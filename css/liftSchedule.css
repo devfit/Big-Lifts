@@ -1,0 +1,23 @@
+.lift-row {
+   font-size: 1.5em;
+}
+
+.lift-row .reps{
+    font-weight: bolder;
+    padding-right: 1em;
+    padding-left: 0.4em;
+}
+
+.lift-row.x-list-item{
+    min-height: 0;
+    padding:  0.3em;
+}
+
+#lift-template .x-tabbar, #edit-percentages-lift-schedule .x-tabbar{
+    padding-left: 0;
+}
+
+#lift-template .x-tab, #edit-percentages-lift-schedule .x-tab{
+    padding-right: 8px;
+    padding-left: 8px;
+}

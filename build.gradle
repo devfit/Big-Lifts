@@ -1,0 +1,101 @@
+import groovyx.gpars.GParsPool
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.codehaus.gpars:gpars:0.12'
+    }
+}
+
+task copyHtmlFilesToBuild(type: Copy) {
+    from '.'
+    into 'build'
+    include '*.html'
+    include 'js/**/*.png'
+}
+
+task copyAppIcon(type: Copy) {
+    from '.'
+    into 'build'
+    include 'apple-touch-icon.png'
+}
+
+def compress(String type, String baseDirectory) {
+    def elementsToMinify = []
+    fileTree {
+        from baseDirectory
+        include "**/*.$type"
+    }.visit { element ->
+        if (element.file.isFile()) {
+            elementsToMinify << element
+        }
+    }
+
+    GParsPool.withPool(8) {
+        elementsToMinify.eachParallel { element ->
+            println "Minifying ${element.relativePath}"
+            def outputFileLocation = "build/$baseDirectory/${element.relativePath}"
+            new File(outputFileLocation).parentFile.mkdirs()
+            ant.java(jar: "lib/yuicompressor-2.4.6.jar", fork: true) {
+                arg(value: "$baseDirectory/${element.relativePath}")
+                arg(value: "-o")
+                arg(value: outputFileLocation)
+            }
+        }
+    }
+}
+
+task compressJs {
+    inputs.dir new File('js')
+    outputs.dir new File('build/js')
+
+    doLast {
+        compress('js', 'js')
+    }
+}
+
+task compressCss {
+    inputs.dir new File('css')
+    inputs.dir new File('js')
+    outputs.dir new File('build/css')
+    outputs.dir new File('build/js')
+
+    doLast {
+        compress('css', 'css')
+        compress('css', 'js')
+    }
+}
+
+task copyCss(type: Copy) {
+    from '.'
+    into 'build'
+    include 'css/**/*.css'
+    include 'js/**/*.css'
+}
+
+defaultTasks 'clean', 'website'
+
+task clean << {
+    delete('build')
+    mkdir('build')
+}
+
+task website(dependsOn: [copyHtmlFilesToBuild, copyAppIcon, compressJs, copyCss]) << {
+}
+
+task appmobi(dependsOn: [copyHtmlFilesToBuild, compressJs, copyCss]) << {
+    File indexFile = new File('build/index.html')
+
+    def appMobiLoader = '''<script type="text/javascript" src="http://localhost:58888/_appMobi/appmobi.js"></script>
+<script type="text/javascript">
+function deviceReadyListener(){AppMobi.device.hideSplashScreen();}window.document.addEventListener("appMobi.device.ready",deviceReadyListener,false);
+</script>'''
+
+    def indexText = indexFile.text.replace("</title>", "</title>$appMobiLoader")
+    indexFile.withWriter { writer ->
+        writer.write(indexText)
+    }
+}
