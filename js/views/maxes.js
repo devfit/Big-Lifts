@@ -1,7 +1,7 @@
 "use strict";
 Ext.ns('wendler', 'wendler.views', 'wendler.stores', 'wendler.maxes', 'wendler.maxes.controller');
 
-wendler.maxes.controller.loadMaxesFormFromStore = function() {
+wendler.maxes.controller.buildMaxesFromStore = function() {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
 };
 
@@ -31,9 +31,6 @@ wendler.views.Maxes = Ext.extend(Ext.Panel, {
         var maxesForm = new Ext.form.FormPanel({
             id: 'maxes-form',
             scroll: 'vertical',
-            listeners: {
-                afterlayout: wendler.maxes.controller.loadMaxesFormFromStore
-            },
             dockedItems:[
                 {
                     xtype: 'toolbar',

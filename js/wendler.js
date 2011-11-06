@@ -26,6 +26,11 @@ var wendlerApp = new Ext.Application({
             new wendler.views.Maxes(),
             new wendler.views.OneRepMaxCalculator(),
             new wendler.views.Settings()
-        ]
+        ],
+        listeners: {
+            afterrender: function(){
+                wendler.maxes.controller.buildMaxesFromStore();
+            }
+        }
     })
 });

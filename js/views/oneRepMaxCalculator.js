@@ -17,9 +17,11 @@ wendler.oneRepMax.controller.estimateOneRepMax = function() {
 wendler.oneRepMax.controller.useEstimateForLift = function() {
     var lift = Ext.getCmp('use-lift-select').getValue();
     var estimate = Ext.getCmp('one-rep-estimate').getValue();
+
     var maxesInput = Ext.getCmp('maxes-' + lift);
     maxesInput.setValue(estimate);
     maxesInput.fireEvent('change', maxesInput, estimate);
+
     Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('maxes-panel'), {
         type : 'slide',
         direction : 'left'
