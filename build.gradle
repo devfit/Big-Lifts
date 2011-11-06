@@ -89,12 +89,21 @@ task website(dependsOn: [copyHtmlFilesToBuild, copyAppIcon, compressJs, copyCss]
 task appmobi(dependsOn: [copyHtmlFilesToBuild, compressJs, copyCss]) << {
     File indexFile = new File('build/index.html')
 
-    def appMobiLoader = '''<script type="text/javascript" src="http://localhost:58888/_appMobi/appmobi.js"></script>
+    def appMobiInclude = '''<script type="text/javascript"  src="http://localhost:58888/_appMobi/appmobi.js"></script>'''
+    def appMobiLoader = '''
 <script type="text/javascript">
-function deviceReadyListener(){AppMobi.device.hideSplashScreen();}window.document.addEventListener("appMobi.device.ready",deviceReadyListener,false);
+function onDeviceReady() {
+    AppMobi.webroot=window.location.href.substring(0,window.location.href.lastIndexOf("/"))+"/";
+    AppMobi.device.hideSplashScreen();
+    wendlerApp.launch();
+}
+</script>
+<script type="text/javascript">
+    document.addEventListener("appMobi.device.ready", onDeviceReady, false);
 </script>'''
 
-    def indexText = indexFile.text.replace("</title>", "</title>$appMobiLoader")
+    def indexText = indexFile.text.replace("</title>", "</title>$appMobiInclude")
+    indexText = indexText.replace("</head>", "$appMobiLoader</head>")
     indexFile.withWriter { writer ->
         writer.write(indexText)
     }
