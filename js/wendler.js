@@ -16,7 +16,7 @@ var wendlerApp = new Ext.Application({
     Viewport: Ext.extend(Ext.TabPanel, {
         id: 'main-tab-panel',
         fullscreen: true,
-        sortable: true,
+        sortable: false,
         tabBar: {
             dock: 'bottom',
             layout: { pack: 'center' }
