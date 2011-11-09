@@ -24,21 +24,17 @@ wendler.maxes.controller.liftValuesChanged = function(el, newValue) {
 };
 
 wendler.maxes.controller.addLiftButtonPressed = function() {
-    Ext.getCmp('maxes-form-items').items.each(function(input) {
-        input.disable();
-    });
-
-    Ext.getCmp('add-lift-button').hide();
-    Ext.getCmp('add-lift-done-button').show();
-};
-
-wendler.maxes.controller.addLiftDoneButtonPressed = function() {
-    Ext.getCmp('maxes-form-items').items.each(function(input) {
-        input.enable();
-    });
-
-    Ext.getCmp('add-lift-button').show();
-    Ext.getCmp('add-lift-done-button').hide();
+    Ext.Msg.prompt('Lift Name', '', function(button, liftName) {
+        if (button == "ok") {
+            if (liftName != '') {
+                wendler.stores.lifts.Lifts.add(Ext.ModelMgr.create({name: liftName, max: 100}, 'Lift'));
+                wendler.stores.lifts.Lifts.sync();
+                Ext.getCmp('maxes-form-items').removeAll();
+                wendler.maxes.controller.buildMaxesFromStore();
+                Ext.getCmp('maxes-form-items').doLayout();
+            }
+        }
+    }, this, false, '');
 };
 
 wendler.views.Maxes = Ext.extend(Ext.Panel, {
@@ -61,13 +57,6 @@ wendler.views.Maxes = Ext.extend(Ext.Panel, {
                             ui: 'action',
                             text: 'Add Lift',
                             handler: wendler.maxes.controller.addLiftButtonPressed
-                        },
-                        {
-                            id: 'add-lift-done-button',
-                            ui: 'action',
-                            text: 'Done',
-                            hidden:true,
-                            handler: wendler.maxes.controller.addLiftDoneButtonPressed
                         }
                     ]
                 }
