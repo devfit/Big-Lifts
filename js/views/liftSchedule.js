@@ -62,6 +62,7 @@ wendler.liftSchedule.controller.getWeekFromComponent = function(component) {
 
 new Ext.TabPanel({
     id: 'lift-template',
+    cardSwitchAnimation: appConfig.cardSwitchAnimation,
     defaults: {
         items:[
             {
