@@ -1,5 +1,14 @@
 "use strict";
 Ext.ns('wendler');
+
+var appConfig = {};
+if (Ext.is.Android) {
+    appConfig.cardSwitchAnimation = false;
+}
+else{
+    appConfig.cardSwitchAnimation = 'slide';
+}
+
 var wendlerApp = new Ext.Application({
     tabletStartupScreen: 'tablet_startup.png',
     phoneStartupScreen: 'phone_startup.png',
@@ -16,6 +25,7 @@ var wendlerApp = new Ext.Application({
     Viewport: Ext.extend(Ext.TabPanel, {
         id: 'main-tab-panel',
         fullscreen: true,
+        cardSwitchAnimation: appConfig.cardSwitchAnimation,
         sortable: false,
         tabBar: {
             dock: 'bottom',
@@ -28,9 +38,11 @@ var wendlerApp = new Ext.Application({
             new wendler.views.Settings()
         ],
         listeners: {
-            afterrender: function(){
+            afterrender: function() {
                 wendler.maxes.controller.buildMaxesFromStore();
             }
         }
     })
 });
+
+
