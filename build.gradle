@@ -93,6 +93,7 @@ task appmobi(dependsOn: [copyHtmlFilesToBuild, compressJs, copyCss]) << {
     def appMobiLoader = '''
 <script type="text/javascript">
 function onDeviceReady() {
+    AppMobi.device.setRotateOrientation("portrait");
     AppMobi.webroot=window.location.href.substring(0,window.location.href.lastIndexOf("/"))+"/";
     AppMobi.device.hideSplashScreen();
     wendlerApp.launch();
