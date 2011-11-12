@@ -1,19 +1,15 @@
 Ext.ns('wendler', 'wendler.maxes', 'wendler.maxes.cards', 'wendler.maxes.controller');
 
-wendler.maxes.controller.editLiftDoneButtonPressed = function() {
+wendler.maxes.controller.addLiftDoneButtonPressed = function() {
     wendler.maxes.controller.returnToEditLiftList();
 };
 
-wendler.maxes.controller.editLiftCancelButtonPressed = function() {
+wendler.maxes.controller.addLiftCancelButtonPressed = function() {
     wendler.maxes.controller.returnToEditLiftList();
 };
 
-wendler.maxes.controller.deleteLiftButtonPressed = function() {
-
-};
-
-wendler.maxes.cards.editLiftPanel = {
-    id: 'maxes-edit-lift-panel',
+wendler.maxes.cards.addLiftPanel = {
+    id: 'maxes-add-lift-panel',
     xtype: 'panel',
     items:[
         {
@@ -24,18 +20,12 @@ wendler.maxes.cards.editLiftPanel = {
                     items:[
                         {
                             xtype: 'textfield',
-                            name: 'edit-lift-new-name',
-                            id: 'edit-lift-new-name',
+                            name: 'add-lift-new-name',
+                            id: 'add-lift-new-name',
                             label: 'Name',
                             labelWidth: '35%'
                         }
                     ]
-                },
-                {
-                    xtype: 'button',
-                    ui: 'decline-round',
-                    text: 'Delete',
-                    handler: wendler.maxes.controller.deleteLiftButtonPressed
                 }
             ]
         }
