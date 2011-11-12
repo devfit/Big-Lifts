@@ -1,9 +1,11 @@
 "use strict";
-Ext.ns('wendler', 'wendler.views', 'wendler.stores', 'wendler.maxes', 'wendler.maxes.controller', 'wendler.maxes.cards');
+Ext.ns('wendler', 'wendler.views', 'wendler.stores', 'wendler.maxes', 'wendler.maxes.controller');
 
 wendler.maxes.controller.buildMaxesFromStore = function() {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
 };
+
+wendler.maxes.title = "Maxes";
 
 wendler.maxes.controller.createMaxesInput = function(record) {
     var liftName = record.data.name;
@@ -17,17 +19,11 @@ wendler.maxes.controller.createMaxesInput = function(record) {
     });
 };
 
-wendler.maxes.controller.liftValuesChanged = function(el, newValue) {
-    var lift = wendler.stores.lifts.Lifts.findRecord('name', el.name);
-    lift.set('max', newValue);
-    lift.save();
-};
-
 wendler.maxes.controller.editLiftButtonPressed = function() {
     wendler.maxes.controller.modifyFormForEdit();
 };
 
-wendler.maxes.controller.editLiftDoneButtonPressed = function() {
+wendler.maxes.controller.editLiftsDoneButtonPressed = function() {
     wendler.maxes.controller.reEnableForm();
 };
 
@@ -35,7 +31,7 @@ wendler.maxes.controller.modifyFormForEdit = function() {
     Ext.getCmp('edit-lifts-button').hide();
     Ext.getCmp('edit-lifts-done-button').show();
 
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-list'));
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-list'));
 };
 
 wendler.maxes.controller.reEnableForm = function() {
@@ -43,10 +39,6 @@ wendler.maxes.controller.reEnableForm = function() {
     Ext.getCmp('edit-lifts-done-button').hide();
 
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
-};
-
-wendler.maxes.controller.editLift = function() {
-    console.log('summin');
 };
 
 wendler.maxes.controller.promptAndAddNewLift = function() {
@@ -63,59 +55,31 @@ wendler.maxes.controller.promptAndAddNewLift = function() {
     }, this, false, '');
 };
 
-wendler.maxes.cards.buildMaxesForm = function() {
-    return {
-        id: 'maxes-form',
-        xtype:'formpanel',
-        scroll:'vertical',
-        items:
-            [
-                {
-                    id: 'maxes-form-items',
-                    xtype: 'fieldset',
-                    style: 'margin-top: 0',
-                    instructions: 'Enter one-rep maxes above.',
-                    defaults: {
-                        listeners:{
-                            change: wendler.maxes.controller.liftValuesChanged
-                        },
-                        labelWidth: '35%',
-                        useClearIcon: true
-                    }
-                }
-            ]
-    };
-};
-
-wendler.maxes.cards.buildEditMaxesList = function() {
-    return {
-        id: 'maxes-edit-lift-list',
-        xtype: 'list',
-        store: wendler.stores.lifts.Lifts,
-        itemTpl: '<strong>{name}</strong>',
-        onItemDisclosure: true,
-        listeners:{
-            itemtap: wendler.maxes.controller.editLift
-        }
-    }
-};
-
 wendler.views.Maxes = Ext.extend(Ext.Panel, {
     id: 'maxes-panel',
     title: 'Maxes',
     iconCls: 'bookmarks',
     layout: 'card',
     items: [
-        wendler.maxes.cards.buildMaxesForm(),
-        wendler.maxes.cards.buildEditMaxesList()
+        wendler.maxes.cards.maxesForm,
+        wendler.maxes.cards.editMaxesList,
+        wendler.maxes.cards.editLiftPanel
     ],
     dockedItems:
         [
             {
+                id: 'maxes-toolbar',
                 xtype: 'toolbar',
                 dock: 'top',
-                title: 'Maxes',
+                title: wendler.maxes.title,
                 items: [
+                    {
+                        id: 'edit-lift-cancel-button',
+                        ui: 'action',
+                        text: 'Cancel',
+                        hidden: true,
+                        handler: wendler.maxes.controller.editLiftCancelButtonPressed
+                    },
                     {xtype: 'spacer'},
                     {
                         id: 'edit-lifts-button',
@@ -125,6 +89,13 @@ wendler.views.Maxes = Ext.extend(Ext.Panel, {
                     },
                     {
                         id: 'edit-lifts-done-button',
+                        ui: 'action',
+                        text: 'Done',
+                        hidden: true,
+                        handler: wendler.maxes.controller.editLiftsDoneButtonPressed
+                    },
+                    {
+                        id: 'edit-lift-done-button',
                         ui: 'action',
                         text: 'Done',
                         hidden: true,
