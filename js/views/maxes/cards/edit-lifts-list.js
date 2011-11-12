@@ -3,7 +3,9 @@ Ext.ns('wendler', 'wendler.maxes', 'wendler.maxes.cards', 'wendler.maxes.control
 wendler.maxes.controller.editLift = function(view, index) {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-panel'), {type:'slide',direction:'left'});
     var liftName = wendler.stores.lifts.Lifts.getAt(index).get('name');
+
     Ext.getCmp('maxes-toolbar').setTitle(liftName);
+    Ext.getCmp('edit-lift-new-name').setValue(liftName);
 
     Ext.getCmp('edit-lifts-done-button').hide();
     Ext.getCmp('edit-lift-cancel-button').show();

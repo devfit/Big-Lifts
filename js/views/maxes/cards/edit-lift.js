@@ -16,7 +16,7 @@ wendler.maxes.controller.editLiftCancelButtonPressed = function() {
     wendler.maxes.controller.returnToEditLiftList();
 };
 
-wendler.maxes.controller.deleteLiftButtonPressed = function(){
+wendler.maxes.controller.deleteLiftButtonPressed = function() {
 
 };
 
@@ -31,7 +31,11 @@ wendler.maxes.cards.editLiftPanel = {
                     xtype: 'fieldset',
                     items:[
                         {
-
+                            xtype: 'textfield',
+                            name: 'edit-lift-new-name',
+                            id: 'edit-lift-new-name',
+                            label: 'Name',
+                            labelWidth: '35%'
                         }
                     ]
                 },
