@@ -1,8 +1,11 @@
 Ext.ns('wendler', 'wendler.maxes', 'wendler.maxes.cards', 'wendler.maxes.controller');
 
+wendler.maxes.currentEditingLiftProperty = null;
 wendler.maxes.controller.editLift = function(view, index) {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-panel'), {type:'slide',direction:'left'});
-    var liftName = wendler.stores.lifts.Lifts.getAt(index).get('name');
+    var liftModel = wendler.stores.lifts.Lifts.getAt(index);
+    var liftName = liftModel.get('name');
+    wendler.maxes.currentEditingLiftProperty = liftModel.get('propertyName');
 
     Ext.getCmp('maxes-toolbar').setTitle(liftName);
     Ext.getCmp('edit-lift-new-name').setValue(liftName);

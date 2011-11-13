@@ -9,7 +9,20 @@ wendler.maxes.controller.editLiftCancelButtonPressed = function() {
 };
 
 wendler.maxes.controller.deleteLiftButtonPressed = function() {
+    Ext.Msg.confirm("Confirm", "Delete Lift?", function(text) {
+        if (text === "yes") {
+            var liftIndex = wendler.stores.lifts.Lifts.find(
+                'propertyName', wendler.maxes.currentEditingLiftProperty,
+                false, true, true);
+            var liftModel = wendler.stores.lifts.Lifts.getAt(liftIndex);
 
+            wendler.stores.lifts.Lifts.remove(liftModel);
+            wendler.stores.lifts.Lifts.sync();
+            wendler.maxes.controller.rebuildMaxesList();
+
+            wendler.maxes.controller.returnToEditLiftList();
+        }
+    });
 };
 
 wendler.maxes.cards.editLiftPanel = {
@@ -21,6 +34,7 @@ wendler.maxes.cards.editLiftPanel = {
             items:[
                 {
                     xtype: 'fieldset',
+                    margin: '0 0 10 0',
                     items:[
                         {
                             xtype: 'textfield',
