@@ -1,6 +1,11 @@
 Ext.ns('wendler', 'wendler.maxes', 'wendler.maxes.cards', 'wendler.maxes.controller');
 
 wendler.maxes.controller.editLiftDoneButtonPressed = function() {
+    var newName = Ext.getCmp('edit-lift-new-name').getValue();
+    var currentModel = wendler.maxes.controller.getCurrentLiftModel();
+    currentModel.set('name', newName );
+    currentModel.save();
+
     wendler.maxes.controller.returnToEditLiftList();
 };
 
@@ -8,14 +13,17 @@ wendler.maxes.controller.editLiftCancelButtonPressed = function() {
     wendler.maxes.controller.returnToEditLiftList();
 };
 
+wendler.maxes.controller.getCurrentLiftModel = function(){
+    var liftIndex = wendler.stores.lifts.Lifts.find(
+        'propertyName', wendler.maxes.currentEditingLiftProperty,
+        false, true, true);
+    return wendler.stores.lifts.Lifts.getAt(liftIndex);
+};
+
 wendler.maxes.controller.deleteLiftButtonPressed = function() {
     Ext.Msg.confirm("Confirm", "Delete Lift?", function(text) {
         if (text === "yes") {
-            var liftIndex = wendler.stores.lifts.Lifts.find(
-                'propertyName', wendler.maxes.currentEditingLiftProperty,
-                false, true, true);
-            var liftModel = wendler.stores.lifts.Lifts.getAt(liftIndex);
-
+            var liftModel = wendler.maxes.controller.getCurrentLiftModel();
             wendler.stores.lifts.Lifts.remove(liftModel);
             wendler.stores.lifts.Lifts.sync();
             wendler.maxes.controller.rebuildMaxesList();
