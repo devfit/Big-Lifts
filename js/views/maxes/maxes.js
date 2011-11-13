@@ -81,6 +81,13 @@ wendler.views.Maxes = Ext.extend(Ext.Panel, {
                         hidden: true,
                         handler: wendler.maxes.controller.editLiftCancelButtonPressed
                     },
+                    {
+                        id: 'add-lift-cancel-button',
+                        ui: 'action',
+                        text: 'Cancel',
+                        hidden: true,
+                        handler: wendler.maxes.controller.addLiftCancelButtonPressed
+                    },
                     {xtype: 'spacer'},
                     {
                         id: 'edit-lifts-button',
@@ -101,6 +108,13 @@ wendler.views.Maxes = Ext.extend(Ext.Panel, {
                         text: 'Done',
                         hidden: true,
                         handler: wendler.maxes.controller.editLiftDoneButtonPressed
+                    },
+                    {
+                        id: 'add-lift-done-button',
+                        ui: 'action',
+                        text: 'Done',
+                        hidden: true,
+                        handler: wendler.maxes.controller.addLiftDoneButtonPressed
                     }
                 ]
             }
