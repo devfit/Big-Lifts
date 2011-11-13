@@ -9,7 +9,7 @@ wendler.maxes.title = "Maxes";
 
 wendler.maxes.controller.createMaxesInput = function(record) {
     var liftName = record.data.name;
-    var liftProperty = liftName.toLowerCase();
+    var liftProperty = record.data.propertyName;
     Ext.getCmp('maxes-form-items').add({
         id: 'maxes-' + liftProperty,
         xtype: 'numberfield',

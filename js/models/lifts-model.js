@@ -24,7 +24,7 @@ wendler.defaults.lifts = [
 Ext.ns('wendler.stores.migrations', 'wendler.models', 'wendler.models.Lift');
 wendler.stores.migrations.liftModelMigration = function() {
     wendler.stores.lifts.Lifts.each(function(r) {
-        if (!r.data.liftProperty) {
+        if (!r.data.propertyName) {
             var propertyName = wendler.models.Lift.sanitizePropertyName(r.data.name);
             r.set('propertyName', propertyName);
             r.save();
