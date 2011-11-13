@@ -1,11 +1,12 @@
 "use strict";
 Ext.ns('wendler', 'wendler.views', 'wendler.stores', 'wendler.maxes', 'wendler.maxes.controller');
 
+wendler.maxes.title = "Maxes";
+
 wendler.maxes.controller.buildMaxesFromStore = function() {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
 };
-
-wendler.maxes.title = "Maxes";
+wendler.appLoadCallbackFunctions.push(wendler.maxes.controller.buildMaxesFromStore);
 
 wendler.maxes.controller.createMaxesInput = function(record) {
     var liftName = record.data.name;
@@ -18,6 +19,7 @@ wendler.maxes.controller.createMaxesInput = function(record) {
         value: record.data.max
     });
 };
+
 
 wendler.maxes.controller.editLiftButtonPressed = function() {
     wendler.maxes.controller.modifyFormForEdit();

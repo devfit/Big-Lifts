@@ -31,7 +31,9 @@ var wendlerApp = new Ext.Application({
         ],
         listeners: {
             afterrender: function() {
-                wendler.maxes.controller.buildMaxesFromStore();
+                for( var i in wendler.appLoadCallbackFunctions ){
+                    wendler.appLoadCallbackFunctions[i]();
+                }
             }
         }
     })
