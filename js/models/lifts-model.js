@@ -1,5 +1,13 @@
 "use strict";
 Ext.ns('wendler', 'wendler.stores', 'wendler.stores.lifts', 'wendler.defaults');
+Ext.ns('wendler.stores.migrations', 'wendler.models', 'wendler.models.Lift');
+
+wendler.models.Lift.uniquePropertyNameValidation = function(propertyName) {
+    var liftIsUnique = wendler.stores.lifts.Lifts.find('propertyName', propertyName, 0,
+        false, true, true) == -1;
+
+    return liftIsUnique;
+};
 
 Ext.regModel('Lift', {
     fields: [
@@ -8,11 +16,18 @@ Ext.regModel('Lift', {
         {name: 'propertyName', type: 'string'},
         {name: 'max', type: 'integer'}
     ],
+    validations:[
+        {field:'propertyName', type: 'custom', message: 'nonunique',
+            fn: wendler.models.Lift.uniquePropertyNameValidation},
+        {field: 'max', type: 'format', matcher:/^\d\d*$/, message: 'Must enter a max'},
+        {field: 'max', type: 'presence'}
+    ],
     proxy: {
         type: 'localstorage',
         id: 'lift-proxy'
     }
 });
+
 
 wendler.defaults.lifts = [
     Ext.ModelMgr.create({name: 'Squat', max: 200, propertyName: 'squat'}, 'Lift'),
@@ -21,7 +36,6 @@ wendler.defaults.lifts = [
     Ext.ModelMgr.create({name: 'Bench', max: 175, propertyName:'bench'}, 'Lift')
 ];
 
-Ext.ns('wendler.stores.migrations', 'wendler.models', 'wendler.models.Lift');
 wendler.stores.migrations.liftModelMigration = function() {
     wendler.stores.lifts.Lifts.each(function(r) {
         if (!r.data.propertyName) {

@@ -3,12 +3,23 @@ Ext.ns('wendler', 'wendler.maxes', 'wendler.maxes.cards', 'wendler.maxes.control
 wendler.maxes.controller.addLiftDoneButtonPressed = function() {
     var liftName = Ext.getCmp('add-lift-new-name').getValue();
     var liftMax = Ext.getCmp('add-lift-new-max').getValue();
+    var liftProperty = wendler.models.Lift.sanitizePropertyName(liftName);
 
-    var newLiftModel = Ext.ModelMgr.create({name: liftName, max: liftMax});
-    wendler.stores.lifts.Lifts.add(newLiftModel);
+    var newLiftModel = Ext.ModelMgr.create(
+        {name: liftName, propertyName: liftProperty, max: liftMax}, 'Lift');
+    var errors = newLiftModel.validate();
 
-    Ext.getCmp('maxes-add-lift-form').reset();
-    wendler.maxes.controller.returnToEditLiftList();
+    if (!errors.isValid()) {
+        console.log( errors );
+        //TODO: validation message?
+    }
+    else {
+        wendler.stores.lifts.Lifts.add(newLiftModel);
+        wendler.stores.lifts.Lifts.sync();
+
+        Ext.getCmp('maxes-add-lift-form').reset();
+        wendler.maxes.controller.returnToEditLiftList();
+    }
 };
 
 wendler.maxes.controller.addLiftCancelButtonPressed = function() {
@@ -26,6 +37,7 @@ wendler.maxes.cards.addLiftPanel = {
             items:[
                 {
                     xtype: 'fieldset',
+                    style: 'margin-top: 0',
                     items:[
                         {
                             xtype: 'textfield',
