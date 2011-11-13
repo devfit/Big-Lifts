@@ -17,6 +17,8 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function() {
         wendler.stores.lifts.Lifts.add(newLiftModel);
         wendler.stores.lifts.Lifts.sync();
 
+        wendler.maxes.controller.rebuildMaxesList();
+
         Ext.getCmp('maxes-add-lift-form').reset();
         wendler.maxes.controller.returnToEditLiftList();
     }

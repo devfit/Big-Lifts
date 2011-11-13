@@ -3,24 +3,6 @@ Ext.ns('wendler', 'wendler.views', 'wendler.stores', 'wendler.maxes', 'wendler.m
 
 wendler.maxes.title = "Maxes";
 
-wendler.maxes.controller.buildMaxesFromStore = function() {
-    wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
-};
-wendler.appLoadCallbackFunctions.push(wendler.maxes.controller.buildMaxesFromStore);
-
-wendler.maxes.controller.createMaxesInput = function(record) {
-    var liftName = record.data.name;
-    var liftProperty = record.data.propertyName;
-    Ext.getCmp('maxes-form-items').add({
-        id: 'maxes-' + liftProperty,
-        xtype: 'numberfield',
-        name: liftProperty,
-        label: liftName,
-        value: record.data.max
-    });
-};
-
-
 wendler.maxes.controller.editLiftButtonPressed = function() {
     wendler.maxes.controller.modifyFormForEdit();
 };
@@ -43,19 +25,6 @@ wendler.maxes.controller.reEnableForm = function() {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };
 
-wendler.maxes.controller.promptAndAddNewLift = function() {
-    Ext.Msg.prompt('Lift Name', '', function(button, liftName) {
-        if (button == "ok") {
-            if (liftName != '') {
-                wendler.stores.lifts.Lifts.add(Ext.ModelMgr.create({name: liftName, max: 100}, 'Lift'));
-                wendler.stores.lifts.Lifts.sync();
-                Ext.getCmp('maxes-form-items').removeAll();
-                wendler.maxes.controller.buildMaxesFromStore();
-                Ext.getCmp('maxes-form-items').doLayout();
-            }
-        }
-    }, this, false, '');
-};
 
 wendler.views.Maxes = Ext.extend(Ext.Panel, {
     id: 'maxes-panel',
