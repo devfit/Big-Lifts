@@ -4,13 +4,14 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function() {
     var liftName = Ext.getCmp('add-lift-new-name').getValue();
     var liftMax = Ext.getCmp('add-lift-new-max').getValue();
 
+    var newLiftModel = Ext.ModelMgr.create({name: liftName, max: liftMax});
+    wendler.stores.lifts.Lifts.add(newLiftModel);
 
     Ext.getCmp('maxes-add-lift-form').reset();
     wendler.maxes.controller.returnToEditLiftList();
 };
 
 wendler.maxes.controller.addLiftCancelButtonPressed = function() {
-
     Ext.getCmp('maxes-add-lift-form').reset();
     wendler.maxes.controller.returnToEditLiftList();
 };

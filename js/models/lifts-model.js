@@ -5,6 +5,7 @@ Ext.regModel('Lift', {
     fields: [
         {name: 'id', type: 'integer'},
         {name: 'name', type: 'string'},
+        {name: 'propertyName', type: 'string'},
         {name: 'max', type: 'integer'}
     ],
     proxy: {
@@ -12,12 +13,28 @@ Ext.regModel('Lift', {
         id: 'lift-proxy'
     }
 });
+
 wendler.defaults.lifts = [
-    Ext.ModelMgr.create({name: 'Squat', max: 200}, 'Lift'),
-    Ext.ModelMgr.create({name: 'Deadlift', max: 300}, 'Lift'),
-    Ext.ModelMgr.create({name: 'Press', max: 150}, 'Lift'),
-    Ext.ModelMgr.create({name: 'Bench', max: 175}, 'Lift')
+    Ext.ModelMgr.create({name: 'Squat', max: 200, propertyName: 'squat'}, 'Lift'),
+    Ext.ModelMgr.create({name: 'Deadlift', max: 300, propertyName: 'deadlift'}, 'Lift'),
+    Ext.ModelMgr.create({name: 'Press', max: 150, propertyName: 'press'}, 'Lift'),
+    Ext.ModelMgr.create({name: 'Bench', max: 175, propertyName:'bench'}, 'Lift')
 ];
+
+Ext.ns('wendler.stores.migrations', 'wendler.models', 'wendler.models.Lift');
+wendler.stores.migrations.liftModelMigration = function() {
+    wendler.stores.lifts.Lifts.each(function(r) {
+        if (!r.data.liftProperty) {
+            var propertyName = wendler.models.Lift.sanitizePropertyName(r.data.name);
+            r.set('propertyName', propertyName);
+            r.save();
+        }
+    });
+};
+
+wendler.models.Lift.sanitizePropertyName = function(propertyName) {
+    return propertyName.toLowerCase().replace(/[^a-z]/g, '');
+};
 
 wendler.stores.lifts.Lifts = new Ext.data.Store({
     model: 'Lift',
@@ -27,6 +44,7 @@ wendler.stores.lifts.Lifts = new Ext.data.Store({
                 this.add(wendler.defaults.lifts);
                 this.sync();
             }
+            wendler.stores.migrations.liftModelMigration();
         }
     },
     autoLoad: true,
