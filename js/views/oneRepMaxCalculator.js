@@ -1,16 +1,5 @@
 "use strict";
-Ext.ns('wendler', 'wendler.views', 'wendler.oneRepMax', 'wendler.oneRepMax.options', 'wendler.oneRepMax.controller');
-
-wendler.oneRepMax.controller.buildLiftOptions = function() {
-    var options = [];
-    wendler.stores.lifts.Lifts.each(function(r) {
-        options.push({text:r.data.name, value: r.data.propertyName});
-    });
-    Ext.getCmp('use-lift-select').setOptions(options);
-
-};
-wendler.events.appLoadCallbackFunctions.push(wendler.oneRepMax.controller.buildLiftOptions);
-
+Ext.ns('wendler', 'wendler.views', 'wendler.oneRepMax', 'wendler.oneRepMax.controller');
 
 wendler.oneRepMax.controller.estimateOneRepMax = function() {
     var weight = Ext.getCmp('one-rep-weight').getValue();
@@ -102,8 +91,10 @@ wendler.views.OneRepMaxCalculator = Ext.extend(Ext.Panel, {
                             id: 'use-lift-select',
                             name: 'use-for-lift-select',
                             xtype: 'selectfield',
+                            valueField: 'propertyName',
+                            displayField: 'name',
                             label: 'Lift',
-                            options: []
+                            store: wendler.stores.lifts.Lifts
                         },
                         {
                             xtype: 'spacer',
