@@ -1,6 +1,4 @@
 "use strict";
-Ext.ns('wendler');
-
 var wendlerApp = new Ext.Application({
     tabletStartupScreen: 'tablet_startup.png',
     phoneStartupScreen: 'phone_startup.png',
@@ -31,8 +29,8 @@ var wendlerApp = new Ext.Application({
         ],
         listeners: {
             afterrender: function() {
-                for( var i in wendler.appLoadCallbackFunctions ){
-                    wendler.appLoadCallbackFunctions[i]();
+                for (var i in wendler.events.appLoadCallbackFunctions) {
+                    wendler.events.appLoadCallbackFunctions[i]();
                 }
             }
         }

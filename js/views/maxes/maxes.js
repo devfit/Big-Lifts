@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler', 'wendler.views', 'wendler.stores', 'wendler.maxes', 'wendler.maxes.controller');
+Ext.ns('wendler.views', 'wendler.stores', 'wendler.maxes.controller');
 
 wendler.maxes.title = "Maxes";
 
@@ -24,7 +24,6 @@ wendler.maxes.controller.reEnableForm = function() {
 
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };
-
 
 wendler.views.Maxes = Ext.extend(Ext.Panel, {
     id: 'maxes-panel',

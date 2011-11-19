@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler', 'wendler.views', 'wendler.settings.liftPercentages', 'wendler.controller.settings.liftPercentages');
+Ext.ns('wendler.views', 'wendler.settings.liftPercentages', 'wendler.controller.settings.liftPercentages');
 
 wendler.settings.liftPercentages.currentWeek = 1;
 

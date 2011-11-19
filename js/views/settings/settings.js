@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler', 'wendler.views');
+Ext.ns('wendler.views');
 
 new Ext.form.FormPanel({
     title: 'Settings',

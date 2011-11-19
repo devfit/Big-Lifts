@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler', 'wendler.defaults', 'wendler.stores', 'wendler.settings.options');
+Ext.ns('wendler.defaults', 'wendler.stores', 'wendler.settings.options');
 
 Ext.regModel('Settings', {
     fields: [

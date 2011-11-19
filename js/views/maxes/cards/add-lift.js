@@ -1,4 +1,4 @@
-Ext.ns('wendler', 'wendler.maxes', 'wendler.maxes.cards', 'wendler.maxes.controller');
+Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
 
 wendler.maxes.controller.addLiftDoneButtonPressed = function() {
     var liftName = Ext.getCmp('add-lift-new-name').getValue();

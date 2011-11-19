@@ -1,4 +1,4 @@
-Ext.ns('wendler', 'wendler.maxes', 'wendler.maxes.cards', 'wendler.maxes.controller');
+Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
 
 wendler.maxes.currentEditingLiftProperty = null;
 wendler.maxes.controller.editLift = function(view, index) {

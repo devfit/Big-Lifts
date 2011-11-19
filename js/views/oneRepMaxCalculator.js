@@ -9,7 +9,7 @@ wendler.oneRepMax.controller.buildLiftOptions = function() {
     Ext.getCmp('use-lift-select').setOptions(options);
 
 };
-wendler.appLoadCallbackFunctions.push(wendler.oneRepMax.controller.buildLiftOptions);
+wendler.events.appLoadCallbackFunctions.push(wendler.oneRepMax.controller.buildLiftOptions);
 
 
 wendler.oneRepMax.controller.estimateOneRepMax = function() {

@@ -1,4 +1,4 @@
-Ext.ns('wendler', 'wendler.maxes', 'wendler.maxes.cards', 'wendler.maxes.controller');
+Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
 
 wendler.maxes.controller.liftValuesChanged = function(el, newValue) {
     var lift = wendler.stores.lifts.Lifts.findRecord('name', el.name);
@@ -9,7 +9,7 @@ wendler.maxes.controller.liftValuesChanged = function(el, newValue) {
 wendler.maxes.controller.buildMaxesFromStore = function() {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
 };
-wendler.appLoadCallbackFunctions.push(wendler.maxes.controller.buildMaxesFromStore);
+wendler.events.appLoadCallbackFunctions.push(wendler.maxes.controller.buildMaxesFromStore);
 
 wendler.maxes.controller.createMaxesInput = function(record) {
     var liftName = record.data.name;
