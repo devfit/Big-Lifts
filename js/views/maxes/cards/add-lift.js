@@ -10,8 +10,26 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function() {
     var errors = newLiftModel.validate();
 
     if (!errors.isValid()) {
-        console.log( errors );
-        //TODO: validation message?
+        var nameErrors = errors.getByField('propertyName');
+        var maxErrors = errors.getByField('max');
+        var messages = [];
+
+        if (nameErrors.length > 0) {
+            for (var i in nameErrors) {
+                var nameError = nameErrors[i];
+                if (nameError.message === "must be present") {
+                    messages.push("Name must not be blank");
+                }
+                else if (nameError.message === "nonunique") {
+                    messages.push("Name must be unique");
+                }
+            }
+        }
+        if (maxErrors.length > 0) {
+            messages.push("Max must be >0");
+        }
+
+        Ext.Msg.alert('Error', messages.join('<br/>'));
     }
     else {
         wendler.stores.lifts.Lifts.add(newLiftModel);

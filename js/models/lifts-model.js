@@ -19,6 +19,7 @@ Ext.regModel('Lift', {
     validations:[
         {field:'propertyName', type: 'custom', message: 'nonunique',
             fn: wendler.models.Lift.uniquePropertyNameValidation},
+        {field: 'propertyName', type:'presence'},
         {field: 'max', type: 'format', matcher:/^\d\d*$/, message: 'Must enter a max'},
         {field: 'max', type: 'presence'}
     ],
