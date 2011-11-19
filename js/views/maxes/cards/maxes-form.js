@@ -32,7 +32,7 @@ wendler.maxes.controller.rebuildMaxesList = function() {
 wendler.maxes.cards.maxesForm = {
     id: 'maxes-form',
     xtype:'formpanel',
-    scroll:'vertical',
+    scroll: util.scrolling.lockedVerticalScroller,
     items:
         [
             {

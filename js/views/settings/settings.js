@@ -1,10 +1,10 @@
 "use strict";
-Ext.ns('wendler','wendler.views');
+Ext.ns('wendler', 'wendler.views');
 
 new Ext.form.FormPanel({
     title: 'Settings',
     id: 'settings-form',
-    scroll: 'vertical',
+    scroll: util.scrolling.lockedVerticalScroller,
     dockedItems:[
         {
             dock: 'top',

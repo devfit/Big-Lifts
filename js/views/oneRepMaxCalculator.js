@@ -36,7 +36,7 @@ wendler.oneRepMax.controller.useEstimateForLift = function() {
 wendler.views.OneRepMaxCalculator = Ext.extend(Ext.Panel, {
     title: '1-Rep Calc',
     iconCls: 'search',
-    scroll: 'vertical',
+    scroll: util.scrolling.lockedVerticalScroller,
     listeners:{
         afterlayout: wendler.oneRepMax.controller.estimateOneRepMax
     },
