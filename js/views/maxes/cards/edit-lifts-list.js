@@ -36,9 +36,14 @@ wendler.maxes.controller.addLiftButtonPressed = function() {
 wendler.maxes.cards.editMaxesList = {
     id: 'maxes-edit-lifts-list',
     xtype: 'panel',
+    layout: {
+        type: 'vbox',
+        align: 'stretch'
+    },
     items:[
         {
             xtype: 'list',
+            flex: 7,
             store: wendler.stores.lifts.Lifts,
             itemTpl: '<strong>{name}</strong>',
             onItemDisclosure: true,
@@ -47,7 +52,8 @@ wendler.maxes.cards.editMaxesList = {
             }
         },
         {
-            margin: '10 0 0 0',
+            margin: '10 5 5 10',
+            flex: 1,
             xtype: 'button',
             text: 'Add lift',
             ui: 'confirm-round',
