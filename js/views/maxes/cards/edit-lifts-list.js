@@ -11,6 +11,7 @@ wendler.maxes.controller.editLift = function(view, index) {
     Ext.getCmp('edit-lift-new-name').setValue(liftName);
 
     Ext.getCmp('edit-lifts-done-button').hide();
+    Ext.getCmp('edit-lifts-add-lift-button').hide();
     Ext.getCmp('edit-lift-cancel-button').show();
     Ext.getCmp('edit-lift-done-button').show();
 };
@@ -23,12 +24,14 @@ wendler.maxes.controller.returnToEditLiftList = function() {
     Ext.getCmp('add-lift-cancel-button').hide();
     Ext.getCmp('add-lift-done-button').hide();
     Ext.getCmp('edit-lifts-done-button').show();
+    Ext.getCmp('edit-lifts-add-lift-button').show();
 };
 
 wendler.maxes.controller.addLiftButtonPressed = function() {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'), {type:'slide',direction:'left'});
     Ext.getCmp('maxes-toolbar').setTitle('New Lift');
     Ext.getCmp('edit-lifts-done-button').hide();
+    Ext.getCmp('edit-lifts-add-lift-button').hide();
     Ext.getCmp('add-lift-cancel-button').show();
     Ext.getCmp('add-lift-done-button').show();
 };
@@ -36,28 +39,16 @@ wendler.maxes.controller.addLiftButtonPressed = function() {
 wendler.maxes.cards.editMaxesList = {
     id: 'maxes-edit-lifts-list',
     xtype: 'panel',
-    layout: {
-        type: 'vbox',
-        align: 'stretch'
-    },
+    layout: 'fit',
     items:[
         {
             xtype: 'list',
-            flex: 7,
             store: wendler.stores.lifts.Lifts,
             itemTpl: '<strong>{name}</strong>',
             onItemDisclosure: true,
             listeners:{
                 itemtap: wendler.maxes.controller.editLift
             }
-        },
-        {
-            margin: '10 5 5 10',
-            flex: 1,
-            xtype: 'button',
-            text: 'Add lift',
-            ui: 'confirm-round',
-            handler: wendler.maxes.controller.addLiftButtonPressed
         }
     ]
 };
