@@ -58,6 +58,11 @@ wendler.maxes.cards.addLiftPanel = {
                 {
                     xtype: 'fieldset',
                     style: 'margin-top: 0',
+                    defaults: {
+                        autoCapitalize: false,
+                        autoCorrect: false,
+                        autoComplete: false
+                    },
                     items:[
                         {
                             xtype: 'textfield',
