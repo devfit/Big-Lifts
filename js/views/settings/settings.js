@@ -49,7 +49,7 @@ new Ext.form.FormPanel({
                 {
                     xtype: 'selectfield',
                     name: 'rounding-value',
-                    label: 'Round To (lbs)',
+                    label: 'Round To',
                     options: wendler.settings.options.roundingValues
                 },
                 {
