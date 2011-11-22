@@ -47,7 +47,7 @@ wendler.maxes.controller.addLiftCancelButtonPressed = function() {
     wendler.maxes.controller.returnToEditLiftList();
 };
 
-wendler.maxes.cards.addLiftPanel = {
+wendler.maxes.cards.addLiftPanel = Ext.extend(wendler.views.cards.MaxesPanel, {
     id: 'maxes-add-lift-panel',
     xtype: 'panel',
     items:[
@@ -83,4 +83,4 @@ wendler.maxes.cards.addLiftPanel = {
             ]
         }
     ]
-};
+});

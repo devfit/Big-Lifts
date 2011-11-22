@@ -29,7 +29,7 @@ wendler.maxes.controller.rebuildMaxesList = function() {
     Ext.getCmp('maxes-form-items').doLayout();
 };
 
-wendler.maxes.cards.maxesForm = {
+wendler.maxes.cards.maxesForm = Ext.extend(wendler.views.cards.MaxesPanel, {
     id: 'maxes-form',
     xtype:'formpanel',
     scroll: util.scrolling.lockedVerticalScroller,
@@ -49,4 +49,4 @@ wendler.maxes.cards.maxesForm = {
                 }
             }
         ]
-};
+});

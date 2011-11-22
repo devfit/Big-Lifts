@@ -33,7 +33,7 @@ wendler.maxes.controller.deleteLiftButtonPressed = function() {
     });
 };
 
-wendler.maxes.cards.editLiftPanel = {
+wendler.maxes.cards.editLiftPanel = Ext.extend(wendler.views.cards.MaxesPanel, {
     id: 'maxes-edit-lift-panel',
     xtype: 'panel',
     items:[
@@ -62,4 +62,4 @@ wendler.maxes.cards.editLiftPanel = {
             ]
         }
     ]
-};
+});

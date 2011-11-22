@@ -36,7 +36,7 @@ wendler.maxes.controller.addLiftButtonPressed = function() {
     Ext.getCmp('add-lift-done-button').show();
 };
 
-wendler.maxes.cards.editMaxesList = {
+wendler.maxes.cards.editMaxesList = Ext.extend(wendler.views.cards.MaxesPanel, {
     id: 'maxes-edit-lifts-list',
     xtype: 'panel',
     layout: 'fit',
@@ -51,4 +51,4 @@ wendler.maxes.cards.editMaxesList = {
             }
         }
     ]
-};
+});
