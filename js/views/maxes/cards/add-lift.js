@@ -82,5 +82,14 @@ wendler.maxes.cards.addLiftPanel = Ext.extend(wendler.views.cards.MaxesPanel, {
                 }
             ]
         }
-    ]
+    ],
+    _setup: function() {
+        Ext.getCmp('add-lift-cancel-button').show();
+        Ext.getCmp('add-lift-done-button').show();
+        Ext.getCmp('maxes-toolbar').setTitle('New Lift');
+    },
+    _teardown: function() {
+        Ext.getCmp('add-lift-cancel-button').hide();
+        Ext.getCmp('add-lift-done-button').hide();
+    }
 });

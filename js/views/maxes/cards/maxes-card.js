@@ -1,10 +1,10 @@
 "use strict";
 Ext.ns('wendler.views.cards');
-wendler.views.cards.MaxesPanel = Ext.extend(Ext.Panel, {
-    _setupHeader: function() {
+wendler.views.cards.MaxesPanel = Ext.extend(Ext.Container, {
+    _setup: function() {
         alert("Unimplemented");
     },
-    _teardownHeader: function() {
+    _teardown: function() {
         alert("Unimplemented");
     }
 });
