@@ -29,9 +29,13 @@ wendler.maxes.controller.rebuildMaxesList = function() {
     Ext.getCmp('maxes-form-items').doLayout();
 };
 
+wendler.maxes.controller.editLiftButtonPressed = function() {
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-list'));
+};
+
+
 wendler.maxes.cards.maxesForm = Ext.extend(Ext.form.FormPanel, {
     id: 'maxes-form',
-    xtype:'formpanel',
     scroll: util.scrolling.lockedVerticalScroller,
     items:
         [
@@ -46,6 +50,24 @@ wendler.maxes.cards.maxesForm = Ext.extend(Ext.form.FormPanel, {
                     labelWidth: '35%',
                     useClearIcon: true
                 }
+            }
+        ],
+    dockedItems:
+        [
+            {
+                id: 'maxes-toolbar',
+                xtype: 'toolbar',
+                dock: 'top',
+                title: 'Maxes',
+                items: [
+                    {xtype: 'spacer'},
+                    {
+                        id: 'edit-lifts-button',
+                        ui: 'action',
+                        text: 'Edit Lifts',
+                        handler: wendler.maxes.controller.editLiftButtonPressed
+                    }
+                ]
             }
         ]
 });

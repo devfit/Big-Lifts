@@ -47,9 +47,8 @@ wendler.maxes.controller.addLiftCancelButtonPressed = function() {
     wendler.maxes.controller.returnToEditLiftList();
 };
 
-wendler.maxes.cards.addLiftPanel = Ext.extend(wendler.views.cards.MaxesPanel, {
+wendler.maxes.cards.addLiftPanel = Ext.extend(Ext.Panel, {
     id: 'maxes-add-lift-panel',
-    xtype: 'panel',
     items:[
         {
             xtype: 'formpanel',
@@ -83,13 +82,27 @@ wendler.maxes.cards.addLiftPanel = Ext.extend(wendler.views.cards.MaxesPanel, {
             ]
         }
     ],
-    _setup: function() {
-        Ext.getCmp('add-lift-cancel-button').show();
-        Ext.getCmp('add-lift-done-button').show();
-        Ext.getCmp('maxes-toolbar').setTitle('New Lift');
-    },
-    _teardown: function() {
-        Ext.getCmp('add-lift-cancel-button').hide();
-        Ext.getCmp('add-lift-done-button').hide();
-    }
+    dockedItems:
+        [
+            {
+                xtype: 'toolbar',
+                dock: 'top',
+                title: "New Lift",
+                items: [
+                    {
+                        id: 'add-lift-cancel-button',
+                        text: 'Cancel',
+                        handler: wendler.maxes.controller.addLiftCancelButtonPressed,
+                        ui: 'action'
+                    },
+                    {xtype:'spacer'},
+                    {
+                        id: 'add-lift-done-button',
+                        text: 'Done',
+                        handler: wendler.maxes.controller.addLiftDoneButtonPressed,
+                        ui: 'action'
+                    }
+                ]
+            }
+        ]
 });
