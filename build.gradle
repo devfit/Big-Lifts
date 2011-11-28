@@ -101,3 +101,13 @@ function onDeviceReady() {
         writer.write(indexText)
     }
 }
+
+task copyBuildFilesToTestDirectory(type: Copy, dependsOn: [website]) {
+    from 'build'
+    into 'selenium-test/public'
+}
+
+task test(type: Exec, dependsOn: [copyBuildFilesToTestDirectory]) {
+    commandLine = ['rake', 'spec']
+    workingDir = new File('./selenium-test')
+}
