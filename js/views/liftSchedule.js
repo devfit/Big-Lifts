@@ -60,10 +60,11 @@ wendler.liftSchedule.controller.getWeekFromComponent = function(component) {
     return parseInt(title.charAt(title.length - 1));
 };
 
-new Ext.TabPanel({
+wendler.liftSchedule.liftTemplate = Ext.extend(Ext.TabPanel, {
     id: 'lift-template',
     cardSwitchAnimation: appConfig.cardSwitchAnimation,
     defaults: {
+        layout: 'fit',
         items:[
             {
                 xtype: 'list',
@@ -99,7 +100,8 @@ new Ext.TabPanel({
     ]
 });
 
-new Ext.Panel({
+wendler.liftSchedule.liftSelector = Ext.extend(Ext.Panel, {
+    layout: 'fit',
     id: 'lift-selector',
     items:[
         new Ext.List({
@@ -131,5 +133,5 @@ wendler.views.LiftSchedule = Ext.extend(Ext.Panel, {
     listeners: {
         beforeshow: wendler.liftSchedule.controller.updateLiftValues
     },
-    items: [Ext.getCmp('lift-selector'), Ext.getCmp('lift-template')]
+    items: [new wendler.liftSchedule.liftSelector(), new wendler.liftSchedule.liftTemplate()]
 });
