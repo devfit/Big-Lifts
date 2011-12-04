@@ -5,7 +5,9 @@ wendler.oneRepMax.controller.estimateOneRepMax = function() {
     var weight = Ext.getCmp('one-rep-weight').getValue();
     var reps = Ext.getCmp('one-rep-reps').getValue();
     var estimate = weight * (1 + reps * 0.033);
-    Ext.getCmp('one-rep-estimate').setValue(estimate);
+
+    var roundedEstimate = util.roundNumber(estimate, '1', 'normal');
+    Ext.getCmp('one-rep-estimate').setValue(roundedEstimate);
 };
 
 wendler.oneRepMax.controller.useEstimateForLift = function() {
