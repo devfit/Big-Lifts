@@ -8,9 +8,10 @@ Feature: lifter sets max
     And I view the <lift> lift schedule for week <week>
     Then The lift schedule shows "<warmup1>","<warmup2>","<warmup3>","<work1>","<work2>","<work3>"
 
-  Scenarios: squat
+  Scenarios: different lifts
     | lift  | max | week | warmup1 | warmup2 | warmup3 | work1  | work2  | work3  |
     | squat | 300 | 1    | 5x 110  | 5x 135  | 3x 160  | 5x 175 | 5x 205 | 5x 230 |
     | squat | 300 | 2    | 5x 110  | 5x 135  | 3x 160  | 3x 190 | 3x 215 | 3x 245 |
     | squat | 300 | 3    | 5x 110  | 5x 135  | 3x 160  | 5x 205 | 3x 230 | 1x 255 |
     | squat | 300 | 4    | 5x 110  | 5x 135  | 3x 160  | 5x 160 | 5x 175 | 5x 190 |
+    | press | 125 | 3    | 5x 45  | 5x 55  | 3x 70  | 5x 85 | 3x 95 | 1x 105 |
