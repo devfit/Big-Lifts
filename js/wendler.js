@@ -18,6 +18,7 @@ var wendlerApp = new Ext.Application({
         cardSwitchAnimation: appConfig.cardSwitchAnimation,
         sortable: false,
         tabBar: {
+            id: 'tab-navigation',
             dock: 'bottom',
             layout: { pack: 'center' }
         },
