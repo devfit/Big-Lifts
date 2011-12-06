@@ -18,7 +18,7 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function() {
             for (var i in nameErrors) {
                 var nameError = nameErrors[i];
                 if (nameError.message === "must be present") {
-                    messages.push("Name must not be blank");
+                    messages.push("Invalid lift name");
                 }
                 else if (nameError.message === "nonunique") {
                     messages.push("Name must be unique");
