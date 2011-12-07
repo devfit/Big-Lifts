@@ -107,7 +107,7 @@ task copyBuildFilesToTestDirectory(type: Copy, dependsOn: [website]) {
     into 'selenium-test/public'
 }
 
-task test(type: Exec, dependsOn: [copyBuildFilesToTestDirectory]) {
+task test(type: Exec, dependsOn: []) {
     commandLine = ['cucumber']
     workingDir = new File('./test')
 }

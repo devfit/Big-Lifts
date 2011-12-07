@@ -41,20 +41,26 @@ Then /^"([^"]*)" is ([\w ]+)?added to the edit lifts screen$/ do |lift, invertCh
 end
 
 Then /^"([^"]*)" is ([\w ]+)?added to the lift schedule$/ do |lift, invertCheck|
-  if (invertCheck != nil)
+  liftShouldBeAdded = invertCheck == nil
+  @main_navigation.navigate_to(:lift_schedule)
 
-  end
+  lift_selector = @driver.find_element(:id => 'lift-selector')
+  liftIsShown = lift_selector.text.include? lift
+
+  liftIsShown.should == liftShouldBeAdded
 end
 
 Then /^I see an error with message "([^"]*)"$/ do |message|
   @wait.until { @driver.find_elements(:class => 'x-msgbox-body') != [] }
   @driver.find_element(:class => 'x-msgbox-body').text.should == message
   @driver.find_element(:class => 'x-msgbox').find_element(:class => 'x-button').click
+  sleep 0.25
 end
 
 Then /^I close the add lift screen$/ do
   @driver.find_element(:id => 'add-lift-cancel-button').click
   sleep 0.25
   @driver.find_element(:id => 'edit-lifts-done-button').click
+  sleep 0.25
 end
 
