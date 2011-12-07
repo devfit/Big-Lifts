@@ -6,7 +6,7 @@ Feature: adding lifts
   Scenario Outline: calculate max with different values
     When I open the 1-rep calculator
     And I set weight to <weight> and reps to <reps>
-    Then Then The calculated max should be <estimate>
+    Then The calculated max should be <estimate>
 
   Scenarios: one-rep calculations
     | weight | reps | estimate |
@@ -16,8 +16,11 @@ Feature: adding lifts
     | 300    | 1    | 310      |
     | 300    | 4    | 340      |
 
-#  Scenario: add a new lift with an invalid name
-#    When I add a new lift named "222" with max 300
-#    Then I see an error with message "Invalid lift name"
-#    And I close the add lift screen
-#    And "222" is not added to the edit lifts screen
+  Scenario: Use estimated max for actual max
+    When I open the 1-rep calculator
+    And I set weight to 200 and reps to 10
+    And I select use for squat
+    Then I am taken to the maxes page
+    And The max for squat is set to 266
+
+

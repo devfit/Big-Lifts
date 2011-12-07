@@ -14,7 +14,7 @@ When /^I set weight to (\d+) and reps to (\d+)$/ do |weight, reps|
   reps_input.send_keys :enter
 end
 
-Then /^Then The calculated max should be (\d+)$/ do |estimate|
+Then /^The calculated max should be (\d+)$/ do |estimate|
   actualEstimatedMax = @driver.find_element(:name => 'calculatedMax').attribute('value')
   actualEstimatedMax.should == estimate
 end
