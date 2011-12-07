@@ -108,6 +108,6 @@ task copyBuildFilesToTestDirectory(type: Copy, dependsOn: [website]) {
 }
 
 task test(type: Exec, dependsOn: [copyBuildFilesToTestDirectory]) {
-    commandLine = ['rake', 'spec']
-    workingDir = new File('./selenium-test')
+    commandLine = ['cucumber']
+    workingDir = new File('./test')
 }
