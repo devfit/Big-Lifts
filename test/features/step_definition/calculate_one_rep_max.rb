@@ -36,7 +36,9 @@ Then /^I select use for (\w+)$/ do |lift|
   liftHolder = liftSpan.find_element(:xpath => './../..')
   liftHolder.click
   sleep 1
-  liftHolder.click
+  if( liftHolder.displayed? )
+    liftHolder.click
+  end
   sleep 1
 
   @driver.find_element(:id => 'use-max-button').click
