@@ -1,13 +1,9 @@
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-}
+SCRIPT_MATCHING_PATTERN = /\s+<script.*?src\s*=\s*['"](.*?)['"]><\/script>.*/
 
 task copyHtmlFilesToBuild(type: Copy) {
     from '.'
     into 'build'
-    include '*.html'
+    include 'index.html'
     include 'js/**/*.png'
 }
 
@@ -40,13 +36,47 @@ def compress(String type, String baseDirectory) {
     }
 }
 
-task compressJs {
+task compressJs(dependsOn: [copyHtmlFilesToBuild]) {
     inputs.dir new File('js')
-    outputs.dir new File('build/js')
+    inputs.file new File('index.html')
+    outputs.file new File('build/app.min.js')
 
     doLast {
-        compress('js', 'js')
+        String originalIndex = new File('index.html').text
+        List<File> scripts = originalIndex.findAll(SCRIPT_MATCHING_PATTERN) {m, script -> new File(script)}
+        String newHtml = removeScriptsFromHtml(originalIndex)
+
+        File jsOutputDir = new File('build', 'js')
+        jsOutputDir.mkdirs()
+
+        File combinedJsFile = new File(jsOutputDir, 'app.js')
+        scripts.each { File script ->
+            combinedJsFile << script.text
+        }
+
+        minify("build/js/app.js", "build/js/app.min.js")
+        combinedJsFile.delete()
+        newHtml = addCombinedIncludeToHtml(newHtml, 'js/app.min.js')
+        new File('build', 'index.html').withWriter { writer ->
+            writer.write(newHtml)
+        }
     }
+}
+
+def minify(String input, String output) {
+    ant.java(jar: "lib/yuicompressor-2.4.7.jar", fork: true) {
+        arg(value: input)
+        arg(value: "-o")
+        arg(value: output)
+    }
+}
+
+def removeScriptsFromHtml(String html) {
+    html.replaceAll(SCRIPT_MATCHING_PATTERN, '')
+}
+
+def addCombinedIncludeToHtml(String html, String combinedJsFilename) {
+    html.replace('</head>', "<script type='text/javascript' src='${combinedJsFilename}'></script></head>")
 }
 
 task compressCss {
@@ -81,7 +111,7 @@ task website(dependsOn: [copyHtmlFilesToBuild, copyAppIcon, compressJs, copyCss]
 task appmobi(dependsOn: [copyHtmlFilesToBuild, compressJs, copyCss]) << {
     File indexFile = new File('build/index.html')
 
-    def appMobiInclude = '''<script type="text/javascript"  src="http://localhost:58888/_appMobi/appmobi.js"></script>'''
+    def appMobiInclude = '''<script type="text/javascript" src="http://localhost:58888/_appMobi/appmobi.js"></script>'''
     def appMobiLoader = '''
 <script type="text/javascript">
 function onDeviceReady() {
@@ -90,8 +120,6 @@ function onDeviceReady() {
     AppMobi.device.hideSplashScreen();
     wendlerApp.launch();
 }
-</script>
-<script type="text/javascript">
     document.addEventListener("appMobi.device.ready", onDeviceReady, false);
 </script>'''
 
@@ -100,11 +128,6 @@ function onDeviceReady() {
     indexFile.withWriter { writer ->
         writer.write(indexText)
     }
-}
-
-task copyBuildFilesToTestDirectory(type: Copy, dependsOn: [website]) {
-    from 'build'
-    into 'selenium-test/public'
 }
 
 task test(type: Exec, dependsOn: []) {
