@@ -32,7 +32,7 @@ def compress(String type, String baseDirectory) {
         println "Minifying ${element.relativePath}"
         def outputFileLocation = "build/$baseDirectory/${element.relativePath}"
         new File(outputFileLocation).parentFile.mkdirs()
-        ant.java(jar: "lib/yuicompressor-2.4.6.jar", fork: true) {
+        ant.java(jar: "lib/yuicompressor-2.4.7.jar", fork: true) {
             arg(value: "$baseDirectory/${element.relativePath}")
             arg(value: "-o")
             arg(value: outputFileLocation)
