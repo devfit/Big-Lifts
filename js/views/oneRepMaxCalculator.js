@@ -104,7 +104,7 @@ wendler.views.OneRepMaxCalculator = Ext.extend(Ext.Panel, {
                         },
                         {
                             xtype: 'button',
-                            name: 'use-button',
+                            id: 'use-max-button',
                             text: 'Use Max',
                             handler: wendler.oneRepMax.controller.useEstimateForLift
                         }

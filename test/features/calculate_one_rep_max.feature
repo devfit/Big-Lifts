@@ -19,8 +19,8 @@ Feature: adding lifts
   Scenario: Use estimated max for actual max
     When I open the 1-rep calculator
     And I set weight to 200 and reps to 10
-    And I select use for squat
+    And I select use for Squat
     Then I am taken to the maxes page
-    And The max for squat is set to 266
+    And The max for Squat is set to 266
 
 
