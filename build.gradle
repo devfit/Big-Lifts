@@ -28,18 +28,14 @@ def compress(String type, String baseDirectory) {
         println "Minifying ${element.relativePath}"
         def outputFileLocation = "build/$baseDirectory/${element.relativePath}"
         new File(outputFileLocation).parentFile.mkdirs()
-        ant.java(jar: "lib/yuicompressor-2.4.7.jar", fork: true) {
-            arg(value: "$baseDirectory/${element.relativePath}")
-            arg(value: "-o")
-            arg(value: outputFileLocation)
-        }
+        minify("$baseDirectory/${element.relativePath}", outputFileLocation)
     }
 }
 
 task compressJs(dependsOn: [copyHtmlFilesToBuild]) {
     inputs.dir new File('js')
     inputs.file new File('index.html')
-    outputs.file new File('build/app.min.js')
+    outputs.file new File('build/js/app.min.js')
 
     doLast {
         String originalIndex = new File('index.html').text
@@ -130,7 +126,13 @@ function onDeviceReady() {
     }
 }
 
-task test(type: Exec, dependsOn: []) {
-    commandLine = ['cucumber']
+task test(type: Exec) {
+    commandLine = ['cucumber', 'TEST_FILE=./index.html']
     workingDir = new File('./test')
 }
+
+task testBuild(type: Exec, dependsOn: [appmobi]) {
+    commandLine = ['cucumber', 'TEST_FILE=./build/index.html']
+    workingDir = new File('./test')
+}
+

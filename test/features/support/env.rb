@@ -7,8 +7,9 @@ require 'wendler531'
 driver = Selenium::WebDriver.for :chrome
 
 Before do
+  testFile = ENV['TEST_FILE'] || 'index.html'
   @driver = driver
-  @driver.navigate.to "file://" + File.absolute_path('../index.html')
+  @driver.navigate.to "file://" + File.absolute_path("../#{testFile}")
   @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
   @wait.until { @driver.find_element(:id => "main-tab-panel" ) }
 
