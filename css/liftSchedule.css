@@ -13,11 +13,17 @@
     padding:  0.3em;
 }
 
-#lift-template .x-tabbar, #edit-percentages-lift-schedule .x-tabbar{
+#lift-selector .x-tabbar, #edit-percentages-lift-schedule .x-tabbar{
     padding-left: 0;
 }
 
-#lift-template .x-tab, #edit-percentages-lift-schedule .x-tab{
+#lift-selector .x-tab, #edit-percentages-lift-schedule .x-tab{
     padding-right: 8px;
     padding-left: 8px;
+}
+
+.x-list-item.done .x-list-disclosure {
+    -webkit-mask: 0 0 url('../images/tick.png');
+    background-color: green;
+    background-image: none !important;
 }
