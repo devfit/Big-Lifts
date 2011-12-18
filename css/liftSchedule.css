@@ -24,6 +24,9 @@
 
 .x-list-item.done .x-list-disclosure {
     -webkit-mask: 0 0 url('../images/tick.png');
-    background-color: green;
-    background-image: none !important;
+    background: green none;
+}
+
+img.done, .x-button img.x-icon-mask.done {
+    -webkit-mask-image:url('../images/tick.png');
 }
