@@ -57,7 +57,7 @@ wendler.liftSchedule.controller.setupWeekMarkLiftsButton = function () {
     var allLiftsCompleted = uniqueValues.length === 1 && uniqueValues[0] === true;
     wendler.stores.lifts.LiftCompletion.clearFilter();
 
-    wendler.liftSchedule.controller.showCorrectWeekMarkButton(allLiftsCompleted);
+    wendler.liftSchedule.controller.showCorrectWeekCompleteButton(allLiftsCompleted);
 };
 
 wendler.liftSchedule.controller.setupListDoneIcons = function () {
@@ -82,7 +82,20 @@ wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex
     return wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week).get('completed');
 };
 
-wendler.liftSchedule.controller.showCorrectWeekMarkButton = function (completed) {
+wendler.liftSchedule.controller.showCorrectLiftCompleteButton = function (completed) {
+    var unmarkButton = Ext.getCmp('unmark-lift-completed-button');
+    var markButton = Ext.getCmp('mark-lift-completed-button');
+    if (completed) {
+        unmarkButton.show();
+        markButton.hide();
+    }
+    else {
+        markButton.show();
+        unmarkButton.hide();
+    }
+};
+
+wendler.liftSchedule.controller.showCorrectWeekCompleteButton = function (completed) {
     var unmarkButton = Ext.getCmp('unmark-week-completed-button');
     var markButton = Ext.getCmp('mark-week-completed-button');
     if (completed) {
@@ -98,7 +111,7 @@ wendler.liftSchedule.controller.showCorrectWeekMarkButton = function (completed)
 wendler.liftSchedule.controller.setupLiftCompleteToggle = function () {
     var completed = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty,
         wendler.liftSchedule.currentWeek).get('completed');
-    wendler.liftSchedule.controller.showCorrectWeekMarkButton(completed);
+    wendler.liftSchedule.controller.showCorrectLiftCompleteButton(completed);
 };
 
 wendler.liftSchedule.controller.markLiftHandler = function (completed) {
@@ -106,18 +119,9 @@ wendler.liftSchedule.controller.markLiftHandler = function (completed) {
     liftCompletion.set('completed', completed);
     liftCompletion.save();
 
-    var unmarkButton = Ext.getCmp('unmark-lift-completed-button');
-    var markButton = Ext.getCmp('mark-lift-completed-button');
-
-    if (completed) {
-        unmarkButton.show();
-        markButton.hide();
-    }
-    else {
-        unmarkButton.hide();
-        markButton.show();
-    }
+    wendler.liftSchedule.controller.showCorrectLiftCompleteButton(completed);
     wendler.liftSchedule.controller.setupListDoneIcons();
+    wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
 };
 
 wendler.liftSchedule.controller.markLiftCompleted = function () {
@@ -167,10 +171,11 @@ wendler.liftSchedule.controller.returnToLiftSelect = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
 };
 
-wendler.liftSchedule.controller.updateLiftSelectTitle = function (container, newCard, oldCard, index) {
+wendler.liftSchedule.controller.handleWeekChange = function (container, newCard, oldCard, index) {
     var week = index + 1;
     Ext.getCmp('lift-selector-toolbar').setTitle('Week ' + week);
     wendler.liftSchedule.currentWeek = week;
+    wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
 };
 
 wendler.liftSchedule.liftTemplate = {
@@ -227,7 +232,7 @@ wendler.liftSchedule.liftSelector = {
     id:'lift-selector',
     cardSwitchAnimation:appConfig.cardSwitchAnimation,
     listeners:{
-        beforecardswitch:wendler.liftSchedule.controller.updateLiftSelectTitle
+        beforecardswitch:wendler.liftSchedule.controller.handleWeekChange
     },
     dockedItems:[
         {
