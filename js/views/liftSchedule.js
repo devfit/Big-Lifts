@@ -154,7 +154,6 @@ wendler.liftSchedule.controller.markWeekHandler = function (completed) {
         markButton.show();
     }
 
-
     wendler.stores.lifts.LiftCompletion.clearFilter();
     wendler.liftSchedule.controller.setupListDoneIcons();
 };
