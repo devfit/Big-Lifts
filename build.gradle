@@ -1,4 +1,10 @@
-task copyHtmlFilesToBuild(type: Copy) {
+task copyImages(type: Copy) {
+    from 'images'
+    into 'build/images'
+    include '*.*'
+}
+
+task copyHtmlFilesToBuild(type: Copy, dependsOn: [copyImages]) {
     from '.'
     into 'build'
     include '*.html'
