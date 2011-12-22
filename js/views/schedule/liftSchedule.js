@@ -120,8 +120,7 @@ wendler.liftSchedule.controller.markLiftHandler = function (completed) {
     liftCompletion.save();
 
     wendler.liftSchedule.controller.showCorrectLiftCompleteButton(completed);
-    wendler.liftSchedule.controller.setupListDoneIcons();
-    wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
+    wendler.liftSchedule.controller.liftCompletionChange();
 };
 
 wendler.liftSchedule.controller.markLiftCompleted = function () {
@@ -155,7 +154,7 @@ wendler.liftSchedule.controller.markWeekHandler = function (completed) {
     }
 
     wendler.stores.lifts.LiftCompletion.clearFilter();
-    wendler.liftSchedule.controller.setupListDoneIcons();
+    wendler.liftSchedule.controller.liftCompletionChange();
 };
 
 wendler.liftSchedule.controller.markWeekCompleted = function () {
@@ -175,6 +174,20 @@ wendler.liftSchedule.controller.handleWeekChange = function (container, newCard,
     Ext.getCmp('lift-selector-toolbar').setTitle('Week ' + week);
     wendler.liftSchedule.currentWeek = week;
     wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
+};
+
+wendler.liftSchedule.controller.liftCompletionChange = function () {
+    wendler.liftSchedule.controller.setupListDoneIcons();
+    wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
+
+    if (wendler.liftSchedule.controller.allLiftsAreCompleted()) {
+        wendler.liftSchedule.controller.showLiftsCompletedScreen();
+    }
+};
+
+wendler.liftSchedule.controller.allLiftsAreCompleted = function () {
+    var completedUniques = wendler.stores.lifts.LiftCompletion.collect('completed');
+    return completedUniques.length === 1 && completedUniques[0] === true;
 };
 
 wendler.liftSchedule.liftTemplate = {
@@ -304,7 +317,6 @@ wendler.liftSchedule.liftSelector = {
     ]
 };
 
-
 wendler.views.LiftSchedule = Ext.extend(Ext.Panel, {
     id:'lift-schedule',
     title:'5/3/1',
@@ -315,5 +327,5 @@ wendler.views.LiftSchedule = Ext.extend(Ext.Panel, {
         afterlayout:wendler.liftSchedule.controller.setupLiftSelector,
         beforeshow:wendler.liftSchedule.controller.updateLiftValues
     },
-    items:[wendler.liftSchedule.liftSelector, wendler.liftSchedule.liftTemplate]
+    items:[wendler.liftSchedule.liftSelector, wendler.liftSchedule.liftTemplate, wendler.liftSchedule.cards.LiftsCompletedScreen]
 });
