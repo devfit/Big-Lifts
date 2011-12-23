@@ -4,11 +4,9 @@ require 'ruby-debug'
 $LOAD_PATH << File.expand_path('../../../lib', __FILE__)
 require 'wendler531'
 
-driver = Selenium::WebDriver.for :chrome
-
 Before do
   testFile = ENV['TEST_FILE'] || 'index.html'
-  @driver = driver
+  @driver = Selenium::WebDriver.for :chrome
   @driver.navigate.to "file://" + File.absolute_path("../#{testFile}")
   @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
   @wait.until { @driver.find_element(:id => "main-tab-panel" ) }
@@ -16,6 +14,6 @@ Before do
   @main_navigation = MainNavigation.new(@driver)
 end
 
-at_exit do
-  driver.quit
+After do
+  @driver.quit
 end
