@@ -25,11 +25,6 @@ wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
         {type:'slide', direction:'up'});
 };
 
-wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('increase-maxes-help'),
-        {type:'slide', direction:'up'});
-};
-
 wendler.views.liftSchedule.LiftsCompletedScreen = {
     id:'lifts-completed',
     xtype:'formpanel',
