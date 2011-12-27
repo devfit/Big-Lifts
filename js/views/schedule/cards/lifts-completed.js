@@ -21,8 +21,22 @@ wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
         wendler.liftSchedule.controller.unmarkAllLifts();
     }
 
+    if (Ext.getCmp('increase-maxes-toggle').getValue() === 1) {
+        wendler.liftSchedule.controller.increaseMaxesByCycleIncrease();
+    }
+
     Ext.getCmp('lift-schedule').setActiveItem(wendler.liftSchedule.lastActiveTab,
         {type:'slide', direction:'up'});
+};
+
+wendler.liftSchedule.controller.increaseMaxesByCycleIncrease = function () {
+    wendler.stores.lifts.Lifts.each(function (r) {
+        var max = r.data.max;
+        var cycleIncrease = r.data.cycleIncrease;
+        r.set('max', max + cycleIncrease);
+    });
+
+    wendler.stores.lifts.Lifts.sync();
 };
 
 wendler.views.liftSchedule.LiftsCompletedScreen = {
@@ -50,6 +64,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     value:1
                 },
                 {
+                    id:'increase-maxes-toggle',
                     xtype:'togglefield',
                     label:'Increase maxes <img id="increase-maxes-help-image" style="float:right" src="images/question.png"/>',
                     value:1
