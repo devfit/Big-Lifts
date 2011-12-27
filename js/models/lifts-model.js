@@ -147,9 +147,7 @@ wendler.stores.lifts.LiftCompletion = new Ext.data.Store({
     model:'LiftCompletion',
     listeners:{
         load:function () {
-            if (this.getCount() == 0) {
-                wendler.stores.migrations.liftCompletionMigration();
-            }
+            wendler.stores.migrations.liftCompletionMigration();
         }
     },
     autoLoad:true,
@@ -165,12 +163,18 @@ wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropert
 wendler.stores.migrations.liftCompletionMigration = function () {
     for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
         var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
-        for (var week = 1; week <= 4; week++) {
-            wendler.stores.lifts.LiftCompletion.add(
-                {liftPropertyName:liftPropertyName, week:week, completed:false});
+
+        var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+            return r.get('liftPropertyName') === liftPropertyName;
+        });
+
+        if (existingLiftCompletion === -1) {
+            for (var week = 1; week <= 4; week++) {
+                wendler.stores.lifts.LiftCompletion.add(
+                    {liftPropertyName:liftPropertyName, week:week, completed:false});
+            }
         }
     }
-
     wendler.stores.lifts.LiftCompletion.sync();
 };
 

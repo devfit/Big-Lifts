@@ -33,10 +33,14 @@ wendler.maxes.controller.editLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-list'));
 };
 
-wendler.stores.lifts.Lifts.addListener('update', function (store, record) {
+wendler.stores.lifts.Lifts.addListener('update', function (store, record,op) {
     var propertyName = record.data.propertyName;
     var max = record.data.max;
-    Ext.getCmp('maxes-' + propertyName).setValue(max);
+
+    var existingInput = Ext.getCmp('maxes-' + propertyName);
+    if( typeof(existingInput) !== "undefined" ){
+        existingInput.setValue(max);
+    }
 });
 
 wendler.maxes.cards.maxesForm = {
