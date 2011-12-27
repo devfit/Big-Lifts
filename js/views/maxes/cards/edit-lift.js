@@ -44,13 +44,21 @@ wendler.maxes.cards.editLiftPanel = {
                 {
                     xtype:'fieldset',
                     margin:'0 0 10 0',
+                    defaults: {
+                      labelWidth: '40%'
+                    },
                     items:[
                         {
                             xtype:'textfield',
                             name:'edit-lift-new-name',
                             id:'edit-lift-new-name',
-                            label:'Name',
-                            labelWidth:'35%'
+                            label:'Name'
+                        },
+                        {
+                            xtype:'textfield',
+                            name:'edit-lift-cycle-increase',
+                            id:'edit-lift-cycle-increase',
+                            label:'Increase at end of cycle'
                         }
                     ]
                 },
@@ -85,9 +93,11 @@ wendler.maxes.cards.editLiftPanel = {
             ]
         }
     ],
-    _setup:function (liftName, propertyName) {
+    _setup:function (propertyName) {
+        var lift = wendler.stores.lifts.Lifts.getAt(wendler.stores.lifts.Lifts.find('propertyName', propertyName));
         wendler.maxes.currentEditingLiftProperty = propertyName;
-        Ext.getCmp('maxes-edit-lift-toolbar').setTitle(liftName);
-        Ext.getCmp('edit-lift-new-name').setValue(liftName);
+        Ext.getCmp('maxes-edit-lift-toolbar').setTitle(lift.data.name);
+        Ext.getCmp('edit-lift-new-name').setValue(lift.data.name);
+        Ext.getCmp('edit-lift-cycle-increase').setValue(lift.data.cycleIncrease);
     }
 };
