@@ -8,8 +8,9 @@ wendler.liftSchedule.currentWeek = 1;
 wendler.liftSchedule.controller.updateLiftValues = function () {
     var showWarmupSets = wendler.stores.Settings.first().data['show-warmup-sets'];
 
-    if (wendler.liftSchedule.currentLiftProperty) {
-        wendler.liftSchedule.currentShowingMax = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).data.max;
+    var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
+    if (liftRecord !== null) {
+        wendler.liftSchedule.currentShowingMax = liftRecord.data.max;
         wendler.stores.lifts.LiftProgression.clearFilter();
         wendler.stores.lifts.LiftProgression.filter("week", wendler.liftSchedule.currentWeek);
 
@@ -17,6 +18,11 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
             wendler.stores.lifts.LiftProgression.filterBy(function (record) {
                 return record.data.set > 3 && record.data.week == wendler.liftSchedule.currentWeek;
             });
+        }
+    }
+    else {
+        if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
+            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
         }
     }
 };

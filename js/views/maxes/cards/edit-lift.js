@@ -25,9 +25,15 @@ wendler.maxes.controller.deleteLiftButtonPressed = function () {
     Ext.Msg.confirm("Confirm", "Delete Lift?", function (text) {
         if (text === "yes") {
             var liftModel = wendler.maxes.controller.getCurrentLiftModel();
+            var propertyName = liftModel.data.propertyName;
+
             wendler.stores.lifts.Lifts.remove(liftModel);
             wendler.stores.lifts.Lifts.sync();
             wendler.maxes.controller.rebuildMaxesList();
+
+            if (wendler.liftSchedule.currentLiftProperty === propertyName) {
+                wendler.liftSchedule.currentLiftProperty = null;
+            }
 
             wendler.maxes.controller.returnToEditLiftList();
         }
@@ -44,8 +50,8 @@ wendler.maxes.cards.editLiftPanel = {
                 {
                     xtype:'fieldset',
                     margin:'0 0 10 0',
-                    defaults: {
-                      labelWidth: '40%'
+                    defaults:{
+                        labelWidth:'40%'
                     },
                     items:[
                         {
@@ -94,7 +100,7 @@ wendler.maxes.cards.editLiftPanel = {
         }
     ],
     _setup:function (propertyName) {
-        var lift = wendler.stores.lifts.Lifts.getAt(wendler.stores.lifts.Lifts.find('propertyName', propertyName));
+        var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
         wendler.maxes.currentEditingLiftProperty = propertyName;
         Ext.getCmp('maxes-edit-lift-toolbar').setTitle(lift.data.name);
         Ext.getCmp('edit-lift-new-name').setValue(lift.data.name);
