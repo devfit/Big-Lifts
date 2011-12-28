@@ -11,6 +11,7 @@ Before do
   @wait.until { @driver.find_element(:id => "main-tab-panel" ) }
 
   @main_navigation = MainNavigation.new(@driver)
+  @lift_schedule_navigator = LiftScheduleNavigator.new(@driver, @wait)
 end
 
 After do

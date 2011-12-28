@@ -28,3 +28,17 @@ class MainNavigation
     end
   end
 end
+
+class LiftScheduleNavigator
+    def initialize(driver, wait)
+        @driver = driver
+        @wait = wait
+    end
+
+    def selectWeek( week )
+       liftSelector = @driver.find_element(:id => 'lift-selector')
+       @wait.until { liftSelector.displayed? }
+       liftSelector.find_elements(:tag_name => 'div', :class => 'x-tab').select { |i| i.text == "#{week}"}[0].click
+       sleep 1
+    end
+end

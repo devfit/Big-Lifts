@@ -70,6 +70,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     value:1
                 },
                 {
+                    id: 'lifts-complete-done-button',
                     xtype:'button',
                     text:'Done',
                     handler:wendler.liftSchedule.controller.closeLiftCompletedScreen
