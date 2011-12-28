@@ -43,6 +43,7 @@ wendler.maxes.controller.editLiftDoneButtonPressed = function () {
 
     if (messages.length === 0) {
         currentModel.save();
+        wendler.maxes.controller.rebuildMaxesList();
         wendler.maxes.controller.returnToEditLiftList();
     }
     else {

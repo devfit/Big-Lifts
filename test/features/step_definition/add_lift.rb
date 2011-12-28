@@ -19,20 +19,19 @@ When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
   maxInput.send_keys max
 
   @driver.find_element(:id => 'add-lift-done-button').click
+  sleep @ANIMATION_DELAY
 end
 
-Then /^When I close the edit lifts screen$/ do
+Then /^I close the edit lifts screen$/ do
   edit_lifts_done_button = @driver.find_element(:id => 'edit-lifts-done-button')
-  @wait.until { edit_lifts_done_button.displayed? }
-  sleep 0.5
   edit_lifts_done_button.click
 end
 
 Then /^"([^"]*)" is ([\w ]+)?added to the edit lifts screen$/ do |lift, invertCheck|
   liftShouldBeAdded = invertCheck == nil
+
   @main_navigation.navigate_to(:lift_editor)
-  editLiftsButton = @driver.find_element(:id => 'edit-lifts-button')
-  @wait.until { editLiftsButton.displayed? }
+  sleep @ANIMATION_DELAY
 
   liftList = @driver.find_element(:id => 'maxes-form-items')
   liftIsShown = liftList.text.include? lift
@@ -59,8 +58,23 @@ end
 
 Then /^I close the add lift screen$/ do
   @driver.find_element(:id => 'add-lift-cancel-button').click
-  sleep 0.25
-  @driver.find_element(:id => 'edit-lifts-done-button').click
-  sleep 0.25
+  sleep @ANIMATION_DELAY
 end
+
+When /^I click edit "([^"]*)"$/ do |lift|
+     editLiftsList = @driver.find_element(:id => 'maxes-edit-lifts-list')
+     editLiftsList.find_elements(:class => 'x-list-item').select{|l| puts l.text; l.text == lift}[0].click()
+end
+
+When /^I close the edit lift screen$/ do
+    @driver.find_element(:id => 'edit-lift-done-button').click
+    sleep @ANIMATION_DELAY
+end
+
+When /^I edit the name to be "([^"]*)"$/ do |newLiftName|
+   editLiftInput = @driver.find_element(:name => 'edit-lift-new-name')
+   editLiftInput.clear
+   editLiftInput.send_keys( newLiftName )
+end
+
 

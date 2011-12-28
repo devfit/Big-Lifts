@@ -12,6 +12,8 @@ Before do
 
   @main_navigation = MainNavigation.new(@driver)
   @lift_schedule_navigator = LiftScheduleNavigator.new(@driver, @wait)
+
+  @ANIMATION_DELAY = 0.75
 end
 
 After do
