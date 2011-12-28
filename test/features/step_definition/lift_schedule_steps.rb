@@ -13,12 +13,12 @@ When /^I view the (\w+) lift schedule for week (\d+)$/ do |liftProperty, week|
 
   liftSelector = @driver.find_element(:id => 'lift-selector')
   @wait.until { liftSelector.displayed? }
+  liftSelector.find_elements(:tag_name => 'div', :class => 'x-tab').select { |i| i.text == "#{week}"}[0].click
+  sleep 1
 
   liftSelector.find_elements(:class => 'x-list-item').select { |i| i.text.downcase == liftProperty }[0].click
   @liftTemplate = @driver.find_element(:id => 'lift-template')
   @wait.until { @liftTemplate.displayed? }
-
-  @liftTemplate.find_elements(:class => 'x-button-label').select { |i| i.tag_name == 'span' && i.text == "Week #{week}"}[0].click
   sleep 1
 end
 

@@ -14,14 +14,16 @@ Ext.regModel('Lift', {
         {name:'id', type:'integer'},
         {name:'name', type:'string'},
         {name:'propertyName', type:'string'},
-        {name:'max', type:'integer'}
+        {name:'max', type:'integer'},
+        {name:'cycleIncrease', type:'integer'}
     ],
     validations:[
         {field:'propertyName', type:'custom', message:'nonunique',
             fn:wendler.models.Lift.uniquePropertyNameValidation},
         {field:'propertyName', type:'presence'},
         {field:'max', type:'format', matcher:/^\d\d*$/, message:'Must enter a max'},
-        {field:'max', type:'presence'}
+        {field:'max', type:'presence'},
+        {field:'cycleIncrease', type:'presence'}
     ],
     proxy:{
         type:'localstorage',
@@ -31,10 +33,10 @@ Ext.regModel('Lift', {
 
 
 wendler.defaults.lifts = [
-    Ext.ModelMgr.create({name:'Squat', max:200, propertyName:'squat'}, 'Lift'),
-    Ext.ModelMgr.create({name:'Deadlift', max:300, propertyName:'deadlift'}, 'Lift'),
-    Ext.ModelMgr.create({name:'Press', max:150, propertyName:'press'}, 'Lift'),
-    Ext.ModelMgr.create({name:'Bench', max:175, propertyName:'bench'}, 'Lift')
+    Ext.ModelMgr.create({name:'Squat', max:200, propertyName:'squat', cycleIncrease:10}, 'Lift'),
+    Ext.ModelMgr.create({name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10}, 'Lift'),
+    Ext.ModelMgr.create({name:'Press', max:150, propertyName:'press', cycleIncrease:5}, 'Lift'),
+    Ext.ModelMgr.create({name:'Bench', max:175, propertyName:'bench', cycleIncrease:5}, 'Lift')
 ];
 
 wendler.stores.migrations.liftModelMigration = function () {
@@ -42,6 +44,15 @@ wendler.stores.migrations.liftModelMigration = function () {
         if (!r.data.propertyName) {
             var propertyName = wendler.models.Lift.sanitizePropertyName(r.data.name);
             r.set('propertyName', propertyName);
+            r.save();
+        }
+
+        if (r.data.cycleIncrease === 0) {
+            var defaultModel = _.find(wendler.defaults.lifts, function (d) {
+                return d.data.propertyName === r.data.propertyName
+            });
+            var cycleIncrease = defaultModel.data.cycleIncrease;
+            r.set('cycleIncrease', cycleIncrease);
             r.save();
         }
     });
@@ -136,15 +147,13 @@ wendler.stores.lifts.LiftCompletion = new Ext.data.Store({
     model:'LiftCompletion',
     listeners:{
         load:function () {
-            if (this.getCount() == 0) {
-                wendler.stores.migrations.liftCompletionMigration();
-            }
+            wendler.stores.migrations.liftCompletionMigration();
         }
     },
     autoLoad:true,
     autoSave:true
 });
-wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function(liftPropertyName, week){
+wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropertyName, week) {
     var completionIndex = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
         return r.get('liftPropertyName') === liftPropertyName && r.get('week') === week;
     });
@@ -154,12 +163,18 @@ wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function(liftProperty
 wendler.stores.migrations.liftCompletionMigration = function () {
     for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
         var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
-        for (var week = 1; week <= 4; week++) {
-            wendler.stores.lifts.LiftCompletion.add(
-                {liftPropertyName:liftPropertyName, week:week, completed:false});
+
+        var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+            return r.get('liftPropertyName') === liftPropertyName;
+        });
+
+        if (existingLiftCompletion === -1) {
+            for (var week = 1; week <= 4; week++) {
+                wendler.stores.lifts.LiftCompletion.add(
+                    {liftPropertyName:liftPropertyName, week:week, completed:false});
+            }
         }
     }
-
     wendler.stores.lifts.LiftCompletion.sync();
 };
 

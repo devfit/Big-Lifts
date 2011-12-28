@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.liftSchedule.controller', 'wendler.liftSchedule.cards');
+Ext.ns('wendler.liftSchedule.controller', 'wendler.views.liftSchedule');
 wendler.liftSchedule.lastActiveTab = null;
 wendler.liftSchedule.controller.showLiftsCompletedScreen = function () {
     wendler.liftSchedule.lastActiveTab = Ext.getCmp('lift-schedule').getActiveItem();
@@ -21,18 +21,41 @@ wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
         wendler.liftSchedule.controller.unmarkAllLifts();
     }
 
+    if (Ext.getCmp('increase-maxes-toggle').getValue() === 1) {
+        wendler.liftSchedule.controller.increaseMaxesByCycleIncrease();
+    }
+
     Ext.getCmp('lift-schedule').setActiveItem(wendler.liftSchedule.lastActiveTab,
         {type:'slide', direction:'up'});
 };
 
-wendler.liftSchedule.cards.LiftsCompletedScreen = {
+wendler.liftSchedule.controller.increaseMaxesByCycleIncrease = function () {
+    wendler.stores.lifts.Lifts.each(function (r) {
+        var max = r.data.max;
+        var cycleIncrease = r.data.cycleIncrease;
+        r.set('max', max + cycleIncrease);
+    });
+
+    wendler.stores.lifts.Lifts.sync();
+};
+
+wendler.views.liftSchedule.LiftsCompletedScreen = {
     id:'lifts-completed',
     xtype:'formpanel',
+    listeners:{
+        afterlayout:function () {
+            Ext.get('increase-maxes-help-image').addListener('click',
+                wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen);
+        }
+    },
     items:[
         {
             xtype:'fieldset',
             title:"You have completed a cycle!",
             style:'margin-top: 0',
+            defaults:{
+                labelWidth:'66%'
+            },
             items:[
                 {
                     id:'uncheck-all-lifts-toggle',
@@ -40,17 +63,18 @@ wendler.liftSchedule.cards.LiftsCompletedScreen = {
                     label:'Uncheck all lifts',
                     value:1
                 },
-//                {
-//                    xtype:'togglefield',
-//                    label: 'Increase maxes <img style="vertical-align:middle" src="images/question.png"/>',
-//                    value: 1
-//                },
+                {
+                    id:'increase-maxes-toggle',
+                    xtype:'togglefield',
+                    label:'Increase maxes <img id="increase-maxes-help-image" style="float:right" src="images/question.png"/>',
+                    value:1
+                },
                 {
                     xtype:'button',
                     text:'Done',
                     handler:wendler.liftSchedule.controller.closeLiftCompletedScreen
                 }
             ]
-        },
+        }
     ]
 };
