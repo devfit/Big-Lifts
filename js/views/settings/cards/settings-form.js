@@ -1,8 +1,23 @@
-"use strict";
+Ext.ns('wendler.settings.controller');
+wendler.settings.controller.resetToDefaults = function() {
+    wendler.stores.Settings.first().set(wendler.defaults.settings);
+    wendler.stores.Settings.sync();
+    Ext.getCmp('settings-form').load(Ext.ModelMgr.create(wendler.defaults.settings, 'Settings'));
+};
+
+wendler.settings.controller.setLiftPercentages = function(){
+    Ext.getCmp('settings').setActiveItem(Ext.getCmp('edit-percentages-lift-schedule'));
+};
+
+wendler.settings.controller.reloadForm = function() {
+    Ext.getCmp('settings-form').load(wendler.stores.Settings.first());
+    Ext.getCmp('settings-form').hasBeenLoaded = true;
+};
+
 new Ext.form.FormPanel({
     title: 'Settings',
     id: 'settings-form',
-    scroll: 'vertical',
+    scroll: util.scrolling.lockedVerticalScroller,
     dockedItems:[
         {
             dock: 'top',
@@ -47,7 +62,7 @@ new Ext.form.FormPanel({
                 {
                     xtype: 'selectfield',
                     name: 'rounding-value',
-                    label: 'Round To (lbs)',
+                    label: 'Round To',
                     options: wendler.settings.options.roundingValues
                 },
                 {
@@ -60,12 +75,17 @@ new Ext.form.FormPanel({
                     xtype: 'togglefield',
                     name: 'use-training-max',
                     label: 'Use 90% training max'
+                },
+                {
+                    xtype: 'panel',
+                    html: '<h1 style="text-align:center;margin-top:-7px">...</h1>'
                 }
             ]
         },
         {
             xtype: 'button',
-            text: 'Set lift percentages'
+            text: 'Set lift percentages',
+            handler: wendler.settings.controller.setLiftPercentages
         },
         {
             xtype: 'spacer',
