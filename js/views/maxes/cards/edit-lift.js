@@ -1,13 +1,53 @@
 Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
 
+wendler.maxes.controller.setAndFindInvalidLiftErrors = function (errors, messages, oldPropertyName, newPropertyName) {
+    var nameErrors = errors.getByField('propertyName');
+    var maxErrors = errors.getByField('max');
+    var cycleIncreaseErrors = errors.getByField('cycleIncrease');
+    if (nameErrors.length > 0) {
+        for (var i in nameErrors) {
+            var nameError = nameErrors[i];
+            if (nameError.message === "must be present") {
+                messages.push("Invalid lift name");
+            }
+            else if (nameError.message === "nonunique" && oldPropertyName !== newPropertyName) {
+                messages.push("Name must be unique");
+            }
+        }
+    }
+    if (maxErrors.length > 0) {
+        messages.push("Max must be > 0");
+    }
+    if (cycleIncreaseErrors.length > 0) {
+        messages.push("Cycle Increase must be > 0");
+    }
+};
+
 wendler.maxes.currentEditingLiftProperty = null;
 wendler.maxes.controller.editLiftDoneButtonPressed = function () {
     var newName = Ext.getCmp('edit-lift-new-name').getValue();
-    var currentModel = wendler.maxes.controller.getCurrentLiftModel();
-    currentModel.set('name', newName);
-    currentModel.save();
+    var newCycleIncrease = Ext.getCmp('edit-lift-cycle-increase').getValue();
+    var newPropertyName = wendler.models.Lift.sanitizePropertyName(newName);
 
-    wendler.maxes.controller.returnToEditLiftList();
+    var currentModel = wendler.maxes.controller.getCurrentLiftModel();
+    var oldPropertyName = currentModel.get('propertyName');
+
+    currentModel.set('name', newName);
+    currentModel.set('propertyName', newPropertyName);
+    currentModel.set('cycleIncrease', newCycleIncrease);
+
+    var errors = currentModel.validate();
+    var messages = [];
+
+    wendler.maxes.controller.setAndFindInvalidLiftErrors(errors, messages, oldPropertyName, newPropertyName);
+
+    if (messages.length === 0) {
+        currentModel.save();
+        wendler.maxes.controller.returnToEditLiftList();
+    }
+    else {
+        Ext.Msg.alert('Error', messages.join('<br/>'));
+    }
 };
 
 wendler.maxes.controller.editLiftCancelButtonPressed = function () {

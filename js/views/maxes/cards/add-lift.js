@@ -1,5 +1,32 @@
 Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
 
+wendler.maxes.controller.handleInvalidLift = function(errors){
+    var nameErrors = errors.getByField('propertyName');
+    var maxErrors = errors.getByField('max');
+    var cycleIncreaseErrors = errors.getByField('cycleIncrease');
+    var messages = [];
+
+    if (nameErrors.length > 0) {
+        for (var i in nameErrors) {
+            var nameError = nameErrors[i];
+            if (nameError.message === "must be present") {
+                messages.push("Invalid lift name");
+            }
+            else if (nameError.message === "nonunique") {
+                messages.push("Name must be unique");
+            }
+        }
+    }
+    if (maxErrors.length > 0) {
+        messages.push("Max must be > 0");
+    }
+    if (cycleIncreaseErrors.length > 0) {
+        messages.push("Cycle Increase must be > 0");
+    }
+
+    Ext.Msg.alert('Error', messages.join('<br/>'));
+};
+
 wendler.maxes.controller.addLiftDoneButtonPressed = function () {
     var liftName = Ext.getCmp('add-lift-new-name').getValue();
     var liftMax = Ext.getCmp('add-lift-new-max').getValue();
@@ -11,30 +38,7 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function () {
     var errors = newLiftModel.validate();
 
     if (!errors.isValid()) {
-        var nameErrors = errors.getByField('propertyName');
-        var maxErrors = errors.getByField('max');
-        var cycleIncreaseErrors = errors.getByField('cycleIncrease');
-        var messages = [];
-
-        if (nameErrors.length > 0) {
-            for (var i in nameErrors) {
-                var nameError = nameErrors[i];
-                if (nameError.message === "must be present") {
-                    messages.push("Invalid lift name");
-                }
-                else if (nameError.message === "nonunique") {
-                    messages.push("Name must be unique");
-                }
-            }
-        }
-        if (maxErrors.length > 0) {
-            messages.push("Max must be > 0");
-        }
-        if (cycleIncreaseErrors.length > 0) {
-            messages.push("Cycle Increase must be > 0");
-        }
-
-        Ext.Msg.alert('Error', messages.join('<br/>'));
+        wendler.maxes.controller.handleInvalidLift(errors);
     }
     else {
         wendler.stores.lifts.Lifts.add(newLiftModel);

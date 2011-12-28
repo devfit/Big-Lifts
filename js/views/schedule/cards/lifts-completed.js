@@ -34,6 +34,7 @@ wendler.liftSchedule.controller.increaseMaxesByCycleIncrease = function () {
         var max = r.data.max;
         var cycleIncrease = r.data.cycleIncrease;
         r.set('max', max + cycleIncrease);
+        r.save();
     });
 
     wendler.stores.lifts.Lifts.sync();
