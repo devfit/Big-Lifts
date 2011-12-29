@@ -17,6 +17,12 @@ task copyAppIcon(type: Copy) {
     include 'icons/**/*.png'
 }
 
+task copyPhonegapConfig(type: Copy){
+    from '.'
+    into 'build'
+    include 'config.xml'
+}
+
 def compress(String type, String baseDirectory) {
     def elementsToMinify = []
     fileTree {
@@ -79,7 +85,7 @@ task clean << {
     mkdir('build')
 }
 
-task build(dependsOn: [copyHtmlFiles, copyAppIcon, compressJs, copyCss]) << {
+task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, compressJs, copyCss]) << {
 }
 
 task test(type: Exec) {
