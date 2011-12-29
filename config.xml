@@ -19,6 +19,9 @@
     <icon src="icons/icon-iphone-72x72.png" width="72" height="72"/>
     <icon src="icons/icon-iphone-114x114.png" width="114" height="114"/>
 
+    <gap:splash src="splashes/splash480x800.png" width="480" height="800"/>
+    <gap:splash src="splashes/splash320x480.png" width="320" height="480"/>
+
     <preference name="permissions" value="none"/>
-    <preference name="target-device" value="universal" />
+    <preference name="target-device" value="universal"/>
 </widget>
