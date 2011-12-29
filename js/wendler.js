@@ -1,15 +1,12 @@
 "use strict";
-var wendlerApp = new Ext.Application({
+new Ext.Application({
     tabletStartupScreen: 'tablet_startup.png',
     phoneStartupScreen: 'phone_startup.png',
     icon: 'apple-touch-icon.png',
     glossOnIcon: false,
 
     viewport:null,
-    launched:false,
     launch: function() {
-        if (!this.launched)
-            return this.launched = true;
         this.viewport = new this.Viewport();
     },
     Viewport: Ext.extend(Ext.TabPanel, {
