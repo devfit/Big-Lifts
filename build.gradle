@@ -81,24 +81,22 @@ task copyCss(type: Copy) {
 defaultTasks 'clean', 'build'
 
 task clean << {
+    String gitBackupDirectory = 'build-backup-git'
+    mkdir(gitBackupDirectory)
     copy {
-        from 'build'
-        into '.'
-        include '.git'
-        rename { String fileName ->
-            fileName + '.build.bak'
-        }
+        from 'build/.git'
+        into gitBackupDirectory
     }
     delete('build')
     mkdir('build')
+    mkdir('build/.git')
+
     copy {
-        from '.'
-        into 'build'
-        include '.git.build.bak'
-        rename { String fileName ->
-            fileName.replace('.build.bak','')
-        }
+        from gitBackupDirectory
+        into 'build/.git'
     }
+
+    delete gitBackupDirectory
 }
 
 task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, compressJs, copyCss]) << {
