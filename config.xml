@@ -23,5 +23,5 @@
     <gap:splash src="splashes/splash320x480.png" width="320" height="480"/>
 
     <preference name="permissions" value="none"/>
-    <preference name="target-device" value="universal"/>
+    <preference name="target-device" value="handset"/>
 </widget>
