@@ -4,7 +4,7 @@ task copyImages(type: Copy) {
     include '*.*'
 }
 
-task copyHtmlFilesToBuild(type: Copy, dependsOn: [copyImages]) {
+task copyHtmlFiles(type: Copy, dependsOn: [copyImages]) {
     from '.'
     into 'build'
     include '*.html'
@@ -12,9 +12,9 @@ task copyHtmlFilesToBuild(type: Copy, dependsOn: [copyImages]) {
 }
 
 task copyAppIcon(type: Copy) {
-    from '.'
+    from 'distribution'
     into 'build'
-    include 'apple-touch-icon.png'
+    include 'icons/**/*.png'
 }
 
 def compress(String type, String baseDirectory) {
@@ -44,7 +44,6 @@ def minify(String input, String output) {
     }
 }
 
-
 task compressJs {
     inputs.dir new File('js')
     outputs.dir new File('build/js')
@@ -73,36 +72,14 @@ task copyCss(type: Copy) {
     include 'js/**/*.css'
 }
 
-defaultTasks 'clean', 'website'
+defaultTasks 'clean', 'build'
 
 task clean << {
     delete('build')
     mkdir('build')
 }
 
-task website(dependsOn: [copyHtmlFilesToBuild, copyAppIcon, compressJs, copyCss]) << {
-}
-
-task appmobi(dependsOn: [copyHtmlFilesToBuild, compressJs, copyCss]) << {
-    File indexFile = new File('build/index.html')
-
-    def appMobiInclude = '''<script type="text/javascript" src="http://localhost:58888/_appMobi/appmobi.js"></script>'''
-    def appMobiLoader = '''
-<script type="text/javascript">
-function onDeviceReady() {
-    AppMobi.device.setRotateOrientation("portrait");
-    AppMobi.webroot=window.location.href.substring(0,window.location.href.lastIndexOf("/"))+"/";
-    AppMobi.device.hideSplashScreen();
-    wendlerApp.launch();
-}
-    document.addEventListener("appMobi.device.ready", onDeviceReady, false);
-</script>'''
-
-    def indexText = indexFile.text.replace("</title>", "</title>$appMobiInclude")
-    indexText = indexText.replace("</head>", "$appMobiLoader</head>")
-    indexFile.withWriter { writer ->
-        writer.write(indexText)
-    }
+task build(dependsOn: [copyHtmlFiles, copyAppIcon, compressJs, copyCss]) << {
 }
 
 task test(type: Exec) {
@@ -110,7 +87,7 @@ task test(type: Exec) {
     workingDir = new File('./test')
 }
 
-task testBuild(type: Exec, dependsOn: [appmobi]) {
+task testBuild(type: Exec, dependsOn: [build]) {
     commandLine = ['cucumber', 'TEST_FILE=./build/index.html']
     workingDir = new File('./test')
 }
