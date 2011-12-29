@@ -23,7 +23,7 @@ task copySplashes(type: Copy) {
     include 'splashes/**/*.png'
 }
 
-task copyPhonegapConfig(type: Copy){
+task copyPhonegapConfig(type: Copy) {
     from '.'
     into 'build'
     include 'config.xml'
@@ -111,6 +111,21 @@ task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplas
 task test(type: Exec) {
     commandLine = ['cucumber', 'TEST_FILE=./index.html']
     workingDir = new File('./test')
+}
+
+task deploy(dependsOn: [build]) << {
+    exec {
+        commandLine = ['git', 'add', '.']
+        workingDir = new File('./build')
+    }
+    exec {
+        commandLine = ['git', 'commit', '-m', '"Building"']
+        workingDir = new File('./build')
+    }
+    exec {
+        commandLine = ['git', 'push', 'build', 'master']
+        workingDir = new File('./build')
+    }
 }
 
 task testBuild(type: Exec, dependsOn: [build]) {
