@@ -17,6 +17,12 @@ task copyAppIcon(type: Copy) {
     include 'icons/**/*.png'
 }
 
+task copySplashes(type: Copy) {
+    from 'distribution'
+    into 'build'
+    include 'splashes/**/*.png'
+}
+
 task copyPhonegapConfig(type: Copy){
     from '.'
     into 'build'
@@ -99,7 +105,7 @@ task clean << {
     delete gitBackupDirectory
 }
 
-task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, compressJs, copyCss]) << {
+task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplashes, compressJs, copyCss]) << {
 }
 
 task test(type: Exec) {
