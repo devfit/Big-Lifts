@@ -81,8 +81,24 @@ task copyCss(type: Copy) {
 defaultTasks 'clean', 'build'
 
 task clean << {
+    copy {
+        from 'build'
+        into '.'
+        include '.git'
+        rename { String fileName ->
+            fileName + '.build.bak'
+        }
+    }
     delete('build')
     mkdir('build')
+    copy {
+        from '.'
+        into 'build'
+        include '.git.build.bak'
+        rename { String fileName ->
+            fileName.replace('.build.bak','')
+        }
+    }
 }
 
 task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, compressJs, copyCss]) << {
