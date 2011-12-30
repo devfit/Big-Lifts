@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('util', 'util.rounding');
+Ext.ns('util.rounding');
 
 util.rounding.roundTo1 = function(unroundedNumber, roundingType) {
     var roundedNumber;
@@ -14,7 +14,7 @@ util.rounding.roundTo1 = function(unroundedNumber, roundingType) {
     }
 
     return roundedNumber;
-}
+};
 
 util.rounding.roundTo5 = function(unroundedNumber, roundingType) {
     var numberMod5 = unroundedNumber % 5;
@@ -32,7 +32,8 @@ util.rounding.roundTo5 = function(unroundedNumber, roundingType) {
     }
 
     return roundedNumber;
-}
+};
+
 util.rounding.roundTo2p5 = function(unroundedNumber, roundingType) {
     var roundedNumber;
 
@@ -73,7 +74,8 @@ util.rounding.roundTo2p5 = function(unroundedNumber, roundingType) {
     }
 
     return roundedNumber;
-}
+};
+
 util.roundNumber = function(unroundedNumber, roundingValue, roundingType) {
     var roundedNumber;
     if (roundingValue === '1') {
