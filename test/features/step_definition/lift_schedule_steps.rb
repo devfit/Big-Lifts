@@ -20,7 +20,7 @@ When /^I view the (\w+) lift schedule for week (\d+)$/ do |liftProperty, week|
   sleep 1
 end
 
-Then /^The lift schedule shows "(.+)","(.+)","(.+)","(.+)","(.+)","(.+)"$/ do |*liftSets|
+Then /^The lift schedule shows "([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)"$/ do |*liftSets|
   actual_lift_sets = @liftTemplate.find_elements(:class => 'lift-row').
       select {|i| i.displayed? }.collect { |i| i.text }
   actual_lift_sets.should == liftSets
