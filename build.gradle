@@ -121,7 +121,7 @@ def getGitStatus() {
 
 def gitHasNoChangesToCommit() {
     String gitStatus = getGitStatus()
-    return gitStatus.contains('no changes added to commit')
+    return gitStatus.contains('no changes added to commit') || gitStatus.contains('nothing to commit')
 }
 
 task version << {
