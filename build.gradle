@@ -150,8 +150,7 @@ task version << {
     }
 }
 
-task deploy(dependsOn: ['version']) << {
-    tasks.build.execute()
+task deploy(dependsOn: ['build']) << {
     exec {
         commandLine = ['git', 'add', '-u']
         workingDir = new File('./build')
