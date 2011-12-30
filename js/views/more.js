@@ -2,7 +2,11 @@
 Ext.ns('wendler.views', 'wendler.controller.more', 'wendler.more');
 
 wendler.controller.more.moreInfoForListItem = function (c, index) {
-    wendler.more.listItems[index].handler.call();
+    Ext.getCmp('more-info-list').deselect(index);
+    var handler = wendler.more.listItems[index].handler;
+    if (typeof(handler) !== 'undefined') {
+        handler.call();
+    }
 };
 
 wendler.controller.more.suggestFeature = function () {
@@ -14,21 +18,21 @@ wendler.controller.more.reportProblem = function () {
 };
 
 wendler.more.listItems = [
-    {model:{text:'Suggest a Feature'}, handler:wendler.controller.more.suggestFeature},
-    {model:{text:'Report a Problem'}, handler:wendler.controller.more.reportProblem}
+    {model:{text:'<span class="text">Version</span>'}},
+    {model:{text:'<span class="text">Suggest a Feature</span><span class="disclosure"></span>'}, handler:wendler.controller.more.suggestFeature},
+    {model:{text:'<span class="text">Report a Problem</span><span class="disclosure"></span>'}, handler:wendler.controller.more.reportProblem}
 ];
+wendler.more.listData = [];
+for (var i = 0; i < wendler.more.listItems.length; i++) {
+    wendler.more.listData.push(wendler.more.listItems[i].model);
+}
+
 Ext.regModel('MoreList', {
     fields:[
         {name:'text', type:'string'}
     ]
 });
-wendler.more.listStore = new Ext.data.Store(
-    {model:'MoreList',
-        data:[
-            wendler.more.listItems[0].model,
-            wendler.more.listItems[1].model
-        ]
-    });
+wendler.more.listStore = new Ext.data.Store({model:'MoreList', data:wendler.more.listData});
 
 wendler.views.More = Ext.extend(Ext.Panel, {
     id:'more',
@@ -42,9 +46,10 @@ wendler.views.More = Ext.extend(Ext.Panel, {
     ],
     items:[
         {
+            id: 'more-info-list',
             xtype:'list',
             itemTpl:'{text}',
-            onItemDisclosure:true,
+            itemCls:'more-info-row',
             store:wendler.more.listStore,
             listeners:{
                 itemtap:wendler.controller.more.moreInfoForListItem
