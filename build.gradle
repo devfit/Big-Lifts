@@ -124,25 +124,49 @@ def gitHasNoChangesToCommit() {
     return gitStatus.contains('no changes added to commit') || gitStatus.contains('nothing to commit')
 }
 
+def incrementJsVersion() {
+    File versionFile = new File('js/version.json')
+    String oldVersionCallback = versionFile.text
+    def versionPattern = /\{"version":(\d+)\}/
+    def matcher = (oldVersionCallback =~ versionPattern)
+    long version = matcher[0][1] as long
+    version++;
+    String newVersionCallback = oldVersionCallback.replaceAll(versionPattern, '{"version":' + version + '}')
+
+    versionFile.withWriter { w ->
+        w.write(newVersionCallback);
+    }
+}
+
+def incrementConfigVersion() {
+    File configFile = new File('config.xml')
+    String oldConfig = configFile.text
+    def versionPattern = /version="(\d+)"/
+    def matcher = (oldConfig =~ versionPattern)
+    long newVersion = (matcher[0][1] as long) + 1
+
+    def versionCodePattern = /versionCode="(\d+)"/
+    matcher = (oldConfig =~ versionCodePattern)
+    long newVersionCode = (matcher[0][1] as long) + 1
+
+    String newConfig = oldConfig.replaceAll(versionPattern,
+            'version="' + newVersion + '"').replaceAll(versionCodePattern, 'versionCode="' + newVersionCode + '"')
+
+    configFile.withWriter { w ->
+        w.write(newConfig);
+    }
+}
+
 task version << {
     if (!gitHasNoChangesToCommit()) {
         throw new GradleException("There are git changes to commit. Commit or unstage changes to version this release.")
     }
     else {
-        File versionFile = new File('js/version.json')
-        String oldVersionCallback = versionFile.text
-        def versionPattern = /\{"version":(\d+)\}/
-        def matcher = (oldVersionCallback =~ versionPattern)
-        long version = matcher[0][1] as long
-        version++;
-        String newVersionCallback = oldVersionCallback.replaceAll(versionPattern, '{"version":' + version + '}')
-
-        versionFile.withWriter { w ->
-            w.write(newVersionCallback);
-        }
+        incrementJsVersion()
+        incrementConfigVersion()
 
         exec {
-            commandLine = ['git', 'add', versionFile.path]
+            commandLine = ['git', 'add', 'js/version.json', 'config.xml']
         }
         exec {
             commandLine = ['git', 'commit', '-m', 'Incrementing build version']
