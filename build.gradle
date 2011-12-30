@@ -125,13 +125,13 @@ def gitHasNoChangesToCommit() {
 }
 
 def incrementJsVersion() {
-    File versionFile = new File('js/version.json')
+    File versionFile = new File('js/version.js')
     String oldVersionCallback = versionFile.text
-    def versionPattern = /\{"version":(\d+)\}/
+    def versionPattern = /version=(\d+);/
     def matcher = (oldVersionCallback =~ versionPattern)
     long version = matcher[0][1] as long
     version++;
-    String newVersionCallback = oldVersionCallback.replaceAll(versionPattern, '{"version":' + version + '}')
+    String newVersionCallback = oldVersionCallback.replaceAll(versionPattern, 'version=' + version + ';')
 
     versionFile.withWriter { w ->
         w.write(newVersionCallback);
@@ -166,7 +166,7 @@ task version << {
         incrementConfigVersion()
 
         exec {
-            commandLine = ['git', 'add', 'js/version.json', 'config.xml']
+            commandLine = ['git', 'add', 'js/version.js', 'config.xml']
         }
         exec {
             commandLine = ['git', 'commit', '-m', 'Incrementing build version']
