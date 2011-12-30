@@ -113,21 +113,6 @@ task test(type: Exec) {
     workingDir = new File('./test')
 }
 
-task deploy(dependsOn: [build]) << {
-    exec {
-        commandLine = ['git', 'add', '.']
-        workingDir = new File('./build')
-    }
-    exec {
-        commandLine = ['git', 'commit', '-m', '"Building"']
-        workingDir = new File('./build')
-    }
-    exec {
-        commandLine = ['git', 'push', 'build', 'master']
-        workingDir = new File('./build')
-    }
-}
-
 def getGitStatus() {
     def p = ['git', 'status'].execute()
     p.waitFor()
@@ -162,5 +147,25 @@ task version << {
         exec {
             commandLine = ['git', 'commit', '-m', 'Incrementing build version']
         }
+    }
+}
+
+task deploy(dependsOn: ['version']) << {
+    tasks.build.execute()
+    exec {
+        commandLine = ['git', 'add', '-u']
+        workingDir = new File('./build')
+    }
+    exec {
+        commandLine = ['git', 'add', '.']
+        workingDir = new File('./build')
+    }
+    exec {
+        commandLine = ['git', 'commit', '-m', '"Building"']
+        workingDir = new File('./build')
+    }
+    exec {
+        commandLine = ['git', 'push', 'build', 'master']
+        workingDir = new File('./build')
     }
 }
