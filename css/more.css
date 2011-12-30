@@ -1,3 +1,11 @@
+#version{
+    float: right;
+    margin-right: 5px;
+    color: grey;
+    font-weight: bolder;
+    font-size: 1em !important;
+}
+
 .more-info-row .text{
     font-weight: bolder;
 }

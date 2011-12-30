@@ -17,8 +17,24 @@ wendler.controller.more.reportProblem = function () {
     location.href = util.email.buildEmailLink("wendler531@stefankendall.com", "Wendler 5/3/1: Report a Problem");
 };
 
+wendler.version = null;
+wendler.controller.more.setupVersion = function () {
+    if (wendler.version !== null) {
+        Ext.get('version').setHTML(wendler.version);
+    }
+
+    Ext.util.JSONP.request({
+        url:'js/version.json',
+        callbackKey: 'callback',
+        callback:function (response) {
+            wendler.version = response.version;
+            Ext.get('version').setHTML(response.version);
+        }
+    });
+};
+
 wendler.more.listItems = [
-    {model:{text:'<span class="text">Version</span>'}},
+    {model:{text:'<span class="text">Version</span><span id="version"></span>'}},
     {model:{text:'<span class="text">Suggest a Feature</span><span class="disclosure"></span>'}, handler:wendler.controller.more.suggestFeature},
     {model:{text:'<span class="text">Report a Problem</span><span class="disclosure"></span>'}, handler:wendler.controller.more.reportProblem}
 ];
@@ -46,7 +62,7 @@ wendler.views.More = Ext.extend(Ext.Panel, {
     ],
     items:[
         {
-            id: 'more-info-list',
+            id:'more-info-list',
             xtype:'list',
             itemTpl:'{text}',
             itemCls:'more-info-row',
@@ -55,6 +71,9 @@ wendler.views.More = Ext.extend(Ext.Panel, {
                 itemtap:wendler.controller.more.moreInfoForListItem
             }
         }
-    ]
+    ],
+    listeners:{
+        afterlayout:wendler.controller.more.setupVersion
+    }
 });
 
