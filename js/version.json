@@ -1,1 +1,1 @@
-Ext.util.JSONP.callback({"version":1});
+Ext.util.JSONP.callback({"version":2});
