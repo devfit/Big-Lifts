@@ -109,7 +109,7 @@ task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplas
 }
 
 task test(type: Exec) {
-    commandLine = ['cucumber', 'TEST_FILE=./index.html']
+    commandLine = ['cucumber']
     workingDir = new File('./test')
 }
 
@@ -128,8 +128,39 @@ task deploy(dependsOn: [build]) << {
     }
 }
 
-task testBuild(type: Exec, dependsOn: [build]) {
-    commandLine = ['cucumber', 'TEST_FILE=./build/index.html']
-    workingDir = new File('./test')
+def getGitStatus() {
+    def p = ['git', 'status'].execute()
+    p.waitFor()
+    p.text
 }
 
+def gitHasNoChangesToCommit() {
+    String gitStatus = getGitStatus()
+    return gitStatus.contains('no changes added to commit')
+}
+
+task version << {
+    if (!gitHasNoChangesToCommit()) {
+        throw new GradleException("There are git changes to commit. Commit or unstage changes to version this release.")
+    }
+    else {
+        File versionFile = new File('js/version.json')
+        String oldVersionCallback = versionFile.text
+        def versionPattern = /\{"version":(\d+)\}/
+        def matcher = (oldVersionCallback =~ versionPattern)
+        long version = matcher[0][1] as long
+        version++;
+        String newVersionCallback = oldVersionCallback.replaceAll(versionPattern, '{"version":' + version + '}')
+
+        versionFile.withWriter { w ->
+            w.write(newVersionCallback);
+        }
+
+        exec {
+            commandLine = ['git', 'add', versionFile.path]
+        }
+        exec {
+            commandLine = ['git', 'commit', '-m', 'Incrementing build version']
+        }
+    }
+}
