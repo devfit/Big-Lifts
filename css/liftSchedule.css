@@ -1,16 +1,24 @@
 .lift-row {
-   font-size: 1.5em;
+    font-size: 1.5em;
 }
 
-.lift-row .reps{
+.lift-row .reps {
     font-weight: bolder;
     padding-right: 1em;
     padding-left: 0.4em;
 }
 
-.lift-row.x-list-item{
+.lift-row .percentage {
+    float: right;
+    font-size: 0.7em !important;
+    margin-top: 0.3em;
+    color: grey;
+    margin-right: 10px;
+}
+
+.lift-row.x-list-item {
     min-height: 0;
-    padding:  0.3em;
+    padding: 0.3em;
 }
 
 .x-list-item.done .x-list-disclosure {
@@ -19,5 +27,5 @@
 }
 
 img.done, .x-button img.x-icon-mask.done {
-    -webkit-mask-image:url('../images/tick.png');
+    -webkit-mask-image: url('../images/tick.png');
 }

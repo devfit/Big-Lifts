@@ -63,7 +63,9 @@ wendler.views.liftSchedule.liftTemplate = {
             xtype:'list',
             store:wendler.stores.lifts.LiftProgression,
             itemCls:'lift-row',
-            itemTpl:'<p><span class="reps">{reps}x</span> <span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span></p>'
+            itemTpl:'<p><span class="reps">{reps}x</span> ' +
+                '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
+                '<span class="percentage">{percentage}%</span></p>'
         }
     ],
     listeners:{
