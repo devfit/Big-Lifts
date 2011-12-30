@@ -24,7 +24,7 @@ wendler.controller.more.setupVersion = function () {
     }
 
     Ext.util.JSONP.request({
-        url:'js/version.json',
+        url:'js/version.json?' + new Date().getTime(),
         callbackKey: 'callback',
         callback:function (response) {
             wendler.version = response.version;
