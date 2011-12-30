@@ -1,4 +1,4 @@
-#version{
+.more-info-row .version {
     float: right;
     margin-right: 5px;
     color: grey;
@@ -6,7 +6,7 @@
     font-size: 1em !important;
 }
 
-.more-info-row .text{
+.more-info-row .text {
     font-weight: bolder;
 }
 
