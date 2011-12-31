@@ -97,6 +97,11 @@ wendler.liftSchedule.controller.handleWeekChange = function (container, newCard,
     wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
 };
 
+wendler.liftSchedule.controller.showLiftScheduleSettings = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'),
+        {type:'slide', direction:'down'});
+};
+
 wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex) {
     var liftPropertyName = wendler.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
     return wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week).get('completed');
@@ -117,6 +122,13 @@ wendler.views.liftSchedule.liftSelector = {
             dock:'top',
             title:'Week 1',
             items:[
+                {
+                    id:'lift-schedule-settings-button',
+                    iconCls:'settings',
+                    iconMask:true,
+                    ui:'action',
+                    handler:wendler.liftSchedule.controller.showLiftScheduleSettings
+                },
                 {xtype:'spacer'},
                 {
                     hidden:true,

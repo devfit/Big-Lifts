@@ -53,5 +53,6 @@ wendler.views.LiftSchedule = Ext.extend(Ext.Panel, {
         beforeshow:wendler.liftSchedule.controller.updateLiftValues
     },
     items:[wendler.views.liftSchedule.liftSelector, wendler.views.liftSchedule.liftTemplate,
-        wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp ]
+        wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp,
+        wendler.views.liftSchedule.LiftSettings ]
 });
