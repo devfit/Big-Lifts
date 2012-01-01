@@ -6,8 +6,9 @@ class MainNavigation
       :settings => 'Settings'
   }
 
-  def initialize(driver)
+  def initialize(driver, animationDelay)
       @driver = driver
+      @animationDelay = animationDelay
   end
 
   def navigate_to(location)
@@ -17,6 +18,7 @@ class MainNavigation
     end
 
     mainNavButtons.select { |button| button.text == menuTextPattern }[0].click
+    sleep @animationDelay
   end
 
   def mainNavButtons
@@ -30,15 +32,14 @@ class MainNavigation
 end
 
 class LiftScheduleNavigator
-    def initialize(driver, wait)
+    def initialize(driver, animationDelay)
         @driver = driver
-        @wait = wait
+        @animationDelay = animationDelay
     end
 
     def selectWeek( week )
        liftSelector = @driver.find_element(:id => 'lift-selector')
-       @wait.until { liftSelector.displayed? }
        liftSelector.find_elements(:tag_name => 'div', :class => 'x-tab').select { |i| i.text == "#{week}"}[0].click
-       sleep 1
+       sleep @animationDelay
     end
 end

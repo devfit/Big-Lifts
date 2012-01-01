@@ -7,8 +7,10 @@ wendler.controller.liftSettings.optionButtonPressed = function (option) {
     Ext.Msg.confirm('Are you sure?', 'This will overwrite any manual percentage changes', function (response) {
         if (response === 'yes') {
             var optionIndex = option - 1;
-            wendler.stores.lifts.LiftProgression.each(function (c) {
-                wendler.stores.lifts.LiftProgression.remove(c);
+
+            wendler.stores.lifts.LiftProgression.clearFilter();
+            wendler.stores.lifts.LiftProgression.each(function(m){
+                wendler.stores.lifts.LiftProgression.remove(m);
             });
 
             wendler.stores.lifts.LiftProgression.add(wendler.liftProgressions.options[optionIndex]);
@@ -77,6 +79,7 @@ wendler.views.liftSchedule.LiftSettings = {
                 {
                     items:[
                         {
+                            id:'progression-option-1',
                             xtype:'button',
                             text:'Option 1',
                             handler:function () {
@@ -88,6 +91,7 @@ wendler.views.liftSchedule.LiftSettings = {
                 {
                     items:[
                         {
+                            id:'progression-option-2',
                             xtype:'button',
                             text:'Option 2',
                             handler:function () {
@@ -105,6 +109,7 @@ wendler.views.liftSchedule.LiftSettings = {
             title:'Config',
             items:[
                 {
+                    id:'lift-settings-back-button',
                     text:'Back',
                     ui:'back',
                     handler:wendler.controller.liftSettings.returnToLiftSelectFromSettings
