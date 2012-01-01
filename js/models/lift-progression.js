@@ -74,12 +74,16 @@ wendler.stores.lifts.LiftProgression = new Ext.data.Store({
     model:'LiftProgression',
     listeners:{
         load:function () {
-            if (this.getCount() == 0) {
+            if (this.getCount() !== wendler.defaults.liftProgression.length) {
+                wendler.stores.lifts.LiftProgression.each(function(m){
+                    wendler.stores.lifts.LiftProgression.remove(m);
+                });
+                this.sync();
+
                 this.add(wendler.defaults.liftProgression);
                 this.sync();
             }
         }
-    },
-    autoLoad:true,
-    autoSave:true
+    }
 });
+wendler.stores.lifts.LiftProgression.load();
