@@ -12,7 +12,11 @@ wendler.liftSchedule.controller.setupExamplePercentagesTable = function () {
         innerHtml += "<td>" + percentagesByWeek[i].join(',') + "</td>";
         innerHtml += "</tr>";
     }
-    Ext.get('example-precentages-table').setHTML(innerHtml);
+
+    var exampleTables = Ext.get('lift-settings').select('.example-percentages-table').elements;
+    for( var i = 0; i < exampleTables.length; i++ ){
+        Ext.get(exampleTables[i]).setHTML(innerHtml);
+    }
 };
 
 wendler.liftSchedule.controller.getLiftPercentagesByWeek = function () {
@@ -57,10 +61,10 @@ wendler.views.liftSchedule.LiftSettings = {
         {
             xtype: 'panel',
 //            bodyPadding: 0,
-            html:'<div id="example-percentages">' +
+            html:'<div class="example-percentages">' +
                 '<table>' +
                 '<thead><tr><th>Week</th><th>Percentages</th></tr></thead>' +
-                '<tbody id="example-precentages-table"></tbody>' +
+                '<tbody class="example-percentages-table"></tbody>' +
                 '</table>' +
                 '</div>'
         }

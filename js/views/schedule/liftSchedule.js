@@ -49,10 +49,9 @@ wendler.views.LiftSchedule = Ext.extend(Ext.Panel, {
     layout:'card',
     cardSwitchAnimation:'slide',
     listeners:{
-        afterlayout:wendler.liftSchedule.controller.setupLiftSelector,
         beforeshow:wendler.liftSchedule.controller.updateLiftValues
     },
-    items:[wendler.views.liftSchedule.liftSelector, wendler.views.liftSchedule.liftTemplate,
-        wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp,
-        wendler.views.liftSchedule.LiftSettings ]
+    items:[wendler.views.liftSchedule.LiftSettings, wendler.views.liftSchedule.liftSelector, wendler.views.liftSchedule.liftTemplate,
+        wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp
+    ]
 });

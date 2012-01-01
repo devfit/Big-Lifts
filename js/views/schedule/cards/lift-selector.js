@@ -113,6 +113,7 @@ wendler.views.liftSchedule.liftSelector = {
     id:'lift-selector',
     cardSwitchAnimation:appConfig.cardSwitchAnimation,
     listeners:{
+        afterlayout:wendler.liftSchedule.controller.setupLiftSelector,
         beforecardswitch:wendler.liftSchedule.controller.handleWeekChange
     },
     dockedItems:[
