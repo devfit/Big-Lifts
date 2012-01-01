@@ -1,6 +1,22 @@
-Ext.ns('wendler.views.liftSchedule', 'wendler.controller.liftSchedule');
-wendler.liftSchedule.controller.returnToLiftSelectFromSettings = function () {
+Ext.ns('wendler.views.liftSchedule', 'wendler.controller.liftSettings');
+wendler.controller.liftSettings.returnToLiftSelectFromSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'up'});
+};
+
+wendler.controller.liftSettings.optionButtonPressed = function (option) {
+    Ext.Msg.confirm('Are you sure?', 'This will overwrite any manual percentage changes', function(response){
+        if( response === 'yes' ){
+            util.mask.doWithMask('Loading...', function(){
+                var optionIndex = option - 1;
+                wendler.stores.lifts.LiftProgression.each(function (c) {
+                    wendler.stores.lifts.LiftProgression.remove(c);
+                });
+
+                wendler.stores.lifts.LiftProgression.add(wendler.liftProgressions.options[optionIndex]);
+                wendler.stores.lifts.LiftProgression.sync();
+            });
+        }
+    });
 };
 
 wendler.views.liftSchedule.LiftSettings = {
@@ -49,28 +65,45 @@ wendler.views.liftSchedule.LiftSettings = {
         {
             xtype:'panel',
             layout:'hbox',
+            height:50,
+            defaults:{
+                xtype:'panel',
+                flex:1,
+                bodyPadding:3
+            },
             items:[
                 {
-                    xtype:'panel',
-                    flex: 1,
-                    bodyPadding: 3,
                     items:[
                         {
                             xtype:'button',
-                            text:'Option 1'
+                            text:'Option 1',
+                            handler:function () {
+                                wendler.controller.liftSettings.optionButtonPressed(1);
+                            }
                         }
                     ]
                 },
                 {
-                    xtype:'panel',
-                    flex: 1,
-                    bodyPadding: 3,
                     items:[
                         {
                             xtype:'button',
-                            text:'Option 2'
+                            text:'Option 2',
+                            handler:function () {
+                                wendler.controller.liftSettings.optionButtonPressed(2);
+                            }
                         }
                     ]
+                }
+            ]
+        },
+        {
+            xtype:'panel',
+            bodyPadding:3,
+            items:[
+                {
+                    xtype:'button',
+                    ui:'decline',
+                    text:'Manual'
                 }
             ]
         }
@@ -83,7 +116,7 @@ wendler.views.liftSchedule.LiftSettings = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.liftSchedule.controller.returnToLiftSelectFromSettings
+                    handler:wendler.controller.liftSettings.returnToLiftSelectFromSettings
                 }
             ]
         }
