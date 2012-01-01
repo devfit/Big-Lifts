@@ -7,8 +7,7 @@ Ext.regModel('Settings', {
         {name: 'show-warmup-sets', type: 'integer'},
         {name: 'units', type: 'string'},
         {name: 'rounding-value', type: 'string'},
-        {name: 'rounding-type', type: 'string'},
-        {name: 'use-training-max', type: 'integer'}
+        {name: 'rounding-type', type: 'string'}
     ],
     proxy: {
         type: 'localstorage',
@@ -20,8 +19,7 @@ wendler.defaults.settings = {
     'show-warmup-sets': 1,
     units: 'lbs',
     'rounding-value': 5,
-    'rounding-type': 'normal',
-    'use-training-max': 1
+    'rounding-type': 'normal'
 };
 
 wendler.stores.Settings = new Ext.data.Store({

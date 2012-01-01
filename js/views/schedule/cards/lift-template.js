@@ -2,13 +2,9 @@
 Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.controller');
 
 wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
-    var useTrainingMax = wendler.stores.Settings.first().data['use-training-max'];
-    var percentageModifier = 1;
-    if (useTrainingMax) {
-        percentageModifier = 0.9;
-    }
+    var trainingMaxModifier = 0.9;
 
-    var unroundedWeight = max * percentage * percentageModifier / 100.0;
+    var unroundedWeight = max * percentage * trainingMaxModifier / 100.0;
     var roundingValue = wendler.stores.Settings.first().data['rounding-value'];
     var roundingType = wendler.stores.Settings.first().data['rounding-type'];
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
