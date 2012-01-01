@@ -27,7 +27,7 @@ Feature: adding lifts
     | weight | reps | lift     | estimate |
     | 200    | 10   | Press    | 266      |
     | 201    | 10   | Squat    | 267      |
-    | 300    | 4    | Deadlift| 340      |
+    | 300    | 4    | Deadlift | 340      |
 
 
 
