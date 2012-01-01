@@ -4,19 +4,21 @@ wendler.controller.liftSettings.returnToLiftSelectFromSettings = function () {
 };
 
 wendler.controller.liftSettings.optionButtonPressed = function (option) {
-    Ext.Msg.confirm('Are you sure?', 'This will overwrite any manual percentage changes', function(response){
-        if( response === 'yes' ){
-            util.mask.doWithMask('Loading...', function(){
-                var optionIndex = option - 1;
-                wendler.stores.lifts.LiftProgression.each(function (c) {
-                    wendler.stores.lifts.LiftProgression.remove(c);
-                });
-
-                wendler.stores.lifts.LiftProgression.add(wendler.liftProgressions.options[optionIndex]);
-                wendler.stores.lifts.LiftProgression.sync();
+    Ext.Msg.confirm('Are you sure?', 'This will overwrite any manual percentage changes', function (response) {
+        if (response === 'yes') {
+            var optionIndex = option - 1;
+            wendler.stores.lifts.LiftProgression.each(function (c) {
+                wendler.stores.lifts.LiftProgression.remove(c);
             });
+
+            wendler.stores.lifts.LiftProgression.add(wendler.liftProgressions.options[optionIndex]);
+            wendler.stores.lifts.LiftProgression.sync();
         }
     });
+};
+
+wendler.controller.liftSettings.showEditLiftPercentages = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
 };
 
 wendler.views.liftSchedule.LiftSettings = {
@@ -93,17 +95,6 @@ wendler.views.liftSchedule.LiftSettings = {
                             }
                         }
                     ]
-                }
-            ]
-        },
-        {
-            xtype:'panel',
-            bodyPadding:3,
-            items:[
-                {
-                    xtype:'button',
-                    ui:'decline',
-                    text:'Manual'
                 }
             ]
         }

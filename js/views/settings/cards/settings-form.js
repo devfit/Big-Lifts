@@ -5,10 +5,6 @@ wendler.settings.controller.resetToDefaults = function() {
     Ext.getCmp('settings-form').load(Ext.ModelMgr.create(wendler.defaults.settings, 'Settings'));
 };
 
-wendler.settings.controller.setLiftPercentages = function(){
-    Ext.getCmp('settings').setActiveItem(Ext.getCmp('edit-percentages-lift-schedule'));
-};
-
 wendler.settings.controller.reloadForm = function() {
     Ext.getCmp('settings-form').load(wendler.stores.Settings.first());
     Ext.getCmp('settings-form').hasBeenLoaded = true;
@@ -31,7 +27,7 @@ new Ext.form.FormPanel({
     items:[
         {
             xtype: 'fieldset',
-            style: 'margin-top: 0',
+            style: 'margin-top: 0; margin-bottom: 0',
             defaults: {
                 labelWidth: '50%',
                 listeners:{
@@ -51,7 +47,7 @@ new Ext.form.FormPanel({
                 {
                     xtype: 'togglefield',
                     name: 'show-warmup-sets',
-                    label: "Show warmup sets"
+                    label: "Show warmup"
                 },
                 {
                     xtype: 'selectfield',
@@ -62,34 +58,21 @@ new Ext.form.FormPanel({
                 {
                     xtype: 'selectfield',
                     name: 'rounding-value',
-                    label: 'Round To',
+                    label: 'Round to',
                     options: wendler.settings.options.roundingValues
                 },
                 {
                     xtype: 'selectfield',
                     name: 'rounding-type',
-                    label: 'Rounding Type',
+                    label: 'Rounding',
                     options: wendler.settings.options.roundingType
                 },
                 {
                     xtype: 'togglefield',
                     name: 'use-training-max',
-                    label: 'Use 90% training max'
-                },
-                {
-                    xtype: 'panel',
-                    html: '<h1 style="text-align:center;margin-top:-7px">...</h1>'
+                    label: 'Use training max'
                 }
             ]
-        },
-        {
-            xtype: 'button',
-            text: 'Set lift percentages',
-            handler: wendler.settings.controller.setLiftPercentages
-        },
-        {
-            xtype: 'spacer',
-            height: 15
         },
         {
             xtype: 'button',

@@ -8,7 +8,6 @@ wendler.views.Settings = Ext.extend(Ext.Panel, {
     layout: 'card',
     cardSwitchAnimation:'slide',
     items:[
-        Ext.getCmp('settings-form'),
-        Ext.getCmp('edit-percentages-lift-schedule')
+        Ext.getCmp('settings-form')
     ]
 });
