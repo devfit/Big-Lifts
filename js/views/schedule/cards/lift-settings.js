@@ -3,70 +3,76 @@ wendler.liftSchedule.controller.returnToLiftSelectFromSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'up'});
 };
 
-wendler.liftSchedule.controller.setupExamplePercentagesTable = function () {
-    var percentagesByWeek = wendler.liftSchedule.controller.getLiftPercentagesByWeek();
-    var innerHtml = "";
-    for (var i in percentagesByWeek) {
-        innerHtml += "<tr>";
-        innerHtml += "<td>" + i + "</td>";
-        innerHtml += "<td>" + percentagesByWeek[i].join(',') + "</td>";
-        innerHtml += "</tr>";
-    }
-
-    var exampleTables = Ext.get('lift-settings').select('.example-percentages-table').elements;
-    for( var i = 0; i < exampleTables.length; i++ ){
-        Ext.get(exampleTables[i]).setHTML(innerHtml);
-    }
-};
-
-wendler.liftSchedule.controller.getLiftPercentagesByWeek = function () {
-    var percentagesByWeek = {};
-    wendler.stores.lifts.LiftProgression.filterBy(function (r) {
-        return r.data.set > 3;
-    });
-
-    wendler.stores.lifts.LiftProgression.each(function (r) {
-        var week = r.data.week;
-        percentagesByWeek[week] = typeof(percentagesByWeek[week]) === 'undefined' ? []
-            : percentagesByWeek[week];
-
-        percentagesByWeek[week].push(r.data.percentage);
-    });
-
-    wendler.stores.lifts.LiftProgression.clearFilter();
-    return percentagesByWeek;
-};
-
-
 wendler.views.liftSchedule.LiftSettings = {
     id:'lift-settings',
-    xtype:'formpanel',
-    style:'margin-top: 0px',
-    bodyPadding:0,
-    listeners:{
-        afterlayout:wendler.liftSchedule.controller.setupExamplePercentagesTable
-    },
+    xtype:'panel',
+    bodyPadding:5,
     items:[
         {
-            html:'The Wendler 5/3/1 book offers two lift progressions with different percentages'
+            html:'The Wendler 5/3/1 book offers two working-set progression options'
         },
         {
-            xtype:'selectfield',
-            options:[
-                {text:'1', value:'1'},
-                {text:'2', value:'2'}
-            ],
-            label:'Option'
+            xtype:'panel',
+            layout:'hbox',
+            bodyPadding:0,
+            defaults:{
+                bodyPadding:3,
+                flex:1
+            },
+            items:[
+                {
+                    html:'<div class="example-percentages">' +
+                        '<table>' +
+                        '<thead><tr><th>Wk</th><th>%</th></tr></thead>' +
+                        '<tbody class="example-percentages-table">' +
+                        '<tr><td>1</td><td>65, 75, 85</td></tr>' +
+                        '<tr><td>2</td><td>70, 80, 90</td></tr>' +
+                        '<tr><td>3</td><td>75, 85, 95</td></tr>' +
+                        '<tr><td>4</td><td>40, 50, 60</td></tr></tbody>' +
+                        '</table>' +
+                        '</div>'
+                },
+                {
+                    html:'<div class="example-percentages">' +
+                        '<table>' +
+                        '<thead><tr><th>Wk</th><th>%</th></tr></thead>' +
+                        '<tbody class="example-percentages-table">' +
+                        '<tr><td>1</td><td>75, 80, 85</td></tr>' +
+                        '<tr><td>2</td><td>80, 85, 90</td></tr>' +
+                        '<tr><td>3</td><td>75, 85, 95</td></tr>' +
+                        '<tr><td>4</td><td>40, 50, 60</td></tr></tbody>' +
+                        '</table>' +
+                        '</div>'
+                }
+            ]
         },
         {
-            xtype: 'panel',
-//            bodyPadding: 0,
-            html:'<div class="example-percentages">' +
-                '<table>' +
-                '<thead><tr><th>Week</th><th>Percentages</th></tr></thead>' +
-                '<tbody class="example-percentages-table"></tbody>' +
-                '</table>' +
-                '</div>'
+            xtype:'panel',
+            layout:'hbox',
+            items:[
+                {
+                    xtype:'panel',
+                    flex: 1,
+                    bodyPadding: 3,
+                    items:[
+                        {
+                            xtype:'button',
+                            text:'Option 1'
+                        }
+                    ]
+                },
+                {
+                    xtype:'panel',
+                    flex: 1,
+                    bodyPadding: 3,
+                    items:[
+                        {
+                            xtype:'button',
+                            text:'Option 2'
+                        }
+                    ]
+                }
+            ]
         }
     ],
     dockedItems:[

@@ -1,24 +1,32 @@
+@import "compass/css3/border-radius";
+
+.selected-percentages {
+    border: solid 2px red;
+}
+
 .example-percentages {
-    border: solid 2px black;
-    -webkit-border-radius: 5px;
-    border-radius: 5px;
-    
     table {
+        border: solid 2px black;
         width: 100%;
          
         tbody {
             tr {
                 background-color: white;
+                border-bottom: solid 1px grey;
             }
             
             td {
                 padding: 3px;
             }
+            td:first-child{
+                width: 20%;
+                border-right: solid 1px grey;
+            }
         }
 
         thead {
             th {
-                padding: 3px;
+                padding: 2px;
                 font-weight: bolder;
             }
             tr {
