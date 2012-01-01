@@ -7,20 +7,18 @@ wendler.controller.liftSettings.optionButtonPressed = function (option) {
     //TODO: Figure out weird saving behavior. On the very first load, and only on mobile safari, if the records
     //being saved are the *same* as those that exist, on page reload, the count of the store will be 0.
     //It's almost as if the records are marked to be deleted twice.
-    Ext.Msg.confirm('Are you sure?', 'This will overwrite any manual percentage changes', function (response) {
-        if (response === 'yes') {
-            var optionIndex = option - 1;
+    var optionIndex = option - 1;
 
-            wendler.stores.lifts.LiftProgression.clearFilter();
-            wendler.stores.lifts.LiftProgression.each(function (m) {
-                wendler.stores.lifts.LiftProgression.remove(m);
-            });
-            wendler.stores.lifts.LiftProgression.sync();
-
-            wendler.stores.lifts.LiftProgression.add(wendler.liftProgressions.options[optionIndex]);
-            wendler.stores.lifts.LiftProgression.sync();
-        }
+    wendler.stores.lifts.LiftProgression.clearFilter();
+    wendler.stores.lifts.LiftProgression.each(function (m) {
+        wendler.stores.lifts.LiftProgression.remove(m);
     });
+    wendler.stores.lifts.LiftProgression.sync();
+
+    wendler.stores.lifts.LiftProgression.add(wendler.liftProgressions.options[optionIndex]);
+    wendler.stores.lifts.LiftProgression.sync();
+
+    Ext.Msg.alert('Lifts Updated', 'The lift schedule has been updated with new progressions', Ext.emptyFn);
 };
 
 wendler.controller.liftSettings.showEditLiftPercentages = function () {

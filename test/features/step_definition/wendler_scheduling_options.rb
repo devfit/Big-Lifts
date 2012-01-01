@@ -10,9 +10,9 @@ end
 
 When /^I confirm the wendler progression change$/ do
     msgBox = @driver.find_element(:class => 'x-msgbox')
-    yesButton = msgBox.find_elements(:class => 'x-button').select { |button| button.text == "Yes" }[0]
+    okButton = msgBox.find_element(:class => 'x-button')
 
-    yesButton.click()
+    okButton.click()
     sleep @ANIMATION_DELAY
 end
 
