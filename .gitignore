@@ -5,3 +5,4 @@ test/*.lock
 **/*.iml
 *.iml
 test/*.log
+*.scssc
