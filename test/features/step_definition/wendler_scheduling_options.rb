@@ -1,3 +1,7 @@
+When /^I view the lift schedule$/ do
+    @main_navigation.navigate_to(:lift_schedule)
+end
+
 When /^I open the lift settings configuration$/ do
    @driver.find_element( :id => 'lift-schedule-settings-button' ).click()
    sleep @ANIMATION_DELAY

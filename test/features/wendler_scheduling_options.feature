@@ -4,7 +4,8 @@ Feature: Selecting wendler options
   So that I can easily set the percentages for both programs
 
   Scenario: Select wendler progression option 2
-    When I open the lift settings configuration
+    When I view the lift schedule
+    And I open the lift settings configuration
     And I select wendler progression option 2
     And I confirm the wendler progression change
     And I navigate back to the lift selector from lift settings
@@ -13,7 +14,8 @@ Feature: Selecting wendler options
     Then The lift schedule shows "5x 110 40%","5x 135 50%","3x 160 60%","5x 205 75%","5x 215 80%","5x 230 85%"
 
   Scenario: Select wendler progression option 1
-    When I open the lift settings configuration
+    When I view the lift schedule
+    And I open the lift settings configuration
     And I select wendler progression option 1
     And I confirm the wendler progression change
     And I navigate back to the lift selector from lift settings
