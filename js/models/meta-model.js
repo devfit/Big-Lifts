@@ -6,7 +6,7 @@ Ext.regModel('Meta', {
     ],
     proxy:{
         type:'localstorage',
-        id:'settings-proxy'
+        id:'meta-proxy'
     }
 });
 
@@ -15,7 +15,7 @@ wendler.defaults.meta = {
 };
 
 wendler.stores.Meta = new Ext.data.Store({
-    model:'Settings',
+    model:'Meta',
     listeners:{
         load:function () {
             if (this.getCount() == 0) {

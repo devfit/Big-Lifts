@@ -40,9 +40,6 @@ new Ext.form.FormPanel({
                         var settingsRecord = wendler.stores.Settings.first();
                         settingsRecord.set(settingsForm.getValues());
                         settingsRecord.save();
-
-                        //TODO: listeners for update and beforesync aren't working on the Settings store. No idea why.
-                        wendler.liftSchedule.controller.updateLiftValues();
                     }
                 }
             },

@@ -31,6 +31,7 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
         }
     }
 };
+wendler.stores.Settings.addListener('update',wendler.liftSchedule.controller.updateLiftValues);
 
 wendler.liftSchedule.controller.setupLiftCompleteToggle = function () {
     var completed = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty,
