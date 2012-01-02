@@ -8,6 +8,7 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
 
 wendler.maxes.controller.buildMaxesFromStore = function () {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
+    Ext.getCmp('maxes-form-items').doLayout();
 };
 wendler.events.appLoadCallbackFunctions.push(wendler.maxes.controller.buildMaxesFromStore);
 
@@ -26,7 +27,6 @@ wendler.maxes.controller.createMaxesInput = function (record) {
 wendler.maxes.controller.rebuildMaxesList = function () {
     Ext.getCmp('maxes-form-items').removeAll();
     wendler.maxes.controller.buildMaxesFromStore();
-    Ext.getCmp('maxes-form-items').doLayout();
 };
 
 wendler.maxes.controller.editLiftButtonPressed = function () {
