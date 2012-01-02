@@ -10,6 +10,28 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
 };
 
+wendler.liftSchedule.controller.updateLiftValues = function () {
+    var showWarmupSets = wendler.stores.Settings.first().data['show-warmup-sets'];
+
+    var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
+    if (liftRecord !== null) {
+        wendler.liftSchedule.currentShowingMax = liftRecord.data.max;
+        wendler.stores.lifts.LiftProgression.clearFilter();
+        wendler.stores.lifts.LiftProgression.filter("week", wendler.liftSchedule.currentWeek);
+
+        if (!showWarmupSets) {
+            wendler.stores.lifts.LiftProgression.filterBy(function (record) {
+                return record.data.set > 3 && record.data.week == wendler.liftSchedule.currentWeek;
+            });
+        }
+    }
+    else {
+        if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
+            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+        }
+    }
+};
+
 wendler.liftSchedule.controller.setupLiftCompleteToggle = function () {
     var completed = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty,
         wendler.liftSchedule.currentWeek).get('completed');
@@ -65,7 +87,7 @@ wendler.views.liftSchedule.liftTemplate = {
         }
     ],
     listeners:{
-        beforeshow:wendler.liftSchedule.controller.setupLiftCompleteToggle
+        afterlayout:wendler.liftSchedule.controller.setupLiftCompleteToggle
     },
     dockedItems:[
         {

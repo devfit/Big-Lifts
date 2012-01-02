@@ -4,9 +4,10 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
     var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', el.name);
     lift.set('max', newValue);
     lift.save();
+    wendler.liftSchedule.controller.updateLiftValues();
 };
 
-wendler.maxes.controller.buildMaxesFromStore = function () {
+wendler.maxes.controller.buildMaxesFromStore = function () {                               300
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
     Ext.getCmp('maxes-form-items').doLayout();
 };

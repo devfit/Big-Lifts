@@ -2,6 +2,31 @@
 Ext.ns('wendler.stores.lifts', 'wendler.defaults');
 Ext.ns('wendler.stores.migrations', 'wendler.models.Lift');
 
+wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropertyName, week) {
+    var completionIndex = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+        return r.get('liftPropertyName') === liftPropertyName && r.get('week') === week;
+    });
+    return wendler.stores.lifts.LiftCompletion.getAt(completionIndex);
+};
+
+wendler.stores.migrations.liftCompletionMigration = function () {
+    for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
+        var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
+
+        var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+            return r.get('liftPropertyName') === liftPropertyName;
+        });
+
+        if (existingLiftCompletion === -1) {
+            for (var week = 1; week <= 4; week++) {
+                wendler.stores.lifts.LiftCompletion.add(
+                    {liftPropertyName:liftPropertyName, week:week, completed:false});
+            }
+        }
+    }
+    wendler.stores.lifts.LiftCompletion.sync();
+};
+
 wendler.models.Lift.uniquePropertyNameValidation = function (propertyName) {
     var liftIsUnique = wendler.stores.lifts.Lifts.find('propertyName', propertyName, 0,
         false, true, true) == -1;
@@ -72,10 +97,9 @@ wendler.stores.lifts.Lifts = new Ext.data.Store({
             }
             wendler.stores.migrations.liftModelMigration();
         }
-    },
-    autoLoad:true,
-    autoSave:true
+    }
 });
+wendler.stores.lifts.Lifts.load();
 
 Ext.regModel('LiftCompletion', {
     fields:[
@@ -95,33 +119,6 @@ wendler.stores.lifts.LiftCompletion = new Ext.data.Store({
         load:function () {
             wendler.stores.migrations.liftCompletionMigration();
         }
-    },
-    autoLoad:true,
-    autoSave:true
-});
-wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropertyName, week) {
-    var completionIndex = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
-        return r.get('liftPropertyName') === liftPropertyName && r.get('week') === week;
-    });
-    return wendler.stores.lifts.LiftCompletion.getAt(completionIndex);
-};
-
-wendler.stores.migrations.liftCompletionMigration = function () {
-    for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
-        var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
-
-        var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
-            return r.get('liftPropertyName') === liftPropertyName;
-        });
-
-        if (existingLiftCompletion === -1) {
-            for (var week = 1; week <= 4; week++) {
-                wendler.stores.lifts.LiftCompletion.add(
-                    {liftPropertyName:liftPropertyName, week:week, completed:false});
-            }
-        }
     }
-    wendler.stores.lifts.LiftCompletion.sync();
-};
-
-
+});
+wendler.stores.lifts.LiftCompletion.load();

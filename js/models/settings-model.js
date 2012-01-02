@@ -31,11 +31,9 @@ wendler.stores.Settings = new Ext.data.Store({
                 this.sync();
             }
         }
-    },
-    autoLoad: true,
-    autoSave: true
+    }
 });
-
+wendler.stores.Settings.load();
 
 wendler.settings.options.units = [
     {text: 'lbs', value: 'lbs'},

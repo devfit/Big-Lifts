@@ -1,4 +1,18 @@
 "use strict";
+Ext.ns( "wendler.main" );
+wendler.main.determineStartTab = function(){
+    var meta = wendler.stores.Meta.first();
+    var startTab = 0;
+    if( meta.data.firstTimeInApp )
+    {
+        startTab = 1;
+        meta.set('firstTimeInApp', false);
+        meta.save();
+    }
+
+    return startTab;
+};
+
 new Ext.Application({
     tabletStartupScreen: 'tablet_startup.png',
     phoneStartupScreen: 'phone_startup.png',
@@ -19,6 +33,7 @@ new Ext.Application({
             dock: 'bottom',
             layout: { pack: 'center' }
         },
+        activeItem: wendler.main.determineStartTab(),
         items: [
             new wendler.views.LiftSchedule(),
             new wendler.views.Maxes(),
