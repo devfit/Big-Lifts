@@ -1,3 +1,5 @@
+import groovy.json.JsonSlurper
+
 task copyImages(type: Copy) {
     from 'images'
     into 'build/images'
@@ -191,4 +193,31 @@ task deploy(dependsOn: ['build']) << {
         commandLine = ['git', 'push', 'build', 'master']
         workingDir = new File('./build')
     }
+}
+
+def execAndGetOutput(def command){
+
+}
+
+String authToken = null
+task getAuthToken() {
+    def output = new ByteArrayOutputStream()
+    exec {
+        commandLine = ['curl', '-u', 'stefankendall@gmail.com', '-X', 'POST', '-d', '""', 'https://build.phonegap.com/token']
+        standardOutput = output
+    }
+    def result = new JsonSlurper().parseText(output.toString())
+    authToken = result.token
+}
+
+task binaries(dependsOn: [getAuthToken]) << {
+    def output = new ByteArrayOutputStream()
+    exec {
+        commandLine = ['curl', "https://build.phonegap.com/api/v1/apps?auth_token=${authToken}"]
+        standardOutput = output
+    }
+    def result = new JsonSlurper().parseText(output.toString())
+
+    def iosDownloadUrl = result.apps.download.ios;
+    def androidDownloadUrl = result.apps.download.android
 }
