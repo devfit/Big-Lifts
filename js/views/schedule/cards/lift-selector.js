@@ -99,7 +99,7 @@ wendler.liftSchedule.controller.handleWeekChange = function (container, newCard,
 
 wendler.liftSchedule.controller.showLiftScheduleSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'),
-        {type:'slide', direction:'down'});
+        {type:'slide', direction:'right'});
 };
 
 wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex) {

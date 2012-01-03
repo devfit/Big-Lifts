@@ -44,14 +44,15 @@ wendler.liftSchedule.controller.returnToLiftSelect = function () {
 };
 
 wendler.liftSchedule.controller.markLiftCompleted = function () {
-    wendler.liftSchedule.controller.markLiftHandler(true);
+    wendler.liftSchedule.controller.persistLiftCompletion(true);
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'), {type:'slide', direction: 'left'});
 };
 
 wendler.liftSchedule.controller.unmarkLiftCompleted = function () {
-    wendler.liftSchedule.controller.markLiftHandler(false);
+    wendler.liftSchedule.controller.persistLiftCompletion(false);
 };
 
-wendler.liftSchedule.controller.markLiftHandler = function (completed) {
+wendler.liftSchedule.controller.persistLiftCompletion = function (completed) {
     var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
     liftCompletion.set('completed', completed);
     liftCompletion.save();

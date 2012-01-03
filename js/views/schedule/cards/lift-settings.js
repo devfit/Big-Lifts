@@ -1,6 +1,6 @@
 Ext.ns('wendler.views.liftSchedule', 'wendler.controller.liftSettings');
 wendler.controller.liftSettings.returnToLiftSelectFromSettings = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'up'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'left'});
 };
 
 wendler.controller.liftSettings.optionButtonPressed = function (option) {
@@ -19,10 +19,6 @@ wendler.controller.liftSettings.optionButtonPressed = function (option) {
     wendler.stores.lifts.LiftProgression.sync();
 
     Ext.Msg.alert('Lifts Updated', 'The lift schedule has been updated with new progressions', Ext.emptyFn);
-};
-
-wendler.controller.liftSettings.showEditLiftPercentages = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
 };
 
 wendler.views.liftSchedule.LiftSettings = {
