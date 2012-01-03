@@ -6,3 +6,4 @@ test/*.lock
 *.iml
 test/*.log
 *.scssc
+binaries

@@ -1,4 +1,5 @@
 import groovy.json.JsonSlurper
+import groovy.json.JsonOutput
 
 task copyImages(type: Copy) {
     from 'images'
@@ -195,29 +196,38 @@ task deploy(dependsOn: ['build']) << {
     }
 }
 
-def execAndGetOutput(def command){
-
-}
-
-String authToken = null
-task getAuthToken() {
+def execAndGetResult(def command){
     def output = new ByteArrayOutputStream()
+    println "Executing ${command}"
     exec {
-        commandLine = ['curl', '-u', 'stefankendall@gmail.com', '-X', 'POST', '-d', '""', 'https://build.phonegap.com/token']
+        commandLine = command
         standardOutput = output
     }
-    def result = new JsonSlurper().parseText(output.toString())
-    authToken = result.token
+    return new JsonSlurper().parseText(output.toString())
+}
+
+final String PHONEGAP_BUILD_API_URL = "https://build.phonegap.com"
+String authToken = null
+task getAuthToken() {
+    def authenticationResponse = execAndGetResult(['curl', '-u', 'stefankendall@gmail.com', '-X', 'POST', '-d', '""', "${PHONEGAP_BUILD_API_URL}/token"])
+    authToken = authenticationResponse.token
 }
 
 task binaries(dependsOn: [getAuthToken]) << {
-    def output = new ByteArrayOutputStream()
-    exec {
-        commandLine = ['curl', "https://build.phonegap.com/api/v1/apps?auth_token=${authToken}"]
-        standardOutput = output
-    }
-    def result = new JsonSlurper().parseText(output.toString())
+    def allAppsResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps?auth_token=${authToken}"])
 
-    def iosDownloadUrl = result.apps.download.ios;
-    def androidDownloadUrl = result.apps.download.android
+    String getIosDownloadUrlRequest = allAppsResult.apps[0].download.ios
+    String getAndroidDownloadUrlRequest = allAppsResult.apps[0].download.android
+
+    [getIosDownloadUrlRequest, getAndroidDownloadUrlRequest].each {
+         def downloadLocationResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}${it}?auth_token=${authToken}"])
+         exec {
+             commandLine = ['wget', downloadLocationResult.location, '-P', 'binaries']
+         }
+    }
+}
+
+task buildStatus(dependsOn: [getAuthToken]){
+    def allAppsResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps?auth_token=${authToken}"])
+    println JsonOutput.prettyPrint(JsonOutput.toJson(allAppsResult.apps[0].status))
 }
