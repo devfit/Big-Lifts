@@ -45,7 +45,7 @@ wendler.liftSchedule.controller.returnToLiftSelect = function () {
 
 wendler.liftSchedule.controller.markLiftCompleted = function () {
     wendler.liftSchedule.controller.persistLiftCompletion(true);
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'), {type:'slide', direction: 'left'});
+    wendler.controller.liftTracking.showLiftTracking();
 };
 
 wendler.liftSchedule.controller.unmarkLiftCompleted = function () {
