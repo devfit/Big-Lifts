@@ -38,7 +38,6 @@ new Ext.Application({
             new wendler.views.LiftSchedule(),
             new wendler.views.Maxes(),
             new wendler.views.OneRepMaxCalculator(),
-            new wendler.views.Settings(),
             new wendler.views.More()
         ],
         listeners: {

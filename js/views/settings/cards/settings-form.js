@@ -11,16 +11,8 @@ wendler.settings.controller.reloadForm = function () {
 };
 
 new Ext.form.FormPanel({
-    title:'Settings',
     id:'settings-form',
     scroll:util.scrolling.lockedVerticalScroller,
-    dockedItems:[
-        {
-            dock:'top',
-            xtype:'toolbar',
-            title:'Settings'
-        }
-    ],
     listeners:{
         afterlayout:wendler.settings.controller.reloadForm
     },
