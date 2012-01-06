@@ -6,20 +6,20 @@ wendler.controller.liftTracking.returnToLiftTemplate = function () {
 };
 
 wendler.controller.liftTracking.logLift = function (liftName, reps, week, weight, cycle) {
-    var existingLogIndex = wendler.stores.LiftLog.findBy(function(m){
+    var existingLogIndex = wendler.stores.LiftLog.findBy(function (m) {
         return m.data.cycle === cycle && m.data.week === week && m.data.liftName === liftName;
     });
 
-    if( existingLogIndex > 0 ){
+    if (existingLogIndex >= 0) {
         var existingLog = wendler.stores.LiftLog.getAt(existingLogIndex);
         existingLog.set('reps', reps);
         existingLog.set('weight', weight);
         existingLog.save();
     }
-    else{
-        var log = Ext.ModelMgr.create({liftName:liftName, reps:reps, week:week, weight:weight, cycle:cycle}, 'LiftLog');
-        log.save();
+    else {
+        wendler.stores.LiftLog.add({liftName:liftName, reps:reps, week:week, weight:weight, cycle:cycle, date: new Date()});
     }
+    wendler.stores.LiftLog.sync();
 };
 
 wendler.controller.liftTracking.logAndReturnToLiftTemplate = function () {

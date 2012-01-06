@@ -1,0 +1,32 @@
+$fontSize: 1.1em;
+$dateFontReduction: 0.85;
+.lift-log-row {
+    table{
+        width: 100%;
+        tr{
+            td {
+                    width: 25%;
+                }
+        }
+    }
+
+    .lift-name {
+        font-size: $fontSize !important;
+        font-weight: bolder;
+    }
+
+    .weight {
+        font-size: $fontSize !important;
+    }
+
+    .reps
+    {
+        font-size: $fontSize !important;
+    }
+
+    .date, .week {
+        font-size: $dateFontReduction * $fontSize !important;
+        margin-top: $fontSize - $fontSize * $dateFontReduction;
+        color: #666;
+    }
+}

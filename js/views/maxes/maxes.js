@@ -4,7 +4,7 @@ Ext.ns('wendler.views', 'wendler.stores', 'wendler.maxes.controller');
 wendler.views.Maxes = Ext.extend(Ext.Panel, {
     id:'maxes-panel',
     title:'Lifts',
-    iconCls:'bookmarks',
+    iconCls:'settings',
     layout:'card',
     defaults:{
         fullscreen:true
