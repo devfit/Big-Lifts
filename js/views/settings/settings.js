@@ -1,5 +1,9 @@
 "use strict";
-Ext.ns('wendler.views');
+Ext.ns('wendler.views', 'wendler.controller.settings');
+
+wendler.controller.settings.backToMore = function () {
+    Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list'), {type:'slide', direction:'right'});
+};
 
 wendler.views.Settings = Ext.extend(Ext.Panel, {
     id:'settings',
@@ -14,7 +18,8 @@ wendler.views.Settings = Ext.extend(Ext.Panel, {
                 {
                     xtype:'button',
                     text:'Back',
-                    ui:'back'
+                    ui:'back',
+                    handler:wendler.controller.settings.backToMore
                 }
             ]
         }
