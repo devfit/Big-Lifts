@@ -48,11 +48,13 @@ wendler.maxes.cards.maxesForm = {
     xtype:'formpanel',
     id:'maxes-form',
     scroll:util.scrolling.lockedVerticalScroller,
+    bodyStyle:'padding-top:0',
     items:[
         {
             id:'maxes-form-items',
             xtype:'fieldset',
             style:'margin-top: 0',
+            title: 'Maxes',
             defaults:{
                 listeners:{
                     change:wendler.maxes.controller.liftValuesChanged
@@ -67,13 +69,13 @@ wendler.maxes.cards.maxesForm = {
             id:'maxes-toolbar',
             xtype:'toolbar',
             dock:'top',
-            title:'Maxes',
+            title:'Lifts',
             items:[
                 {xtype:'spacer'},
                 {
                     id:'edit-lifts-button',
                     ui:'action',
-                    text:'Edit Lifts',
+                    text:'Edit',
                     handler:wendler.maxes.controller.editLiftButtonPressed
                 }
             ]

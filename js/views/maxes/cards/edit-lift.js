@@ -44,7 +44,7 @@ wendler.maxes.controller.editLiftDoneButtonPressed = function () {
     if (messages.length === 0) {
         currentModel.save();
         wendler.maxes.controller.rebuildMaxesList();
-        wendler.maxes.controller.returnToEditLiftList();
+        wendler.maxes.controller.doneWithEditing();
     }
     else {
         Ext.Msg.alert('Error', messages.join('<br/>'));
@@ -52,7 +52,7 @@ wendler.maxes.controller.editLiftDoneButtonPressed = function () {
 };
 
 wendler.maxes.controller.editLiftCancelButtonPressed = function () {
-    wendler.maxes.controller.returnToEditLiftList();
+    wendler.maxes.controller.doneWithEditing();
 };
 
 wendler.maxes.controller.getCurrentLiftModel = function () {
@@ -76,7 +76,7 @@ wendler.maxes.controller.deleteLiftButtonPressed = function () {
                 wendler.liftSchedule.currentLiftProperty = null;
             }
 
-            wendler.maxes.controller.returnToEditLiftList();
+            wendler.maxes.controller.doneWithEditing();
         }
     });
 };

@@ -48,13 +48,13 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function () {
         wendler.maxes.controller.rebuildMaxesList();
 
         Ext.getCmp('maxes-add-lift-form').reset();
-        wendler.maxes.controller.returnToEditLiftList();
+        wendler.maxes.controller.doneWithEditing();
     }
 };
 
 wendler.maxes.controller.addLiftCancelButtonPressed = function () {
     Ext.getCmp('maxes-add-lift-form').reset();
-    wendler.maxes.controller.returnToEditLiftList();
+    wendler.maxes.controller.doneWithEditing();
 };
 
 wendler.maxes.cards.addLiftPanel = {

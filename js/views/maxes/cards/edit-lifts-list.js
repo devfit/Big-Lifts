@@ -8,8 +8,8 @@ wendler.maxes.controller.editLift = function (view, index) {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-panel'), {type:'slide', direction:'left'});
 };
 
-wendler.maxes.controller.returnToEditLiftList = function () {
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-list'), {type:'slide', direction:'right'});
+wendler.maxes.controller.doneWithEditing = function () {
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
 };
 
 wendler.maxes.controller.addLiftButtonPressed = function () {
