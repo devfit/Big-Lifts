@@ -1,6 +1,6 @@
 Ext.ns('wendler.views.liftSchedule', 'wendler.controller.liftSettings');
 wendler.controller.liftSettings.returnToLiftSelectFromSettings = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'up'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'left'});
 };
 
 wendler.controller.liftSettings.optionButtonPressed = function (option) {
@@ -22,7 +22,7 @@ wendler.controller.liftSettings.optionButtonPressed = function (option) {
 };
 
 wendler.controller.liftSettings.showEditLiftPercentages = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'left'});
 };
 
 wendler.views.liftSchedule.LiftSettings = {
@@ -103,6 +103,12 @@ wendler.views.liftSchedule.LiftSettings = {
                     ]
                 }
             ]
+        },
+        {
+            xtype: 'button',
+            text: 'Manual',
+            ui: 'decline',
+            handler: wendler.controller.liftSettings.showEditLiftPercentages
         }
     ],
     dockedItems:[
