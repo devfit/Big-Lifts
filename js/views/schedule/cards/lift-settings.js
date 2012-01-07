@@ -7,7 +7,6 @@ wendler.controller.liftSettings.showEditLiftPercentages = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'left'});
 };
 
-
 wendler.controller.liftSettings.optionButtonPressed = function (option) {
     //TODO: Figure out weird saving behavior. On the very first load, and only on mobile safari, if the records
     //being saved are the *same* as those that exist, on page reload, the count of the store will be 0.
@@ -108,6 +107,7 @@ wendler.views.liftSchedule.LiftSettings = {
             ]
         },
         {
+            id: 'manual-percentages-button',
             xtype:'button',
             text:'Manual',
             ui:'decline',

@@ -58,6 +58,7 @@ wendler.views.EditPercentage = {
                     xtype:'spacer'
                 },
                 {
+                    id: 'edit-percentage-save-button',
                     xtype:'button',
                     ui:'action',
                     text:'Save',

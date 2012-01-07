@@ -42,7 +42,6 @@ wendler.views.EditLiftPercentages = {
     defaults:{
         items:[
             {
-                id:'edit-percentages-lift-list',
                 xtype:'list',
                 store:wendler.stores.lifts.LiftProgression,
                 itemTpl:'<span class="lift-percentage-row">{percentage}%</span><span class="disclosure"></span>',
