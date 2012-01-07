@@ -11,10 +11,10 @@ Feature: adding lifts
   Scenarios: one-rep calculations
     | weight | reps | estimate |
     | 200    | 10   | 266      |
-    | 201    | 10   | 267      |
-    | 200    | 6    | 240      |
+    | 201    | 10   | 267.5    |
+    | 200    | 6    | 239.5    |
     | 300    | 1    | 310      |
-    | 300    | 4    | 340      |
+    | 300    | 4    | 339.5      |
 
   Scenario Outline: Use estimated max for actual max
     When I open the 1-rep calculator
@@ -26,8 +26,8 @@ Feature: adding lifts
   Scenarios: use one-rep calculations
     | weight | reps | lift     | estimate |
     | 200    | 10   | Press    | 266      |
-    | 201    | 10   | Squat    | 267      |
-    | 300    | 4    | Deadlift | 340      |
+    | 201    | 10   | Squat    | 267.5    |
+    | 300    | 4    | Deadlift | 339.5      |
 
 
 

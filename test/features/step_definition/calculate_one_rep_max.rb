@@ -15,7 +15,7 @@ When /^I set weight to (\d+) and reps to (\d+)$/ do |weight, reps|
   reps_input.send_keys :enter
 end
 
-Then /^The calculated max should be (\d+)$/ do |estimate|
+Then /^The calculated max should be ([\d\.]+)$/ do |estimate|
   actualEstimatedMax = @driver.find_element(:name => 'calculatedMax').attribute('value')
   actualEstimatedMax.should == estimate
 end
@@ -49,7 +49,7 @@ Then /^I am taken to the maxes page$/ do
   @driver.find_element(:id => 'maxes-form').displayed?.should == true
 end
 
-Then /^The max for (\w+) is set to (\d+)$/ do |lift, max|
+Then /^The max for (\w+) is set to ([\d\.]+)$/ do |lift, max|
   actualValue = @driver.find_element(:name => lift.downcase, :tag_name => 'input').attribute('value')
   actualValue.should == max
 end

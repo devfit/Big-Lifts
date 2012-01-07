@@ -39,7 +39,7 @@ Ext.regModel('Lift', {
         {name:'id', type:'integer'},
         {name:'name', type:'string'},
         {name:'propertyName', type:'string'},
-        {name:'max', type:'integer'},
+        {name:'max', type:'float'},
         {name:'cycleIncrease', type:'integer'}
     ],
     validations:[

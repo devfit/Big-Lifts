@@ -1,7 +1,7 @@
 "use strict";
 Ext.ns('util.rounding');
 
-util.rounding.roundTo1 = function(unroundedNumber, roundingType) {
+util.rounding.roundTo1 = function (unroundedNumber, roundingType) {
     var roundedNumber;
     if (roundingType == 'normal') {
         roundedNumber = Math.round(unroundedNumber);
@@ -16,7 +16,7 @@ util.rounding.roundTo1 = function(unroundedNumber, roundingType) {
     return roundedNumber;
 };
 
-util.rounding.roundTo5 = function(unroundedNumber, roundingType) {
+util.rounding.roundTo5 = function (unroundedNumber, roundingType) {
     var numberMod5 = unroundedNumber % 5;
     var base5Round = parseInt(unroundedNumber / 5) * 5;
 
@@ -34,7 +34,7 @@ util.rounding.roundTo5 = function(unroundedNumber, roundingType) {
     return roundedNumber;
 };
 
-util.rounding.roundTo2p5 = function(unroundedNumber, roundingType) {
+util.rounding.roundTo2p5 = function (unroundedNumber, roundingType) {
     var roundedNumber;
 
     var numberMod5 = unroundedNumber % 5;
@@ -76,17 +76,17 @@ util.rounding.roundTo2p5 = function(unroundedNumber, roundingType) {
     return roundedNumber;
 };
 
-util.roundNumber = function(unroundedNumber, roundingValue, roundingType) {
-    var roundedNumber;
-    if (roundingValue === '1') {
-        roundedNumber = util.rounding.roundTo1(unroundedNumber, roundingType);
-    }
-    else if (roundingValue == '2.5') {
-        roundedNumber = util.rounding.roundTo2p5(unroundedNumber, roundingType);
-    }
-    else if (roundingValue == '5') {
-        roundedNumber = util.rounding.roundTo5(unroundedNumber, roundingType);
-    }
+util.rounding.roundTo0p5 = function (unroundedNumber, roundingType) {
+    var numberTimes10 = unroundedNumber * 10;
+    return util.rounding.roundTo5(numberTimes10, roundingType, 'normal')/10.0;
+};
 
-    return roundedNumber;
+util.roundNumber = function (unroundedNumber, roundingValue, roundingType) {
+    var roundingMethods = {
+        '0.5':util.rounding.roundTo0p5,
+        '1':util.rounding.roundTo1,
+        '2.5':util.rounding.roundTo2p5,
+        '5':util.rounding.roundTo5
+    };
+    return roundingMethods[roundingValue].call(this, unroundedNumber, roundingType);
 };

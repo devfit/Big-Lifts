@@ -7,7 +7,7 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
     wendler.liftSchedule.controller.updateLiftValues();
 };
 
-wendler.maxes.controller.buildMaxesFromStore = function () {                               300
+wendler.maxes.controller.buildMaxesFromStore = function () {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
     Ext.getCmp('maxes-form-items').doLayout();
 };
@@ -34,12 +34,12 @@ wendler.maxes.controller.editLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-list'));
 };
 
-wendler.stores.lifts.Lifts.addListener('update', function (store, record,op) {
+wendler.stores.lifts.Lifts.addListener('update', function (store, record, op) {
     var propertyName = record.data.propertyName;
     var max = record.data.max;
 
     var existingInput = Ext.getCmp('maxes-' + propertyName);
-    if( typeof(existingInput) !== "undefined" ){
+    if (typeof(existingInput) !== "undefined") {
         existingInput.setValue(max);
     }
 });
