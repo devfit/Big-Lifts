@@ -24,4 +24,5 @@
 
     <preference name="permissions" value="none"/>
     <preference name="target-device" value="handset"/>
+    <preference name="orientation" value="portrait" />
 </widget>
