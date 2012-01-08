@@ -139,6 +139,7 @@ def incrementJsVersion() {
     versionFile.withWriter { w ->
         w.write(newVersionCallback);
     }
+    return version
 }
 
 def incrementConfigVersion() {
@@ -158,6 +159,7 @@ def incrementConfigVersion() {
     configFile.withWriter { w ->
         w.write(newConfig);
     }
+    return newVersion
 }
 
 task version << {
@@ -165,7 +167,7 @@ task version << {
         throw new GradleException("There are git changes to commit. Commit or unstage changes to version this release.")
     }
     else {
-        incrementJsVersion()
+        def version = incrementJsVersion()
         incrementConfigVersion()
 
         exec {
@@ -173,6 +175,9 @@ task version << {
         }
         exec {
             commandLine = ['git', 'commit', '-m', 'Incrementing build version']
+        }
+        exec {
+            commandLine = ['git', 'tag', version]
         }
     }
 }
@@ -196,7 +201,7 @@ task deploy(dependsOn: ['build']) << {
     }
 }
 
-def execAndGetResult(def command){
+def execAndGetResult(def command) {
     def output = new ByteArrayOutputStream()
     println "Executing ${command}"
     exec {
@@ -208,26 +213,27 @@ def execAndGetResult(def command){
 
 final String PHONEGAP_BUILD_API_URL = "https://build.phonegap.com"
 String authToken = null
-task getAuthToken() {
+task getAuthToken() << {
     def authenticationResponse = execAndGetResult(['curl', '-u', 'stefankendall@gmail.com', '-X', 'POST', '-d', '""', "${PHONEGAP_BUILD_API_URL}/token"])
     authToken = authenticationResponse.token
 }
 
 task binaries(dependsOn: [getAuthToken]) << {
+    delete('binaries')
     def allAppsResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps?auth_token=${authToken}"])
 
     String getIosDownloadUrlRequest = allAppsResult.apps[0].download.ios
     String getAndroidDownloadUrlRequest = allAppsResult.apps[0].download.android
 
     [getIosDownloadUrlRequest, getAndroidDownloadUrlRequest].each {
-         def downloadLocationResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}${it}?auth_token=${authToken}"])
-         exec {
-             commandLine = ['wget', downloadLocationResult.location, '-P', 'binaries']
-         }
+        def downloadLocationResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}${it}?auth_token=${authToken}"])
+        exec {
+            commandLine = ['wget', downloadLocationResult.location, '-P', 'binaries']
+        }
     }
 }
 
-task buildStatus(dependsOn: [getAuthToken]){
+task buildStatus(dependsOn: [getAuthToken]) << {
     def allAppsResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps?auth_token=${authToken}"])
     println JsonOutput.prettyPrint(JsonOutput.toJson(allAppsResult.apps[0].status))
 }
