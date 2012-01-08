@@ -88,7 +88,7 @@ wendler.views.liftSchedule.liftTemplate = {
         }
     ],
     listeners:{
-        afterlayout:wendler.liftSchedule.controller.setupLiftCompleteToggle
+        beforeshow:wendler.liftSchedule.controller.setupLiftCompleteToggle
     },
     dockedItems:[
         {
