@@ -28,6 +28,7 @@ wendler.maxes.controller.editLiftDoneButtonPressed = function () {
     var newName = Ext.getCmp('edit-lift-new-name').getValue();
     var newCycleIncrease = Ext.getCmp('edit-lift-cycle-increase').getValue();
     var newPropertyName = wendler.models.Lift.sanitizePropertyName(newName);
+    var newMax = Ext.getCmp('edit-lift-new-max').getValue();
 
     var currentModel = wendler.maxes.controller.getCurrentLiftModel();
     var oldPropertyName = currentModel.get('propertyName');
@@ -35,6 +36,7 @@ wendler.maxes.controller.editLiftDoneButtonPressed = function () {
     currentModel.set('name', newName);
     currentModel.set('propertyName', newPropertyName);
     currentModel.set('cycleIncrease', newCycleIncrease);
+    currentModel.set('max', newMax);
 
     var errors = currentModel.validate();
     var messages = [];
@@ -103,6 +105,12 @@ wendler.maxes.cards.editLiftPanel = {
                         },
                         {
                             xtype:'textfield',
+                            name:'edit-lift-new-max',
+                            id:'edit-lift-new-max',
+                            label:'Max'
+                        },
+                        {
+                            xtype:'textfield',
                             name:'edit-lift-cycle-increase',
                             id:'edit-lift-cycle-increase',
                             label:'Increase at end of cycle'
@@ -145,6 +153,7 @@ wendler.maxes.cards.editLiftPanel = {
         wendler.maxes.currentEditingLiftProperty = propertyName;
         Ext.getCmp('maxes-edit-lift-toolbar').setTitle(lift.data.name);
         Ext.getCmp('edit-lift-new-name').setValue(lift.data.name);
+        Ext.getCmp('edit-lift-new-max').setValue(lift.data.max);
         Ext.getCmp('edit-lift-cycle-increase').setValue(lift.data.cycleIncrease);
     }
 };
