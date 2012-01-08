@@ -44,6 +44,10 @@ wendler.stores.lifts.Lifts.addListener('update', function (store, record, op) {
     }
 });
 
+wendler.maxes.controller.addLiftButtonPressed = function () {
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'), {type:'slide', direction:'left'});
+};
+
 wendler.maxes.cards.maxesForm = {
     xtype:'formpanel',
     id:'maxes-form',
@@ -71,6 +75,13 @@ wendler.maxes.cards.maxesForm = {
             dock:'top',
             title:'Lifts',
             items:[
+                {
+                    id:'add-lift-button',
+                    iconCls:'add',
+                    iconMask:true,
+                    handler:wendler.maxes.controller.addLiftButtonPressed,
+                    ui:'action'
+                },
                 {xtype:'spacer'},
                 {
                     id:'edit-lifts-button',

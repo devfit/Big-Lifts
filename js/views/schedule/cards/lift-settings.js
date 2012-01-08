@@ -44,7 +44,7 @@ wendler.views.liftSchedule.LiftSettings = {
             items:[
                 {
                     html:'<div class="example-percentages">' +
-                        '<p>"Fresh"</p>' +
+                        '<p>"Fresher"</p>' +
                         '<table>' +
                         '<thead><tr><th>Wk</th><th>%</th></tr></thead>' +
                         '<tbody class="example-percentages-table">' +
@@ -57,7 +57,7 @@ wendler.views.liftSchedule.LiftSettings = {
                 },
                 {
                     html:'<div class="example-percentages">' +
-                        '<p>"Heavy"</p>' +
+                        '<p>"Heavier"</p>' +
                         '<table>' +
                         '<thead><tr><th>Wk</th><th>%</th></tr></thead>' +
                         '<tbody class="example-percentages-table">' +
