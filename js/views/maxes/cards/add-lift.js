@@ -60,6 +60,11 @@ wendler.maxes.controller.addLiftCancelButtonPressed = function () {
 wendler.maxes.cards.addLiftPanel = {
     xtype:'panel',
     id:'maxes-add-lift-panel',
+    listeners: {
+      beforeshow: function(){
+          wendler.navigation.backFunction = wendler.maxes.controller.addLiftCancelButtonPressed;
+      }
+    },
     items:[
         {
             xtype:'formpanel',

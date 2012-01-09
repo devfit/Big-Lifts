@@ -46,6 +46,9 @@ new Ext.Application({
                 for (var i in wendler.events.appLoadCallbackFunctions) {
                     wendler.events.appLoadCallbackFunctions[i]();
                 }
+            },
+            beforecardswitch: function(){
+                wendler.navigation.resetBack();
             }
         }
     })

@@ -149,6 +149,8 @@ wendler.maxes.cards.editLiftPanel = {
         }
     ],
     _setup:function (propertyName) {
+        wendler.navigation.backFunction = wendler.maxes.controller.editLiftCancelButtonPressed;
+
         var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
         wendler.maxes.currentEditingLiftProperty = propertyName;
         Ext.getCmp('maxes-edit-lift-toolbar').setTitle(lift.data.name);
