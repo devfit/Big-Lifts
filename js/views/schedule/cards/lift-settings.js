@@ -29,6 +29,11 @@ wendler.views.liftSchedule.LiftSettings = {
     id:'lift-settings',
     xtype:'panel',
     bodyPadding:5,
+    listeners:{
+        beforeshow:function () {
+            wendler.navigation.backFunction = wendler.controller.liftSettings.returnToLiftSelectFromSettings;
+        }
+    },
     items:[
         {
             html:'The Wendler 5/3/1 book offers two working-set progression options'
@@ -107,7 +112,7 @@ wendler.views.liftSchedule.LiftSettings = {
             ]
         },
         {
-            id: 'manual-percentages-button',
+            id:'manual-percentages-button',
             xtype:'button',
             text:'Manual',
             ui:'decline',
