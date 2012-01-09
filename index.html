@@ -11,9 +11,14 @@
     <script type="text/javascript" src="js/sencha-touch-1.1.1/sencha-touch.js"></script>
     <script type="text/javascript" src="js/util/navigation.js"></script>
     <script type="text/javascript" charset="utf-8">
-        document.addEventListener("deviceready", onDeviceReady, false);
         function onDeviceReady() {
-            document.addEventListener("backbutton", wendler.navigation.back, true);
+            document.addEventListener("backbutton", function () {
+                alert("BACK");
+            }, false);
+        }
+
+        function onLoad() {
+            document.addEventListener("deviceready", onDeviceReady, false);
         }
     </script>
     <script type="text/javascript" src="js/lib/underscore-min.js"></script>
@@ -47,6 +52,6 @@
     <script type='text/javascript' src='js/views/more.js'></script>
     <script type="text/javascript" src="js/wendler.js"></script>
 </head>
-<body>
+<body onload="onLoad()">
 </body>
 </html>
