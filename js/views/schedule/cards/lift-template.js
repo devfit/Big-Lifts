@@ -31,7 +31,7 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
         }
     }
 };
-wendler.stores.Settings.addListener('update',wendler.liftSchedule.controller.updateLiftValues);
+wendler.stores.Settings.addListener('update', wendler.liftSchedule.controller.updateLiftValues);
 
 wendler.liftSchedule.controller.setupLiftCompleteToggle = function () {
     var completed = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty,
@@ -88,7 +88,10 @@ wendler.views.liftSchedule.liftTemplate = {
         }
     ],
     listeners:{
-        beforeshow:wendler.liftSchedule.controller.setupLiftCompleteToggle
+        beforeshow:function () {
+            wendler.navigation.backFunction = wendler.liftSchedule.controller.returnToLiftSelect;
+            wendler.liftSchedule.controller.setupLiftCompleteToggle();
+        }
     },
     dockedItems:[
         {
@@ -121,4 +124,5 @@ wendler.views.liftSchedule.liftTemplate = {
             ]
         }
     ]
-};
+}
+;

@@ -26,13 +26,13 @@ wendler.controller.settings.liftPercentages.getWeekFromComponent = function (com
     return parseInt(title.charAt(title.length - 1));
 };
 
-wendler.controller.settings.liftPercentages.returnToLiftSelector = function () {
+wendler.controller.settings.liftPercentages.returnToLiftSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'), {type:'slide', direction:'right'});
 };
 
 wendler.controller.settings.liftPercentages.showEditLiftPercentage = function (view, index) {
     wendler.settings.liftPercentages.currentSet = index + 1;
-    wendler.controller.liftPercentages.showEditLiftPercentages();
+    wendler.controller.liftPercentages.showEditLiftProgression();
 };
 
 wendler.views.EditLiftPercentages = {
@@ -59,7 +59,10 @@ wendler.views.EditLiftPercentages = {
     ],
     listeners:{
         beforecardswitch:wendler.controller.settings.liftPercentages.switchLiftWeekForComponent,
-        beforeshow:wendler.controller.settings.liftPercentages.updateLiftPercentaqes
+        beforeshow:function () {
+            wendler.navigation.backFunction = wendler.controller.settings.liftPercentages.returnToLiftSettings;
+            wendler.controller.settings.liftPercentages.updateLiftPercentaqes();
+        }
     },
     dockedItems:[
         {
@@ -70,9 +73,10 @@ wendler.views.EditLiftPercentages = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.controller.settings.liftPercentages.returnToLiftSelector
+                    handler:wendler.controller.settings.liftPercentages.returnToLiftSettings
                 }
             ]
         }
     ]
-};
+}
+;

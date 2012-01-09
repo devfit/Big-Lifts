@@ -47,6 +47,9 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
         afterlayout:function () {
             Ext.get('increase-maxes-help-image').addListener('click',
                 wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen);
+        },
+        beforeshow:function () {
+            wendler.navigation.backFunction = wendler.liftSchedule.controller.closeLiftCompletedScreen;
         }
     },
     items:[
@@ -71,7 +74,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     value:1
                 },
                 {
-                    id: 'lifts-complete-done-button',
+                    id:'lifts-complete-done-button',
                     xtype:'button',
                     text:'Done',
                     handler:wendler.liftSchedule.controller.closeLiftCompletedScreen

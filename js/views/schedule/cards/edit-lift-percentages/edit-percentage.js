@@ -1,7 +1,7 @@
 "use strict";
 Ext.ns('wendler.views', 'wendler.settings.liftPercentages', 'wendler.controller.liftPercentages');
 
-wendler.settings.liftPercentages.getCurrentProgression = function() {
+wendler.settings.liftPercentages.getCurrentProgression = function () {
     var progressionIndex = wendler.stores.lifts.LiftProgression.findBy(function (r) {
         return r.data.set == wendler.settings.liftPercentages.currentSet && r.data.week == wendler.settings.liftPercentages.currentWeek;
     });
@@ -14,11 +14,11 @@ wendler.controller.liftPercentages.setupEditLiftPercentages = function () {
     Ext.getCmp('percentage-edit-input').setValue(progression.data.percentage);
 };
 
-wendler.controller.liftPercentages.showEditLiftPercentages = function (week, set) {
+wendler.controller.liftPercentages.showEditLiftProgression = function (week, set) {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-percentage'), {type:'slide', direction:'left'});
 };
 
-wendler.controller.liftPercentages.saveAndReturnToLiftSettings = function(){
+wendler.controller.liftPercentages.saveAndReturnToLiftSettings = function () {
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
     var newPercentage = Ext.getCmp('percentage-edit-input').getValue();
     progression.set('percentage', newPercentage);
@@ -36,6 +36,7 @@ wendler.views.EditPercentage = {
     _rendered:false,
     listeners:{
         beforeshow:function () {
+            wendler.navigation.backFunction = wendler.controller.liftPercentages.returnToLiftSettings;
             if (this._rendered) {
                 wendler.controller.liftPercentages.setupEditLiftPercentages();
             }
@@ -58,7 +59,7 @@ wendler.views.EditPercentage = {
                     xtype:'spacer'
                 },
                 {
-                    id: 'edit-percentage-save-button',
+                    id:'edit-percentage-save-button',
                     xtype:'button',
                     ui:'action',
                     text:'Save',
