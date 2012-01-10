@@ -35,8 +35,10 @@ wendler.views.Log = Ext.extend(Ext.Panel, {
             itemTpl:'<table><tbody><tr>' +
                 '<td><span class="lift-name">{liftName}</span></td>' +
                 '<td><span class="reps">{reps}x</span> <span class="weight">{weight}</span></td>' +
-                '<td><span class="week">Week {week}</span></td>' +
-                '<td><span class="date">{[wendler.controller.log.formatDate(values.date)]}</span></td>' +
+                '<td colspan="2" class="date-week">' +
+                '<span class="date">{[wendler.controller.log.formatDate(values.date)]}</span> ' +
+                '<span class="week">Week {week}</span>' +
+                '</td>' +
                 '</tr></tbody></table>'
         }
     ]

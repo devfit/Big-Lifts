@@ -21,7 +21,12 @@ $dateFontReduction: 0.85;
 
     .reps
     {
+        color: #666;
         font-size: $fontSize !important;
+    }
+
+    td.date-week{
+        text-align: right;
     }
 
     .date, .week {
