@@ -5,19 +5,21 @@ wendler.controller.liftTracking.returnToLiftTemplate = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'right'});
 };
 
-wendler.controller.liftTracking.logLift = function (liftName, reps, week, weight, cycle) {
+wendler.controller.liftTracking.logLift = function (data) {
     var existingLogIndex = wendler.stores.LiftLog.findBy(function (m) {
-        return m.data.cycle === cycle && m.data.week === week && m.data.liftName === liftName;
+        return m.data.cycle === data.cycle && m.data.week === data.week && m.data.liftName === data.liftName;
     });
 
     if (existingLogIndex >= 0) {
         var existingLog = wendler.stores.LiftLog.getAt(existingLogIndex);
-        existingLog.set('reps', reps);
-        existingLog.set('weight', weight);
+        existingLog.set('reps', data.reps);
+        existingLog.set('weight', data.weight);
+        existingLog.set('units', data.units);
+        existingLog.set('expectedReps', data.expectedReps);
         existingLog.save();
     }
     else {
-        wendler.stores.LiftLog.add({liftName:liftName, reps:reps, week:week, weight:weight, cycle:cycle, date: new Date()});
+        wendler.stores.LiftLog.add({liftName:data.liftName, reps:data.reps, week:data.week, weight:data.weight, cycle:data.cycle, date:new Date()});
     }
     wendler.stores.LiftLog.sync();
 };
@@ -30,8 +32,9 @@ wendler.controller.liftTracking.logAndReturnToLiftTemplate = function () {
     var week = wendler.liftSchedule.currentWeek;
     var weight = wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax, liftProgression.data.percentage);
     var cycle = wendler.stores.CurrentCycle.first().data.cycle;
+    var units = wendler.stores.Settings.first().data.units;
 
-    wendler.controller.liftTracking.logLift(liftName, reps, week, weight, cycle);
+    wendler.controller.liftTracking.logLift({liftName:liftName, reps:reps, week:week, weight:weight, cycle:cycle, units:units, expectedReps:expectedReps});
     wendler.controller.liftTracking.returnToLiftTemplate();
 };
 

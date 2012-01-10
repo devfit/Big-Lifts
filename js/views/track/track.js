@@ -17,11 +17,11 @@ wendler.views.Log = Ext.extend(Ext.Panel, {
     id:'log',
     iconCls:'bookmarks',
     layout:'fit',
-    title:'Log',
+    title:'Track',
     dockedItems:[
         {
             xtype:'toolbar',
-            title:'Log',
+            title:'Track',
             items:[
             ]
         }

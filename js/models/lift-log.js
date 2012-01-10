@@ -4,7 +4,9 @@ Ext.regModel('LiftLog', {
         {name:'id', type:'integer'},
         {name:'liftName', type:'string'},
         {name:'weight', type:'string'},
+        {name:'units', type:'string'},
         {name:'reps', type:'integer'},
+        {name:'expectedReps', type:'integer'},
         {name:'week', type:'integer'},
         {name:'cycle', type:'integer'},
         {name:'date', type: 'date'}
