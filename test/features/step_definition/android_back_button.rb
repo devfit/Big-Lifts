@@ -31,3 +31,10 @@ Then /^I am on the lift editor$/ do
   liftEditorDisplayed = @driver.find_element(:id => 'maxes-panel').displayed?
   liftEditorDisplayed.should == true
 end
+
+When /^I click edit squat in the edit lifts lists$/ do
+  liftList = @driver.find_element(:id => 'maxes-edit-lifts-list').find_elements(:class => 'x-list-item')
+  editSquat = liftList.select{ |lift| lift.text == 'Squat' }[0]
+  editSquat.click()
+  sleep @ANIMATION_DELAY
+end
