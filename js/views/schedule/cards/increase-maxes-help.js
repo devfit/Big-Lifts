@@ -3,17 +3,22 @@ Ext.ns('wendler.liftSchedule.controller', 'wendler.views.liftSchedule');
 
 wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('increase-maxes-help'),
-        {type:'slide', direction:'up'});
+        {type:'slide', direction:'right'});
 };
 
 wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lifts-completed'),
-        {type:'slide', direction:'down'});
+        {type:'slide', direction:'left'});
 };
 
 wendler.views.liftSchedule.IncreaseMaxesHelp = {
     id:'increase-maxes-help',
     xtype:'panel',
+    listeners:{
+      beforeshow: function(){
+          wendler.navigation.backFunction = wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen;
+      }
+    },
     dockedItems:[
         {
             xtype:'toolbar',

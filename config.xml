@@ -2,8 +2,8 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
         id="com.stefankendall.wendler531"
-        versionCode="51"
-        version="21">
+        versionCode="52"
+        version="22">
     <name>Wendler 5/3/1</name>
 
     <description>
@@ -24,4 +24,5 @@
 
     <preference name="permissions" value="none"/>
     <preference name="target-device" value="handset"/>
+    <preference name="orientation" value="portrait" />
 </widget>

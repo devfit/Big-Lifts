@@ -1,6 +1,10 @@
 Ext.ns('wendler.views.liftSchedule', 'wendler.controller.liftSettings');
 wendler.controller.liftSettings.returnToLiftSelectFromSettings = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'left'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
+};
+
+wendler.controller.liftSettings.showEditLiftPercentages = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'left'});
 };
 
 wendler.controller.liftSettings.optionButtonPressed = function (option) {
@@ -25,6 +29,11 @@ wendler.views.liftSchedule.LiftSettings = {
     id:'lift-settings',
     xtype:'panel',
     bodyPadding:5,
+    listeners:{
+        beforeshow:function () {
+            wendler.navigation.backFunction = wendler.controller.liftSettings.returnToLiftSelectFromSettings;
+        }
+    },
     items:[
         {
             html:'The Wendler 5/3/1 book offers two working-set progression options'
@@ -40,6 +49,7 @@ wendler.views.liftSchedule.LiftSettings = {
             items:[
                 {
                     html:'<div class="example-percentages">' +
+                        '<p>"Fresher"</p>' +
                         '<table>' +
                         '<thead><tr><th>Wk</th><th>%</th></tr></thead>' +
                         '<tbody class="example-percentages-table">' +
@@ -52,6 +62,7 @@ wendler.views.liftSchedule.LiftSettings = {
                 },
                 {
                     html:'<div class="example-percentages">' +
+                        '<p>"Heavier"</p>' +
                         '<table>' +
                         '<thead><tr><th>Wk</th><th>%</th></tr></thead>' +
                         '<tbody class="example-percentages-table">' +
@@ -99,6 +110,13 @@ wendler.views.liftSchedule.LiftSettings = {
                     ]
                 }
             ]
+        },
+        {
+            id:'manual-percentages-button',
+            xtype:'button',
+            text:'Manual',
+            ui:'decline',
+            handler:wendler.controller.liftSettings.showEditLiftPercentages
         }
     ],
     dockedItems:[

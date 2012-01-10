@@ -9,11 +9,19 @@ wendler.controller.more.moreInfoForListItem = function (c, index) {
 };
 
 wendler.controller.more.suggestFeature = function () {
-    location.href = util.email.buildEmailLink("wendler531@stefankendall.com", "Wendler 5/3/1: Suggest a Feature");
+    location.href = util.email.buildEmailLink("wendler531@stefankendall.com", "Wendler 5/3/1: Suggest a Feature, "
+        + wendler.controller.more.getVersionOsInfo());
 };
 
 wendler.controller.more.reportProblem = function () {
-    location.href = util.email.buildEmailLink("wendler531@stefankendall.com", "Wendler 5/3/1: Report a Problem");
+    location.href = util.email.buildEmailLink("wendler531@stefankendall.com", "Wendler 5/3/1: Report a Problem, " +
+        wendler.controller.more.getVersionOsInfo());
+};
+
+wendler.controller.more.getVersionOsInfo = function () {
+    var version = "v" + wendler.version;
+    var os = Ext.is.Android ? "Android" : "iOS";
+    return version + "-" + os;
 };
 
 wendler.controller.more.showSettings = function () {

@@ -8,7 +8,15 @@
     <link rel="stylesheet" href="css/liftSchedule.css" type="text/css"/>
     <link rel="stylesheet" href="css/lift-settings.css" type="text/css"/>
     <link rel="stylesheet" href="css/lift-log.css" type="text/css"/>
+    <script type="text/javascript" src="phonegap.js"></script>
     <script type="text/javascript" src="js/sencha-touch-1.1.1/sencha-touch.js"></script>
+    <script type="text/javascript" src="js/util/navigation.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        document.addEventListener("deviceready", onDeviceReady, false);
+        function onDeviceReady() {
+            document.addEventListener("backbutton", wendler.navigation.back, true);
+        }
+    </script>
     <script type="text/javascript" src="js/lib/underscore-min.js"></script>
     <script type="text/javascript" src="js/app-config.js"></script>
     <script type="text/javascript" src="js/version.js"></script>
@@ -33,6 +41,9 @@
     <script type='text/javascript' src='js/views/schedule/cards/lift-tracking.js'></script>
     <script type='text/javascript' src='js/views/schedule/cards/lift-template.js'></script>
     <script type='text/javascript' src='js/views/schedule/cards/lift-settings.js'></script>
+    <script type='text/javascript'
+            src='js/views/schedule/cards/edit-lift-percentages/edit-lift-percentages.js'></script>
+    <script type='text/javascript' src='js/views/schedule/cards/edit-lift-percentages/edit-percentage.js'></script>
     <script type='text/javascript' src='js/views/schedule/liftSchedule.js'></script>
     <script type='text/javascript' src='js/views/settings/cards/settings-form.js'></script>
     <script type='text/javascript' src='js/views/settings/settings.js'></script>
