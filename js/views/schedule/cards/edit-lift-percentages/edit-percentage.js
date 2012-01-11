@@ -36,7 +36,7 @@ wendler.views.EditPercentage = {
     _rendered:false,
     listeners:{
         beforeshow:function () {
-            wendler.navigation.backFunction = wendler.controller.liftPercentages.returnToLiftSettings;
+            wendler.navigation.setBackFunction(wendler.controller.liftPercentages.returnToLiftSettings);
             if (this._rendered) {
                 wendler.controller.liftPercentages.setupEditLiftPercentages();
             }

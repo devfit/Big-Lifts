@@ -31,7 +31,7 @@ wendler.views.liftSchedule.LiftSettings = {
     bodyPadding:5,
     listeners:{
         beforeshow:function () {
-            wendler.navigation.backFunction = wendler.controller.liftSettings.returnToLiftSelectFromSettings;
+            wendler.navigation.setBackFunction(wendler.controller.liftSettings.returnToLiftSelectFromSettings);
         }
     },
     items:[

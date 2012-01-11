@@ -62,7 +62,7 @@ wendler.maxes.cards.addLiftPanel = {
     id:'maxes-add-lift-panel',
     listeners: {
       beforeshow: function(){
-          wendler.navigation.backFunction = wendler.maxes.controller.addLiftCancelButtonPressed;
+          wendler.navigation.setBackFunction(wendler.maxes.controller.addLiftCancelButtonPressed);
       }
     },
     items:[

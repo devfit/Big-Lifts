@@ -16,7 +16,7 @@ wendler.views.liftSchedule.IncreaseMaxesHelp = {
     xtype:'panel',
     listeners:{
       beforeshow: function(){
-          wendler.navigation.backFunction = wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen;
+          wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen);
       }
     },
     dockedItems:[

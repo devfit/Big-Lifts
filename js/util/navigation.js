@@ -1,12 +1,13 @@
 "use strict";
 Ext.ns('wendler.navigation');
 
-wendler.navigation.DEFAULT_BACK = function () {
-};
-wendler.navigation.backFunction = wendler.navigation.DEFAULT_BACK;
 wendler.navigation.resetBack = function () {
-    wendler.navigation.backFunction = wendler.navigation.DEFAULT_BACK;
+    document.removeEventListener("backbutton", wendler.navigation.back, false);
 };
+
 wendler.navigation.back = function () {
-    wendler.navigation.backFunction();
+};
+wendler.navigation.setBackFunction = function (backFunction) {
+    wendler.navigation.back = backFunction;
+    document.addEventListener('backbutton', wendler.navigation.back, false);
 };

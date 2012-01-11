@@ -49,7 +49,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                 wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen);
         },
         beforeshow:function () {
-            wendler.navigation.backFunction = wendler.liftSchedule.controller.closeLiftCompletedScreen;
+            wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeLiftCompletedScreen);
         }
     },
     items:[

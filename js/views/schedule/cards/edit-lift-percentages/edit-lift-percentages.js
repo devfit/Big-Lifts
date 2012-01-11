@@ -60,7 +60,7 @@ wendler.views.EditLiftPercentages = {
     listeners:{
         beforecardswitch:wendler.controller.settings.liftPercentages.switchLiftWeekForComponent,
         beforeshow:function () {
-            wendler.navigation.backFunction = wendler.controller.settings.liftPercentages.returnToLiftSettings;
+            wendler.navigation.setBackFunction(wendler.controller.settings.liftPercentages.returnToLiftSettings);
             wendler.controller.settings.liftPercentages.updateLiftPercentaqes();
         }
     },

@@ -1,5 +1,5 @@
 When /^I press the android back button$/ do
-    @driver.execute_script('wendler.navigation.backFunction()')
+    @driver.execute_script('wendler.navigation.back()')
     sleep @ANIMATION_DELAY
 end
 

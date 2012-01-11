@@ -90,7 +90,7 @@ wendler.views.liftSchedule.liftTemplate = {
     ],
     listeners:{
         beforeshow:function () {
-            wendler.navigation.backFunction = wendler.liftSchedule.controller.returnToLiftSelect;
+            wendler.navigation.setBackFunction(wendler.liftSchedule.controller.returnToLiftSelect);
             wendler.liftSchedule.controller.setupLiftCompleteToggle();
         }
     },
