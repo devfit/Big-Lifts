@@ -7,7 +7,7 @@ wendler.settings.liftPercentages.getCurrentProgression = function () {
     });
     return wendler.stores.lifts.LiftProgression.getAt(progressionIndex);
 }
-wendler.controller.liftPercentages.setupEditLiftPercentages = function () {
+wendler.controller.liftPercentages.setupEditLiftProgression = function () {
     Ext.getCmp('edit-percentage')._rendered = true;
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
     Ext.get('edit-percentage-label').setHTML('Week ' + wendler.settings.liftPercentages.currentWeek + ", Set " + wendler.settings.liftPercentages.currentSet);
@@ -38,10 +38,10 @@ wendler.views.EditPercentage = {
         beforeshow:function () {
             wendler.navigation.setBackFunction(wendler.controller.liftPercentages.returnToLiftSettings);
             if (this._rendered) {
-                wendler.controller.liftPercentages.setupEditLiftPercentages();
+                wendler.controller.liftPercentages.setupEditLiftProgression();
             }
         },
-        afterlayout:wendler.controller.liftPercentages.setupEditLiftPercentages
+        afterlayout:wendler.controller.liftPercentages.setupEditLiftProgression
     },
     dockedItems:[
         {
@@ -63,7 +63,7 @@ wendler.views.EditPercentage = {
                     xtype:'button',
                     ui:'action',
                     text:'Save',
-                    handler:wendler.controller.liftPercentages.saveAndReturnToLiftSettings
+                    handler:wendler.controller.liftPercentages.setupEditLiftProgression
                 }
             ]
         }
