@@ -58,6 +58,11 @@ new Ext.form.FormPanel({
                     name:'rounding-type',
                     label:'Rounding',
                     options:wendler.settings.options.roundingType
+                },
+                {
+                    xtype: 'togglefield',
+                    name: 'use-training-max',
+                    label: 'Use training max'
                 }
             ]
         },

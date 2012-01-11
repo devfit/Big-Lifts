@@ -2,7 +2,8 @@
 Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.controller');
 
 wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
-    var trainingMaxModifier = 0.9;
+    var settings = wendler.stores.Settings.first();
+    var trainingMaxModifier = settings.get('use-training-max') == 1 ? 0.9 : 1.0;
 
     var unroundedWeight = max * percentage * trainingMaxModifier / 100.0;
     var roundingValue = wendler.stores.Settings.first().data['rounding-value'];
