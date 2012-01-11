@@ -63,7 +63,7 @@ wendler.views.EditPercentage = {
                     xtype:'button',
                     ui:'action',
                     text:'Save',
-                    handler:wendler.controller.liftPercentages.setupEditLiftProgression
+                    handler:wendler.controller.liftPercentages.saveAndReturnToLiftSettings
                 }
             ]
         }
