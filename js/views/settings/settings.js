@@ -10,6 +10,11 @@ wendler.views.Settings = Ext.extend(Ext.Panel, {
     iconCls:'settings',
     layout:'card',
     cardSwitchAnimation:'slide',
+    listeners: {
+      beforeshow: function(){
+          wendler.navigation.setBackFunction(wendler.controller.settings.backToMore);
+      }
+    },
     dockedItems:[
         {
             xtype:'toolbar',

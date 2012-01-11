@@ -51,12 +51,6 @@ wendler.views.EditLiftPercentages = {
             }
         ]
     },
-    items:[
-        {title:'Wk 1'},
-        {title:'Wk 2'},
-        {title:'Wk 3'},
-        {title:'Wk 4'}
-    ],
     listeners:{
         beforecardswitch:wendler.controller.settings.liftPercentages.switchLiftWeekForComponent,
         beforeshow:function () {
@@ -64,6 +58,12 @@ wendler.views.EditLiftPercentages = {
             wendler.controller.settings.liftPercentages.updateLiftPercentaqes();
         }
     },
+    items:[
+        {title:'Wk 1'},
+        {title:'Wk 2'},
+        {title:'Wk 3'},
+        {title:'Wk 4'}
+    ],
     dockedItems:[
         {
             dock:'top',
