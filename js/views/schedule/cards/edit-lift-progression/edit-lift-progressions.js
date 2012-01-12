@@ -69,7 +69,7 @@ wendler.views.EditLiftPercentages = {
         {
             dock:'top',
             xtype:'toolbar',
-            title:'Percentages',
+            title:'Progressions',
             items:[
                 {
                     text:'Back',

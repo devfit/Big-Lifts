@@ -10,7 +10,8 @@ wendler.settings.liftPercentages.getCurrentProgression = function () {
 wendler.controller.liftPercentages.setupEditLiftProgression = function () {
     Ext.getCmp('edit-percentage')._rendered = true;
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
-    Ext.get('edit-percentage-label').setHTML('Week ' + wendler.settings.liftPercentages.currentWeek + ", Set " + wendler.settings.liftPercentages.currentSet);
+    Ext.get('edit-progression-title').setHTML('Week ' + wendler.settings.liftPercentages.currentWeek + ", Set " + wendler.settings.liftPercentages.currentSet);
+    Ext.getCmp('reps-edit-input').setValue(progression.data.reps);
     Ext.getCmp('percentage-edit-input').setValue(progression.data.percentage);
 };
 
@@ -21,7 +22,9 @@ wendler.controller.liftPercentages.showEditLiftProgression = function (week, set
 wendler.controller.liftPercentages.saveAndReturnToLiftSettings = function () {
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
     var newPercentage = Ext.getCmp('percentage-edit-input').getValue();
+    var newReps = Ext.getCmp('reps-edit-input').getValue();
     progression.set('percentage', newPercentage);
+    progression.set('reps', newReps);
     progression.save();
     wendler.controller.liftPercentages.returnToLiftSettings();
 };
@@ -34,6 +37,7 @@ wendler.views.EditPercentage = {
     xtype:'formpanel',
     id:'edit-percentage',
     _rendered:false,
+    bodyStyle: 'padding-top: 0px',
     listeners:{
         beforeshow:function () {
             wendler.navigation.setBackFunction(wendler.controller.liftPercentages.returnToLiftSettings);
@@ -47,7 +51,7 @@ wendler.views.EditPercentage = {
         {
             id:'edit-percentage-toolbar',
             xtype:'toolbar',
-            title:'Percentages',
+            title:'Progression',
             items:[
                 {
                     xtype:'button',
@@ -72,12 +76,19 @@ wendler.views.EditPercentage = {
         {
             xtype:'fieldset',
             style:'margin-top: 0px',
+            title: "<div id='edit-progression-title'>Week 1, Set 1</div>",
             items:[
+                {
+                    id:'reps-edit-input',
+                    xtype:'numberfield',
+                    labelWidth:'50%',
+                    label:'Reps'
+                },
                 {
                     id:'percentage-edit-input',
                     xtype:'numberfield',
                     labelWidth:'50%',
-                    label:'<div id="edit-percentage-label"></div>'
+                    label:'Percentage'
                 }
             ]
         }
