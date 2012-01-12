@@ -63,7 +63,7 @@ When /^I click edit "([^"]*)"$/ do |lift|
      editLiftsList.find_elements(:class => 'x-list-item').select{|l| puts l.text; l.text == lift}[0].click()
 end
 
-When /^I close the edit lift screen$/ do
+When /^I save and close the edit lift screen$/ do
     @driver.find_element(:id => 'edit-lift-done-button').click
     sleep @ANIMATION_DELAY
 end
