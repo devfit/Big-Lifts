@@ -3,7 +3,7 @@ class MainNavigation
       :lift_schedule => '5/3/1',
       :lift_editor => 'Lifts',
       :one_rep_calculator => '1-Rep Calc',
-      :settings => 'Settings'
+      :more => 'More'
   }
 
   def initialize(driver, animationDelay)
