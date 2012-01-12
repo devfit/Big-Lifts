@@ -141,7 +141,7 @@ wendler.maxes.cards.editLiftPanel = {
                 {xtype:'spacer'},
                 {
                     id:'edit-lift-done-button',
-                    text:'Done',
+                    text:'Save',
                     handler:wendler.maxes.controller.editLiftDoneButtonPressed,
                     ui:'action'
                 }
