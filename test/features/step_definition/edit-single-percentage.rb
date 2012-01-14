@@ -24,7 +24,7 @@ When /^I set the manual percentage to (\d+)$/ do |percentage|
   percentageInput.send_keys percentage
 end
 
-When /^I save the manual percentage$/ do
+When /^I save the manual progression$/ do
   @driver.find_element(:id => 'edit-percentage-save-button').click()
   sleep @ANIMATION_DELAY
 end
@@ -37,5 +37,16 @@ end
 Then /^The set (\d+) lift percentage shows (\d+)%$/ do |set, percentage|
   setListItem = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item')[set.to_i-1]
   setListItem.text.include?( "#{percentage}%" ).should == true
+end
+
+When /^I set the manual reps to (\d+)$/ do |reps|
+   repsInput = @driver.find_element(:name => 'reps-edit-input')
+   repsInput.clear
+   repsInput.send_keys reps
+end
+
+Then /^The set (\d+) reps shows (\d+)$/ do |set, reps|
+  setListItem = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item')[set.to_i-1]
+  setListItem.text.include?( "#{reps}x" ).should == true
 end
 
