@@ -47,18 +47,24 @@ Ext.regModel('MoreList', {
 wendler.more.listStore = new Ext.data.Store({model:'MoreList', data:wendler.more.listData});
 
 wendler.views.MoreInfoList = {
-    id:'more-info-list',
+    id:'more-info-list-panel',
+    xtype:'panel',
     dockedItems:[
         {
             xtype:'toolbar',
             title:'More'
         }
     ],
-    xtype:'list',
-    itemTpl:'{text}',
-    itemCls:'more-info-row',
-    store:wendler.more.listStore,
-    listeners:{
-        itemtap:wendler.controller.more.moreInfoForListItem
-    }
+    items:[
+        {
+            id: 'more-info-list',
+            xtype:'list',
+            itemTpl:'{text}',
+            itemCls:'more-info-row',
+            store:wendler.more.listStore,
+            listeners:{
+                itemtap:wendler.controller.more.moreInfoForListItem
+            }
+        }
+    ]
 };

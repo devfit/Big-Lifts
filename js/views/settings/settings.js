@@ -2,7 +2,7 @@
 Ext.ns('wendler.views', 'wendler.controller.settings');
 
 wendler.controller.settings.backToMore = function () {
-    Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list'), {type:'slide', direction:'right'});
+    Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'), {type:'slide', direction:'right'});
 };
 
 wendler.views.Settings = Ext.extend(Ext.Panel, {
