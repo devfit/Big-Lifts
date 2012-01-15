@@ -8,6 +8,10 @@
     padding-left: 0.4em;
 }
 
+.lift-row .amrap-indicator {
+    display: none;
+}
+
 .lift-percentage-row {
     font-size: 1.5em;
 }
