@@ -51,7 +51,6 @@ wendler.maxes.controller.addLiftButtonPressed = function () {
 wendler.maxes.cards.maxesForm = {
     xtype:'formpanel',
     id:'maxes-form',
-    scroll:util.scrolling.lockedVerticalScroller,
     bodyStyle:'padding-top:0',
     items:[
         {

@@ -12,7 +12,6 @@ wendler.settings.controller.reloadForm = function () {
 
 new Ext.form.FormPanel({
     id:'settings-form',
-    scroll:util.scrolling.lockedVerticalScroller,
     listeners:{
         afterlayout:wendler.settings.controller.reloadForm
     },
