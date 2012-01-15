@@ -4,7 +4,7 @@ $LOAD_PATH << File.expand_path('../../../lib', __FILE__)
 require 'wendler531'
 
 Before do
-  @ANIMATION_DELAY = 0.75
+  @ANIMATION_DELAY = 0.8
 
   testFile = ENV['TEST_FILE'] || 'index.html'
   @driver = Selenium::WebDriver.for :chrome

@@ -10,6 +10,7 @@ When /^I select week (\d+) for the manual percentages editor$/ do |week|
   }[0]
   weekTab.click()
   sleep @ANIMATION_DELAY
+  sleep 0.5
 end
 
 When /^I select set (\d+) on the manual percentages editor$/ do |set|
