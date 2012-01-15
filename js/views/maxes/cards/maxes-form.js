@@ -30,14 +30,33 @@ wendler.maxes.controller.createMaxesInput = function (record) {
         xtype:'textfield',
         name:liftProperty + "-training",
         value:trainingMax,
-        cls: 'training-max-value',
-        listeners: {
-            afterrender: function(ele) {
+        cls:'training-max-value',
+        listeners:{
+            afterrender:function (ele) {
                 ele.fieldEl.dom.readOnly = true;
             }
         }
     });
 };
+
+wendler.maxes.controller.showHideTrainingMaxes = function (r, changed) {
+    var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
+    if (changed.data['use-training-max']) {
+        if (trainingMaxesPanel.isHidden()) {
+            trainingMaxesPanel.flex = 1;
+            trainingMaxesPanel.show();
+            Ext.getCmp('maxes-form-hbox').doLayout();
+        }
+    }
+    else {
+        if (!trainingMaxesPanel.isHidden()) {
+            trainingMaxesPanel.flex = 0;
+            trainingMaxesPanel.hide();
+            Ext.getCmp('maxes-form-hbox').doLayout();
+        }
+    }
+};
+wendler.stores.Settings.addListener('update', wendler.maxes.controller.showHideTrainingMaxes);
 
 wendler.maxes.controller.rebuildMaxesList = function () {
     Ext.getCmp('maxes-form-items').removeAll();
@@ -86,7 +105,8 @@ wendler.maxes.cards.maxesFormEditable = {
 
 wendler.maxes.cards.trainingMaxes = {
     xtype:'panel',
-    flex:1,
+    id: 'training-maxes-panel',
+    flex: 1,
     bodyPadding:0,
     items:[
         {
@@ -100,9 +120,15 @@ wendler.maxes.cards.trainingMaxes = {
 wendler.maxes.cards.maxesForm = {
     xtype:'formpanel',
     id:'maxes-form',
+    listeners:{
+        afterrender:function () {
+            wendler.maxes.controller.showHideTrainingMaxes(null, wendler.stores.Settings.first());
+        }
+    },
     items:[
         {
             xtype:'panel',
+            id: 'maxes-form-hbox',
             layout:{
                 type:'hbox'
             },
