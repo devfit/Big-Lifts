@@ -6,7 +6,8 @@ wendler.settings.liftPercentages.getCurrentProgression = function () {
         return r.data.set == wendler.settings.liftPercentages.currentSet && r.data.week == wendler.settings.liftPercentages.currentWeek;
     });
     return wendler.stores.lifts.LiftProgression.getAt(progressionIndex);
-}
+};
+
 wendler.controller.liftPercentages.setupEditLiftProgression = function () {
     Ext.getCmp('edit-percentage')._rendered = true;
     var progression = wendler.settings.liftPercentages.getCurrentProgression();

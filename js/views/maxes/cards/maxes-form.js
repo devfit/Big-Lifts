@@ -23,6 +23,20 @@ wendler.maxes.controller.createMaxesInput = function (record) {
         label:liftName,
         value:record.data.max
     });
+
+    var trainingMax = util.roundNumber(0.9 * record.data.max, '0.5', 'normal');
+    Ext.getCmp('training-maxes').add({
+        id:'maxes-' + liftProperty + '-training',
+        xtype:'textfield',
+        name:liftProperty + "-training",
+        value:trainingMax,
+        cls: 'training-max-value',
+        listeners: {
+            afterrender: function(ele) {
+                ele.fieldEl.dom.readOnly = true;
+            }
+        }
+    });
 };
 
 wendler.maxes.controller.rebuildMaxesList = function () {
@@ -41,6 +55,8 @@ wendler.stores.lifts.Lifts.addListener('update', function (store, record, op) {
     var existingInput = Ext.getCmp('maxes-' + propertyName);
     if (typeof(existingInput) !== "undefined") {
         existingInput.setValue(max);
+        var trainingMaxInput = Ext.getCmp('maxes-' + propertyName + '-training');
+        trainingMaxInput.setValue(util.roundNumber(0.9 * max, '0.5', 'normal'));
     }
 });
 
@@ -48,17 +64,15 @@ wendler.maxes.controller.addLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'), {type:'slide', direction:'left'});
 };
 
-wendler.maxes.cards.maxesForm = {
-    xtype:'formpanel',
-    id:'maxes-form',
-    scroll:util.scrolling.lockedVerticalScroller,
-    bodyStyle:'padding-top:0',
+wendler.maxes.cards.maxesFormEditable = {
+    xtype:'panel',
+    flex:3,
+    bodyPadding:0,
     items:[
         {
             id:'maxes-form-items',
             xtype:'fieldset',
-            style:'margin-top: 0',
-            title: 'Maxes',
+            title:'Maxes',
             defaults:{
                 listeners:{
                     change:wendler.maxes.controller.liftValuesChanged
@@ -66,6 +80,39 @@ wendler.maxes.cards.maxesForm = {
                 labelWidth:'35%',
                 useClearIcon:true
             }
+        }
+    ]
+};
+
+wendler.maxes.cards.trainingMaxes = {
+    xtype:'panel',
+    flex:1,
+    bodyPadding:0,
+    items:[
+        {
+            id:'training-maxes',
+            xtype:'fieldset',
+            title:'90%'
+        }
+    ]
+};
+
+wendler.maxes.cards.maxesForm = {
+    xtype:'formpanel',
+    id:'maxes-form',
+    scroll:util.scrolling.lockedVerticalScroller,
+    items:[
+        {
+            xtype:'panel',
+            layout:{
+                type:'hbox'
+            },
+            padding:0,
+            bodyPadding:0,
+            items:[
+                wendler.maxes.cards.maxesFormEditable,
+                wendler.maxes.cards.trainingMaxes
+            ]
         }
     ],
     dockedItems:[
