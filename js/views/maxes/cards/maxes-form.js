@@ -100,7 +100,6 @@ wendler.maxes.cards.trainingMaxes = {
 wendler.maxes.cards.maxesForm = {
     xtype:'formpanel',
     id:'maxes-form',
-    scroll:util.scrolling.lockedVerticalScroller,
     items:[
         {
             xtype:'panel',
