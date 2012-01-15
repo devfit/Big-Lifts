@@ -29,7 +29,12 @@ new Ext.form.FormPanel({
                         }
 
                         var settingsRecord = wendler.stores.Settings.first();
-                        settingsRecord.set(settingsForm.getValues());
+                        var settingsFormValues = settingsForm.getValues();
+                        for (var property in settingsFormValues) {
+                            if (settingsRecord.get(property) !== settingsFormValues[property]) {
+                                settingsRecord.set(property, settingsFormValues[property]);
+                            }
+                        }
                         settingsRecord.save();
                     }
                 }
@@ -59,9 +64,9 @@ new Ext.form.FormPanel({
                     options:wendler.settings.options.roundingType
                 },
                 {
-                    xtype: 'togglefield',
-                    name: 'use-training-max',
-                    label: 'Use training max'
+                    xtype:'togglefield',
+                    name:'use-training-max',
+                    label:'Use training max'
                 }
             ]
         },
