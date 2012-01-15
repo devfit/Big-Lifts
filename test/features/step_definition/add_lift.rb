@@ -60,7 +60,7 @@ end
 
 When /^I click edit "([^"]*)"$/ do |lift|
      editLiftsList = @driver.find_element(:id => 'maxes-edit-lifts-list')
-     editLiftsList.find_elements(:class => 'x-list-item').select{|l| puts l.text; l.text == lift}[0].click()
+     editLiftsList.find_elements(:class => 'x-list-item').select{|l| l.text == lift}[0].click()
 end
 
 When /^I save and close the edit lift screen$/ do

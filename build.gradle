@@ -1,5 +1,16 @@
 import groovy.json.JsonSlurper
 import groovy.json.JsonOutput
+import groovyx.gpars.GParsPool
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.codehaus.gpars:gpars:1.0-beta-1'
+    }
+}
 
 task copyImages(type: Copy) {
     from 'images'
@@ -111,9 +122,23 @@ task clean << {
 task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplashes, compressJs, copyCss]) << {
 }
 
-task test(type: Exec) {
-    commandLine = ['cucumber']
-    workingDir = new File('./test')
+task test() << {
+    List<File> tests = []
+    new File('./test').eachFileRecurse {
+        if (it.name.endsWith('.feature')) {
+            tests << it
+        }
+    }
+
+
+    GParsPool.withPool(4) {
+        tests.eachParallel { File test ->
+            exec {
+                commandLine= ['cucumber', test.getAbsolutePath(), '-f', 'progress']
+                workingDir = new File('./test')
+            }
+        }
+    }
 }
 
 def getGitStatus() {

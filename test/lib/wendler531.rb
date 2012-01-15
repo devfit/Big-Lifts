@@ -17,17 +17,11 @@ class MainNavigation
       raise "#{location}: Not a valid menu location"
     end
 
+    tabNavigation = @driver.find_element(:id, 'tab-navigation')
+    mainNavButtons = tabNavigation.find_elements(:class => 'x-tab')
+
     mainNavButtons.select { |button| button.text == menuTextPattern }[0].click
     sleep @animationDelay
-  end
-
-  def mainNavButtons
-    if (@mainNavButtons)
-      @mainNavButtons
-    else
-      tabNavigation = @driver.find_element(:id, 'tab-navigation')
-      @mainNavButtons ||= tabNavigation.find_elements(:class => 'x-tab')
-    end
   end
 end
 
