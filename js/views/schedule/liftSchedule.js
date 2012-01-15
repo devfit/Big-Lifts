@@ -22,7 +22,7 @@ wendler.liftSchedule.controller.allLiftsAreCompleted = function () {
 wendler.views.LiftSchedule = Ext.extend(Ext.Panel, {
     id:'lift-schedule',
     title:'5/3/1',
-    iconCls:'time',
+    iconCls:'icnBarbell',
     layout:'card',
     cardSwitchAnimation:'slide',
     activeItem: 0,
