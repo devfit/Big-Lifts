@@ -18,6 +18,9 @@ wendler.liftSchedule.controller.unmarkAllLifts = function () {
 
 wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
     if (Ext.getCmp('uncheck-all-lifts-toggle').getValue() === 1) {
+        var currentCycle = wendler.stores.CurrentCycle.first();
+        currentCycle.set('cycle', currentCycle.data.cycle + 1);
+        currentCycle.save();
         wendler.liftSchedule.controller.unmarkAllLifts();
     }
 
@@ -64,7 +67,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                 {
                     id:'uncheck-all-lifts-toggle',
                     xtype:'togglefield',
-                    label:'Uncheck all lifts',
+                    label:'Start new cycle',
                     value:1
                 },
                 {
