@@ -5,6 +5,3 @@ if (Ext.is.Android) {
 else {
     appConfig.cardSwitchAnimation = 'slide';
 }
-
-Ext.ns('wendler.events');
-wendler.events.appLoadCallbackFunctions = [];

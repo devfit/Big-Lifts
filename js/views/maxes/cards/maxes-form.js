@@ -11,7 +11,6 @@ wendler.maxes.controller.buildMaxesFromStore = function () {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
     Ext.getCmp('maxes-form-items').doLayout();
 };
-wendler.events.appLoadCallbackFunctions.push(wendler.maxes.controller.buildMaxesFromStore);
 
 wendler.maxes.controller.createMaxesInput = function (record) {
     var liftName = record.data.name;
@@ -30,7 +29,6 @@ wendler.maxes.controller.createMaxesInput = function (record) {
         xtype:'textfield',
         name:liftProperty + "-training",
         value:trainingMax,
-        cls:'training-max-value',
         listeners:{
             afterrender:function (ele) {
                 ele.fieldEl.dom.readOnly = true;
@@ -122,6 +120,7 @@ wendler.maxes.cards.maxesForm = {
     id:'maxes-form',
     listeners:{
         afterrender:function () {
+            wendler.maxes.controller.buildMaxesFromStore();
             wendler.maxes.controller.showHideTrainingMaxes(null, wendler.stores.Settings.first());
         }
     },

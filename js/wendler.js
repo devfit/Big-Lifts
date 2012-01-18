@@ -42,11 +42,6 @@ new Ext.Application({
             new wendler.views.More()
         ],
         listeners: {
-            afterrender: function() {
-                for (var i in wendler.events.appLoadCallbackFunctions) {
-                    wendler.events.appLoadCallbackFunctions[i]();
-                }
-            },
             beforecardswitch: function(){
                 wendler.navigation.resetBack();
             }
