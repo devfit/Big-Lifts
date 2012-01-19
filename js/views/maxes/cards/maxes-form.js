@@ -9,7 +9,6 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
 
 wendler.maxes.controller.buildMaxesFromStore = function () {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
-    Ext.getCmp('maxes-form-items').doLayout();
 };
 
 wendler.maxes.controller.createMaxesInput = function (record) {
@@ -22,6 +21,7 @@ wendler.maxes.controller.createMaxesInput = function (record) {
         label:liftName,
         value:record.data.max
     });
+    Ext.getCmp('maxes-form-items').doLayout();
 
     var trainingMax = util.roundNumber(0.9 * record.data.max, '0.5', 'normal');
     Ext.getCmp('training-maxes').add({
@@ -35,6 +35,7 @@ wendler.maxes.controller.createMaxesInput = function (record) {
             }
         }
     });
+    Ext.getCmp('training-maxes').doLayout();
 };
 
 wendler.maxes.controller.showHideTrainingMaxes = function (r, changed) {
@@ -58,6 +59,7 @@ wendler.stores.Settings.addListener('update', wendler.maxes.controller.showHideT
 
 wendler.maxes.controller.rebuildMaxesList = function () {
     Ext.getCmp('maxes-form-items').removeAll();
+    Ext.getCmp('training-maxes').removeAll();
     wendler.maxes.controller.buildMaxesFromStore();
 };
 
