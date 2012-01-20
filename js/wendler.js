@@ -14,8 +14,6 @@ wendler.main.determineStartTab = function(){
 };
 
 new Ext.Application({
-    tabletStartupScreen: 'tablet_startup.png',
-    phoneStartupScreen: 'phone_startup.png',
     icon: 'apple-touch-icon.png',
     glossOnIcon: false,
 
