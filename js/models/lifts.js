@@ -1,6 +1,6 @@
 "use strict";
 Ext.ns('wendler.stores.lifts', 'wendler.defaults');
-Ext.ns('wendler.stores.migrations', 'wendler.models.Lift');
+Ext.ns('wendler.stores.migrations', 'wendler.models.Lift', 'wendler.stores.recovery');
 
 wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropertyName, week) {
     var completionIndex = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
@@ -34,6 +34,13 @@ wendler.models.Lift.uniquePropertyNameValidation = function (propertyName) {
     return liftIsUnique;
 };
 
+wendler.stores.recovery.setupDefaultLifts = function () {
+    if (wendler.stores.lifts.Lifts.getCount() == 0) {
+        wendler.stores.lifts.Lifts.add(wendler.defaults.lifts);
+        wendler.stores.lifts.Lifts.sync();
+    }
+};
+
 Ext.regModel('Lift', {
     fields:[
         {name:'id', type:'integer'},
@@ -55,7 +62,6 @@ Ext.regModel('Lift', {
         id:'lift-proxy'
     }
 });
-
 
 wendler.defaults.lifts = [
     Ext.ModelMgr.create({name:'Squat', max:200, propertyName:'squat', cycleIncrease:10}, 'Lift'),
@@ -91,10 +97,7 @@ wendler.stores.lifts.Lifts = new Ext.data.Store({
     model:'Lift',
     listeners:{
         load:function () {
-            if (this.getCount() == 0) {
-                this.add(wendler.defaults.lifts);
-                this.sync();
-            }
+            wendler.stores.recovery.setupDefaultLifts();
             wendler.stores.migrations.liftModelMigration();
         }
     }

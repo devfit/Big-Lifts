@@ -1,4 +1,4 @@
-Ext.ns('wendler.liftProgressions', 'wendler.stores.lifts', 'wendler.defaults');
+Ext.ns('wendler.liftProgressions', 'wendler.stores.lifts', 'wendler.stores.recovery', 'wendler.defaults');
 Ext.regModel('LiftProgression', {
     fields:[
         {name:'id', type:'integer'},
@@ -70,20 +70,22 @@ wendler.liftProgressions.options.push([
 
 wendler.defaults.liftProgression = wendler.liftProgressions.options[0];
 
+wendler.stores.recovery.setupDefaultLiftProgressions = function () {
+    if (wendler.stores.lifts.LiftProgression.getCount() !== wendler.defaults.liftProgression.length) {
+        wendler.stores.lifts.LiftProgression.each(function (m) {
+            wendler.stores.lifts.LiftProgression.remove(m);
+        });
+        wendler.stores.lifts.LiftProgression.sync();
+
+        wendler.stores.lifts.LiftProgression.add(wendler.defaults.liftProgression);
+        wendler.stores.lifts.LiftProgression.sync();
+    }
+};
+
 wendler.stores.lifts.LiftProgression = new Ext.data.Store({
     model:'LiftProgression',
     listeners:{
-        load:function () {
-            if (this.getCount() !== wendler.defaults.liftProgression.length) {
-                wendler.stores.lifts.LiftProgression.each(function(m){
-                    wendler.stores.lifts.LiftProgression.remove(m);
-                });
-                this.sync();
-
-                this.add(wendler.defaults.liftProgression);
-                this.sync();
-            }
-        }
+        load:wendler.stores.recovery.setupDefaultLiftProgressions
     }
 });
 wendler.stores.lifts.LiftProgression.load();

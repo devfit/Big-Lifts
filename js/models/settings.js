@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.defaults', 'wendler.stores', 'wendler.settings.options');
+Ext.ns('wendler.defaults', 'wendler.stores.recovery', 'wendler.settings.options');
 
 Ext.regModel('Settings', {
     fields:[
@@ -8,7 +8,7 @@ Ext.regModel('Settings', {
         {name:'units', type:'string'},
         {name:'rounding-value', type:'string'},
         {name:'rounding-type', type:'string'},
-        {name:'use-training-max', type:'integer', defaultValue: 1}
+        {name:'use-training-max', type:'integer', defaultValue:1}
     ],
     proxy:{
         type:'localstorage',
@@ -24,15 +24,17 @@ wendler.defaults.settings = {
     'use-training-max':1
 };
 
+wendler.stores.recovery.setupDefaultSettings = function () {
+    if (wendler.stores.Settings.getCount() == 0) {
+        wendler.stores.Settings.add(wendler.defaults.settings);
+        wendler.stores.Settings.sync();
+    }
+};
+
 wendler.stores.Settings = new Ext.data.Store({
     model:'Settings',
     listeners:{
-        load:function () {
-            if (this.getCount() == 0) {
-                this.add(wendler.defaults.settings);
-                this.sync();
-            }
-        }
+        load:wendler.stores.recovery.setupDefaultSettings
     }
 });
 wendler.stores.Settings.load();

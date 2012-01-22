@@ -25,7 +25,10 @@ wendler.views.LiftSchedule = Ext.extend(Ext.Panel, {
     iconCls:'icnBarbell',
     layout:'card',
     cardSwitchAnimation:'slide',
-    activeItem: 0,
+    activeItem:0,
+    listeners:{
+        beforeshow: wendler.data.disasterRecovery
+    },
     items:[wendler.views.liftSchedule.liftSelector, wendler.views.liftSchedule.liftTemplate,
         wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp,
         wendler.views.liftSchedule.LiftSettings, wendler.views.EditLiftPercentages, wendler.views.EditPercentage, wendler.views.liftSchedule.LiftTracking
