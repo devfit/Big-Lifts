@@ -14,6 +14,6 @@ end
 
 When /^I return from the lift log$/ do
    liftTrackingPanel = @driver.find_element(:id => 'lift-tracking')
-   liftTrackingPanel.find_element(:class => 'x-button-back').click()
+   liftTrackingPanel.find_element(:id => 'log-lift-save-button').click()
    sleep @ANIMATION_DELAY
 end

@@ -54,6 +54,7 @@ wendler.views.liftSchedule.LiftTracking = {
             items:[
                 {xtype:'spacer'},
                 {
+                    id: 'log-lift-save-button',
                     ui:'action',
                     text:'Save',
                     handler:wendler.controller.liftTracking.logAndReturnToLiftTemplate

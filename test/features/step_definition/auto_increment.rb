@@ -13,5 +13,6 @@ When /^I edit the cycle increase to be ([\d\.]+)$/ do |increase|
   cycleIncrease = @driver.find_element(:name => 'edit-lift-cycle-increase')
   cycleIncrease.clear
   cycleIncrease.send_keys(increase)
+  sleep 0.5
 end
 
