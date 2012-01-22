@@ -7,10 +7,20 @@ wendler.controller.log.backToMore = function () {
 
 wendler.stores.LiftLog.addListener('beforesync', function () {
     Ext.getCmp('lift-log-list').refresh();
+    wendler.controller.log.showHideHelpMessage();
 });
 
 wendler.controller.log.formatDate = function (date) {
     return date.format('m/d/Y');
+};
+
+wendler.controller.log.showHideHelpMessage = function () {
+    if (wendler.stores.LiftLog.getCount() == 0) {
+        Ext.getCmp('no-log-help-text-container').show();
+    }
+    else {
+        Ext.getCmp('no-log-help-text-container').hide();
+    }
 };
 
 wendler.views.Log = Ext.extend(Ext.Panel, {
@@ -18,6 +28,9 @@ wendler.views.Log = Ext.extend(Ext.Panel, {
     iconCls:'bookmarks',
     layout:'fit',
     title:'Track',
+    listeners:{
+        beforeshow: wendler.controller.log.showHideHelpMessage
+    },
     dockedItems:[
         {
             xtype:'toolbar',
@@ -27,6 +40,11 @@ wendler.views.Log = Ext.extend(Ext.Panel, {
         }
     ],
     items:[
+        {
+            id:'no-log-help-text-container',
+            html:'<div id="no-log-help-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
+            hidden:true
+        },
         {
             id:'lift-log-list',
             xtype:'list',

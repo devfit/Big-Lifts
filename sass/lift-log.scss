@@ -1,5 +1,21 @@
 $fontSize: 1.1em;
 $dateFontReduction: 0.85;
+
+#no-log-help-text-container{
+ position: relative;
+}
+
+#no-log-help-text{
+    text-align: center;
+    color: #a9a9a9;
+    position: absolute;
+    top: 50%;
+    font-size: 1em;
+    margin-top: -1em;
+    width: 100%;
+    padding: 0 0.5em;
+}
+
 .lift-log-row {
     table{
         width: 100%;
