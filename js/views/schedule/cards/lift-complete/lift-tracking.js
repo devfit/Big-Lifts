@@ -52,11 +52,6 @@ wendler.views.liftSchedule.LiftTracking = {
             xtype:'toolbar',
             title:'Log',
             items:[
-                {
-                    ui:'back',
-                    text:'Back',
-                    handler:wendler.controller.liftTracking.returnToLiftTemplate
-                },
                 {xtype:'spacer'},
                 {
                     ui:'action',
