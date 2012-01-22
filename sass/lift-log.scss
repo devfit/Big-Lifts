@@ -16,7 +16,9 @@ $dateFontReduction: 0.85;
     padding: 0 0.5em;
 }
 
-.lift-log-row {
+div.lift-log-row {
+    padding: 2px 5px!important;
+    min-height: 0px !important;
     table{
         width: 100%;
         tr{
