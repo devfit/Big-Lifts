@@ -12,10 +12,12 @@ Ext.regModel('CurrentCycle', {
 });
 
 wendler.stores.recovery.setupDefaultCurrentCycle = function () {
-    if (wendler.stores.CurrentCycle.getCount() == 0) {
-        wendler.stores.CurrentCycle.add({cycle:1});
-        wendler.stores.CurrentCycle.sync();
-    }
+    util.withNoFilters(wendler.stores.CurrentCycle, function () {
+        if (wendler.stores.CurrentCycle.getCount() == 0) {
+            wendler.stores.CurrentCycle.add({cycle:1});
+            wendler.stores.CurrentCycle.sync();
+        }
+    });
 };
 
 wendler.stores.CurrentCycle = new Ext.data.Store({

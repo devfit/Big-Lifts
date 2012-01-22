@@ -25,10 +25,12 @@ wendler.defaults.settings = {
 };
 
 wendler.stores.recovery.setupDefaultSettings = function () {
-    if (wendler.stores.Settings.getCount() == 0) {
-        wendler.stores.Settings.add(wendler.defaults.settings);
-        wendler.stores.Settings.sync();
-    }
+    util.withNoFilters(wendler.stores.Settings, function(){
+        if (wendler.stores.Settings.getCount() == 0) {
+            wendler.stores.Settings.add(wendler.defaults.settings);
+            wendler.stores.Settings.sync();
+        }
+    });
 };
 
 wendler.stores.Settings = new Ext.data.Store({

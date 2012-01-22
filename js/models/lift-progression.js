@@ -71,15 +71,18 @@ wendler.liftProgressions.options.push([
 wendler.defaults.liftProgression = wendler.liftProgressions.options[0];
 
 wendler.stores.recovery.setupDefaultLiftProgressions = function () {
-    if (wendler.stores.lifts.LiftProgression.getCount() !== wendler.defaults.liftProgression.length) {
-        wendler.stores.lifts.LiftProgression.each(function (m) {
-            wendler.stores.lifts.LiftProgression.remove(m);
-        });
-        wendler.stores.lifts.LiftProgression.sync();
+    util.withNoFilters(wendler.stores.lifts.LiftProgression, function () {
+            if (wendler.stores.lifts.LiftProgression.getCount() !== wendler.defaults.liftProgression.length) {
+                wendler.stores.lifts.LiftProgression.each(function (m) {
+                    wendler.stores.lifts.LiftProgression.remove(m);
+                });
+                wendler.stores.lifts.LiftProgression.sync();
 
-        wendler.stores.lifts.LiftProgression.add(wendler.defaults.liftProgression);
-        wendler.stores.lifts.LiftProgression.sync();
-    }
+                wendler.stores.lifts.LiftProgression.add(wendler.defaults.liftProgression);
+                wendler.stores.lifts.LiftProgression.sync();
+            }
+        }
+    );
 };
 
 wendler.stores.lifts.LiftProgression = new Ext.data.Store({

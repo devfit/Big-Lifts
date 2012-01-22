@@ -10,21 +10,23 @@ wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropert
 };
 
 wendler.stores.migrations.liftCompletionMigration = function () {
-    for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
-        var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
+    util.withNoFilters(wendler.stores.lifts.LiftCompletion, function () {
+        for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
+            var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
 
-        var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
-            return r.get('liftPropertyName') === liftPropertyName;
-        });
+            var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+                return r.get('liftPropertyName') === liftPropertyName;
+            });
 
-        if (existingLiftCompletion === -1) {
-            for (var week = 1; week <= 4; week++) {
-                wendler.stores.lifts.LiftCompletion.add(
-                    {liftPropertyName:liftPropertyName, week:week, completed:false});
+            if (existingLiftCompletion === -1) {
+                for (var week = 1; week <= 4; week++) {
+                    wendler.stores.lifts.LiftCompletion.add(
+                        {liftPropertyName:liftPropertyName, week:week, completed:false});
+                }
             }
         }
-    }
-    wendler.stores.lifts.LiftCompletion.sync();
+        wendler.stores.lifts.LiftCompletion.sync();
+    });
 };
 
 wendler.models.Lift.uniquePropertyNameValidation = function (propertyName) {
@@ -35,10 +37,12 @@ wendler.models.Lift.uniquePropertyNameValidation = function (propertyName) {
 };
 
 wendler.stores.recovery.setupDefaultLifts = function () {
-    if (wendler.stores.lifts.Lifts.getCount() == 0) {
-        wendler.stores.lifts.Lifts.add(wendler.defaults.lifts);
-        wendler.stores.lifts.Lifts.sync();
-    }
+    util.withNoFilters(wendler.stores.lifts.Lifts, function () {
+        if (wendler.stores.lifts.Lifts.getCount() == 0) {
+            wendler.stores.lifts.Lifts.add(wendler.defaults.lifts);
+            wendler.stores.lifts.Lifts.sync();
+        }
+    });
 };
 
 Ext.regModel('Lift', {
