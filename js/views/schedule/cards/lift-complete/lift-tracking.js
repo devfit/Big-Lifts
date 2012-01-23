@@ -19,7 +19,16 @@ wendler.controller.liftTracking.logLift = function (data) {
         existingLog.save();
     }
     else {
-        wendler.stores.LiftLog.add({liftName:data.liftName, reps:data.reps, week:data.week, weight:data.weight, cycle:data.cycle, date:new Date()});
+        wendler.stores.LiftLog.add(
+            {
+                liftName:data.liftName,
+                reps:data.reps,
+                week:data.week,
+                weight:data.weight,
+                cycle:data.cycle,
+                date:new Date(),
+                units:wendler.stores.Settings.first().data.units
+            });
     }
     wendler.stores.LiftLog.sync();
 };
@@ -54,7 +63,7 @@ wendler.views.liftSchedule.LiftTracking = {
             items:[
                 {xtype:'spacer'},
                 {
-                    id: 'log-lift-save-button',
+                    id:'log-lift-save-button',
                     ui:'action',
                     text:'Save',
                     handler:wendler.controller.liftTracking.logAndReturnToLiftTemplate
