@@ -51,17 +51,23 @@ wendler.liftSchedule.controller.setupWeekMarkLiftsButton = function () {
 };
 
 wendler.liftSchedule.controller.setupListDoneIcons = function () {
-    var liftLists = Ext.getCmp('lift-selector').query('list');
-    for (var weekIndex = 0; weekIndex < liftLists.length; weekIndex++) {
-        var liftList = liftLists[weekIndex];
-        var listItems = liftList.getEl().query('.x-list-item');
-        for (var listItemIndex = 0; listItemIndex < listItems.length; listItemIndex++) {
-            var listItem = listItems[listItemIndex];
-            if (wendler.liftSchedule.controller.liftHasBeenCompleted(weekIndex + 1, listItemIndex)) {
-                Ext.get(listItem).addCls('done');
-            }
-            else {
-                Ext.get(listItem).removeCls('done');
+    var liftSelector = Ext.getCmp('lift-selector');
+    if (liftSelector) {
+        var liftLists = liftSelector.query('list');
+        for (var weekIndex = 0; weekIndex < liftLists.length; weekIndex++) {
+            var liftList = liftLists[weekIndex];
+            var liftListEl = liftList.getEl();
+            if (liftListEl) {
+                var listItems = liftListEl.query('.x-list-item');
+                for (var listItemIndex = 0; listItemIndex < listItems.length; listItemIndex++) {
+                    var listItem = listItems[listItemIndex];
+                    if (wendler.liftSchedule.controller.liftHasBeenCompleted(weekIndex + 1, listItemIndex)) {
+                        Ext.get(listItem).addCls('done');
+                    }
+                    else {
+                        Ext.get(listItem).removeCls('done');
+                    }
+                }
             }
         }
     }
