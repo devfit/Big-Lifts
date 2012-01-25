@@ -1,6 +1,15 @@
 $fontSize: 1.1em;
 $dateFontReduction: 0.85;
 
+span.disclosure-small{
+    float: right;
+    margin-right: 5px;
+    width: 16px;
+    height: 24px;
+    -webkit-mask-image: url('../images/right_arrow_smaller.png');
+    background: grey none;
+}
+
 #no-log-help-text-container{
  position: relative;
 }
@@ -51,5 +60,6 @@ div.lift-log-row {
         font-size: $dateFontReduction * $fontSize !important;
         margin-top: $fontSize - $fontSize * $dateFontReduction;
         color: #666;
+        padding-right:5px;
     }
 }
