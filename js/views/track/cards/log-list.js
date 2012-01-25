@@ -5,9 +5,27 @@ wendler.controller.logList.showEditLogEntry = function (dataview, index) {
     wendler.controller.logEntry.setupLogEntry(logRecord);
 };
 
+wendler.controller.logList.showHideHelpMessage = function () {
+    if (wendler.stores.LiftLog.getCount() == 0) {
+        Ext.getCmp('no-log-help-text-container').show();
+    }
+    else {
+        Ext.getCmp('no-log-help-text-container').hide();
+    }
+};
+
+wendler.stores.LiftLog.addListener('beforesync', function () {
+    wendler.controller.logList.showHideHelpMessage();
+    Ext.getCmp('lift-log-list').refresh();
+});
+
 wendler.views.log.cards.LogList = {
     id:'log-list',
     xtype:'panel',
+    layout: 'fit',
+    listeners: {
+      afterlayout: wendler.controller.logList.showHideHelpMessage
+    },
     dockedItems:[
         {
             xtype:'toolbar',

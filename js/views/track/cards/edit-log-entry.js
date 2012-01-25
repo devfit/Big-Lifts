@@ -9,7 +9,15 @@ wendler.controller.logEntry.updateLogEntry = function () {
 
 };
 
+wendler.controller.logEntry.deleteLogEntry = function () {
+    wendler.stores.LiftLog.remove(wendler.controller.logEntry.currentRecord);
+    wendler.stores.LiftLog.sync();
+    wendler.controller.logEntry.backToLogList();
+};
+
+wendler.controller.logEntry.currentRecord = null;
 wendler.controller.logEntry.setupLogEntry = function (logRecord) {
+    wendler.controller.logEntry.currentRecord = logRecord;
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
     var logTitle = logRecord.data.liftName + " " + wendler.controller.log.formatDate(logRecord.data.date);
     Ext.get('log-entry-field-title').setHTML(logTitle);
@@ -78,7 +86,8 @@ wendler.views.log.cards.EditLogEntry = {
         {
             xtype:'button',
             text:'Delete',
-            ui:'decline'
+            ui:'decline',
+            handler: wendler.controller.logEntry.deleteLogEntry
         }
     ]
 };
