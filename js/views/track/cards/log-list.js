@@ -50,7 +50,7 @@ wendler.views.log.cards.LogList = {
             itemCls:'lift-log-row',
             itemTpl:'<table><tbody><tr>' +
                 '<td><span class="lift-name">{liftName}</span></td>' +
-                '<td><span class="reps">{reps}x</span> <span class="weight">{weight}</span></td>' +
+                '<td><span class="reps">{reps}x</span> <span class="weight">{weight}{units}</span></td>' +
                 '<td colspan="2" class="date-week">' +
                 '<span class="date">{[wendler.controller.log.formatDate(values.date)]}</span> ' +
                 '<span class="week">Week {week}</span>' +

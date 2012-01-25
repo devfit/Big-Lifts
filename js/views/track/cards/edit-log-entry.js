@@ -6,7 +6,13 @@ wendler.controller.logEntry.backToLogList = function () {
 };
 
 wendler.controller.logEntry.updateLogEntry = function () {
-
+    var values = Ext.getCmp('edit-log-entry').getValues();
+    wendler.controller.logEntry.currentRecord.set('reps', values.reps );
+    wendler.controller.logEntry.currentRecord.set('weight', values.weight );
+    wendler.controller.logEntry.currentRecord.set('units', values.units );
+    wendler.controller.logEntry.currentRecord.save();
+    wendler.stores.LiftLog.sync();
+    wendler.controller.logEntry.backToLogList();
 };
 
 wendler.controller.logEntry.deleteLogEntry = function () {
