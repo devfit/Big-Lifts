@@ -2,6 +2,7 @@ class MainNavigation
   TABS = {
       :lift_schedule => '5/3/1',
       :lift_editor => 'Lifts',
+      :track => 'Track',
       :one_rep_calculator => '1-Rep Calc',
       :more => 'More'
   }
