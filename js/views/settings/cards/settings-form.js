@@ -10,6 +10,23 @@ wendler.settings.controller.reloadForm = function () {
     Ext.getCmp('settings-form').hasBeenLoaded = true;
 };
 
+wendler.settings.controller.updateSettings = function () {
+    var settingsForm = Ext.getCmp('settings-form');
+    if (!settingsForm.hasBeenLoaded) {
+        return;
+    }
+
+    var settingsRecord = wendler.stores.Settings.first();
+    var settingsFormValues = settingsForm.getValues();
+    for (var property in settingsFormValues) {
+        if (settingsRecord.get(property) !== settingsFormValues[property]) {
+            settingsRecord.set(property, settingsFormValues[property]);
+        }
+    }
+    settingsRecord.save();
+    wendler.stores.Settings.sync();
+};
+
 new Ext.form.FormPanel({
     id:'settings-form',
     listeners:{
@@ -22,21 +39,7 @@ new Ext.form.FormPanel({
             defaults:{
                 labelWidth:'50%',
                 listeners:{
-                    change:function () {
-                        var settingsForm = Ext.getCmp('settings-form');
-                        if (!settingsForm.hasBeenLoaded) {
-                            return;
-                        }
-
-                        var settingsRecord = wendler.stores.Settings.first();
-                        var settingsFormValues = settingsForm.getValues();
-                        for (var property in settingsFormValues) {
-                            if (settingsRecord.get(property) !== settingsFormValues[property]) {
-                                settingsRecord.set(property, settingsFormValues[property]);
-                            }
-                        }
-                        settingsRecord.save();
-                    }
+                    change:wendler.settings.controller.updateSettings
                 }
             },
             items:[
@@ -67,6 +70,11 @@ new Ext.form.FormPanel({
                     xtype:'togglefield',
                     name:'use-training-max',
                     label:'Use training max'
+                },
+                {
+                    xtype:'numberfield',
+                    name:'training-max-percentage',
+                    label:'Training %'
                 }
             ]
         },
