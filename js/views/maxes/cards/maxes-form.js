@@ -10,6 +10,7 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
 wendler.maxes.controller.buildMaxesFromStore = function () {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
     Ext.getCmp('maxes-form-items').doLayout();
+    wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createTrainingMaxesInput, this);
     Ext.getCmp('training-maxes').doLayout();
 };
 
@@ -23,9 +24,12 @@ wendler.maxes.controller.createMaxesInput = function (record) {
         label:liftName,
         value:record.data.max
     });
+};
 
+wendler.maxes.controller.createTrainingMaxesInput = function(record){
     var trainingMaxPercentage = wendler.stores.Settings.first().data['training-max-percentage'] / 100.0;
     var trainingMax = util.roundNumber(trainingMaxPercentage * record.data.max, '0.5', 'normal');
+    var liftProperty = record.data.propertyName;
     Ext.getCmp('training-maxes').add({
         id:'maxes-' + liftProperty + '-training',
         xtype:'textfield',
@@ -87,7 +91,12 @@ wendler.maxes.controller.updateTrainingPercentageDisplay = function () {
     if (trainingMaxPercentageIndicator !== null) {
         trainingMaxPercentageIndicator.setHTML(trainingMaxPercentage);
     }
+
+    Ext.getCmp('training-maxes').removeAll();
+    wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createTrainingMaxesInput, this);
+    Ext.getCmp('training-maxes').doLayout();
 };
+
 wendler.stores.Settings.addListener('update', wendler.maxes.controller.updateTrainingPercentageDisplay);
 
 wendler.maxes.controller.addLiftButtonPressed = function () {
