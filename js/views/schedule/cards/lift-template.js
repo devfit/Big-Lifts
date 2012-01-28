@@ -12,8 +12,8 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
 };
 
-wendler.liftSchedule.controller.getRepsModifier = function (values) {
-    return values.set === 6 ? '+' : 'x';
+wendler.liftSchedule.controller.getLastRepsModifier = function (values) {
+    return values.set === 6 ? 'last' : '';
 };
 
 wendler.liftSchedule.controller.updateLiftValues = function () {
@@ -89,7 +89,7 @@ wendler.views.liftSchedule.liftTemplate = {
             xtype:'list',
             store:wendler.stores.lifts.LiftProgression,
             itemCls:'lift-row',
-            itemTpl:'<p><span class="reps">{reps}{[wendler.liftSchedule.controller.getRepsModifier(values)]}</span> ' +
+            itemTpl:'<p><span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier(values)]}">{reps}</span> ' +
                 '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
                 '<span class="percentage">{percentage}%</span></p>'
         }
