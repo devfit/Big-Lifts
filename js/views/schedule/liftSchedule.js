@@ -13,6 +13,7 @@ wendler.liftSchedule.controller.liftCompletionChange = function () {
         wendler.liftSchedule.controller.showLiftsCompletedScreen();
     }
 };
+wendler.stores.lifts.LiftCompletion.addListener('update', wendler.liftSchedule.controller.liftCompletionChange);
 
 wendler.liftSchedule.controller.allLiftsAreCompleted = function () {
     var completedUniques = wendler.stores.lifts.LiftCompletion.collect('completed');

@@ -143,7 +143,7 @@ wendler.maxes.cards.editLiftPanel = {
                     id:'edit-lift-done-button',
                     text:'Save',
                     handler:wendler.maxes.controller.editLiftDoneButtonPressed,
-                    ui:'action'
+                    ui:'confirm'
                 }
             ]
         }

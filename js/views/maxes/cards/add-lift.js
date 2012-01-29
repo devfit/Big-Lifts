@@ -119,9 +119,9 @@ wendler.maxes.cards.addLiftPanel = {
                 {xtype:'spacer'},
                 {
                     id:'add-lift-done-button',
-                    text:'Done',
+                    text:'Save',
                     handler:wendler.maxes.controller.addLiftDoneButtonPressed,
-                    ui:'action'
+                    ui:'confirm'
                 }
             ]
         }

@@ -39,45 +39,19 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
 };
 wendler.stores.Settings.addListener('update', wendler.liftSchedule.controller.updateLiftValues);
 
-wendler.liftSchedule.controller.setupLiftCompleteToggle = function () {
-    var completed = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty,
-        wendler.liftSchedule.currentWeek).get('completed');
-    wendler.liftSchedule.controller.showCorrectLiftCompleteButton(completed);
-};
-
 wendler.liftSchedule.controller.returnToLiftSelect = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
 };
 
 wendler.liftSchedule.controller.markLiftCompleted = function () {
-    wendler.liftSchedule.controller.persistLiftCompletion(true);
+    wendler.liftSchedule.controller.persistLiftCompletion();
     wendler.controller.liftTracking.showLiftTracking();
 };
 
-wendler.liftSchedule.controller.unmarkLiftCompleted = function () {
-    wendler.liftSchedule.controller.persistLiftCompletion(false);
-};
-
-wendler.liftSchedule.controller.persistLiftCompletion = function (completed) {
+wendler.liftSchedule.controller.persistLiftCompletion = function () {
     var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
-    liftCompletion.set('completed', completed);
+    liftCompletion.set('completed', true);
     liftCompletion.save();
-
-    wendler.liftSchedule.controller.showCorrectLiftCompleteButton(completed);
-    wendler.liftSchedule.controller.liftCompletionChange();
-};
-
-wendler.liftSchedule.controller.showCorrectLiftCompleteButton = function (completed) {
-    var unmarkButton = Ext.getCmp('unmark-lift-completed-button');
-    var markButton = Ext.getCmp('mark-lift-completed-button');
-    if (completed) {
-        unmarkButton.show();
-        markButton.hide();
-    }
-    else {
-        markButton.show();
-        unmarkButton.hide();
-    }
 };
 
 wendler.views.liftSchedule.liftTemplate = {
@@ -97,7 +71,6 @@ wendler.views.liftSchedule.liftTemplate = {
     listeners:{
         beforeshow:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.controller.returnToLiftSelect);
-            wendler.liftSchedule.controller.setupLiftCompleteToggle();
         }
     },
     dockedItems:[
@@ -113,20 +86,11 @@ wendler.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
-                    hidden:true,
                     id:'mark-lift-completed-button',
                     iconCls:'done',
                     iconMask:true,
                     ui:'action',
                     handler:wendler.liftSchedule.controller.markLiftCompleted
-                },
-                {
-                    hidden:true,
-                    id:'unmark-lift-completed-button',
-                    iconCls:'done',
-                    iconMask:true,
-                    ui:'confirm',
-                    handler:wendler.liftSchedule.controller.unmarkLiftCompleted
                 }
             ]
         }
