@@ -7,7 +7,6 @@ wendler.liftSchedule.currentWeek = 1;
 
 wendler.liftSchedule.controller.liftCompletionChange = function () {
     wendler.liftSchedule.controller.setupListDoneIcons();
-    wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
 
     if (wendler.liftSchedule.controller.allLiftsAreCompleted()) {
         wendler.liftSchedule.controller.showLiftsCompletedScreen();

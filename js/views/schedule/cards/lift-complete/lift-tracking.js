@@ -1,39 +1,22 @@
 "use strict";
 Ext.ns('wendler.views.liftSchedule', 'wendler.controller.liftTracking');
 
-wendler.controller.liftTracking.returnToLiftTemplate = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'right'});
-};
-
 wendler.controller.liftTracking.logLift = function (data) {
-    var existingLogIndex = wendler.stores.LiftLog.findBy(function (m) {
-        return m.data.cycle === data.cycle && m.data.week === data.week && m.data.liftName === data.liftName;
-    });
+    wendler.stores.LiftLog.add(
+        {
+            liftName:data.liftName,
+            reps:data.reps,
+            week:data.week,
+            weight:data.weight,
+            cycle:data.cycle,
+            date:new Date(),
+            units:wendler.stores.Settings.first().data.units
+        });
 
-    if (existingLogIndex >= 0) {
-        var existingLog = wendler.stores.LiftLog.getAt(existingLogIndex);
-        existingLog.set('reps', data.reps);
-        existingLog.set('weight', data.weight);
-        existingLog.set('units', data.units);
-        existingLog.set('expectedReps', data.expectedReps);
-        existingLog.save();
-    }
-    else {
-        wendler.stores.LiftLog.add(
-            {
-                liftName:data.liftName,
-                reps:data.reps,
-                week:data.week,
-                weight:data.weight,
-                cycle:data.cycle,
-                date:new Date(),
-                units:wendler.stores.Settings.first().data.units
-            });
-    }
     wendler.stores.LiftLog.sync();
 };
 
-wendler.controller.liftTracking.logAndReturnToLiftTemplate = function () {
+wendler.controller.liftTracking.logAndShowTracking = function () {
     var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6);
     var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).data.name;
     var expectedReps = liftProgression.data.reps;
@@ -44,7 +27,8 @@ wendler.controller.liftTracking.logAndReturnToLiftTemplate = function () {
     var units = wendler.stores.Settings.first().data.units;
 
     wendler.controller.liftTracking.logLift({liftName:liftName, reps:reps, week:week, weight:weight, cycle:cycle, units:units, expectedReps:expectedReps});
-    wendler.controller.liftTracking.returnToLiftTemplate();
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+    Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
 };
 
 wendler.controller.liftTracking.showLiftTracking = function () {
@@ -66,7 +50,7 @@ wendler.views.liftSchedule.LiftTracking = {
                     id:'log-lift-save-button',
                     ui:'confirm',
                     text:'Save',
-                    handler:wendler.controller.liftTracking.logAndReturnToLiftTemplate
+                    handler:wendler.controller.liftTracking.logAndShowTracking
                 }
             ]
         }

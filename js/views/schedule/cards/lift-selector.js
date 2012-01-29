@@ -1,53 +1,7 @@
 Ext.ns('wendler.views.liftSchedule');
 
-wendler.liftSchedule.controller.markWeekHandler = function (completed) {
-    wendler.stores.lifts.LiftCompletion.filterBy(function (r) {
-        return r.get('week') == wendler.liftSchedule.currentWeek;
-    });
-
-    wendler.stores.lifts.LiftCompletion.each(function (r) {
-        r.set('completed', completed);
-        r.save();
-    });
-
-    var unmarkButton = Ext.getCmp('unmark-week-completed-button');
-    var markButton = Ext.getCmp('mark-week-completed-button');
-
-    if (completed) {
-        unmarkButton.show();
-        markButton.hide();
-    }
-    else {
-        unmarkButton.hide();
-        markButton.show();
-    }
-
-    wendler.stores.lifts.LiftCompletion.clearFilter();
-    wendler.liftSchedule.controller.liftCompletionChange();
-};
-
-wendler.liftSchedule.controller.markWeekCompleted = function () {
-    wendler.liftSchedule.controller.markWeekHandler(true);
-};
-
-wendler.liftSchedule.controller.unmarkWeekCompleted = function () {
-    wendler.liftSchedule.controller.markWeekHandler(false);
-};
-
 wendler.liftSchedule.controller.setupLiftSelector = function () {
     wendler.liftSchedule.controller.setupListDoneIcons();
-    wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
-};
-
-wendler.liftSchedule.controller.setupWeekMarkLiftsButton = function () {
-    wendler.stores.lifts.LiftCompletion.filterBy(function (r) {
-        return r.get('week') == wendler.liftSchedule.currentWeek;
-    });
-    var uniqueValues = wendler.stores.lifts.LiftCompletion.collect('completed');
-    var allLiftsCompleted = uniqueValues.length === 1 && uniqueValues[0] === true;
-    wendler.stores.lifts.LiftCompletion.clearFilter();
-
-    wendler.liftSchedule.controller.showCorrectWeekCompleteButton(allLiftsCompleted);
 };
 
 wendler.liftSchedule.controller.setupListDoneIcons = function () {
@@ -83,24 +37,10 @@ wendler.liftSchedule.controller.viewLift = function (view, index) {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'left'});
 };
 
-wendler.liftSchedule.controller.showCorrectWeekCompleteButton = function (completed) {
-    var unmarkButton = Ext.getCmp('unmark-week-completed-button');
-    var markButton = Ext.getCmp('mark-week-completed-button');
-    if (completed) {
-        unmarkButton.show();
-        markButton.hide();
-    }
-    else {
-        markButton.show();
-        unmarkButton.hide();
-    }
-};
-
 wendler.liftSchedule.controller.handleWeekChange = function (container, newCard, oldCard, index) {
     var week = index + 1;
     Ext.getCmp('lift-selector-toolbar').setTitle('Week ' + week);
     wendler.liftSchedule.currentWeek = week;
-    wendler.liftSchedule.controller.setupWeekMarkLiftsButton();
 };
 
 wendler.liftSchedule.controller.showLiftScheduleSettings = function () {
@@ -135,23 +75,6 @@ wendler.views.liftSchedule.liftSelector = {
                     iconMask:true,
                     ui:'action',
                     handler:wendler.liftSchedule.controller.showLiftScheduleSettings
-                },
-                {xtype:'spacer'},
-                {
-                    hidden:true,
-                    id:'mark-week-completed-button',
-                    iconCls:'done',
-                    iconMask:true,
-                    ui:'action',
-                    handler:wendler.liftSchedule.controller.markWeekCompleted
-                },
-                {
-                    hidden:true,
-                    id:'unmark-week-completed-button',
-                    iconCls:'done',
-                    iconMask:true,
-                    ui:'confirm',
-                    handler:wendler.liftSchedule.controller.unmarkWeekCompleted
                 }
             ]
         }
