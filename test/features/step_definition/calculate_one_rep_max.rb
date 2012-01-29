@@ -27,22 +27,21 @@ Then /^I select use for (\w+)$/ do |lift|
   sleep 0.25
 
   floatingSelector = @driver.find_element(:class => 'x-floating')
-  @wait.until { floatingSelector.displayed? }
-  sleep 1
+  sleep @ANIMATION_DELAY
 
   liftSpan = floatingSelector.find_elements(:tag_name => 'span', :class => 'x-list-label').select { |label|
     label.text == lift
   }[0]
   liftHolder = liftSpan.find_element(:xpath => './../..')
   liftHolder.click
-  sleep 1
+  sleep @ANIMATION_DELAY
   if( liftHolder.displayed? )
     liftHolder.click
   end
-  sleep 1
+  sleep @ANIMATION_DELAY
 
   @driver.find_element(:id => 'use-max-button').click
-  sleep 0.25
+  sleep @ANIMATION_DELAY
 end
 
 Then /^I am taken to the maxes page$/ do

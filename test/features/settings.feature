@@ -15,8 +15,8 @@ Feature: Settings
     And I navigate to the settings page
     And I set the training percentage to 95
     And I view the squat lift schedule for week 1
-    Then The lift schedule shows "5 120 40%","5 150 50%","3 180 60%","5 195 65%","5 225 75%","5 255 85%"
+    Then The lift schedule shows "5 115 40%","5 145 50%","3 170 60%","5 185 65%","5 215 75%","5 240 85%"
     And I navigate to the lift editor
     Then The training percentage shows 95
-    Then The calculated squat training max is 300
+    Then The calculated squat training max is 285
 
