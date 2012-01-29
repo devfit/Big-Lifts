@@ -6,7 +6,6 @@ Feature: Checking off individual lifts
   Scenario: Check lift indicator is set before each lift is viewed
     When I view the squat lift schedule for week 1
     When I mark the current lift completed
-    And I return from the lift log
-    And I return to the lift schedule
-    When I view the bench lift schedule for week 1
-    Then The lift complete button is unchecked
+    And I save the lift log
+    And I navigate to the lift schedule
+    Then the Squat lift is checked
