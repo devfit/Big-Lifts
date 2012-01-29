@@ -20,7 +20,7 @@ Ext.regModel('Settings', {
 wendler.defaults.settings = {
     'show-warmup-sets':1,
     units:'lbs',
-    'rounding-value':5,
+    'rounding-value':'5',
     'rounding-type':'normal',
     'use-training-max':1
 };
@@ -48,9 +48,9 @@ wendler.settings.options.units = [
 ];
 
 wendler.settings.options.roundingValues = [
-    {text:'1', value:1},
-    {text:'2.5', value:2.5},
-    {text:'5', value:5}
+    {text:'1', value:'1'},
+    {text:'2.5', value:'2.5'},
+    {text:'5', value:'5'}
 ];
 
 wendler.settings.options.roundingType = [
