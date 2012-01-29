@@ -45,3 +45,9 @@ img.done, .x-button img.x-icon-mask.done {
 img.settings, .x-button img.x-icon-mask.settings {
     -webkit-mask-image: url('../images/settings.png');
 }
+
+#lifts-completed {
+   .x-form-fieldset-title{
+       margin-top: 0;
+   }
+}

@@ -7,17 +7,8 @@ wendler.liftSchedule.currentWeek = 1;
 
 wendler.liftSchedule.controller.liftCompletionChange = function () {
     wendler.liftSchedule.controller.setupListDoneIcons();
-
-    if (wendler.liftSchedule.controller.allLiftsAreCompleted()) {
-        wendler.liftSchedule.controller.showLiftsCompletedScreen();
-    }
 };
 wendler.stores.lifts.LiftCompletion.addListener('update', wendler.liftSchedule.controller.liftCompletionChange);
-
-wendler.liftSchedule.controller.allLiftsAreCompleted = function () {
-    var completedUniques = wendler.stores.lifts.LiftCompletion.collect('completed');
-    return completedUniques.length === 1 && completedUniques[0] === true;
-};
 
 wendler.liftSchedule.controller.setupLiftSchedule = function () {
     wendler.data.disasterRecovery();
