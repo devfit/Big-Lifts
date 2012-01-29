@@ -116,7 +116,7 @@ wendler.maxes.cards.maxesFormEditable = {
                 listeners:{
                     change:wendler.maxes.controller.liftValuesChanged
                 },
-                labelWidth:'35%',
+                labelWidth:'45%',
                 useClearIcon:true
             }
         }
@@ -143,6 +143,7 @@ wendler.maxes.cards.trainingMaxes = {
 wendler.maxes.cards.maxesForm = {
     xtype:'formpanel',
     id:'maxes-form',
+    scroll: 'vertical',
     listeners:{
         afterrender:function () {
             wendler.maxes.controller.buildMaxesFromStore();
