@@ -48,6 +48,6 @@ end
 
 Then /^The set (\d+) reps shows (\d+)$/ do |set, reps|
   setListItem = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item')[set.to_i-1]
-  setListItem.text.include?( "#{reps}x" ).should == true
+  setListItem.text.include?( "#{reps}" ).should == true
 end
 
