@@ -3,7 +3,6 @@ $dateFontReduction: 0.85;
 
 span.disclosure-small{
     float: right;
-    margin-right: 5px;
     width: 16px;
     height: 24px;
     -webkit-mask-image: url('../images/right_arrow_smaller.png');
@@ -30,11 +29,6 @@ div.lift-log-row {
     min-height: 0px !important;
     table{
         width: 100%;
-        tr{
-            td {
-                    width: 25%;
-                }
-        }
     }
 
     .lift-name {
