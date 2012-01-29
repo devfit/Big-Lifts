@@ -37,7 +37,7 @@ wendler.controller.liftPercentages.returnToLiftSettings = function () {
 wendler.views.EditPercentage = {
     xtype:'formpanel',
     id:'edit-percentage',
-    _rendered:false,
+    _hasBeenRendered:false,
     bodyStyle: 'padding-top: 0px',
     listeners:{
         beforeshow:function () {

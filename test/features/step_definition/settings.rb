@@ -10,3 +10,15 @@ Then /^I untoggle use training max$/ do
   @driver.find_element(:name => 'use-training-max').click()
   sleep @ANIMATION_DELAY
 end
+
+When /^I set the training percentage to (\d+)$/ do |percentage|
+  trainingMaxPercentageInput = @driver.find_element(:name => 'training-max-percentage')
+  trainingMaxPercentageInput.clear()
+  trainingMaxPercentageInput.send_keys(percentage)
+  sleep @ANIMATION_DELAY
+end
+
+Then /^The training percentage shows (\d+)$/ do |percentage|
+  trainingPercentageText = @driver.find_element(:id => 'training-max-percentage-indicator').text
+  trainingPercentageText.indlude?(percentage).should == true
+end

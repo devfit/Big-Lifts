@@ -24,7 +24,6 @@ wendler.settings.controller.updateSettings = function () {
         }
     }
     settingsRecord.save();
-    wendler.stores.Settings.sync();
 };
 
 new Ext.form.FormPanel({

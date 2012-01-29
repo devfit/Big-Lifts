@@ -13,6 +13,7 @@ wendler.stores.lifts.LiftCompletion.addListener('update', wendler.liftSchedule.c
 wendler.liftSchedule.controller.setupLiftSchedule = function () {
     wendler.data.disasterRecovery();
     wendler.liftSchedule.controller.setupLiftSelector();
+    wendler.liftSchedule.controller.updateLiftValues();
 };
 
 wendler.views.LiftSchedule = Ext.extend(Ext.Panel, {

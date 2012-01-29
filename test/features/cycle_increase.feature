@@ -4,6 +4,7 @@ Feature: Increasing the cycle
   So that I can log more than one cycle's worth of lifts.
 
   Scenario: Increase the cycle
+    When I navigate to the lift schedule
     When I check off all lifts
     And I hit done on the lift completion screen
     Then the cycle is increased
