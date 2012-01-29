@@ -76,9 +76,32 @@ util.rounding.roundTo2p5 = function (unroundedNumber, roundingType) {
     return roundedNumber;
 };
 
+util.rounding.roundToClosest5 = function (unroundedNumber, roundingType) {
+    var roundedTo5 = util.rounding.roundTo5(unroundedNumber, roundingType);
+    if (roundedTo5 % 10 === 0) {
+        var up = roundedTo5 + 1;
+        var down = roundedTo5 - 1;
+        var up5 = util.rounding.roundTo5(up, 'up');
+        var down5 = util.rounding.roundTo5(down, 'down');
+
+        var upDistance = up5 - unroundedNumber;
+        var downDistance = unroundedNumber - down5;
+
+        if (upDistance <= downDistance) {
+            return up5;
+        }
+        else {
+            return down5;
+        }
+    }
+    else {
+        return roundedTo5;
+    }
+};
+
 util.rounding.roundTo0p5 = function (unroundedNumber, roundingType) {
     var numberTimes10 = unroundedNumber * 10;
-    return util.rounding.roundTo5(numberTimes10, roundingType, 'normal')/10.0;
+    return util.rounding.roundTo5(numberTimes10, roundingType, 'normal') / 10.0;
 };
 
 util.roundNumber = function (unroundedNumber, roundingValue, roundingType) {
@@ -86,7 +109,8 @@ util.roundNumber = function (unroundedNumber, roundingValue, roundingType) {
         '0.5':util.rounding.roundTo0p5,
         '1':util.rounding.roundTo1,
         '2.5':util.rounding.roundTo2p5,
-        '5':util.rounding.roundTo5
+        '5':util.rounding.roundTo5,
+        'closest5':util.rounding.roundToClosest5
     };
     return roundingMethods[roundingValue].call(this, unroundedNumber, roundingType);
 };

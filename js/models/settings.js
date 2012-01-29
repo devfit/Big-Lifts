@@ -50,7 +50,8 @@ wendler.settings.options.units = [
 wendler.settings.options.roundingValues = [
     {text:'1', value:'1'},
     {text:'2.5', value:'2.5'},
-    {text:'5', value:'5'}
+    {text:'5', value:'5'},
+    {text:'Closest 5', value: 'closest5'}
 ];
 
 wendler.settings.options.roundingType = [
