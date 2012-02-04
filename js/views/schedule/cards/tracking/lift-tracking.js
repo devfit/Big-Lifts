@@ -28,10 +28,10 @@ wendler.controller.liftTracking.logAndShowTracking = function () {
     var expectedReps = liftProgression.data.reps;
 
     var formValues = Ext.getCmp('lift-tracking').getValues();
-    var reps = formValues['last-set-reps'];
+    var reps = formValues['reps'];
     var notes = formValues['notes'];
     var week = wendler.liftSchedule.currentWeek;
-    var weight = wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax, liftProgression.data.percentage);
+    var weight = formValues['weight'];
     var cycle = wendler.stores.CurrentCycle.first().data.cycle;
     var units = wendler.stores.Settings.first().data.units;
 
@@ -46,9 +46,20 @@ wendler.controller.liftTracking.logAndShowTracking = function () {
     }
 };
 
+wendler.controller.liftTracking.recomputeOneRepMax = function () {
+    var formValues = Ext.getCmp('lift-tracking').getValues();
+    formValues['estimated-one-rep-max'] = util.formulas.estimateOneRepMax(formValues.weight, formValues.reps);
+    Ext.getCmp('lift-tracking').setValues(formValues);
+};
+
 wendler.controller.liftTracking.showLiftTracking = function () {
+    var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6).data;
+    var reps = liftProgression.reps;
+    var weight = wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax, liftProgression.percentage);
     var formValues = {
-        'last-set-reps':wendler.stores.lifts.LiftProgression.findRecord('set', 6).data.reps,
+        'reps':reps,
+        'weight':weight,
+        'estimated-one-rep-max':util.formulas.estimateOneRepMax(weight, reps),
         'notes':''
     };
 
@@ -59,6 +70,7 @@ wendler.controller.liftTracking.showLiftTracking = function () {
 wendler.views.liftSchedule.LiftTracking = {
     xtype:'formpanel',
     id:'lift-tracking',
+    scroll:'vertical',
     dockedItems:[
         {
             xtype:'toolbar',
@@ -80,11 +92,33 @@ wendler.views.liftSchedule.LiftTracking = {
             style:'margin-top: 0',
             items:[
                 {
-                    name:'last-set-reps',
+                    labelWidth:'50%',
+                    name:'reps',
                     xtype:'numberfield',
-                    label:'Last set reps'
+                    label:'Last set reps',
+                    listeners:{
+                        change:wendler.controller.liftTracking.recomputeOneRepMax
+                    }
                 },
                 {
+                    labelWidth:'50%',
+                    name:'weight',
+                    xtype:'numberfield',
+                    label:'Weight',
+                    listeners:{
+                        change:wendler.controller.liftTracking.recomputeOneRepMax
+                    }
+                },
+                {
+                    labelWidth:'50%',
+                    name:'estimated-one-rep-max',
+                    xtype:'numberfield',
+                    label:'Estimated 1RM',
+                    disabled:true,
+                    disabledCls:'disabledVisible'
+                },
+                {
+                    labelWidth:'30%',
                     name:'notes',
                     xtype:'textareafield',
                     label:'Notes'
