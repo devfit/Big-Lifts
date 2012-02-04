@@ -1,11 +1,5 @@
 "use strict";
 Ext.ns('wendler.liftSchedule.controller', 'wendler.views.liftSchedule');
-wendler.liftSchedule.lastActiveTab = null;
-wendler.liftSchedule.controller.showLiftsCompletedScreen = function () {
-    wendler.liftSchedule.lastActiveTab = Ext.getCmp('lift-schedule').getActiveItem();
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lifts-completed'),
-        {type:'slide', direction:'down'});
-};
 
 wendler.liftSchedule.controller.unmarkAllLifts = function () {
     wendler.stores.lifts.LiftCompletion.each(function (r) {

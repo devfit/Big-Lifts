@@ -2,14 +2,11 @@ Ext.ns('wendler.views.liftSchedule');
 
 wendler.liftSchedule.controller.setupLiftSelector = function () {
     wendler.liftSchedule.controller.setupListDoneIcons();
-    var cycleIndicator = Ext.get('cycle-indicator');
+    var cycleButton = Ext.getCmp('cycle-change-button');
     var cycle = wendler.stores.CurrentCycle.first().data.cycle;
 
-    if (cycleIndicator) {
-        cycleIndicator.setHTML("Cycle " + cycle);
-        if (cycle === 1) {
-            cycleIndicator.hide();
-        }
+    if (cycleButton) {
+        cycleButton.setText("Cycle " + cycle);
     }
 };
 
@@ -57,6 +54,13 @@ wendler.liftSchedule.controller.showLiftScheduleSettings = function () {
         {type:'slide', direction:'left'});
 };
 
+wendler.liftSchedule.lastActiveTab = null;
+wendler.liftSchedule.controller.showLiftsCompletedScreen = function () {
+    wendler.liftSchedule.lastActiveTab = Ext.getCmp('lift-schedule').getActiveItem();
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lifts-completed'),
+        {type:'slide', direction:'down'});
+};
+
 wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex) {
     var liftPropertyName = wendler.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
     return wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week).get('completed');
@@ -87,8 +91,11 @@ wendler.views.liftSchedule.liftSelector = {
                 },
                 {xtype:'spacer'},
                 {
-                    xtype:'panel',
-                    html:'<div id="cycle-indicator">Cycle 133</div>'
+                    id:'cycle-change-button',
+                    xtype:'button',
+                    ui:'action',
+                    text:'Cycle 1',
+                    handler:wendler.liftSchedule.controller.showLiftsCompletedScreen
                 }
             ]
         }
