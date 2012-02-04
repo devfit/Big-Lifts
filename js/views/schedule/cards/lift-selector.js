@@ -2,6 +2,13 @@ Ext.ns('wendler.views.liftSchedule');
 
 wendler.liftSchedule.controller.setupLiftSelector = function () {
     wendler.liftSchedule.controller.setupListDoneIcons();
+    var cycleIndicator = Ext.get('cycle-indicator');
+    var cycle = wendler.stores.CurrentCycle.first().data.cycle;
+
+    if (cycle > 1) {
+        cycleIndicator.setHTML("Cycle " + cycle);
+        cycleIndicator.show();
+    }
 };
 
 wendler.liftSchedule.controller.setupListDoneIcons = function () {
@@ -75,13 +82,19 @@ wendler.views.liftSchedule.liftSelector = {
                     iconMask:true,
                     ui:'action',
                     handler:wendler.liftSchedule.controller.showLiftScheduleSettings
+                },
+                {xtype:'spacer'},
+                {
+                    hidden:true,
+                    xtype:'panel',
+                    html:'<div id="cycle-indicator">Cycle 133</div>'
                 }
             ]
         }
     ],
     items:[
         {
-            id: 'test',
+            id:'test',
             title:'1',
             xtype:'list',
             store:wendler.stores.lifts.Lifts,

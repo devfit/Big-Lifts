@@ -5,27 +5,14 @@ wendler.controller.logList.showEditLogEntry = function (dataview, index) {
     wendler.controller.logEntry.setupLogEntry(logRecord);
 };
 
-wendler.controller.logList.showHideHelpMessage = function () {
-    if (wendler.stores.LiftLog.getCount() == 0) {
-        Ext.getCmp('no-log-help-text-container').show();
-    }
-    else {
-        Ext.getCmp('no-log-help-text-container').hide();
-    }
-};
-
-wendler.stores.LiftLog.addListener('beforesync', function () {
-    wendler.controller.logList.showHideHelpMessage();
+wendler.stores.LiftLog.addListener('update', function () {
     Ext.getCmp('lift-log-list').refresh();
 });
 
 wendler.views.log.cards.LogList = {
     id:'log-list',
     xtype:'panel',
-    layout: 'fit',
-    listeners: {
-      afterlayout: wendler.controller.logList.showHideHelpMessage
-    },
+    layout:'fit',
     dockedItems:[
         {
             xtype:'toolbar',
@@ -36,18 +23,17 @@ wendler.views.log.cards.LogList = {
     ],
     items:[
         {
-            id:'no-log-help-text-container',
-            html:'<div id="no-log-help-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
-            hidden:true
-        },
-        {
             id:'lift-log-list',
             listeners:{
+                afterrender:function (cmp) {
+                    cmp.refresh();
+                },
                 itemtap:wendler.controller.logList.showEditLogEntry
             },
             xtype:'list',
             store:wendler.stores.LiftLog,
             itemCls:'lift-log-row',
+            emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
             itemTpl:'<table><tbody><tr>' +
                 '<td width="30%"><span class="lift-name">{liftName}</span></td>' +
                 '<td width="30%"><span class="reps">{reps}x</span> <span class="weight">{weight}</span></td>' +

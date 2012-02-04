@@ -57,3 +57,15 @@ div.lift-log-row {
         padding-right:5px;
     }
 }
+
+#lift-log-empty-text{
+    color: #777;
+    text-align: center;
+    width: 100%;
+    padding: 0 1em;
+
+    position: absolute;
+    top: 50%;
+    height: 1em;
+    margin-top: -1.5em;
+}
