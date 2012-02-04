@@ -52,7 +52,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
     items:[
         {
             xtype:'fieldset',
-            title:"You have completed a cycle!",
+            title:"Complete a cycle?",
             style:'margin-top: 0',
             defaults:{
                 labelWidth:'66%'
