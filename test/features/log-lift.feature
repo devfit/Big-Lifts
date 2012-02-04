@@ -6,8 +6,11 @@ Feature: Lift tracking
   Scenario: Lift logging
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
+    And I set the log notes to "Log notes"
     And I save the lift log
     Then I do see a log entry containing Squat
+    And I select the log entry for Squat
+    Then the log notes are "Log notes"
 
   Scenario: Deleting a lift log
     When I view the press lift schedule for week 1
