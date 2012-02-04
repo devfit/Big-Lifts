@@ -5,9 +5,12 @@ wendler.controller.logList.showEditLogEntry = function (dataview, index) {
     wendler.controller.logEntry.setupLogEntry(logRecord);
 };
 
-wendler.stores.LiftLog.addListener('update', function () {
+wendler.controller.logList.sortAndRefreshList = function () {
+    wendler.stores.LiftLog.sort('date', 'DESC');
     Ext.getCmp('lift-log-list').refresh();
-});
+};
+
+wendler.stores.LiftLog.addListener('update', wendler.controller.logList.sortAndRefreshList);
 
 wendler.views.log.cards.LogList = {
     id:'log-list',
@@ -25,9 +28,7 @@ wendler.views.log.cards.LogList = {
         {
             id:'lift-log-list',
             listeners:{
-                afterrender:function (cmp) {
-                    cmp.refresh();
-                },
+                afterrender:wendler.controller.logList.sortAndRefreshList,
                 itemtap:wendler.controller.logList.showEditLogEntry
             },
             xtype:'list',
