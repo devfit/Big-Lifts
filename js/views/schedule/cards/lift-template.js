@@ -53,6 +53,7 @@ wendler.liftSchedule.controller.persistLiftCompletion = function () {
     var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
     liftCompletion.set('completed', true);
     liftCompletion.save();
+    wendler.stores.lifts.LiftCompletion.sync();
 };
 
 wendler.views.liftSchedule.liftTemplate = {
