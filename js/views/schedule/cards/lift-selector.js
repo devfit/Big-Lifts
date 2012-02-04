@@ -5,9 +5,11 @@ wendler.liftSchedule.controller.setupLiftSelector = function () {
     var cycleIndicator = Ext.get('cycle-indicator');
     var cycle = wendler.stores.CurrentCycle.first().data.cycle;
 
-    if (cycle > 1) {
+    if (cycleIndicator) {
         cycleIndicator.setHTML("Cycle " + cycle);
-        cycleIndicator.show();
+        if (cycle === 1) {
+            cycleIndicator.hide();
+        }
     }
 };
 
@@ -85,7 +87,6 @@ wendler.views.liftSchedule.liftSelector = {
                 },
                 {xtype:'spacer'},
                 {
-                    hidden:true,
                     xtype:'panel',
                     html:'<div id="cycle-indicator">Cycle 133</div>'
                 }
