@@ -6,10 +6,11 @@ Ext.regModel('LiftLog', {
         {name:'weight', type:'string'},
         {name:'units', type:'string'},
         {name:'reps', type:'integer'},
+        {name:'notes', type:'string', defaultValue:''},
         {name:'expectedReps', type:'integer'},
         {name:'week', type:'integer'},
         {name:'cycle', type:'integer'},
-        {name:'date', type: 'date'}
+        {name:'date', type:'date'}
     ],
     proxy:{
         type:'localstorage',

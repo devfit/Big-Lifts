@@ -6,6 +6,7 @@ wendler.controller.liftTracking.logLift = function (data) {
         {
             liftName:data.liftName,
             reps:data.reps,
+            notes:data.notes,
             week:data.week,
             weight:data.weight,
             cycle:data.cycle,
@@ -25,13 +26,16 @@ wendler.controller.liftTracking.logAndShowTracking = function () {
     var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6);
     var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).data.name;
     var expectedReps = liftProgression.data.reps;
-    var reps = Ext.getCmp('last-set-reps').getValue();
+
+    var formValues = Ext.getCmp('lift-tracking').getValues();
+    var reps = formValues['last-set-reps'];
+    var notes = formValues['notes'];
     var week = wendler.liftSchedule.currentWeek;
     var weight = wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax, liftProgression.data.percentage);
     var cycle = wendler.stores.CurrentCycle.first().data.cycle;
     var units = wendler.stores.Settings.first().data.units;
 
-    wendler.controller.liftTracking.logLift({liftName:liftName, reps:reps, week:week, weight:weight, cycle:cycle, units:units, expectedReps:expectedReps});
+    wendler.controller.liftTracking.logLift({liftName:liftName, reps:reps, notes:notes, week:week, weight:weight, cycle:cycle, units:units, expectedReps:expectedReps});
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
 
     if (wendler.liftSchedule.controller.allLiftsAreCompleted()) {
@@ -43,8 +47,12 @@ wendler.controller.liftTracking.logAndShowTracking = function () {
 };
 
 wendler.controller.liftTracking.showLiftTracking = function () {
-    var lastSetReps = wendler.stores.lifts.LiftProgression.findRecord('set', 6).data.reps;
-    Ext.getCmp('last-set-reps').setValue(lastSetReps);
+    var formValues = {
+        'last-set-reps':wendler.stores.lifts.LiftProgression.findRecord('set', 6).data.reps,
+        'notes':''
+    };
+
+    Ext.getCmp('lift-tracking').setValues(formValues);
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'), {type:'slide', direction:'left'});
 };
 
@@ -72,9 +80,14 @@ wendler.views.liftSchedule.LiftTracking = {
             style:'margin-top: 0',
             items:[
                 {
-                    id:'last-set-reps',
+                    name:'last-set-reps',
                     xtype:'numberfield',
                     label:'Last set reps'
+                },
+                {
+                    name:'notes',
+                    xtype:'textareafield',
+                    label:'Notes'
                 }
             ]
         }

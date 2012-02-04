@@ -7,9 +7,7 @@ wendler.controller.logEntry.backToLogList = function () {
 
 wendler.controller.logEntry.updateLogEntry = function () {
     var values = Ext.getCmp('edit-log-entry').getValues();
-    wendler.controller.logEntry.currentRecord.set('reps', values.reps);
-    wendler.controller.logEntry.currentRecord.set('weight', values.weight);
-    wendler.controller.logEntry.currentRecord.set('units', values.units);
+    wendler.controller.logEntry.currentRecord.set(values);
     wendler.controller.logEntry.currentRecord.save();
     wendler.stores.LiftLog.sync();
     wendler.controller.logEntry.backToLogList();
@@ -27,18 +25,13 @@ wendler.controller.logEntry.setupLogEntry = function (logRecord) {
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
     var logTitle = logRecord.data.liftName + " " + wendler.controller.log.formatDate(logRecord.data.date) + " - Cycle " + logRecord.data.cycle;
     Ext.get('log-entry-field-title').setHTML(logTitle);
-
-    var values = {
-        weight:logRecord.data.weight,
-        reps:logRecord.data.reps,
-        units:logRecord.data.units
-    };
-    Ext.getCmp('edit-log-entry').setValues(values);
+    Ext.getCmp('edit-log-entry').setValues(logRecord.data);
 };
 
 wendler.views.log.cards.EditLogEntry = {
     id:'edit-log-entry',
     xtype:'formpanel',
+    scroll: 'vertical',
     style:'padding-top:0px',
     bodyStyle:'padding-top:0px',
     listeners:{
@@ -86,6 +79,11 @@ wendler.views.log.cards.EditLogEntry = {
                     label:'Units',
                     name:'units',
                     options:wendler.settings.options.units
+                },
+                {
+                    xtype:'textareafield',
+                    label:'Notes',
+                    name:'notes'
                 }
             ]
         },
