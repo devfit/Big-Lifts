@@ -13,7 +13,7 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
 };
 
 wendler.liftSchedule.controller.getLastRepsModifier = function (values) {
-    return values.set === 6 ? 'last' : '';
+    return (values.set === 6 && values.week !== 4) ? 'last' : '';
 };
 
 wendler.liftSchedule.controller.updateLiftValues = function () {
