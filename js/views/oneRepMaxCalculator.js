@@ -28,6 +28,7 @@ wendler.views.OneRepMaxCalculator = Ext.extend(Ext.Panel, {
     listeners:{
         afterlayout:wendler.oneRepMax.controller.estimateOneRepMax
     },
+    layout:'fit',
     dockedItems:[
         {
             dock:'top',
@@ -38,6 +39,7 @@ wendler.views.OneRepMaxCalculator = Ext.extend(Ext.Panel, {
     items:[
         {
             xtype:'formpanel',
+            scroll: 'vertical',
             items:[
                 {
                     xtype:'fieldset',
