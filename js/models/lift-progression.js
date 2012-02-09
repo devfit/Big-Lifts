@@ -34,8 +34,8 @@ wendler.liftProgressions.options.push([
     Ext.ModelMgr.create({week:3, set:5, reps:3, percentage:85}, 'LiftProgression'),
     Ext.ModelMgr.create({week:3, set:6, reps:1, percentage:95}, 'LiftProgression'),
     Ext.ModelMgr.create({week:4, set:1, reps:5, percentage:40}, 'LiftProgression'),
-    Ext.ModelMgr.create({week:4, set:2, reps:5, percentage:50}, 'LiftProgression'),
-    Ext.ModelMgr.create({week:4, set:3, reps:3, percentage:60}, 'LiftProgression'),
+    Ext.ModelMgr.create({week:4, set:2, reps:5, percentage:40}, 'LiftProgression'),
+    Ext.ModelMgr.create({week:4, set:3, reps:5, percentage:40}, 'LiftProgression'),
     Ext.ModelMgr.create({week:4, set:4, reps:5, percentage:40}, 'LiftProgression'),
     Ext.ModelMgr.create({week:4, set:5, reps:5, percentage:50}, 'LiftProgression'),
     Ext.ModelMgr.create({week:4, set:6, reps:5, percentage:60}, 'LiftProgression')
@@ -61,8 +61,8 @@ wendler.liftProgressions.options.push([
     Ext.ModelMgr.create({week:3, set:5, reps:3, percentage:85}, 'LiftProgression'),
     Ext.ModelMgr.create({week:3, set:6, reps:1, percentage:95}, 'LiftProgression'),
     Ext.ModelMgr.create({week:4, set:1, reps:5, percentage:40}, 'LiftProgression'),
-    Ext.ModelMgr.create({week:4, set:2, reps:5, percentage:50}, 'LiftProgression'),
-    Ext.ModelMgr.create({week:4, set:3, reps:3, percentage:60}, 'LiftProgression'),
+    Ext.ModelMgr.create({week:4, set:2, reps:5, percentage:40}, 'LiftProgression'),
+    Ext.ModelMgr.create({week:4, set:3, reps:5, percentage:40}, 'LiftProgression'),
     Ext.ModelMgr.create({week:4, set:4, reps:5, percentage:40}, 'LiftProgression'),
     Ext.ModelMgr.create({week:4, set:5, reps:5, percentage:50}, 'LiftProgression'),
     Ext.ModelMgr.create({week:4, set:6, reps:5, percentage:60}, 'LiftProgression')
