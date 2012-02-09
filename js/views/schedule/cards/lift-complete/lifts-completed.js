@@ -10,7 +10,7 @@ wendler.liftSchedule.controller.unmarkAllLifts = function () {
     wendler.liftSchedule.controller.liftCompletionChange();
 };
 
-wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
+wendler.liftSchedule.controller.saveAndCloseLiftCompletedScreen = function () {
     if (Ext.getCmp('uncheck-all-lifts-toggle').getValue() === 1) {
         var currentCycle = wendler.stores.CurrentCycle.first();
         currentCycle.set('cycle', currentCycle.data.cycle + 1);
@@ -22,6 +22,10 @@ wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
         wendler.liftSchedule.controller.increaseMaxesByCycleIncrease();
     }
 
+    wendler.liftSchedule.controller.closeLiftCompletedScreen();
+};
+
+wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
     Ext.getCmp('lift-schedule').setActiveItem(wendler.liftSchedule.lastActiveTab,
         {type:'slide', direction:'up'});
 };
@@ -49,10 +53,24 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
             wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeLiftCompletedScreen);
         }
     },
+    dockedItems:[
+        {
+            xtype:'toolbar',
+            title:'Finish Cycle?',
+            items:[
+                {
+                    id: 'complete-cycle-back-button',
+                    xtype:'button',
+                    text:'Cancel',
+                    ui:'back',
+                    handler:wendler.liftSchedule.controller.closeLiftCompletedScreen
+                }
+            ]
+        }
+    ],
     items:[
         {
             xtype:'fieldset',
-            title:"Complete a cycle?",
             style:'margin-top: 0',
             defaults:{
                 labelWidth:'66%'
@@ -74,7 +92,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     id:'lifts-complete-done-button',
                     xtype:'button',
                     text:'Done',
-                    handler:wendler.liftSchedule.controller.closeLiftCompletedScreen
+                    handler:wendler.liftSchedule.controller.saveAndCloseLiftCompletedScreen
                 }
             ]
         }

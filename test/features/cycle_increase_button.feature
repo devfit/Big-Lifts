@@ -9,8 +9,8 @@ Feature: Increasing the cycle
     And I hit done on the lift completion screen
     Then the cycle is increased
 
-  Scenario: Check all lifts to increase the cycle
+  Scenario: Cancel on after clicking increase cycle button
     When I navigate to the lift schedule
-    When I check off all lifts
-    And I hit done on the lift completion screen
-    Then the cycle is increased
+    And I click the increase cycle button
+    And I hit cancel on the increase cycle screen
+    Then the cycle is not increased

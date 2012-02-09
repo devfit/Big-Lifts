@@ -1,6 +1,7 @@
-Then /^the cycle is increased$/ do
+Then /^the cycle is ([\w\s]*)increased$/ do |notModifier|
     cycle = @driver.execute_script('return wendler.stores.CurrentCycle.first().data.cycle')
-    cycle.should == 2
+    expectedNewCycle = notModifier == "" ? 2 : 1
+    cycle.should == expectedNewCycle
 end
 
 Then /^I click the increase cycle button$/ do
