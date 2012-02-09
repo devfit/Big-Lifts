@@ -11,12 +11,14 @@ wendler.liftSchedule.controller.unmarkAllLifts = function () {
 };
 
 wendler.liftSchedule.controller.saveAndCloseLiftCompletedScreen = function () {
-    if (Ext.getCmp('uncheck-all-lifts-toggle').getValue() === 1) {
-        var currentCycle = wendler.stores.CurrentCycle.first();
-        currentCycle.set('cycle', currentCycle.data.cycle + 1);
-        currentCycle.save();
-        wendler.liftSchedule.controller.unmarkAllLifts();
-    }
+    var currentCycle = wendler.stores.CurrentCycle.first();
+
+    var newCycle = Ext.getCmp('lifts-completed').getValues()['new-cycle'];
+    currentCycle.set('cycle', newCycle);
+    currentCycle.save();
+    wendler.stores.CurrentCycle.sync();
+
+    wendler.liftSchedule.controller.unmarkAllLifts();
 
     if (Ext.getCmp('increase-maxes-toggle').getValue() === 1) {
         wendler.liftSchedule.controller.increaseMaxesByCycleIncrease();
@@ -41,6 +43,13 @@ wendler.liftSchedule.controller.increaseMaxesByCycleIncrease = function () {
     wendler.stores.lifts.Lifts.sync();
 };
 
+wendler.liftSchedule.controller.setNextCycleDefault = function () {
+    var formValues = Ext.getCmp('lifts-completed').getValues();
+    var currentCycle = wendler.stores.CurrentCycle.first();
+    formValues['new-cycle'] = currentCycle.data.cycle + 1;
+    Ext.getCmp('lifts-completed').setValues(formValues);
+};
+
 wendler.views.liftSchedule.LiftsCompletedScreen = {
     id:'lifts-completed',
     xtype:'formpanel',
@@ -48,6 +57,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
         afterlayout:function () {
             Ext.get('increase-maxes-help-image').addListener('click',
                 wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen);
+            wendler.liftSchedule.controller.setNextCycleDefault();
         },
         beforeshow:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeLiftCompletedScreen);
@@ -59,7 +69,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
             title:'Finish Cycle?',
             items:[
                 {
-                    id: 'complete-cycle-back-button',
+                    id:'complete-cycle-back-button',
                     xtype:'button',
                     text:'Cancel',
                     ui:'back',
@@ -77,10 +87,9 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
             },
             items:[
                 {
-                    id:'uncheck-all-lifts-toggle',
-                    xtype:'togglefield',
-                    label:'Start new cycle',
-                    value:1
+                    name:'new-cycle',
+                    xtype:'numberfield',
+                    label:'New cycle'
                 },
                 {
                     id:'increase-maxes-toggle',

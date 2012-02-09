@@ -14,3 +14,11 @@ Feature: Increasing the cycle
     And I click the increase cycle button
     And I hit cancel on the increase cycle screen
     Then the cycle is not increased
+
+  Scenario: Going down a cycle
+    When I navigate to the lift schedule
+    And I click the increase cycle button
+    And I hit done on the lift completion screen
+    And I click the increase cycle button
+    And I set the next cycle to 1
+    Then the cycle is not increased
