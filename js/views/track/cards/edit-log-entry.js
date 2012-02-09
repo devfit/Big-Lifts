@@ -23,15 +23,27 @@ wendler.controller.logEntry.currentRecord = null;
 wendler.controller.logEntry.setupLogEntry = function (logRecord) {
     wendler.controller.logEntry.currentRecord = logRecord;
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
+
     var logTitle = logRecord.data.liftName + " " + wendler.controller.log.formatDate(logRecord.data.date) + " - Cycle " + logRecord.data.cycle;
     Ext.get('log-entry-field-title').setHTML(logTitle);
-    Ext.getCmp('edit-log-entry').setValues(logRecord.data);
+
+    var formValues = logRecord.data;
+    formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
+    Ext.getCmp('edit-log-entry').setValues(formValues);
+};
+
+wendler.controller.logEntry.updateOneRepMax = function () {
+    var formValues = Ext.getCmp('edit-log-entry').getValues();
+    var newOneRepSetter = {
+        estimatedOneRepMax:util.formulas.estimateOneRepMax(formValues.weight, formValues.reps)
+    };
+    Ext.getCmp('edit-log-entry').setValues(newOneRepSetter);
 };
 
 wendler.views.log.cards.EditLogEntry = {
     id:'edit-log-entry',
     xtype:'formpanel',
-    scroll: 'vertical',
+    scroll:'vertical',
     style:'padding-top:0px',
     bodyStyle:'padding-top:0px',
     listeners:{
@@ -42,7 +54,7 @@ wendler.views.log.cards.EditLogEntry = {
     dockedItems:[
         {
             xtype:'toolbar',
-            title:'Edit Entry',
+            title:'Log Entry',
             items:[
                 {
                     text:'Cancel',
@@ -67,18 +79,35 @@ wendler.views.log.cards.EditLogEntry = {
                 {
                     xtype:'numberfield',
                     label:'Weight',
-                    name:'weight'
+                    name:'weight',
+                    labelWidth:'50%',
+                    listeners:{
+                        change:wendler.controller.logEntry.updateOneRepMax
+                    }
                 },
                 {
                     xtype:'numberfield',
                     label:'Reps',
-                    name:'reps'
+                    name:'reps',
+                    labelWidth:'50%',
+                    listeners:{
+                        change:wendler.controller.logEntry.updateOneRepMax
+                    }
+                },
+                {
+                    xtype:'numberfield',
+                    disabled:true,
+                    disabledCls:'disabledVisible',
+                    label:'Estimated 1RM',
+                    name:'estimatedOneRepMax',
+                    labelWidth:'50%'
                 },
                 {
                     xtype:'selectfield',
                     label:'Units',
                     name:'units',
-                    options:wendler.settings.options.units
+                    options:wendler.settings.options.units,
+                    labelWidth:'50%'
                 },
                 {
                     xtype:'textareafield',
