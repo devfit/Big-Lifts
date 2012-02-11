@@ -9,24 +9,30 @@ span.disclosure-small{
     background: grey none;
 }
 
-#no-log-help-text-container{
- position: relative;
+.hidden {
+    display:none;
 }
 
-#no-log-help-text{
-    text-align: center;
-    color: #a9a9a9;
-    position: absolute;
-    top: 50%;
-    font-size: 1em;
-    margin-top: -1em;
-    width: 100%;
-    padding: 0 0.5em;
+@-webkit-keyframes fade-in {
+0% {
+    opacity: 0;
+}
+60% {
+    opacity: 0;
+}
+100% {
+    opacity: 1;
+}
+}
+
+.fade-in {
+    -webkit-animation-name: fade-in;
+    -webkit-animation-duration: 0.3s;
+    -webkit-animation-timing-function: ease-in;
+    -webkit-animation-iteration-count: 1;
 }
 
 div.lift-log-row {
-    padding: 2px 5px!important;
-    min-height: 0px !important;
     table{
         width: 100%;
     }
@@ -52,7 +58,6 @@ div.lift-log-row {
 
     .date, .week {
         font-size: $dateFontReduction * $fontSize !important;
-        margin-top: $fontSize - $fontSize * $dateFontReduction;
         color: #666;
         padding-right:5px;
     }
