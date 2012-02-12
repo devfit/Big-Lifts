@@ -57,15 +57,16 @@ wendler.views.log.cards.EditLogEntry = {
             title:'Log Entry',
             items:[
                 {
-                    text:'Cancel',
+                    text:'Back',
                     ui:'back',
                     handler:wendler.controller.logEntry.backToLogList
                 },
                 {xtype:'spacer'},
                 {
-                    text:'Save',
-                    ui:'action',
-                    handler:wendler.controller.logEntry.updateLogEntry
+                    ui:'decline',
+                    iconMask:true,
+                    iconCls:'trash',
+                    handler:wendler.controller.logEntry.deleteLogEntry
                 }
             ]
         }
@@ -115,13 +116,6 @@ wendler.views.log.cards.EditLogEntry = {
                     name:'notes'
                 }
             ]
-        },
-        {
-            id:'delete-log-entry-button',
-            xtype:'button',
-            text:'Delete',
-            ui:'decline',
-            handler:wendler.controller.logEntry.deleteLogEntry
         }
     ]
 };
