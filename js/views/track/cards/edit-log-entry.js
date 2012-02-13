@@ -7,10 +7,10 @@ wendler.controller.logEntry.backToLogList = function () {
 
 wendler.controller.logEntry.updateLogEntry = function () {
     var values = Ext.getCmp('edit-log-entry').getValues();
+
     wendler.controller.logEntry.currentRecord.set(values);
     wendler.controller.logEntry.currentRecord.save();
     wendler.stores.LiftLog.sync();
-    wendler.controller.logEntry.backToLogList();
 };
 
 wendler.controller.logEntry.deleteLogEntry = function () {
@@ -29,7 +29,11 @@ wendler.controller.logEntry.setupLogEntry = function (logRecord) {
 
     var formValues = logRecord.data;
     formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
+
     Ext.getCmp('edit-log-entry').setValues(formValues);
+
+    Ext.get('edit-log-notes').setHTML(logRecord.data.notes === "" ?
+        "<div class='notes-empty-text'>Tap to edit</div>" : logRecord.data.notes);
 };
 
 wendler.controller.logEntry.updateOneRepMax = function () {
@@ -40,6 +44,15 @@ wendler.controller.logEntry.updateOneRepMax = function () {
     Ext.getCmp('edit-log-entry').setValues(newOneRepSetter);
 };
 
+wendler.controller.logEntry.editNotes = function () {
+    Ext.get('edit-log-notes').addCls('tapped');
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('log-notes-editor'), {type:'slide', direction:'left'});
+};
+
+wendler.controller.logEntry.returnFromEditNotes = function(newNotes){
+    Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'right'});
+};
+
 wendler.views.log.cards.EditLogEntry = {
     id:'edit-log-entry',
     xtype:'formpanel',
@@ -48,6 +61,9 @@ wendler.views.log.cards.EditLogEntry = {
     bodyStyle:'padding-top:0px',
     listeners:{
         beforeshow:function () {
+            if (Ext.get('edit-log-notes')) {
+                Ext.get('edit-log-notes').removeCls('tapped');
+            }
             wendler.navigation.setBackFunction(wendler.controller.logEntry.backToLogList);
         }
     },
@@ -83,7 +99,10 @@ wendler.views.log.cards.EditLogEntry = {
                     name:'weight',
                     labelWidth:'50%',
                     listeners:{
-                        change:wendler.controller.logEntry.updateOneRepMax
+                        change:function () {
+                            wendler.controller.logEntry.updateOneRepMax();
+                            wendler.controller.logEntry.updateLogEntry();
+                        }
                     }
                 },
                 {
@@ -92,7 +111,10 @@ wendler.views.log.cards.EditLogEntry = {
                     name:'reps',
                     labelWidth:'50%',
                     listeners:{
-                        change:wendler.controller.logEntry.updateOneRepMax
+                        change:function () {
+                            wendler.controller.logEntry.updateOneRepMax();
+                            wendler.controller.logEntry.updateLogEntry();
+                        }
                     }
                 },
                 {
@@ -108,14 +130,24 @@ wendler.views.log.cards.EditLogEntry = {
                     label:'Units',
                     name:'units',
                     options:wendler.settings.options.units,
-                    labelWidth:'50%'
-                },
-                {
-                    xtype:'textareafield',
-                    label:'Notes',
-                    name:'notes'
+                    labelWidth:'50%',
+                    listeners:{
+                        change:wendler.controller.logEntry.updateLogEntry
+                    }
                 }
             ]
+        },
+        {
+            xtype:'panel',
+            bodyPadding:0,
+            layout:'fit',
+            html:'<div class="x-form-fieldset-title fieldset-title-no-margin">Notes</div>' +
+                '<div id="edit-log-notes"></div>',
+            listeners:{
+                afterrender:function (c) {
+                    Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);
+                }
+            }
         }
     ]
 };

@@ -1,3 +1,5 @@
+@import "compass/css3/border-radius";
+
 $fontSize: 1.1em;
 $dateFontReduction: 0.85;
 
@@ -73,4 +75,33 @@ div.lift-log-row {
     top: 50%;
     height: 1em;
     margin-top: -1.5em;
+}
+
+#edit-log-notes{
+    background-color: white;
+    padding: 5px;
+    border: solid 2px #555;
+    @include border-radius(4px,4px);
+}
+
+#edit-log-notes.tapped {
+    color: black;
+    background-color: #77B2F8;
+
+    div.notes-empty-text{
+        color: black;
+    }
+}
+
+div.notes-empty-text {
+    width: 100%;
+    text-align: center;
+    color: #a9a9a9;
+}
+
+div.notes-form{
+   height: 100%;
+   margin: 0px;
+   border: solid 2px #a9a9a9;
+   @include border-radius(8px,8px);
 }
