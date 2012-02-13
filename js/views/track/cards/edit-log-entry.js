@@ -158,7 +158,7 @@ wendler.views.log.cards.EditLogEntry = {
             bodyPadding:0,
             layout:'fit',
             html:'<div class="x-form-fieldset-title fieldset-title-no-margin">Notes</div>' +
-                '<div id="edit-log-notes"></div>',
+                '<div id="edit-log-notes" class="log-notes"></div>',
             listeners:{
                 afterrender:function () {
                     Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);

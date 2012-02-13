@@ -77,14 +77,14 @@ div.lift-log-row {
     margin-top: -1.5em;
 }
 
-#edit-log-notes{
+div.log-notes{
     background-color: white;
     padding: 5px;
     border: solid 2px #555;
     @include border-radius(4px,4px);
 }
 
-#edit-log-notes.tapped {
+div.log-notes.tapped {
     color: black;
     background-color: #77B2F8;
 

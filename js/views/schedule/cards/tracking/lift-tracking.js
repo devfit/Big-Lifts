@@ -67,6 +67,11 @@ wendler.controller.liftTracking.showLiftTracking = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'), {type:'slide', direction:'left'});
 };
 
+wendler.controller.liftTracking.currentLiftNotes = '';
+wendler.controller.liftTracking.editNotes = function () {
+    console.log('Edit notes');
+};
+
 wendler.views.liftSchedule.LiftTracking = {
     xtype:'formpanel',
     id:'lift-tracking',
@@ -89,7 +94,7 @@ wendler.views.liftSchedule.LiftTracking = {
     items:[
         {
             xtype:'fieldset',
-            style:'margin-top: 0',
+            style:'margin-top: 0; margin-bottom:7px',
             items:[
                 {
                     labelWidth:'50%',
@@ -116,14 +121,20 @@ wendler.views.liftSchedule.LiftTracking = {
                     label:'Estimated 1RM',
                     disabled:true,
                     disabledCls:'disabledVisible'
-                },
-                {
-                    labelWidth:'30%',
-                    name:'notes',
-                    xtype:'textareafield',
-                    label:'Notes'
                 }
             ]
+        },
+        {
+            xtype:'panel',
+            bodyPadding:0,
+            layout:'fit',
+            html:'<div class="x-form-fieldset-title fieldset-title-no-margin">Notes</div>' +
+                '<div id="first-log-notes" class="log-notes"><div class="notes-empty-text">Tap to edit</div></div>',
+            listeners:{
+                afterrender:function () {
+                    Ext.get('first-log-notes').addListener('tap', wendler.controller.liftTracking.editNotes);
+                }
+            }
         }
     ]
 };
