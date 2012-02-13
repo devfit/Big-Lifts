@@ -29,6 +29,7 @@ wendler.stores.migrations.fixAndroid22BrokenDate = function (r) {
 
 wendler.stores.migrations.migrateStringDatesToTimestamps = function (r) {
     var date = r.get('date');
+    console.log( typeof( date ) );
     if (typeof(date) === "string") {
         r.set('date', Date.parse(date));
         r.save();
