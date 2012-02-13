@@ -34,7 +34,7 @@ wendler.controller.logList.showEditLogEntry = function (dataview, index, item, e
 };
 
 wendler.controller.logList.sortAndRefreshList = function () {
-    wendler.stores.LiftLog.sort('date', 'DESC');
+    wendler.stores.LiftLog.sort('timestamp', 'DESC');
     Ext.getCmp('lift-log-list').refresh();
 };
 
@@ -100,7 +100,7 @@ wendler.views.log.cards.LogList = {
                 '<td width="30%"><span class="lift-name">{liftName}</span></td>' +
                 '<td width="30%"><span class="reps">{reps}x</span> <span class="weight">{weight}</span></td>' +
                 '<td width="40%" class="date-week">' +
-                '<span class="date">{[wendler.controller.log.formatDate(values.date)]}</span><span class="disclosure-small"></span>' +
+                '<span class="date">{[wendler.controller.log.formatDate(values.timestamp)]}</span><span class="disclosure-small"></span>' +
                 '</td><td width="40%" class="delete-button-holder hidden"></td>' +
                 '</tr></tbody></table>'
         }
