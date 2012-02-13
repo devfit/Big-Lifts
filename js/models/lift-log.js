@@ -20,17 +20,11 @@ Ext.regModel('LiftLog', {
     }
 });
 
-wendler.stores.migrations.fixAndroid22BrokenDate = function (r) {
-    if (r.get('date') === null) {
-        r.set('date', new Date().getTime());
-        r.save();
-        wendler.stores.LiftLog.sync();
-    }
-};
-
 wendler.stores.migrations.migrateDatesToTimestamps = function (r) {
     var date = r.get('date');
     var timestamp = r.get('timestamp');
+    console.log( date );
+    console.log( timestamp );
     if (timestamp === null) {
         if (date === null) {
             r.set('timestamp', new Date().getTime());
