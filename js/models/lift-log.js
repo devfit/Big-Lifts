@@ -10,8 +10,9 @@ Ext.regModel('LiftLog', {
         {name:'expectedReps', type:'integer'},
         {name:'week', type:'integer'},
         {name:'cycle', type:'integer'},
-        //type: date is broken on Android 2.2
-        {name:'date', type:'integer'}
+        {name:'timestamp', type:'integer'},
+        //type: date is broken on Android 2.2. Maintain this property until all customers have migrated data
+        {name:'date', type:'date'}
     ],
     proxy:{
         type:'localstorage',
@@ -27,21 +28,27 @@ wendler.stores.migrations.fixAndroid22BrokenDate = function (r) {
     }
 };
 
-wendler.stores.migrations.migrateStringDatesToTimestamps = function (r) {
+wendler.stores.migrations.migrateDatesToTimestamps = function (r) {
     var date = r.get('date');
-    console.log( typeof( date ) );
-    if (typeof(date) === "string") {
-        r.set('date', Date.parse(date));
-        r.save();
-        wendler.stores.LiftLog.sync();
+    var timestamp = r.get('timestamp');
+    if (timestamp === null) {
+        if (date === null) {
+            r.set('timestamp', new Date().getTime());
+            r.save();
+            wendler.stores.LiftLog.sync();
+        }
+        else {
+            r.set('timestamp', date.getTime());
+            r.save();
+            wendler.stores.LiftLog.sync();
+        }
     }
 };
 
 wendler.stores.migrations.liftLogMigration = function () {
     util.withNoFilters(wendler.stores.LiftLog, function () {
         wendler.stores.LiftLog.each(function (r) {
-            wendler.stores.migrations.fixAndroid22BrokenDate(r);
-            wendler.stores.migrations.migrateStringDatesToTimestamps(r);
+            wendler.stores.migrations.migrateDatesToTimestamps(r);
         });
     });
 };
