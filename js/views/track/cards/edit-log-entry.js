@@ -31,9 +31,19 @@ wendler.controller.logEntry.setupLogEntry = function (logRecord) {
     formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
 
     Ext.getCmp('edit-log-entry').setValues(formValues);
+    wendler.controller.logEntry.displayNotes(logRecord.data.notes);
+};
 
-    Ext.get('edit-log-notes').setHTML(logRecord.data.notes === "" ?
-        "<div class='notes-empty-text'>Tap to edit</div>" : logRecord.data.notes);
+wendler.controller.logEntry.displayNotes = function (notes) {
+    var displayableNotes = null;
+    if (notes === "") {
+        displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
+    }
+    else {
+        displayableNotes = Ext.util.Format.htmlEncode(notes);
+        displayableNotes = displayableNotes.replace(/\n/g, '<br/>');
+    }
+    Ext.get('edit-log-notes').setHTML(displayableNotes);
 };
 
 wendler.controller.logEntry.updateOneRepMax = function () {
@@ -46,11 +56,17 @@ wendler.controller.logEntry.updateOneRepMax = function () {
 
 wendler.controller.logEntry.editNotes = function () {
     Ext.get('edit-log-notes').addCls('tapped');
+    Ext.getCmp('log-notes-editor')._setNotes(wendler.controller.logEntry.currentRecord.get('notes'));
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-notes-editor'), {type:'slide', direction:'left'});
 };
 
-wendler.controller.logEntry.returnFromEditNotes = function(newNotes){
+wendler.controller.logEntry.returnFromEditNotes = function (newNotes) {
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'right'});
+    wendler.controller.logEntry.currentRecord.set('notes', newNotes);
+    wendler.controller.logEntry.currentRecord.save();
+    wendler.stores.LiftLog.sync();
+
+    wendler.controller.logEntry.displayNotes(newNotes);
 };
 
 wendler.views.log.cards.EditLogEntry = {
@@ -144,7 +160,7 @@ wendler.views.log.cards.EditLogEntry = {
             html:'<div class="x-form-fieldset-title fieldset-title-no-margin">Notes</div>' +
                 '<div id="edit-log-notes"></div>',
             listeners:{
-                afterrender:function (c) {
+                afterrender:function () {
                     Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);
                 }
             }

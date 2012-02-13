@@ -1,15 +1,21 @@
 Ext.ns('wendler.views.log.cards');
 
+wendler.controller.logEntry.returnFromNotesEditor = function (notesEditor) {
+    var notes = notesEditor.down('[name=notes]').getValue();
+    notesEditor._returnCallback(notes);
+};
+
 wendler.views.log.cards.NotesEditor = Ext.extend(Ext.Panel, {
     _returnCallback:function (notes) {
+    },
+    _setNotes:function (notes) {
+        this.down('[name=notes]').setValue(notes);
     },
     layout:'fit',
     listeners:{
         beforeshow:function (c) {
-            console.log( c );
-            window.test = c;
             wendler.navigation.setBackFunction(function () {
-                c._returnCallback();
+                wendler.controller.logEntry.returnFromNotesEditor(c);
             });
         }
     },
@@ -20,7 +26,9 @@ wendler.views.log.cards.NotesEditor = Ext.extend(Ext.Panel, {
             {
                 text:'Back',
                 ui:'back',
-                handler:this._returnCallback
+                handler:function () {
+                    wendler.controller.logEntry.returnFromNotesEditor(this.up('panel'));
+                }
             }
         ]
     },
