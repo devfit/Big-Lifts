@@ -25,7 +25,7 @@ wendler.stores.migrations.migrateDatesToTimestamps = function (r) {
     var timestamp = r.get('timestamp');
     console.log( date );
     console.log( timestamp );
-    if (timestamp === null) {
+    if (timestamp === 0) {
         if (date === null) {
             r.set('timestamp', new Date().getTime());
             r.save();
