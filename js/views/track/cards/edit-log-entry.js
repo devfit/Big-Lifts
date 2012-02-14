@@ -24,7 +24,7 @@ wendler.controller.logEntry.setupLogEntry = function (logRecord) {
     wendler.controller.logEntry.currentRecord = logRecord;
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
 
-    var logTitle = logRecord.data.liftName + " " + wendler.controller.log.formatDate(logRecord.data.date) + " - Cycle " + logRecord.data.cycle;
+    var logTitle = logRecord.data.liftName + " " + wendler.controller.log.formatDate(logRecord.data.timestamp) + " - Cycle " + logRecord.data.cycle;
     Ext.get('log-entry-field-title').setHTML(logTitle);
 
     var formValues = logRecord.data;
@@ -40,8 +40,7 @@ wendler.controller.logEntry.displayNotes = function (notes) {
         displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
     }
     else {
-        displayableNotes = Ext.util.Format.htmlEncode(notes);
-        displayableNotes = displayableNotes.replace(/\n/g, '<br/>');
+        displayableNotes = displayableNotes = wendler.controller.components.notesEditor.sanitizeForDisplay(notes);
     }
     Ext.get('edit-log-notes').setHTML(displayableNotes);
 };

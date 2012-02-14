@@ -70,8 +70,26 @@ wendler.controller.liftTracking.showLiftTracking = function () {
 wendler.controller.liftTracking.currentLiftNotes = '';
 wendler.controller.liftTracking.editNotes = function () {
     Ext.get('first-log-notes').addCls('tapped');
-//    Ext.getCmp('first-log-notes-editor')._setNotes(wendler.controller.logEntry.currentRecord.get('notes'));
-//    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('first-log-notes-editor'), {type:'slide', direction:'left'});
+    Ext.getCmp('first-log-notes-editor')._setNotes(wendler.controller.liftTracking.currentLiftNotes);
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('first-log-notes-editor'), {type:'slide', direction:'left'});
+};
+
+wendler.controller.liftTracking.returnFromEditNotes = function (notes) {
+    Ext.getCmp('lift-schedule').setActiveItem('lift-tracking', {type:'slide', direction:'right'});
+    Ext.get('first-log-notes').removeCls('tapped');
+    wendler.controller.liftTracking.currentLiftNotes = notes;
+    wendler.controller.liftTracking.displayNotes(wendler.controller.liftTracking.currentLiftNotes);
+};
+
+wendler.controller.liftTracking.displayNotes = function (notes) {
+    var displayableNotes = null;
+    if (notes === "") {
+        displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
+    }
+    else {
+        displayableNotes = wendler.controller.components.notesEditor.sanitizeForDisplay(notes);
+    }
+    Ext.get('first-log-notes').setHTML(displayableNotes);
 };
 
 wendler.views.liftSchedule.LiftTracking = {

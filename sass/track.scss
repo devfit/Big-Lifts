@@ -77,11 +77,12 @@ div.lift-log-row {
     margin-top: -1.5em;
 }
 
+$notesBorderColor: #777777;
 div.log-notes{
     background-color: white;
     padding: 5px;
-    border: solid 2px #555;
-    @include border-radius(4px,4px);
+    border: solid 2px $notesBorderColor;
+    @include border-radius(8px,8px);
 }
 
 div.log-notes.tapped {
@@ -102,6 +103,6 @@ div.notes-empty-text {
 div.notes-form{
    height: 100%;
    margin: 0px;
-   border: solid 2px #a9a9a9;
+   border: solid 2px $notesBorderColor;
    @include border-radius(8px,8px);
 }

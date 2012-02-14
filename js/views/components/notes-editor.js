@@ -1,8 +1,14 @@
-Ext.ns('wendler.views.log.cards');
+Ext.ns('wendler.views.log.cards', 'wendler.controller.components.notesEditor');
 
-wendler.controller.logEntry.returnFromNotesEditor = function (notesEditor) {
+wendler.controller.components.notesEditor.returnFromNotesEditor = function (notesEditor) {
     var notes = notesEditor.down('[name=notes]').getValue();
     notesEditor._returnCallback(notes);
+};
+
+wendler.controller.components.notesEditor.sanitizeForDisplay = function(notes){
+    var displayableNotes = Ext.util.Format.htmlEncode(notes);
+    displayableNotes = displayableNotes.replace(/\n/g, '<br/>');
+    return displayableNotes;
 };
 
 wendler.views.log.cards.NotesEditor = Ext.extend(Ext.Panel, {
@@ -15,7 +21,7 @@ wendler.views.log.cards.NotesEditor = Ext.extend(Ext.Panel, {
     listeners:{
         beforeshow:function (c) {
             wendler.navigation.setBackFunction(function () {
-                wendler.controller.logEntry.returnFromNotesEditor(c);
+                wendler.controller.components.notesEditor.returnFromNotesEditor(c);
             });
         }
     },
@@ -27,7 +33,7 @@ wendler.views.log.cards.NotesEditor = Ext.extend(Ext.Panel, {
                 text:'Back',
                 ui:'back',
                 handler:function () {
-                    wendler.controller.logEntry.returnFromNotesEditor(this.up('panel'));
+                    wendler.controller.components.notesEditor.returnFromNotesEditor(this.up('panel'));
                 }
             }
         ]
