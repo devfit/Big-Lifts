@@ -69,7 +69,9 @@ wendler.controller.liftTracking.showLiftTracking = function () {
 
 wendler.controller.liftTracking.currentLiftNotes = '';
 wendler.controller.liftTracking.editNotes = function () {
-    console.log('Edit notes');
+    Ext.get('first-log-notes').addCls('tapped');
+//    Ext.getCmp('first-log-notes-editor')._setNotes(wendler.controller.logEntry.currentRecord.get('notes'));
+//    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('first-log-notes-editor'), {type:'slide', direction:'left'});
 };
 
 wendler.views.liftSchedule.LiftTracking = {
