@@ -1,10 +1,22 @@
-When /^I set the log notes to "([^"]*)"$/ do |logNotes|
-  liftTracking = @driver.find_element(:id => 'lift-tracking')
-  liftTracking.find_element(:name => 'notes').send_keys(logNotes)
+When /^I tap edit first log notes$/ do
+  @driver.find_element(:id => 'first-log-notes').click()
+  sleep @ANIMATION_DELAY
+end
+
+When /^I set the first log notes to "([^"]*)"$/ do |logNotes|
+  firstLiftTracking = @driver.find_element(:id => 'first-log-notes-editor')
+  firstLiftTracking.find_element(:name => 'notes').send_keys(logNotes)
+
+  firstLiftTracking.find_element(:class => 'x-button-back').click()
+  sleep @ANIMATION_DELAY
 end
 
 Then /^the log notes are "([^"]*)"$/ do |expectedLogNotes|
-  editLogEntry = @driver.find_element(:id => 'edit-log-entry')
-  logNotes = editLogEntry.find_element(:name => 'notes').attribute('value')
+  logNotes = @driver.find_element(:id => 'edit-log-notes').text()
   logNotes.should == expectedLogNotes
+end
+
+Then /^The log date is today$/ do
+  dateText = @driver.find_element(:id => 'log-entry-field-title').text()
+  dateText.include?(Time.now.strftime("%m/%d/%Y")).should == true
 end

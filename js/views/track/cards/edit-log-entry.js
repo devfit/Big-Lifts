@@ -94,6 +94,7 @@ wendler.views.log.cards.EditLogEntry = {
                 },
                 {xtype:'spacer'},
                 {
+                    id: 'delete-log-entry-button',
                     ui:'decline',
                     iconMask:true,
                     iconCls:'trash',

@@ -29,7 +29,7 @@ wendler.controller.liftTracking.logAndShowTracking = function () {
 
     var formValues = Ext.getCmp('lift-tracking').getValues();
     var reps = formValues['reps'];
-    var notes = formValues['notes'];
+    var notes = wendler.controller.liftTracking.currentLiftNotes;
     var week = wendler.liftSchedule.currentWeek;
     var weight = formValues['weight'];
     var cycle = wendler.stores.CurrentCycle.first().data.cycle;
