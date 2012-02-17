@@ -7,12 +7,14 @@ util.filebackup.saveStore = function (store) {
 util.filebackup.loadStore = function (store) {
     util.withNoFilters(store, function () {
         util.files.read(util.filebackup.generateFileName(store), function (data) {
-            store.removeAll();
             var storeData = JSON.parse(data);
-            for (var i = 0; i < storeData.length; i++) {
-                store.add(storeData[i]);
+            if (storeData.length > 0) {
+                store.removeAll();
+                for (var i = 0; i < storeData.length; i++) {
+                    store.add(storeData[i]);
+                }
+                store.sync();
             }
-            store.sync();
         });
     });
 };
