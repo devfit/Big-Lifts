@@ -1,18 +1,16 @@
 "use strict";
 Ext.ns("wendler.main");
-wendler.main.determineStartTab = function () {
-    var meta = wendler.stores.Meta.first();
-    var startTab = 0;
-    if (meta.data.firstTimeInApp) {
-        startTab = 1;
-        meta.set('firstTimeInApp', false);
-        meta.save();
-    }
 
-    return startTab;
+wendler.main.markFirstStartup = function(){
+    var meta = wendler.stores.Meta.first();
+    meta.set('firstTimeInApp', false);
+    meta.save();
 };
 
 wendler.main.start = function () {
+    var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
+    wendler.main.markFirstStartup();
+
     new Ext.Application({
         icon:'apple-touch-icon.png',
         glossOnIcon:false,
@@ -31,7 +29,7 @@ wendler.main.start = function () {
                 dock:'bottom',
                 layout:{ pack:'center' }
             },
-            activeItem:wendler.main.determineStartTab(),
+            activeItem:startTab,
             items:[
                 new wendler.views.LiftSchedule(),
                 new wendler.views.Maxes(),
