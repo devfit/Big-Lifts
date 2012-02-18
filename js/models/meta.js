@@ -26,3 +26,4 @@ wendler.stores.Meta = new Ext.data.Store({
     }
 });
 wendler.stores.Meta.load();
+util.filebackup.watchStoreSync(wendler.stores.Meta);

@@ -51,3 +51,4 @@ wendler.stores.lifts.LiftCompletion = new Ext.data.Store({
     }
 });
 wendler.stores.lifts.LiftCompletion.load();
+util.filebackup.watchStoreSync(wendler.stores.lifts.LiftCompletion);

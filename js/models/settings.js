@@ -26,7 +26,7 @@ wendler.defaults.settings = {
 };
 
 wendler.stores.recovery.setupDefaultSettings = function () {
-    util.withNoFilters(wendler.stores.Settings, function(){
+    util.withNoFilters(wendler.stores.Settings, function () {
         if (wendler.stores.Settings.getCount() == 0) {
             wendler.stores.Settings.add(wendler.defaults.settings);
             wendler.stores.Settings.sync();
@@ -41,6 +41,7 @@ wendler.stores.Settings = new Ext.data.Store({
     }
 });
 wendler.stores.Settings.load();
+util.filebackup.watchStoreSync(wendler.stores.Settings);
 
 wendler.settings.options.units = [
     {text:'lbs', value:'lbs'},
@@ -51,7 +52,7 @@ wendler.settings.options.roundingValues = [
     {text:'1', value:'1'},
     {text:'2.5', value:'2.5'},
     {text:'5', value:'5'},
-    {text:'Closest 5', value: 'closest5'}
+    {text:'Closest 5', value:'closest5'}
 ];
 
 wendler.settings.options.roundingType = [

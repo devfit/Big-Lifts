@@ -42,7 +42,6 @@ util.filebackup.storeHasChanged = function (currentStore) {
 };
 
 util.filebackup.syncStoresToFile = function () {
-    console.log( "Syncing to file" );
     _.each(util.filebackup.storesToSync, function (store) {
         util.filebackup.saveStore(store);
     });

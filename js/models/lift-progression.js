@@ -92,3 +92,4 @@ wendler.stores.lifts.LiftProgression = new Ext.data.Store({
     }
 });
 wendler.stores.lifts.LiftProgression.load();
+util.filebackup.watchStoreSync(wendler.stores.lifts.LiftProgression);

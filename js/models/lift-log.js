@@ -54,3 +54,4 @@ wendler.stores.LiftLog = new Ext.data.Store({
     }
 });
 wendler.stores.LiftLog.load();
+util.filebackup.watchStoreSync(wendler.stores.LiftLog);

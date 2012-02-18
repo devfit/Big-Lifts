@@ -1,10 +1,12 @@
 "use strict";
 Ext.ns("wendler.main");
 
-wendler.main.markFirstStartup = function(){
+wendler.main.markFirstStartup = function () {
     var meta = wendler.stores.Meta.first();
-    meta.set('firstTimeInApp', false);
-    meta.save();
+    if (meta.firstTimeInApp) {
+        meta.set('firstTimeInApp', false);
+        meta.save();
+    }
 };
 
 wendler.main.start = function () {
