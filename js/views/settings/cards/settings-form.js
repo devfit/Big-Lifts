@@ -10,10 +10,14 @@ wendler.settings.controller.reloadForm = function () {
     Ext.getCmp('settings-form').hasBeenLoaded = true;
 };
 
-wendler.settings.controller.updateSettings = function () {
+wendler.settings.controller.updateSettings = function (field) {
     var settingsForm = Ext.getCmp('settings-form');
     if (!settingsForm.hasBeenLoaded) {
         return;
+    }
+
+    if (field.originalValue === 'lbs' && field.value === 'kg') {
+        wendler.stores.lifts.adjustCycleIncreaseForKg();
     }
 
     var settingsRecord = wendler.stores.Settings.first();

@@ -81,3 +81,14 @@ wendler.stores.lifts.Lifts = new Ext.data.Store({
 });
 wendler.stores.lifts.Lifts.load();
 util.filebackup.watchStoreSync(wendler.stores.lifts.Lifts);
+
+wendler.stores.lifts.adjustCycleIncreaseForKg = function () {
+    var lbToKg = {10:5, 5:2.5};
+    wendler.stores.lifts.Lifts.each(function (r) {
+        var newKgIncrease = lbToKg[r.data.cycleIncrease];
+        if (typeof(newKgIncrease) !== 'undefined') {
+            r.set('cycleIncrease', lbToKg[r.data.cycleIncrease]);
+            r.save();
+        }
+    });
+};

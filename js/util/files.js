@@ -38,7 +38,7 @@ util.files.requestFileSystem = function (fileSystemObtainedCallback) {
 };
 
 util.files.write = function (directory, filename, data, successCallback) {
-    var fileEntryObtained = function (fileEntry) {
+    var writeData = function (fileEntry) {
         fileEntry.createWriter(function (fileWriter) {
             fileWriter.onerror = util.files.errorCallback;
             fileWriter.onwriteend = successCallback;
@@ -54,14 +54,27 @@ util.files.write = function (directory, filename, data, successCallback) {
         });
     };
 
+    //HTML5 write doesn't overwrite the entire file, so the file has to be deleted before it can be written to cleanly
+    var deleteFileAndWrite = function (fileEntry, parentFile) {
+        fileEntry.remove(function () {
+            parentFile.getFile(filename, {create:true}, writeData);
+        }, util.files.errorCallback);
+    };
+
+    var getFileFromDirectory = function (parentFile) {
+        parentFile.getFile(filename, {create:true}, function (fileEntry) {
+            deleteFileAndWrite(fileEntry, parentFile)
+        }, util.files.errorCallback);
+    };
+
     var fileSystemObtained = function (fileSystem) {
         if (directory !== null) {
             fileSystem.root.getDirectory(directory, {create:true}, function (dirEntry) {
-                dirEntry.getFile(filename, {create:true}, fileEntryObtained, util.files.errorCallback);
+                getFileFromDirectory(dirEntry);
             }, util.files.errorCallback);
         }
         else {
-            fileSystem.root.getFile(filename, {create:true}, fileEntryObtained, util.files.errorCallback);
+            getFileFromDirectory(fileSystem.root);
         }
     };
 

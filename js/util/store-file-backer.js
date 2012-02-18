@@ -16,14 +16,17 @@ util.filebackup.loadAllStores = function () {
 
 util.filebackup.loadStore = function (store) {
     util.withNoFilters(store, function () {
-        util.files.read(util.filebackup.directory, util.filebackup.generateFileName(store), function (data) {
-            var storeData = JSON.parse(data);
-            if (storeData.length > 0) {
-                store.removeAll();
-                for (var i = 0; i < storeData.length; i++) {
-                    store.add(storeData[i]);
+        util.files.read(util.filebackup.directory, util.filebackup.generateFileName(store), function (fileDataAsString) {
+            var fileStoreData = JSON.parse(fileDataAsString);
+            if (fileStoreData.length > 0) {
+                var existingStoreAsString = Ext.encode(Ext.pluck(store.data.items, 'data'));
+                if (fileDataAsString != existingStoreAsString) {
+                    store.removeAll();
+                    for (var i = 0; i < fileStoreData.length; i++) {
+                        store.add(fileStoreData[i]);
+                    }
+                    store.sync();
                 }
-                store.sync();
             }
         });
     });
