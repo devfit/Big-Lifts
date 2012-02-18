@@ -1,5 +1,5 @@
 Ext.ns('util.filebackup');
-util.filebackup.directory = 'wendle531';
+util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store) {
     var data = Ext.encode(Ext.pluck(store.data.items, 'data'));
     util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
