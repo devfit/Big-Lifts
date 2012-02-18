@@ -37,10 +37,9 @@ util.files.requestFileSystem = function (fileSystemObtainedCallback) {
     window.requestFileSystem(type, util.files.requestedFileSystemSizeBytes, fileSystemObtainedCallback, util.files.errorCallback);
 };
 
-util.files.write = function (filename, data, successCallback) {
+util.files.write = function (directory, filename, data, successCallback) {
     var fileEntryObtained = function (fileEntry) {
         fileEntry.createWriter(function (fileWriter) {
-
             fileWriter.onerror = util.files.errorCallback;
             fileWriter.onwriteend = successCallback;
 
@@ -56,13 +55,20 @@ util.files.write = function (filename, data, successCallback) {
     };
 
     var fileSystemObtained = function (fileSystem) {
-        fileSystem.root.getFile(filename, {create:true}, fileEntryObtained, util.files.errorCallback);
+        if (directory !== null) {
+            fileSystem.root.getDirectory(directory, {create:true}, function (dirEntry) {
+                dirEntry.getFile(filename, {create:true}, fileEntryObtained, util.files.errorCallback);
+            }, util.files.errorCallback);
+        }
+        else {
+            fileSystem.root.getFile(filename, {create:true}, fileEntryObtained, util.files.errorCallback);
+        }
     };
 
     util.files.requestFileSystem(fileSystemObtained);
 };
 
-util.files.read = function (filename, successCallback) {
+util.files.read = function (directory, filename, successCallback) {
     var fileObtained = function (file) {
         var reader = new FileReader();
         reader.onloadend = function (e) {
@@ -71,10 +77,19 @@ util.files.read = function (filename, successCallback) {
         reader.readAsText(file);
     };
 
+    var fileEntryObtained = function (fileEntry) {
+        fileEntry.file(fileObtained);
+    };
+
     var fileSystemObtained = function (fileSystem) {
-        fileSystem.root.getFile(filename, {}, function (fileEntry) {
-            fileEntry.file(fileObtained);
-        });
+        if (directory !== null) {
+            fileSystem.root.getDirectory(directory, {}, function (dirEntry) {
+                dirEntry.getFile(filename, {}, fileEntryObtained, util.files.errorCallback);
+            });
+        }
+        else {
+            fileSystem.root.getFile(filename, {}, fileEntryObtained, util.files.errorCallback);
+        }
     };
 
     util.files.requestFileSystem(fileSystemObtained);

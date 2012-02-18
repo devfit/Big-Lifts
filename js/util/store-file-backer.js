@@ -1,7 +1,8 @@
 Ext.ns('util.filebackup');
+util.filebackup.directory = 'wendle531';
 util.filebackup.saveStore = function (store) {
     var data = Ext.encode(Ext.pluck(store.data.items, 'data'));
-    util.files.write(util.filebackup.generateFileName(store), data);
+    util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
 };
 
 util.filebackup.loadAllStores = function () {
@@ -15,7 +16,7 @@ util.filebackup.loadAllStores = function () {
 
 util.filebackup.loadStore = function (store) {
     util.withNoFilters(store, function () {
-        util.files.read(util.filebackup.generateFileName(store), function (data) {
+        util.files.read(util.filebackup.directory, util.filebackup.generateFileName(store), function (data) {
             var storeData = JSON.parse(data);
             if (storeData.length > 0) {
                 store.removeAll();
@@ -29,7 +30,9 @@ util.filebackup.loadStore = function (store) {
 };
 
 util.filebackup.generateFileName = function (store) {
-    return store.getProxy().id + ".txt";
+    var proxyId = store.getProxy().id;
+    proxyId = proxyId.replace('-proxy', '');
+    return proxyId + ".json";
 };
 
 util.filebackup.storesToSync = [];
