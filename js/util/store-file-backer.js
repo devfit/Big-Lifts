@@ -5,7 +5,12 @@ util.filebackup.saveStore = function (store) {
 };
 
 util.filebackup.loadAllStores = function () {
-    _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
+    if (wendler.main.deviceReady) {
+        _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
+    }
+    else{
+        setTimeout(util.filebackup.loadAllStores, 250);
+    }
 };
 
 util.filebackup.loadStore = function (store) {

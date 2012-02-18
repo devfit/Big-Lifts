@@ -49,11 +49,5 @@ wendler.main.start = function () {
     });
 };
 
-if (typeof(PhoneGap) === 'undefined') {
-    wendler.main.start();
-}
-else if (wendler.main.deviceReady && !wendler.main.started) {
-    wendler.main.started = true;
-    wendler.main.start();
-}
+wendler.main.start();
 
