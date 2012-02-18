@@ -28,10 +28,13 @@ util.files.errorCallback = function (e) {
 };
 
 
+util.files.BYTES_PER_KB = 1024;
+util.files.KB_PER_MB = 1024;
+util.files.requestedFileSystemSizeBytes = Ext.is.Desktop ? 5 * util.files.KB_PER_MB * util.files.BYTES_PER_KB : 0;
 util.files.requestFileSystem = function (fileSystemObtainedCallback) {
     window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
     var type = typeof(LocalFileSystem) !== 'undefined' ? LocalFileSystem.PERSISTENT : window.TEMPORARY;
-    window.requestFileSystem(type, 256 * 1024 * 1024, fileSystemObtainedCallback, util.files.errorCallback);
+    window.requestFileSystem(type, util.files.requestedFileSystemSizeBytes, fileSystemObtainedCallback, util.files.errorCallback);
 };
 
 util.files.write = function (filename, data, successCallback) {
@@ -69,6 +72,7 @@ util.files.read = function (filename, successCallback) {
     };
 
     var fileSystemObtained = function (fileSystem) {
+        console.log(fileSystem.root.fullPath);
         fileSystem.root.getFile(filename, {}, function (fileEntry) {
             fileEntry.file(fileObtained);
         });

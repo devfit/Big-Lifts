@@ -8,7 +8,7 @@ util.filebackup.loadAllStores = function () {
     if (wendler.main.deviceReady) {
         _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
     }
-    else{
+    else {
         setTimeout(util.filebackup.loadAllStores, 250);
     }
 };
