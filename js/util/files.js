@@ -44,7 +44,7 @@ util.files.write = function (filename, data, successCallback) {
             fileWriter.onerror = util.files.errorCallback;
             fileWriter.onwriteend = successCallback;
 
-            if (typeof(window.WebKitBlobBuilder) !== 'undefined') {
+            if (Ext.is.Desktop) {
                 var bb = new window.WebKitBlobBuilder();
                 bb.append(data);
                 fileWriter.write(bb.getBlob('text/plain'));
@@ -72,7 +72,6 @@ util.files.read = function (filename, successCallback) {
     };
 
     var fileSystemObtained = function (fileSystem) {
-        console.log(fileSystem.root.fullPath);
         fileSystem.root.getFile(filename, {}, function (fileEntry) {
             fileEntry.file(fileObtained);
         });
