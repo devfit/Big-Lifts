@@ -4,6 +4,10 @@ util.filebackup.saveStore = function (store) {
     util.files.write(util.filebackup.generateFileName(store), data);
 };
 
+util.filebackup.loadAllStores = function () {
+    _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
+};
+
 util.filebackup.loadStore = function (store) {
     util.withNoFilters(store, function () {
         util.files.read(util.filebackup.generateFileName(store), function (data) {
@@ -24,7 +28,9 @@ util.filebackup.generateFileName = function (store) {
 };
 
 util.filebackup.storesToSync = [];
+util.filebackup.watchedStores = [];
 util.filebackup.watchStoreSync = function (store) {
+    util.filebackup.watchedStores.push(store);
     store.addListener('update', util.filebackup.storeHasChanged);
     store.addListener('remove', util.filebackup.storeHasChanged);
 };

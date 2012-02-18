@@ -12,6 +12,7 @@ wendler.main.markFirstStartup = function () {
 wendler.main.start = function () {
     var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
     wendler.main.markFirstStartup();
+    util.filebackup.loadAllStores();
 
     new Ext.Application({
         icon:'apple-touch-icon.png',
