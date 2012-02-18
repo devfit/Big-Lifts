@@ -50,7 +50,7 @@ util.filebackup.storeHasChanged = function (currentStore) {
 
         if (!util.filebackup.waitingToSync) {
             util.filebackup.waitingToSync = true;
-            setTimeout(util.filebackup.syncStoresToFile, 1000);
+            setTimeout(util.filebackup.syncStoresToFile, 500);
         }
     }
 };
