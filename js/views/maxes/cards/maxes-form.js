@@ -4,6 +4,7 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
     var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', el.name);
     lift.set('max', newValue);
     lift.save();
+    wendler.stores.lifts.Lifts.sync();
     wendler.liftSchedule.controller.updateLiftValues();
 };
 

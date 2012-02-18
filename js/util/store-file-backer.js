@@ -22,3 +22,31 @@ util.filebackup.loadStore = function (store) {
 util.filebackup.generateFileName = function (store) {
     return store.getProxy().id + ".txt";
 };
+
+util.filebackup.storesToSync = [];
+util.filebackup.watchStoreSync = function (store) {
+    store.addListener('update', util.filebackup.storeHasChanged);
+    store.addListener('remove', util.filebackup.storeHasChanged);
+};
+
+util.filebackup.waitingToSync = false;
+util.filebackup.storeHasChanged = function (currentStore) {
+    if (!_.include(util.filebackup.storesToSync, currentStore)) {
+        util.filebackup.storesToSync.push(currentStore);
+
+        if (!util.filebackup.waitingToSync) {
+            util.filebackup.waitingToSync = true;
+            setTimeout(util.filebackup.syncStoresToFile, 1000);
+        }
+    }
+};
+
+util.filebackup.syncStoresToFile = function () {
+    console.log( "Syncing to file" );
+    _.each(util.filebackup.storesToSync, function (store) {
+        util.filebackup.saveStore(store);
+    });
+    util.filebackup.waitingToSync = false;
+    util.filebackup.storesToSync = [];
+};
+

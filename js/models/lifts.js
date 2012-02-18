@@ -80,3 +80,4 @@ wendler.stores.lifts.Lifts = new Ext.data.Store({
     }
 });
 wendler.stores.lifts.Lifts.load();
+util.filebackup.watchStoreSync(wendler.stores.lifts.Lifts);
