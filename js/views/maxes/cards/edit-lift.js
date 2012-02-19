@@ -6,7 +6,7 @@ wendler.maxes.controller.setAndFindInvalidLiftErrors = function (errors, message
     var maxErrors = errors.getByField('max');
     var cycleIncreaseErrors = errors.getByField('cycleIncrease');
     if (nameErrors.length > 0) {
-        for (var i = 0; i < nameErrors.length; i++ ) {
+        for (var i = 0; i < nameErrors.length; i++) {
             var nameError = nameErrors[i];
             if (nameError.message === "must be present") {
                 messages.push("Invalid lift name");
@@ -35,17 +35,15 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
     var currentModel = wendler.maxes.controller.getCurrentLiftModel();
     var oldPropertyName = currentModel.get('propertyName');
 
-    currentModel.set('name', newName);
-    currentModel.set('propertyName', newPropertyName);
-    currentModel.set('cycleIncrease', newCycleIncrease);
-    currentModel.set('max', newMax);
-
-    var errors = currentModel.validate();
+    var newLiftConfiguration = {name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax};
+    var copyModel = Ext.ModelMgr.create(newLiftConfiguration, 'Lift');
+    var errors = copyModel.validate();
     var messages = [];
 
     wendler.maxes.controller.setAndFindInvalidLiftErrors(errors, messages, oldPropertyName, newPropertyName);
 
     if (messages.length === 0) {
+        currentModel.set(newLiftConfiguration);
         currentModel.save();
         wendler.maxes.controller.rebuildMaxesList();
         wendler.maxes.controller.doneWithEditing();
