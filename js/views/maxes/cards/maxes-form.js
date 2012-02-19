@@ -70,7 +70,7 @@ wendler.maxes.controller.rebuildMaxesList = function () {
 };
 
 wendler.maxes.controller.editLiftButtonPressed = function () {
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-list'));
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-panel'));
 };
 
 wendler.stores.lifts.Lifts.addListener('update', function (store, record, op) {

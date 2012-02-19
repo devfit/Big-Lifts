@@ -1,12 +1,38 @@
 Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller.editLiftsList');
 
-wendler.maxes.controller.editLift = function (view, index) {
-    var liftModel = wendler.stores.lifts.Lifts.getAt(index);
-    var propertyName = liftModel.get('propertyName');
+wendler.maxes.controller.editLift = function (dataview, index, item, e) {
+    var tapTarget = Ext.get(e.target);
 
-    Ext.getCmp('maxes-edit-lift-panel')._setup(propertyName);
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-panel'), {type:'slide', direction:'left'});
+    var editLiftsRowWithDelete = wendler.maxes.controller.editLiftsList.findLogRowWithDeleteButton(tapTarget.up('.x-list-parent'));
+    if (wendler.maxes.controller.editLiftsList.tappingDelete(tapTarget)) {
+        wendler.stores.lifts.Lifts.removeAt(index);
+        wendler.stores.lifts.Lifts.sync();
+        wendler.maxes.controller.rebuildMaxesList();
+        Ext.getCmp('maxes-edit-lifts-list').refresh();
+    }
+    else if (editLiftsRowWithDelete !== null) {
+        wendler.maxes.controller.editLiftsList.showHideDeleteButton(editLiftsRowWithDelete, index);
+    }
+    else {
+        var liftModel = wendler.stores.lifts.Lifts.getAt(index);
+        var propertyName = liftModel.get('propertyName');
+
+        Ext.getCmp('maxes-edit-lift-panel')._setup(propertyName);
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-panel'), {type:'slide', direction:'left'});
+    }
 };
+
+wendler.maxes.controller.editLiftsList.findLogRowWithDeleteButton = function (list) {
+    var deleteContainers = list.query('.delete-button-holder');
+    for (var i = 0; i < deleteContainers.length; i++) {
+        var deleteContainer = deleteContainers[i];
+        if (!Ext.get(deleteContainer).hasCls('hidden')) {
+            return Ext.get(deleteContainer).up('.x-list-item');
+        }
+    }
+    return null;
+};
+
 
 wendler.maxes.controller.doneWithEditing = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
@@ -18,6 +44,10 @@ wendler.maxes.controller.editLiftsDoneButtonPressed = function () {
 
 wendler.maxes.controller.editLiftsList.onItemSwipe = function (dataview, index, item) {
     wendler.maxes.controller.editLiftsList.showHideDeleteButton(item);
+};
+
+wendler.maxes.controller.editLiftsList.tappingDelete = function (tapTarget) {
+    return tapTarget.hasCls('delete-button') || tapTarget.up('.delete-button') !== null;
 };
 
 wendler.maxes.controller.editLiftsList.showHideDeleteButton = function (row) {
@@ -48,11 +78,12 @@ wendler.maxes.controller.editLiftsList.showDeleteButtonForDom = function (contai
 };
 
 wendler.maxes.cards.editMaxesList = {
-    id:'maxes-edit-lifts-list',
+    id:'maxes-edit-lifts-panel',
     xtype:'panel',
     layout:'fit',
     items:[
         {
+            id: 'maxes-edit-lifts-list',
             xtype:'list',
             selectedItemCls:'',
             store:wendler.stores.lifts.Lifts,
