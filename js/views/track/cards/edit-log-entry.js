@@ -26,11 +26,9 @@ wendler.controller.logEntry.setupLogEntry = function (logRecord) {
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
     Ext.getCmp('edit-log-entry-toolbar').setTitle(logRecord.data.liftName);
 
-    var formValues = logRecord.data;
+    var formValues = _.clone(logRecord.data);
     formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
-
     formValues['timestamp'] = new Date(logRecord.data.timestamp);
-
     Ext.getCmp('edit-log-entry').setValues(formValues);
     wendler.controller.logEntry.displayNotes(logRecord.data.notes);
 };
@@ -63,6 +61,7 @@ wendler.controller.logEntry.editNotes = function () {
 wendler.controller.logEntry.returnFromEditNotes = function (newNotes) {
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'right'});
     wendler.controller.logEntry.currentRecord.set('notes', newNotes);
+
     wendler.controller.logEntry.currentRecord.save();
     wendler.stores.LiftLog.sync();
 
