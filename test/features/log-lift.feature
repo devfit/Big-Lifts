@@ -14,6 +14,18 @@ Feature: Lift tracking
     Then the log notes are "Log notes"
     Then The log date is today
 
+  Scenario: Editing notes and viewing date
+    When I view the squat lift schedule for week 1
+    And I mark the current lift completed
+    And I save the lift log
+    And I select the log entry for Squat
+    Then The log date is today
+    And I tap edit log notes
+    And I return from editing the log notes
+    Then The log date is today
+    And I return from viewing a log
+    Then The squat long entry date in the log list is today
+
   Scenario: Deleting a lift log
     When I view the press lift schedule for week 1
     And I mark the current lift completed

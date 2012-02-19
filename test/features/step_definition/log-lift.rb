@@ -20,3 +20,24 @@ Then /^The log date is today$/ do
   dateText = @driver.find_element(:id => 'edit-log-entry').find_element(:name => 'timestamp').attribute('value')
   dateText.include?(Time.now.strftime("%m/%d/%Y")).should == true
 end
+
+Then /^I tap edit log notes$/ do
+  @driver.find_element(:id => 'edit-log-notes').click()
+  sleep @ANIMATION_DELAY
+end
+
+Then /^I return from editing the log notes$/ do
+  @driver.find_element(:id => 'log-notes-editor').find_element(:class => 'x-button-back').click()
+  sleep @ANIMATION_DELAY
+end
+
+Then /^I return from viewing a log$/ do
+  @driver.find_element(:id => 'edit-log-entry').find_element(:class => 'x-button-back').click()
+  sleep @ANIMATION_DELAY
+end
+
+Then /^The squat long entry date in the log list is today$/ do
+  dateText = @driver.find_element(:id => 'lift-log-list').find_element(:class => 'date-week').text()
+  dateText.include?(Time.now.strftime("%m/%d/%Y")).should == true
+end
+

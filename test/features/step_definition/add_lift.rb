@@ -14,12 +14,6 @@ When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
   sleep @ANIMATION_DELAY
 end
 
-Then /^I close the edit lifts screen$/ do
-  edit_lifts_done_button = @driver.find_element(:id => 'edit-lifts-done-button')
-  edit_lifts_done_button.click
-  sleep @ANIMATION_DELAY
-end
-
 Then /^"([^"]*)" is ([\w ]+)?added to the edit lifts screen$/ do |lift, invertCheck|
   liftShouldBeAdded = invertCheck == nil
 
