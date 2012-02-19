@@ -17,7 +17,7 @@ Feature: Auto-increment lift maxes
     And I click edit lifts
     And I click edit "Squat"
     And I edit the cycle increase to be 2.5
-    And I save and close the edit lift screen
+    And I close the edit lift screen
     And I navigate to the lift schedule
     And I check off all lifts
     And I hit done on the lift completion screen
