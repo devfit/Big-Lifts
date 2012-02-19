@@ -24,9 +24,7 @@ wendler.controller.logEntry.currentRecord = null;
 wendler.controller.logEntry.setupLogEntry = function (logRecord) {
     wendler.controller.logEntry.currentRecord = logRecord;
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
-
-    var logTitle = logRecord.data.liftName + " - Cycle " + logRecord.data.cycle;
-    Ext.get('log-entry-field-title').setHTML(logTitle);
+    Ext.getCmp('edit-log-entry-toolbar').setTitle(logRecord.data.liftName);
 
     var formValues = logRecord.data;
     formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
@@ -87,8 +85,9 @@ wendler.views.log.cards.EditLogEntry = {
     },
     dockedItems:[
         {
+            id:'edit-log-entry-toolbar',
             xtype:'toolbar',
-            title:'Log Entry',
+            title:'',
             items:[
                 {
                     text:'Back',
@@ -109,15 +108,22 @@ wendler.views.log.cards.EditLogEntry = {
     items:[
         {
             xtype:'fieldset',
-            title:'<div id="log-entry-field-title"></div>',
-            style:'margin-top: 0px; margin-bottom: 7px;',
+            style:'margin-top: 7px; margin-bottom: 7px;',
             items:[
                 {
-                    id:'test',
                     xtype:'datepickerfield',
                     label:'Date',
                     name:'timestamp',
-                    labelWidth:'50%',
+                    labelWidth:'45%',
+                    listeners:{
+                        change:wendler.controller.logEntry.updateLogEntry
+                    }
+                },
+                {
+                    xtype:'numberfield',
+                    label:'Cycle',
+                    name:'cycle',
+                    labelWidth:'45%',
                     listeners:{
                         change:wendler.controller.logEntry.updateLogEntry
                     }
@@ -126,7 +132,7 @@ wendler.views.log.cards.EditLogEntry = {
                     xtype:'numberfield',
                     label:'Weight',
                     name:'weight',
-                    labelWidth:'50%',
+                    labelWidth:'45%',
                     listeners:{
                         change:function () {
                             wendler.controller.logEntry.updateOneRepMax();
@@ -138,7 +144,7 @@ wendler.views.log.cards.EditLogEntry = {
                     xtype:'numberfield',
                     label:'Reps',
                     name:'reps',
-                    labelWidth:'50%',
+                    labelWidth:'45%',
                     listeners:{
                         change:function () {
                             wendler.controller.logEntry.updateOneRepMax();
@@ -159,7 +165,7 @@ wendler.views.log.cards.EditLogEntry = {
                     label:'Units',
                     name:'units',
                     options:wendler.settings.options.units,
-                    labelWidth:'50%',
+                    labelWidth:'45%',
                     listeners:{
                         change:wendler.controller.logEntry.updateLogEntry
                     }
