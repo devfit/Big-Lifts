@@ -1,3 +1,4 @@
+"use strict";
 Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
 
 wendler.maxes.controller.setAndFindInvalidLiftErrors = function (errors, messages, oldPropertyName, newPropertyName) {
@@ -5,7 +6,7 @@ wendler.maxes.controller.setAndFindInvalidLiftErrors = function (errors, message
     var maxErrors = errors.getByField('max');
     var cycleIncreaseErrors = errors.getByField('cycleIncrease');
     if (nameErrors.length > 0) {
-        for (var i in nameErrors) {
+        for (var i = 0; i < nameErrors.length; i++ ) {
             var nameError = nameErrors[i];
             if (nameError.message === "must be present") {
                 messages.push("Invalid lift name");
@@ -24,7 +25,8 @@ wendler.maxes.controller.setAndFindInvalidLiftErrors = function (errors, message
 };
 
 wendler.maxes.currentEditingLiftProperty = null;
-wendler.maxes.controller.editLiftDoneButtonPressed = function () {
+
+wendler.maxes.controller.editLiftBackButtonPressed = function () {
     var newName = Ext.getCmp('edit-lift-new-name').getValue();
     var newCycleIncrease = Ext.getCmp('edit-lift-cycle-increase').getValue();
     var newPropertyName = wendler.models.Lift.sanitizePropertyName(newName);
@@ -51,10 +53,6 @@ wendler.maxes.controller.editLiftDoneButtonPressed = function () {
     else {
         Ext.Msg.alert('Error', messages.join('<br/>'));
     }
-};
-
-wendler.maxes.controller.editLiftCancelButtonPressed = function () {
-    wendler.maxes.controller.doneWithEditing();
 };
 
 wendler.maxes.controller.getCurrentLiftModel = function () {
@@ -116,12 +114,6 @@ wendler.maxes.cards.editLiftPanel = {
                             label:'Increase at end of cycle'
                         }
                     ]
-                },
-                {
-                    xtype:'button',
-                    ui:'decline-round',
-                    text:'Delete',
-                    handler:wendler.maxes.controller.deleteLiftButtonPressed
                 }
             ]
         }
@@ -133,23 +125,24 @@ wendler.maxes.cards.editLiftPanel = {
             dock:'top',
             items:[
                 {
-                    id:'edit-lift-cancel-button',
-                    text:'Cancel',
-                    handler:wendler.maxes.controller.editLiftCancelButtonPressed,
-                    ui:'action'
+                    id:'edit-lift-back-button',
+                    text:'Back',
+                    handler:wendler.maxes.controller.editLiftBackButtonPressed,
+                    ui:'back'
                 },
                 {xtype:'spacer'},
                 {
-                    id:'edit-lift-done-button',
-                    text:'Save',
-                    handler:wendler.maxes.controller.editLiftDoneButtonPressed,
-                    ui:'confirm'
+                    id:'delete-lift-button',
+                    ui:'decline',
+                    iconMask:true,
+                    iconCls:'trash',
+                    handler:wendler.maxes.controller.deleteLiftButtonPressed
                 }
             ]
         }
     ],
     _setup:function (propertyName) {
-        wendler.navigation.setBackFunction(wendler.maxes.controller.editLiftCancelButtonPressed);
+        wendler.navigation.setBackFunction(wendler.maxes.controller.editLiftBackButtonPressed);
 
         var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
         wendler.maxes.currentEditingLiftProperty = propertyName;

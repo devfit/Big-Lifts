@@ -71,3 +71,8 @@ util.filebackup.syncStoresToFile = function () {
     util.filebackup.storesToSync = [];
 };
 
+util.filebackup.deleteAllStoreFiles = function () {
+    _.each(util.filebackup.watchedStores, function (store) {
+        util.files.deleteFile(util.filebackup.directory, util.filebackup.generateFileName(store));
+    });
+};

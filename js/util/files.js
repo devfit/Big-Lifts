@@ -107,3 +107,26 @@ util.files.read = function (directory, filename, successCallback) {
 
     util.files.requestFileSystem(fileSystemObtained);
 };
+
+util.files.deleteFile = function (directory, filename, successCallback) {
+    var deleteFile = function (fileEntry) {
+        fileEntry.remove(successCallback, util.files.errorCallback);
+    };
+
+    var getFileFromDirectory = function (parentFile) {
+        parentFile.getFile(filename, {create:true}, deleteFile, util.files.errorCallback);
+    };
+
+    var fileSystemObtained = function (fileSystem) {
+        if (directory !== null) {
+            fileSystem.root.getDirectory(directory, {create:true}, function (dirEntry) {
+                getFileFromDirectory(dirEntry);
+            }, util.files.errorCallback);
+        }
+        else {
+            getFileFromDirectory(fileSystem.root);
+        }
+    };
+
+    util.files.requestFileSystem(fileSystemObtained);
+};
