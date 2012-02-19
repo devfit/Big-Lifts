@@ -1,7 +1,7 @@
 Then /^I navigate to the settings page$/ do
   @main_navigation.navigate_to(:more)
   moreInfoList = @driver.find_element(:id => 'more-info-list').find_elements(:class => 'x-list-item')
-  settingsMenuItem = moreInfoList.select{|item| item.text == 'Settings' }[0]
+  settingsMenuItem = moreInfoList.select { |item| item.text == 'Settings' }[0]
   settingsMenuItem.click()
   sleep @ANIMATION_DELAY
 end
@@ -16,6 +16,17 @@ When /^I set the training percentage to (\d+)$/ do |percentage|
   trainingMaxPercentageInput.clear()
   trainingMaxPercentageInput.send_keys(percentage)
   sleep @ANIMATION_DELAY
+end
+
+When /^I set units to kg$/ do
+  @driver.find_element(:name => 'units').find_element(:xpath => './..').click()
+  sleep @ANIMATION_DELAY
+
+  unitsSelect = @driver.find_element(:class => 'x-floating').find_elements(:class => 'x-list-item').select { |item|
+    item.text() == "kg"
+  }[0]
+
+  unitsSelect.click()
 end
 
 Then /^The training percentage shows (\d+)$/ do |percentage|
