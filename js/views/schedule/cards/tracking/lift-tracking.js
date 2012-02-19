@@ -10,6 +10,7 @@ wendler.controller.liftTracking.logLift = function (data) {
             week:data.week,
             weight:data.weight,
             cycle:data.cycle,
+            date:null,
             timestamp:new Date().getTime(),
             units:wendler.stores.Settings.first().data.units
         });

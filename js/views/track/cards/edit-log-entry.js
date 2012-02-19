@@ -7,6 +7,7 @@ wendler.controller.logEntry.backToLogList = function () {
 
 wendler.controller.logEntry.updateLogEntry = function () {
     var values = Ext.getCmp('edit-log-entry').getValues();
+    values['timestamp'] = values['timestamp'].getTime();
 
     wendler.controller.logEntry.currentRecord.set(values);
     wendler.controller.logEntry.currentRecord.save();
@@ -24,11 +25,13 @@ wendler.controller.logEntry.setupLogEntry = function (logRecord) {
     wendler.controller.logEntry.currentRecord = logRecord;
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
 
-    var logTitle = logRecord.data.liftName + " " + wendler.controller.log.formatDate(logRecord.data.timestamp) + " - Cycle " + logRecord.data.cycle;
+    var logTitle = logRecord.data.liftName + " - Cycle " + logRecord.data.cycle;
     Ext.get('log-entry-field-title').setHTML(logTitle);
 
     var formValues = logRecord.data;
     formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
+
+    formValues['timestamp'] = new Date(logRecord.data.timestamp);
 
     Ext.getCmp('edit-log-entry').setValues(formValues);
     wendler.controller.logEntry.displayNotes(logRecord.data.notes);
@@ -94,7 +97,7 @@ wendler.views.log.cards.EditLogEntry = {
                 },
                 {xtype:'spacer'},
                 {
-                    id: 'delete-log-entry-button',
+                    id:'delete-log-entry-button',
                     ui:'decline',
                     iconMask:true,
                     iconCls:'trash',
@@ -109,6 +112,16 @@ wendler.views.log.cards.EditLogEntry = {
             title:'<div id="log-entry-field-title"></div>',
             style:'margin-top: 0px; margin-bottom: 7px;',
             items:[
+                {
+                    id:'test',
+                    xtype:'datepickerfield',
+                    label:'Date',
+                    name:'timestamp',
+                    labelWidth:'50%',
+                    listeners:{
+                        change:wendler.controller.logEntry.updateLogEntry
+                    }
+                },
                 {
                     xtype:'numberfield',
                     label:'Weight',

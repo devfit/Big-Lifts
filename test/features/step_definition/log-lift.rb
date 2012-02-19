@@ -17,6 +17,6 @@ Then /^the log notes are "([^"]*)"$/ do |expectedLogNotes|
 end
 
 Then /^The log date is today$/ do
-  dateText = @driver.find_element(:id => 'log-entry-field-title').text()
+  dateText = @driver.find_element(:id => 'edit-log-entry').find_element(:name => 'timestamp').attribute('value')
   dateText.include?(Time.now.strftime("%m/%d/%Y")).should == true
 end
