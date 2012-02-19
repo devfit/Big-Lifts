@@ -39,10 +39,10 @@ wendler.controller.logList.sortAndRefreshList = function () {
 };
 
 wendler.controller.logList.onItemSwipe = function (dataview, index, item) {
-    wendler.controller.logList.showHideDeleteButton(item, index);
+    wendler.controller.logList.showHideDeleteButton(item);
 };
 
-wendler.controller.logList.showHideDeleteButton = function (row, index) {
+wendler.controller.logList.showHideDeleteButton = function (row) {
     var dateWeek = Ext.get(row).down('.date-week');
     var deleteButton = Ext.get(row).down('.delete-button-holder');
     if (dateWeek.hasCls('hidden')) {
@@ -50,12 +50,12 @@ wendler.controller.logList.showHideDeleteButton = function (row, index) {
         deleteButton.addCls('hidden');
     }
     else if (deleteButton.hasCls('hidden')) {
-        wendler.controller.logList.showDeleteButtonForDom(deleteButton, index);
+        wendler.controller.logList.showDeleteButtonForDom(deleteButton);
         dateWeek.addCls('hidden');
     }
 };
 
-wendler.controller.logList.showDeleteButtonForDom = function (container, index) {
+wendler.controller.logList.showDeleteButtonForDom = function (container) {
     container.removeCls('hidden');
     container.addCls('fade-in');
 
