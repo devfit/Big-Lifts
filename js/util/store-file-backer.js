@@ -1,10 +1,15 @@
 Ext.ns('util.filebackup');
+
+util.filebackup.fileBackupEnabled = Ext.is.Desktop || typeof(PhoneGap) !== 'undefined';
+
 util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store) {
     var data = Ext.encode(Ext.pluck(store.data.items, 'data'));
     util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
 };
 
+util.filebackup.storesToSync = [];
+util.filebackup.watchedStores = [];
 util.filebackup.loadAllStores = function () {
     if (wendler.main.deviceReady) {
         _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
@@ -38,12 +43,12 @@ util.filebackup.generateFileName = function (store) {
     return proxyId + ".json";
 };
 
-util.filebackup.storesToSync = [];
-util.filebackup.watchedStores = [];
 util.filebackup.watchStoreSync = function (store) {
-    util.filebackup.watchedStores.push(store);
-    store.addListener('update', util.filebackup.storeHasChanged);
-    store.addListener('remove', util.filebackup.storeHasChanged);
+    if (util.filebackup.fileBackupEnabled) {
+        util.filebackup.watchedStores.push(store);
+        store.addListener('update', util.filebackup.storeHasChanged);
+        store.addListener('remove', util.filebackup.storeHasChanged);
+    }
 };
 
 util.filebackup.waitingToSync = false;
