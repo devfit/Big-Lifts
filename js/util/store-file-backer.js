@@ -33,6 +33,10 @@ util.filebackup.loadStore = function (store) {
                     store.sync();
                 }
             }
+        }, function (error) {
+            if (error.code === FileError.NOT_FOUND_ERR) {
+                util.filebackup.storeHasChanged(store);
+            }
         });
     });
 };

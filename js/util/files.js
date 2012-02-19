@@ -81,7 +81,7 @@ util.files.write = function (directory, filename, data, successCallback) {
     util.files.requestFileSystem(fileSystemObtained);
 };
 
-util.files.read = function (directory, filename, successCallback) {
+util.files.read = function (directory, filename, successCallback, errorCallback) {
     var fileObtained = function (file) {
         var reader = new FileReader();
         reader.onloadend = function (e) {
@@ -97,11 +97,11 @@ util.files.read = function (directory, filename, successCallback) {
     var fileSystemObtained = function (fileSystem) {
         if (directory !== null) {
             fileSystem.root.getDirectory(directory, {}, function (dirEntry) {
-                dirEntry.getFile(filename, {}, fileEntryObtained, util.files.errorCallback);
+                dirEntry.getFile(filename, {}, fileEntryObtained, errorCallback);
             });
         }
         else {
-            fileSystem.root.getFile(filename, {}, fileEntryObtained, util.files.errorCallback);
+            fileSystem.root.getFile(filename, {}, fileEntryObtained, errorCallback);
         }
     };
 
