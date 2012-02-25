@@ -1,8 +1,10 @@
 @import "compass/css3/border-radius";
 
 $fontSize: 1.1em;
+$smallerFontSize: 0.85 * $fontSize;
 $dateFontReduction: 0.85;
 
+$mutedBlack: #666;
 span.disclosure-small{
     float: right;
     width: 16px;
@@ -34,7 +36,9 @@ span.disclosure-small{
     -webkit-animation-iteration-count: 1;
 }
 
-div.lift-log-row, div.lift-list-row {
+.x-list div.lift-log-row, div.lift-list-row {
+    padding-top: 5px;
+    padding-bottom: 5px;
     table{
         width: 100%;
     }
@@ -43,6 +47,10 @@ div.lift-log-row, div.lift-list-row {
         font-size: $fontSize !important;
         font-weight: bolder;
     }
+    .cycle-and-week {
+        color: $mutedBlack;
+        font-size: $smallerFontSize;
+    }
 
     .weight {
         font-size: $fontSize !important;
@@ -50,8 +58,14 @@ div.lift-log-row, div.lift-list-row {
 
     .reps
     {
-        color: #666;
+        font-weight: bold;
+        color: $mutedBlack;
         font-size: $fontSize !important;
+    }
+
+    .estimated-one-rep{
+        color: $mutedBlack;
+        font-size: $smallerFontSize;
     }
 
     td.date-week{
@@ -60,7 +74,7 @@ div.lift-log-row, div.lift-list-row {
 
     .date, .week {
         font-size: $dateFontReduction * $fontSize !important;
-        color: #666;
+        color: $mutedBlack;
         padding-right:5px;
     }
 }

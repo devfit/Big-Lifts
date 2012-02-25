@@ -46,8 +46,9 @@ wendler.views.log.cards.LogList = {
             itemCls:'lift-log-row',
             emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
             itemTpl:'<table><tbody><tr>' +
-                '<td width="30%"><span class="lift-name">{liftName}</span></td>' +
-                '<td width="30%"><span class="reps">{reps}x</span> <span class="weight">{weight}</span></td>' +
+                '<td width="30%"><div class="lift-name">{liftName}</div><div class="cycle-and-week">C{cycle} W{week}</div></td>' +
+                '<td width="30%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div>' +
+                '<div class="estimated-one-rep">~{[util.formulas.estimateOneRepMax(values.weight,values.reps)]}</div></td>' +
                 '<td width="40%" class="date-week">' +
                 '<span class="date">{[wendler.controller.log.formatDate(values.timestamp)]}</span><span class="disclosure-small"></span>' +
                 '</td><td width="40%" class="delete-button-holder hidden"></td>' +
