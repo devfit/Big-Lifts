@@ -82,6 +82,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
         {
             xtype:'fieldset',
             style:'margin-top: 0',
+            cls:'fieldset-no-margin',
             defaults:{
                 labelWidth:'66%'
             },

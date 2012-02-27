@@ -11,6 +11,10 @@ wendler.controller.logList.deleteLogEntry = function (dataview, index, item, e) 
     Ext.getCmp('lift-log-list').refresh();
 };
 
+wendler.controller.logList.showExportLog = function () {
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('export-log'), {type:'slide', direction:'left'});
+};
+
 wendler.controller.logList.sortAndRefreshList = function () {
     wendler.stores.LiftLog.sort('timestamp', 'DESC');
     Ext.getCmp('lift-log-list').refresh();
@@ -27,6 +31,14 @@ wendler.views.log.cards.LogList = {
             xtype:'toolbar',
             title:'Track',
             items:[
+                {xtype:'spacer'},
+                {
+                    xtype:'button',
+                    iconMask:true,
+                    iconCls:'action',
+                    ui:'action',
+                    handler:wendler.controller.logList.showExportLog
+                }
             ]
         }
     ],

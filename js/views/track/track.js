@@ -16,6 +16,7 @@ wendler.views.Log = Ext.extend(Ext.Panel, {
         new wendler.views.log.cards.NotesEditor({
             id:'log-notes-editor',
             _returnCallback:wendler.controller.logEntry.returnFromEditNotes
-        })
+        }),
+        wendler.views.log.cards.Export
     ]
 });

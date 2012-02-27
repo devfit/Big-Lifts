@@ -1,3 +1,7 @@
 .fieldset-title-no-margin.x-form-fieldset-title {
     margin-top: 0;
 }
+
+.x-form-fieldset.fieldset-no-margin {
+    margin-top: 0;
+}
