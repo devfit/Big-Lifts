@@ -4,8 +4,30 @@ wendler.controller.log.export.returnToTrackingList = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
 };
 
-wendler.controller.log.export.exportLog = function(){
+wendler.controller.log.export.exportLog = function () {
+    var data = util.filebackup.generateDataFromStore(wendler.stores.LiftLog);
+    wendler.controller.log.export.ajaxEmailRequest('stefankendall@gmail.com', data);
+};
 
+wendler.controller.log.export.ajaxEmailRequest = function (email, data) {
+    var loadingMask = new Ext.LoadMask(Ext.getCmp('export-log').getEl(), {msg:"Exporting..."});
+    loadingMask.show();
+    Ext.Ajax.request({
+        url:'http://wendler.herokuapp.com/email',
+        method:'POST',
+        params:{
+            email:email,
+            data:data
+        },
+        success:function () {
+            Ext.Msg.alert("Success", "Email sent!");
+            loadingMask.hide();
+        },
+        failure:function () {
+            Ext.Msg.alert("Error", "Error exporting. Please try again later.");
+            loadingMask.hide();
+        }
+    });
 };
 
 wendler.views.log.cards.Export = {
@@ -32,8 +54,8 @@ wendler.views.log.cards.Export = {
                 {xtype:'spacer'},
                 {
                     xtype:'button',
-                    ui: 'confirm',
-                    text: 'Send',
+                    ui:'confirm',
+                    text:'Send',
                     handler:wendler.controller.log.export.exportLog
                 }
 
@@ -48,7 +70,8 @@ wendler.views.log.cards.Export = {
                 {
                     name:'email',
                     xtype:'emailfield',
-                    label:'Email'
+                    label:'Email',
+                    value:'stefankendall@gmail.com'
                 }
             ]
         }

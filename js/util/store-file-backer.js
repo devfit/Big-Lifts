@@ -4,8 +4,12 @@ util.filebackup.fileBackupEnabled = Ext.is.Desktop || typeof(PhoneGap) !== 'unde
 
 util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store) {
-    var data = Ext.encode(Ext.pluck(store.data.items, 'data'));
+    var data = util.filebackup.generateDataFromStore(store);
     util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
+};
+
+util.filebackup.generateDataFromStore = function (store) {
+    return Ext.encode(Ext.pluck(store.data.items, 'data'));
 };
 
 util.filebackup.storesToSync = [];
