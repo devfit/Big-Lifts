@@ -33,6 +33,7 @@ wendler.views.log.cards.LogList = {
             items:[
                 {xtype:'spacer'},
                 {
+                    id:'export-log-button',
                     xtype:'button',
                     iconMask:true,
                     iconCls:'action',

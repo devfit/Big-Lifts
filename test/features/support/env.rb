@@ -7,7 +7,7 @@ Before do
   @ANIMATION_DELAY = 0.8
 
   testFile = ENV['TEST_FILE'] || 'index.html'
-  @driver = Selenium::WebDriver.for :chrome
+  @driver = Selenium::WebDriver.for :chrome, :switches => %w[--allow-file-access-from-files --disable-web-security]
   @driver.navigate.to "file://" + File.absolute_path("../#{testFile}")
   @wait = Selenium::WebDriver::Wait.new(:timeout => 10)
   @wait.until { @driver.find_element(:id => "main-tab-panel" ) }

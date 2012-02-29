@@ -60,6 +60,7 @@ wendler.views.log.cards.Export = {
                 },
                 {xtype:'spacer'},
                 {
+                    id:'send-email-export-log-button',
                     xtype:'button',
                     ui:'confirm',
                     text:'Send',
