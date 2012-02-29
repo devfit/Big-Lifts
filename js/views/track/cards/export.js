@@ -5,9 +5,46 @@ wendler.controller.log.export.returnToTrackingList = function () {
 };
 
 wendler.controller.log.export.exportLog = function () {
-    var data = util.filebackup.generateDataFromStore(wendler.stores.LiftLog);
+    var data = wendler.controller.log.export.buildCsvToExport();
     var email = Ext.getCmp('export-log').getValues().email;
     wendler.controller.log.export.ajaxEmailRequest(email, data);
+};
+
+wendler.controller.log.export.buildCsvToExport = function () {
+    var objects = Ext.pluck(wendler.stores.LiftLog.data.items, 'data');
+
+    var csvKeyMapper = {
+        'liftName':'name',
+        'reps':'reps',
+        'notes':'notes',
+        'week':'week',
+        'weight':'weight',
+        'cycle':'cycle',
+        'date':'date',
+        'timestamp':'timestamp',
+        'units':'units'
+    };
+
+    var csvValueMapper = {
+
+    };
+
+    var csvObjects = _.map(objects, wendler.controller.log.export.createCsvTransformer(csvKeyMapper, csvValueMapper));
+
+    return Ext.encode(csvObjects);
+};
+
+wendler.controller.log.export.createCsvTransformer = function(nameMapper, valueMapper){
+    var transformer = function(object){
+        var csvObject = {};
+        for( var property in nameMapper ){
+            var replacement = nameMapper[property];
+            csvObject[replacement] = object[property];
+        }
+        return csvObject;
+    };
+
+    return transformer;
 };
 
 wendler.controller.log.export.ajaxEmailRequest = function (email, data) {
