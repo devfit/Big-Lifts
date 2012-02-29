@@ -6,7 +6,8 @@ wendler.controller.log.export.returnToTrackingList = function () {
 
 wendler.controller.log.export.exportLog = function () {
     var data = util.filebackup.generateDataFromStore(wendler.stores.LiftLog);
-    wendler.controller.log.export.ajaxEmailRequest('stefankendall@gmail.com', data);
+    var email = Ext.getCmp('export-log').getValues().email;
+    wendler.controller.log.export.ajaxEmailRequest(email, data);
 };
 
 wendler.controller.log.export.ajaxEmailRequest = function (email, data) {
@@ -30,6 +31,11 @@ wendler.controller.log.export.ajaxEmailRequest = function (email, data) {
     });
 };
 
+wendler.controller.log.export.loadPreviousExportEmail = function () {
+    var settings = wendler.stores.Settings.first();
+    Ext.getCmp('export-log').setValues({email:settings.data.exportEmail});
+};
+
 wendler.views.log.cards.Export = {
     id:'export-log',
     xtype:'formpanel',
@@ -38,6 +44,7 @@ wendler.views.log.cards.Export = {
     listeners:{
         beforeshow:function () {
             wendler.navigation.setBackFunction(wendler.controller.log.export.returnToTrackingList);
+            wendler.controller.log.export.loadPreviousExportEmail();
         }
     },
     dockedItems:[
@@ -71,7 +78,13 @@ wendler.views.log.cards.Export = {
                     name:'email',
                     xtype:'emailfield',
                     label:'Email',
-                    value:'stefankendall@gmail.com'
+                    listeners:{
+                        change:function (c, value) {
+                            var settings = wendler.stores.Settings.first();
+                            settings.set('exportEmail', value);
+                            settings.save();
+                        }
+                    }
                 }
             ]
         }

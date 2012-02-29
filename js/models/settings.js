@@ -9,7 +9,8 @@ Ext.regModel('Settings', {
         {name:'rounding-value', type:'string'},
         {name:'rounding-type', type:'string'},
         {name:'use-training-max', type:'integer', defaultValue:1},
-        {name:'training-max-percentage', type:'integer', defaultValue:90}
+        {name:'training-max-percentage', type:'integer', defaultValue:90},
+        {name:'exportEmail', type:'string', defaultValue:''}
     ],
     proxy:{
         type:'localstorage',
