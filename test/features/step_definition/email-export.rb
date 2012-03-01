@@ -1,3 +1,5 @@
+require 'json'
+
 When /^I tap the log export button$/ do
   @driver.find_element(:id => 'export-log-button').click()
   sleep @ANIMATION_DELAY
@@ -20,10 +22,15 @@ end
 Then /^The CSV to export is correct$/ do
   csv = @driver.execute_script("return window.testData")
 
-  expectedCsv =
-<<eos
-[{"name":"Squat","reps":5,"notes":"","weight":"155","week":1,"cycle":1,"date":"","timestamp":1330488621420,"units":"lbs"}]
-eos
+  results = JSON.parse(csv)
+  object = results[0]
+  object['name'].should == "Squat"
+  object['reps'].should == 5
+  object['notes'].should == ""
+  object['week'].should == 1
+  object['weight'].should == "155"
+  object['cycle'].should == 1
 
-  csv.should == expectedCsv
+  object['date'].should == Time.now.strftime("%m/%d/%Y")
+  object['units'].should == 'lbs'
 end
