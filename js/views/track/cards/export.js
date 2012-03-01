@@ -26,7 +26,9 @@ wendler.controller.log.export.buildCsvToExport = function () {
     };
 
     var csvValueMapper = {
-
+        'date':function (object) {
+            return wendler.controller.log.formatDate(object.timestamp);
+        }
     };
 
     var csvObjects = _.map(objects, wendler.controller.log.export.createCsvTransformer(csvKeyMapper, csvValueMapper));
@@ -34,12 +36,18 @@ wendler.controller.log.export.buildCsvToExport = function () {
     return Ext.encode(csvObjects);
 };
 
-wendler.controller.log.export.createCsvTransformer = function(nameMapper, valueMapper){
-    var transformer = function(object){
+wendler.controller.log.export.createCsvTransformer = function (nameMapper, valueMapper) {
+    var transformer = function (object) {
         var csvObject = {};
-        for( var property in nameMapper ){
-            var replacement = nameMapper[property];
-            csvObject[replacement] = object[property];
+        for (var property in nameMapper) {
+            var keyReplacement = nameMapper[property];
+
+            var value = object[property];
+            if (valueMapper.hasOwnProperty(property)) {
+                value = valueMapper[property](object);
+            }
+
+            csvObject[keyReplacement] = value;
         }
         return csvObject;
     };
