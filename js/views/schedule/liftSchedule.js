@@ -11,6 +11,7 @@ wendler.liftSchedule.controller.liftCompletionChange = function () {
 wendler.stores.lifts.LiftCompletion.addListener('update', wendler.liftSchedule.controller.liftCompletionChange);
 
 wendler.liftSchedule.controller.setupLiftSchedule = function () {
+    wendler.data.disasterRecovery();
     wendler.liftSchedule.controller.setupLiftSelector();
     wendler.liftSchedule.controller.updateLiftValues();
 };
