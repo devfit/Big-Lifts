@@ -44,6 +44,8 @@ end
 Then /^I am returned to the lift schedule and no log is saved$/ do
   liftTemplateVisible = @driver.find_element(:id => 'lift-template').displayed?
   liftTemplateVisible.should == true
+
+  @driver.execute_script("return wendler.stores.LiftLog.getCount()").should == 0
 end
 
 When /^I tap back in the lift log$/ do
