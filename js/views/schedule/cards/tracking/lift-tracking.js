@@ -24,6 +24,8 @@ wendler.liftSchedule.controller.allLiftsAreCompleted = function () {
 };
 
 wendler.controller.liftTracking.logAndShowTracking = function () {
+    wendler.liftSchedule.controller.persistLiftCompletion();
+
     var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6);
     var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).data.name;
     var expectedReps = liftProgression.data.reps;
@@ -93,15 +95,30 @@ wendler.controller.liftTracking.displayNotes = function (notes) {
     Ext.get('first-log-notes').setHTML(displayableNotes);
 };
 
+wendler.controller.liftTracking.cancelLogTracking = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'right'});
+};
+
 wendler.views.liftSchedule.LiftTracking = {
     xtype:'formpanel',
     id:'lift-tracking',
     scroll:'vertical',
+    listeners:{
+        beforeshow:function () {
+            wendler.navigation.setBackFunction(wendler.controller.liftTracking.cancelLogTracking);
+        }
+    },
     dockedItems:[
         {
             xtype:'toolbar',
             title:'Log',
             items:[
+                {
+                    id:'log-lift-back-button',
+                    ui:'back',
+                    text:'Back',
+                    handler:wendler.controller.liftTracking.cancelLogTracking
+                },
                 {xtype:'spacer'},
                 {
                     id:'log-lift-save-button',

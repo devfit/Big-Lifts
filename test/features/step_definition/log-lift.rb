@@ -41,3 +41,13 @@ Then /^The squat long entry date in the log list is today$/ do
   dateText.include?(Time.now.strftime("%m/%d/%Y")).should == true
 end
 
+Then /^I am returned to the lift schedule and no log is saved$/ do
+  liftTemplateVisible = @driver.find_element(:id => 'lift-template').displayed?
+  liftTemplateVisible.should == true
+end
+
+When /^I tap back in the lift log$/ do
+  @driver.find_element(:id => 'log-lift-back-button').click()
+  sleep @ANIMATION_DELAY
+end
+
