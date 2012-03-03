@@ -28,8 +28,21 @@ wendler.controller.more.showSettings = function () {
     Ext.getCmp('more').setActiveItem(Ext.getCmp('settings'), {type:'slide', direction:'left'});
 };
 
-wendler.controller.more.hardReset = function(){
-  console.log( 'HARD RESET' );
+wendler.controller.more.hardReset = function () {
+    Ext.Msg.confirm('WARNING', 'Reset ALL data and settings?', function (text) {
+        if (text === 'yes') {
+            util.filebackup.deleteAllStoreFiles();
+
+            setTimeout(function () {
+                new Ext.LoadMask(Ext.getBody(), {msg:"Resetting..."}).show();
+            }, 500);
+
+            setTimeout(function () {
+                localStorage.clear();
+                location.reload();
+            }, 2000);
+        }
+    });
 };
 
 wendler.more.listItems = [
@@ -62,7 +75,7 @@ wendler.views.MoreInfoList = {
     ],
     items:[
         {
-            id: 'more-info-list',
+            id:'more-info-list',
             xtype:'list',
             itemTpl:'{text}',
             itemCls:'more-info-row',

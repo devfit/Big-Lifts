@@ -114,7 +114,7 @@ util.files.deleteFile = function (directory, filename, successCallback) {
     };
 
     var getFileFromDirectory = function (parentFile) {
-        parentFile.getFile(filename, {create:true}, deleteFile, util.files.errorCallback);
+        parentFile.getFile(filename, {}, deleteFile, util.files.errorCallback);
     };
 
     var fileSystemObtained = function (fileSystem) {
