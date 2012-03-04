@@ -16,7 +16,8 @@ wendler.controller.logList.showExportLog = function () {
 };
 
 wendler.controller.logList.sortAndRefreshList = function () {
-    wendler.stores.LiftLog.sort('timestamp', 'DESC');
+    var liftLogSort = wendler.stores.LiftLogSort.first();
+    wendler.stores.LiftLog.sort(liftLogSort.data.property, liftLogSort.data.ascending ? 'ASC' : 'DESC');
     Ext.getCmp('lift-log-list').refresh();
 };
 wendler.stores.LiftLog.addListener('update', wendler.controller.logList.sortAndRefreshList);
@@ -57,6 +58,7 @@ wendler.controller.logList.sortBy = function (selectedProperty) {
     liftLogSort.save();
 
     wendler.controller.logList.updateUiForSortButtons();
+    wendler.controller.logList.sortAndRefreshList();
 };
 
 wendler.controller.logList.updateUiForSortButtons = function () {

@@ -8,8 +8,6 @@ end
 
 When /^I view the (\w+) lift schedule for week (\d+)$/ do |liftProperty, week|
   @main_navigation.navigate_to(:lift_schedule)
-  sleep 1
-
   @lift_schedule_navigator.selectWeek(week)
 
   liftSelector = @driver.find_element(:id => 'lift-selector')
