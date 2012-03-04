@@ -81,7 +81,7 @@ new Ext.form.FormPanel({
                 },
                 {
                     xtype:'togglefield',
-                    name:'orientationLock',
+                    name:'lockPortrait',
                     label:'Lock portrait'
                 },
             ]

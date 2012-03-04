@@ -13,7 +13,7 @@ function shouldRotateToOrientation(rotation) {
             //LandscapeRight or LandscapeLeft
             case 90:
             case -90:
-                return false;
+                return !settings.data.lockPortrait;
         }
     }
 }
