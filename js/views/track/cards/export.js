@@ -1,16 +1,16 @@
-Ext.ns('wendler.views.log.cards', 'wendler.controller.log.export');
+Ext.ns('wendler.views.log.cards', 'wendler.controller.log.emailExport');
 
-wendler.controller.log.export.returnToTrackingList = function () {
+wendler.controller.log.emailExport.returnToTrackingList = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
 };
 
-wendler.controller.log.export.exportLog = function () {
-    var data = wendler.controller.log.export.buildCsvToExport();
+wendler.controller.log.emailExport.exportLog = function () {
+    var data = wendler.controller.log.emailExport.buildCsvToExport();
     var email = Ext.getCmp('export-log').getValues().email;
-    wendler.controller.log.export.ajaxEmailRequest(email, data);
+    wendler.controller.log.emailExport.ajaxEmailRequest(email, data);
 };
 
-wendler.controller.log.export.buildCsvToExport = function () {
+wendler.controller.log.emailExport.buildCsvToExport = function () {
     var objects = Ext.pluck(wendler.stores.LiftLog.data.items, 'data');
 
     var csvKeyMapper = {
@@ -31,12 +31,12 @@ wendler.controller.log.export.buildCsvToExport = function () {
         }
     };
 
-    var csvObjects = _.map(objects, wendler.controller.log.export.createCsvTransformer(csvKeyMapper, csvValueMapper));
+    var csvObjects = _.map(objects, wendler.controller.log.emailExport.createCsvTransformer(csvKeyMapper, csvValueMapper));
 
     return Ext.encode(csvObjects);
 };
 
-wendler.controller.log.export.createCsvTransformer = function (nameMapper, valueMapper) {
+wendler.controller.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper) {
     var transformer = function (object) {
         var csvObject = {};
         for (var property in nameMapper) {
@@ -55,7 +55,7 @@ wendler.controller.log.export.createCsvTransformer = function (nameMapper, value
     return transformer;
 };
 
-wendler.controller.log.export.ajaxEmailRequest = function (email, data) {
+wendler.controller.log.emailExport.ajaxEmailRequest = function (email, data) {
     var loadingMask = new Ext.LoadMask(Ext.getCmp('export-log').getEl(), {msg:"Exporting..."});
     loadingMask.show();
     Ext.Ajax.request({
@@ -76,7 +76,7 @@ wendler.controller.log.export.ajaxEmailRequest = function (email, data) {
     });
 };
 
-wendler.controller.log.export.loadPreviousExportEmail = function () {
+wendler.controller.log.emailExport.loadPreviousExportEmail = function () {
     var settings = wendler.stores.Settings.first();
     Ext.getCmp('export-log').setValues({email:settings.data.exportEmail});
 };
@@ -88,8 +88,8 @@ wendler.views.log.cards.Export = {
     style:'padding-top:0px',
     listeners:{
         beforeshow:function () {
-            wendler.navigation.setBackFunction(wendler.controller.log.export.returnToTrackingList);
-            wendler.controller.log.export.loadPreviousExportEmail();
+            wendler.navigation.setBackFunction(wendler.controller.log.emailExport.returnToTrackingList);
+            wendler.controller.log.emailExport.loadPreviousExportEmail();
         }
     },
     dockedItems:[
@@ -101,7 +101,7 @@ wendler.views.log.cards.Export = {
                     xtype:'button',
                     ui:'back',
                     text:'Back',
-                    handler:wendler.controller.log.export.returnToTrackingList
+                    handler:wendler.controller.log.emailExport.returnToTrackingList
                 },
                 {xtype:'spacer'},
                 {
@@ -109,7 +109,7 @@ wendler.views.log.cards.Export = {
                     xtype:'button',
                     ui:'confirm',
                     text:'Send',
-                    handler:wendler.controller.log.export.exportLog
+                    handler:wendler.controller.log.emailExport.exportLog
                 }
 
             ]
