@@ -35,6 +35,7 @@ new Ext.form.FormPanel({
     listeners:{
         afterlayout:wendler.settings.controller.reloadForm
     },
+    scroll: 'vertical',
     items:[
         {
             xtype:'fieldset',
@@ -83,7 +84,7 @@ new Ext.form.FormPanel({
                     xtype:'togglefield',
                     name:'lockPortrait',
                     label:'Lock portrait'
-                },
+                }
             ]
         },
         {
