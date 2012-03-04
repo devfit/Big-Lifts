@@ -10,7 +10,8 @@ Ext.regModel('Settings', {
         {name:'rounding-type', type:'string'},
         {name:'use-training-max', type:'integer', defaultValue:1},
         {name:'training-max-percentage', type:'integer', defaultValue:90},
-        {name:'exportEmail', type:'string', defaultValue:''}
+        {name:'exportEmail', type:'string', defaultValue:''},
+        {name:'orientationLock', type:'boolean', defaultValue:false}
     ],
     proxy:{
         type:'localstorage',
@@ -25,7 +26,8 @@ wendler.defaults.settings = {
     'rounding-type':'normal',
     'use-training-max':1,
     'training-max-percentage':90,
-    'exportEmail':''
+    'exportEmail':'',
+    'orientationLock':false
 };
 
 wendler.stores.recovery.setupDefaultSettings = function () {

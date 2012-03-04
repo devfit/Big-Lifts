@@ -78,7 +78,12 @@ new Ext.form.FormPanel({
                     xtype:'numberfield',
                     name:'training-max-percentage',
                     label:'Training %'
-                }
+                },
+                {
+                    xtype:'togglefield',
+                    name:'orientationLock',
+                    label:'Lock portrait'
+                },
             ]
         },
         {
