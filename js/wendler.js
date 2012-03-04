@@ -3,7 +3,7 @@ Ext.ns("wendler.main");
 
 wendler.main.markFirstStartup = function () {
     var meta = wendler.stores.Meta.first();
-    if (meta.firstTimeInApp) {
+    if (meta.data.firstTimeInApp) {
         meta.set('firstTimeInApp', false);
         meta.save();
     }

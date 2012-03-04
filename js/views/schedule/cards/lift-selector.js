@@ -33,6 +33,23 @@ wendler.liftSchedule.controller.setupListDoneIcons = function () {
     }
 };
 
+wendler.liftSchedule.controller.getStartingWeek = function () {
+    var weekCompleted = {1:true, 2:true, 3:true, 4:true};
+    wendler.stores.lifts.LiftCompletion.each(function (record) {
+        weekCompleted[record.data.week] &= record.data.completed;
+    });
+
+    var startingWeekTabIndex;
+    for (var i = 1; i <= 4; i++) {
+        if (!weekCompleted[i]) {
+            startingWeekTabIndex = i - 1;
+            break;
+        }
+    }
+
+    return startingWeekTabIndex;
+};
+
 wendler.liftSchedule.controller.viewLift = function (view, index) {
     var record = wendler.stores.lifts.Lifts.getAt(index);
 
@@ -71,6 +88,7 @@ wendler.views.liftSchedule.liftSelector = {
     layout:'fit',
     id:'lift-selector',
     cardSwitchAnimation:appConfig.cardSwitchAnimation,
+    activeItem: wendler.liftSchedule.controller.getStartingWeek(),
     listeners:{
         beforeshow:wendler.liftSchedule.controller.setupLiftSelector,
         beforecardswitch:wendler.liftSchedule.controller.handleWeekChange
@@ -102,7 +120,6 @@ wendler.views.liftSchedule.liftSelector = {
     ],
     items:[
         {
-            id:'test',
             title:'1',
             xtype:'list',
             store:wendler.stores.lifts.Lifts,
