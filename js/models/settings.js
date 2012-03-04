@@ -23,7 +23,9 @@ wendler.defaults.settings = {
     units:'lbs',
     'rounding-value':'5',
     'rounding-type':'normal',
-    'use-training-max':1
+    'use-training-max':1,
+    'training-max-percentage':90,
+    'exportEmail':''
 };
 
 wendler.stores.recovery.setupDefaultSettings = function () {

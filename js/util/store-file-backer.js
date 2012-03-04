@@ -1,5 +1,6 @@
 Ext.ns('util.filebackup');
 
+util.filebackup.SYNC_MS = 175;
 util.filebackup.fileBackupEnabled = Ext.is.Desktop || typeof(PhoneGap) !== 'undefined';
 
 util.filebackup.directory = 'wendler531';
@@ -19,7 +20,7 @@ util.filebackup.loadAllStores = function () {
         _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
     }
     else {
-        setTimeout(util.filebackup.loadAllStores, 250);
+        setTimeout(util.filebackup.loadAllStores, util.filebackup.SYNC_MS);
     }
 };
 
@@ -66,7 +67,7 @@ util.filebackup.storeHasChanged = function (currentStore) {
 
         if (!util.filebackup.waitingToSync) {
             util.filebackup.waitingToSync = true;
-            setTimeout(util.filebackup.syncStoresToFile, 500);
+            setTimeout(util.filebackup.syncStoresToFile, util.filebackup.SYNC_MS);
         }
     }
 };
