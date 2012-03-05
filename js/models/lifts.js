@@ -65,7 +65,6 @@ wendler.stores.migrations.liftModelMigration = function () {
             r.save();
         }
 
-        console.log(r.data.order);
         if (r.data.order < 0) {
             r.set('order', r.data.id);
             r.save();

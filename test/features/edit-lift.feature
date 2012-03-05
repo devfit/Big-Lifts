@@ -4,7 +4,6 @@ Feature: Editing lifts
   So that the lift schedule exactly matches my own preferred programming
 
   Scenario: Space in a lift name
-  Scenario: newly added lift can be edited
     When I navigate to the lift editor
     And I click edit lifts
     And I click edit "Squat"

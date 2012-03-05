@@ -17,12 +17,7 @@ wendler.maxes.arrangeLifts.getSelectedIndex = function () {
 wendler.maxes.arrangeLifts.moveUp = function () {
     var index = wendler.maxes.arrangeLifts.getSelectedIndex();
     if (index >= 1) {
-        var below = wendler.stores.lifts.Lifts.getAt(index);
-        var above = wendler.stores.lifts.Lifts.getAt(index - 1);
-        above.set('order', above.get('order') + 1);
-        below.set('order', below.get('order') - 1);
-        above.save();
-        below.save();
+        wendler.maxes.arrangeLifts.swapLiftsByOrder(index, index-1);
     }
 
     wendler.maxes.arrangeLifts.refreshList();
@@ -31,19 +26,23 @@ wendler.maxes.arrangeLifts.moveUp = function () {
 wendler.maxes.arrangeLifts.moveDown = function () {
     var index = wendler.maxes.arrangeLifts.getSelectedIndex();
     if (index < wendler.stores.lifts.Lifts.getCount() - 1) {
-        var below = wendler.stores.lifts.Lifts.getAt(index + 1);
-        var above = wendler.stores.lifts.Lifts.getAt(index);
-        above.set('order', above.get('order') + 1);
-        below.set('order', below.get('order') - 1);
-        above.save();
-        below.save();
+        wendler.maxes.arrangeLifts.swapLiftsByOrder(index, index+1);
     }
 
     wendler.maxes.arrangeLifts.refreshList();
 };
 
-wendler.maxes.arrangeLifts.refreshList = function(){
-    wendler.stores.lifts.Lifts.sort('order','ASC');
+wendler.maxes.arrangeLifts.swapLiftsByOrder = function (order1, order2) {
+    var order1Record = wendler.stores.lifts.Lifts.findRecord('order', order1);
+    var order2Record = wendler.stores.lifts.Lifts.findRecord('order', order2);
+    order1Record.set('order',order2);
+    order2Record.set('order',order1);
+    order1Record.save();
+    order2Record.save();
+};
+
+wendler.maxes.arrangeLifts.refreshList = function () {
+    wendler.stores.lifts.Lifts.sort('order', 'ASC');
     Ext.getCmp('arrange-lifts-list').refresh();
 };
 

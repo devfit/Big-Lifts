@@ -57,6 +57,7 @@ wendler.maxes.cards.editMaxesList = {
             title:"Edit Lifts",
             items:[
                 {
+                    id: 'arrange-lifts-button',
                     xtype:'button',
                     text:'Arrange',
                     handler:wendler.maxes.controller.showArrangeLifts,
