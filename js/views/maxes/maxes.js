@@ -13,6 +13,7 @@ wendler.views.Maxes = Ext.extend(Ext.Panel, {
         wendler.maxes.cards.maxesForm,
         wendler.maxes.cards.editMaxesList,
         wendler.maxes.cards.editLiftPanel,
-        wendler.maxes.cards.addLiftPanel
+        wendler.maxes.cards.addLiftPanel,
+        wendler.maxes.cards.ArrangeLifts
     ]
 });

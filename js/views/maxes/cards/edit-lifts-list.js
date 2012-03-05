@@ -23,6 +23,10 @@ wendler.maxes.controller.editLiftsDoneButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };
 
+wendler.maxes.controller.showArrangeLifts = function(){
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('arrange-lifts'));
+};
+
 wendler.maxes.cards.editMaxesList = {
     id:'maxes-edit-lifts-panel',
     xtype:'panel',
@@ -52,6 +56,12 @@ wendler.maxes.cards.editMaxesList = {
             dock:'top',
             title:"Edit Lifts",
             items:[
+                {
+                    xtype:'button',
+                    text:'Arrange',
+                    handler:wendler.maxes.controller.showArrangeLifts,
+                    ui:'action'
+                },
                 {xtype:'spacer'},
                 {
                     id:'edit-lifts-done-button',
