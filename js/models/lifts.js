@@ -24,7 +24,8 @@ Ext.regModel('Lift', {
         {name:'name', type:'string'},
         {name:'propertyName', type:'string'},
         {name:'max', type:'float'},
-        {name:'cycleIncrease', type:'float'}
+        {name:'cycleIncrease', type:'float'},
+        {name:'order', type:'int', defaultValue:-1}
     ],
     validations:[
         {field:'propertyName', type:'custom', message:'nonunique',
@@ -41,10 +42,10 @@ Ext.regModel('Lift', {
 });
 
 wendler.defaults.lifts = [
-    Ext.ModelMgr.create({name:'Squat', max:200, propertyName:'squat', cycleIncrease:10}, 'Lift'),
-    Ext.ModelMgr.create({name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10}, 'Lift'),
-    Ext.ModelMgr.create({name:'Press', max:150, propertyName:'press', cycleIncrease:5}, 'Lift'),
-    Ext.ModelMgr.create({name:'Bench', max:175, propertyName:'bench', cycleIncrease:5}, 'Lift')
+    Ext.ModelMgr.create({name:'Squat', max:200, propertyName:'squat', cycleIncrease:10, order:0}, 'Lift'),
+    Ext.ModelMgr.create({name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10, order:1}, 'Lift'),
+    Ext.ModelMgr.create({name:'Press', max:150, propertyName:'press', cycleIncrease:5, order:2}, 'Lift'),
+    Ext.ModelMgr.create({name:'Bench', max:175, propertyName:'bench', cycleIncrease:5, order:3}, 'Lift')
 ];
 
 wendler.stores.migrations.liftModelMigration = function () {
@@ -63,6 +64,12 @@ wendler.stores.migrations.liftModelMigration = function () {
             r.set('cycleIncrease', cycleIncrease);
             r.save();
         }
+
+        console.log(r.data.order);
+        if (r.data.order < 0) {
+            r.set('order', r.data.id);
+            r.save();
+        }
     });
 };
 
@@ -77,7 +84,13 @@ wendler.stores.lifts.Lifts = new Ext.data.Store({
             wendler.stores.recovery.setupDefaultLifts();
             wendler.stores.migrations.liftModelMigration();
         }
-    }
+    },
+    sorters:[
+        {
+            property:'order',
+            direction:'ASC'
+        }
+    ]
 });
 wendler.stores.lifts.Lifts.load();
 util.filebackup.watchStoreSync(wendler.stores.lifts.Lifts);
