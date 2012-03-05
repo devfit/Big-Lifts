@@ -27,7 +27,7 @@ wendler.maxes.controller.setAndFindInvalidLiftErrors = function (errors, message
 wendler.maxes.currentEditingLiftProperty = null;
 
 wendler.maxes.controller.editLiftBackButtonPressed = function () {
-    var newName = Ext.getCmp('edit-lift-new-name').getValue();
+    var newName = Ext.getCmp('edit-lift-new-name').getValue().trim();
     var newCycleIncrease = Ext.getCmp('edit-lift-cycle-increase').getValue();
     var newPropertyName = wendler.models.Lift.sanitizePropertyName(newName);
     var newMax = Ext.getCmp('edit-lift-new-max').getValue();
