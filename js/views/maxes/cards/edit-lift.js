@@ -37,14 +37,20 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
 
     var newLiftConfiguration = {name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax};
     var copyModel = Ext.ModelMgr.create(newLiftConfiguration, 'Lift');
+    newLiftConfiguration.id = currentModel.data.id;
     var errors = copyModel.validate();
     var messages = [];
 
     wendler.maxes.controller.setAndFindInvalidLiftErrors(errors, messages, oldPropertyName, newPropertyName);
 
     if (messages.length === 0) {
-        currentModel.set(newLiftConfiguration);
-        currentModel.save();
+        for (var key in newLiftConfiguration) {
+            if (currentModel.get(key) != newLiftConfiguration[key]) {
+                currentModel.set(key, newLiftConfiguration[key]);
+                currentModel.save();
+            }
+        }
+
         wendler.maxes.controller.rebuildMaxesList();
         wendler.maxes.controller.doneWithEditing();
     }
