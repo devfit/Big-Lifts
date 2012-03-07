@@ -19,9 +19,10 @@ wendler.controller.more.reportProblem = function () {
 };
 
 wendler.controller.more.getVersionOsInfo = function () {
-    var version = "v" + wendler.version;
+    var appVersion = "v" + wendler.version;
     var os = Ext.is.Android ? "Android" : "iOS";
-    return version + "-" + os;
+    var phoneVersion = window.device.version;
+    return appVersion + "-" + os + " " + phoneVersion;
 };
 
 wendler.controller.more.showSettings = function () {

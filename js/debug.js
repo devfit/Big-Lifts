@@ -1,5 +1,11 @@
 "use strict";
 if (Ext.is.Desktop) {
+    window.device = {
+        name:"Chrome",
+        uuid:'1234',
+        version:'1.0'
+    };
+
     wendler.controller.log.emailExport.ajaxEmailRequest = function (email, data) {
         window.testEmail = email;
         window.testData = data;
