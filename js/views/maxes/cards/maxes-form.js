@@ -27,7 +27,7 @@ wendler.maxes.controller.createMaxesInput = function (record) {
     });
 };
 
-wendler.maxes.controller.createTrainingMaxesInput = function(record){
+wendler.maxes.controller.createTrainingMaxesInput = function (record) {
     var trainingMaxPercentage = wendler.stores.Settings.first().data['training-max-percentage'] / 100.0;
     var trainingMax = util.roundNumber(trainingMaxPercentage * record.data.max, '0.5', 'normal');
     var liftProperty = record.data.propertyName;
@@ -144,7 +144,7 @@ wendler.maxes.cards.trainingMaxes = {
 wendler.maxes.cards.maxesForm = {
     xtype:'formpanel',
     id:'maxes-form',
-    scroll: 'vertical',
+    scroll:'vertical',
     listeners:{
         afterrender:function () {
             wendler.maxes.controller.buildMaxesFromStore();
@@ -174,18 +174,18 @@ wendler.maxes.cards.maxesForm = {
             title:'Lifts',
             items:[
                 {
+                    id:'edit-lifts-button',
+                    ui:'action',
+                    text:'Edit',
+                    handler:wendler.maxes.controller.editLiftButtonPressed
+                },
+                {xtype:'spacer'},
+                {
                     id:'add-lift-button',
                     iconCls:'add',
                     iconMask:true,
                     handler:wendler.maxes.controller.addLiftButtonPressed,
                     ui:'action'
-                },
-                {xtype:'spacer'},
-                {
-                    id:'edit-lifts-button',
-                    ui:'action',
-                    text:'Edit',
-                    handler:wendler.maxes.controller.editLiftButtonPressed
                 }
             ]
         }

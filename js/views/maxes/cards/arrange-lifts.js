@@ -17,7 +17,7 @@ wendler.maxes.arrangeLifts.getSelectedIndex = function () {
 wendler.maxes.arrangeLifts.moveUp = function () {
     var index = wendler.maxes.arrangeLifts.getSelectedIndex();
     if (index >= 1) {
-        wendler.maxes.arrangeLifts.swapLiftsByOrder(index, index-1);
+        wendler.maxes.arrangeLifts.swapLiftsByOrder(index, index - 1);
     }
 
     wendler.maxes.arrangeLifts.refreshList();
@@ -26,7 +26,7 @@ wendler.maxes.arrangeLifts.moveUp = function () {
 wendler.maxes.arrangeLifts.moveDown = function () {
     var index = wendler.maxes.arrangeLifts.getSelectedIndex();
     if (index < wendler.stores.lifts.Lifts.getCount() - 1) {
-        wendler.maxes.arrangeLifts.swapLiftsByOrder(index, index+1);
+        wendler.maxes.arrangeLifts.swapLiftsByOrder(index, index + 1);
     }
 
     wendler.maxes.arrangeLifts.refreshList();
@@ -35,8 +35,8 @@ wendler.maxes.arrangeLifts.moveDown = function () {
 wendler.maxes.arrangeLifts.swapLiftsByOrder = function (order1, order2) {
     var order1Record = wendler.stores.lifts.Lifts.findRecord('order', order1);
     var order2Record = wendler.stores.lifts.Lifts.findRecord('order', order2);
-    order1Record.set('order',order2);
-    order2Record.set('order',order1);
+    order1Record.set('order', order2);
+    order2Record.set('order', order1);
     order1Record.save();
     order2Record.save();
 };
@@ -50,6 +50,11 @@ wendler.maxes.cards.ArrangeLifts = {
     id:'arrange-lifts',
     xtype:'panel',
     layout:'fit',
+    listeners:{
+        beforeshow:function () {
+          wendler.navigation.setBackFunction(wendler.maxes.arrangeLifts.doneButtonPressed);
+        }
+    },
     items:[
         {
             id:'arrange-lifts-list',
