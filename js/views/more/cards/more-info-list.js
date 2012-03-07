@@ -40,7 +40,7 @@ wendler.controller.more.hardReset = function () {
 
             setTimeout(function () {
                 localStorage.clear();
-                document.location = "index.html";
+                device.exitApp();
             }, 2000);
         }
     });

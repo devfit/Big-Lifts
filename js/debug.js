@@ -3,7 +3,10 @@ if (Ext.is.Desktop) {
     window.device = {
         name:"Chrome",
         uuid:'1234',
-        version:'1.0'
+        version:'1.0',
+        exitApp:function () {
+            window.location.reload();
+        }
     };
 
     wendler.controller.log.emailExport.ajaxEmailRequest = function (email, data) {
