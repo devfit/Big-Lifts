@@ -1,6 +1,6 @@
 Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
 
-wendler.maxes.controller.handleInvalidLift = function(errors){
+wendler.maxes.controller.handleInvalidLift = function (errors) {
     var nameErrors = errors.getByField('propertyName');
     var maxErrors = errors.getByField('max');
     var cycleIncreaseErrors = errors.getByField('cycleIncrease');
@@ -27,6 +27,11 @@ wendler.maxes.controller.handleInvalidLift = function(errors){
     Ext.Msg.alert('Error', messages.join('<br/>'));
 };
 
+wendler.maxes.controller.findNextOrdering = function () {
+    var orders = wendler.stores.lifts.Lifts.collect('order', false, true);
+    return _.max(orders) + 1;
+};
+
 wendler.maxes.controller.addLiftDoneButtonPressed = function () {
     var liftName = Ext.getCmp('add-lift-new-name').getValue();
     var liftMax = Ext.getCmp('add-lift-new-max').getValue();
@@ -34,7 +39,7 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function () {
     var cycleIncrease = Ext.getCmp('add-lift-cycle-increase').getValue();
 
     var newLiftModel = Ext.ModelMgr.create(
-        {name:liftName, propertyName:liftProperty, max:liftMax, cycleIncrease:cycleIncrease}, 'Lift');
+        {name:liftName, propertyName:liftProperty, max:liftMax, cycleIncrease:cycleIncrease, order:wendler.maxes.controller.findNextOrdering() }, 'Lift');
     var errors = newLiftModel.validate();
 
     if (!errors.isValid()) {
@@ -60,10 +65,10 @@ wendler.maxes.controller.addLiftCancelButtonPressed = function () {
 wendler.maxes.cards.addLiftPanel = {
     xtype:'panel',
     id:'maxes-add-lift-panel',
-    listeners: {
-      beforeshow: function(){
-          wendler.navigation.setBackFunction(wendler.maxes.controller.addLiftCancelButtonPressed);
-      }
+    listeners:{
+        beforeshow:function () {
+            wendler.navigation.setBackFunction(wendler.maxes.controller.addLiftCancelButtonPressed);
+        }
     },
     items:[
         {
