@@ -87,7 +87,6 @@ wendler.views.liftSchedule.liftSelector = {
     xtype:'tabpanel',
     layout:'fit',
     id:'lift-selector',
-    cardSwitchAnimation:appConfig.cardSwitchAnimation,
     activeItem: wendler.liftSchedule.controller.getStartingWeek(),
     listeners:{
         beforeshow:wendler.liftSchedule.controller.setupLiftSelector,

@@ -20,7 +20,7 @@ wendler.controller.more.reportProblem = function () {
 
 wendler.controller.more.getVersionOsInfo = function () {
     var appVersion = "v" + wendler.version;
-    var os = Ext.is.Android ? "Android" : "iOS";
+    var os = Ext.os.is.Android ? "Android" : "iOS";
     var phoneVersion = window.device.version;
     return appVersion + "-" + os + " " + phoneVersion;
 };
@@ -35,7 +35,12 @@ wendler.controller.more.hardReset = function () {
             util.filebackup.deleteAllStoreFiles();
 
             setTimeout(function () {
-                new Ext.LoadMask(Ext.getBody(), {msg:"Resetting..."}).show();
+                Ext.getCmp('main-tab-panel').add({
+                    masked:{
+                        xtype:'loadmask',
+                        message:'Resetting...'
+                    }
+                });
             }, 500);
 
             setTimeout(function () {
@@ -58,23 +63,29 @@ for (var i = 0; i < wendler.more.listItems.length; i++) {
     wendler.more.listData.push(wendler.more.listItems[i].model);
 }
 
-Ext.regModel('MoreList', {
-    fields:[
-        {name:'text', type:'string'}
-    ]
+Ext.define('MoreList', {
+    extend:'Ext.data.Model',
+    config:{
+        fields:[
+            {name:'text', type:'string'}
+        ]
+    }
 });
-wendler.more.listStore = new Ext.data.Store({model:'MoreList', data:wendler.more.listData});
+wendler.more.listStore = Ext.create('Ext.data.Store', {
+    model:'MoreList',
+    data:wendler.more.listData
+});
 
 wendler.views.MoreInfoList = {
-    id:'more-info-list-panel',
     xtype:'panel',
-    dockedItems:[
+    id:'more-info-list-panel',
+    layout:'fit',
+    items:[
         {
+            docked:'top',
             xtype:'toolbar',
             title:'More'
-        }
-    ],
-    items:[
+        },
         {
             id:'more-info-list',
             xtype:'list',

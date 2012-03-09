@@ -14,40 +14,40 @@ wendler.main.start = function () {
     wendler.main.markFirstStartup();
     util.filebackup.loadAllStores();
 
-    new Ext.Application({
+    Ext.application({
         icon:'apple-touch-icon.png',
         glossOnIcon:false,
-
-        viewport:null,
         launch:function () {
-            this.viewport = new this.Viewport();
-        },
-        Viewport:Ext.extend(Ext.TabPanel, {
-            id:'main-tab-panel',
-            fullscreen:true,
-            cardSwitchAnimation:appConfig.cardSwitchAnimation,
-            sortable:false,
-            tabBar:{
-                id:'tab-navigation',
-                dock:'bottom',
-                layout:{ pack:'center' }
-            },
-            activeItem:startTab,
-            items:[
-                new wendler.views.LiftSchedule(),
-                new wendler.views.Maxes(),
-                new wendler.views.Log(),
-                new wendler.views.OneRepMaxCalculator(),
-                new wendler.views.More()
-            ],
-            listeners:{
-                beforecardswitch:function () {
-                    wendler.navigation.resetBack();
+            Ext.create('Ext.tab.Panel', {
+                    id:'main-tab-panel',
+                    fullscreen:true,
+                    sortable:false,
+                    layout:'fit',
+                    tabBar:{
+                        id:'tab-navigation',
+                        docked:'bottom',
+                        layout:{ pack:'center' }
+                    },
+                    activeItem:startTab,
+                    items:[
+//                new wendler.views.LiftSchedule(),
+//                new wendler.views.Maxes(),
+//                new wendler.views.Log(),
+//                new wendler.views.OneRepMaxCalculator(),
+                        Ext.create('Wendler.views.More')
+                    ],
+                    listeners:{
+                        beforecardswitch:function () {
+                            wendler.navigation.resetBack();
+                        }
+                    }
                 }
-            }
-        })
+            );
+        }
     });
 };
 
-wendler.main.start();
-
+if (wendler.main.deviceReady && !wendler.main.started) {
+    wendler.main.started = true;
+    wendler.main.start();
+}

@@ -1,5 +1,5 @@
 "use strict";
-if (Ext.is.Desktop) {
+if (Ext.os.is.Linux) {
     window.device = {
         name:"Chrome",
         uuid:'1234',

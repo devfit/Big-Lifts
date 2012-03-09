@@ -1,7 +1,7 @@
 Ext.ns('util.filebackup');
 
 util.filebackup.SYNC_MS = 175;
-util.filebackup.fileBackupEnabled = Ext.is.Desktop || typeof(PhoneGap) !== 'undefined';
+util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
 util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store) {
