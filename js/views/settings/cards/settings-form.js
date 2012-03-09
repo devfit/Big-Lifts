@@ -34,7 +34,7 @@ wendler.views.SettingsForm = {
     xtype:'formpanel',
     id:'settings-form',
     listeners:{
-        show:wendler.settings.controller.reloadForm
+        initialize:wendler.settings.controller.reloadForm
     },
     scroll:'vertical',
     items:[

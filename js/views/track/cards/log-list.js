@@ -25,16 +25,10 @@ wendler.stores.LiftLog.addListener('update', wendler.controller.logList.sortAndR
 wendler.controller.logList.showSortMenu = function () {
     var sortToolbar = Ext.getCmp('track-sort-toolbar');
 
-    if (sortToolbar.hidden) {
-        sortToolbar.show({type:'slide', direction:'down'});
-        Ext.getCmp('log-list').doComponentLayout();
-        Ext.getCmp('log-list').doLayout();
+    if (sortToolbar.isHidden()) {
+        sortToolbar.show();
     } else {
         sortToolbar.hide();
-        setTimeout(function () {
-            Ext.getCmp('log-list').doComponentLayout();
-            Ext.getCmp('log-list').doLayout();
-        }, 500);
     }
 
     wendler.controller.logList.updateUiForSortButtons();
@@ -131,13 +125,13 @@ wendler.controller.logList.updateAscendingText = function () {
     }
 };
 
-
 wendler.views.log.cards.LogList = {
     id:'log-list',
     xtype:'panel',
     layout:'fit',
-    dockedItems:[
+    items:[
         {
+            docked:'top',
             xtype:'toolbar',
             title:'Track',
             items:[
@@ -160,9 +154,14 @@ wendler.views.log.cards.LogList = {
             ]
         },
         {
+            docked:'top',
             id:'track-sort-toolbar',
             xtype:'toolbar',
             hidden:true,
+            showAnimation:{
+                type:'slide',
+                direction:'down'
+            },
             items:[
                 {
                     id:'sort-name-button',
@@ -203,13 +202,11 @@ wendler.views.log.cards.LogList = {
                     }
                 }
             ]
-        }
-    ],
-    items:[
+        },
         {
             id:'lift-log-list',
             listeners:{
-                afterrender:function () {
+                initialize:function () {
                     wendler.controller.logList.sortAndRefreshList();
                     wendler.components.addSwipeToDelete(this, wendler.controller.logList.showLogEntry,
                         wendler.controller.logList.deleteLogEntry, '.date-week');

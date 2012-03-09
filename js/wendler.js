@@ -15,31 +15,29 @@ wendler.main.start = function () {
     util.filebackup.loadAllStores();
 
     Ext.application({
-        icon:'apple-touch-icon.png',
-        glossOnIcon:false,
         launch:function () {
             Ext.create('Ext.tab.Panel', {
                     id:'main-tab-panel',
                     fullscreen:true,
                     sortable:false,
-                    layout:'fit',
                     tabBar:{
                         id:'tab-navigation',
                         docked:'bottom',
-                        layout:{ pack:'center' }
+                        layout:{ pack:'center', align:'center' }
                     },
-                    activeItem:startTab,
+//                    activeItem:startTab,
+                    activeItem:1,
                     items:[
 //                new wendler.views.LiftSchedule(),
 //                new wendler.views.Maxes(),
-//                new wendler.views.Log(),
 //                new wendler.views.OneRepMaxCalculator(),
-                        Ext.create('Wendler.views.More')
+                        Ext.create('Wendler.views.More'),
+                        Ext.create('Wendler.views.Log')
                     ],
                     listeners:{
-                        beforecardswitch:function () {
-                            wendler.navigation.resetBack();
-                        }
+//                        beforecardswitch:function () {
+//                            wendler.navigation.resetBack();
+//                        }
                     }
                 }
             );
