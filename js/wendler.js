@@ -29,7 +29,7 @@ wendler.main.start = function () {
                     activeItem:0,
                     items:[
 //                new wendler.views.LiftSchedule(),
-//                new wendler.views.Maxes(),
+                        Ext.create('Wendler.views.Maxes'),
                         Ext.create('Wendler.views.OneRepMaxCalculator'),
                         Ext.create('Wendler.views.More'),
                         Ext.create('Wendler.views.Log')

@@ -10,9 +10,7 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
 
 wendler.maxes.controller.buildMaxesFromStore = function () {
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
-    Ext.getCmp('maxes-form-items').doLayout();
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createTrainingMaxesInput, this);
-    Ext.getCmp('training-maxes').doLayout();
 };
 
 wendler.maxes.controller.createMaxesInput = function (record) {
@@ -90,12 +88,11 @@ wendler.maxes.controller.updateTrainingPercentageDisplay = function () {
     var trainingMaxPercentage = wendler.stores.Settings.first().data['training-max-percentage'];
     var trainingMaxPercentageIndicator = Ext.get('training-max-percentage-indicator');
     if (trainingMaxPercentageIndicator !== null) {
-        trainingMaxPercentageIndicator.setHTML(trainingMaxPercentage);
+        trainingMaxPercentageIndicator.setHtml(trainingMaxPercentage);
     }
 
     Ext.getCmp('training-maxes').removeAll();
     wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createTrainingMaxesInput, this);
-    Ext.getCmp('training-maxes').doLayout();
 };
 
 wendler.stores.Settings.addListener('update', wendler.maxes.controller.updateTrainingPercentageDisplay);
@@ -112,6 +109,7 @@ wendler.maxes.cards.maxesFormEditable = {
         {
             id:'maxes-form-items',
             xtype:'fieldset',
+            cls:'fieldset-title-no-margin',
             title:'Maxes',
             defaults:{
                 listeners:{
@@ -130,12 +128,13 @@ wendler.maxes.cards.trainingMaxes = {
     flex:1,
     bodyPadding:0,
     listeners:{
-        afterlayout:wendler.maxes.controller.updateTrainingPercentageDisplay
+        painted:wendler.maxes.controller.updateTrainingPercentageDisplay
     },
     items:[
         {
             id:'training-maxes',
             xtype:'fieldset',
+            cls:'fieldset-title-no-margin',
             title:'<span id="training-max-percentage-indicator"></span>%'
         }
     ]
@@ -146,31 +145,16 @@ wendler.maxes.cards.maxesForm = {
     id:'maxes-form',
     scroll:'vertical',
     listeners:{
-        afterrender:function () {
+        painted:function () {
             wendler.maxes.controller.buildMaxesFromStore();
             wendler.maxes.controller.showHideTrainingMaxes(null, wendler.stores.Settings.first());
         }
     },
     items:[
         {
-            xtype:'panel',
-            id:'maxes-form-hbox',
-            layout:{
-                type:'hbox'
-            },
-            padding:0,
-            bodyPadding:0,
-            items:[
-                wendler.maxes.cards.maxesFormEditable,
-                wendler.maxes.cards.trainingMaxes
-            ]
-        }
-    ],
-    dockedItems:[
-        {
             id:'maxes-toolbar',
             xtype:'toolbar',
-            dock:'top',
+            docked:'top',
             title:'Lifts',
             items:[
                 {
@@ -187,6 +171,19 @@ wendler.maxes.cards.maxesForm = {
                     handler:wendler.maxes.controller.addLiftButtonPressed,
                     ui:'action'
                 }
+            ]
+        },
+        {
+            xtype:'panel',
+            id:'maxes-form-hbox',
+            layout:{
+                type:'hbox'
+            },
+            padding:0,
+            bodyPadding:0,
+            items:[
+                wendler.maxes.cards.maxesFormEditable,
+                wendler.maxes.cards.trainingMaxes
             ]
         }
     ]
