@@ -279,7 +279,11 @@ task useDevSigningKey(dependsOn: [getAuthToken]) << {
     println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
 }
 
-task devBinaries(dependsOn: [useDevSigningKey]) << {
+task useReleaseSigningKey(dependsOn: [getAuthToken]) << {
+    def id = getIdForAppName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 5/3/1")
+    def devKeyId = getSigningKeyByName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 531")
+    String newKeyJson = "data={\"keys\":{\"ios\":${devKeyId}}}"
+    println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
 }
 
 task buildStatus(dependsOn: [getAuthToken]) << {
