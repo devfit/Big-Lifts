@@ -134,7 +134,7 @@ task test() << {
     GParsPool.withPool(4) {
         tests.eachParallel { File test ->
             exec {
-                commandLine= ['cucumber', test.getAbsolutePath(), '-f', 'progress']
+                commandLine = ['cucumber', test.getAbsolutePath(), '-f', 'progress']
                 workingDir = new File('./test')
             }
         }
@@ -164,6 +164,7 @@ def incrementJsVersion() {
     versionFile.withWriter { w ->
         w.write(newVersionCallback);
     }
+
     return version
 }
 
@@ -184,6 +185,7 @@ def incrementConfigVersion() {
     configFile.withWriter { w ->
         w.write(newConfig);
     }
+
     return newVersion
 }
 
@@ -238,6 +240,7 @@ def execAndGetResult(def command) {
 
 final String PHONEGAP_BUILD_API_URL = "https://build.phonegap.com"
 String authToken = null
+
 task getAuthToken() << {
     def authenticationResponse = execAndGetResult(['curl', '-u', 'stefankendall@gmail.com', '-X', 'POST', '-d', '""', "${PHONEGAP_BUILD_API_URL}/token"])
     authToken = authenticationResponse.token
@@ -256,6 +259,31 @@ task binaries(dependsOn: [getAuthToken]) << {
             commandLine = ['wget', downloadLocationResult.location, '-P', 'binaries']
         }
     }
+}
+
+def getIdForAppName(phoneGapUrl, authToken, appName) {
+    def allAppsResult = execAndGetResult(['curl', "${phoneGapUrl}/api/v1/apps?auth_token=${authToken}"])
+    return allAppsResult.apps.find { it.title == appName }?.get('id')
+}
+
+def getSigningKeyByName(phoneGapUrl, authToken, keyName) {
+    def keyInfo = execAndGetResult(['curl', "${phoneGapUrl}/api/v1/keys?auth_token=${authToken}"])
+    Map key = keyInfo.keys.ios.all.find { it.title == keyName }
+    return key?.get('id')
+}
+
+task useDevSigningKey(dependsOn: [getAuthToken]) << {
+    def id = getIdForAppName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 5/3/1")
+    def devKeyId = getSigningKeyByName(PHONEGAP_BUILD_API_URL, authToken, "Wendler Development")
+    String newKeyJson = "data={\"keys\":{\"ios\":${devKeyId}}}"
+    println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
+}
+
+task useReleaseSigningKey(dependsOn: [getAuthToken]) << {
+    def id = getIdForAppName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 5/3/1")
+    def devKeyId = getSigningKeyByName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 531")
+    String newKeyJson = "data={\"keys\":{\"ios\":${devKeyId}}}"
+    println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
 }
 
 task buildStatus(dependsOn: [getAuthToken]) << {
