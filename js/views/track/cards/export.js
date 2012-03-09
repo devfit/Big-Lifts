@@ -87,13 +87,14 @@ wendler.views.log.cards.Export = {
     scroll:'vertical',
     style:'padding-top:0px',
     listeners:{
-        beforeshow:function () {
+        initialize:function () {
             wendler.navigation.setBackFunction(wendler.controller.log.emailExport.returnToTrackingList);
             wendler.controller.log.emailExport.loadPreviousExportEmail();
         }
     },
-    dockedItems:[
+    items:[
         {
+            docked:'top',
             xtype:'toolbar',
             title:'Export',
             items:[
@@ -113,9 +114,7 @@ wendler.views.log.cards.Export = {
                 }
 
             ]
-        }
-    ],
-    items:[
+        },
         {
             xtype:'fieldset',
             cls:'fieldset-no-margin',

@@ -22,94 +22,95 @@ wendler.oneRepMax.controller.useEstimateForLift = function () {
     });
 };
 
-wendler.views.OneRepMaxCalculator = Ext.extend(Ext.Panel, {
-    title:'1-Rep Calc',
-    iconCls:'search',
-    listeners:{
-        afterlayout:wendler.oneRepMax.controller.estimateOneRepMax
-    },
-    layout:'fit',
-    dockedItems:[
-        {
-            dock:'top',
-            xtype:'toolbar',
-            title:"1-Rep Calc"
-        }
-    ],
-    items:[
-        {
-            xtype:'formpanel',
-            scroll: 'vertical',
-            items:[
-                {
-                    xtype:'fieldset',
-                    instructions:'Weight*(1+Reps*0.033)',
-                    margin:'0',
-                    style:'margin-top: 0',
-                    defaults:{
-                        labelWidth:'35%',
-                        listeners:{
-                            change:wendler.oneRepMax.controller.estimateOneRepMax
-                        }
+Ext.define('Wendler.views.OneRepMaxCalculator', {
+    extend:'Ext.Panel',
+    config:{
+        title:'1-Rep Calc',
+        iconCls:'search',
+        listeners:{
+            initialize:wendler.oneRepMax.controller.estimateOneRepMax
+        },
+        layout:'fit',
+        items:[
+            {
+                docked:'top',
+                xtype:'toolbar',
+                title:"1-Rep Calc"
+            },
+            {
+                xtype:'formpanel',
+                scroll:'vertical',
+                items:[
+                    {
+                        xtype:'fieldset',
+                        instructions:'Weight*(1+Reps*0.033)',
+                        margin:'0',
+                        style:'margin-top: 0',
+                        defaults:{
+                            labelWidth:'35%',
+                            listeners:{
+                                change:wendler.oneRepMax.controller.estimateOneRepMax
+                            }
+                        },
+                        items:[
+                            {
+                                id:'one-rep-weight',
+                                xtype:'numberfield',
+                                name:'weight',
+                                label:'Weight',
+                                value:200
+                            },
+                            {
+                                id:'one-rep-reps',
+                                xtype:'numberfield',
+                                name:'reps',
+                                label:'Reps',
+                                value:10
+                            },
+                            {
+                                xtype:'spacer',
+                                height:7,
+                                style:'background-color: #36393D'
+                            },
+                            {
+                                id:'one-rep-estimate',
+                                xtype:'numberfield',
+                                name:'calculatedMax',
+                                label:'Max',
+                                disabled:true,
+                                disabledCls:'disabledVisible'
+                            }
+                        ]
                     },
-                    items:[
-                        {
-                            id:'one-rep-weight',
-                            xtype:'numberfield',
-                            name:'weight',
-                            label:'Weight',
-                            value:200
-                        },
-                        {
-                            id:'one-rep-reps',
-                            xtype:'numberfield',
-                            name:'reps',
-                            label:'Reps',
-                            value:10
-                        },
-                        {
-                            xtype:'spacer',
-                            height:7,
-                            style:'background-color: #36393D'
-                        },
-                        {
-                            id:'one-rep-estimate',
-                            xtype:'numberfield',
-                            name:'calculatedMax',
-                            label:'Max',
-                            disabled:true,
-                            disabledCls:'disabledVisible'
-                        }
-                    ]
-                },
-                {
-                    xtype:'fieldset',
-                    title:'Use For...',
-                    instructions:'Auto-fill max',
-                    margin:'0',
-                    items:[
-                        {
-                            id:'use-lift-select',
-                            name:'use-for-lift-select',
-                            xtype:'selectfield',
-                            valueField:'propertyName',
-                            displayField:'name',
-                            label:'Lift',
-                            store:wendler.stores.lifts.Lifts
-                        },
-                        {
-                            xtype:'spacer',
-                            height:15
-                        },
-                        {
-                            xtype:'button',
-                            id:'use-max-button',
-                            text:'Use Max',
-                            handler:wendler.oneRepMax.controller.useEstimateForLift
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+                    {
+                        xtype:'fieldset',
+                        title:'Use For...',
+                        instructions:'Auto-fill max',
+                        margin:'0',
+                        items:[
+                            {
+                                id:'use-lift-select',
+                                name:'use-for-lift-select',
+                                xtype:'selectfield',
+                                valueField:'propertyName',
+                                displayField:'name',
+                                label:'Lift',
+                                store:wendler.stores.lifts.Lifts
+                            },
+                            {
+                                xtype:'spacer',
+                                height:15
+                            },
+                            {
+                                xtype:'button',
+                                id:'use-max-button',
+                                text:'Use Max',
+                                handler:wendler.oneRepMax.controller.useEstimateForLift
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 });

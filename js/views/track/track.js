@@ -14,12 +14,12 @@ Ext.define('Wendler.views.Log', {
         title:'Track',
         items:[
             wendler.views.log.cards.LogList,
-            wendler.views.log.cards.EditLogEntry
+            wendler.views.log.cards.EditLogEntry,
 //            new wendler.views.log.cards.NotesEditor({
 //                id:'log-notes-editor',
 //                _returnCallback:wendler.controller.logEntry.returnFromEditNotes
 //            }),
-//            wendler.views.log.cards.Export
+            wendler.views.log.cards.Export
         ]
     }
 });

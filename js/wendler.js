@@ -26,11 +26,11 @@ wendler.main.start = function () {
                         layout:{ pack:'center', align:'center' }
                     },
 //                    activeItem:startTab,
-                    activeItem:1,
+                    activeItem:0,
                     items:[
 //                new wendler.views.LiftSchedule(),
 //                new wendler.views.Maxes(),
-//                new wendler.views.OneRepMaxCalculator(),
+                        Ext.create('Wendler.views.OneRepMaxCalculator'),
                         Ext.create('Wendler.views.More'),
                         Ext.create('Wendler.views.Log')
                     ],
