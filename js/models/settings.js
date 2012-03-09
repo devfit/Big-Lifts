@@ -1,21 +1,24 @@
 "use strict";
 Ext.ns('wendler.defaults', 'wendler.stores.recovery', 'wendler.settings.options');
 
-Ext.regModel('Settings', {
-    fields:[
-        {name:'id', type:'integer'},
-        {name:'show-warmup-sets', type:'integer'},
-        {name:'units', type:'string'},
-        {name:'rounding-value', type:'string'},
-        {name:'rounding-type', type:'string'},
-        {name:'use-training-max', type:'integer', defaultValue:1},
-        {name:'training-max-percentage', type:'integer', defaultValue:90},
-        {name:'exportEmail', type:'string', defaultValue:''},
-        {name:'lockPortrait', type:'boolean', defaultValue:false}
-    ],
-    proxy:{
-        type:'localstorage',
-        id:'settings-proxy'
+Ext.define('Settings', {
+    extend: 'Ext.data.Model',
+    config:{
+        fields:[
+            {name:'id', type:'integer'},
+            {name:'show-warmup-sets', type:'integer'},
+            {name:'units', type:'string'},
+            {name:'rounding-value', type:'string'},
+            {name:'rounding-type', type:'string'},
+            {name:'use-training-max', type:'integer', defaultValue:1},
+            {name:'training-max-percentage', type:'integer', defaultValue:90},
+            {name:'exportEmail', type:'string', defaultValue:''},
+            {name:'lockPortrait', type:'boolean', defaultValue:false}
+        ],
+        proxy:{
+            type:'localstorage',
+            id:'settings-proxy'
+        }
     }
 });
 
@@ -39,7 +42,7 @@ wendler.stores.recovery.setupDefaultSettings = function () {
     });
 };
 
-wendler.stores.Settings = new Ext.data.Store({
+wendler.stores.Settings = Ext.create('Ext.data.Store',{
     model:'Settings',
     listeners:{
         load:wendler.stores.recovery.setupDefaultSettings

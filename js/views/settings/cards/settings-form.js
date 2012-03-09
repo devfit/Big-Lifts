@@ -6,7 +6,7 @@ wendler.settings.controller.resetToDefaults = function () {
 };
 
 wendler.settings.controller.reloadForm = function () {
-    Ext.getCmp('settings-form').load(wendler.stores.Settings.first());
+    Ext.getCmp('settings-form').setRecord(wendler.stores.Settings.first());
     Ext.getCmp('settings-form').hasBeenLoaded = true;
 };
 
@@ -34,7 +34,7 @@ wendler.views.SettingsForm = {
     xtype:'formpanel',
     id:'settings-form',
     listeners:{
-        afterlayout:wendler.settings.controller.reloadForm
+        show:wendler.settings.controller.reloadForm
     },
     scroll:'vertical',
     items:[
