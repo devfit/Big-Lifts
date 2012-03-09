@@ -1,4 +1,4 @@
-Ext.ns('wendler.settings.controller');
+Ext.ns('wendler.settings.controller', 'wendler.views');
 wendler.settings.controller.resetToDefaults = function () {
     wendler.stores.Settings.first().set(wendler.defaults.settings);
     wendler.stores.Settings.sync();
@@ -30,12 +30,13 @@ wendler.settings.controller.updateSettings = function (field) {
     settingsRecord.save();
 };
 
-new Ext.form.FormPanel({
+wendler.views.SettingsForm = {
+    xtype:'formpanel',
     id:'settings-form',
     listeners:{
         afterlayout:wendler.settings.controller.reloadForm
     },
-    scroll: 'vertical',
+    scroll:'vertical',
     items:[
         {
             xtype:'fieldset',
@@ -98,4 +99,4 @@ new Ext.form.FormPanel({
             handler:wendler.settings.controller.resetToDefaults
         }
     ]
-});
+};

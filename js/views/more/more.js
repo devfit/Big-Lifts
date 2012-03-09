@@ -10,8 +10,8 @@ Ext.define('Wendler.views.More', {
         layout:'card',
         activeItem:0,
         items:[
-            wendler.views.MoreInfoList
-//            new wendler.views.Settings()
+            wendler.views.MoreInfoList,
+            wendler.views.Settings
         ]
     }
 });
