@@ -6,7 +6,7 @@ wendler.maxes.arrangeLifts.doneButtonPressed = function () {
 };
 
 wendler.maxes.arrangeLifts.getSelectedIndex = function () {
-    var selected = Ext.getCmp('arrange-lifts-list').getSelectedRecords();
+    var selected = Ext.getCmp('arrange-lifts-list').getSelection();
     var index = -1;
     if (selected.length > 0) {
         index = wendler.stores.lifts.Lifts.indexOf(selected[0]);
@@ -51,26 +51,14 @@ wendler.maxes.cards.ArrangeLifts = {
     xtype:'panel',
     layout:'fit',
     listeners:{
-        beforeshow:function () {
-          wendler.navigation.setBackFunction(wendler.maxes.arrangeLifts.doneButtonPressed);
+        show:function () {
+            wendler.navigation.setBackFunction(wendler.maxes.arrangeLifts.doneButtonPressed);
         }
     },
     items:[
         {
-            id:'arrange-lifts-list',
-            xtype:'list',
-            store:wendler.stores.lifts.Lifts,
-            itemCls:'lift-list-row',
-            itemTpl:'<table width="100%"><tbody><tr>' +
-                '<td width="60%"><span class="lift-name">{name}</span></td>' +
-                '<td width="40%" class="delete-button-holder hidden"></td>' +
-                '</tr></tbody></table>'
-        }
-    ],
-    dockedItems:[
-        {
             xtype:'toolbar',
-            dock:'top',
+            docked:'top',
             title:"Arrange",
             items:[
                 {
@@ -97,6 +85,16 @@ wendler.maxes.cards.ArrangeLifts = {
                     ui:'action'
                 }
             ]
+        },
+        {
+            id:'arrange-lifts-list',
+            xtype:'list',
+            store:wendler.stores.lifts.Lifts,
+            itemCls:'lift-list-row',
+            itemTpl:'<table width="100%"><tbody><tr>' +
+                '<td width="60%"><span class="lift-name">{name}</span></td>' +
+                '<td width="40%" class="delete-button-holder hidden"></td>' +
+                '</tr></tbody></table>'
         }
     ]
 };

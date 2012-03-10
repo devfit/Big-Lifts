@@ -85,10 +85,42 @@ wendler.maxes.controller.deleteLiftButtonPressed = function () {
     });
 };
 
+wendler.maxes.controller.setupEditLift = function (propertyName) {
+    wendler.navigation.setBackFunction(wendler.maxes.controller.editLiftBackButtonPressed);
+    var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
+    wendler.maxes.currentEditingLiftProperty = propertyName;
+    Ext.getCmp('maxes-edit-lift-toolbar').setTitle(lift.data.name);
+    Ext.getCmp('edit-lift-new-name').setValue(lift.data.name);
+    Ext.getCmp('edit-lift-new-max').setValue(lift.data.max);
+    Ext.getCmp('edit-lift-cycle-increase').setValue(lift.data.cycleIncrease);
+};
+
 wendler.maxes.cards.editLiftPanel = {
     xtype:'panel',
     id:'maxes-edit-lift-panel',
+    layout:'fit',
     items:[
+        {
+            id:'maxes-edit-lift-toolbar',
+            xtype:'toolbar',
+            docked:'top',
+            items:[
+                {
+                    id:'edit-lift-back-button',
+                    text:'Back',
+                    handler:wendler.maxes.controller.editLiftBackButtonPressed,
+                    ui:'back'
+                },
+                {xtype:'spacer'},
+                {
+                    id:'delete-lift-button',
+                    ui:'decline',
+                    iconMask:true,
+                    iconCls:'trash',
+                    handler:wendler.maxes.controller.deleteLiftButtonPressed
+                }
+            ]
+        },
         {
             xtype:'formpanel',
             items:[
@@ -121,38 +153,5 @@ wendler.maxes.cards.editLiftPanel = {
                 }
             ]
         }
-    ],
-    dockedItems:[
-        {
-            id:'maxes-edit-lift-toolbar',
-            xtype:'toolbar',
-            dock:'top',
-            items:[
-                {
-                    id:'edit-lift-back-button',
-                    text:'Back',
-                    handler:wendler.maxes.controller.editLiftBackButtonPressed,
-                    ui:'back'
-                },
-                {xtype:'spacer'},
-                {
-                    id:'delete-lift-button',
-                    ui:'decline',
-                    iconMask:true,
-                    iconCls:'trash',
-                    handler:wendler.maxes.controller.deleteLiftButtonPressed
-                }
-            ]
-        }
-    ],
-    _setup:function (propertyName) {
-        wendler.navigation.setBackFunction(wendler.maxes.controller.editLiftBackButtonPressed);
-
-        var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
-        wendler.maxes.currentEditingLiftProperty = propertyName;
-        Ext.getCmp('maxes-edit-lift-toolbar').setTitle(lift.data.name);
-        Ext.getCmp('edit-lift-new-name').setValue(lift.data.name);
-        Ext.getCmp('edit-lift-new-max').setValue(lift.data.max);
-        Ext.getCmp('edit-lift-cycle-increase').setValue(lift.data.cycleIncrease);
-    }
+    ]
 };

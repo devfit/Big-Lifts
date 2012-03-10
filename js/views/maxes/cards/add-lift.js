@@ -28,7 +28,12 @@ wendler.maxes.controller.handleInvalidLift = function (errors) {
 };
 
 wendler.maxes.controller.findNextOrdering = function () {
-    var orders = wendler.stores.lifts.Lifts.collect('order', false, true);
+    var orders = [];
+    util.withNoFilters(wendler.stores.lifts.Lifts, function () {
+        orders = _.map(wendler.stores.lifts.Lifts.getRange(), function (record) {
+            return record.data.order;
+        });
+    });
     return _.max(orders) + 1;
 };
 
@@ -65,12 +70,33 @@ wendler.maxes.controller.addLiftCancelButtonPressed = function () {
 wendler.maxes.cards.addLiftPanel = {
     xtype:'panel',
     id:'maxes-add-lift-panel',
+    layout:'fit',
     listeners:{
-        beforeshow:function () {
+        show:function () {
             wendler.navigation.setBackFunction(wendler.maxes.controller.addLiftCancelButtonPressed);
         }
     },
     items:[
+        {
+            xtype:'toolbar',
+            docked:'top',
+            title:"New Lift",
+            items:[
+                {
+                    id:'add-lift-cancel-button',
+                    text:'Cancel',
+                    handler:wendler.maxes.controller.addLiftCancelButtonPressed,
+                    ui:'action'
+                },
+                {xtype:'spacer'},
+                {
+                    id:'add-lift-done-button',
+                    text:'Save',
+                    handler:wendler.maxes.controller.addLiftDoneButtonPressed,
+                    ui:'confirm'
+                }
+            ]
+        },
         {
             xtype:'formpanel',
             id:'maxes-add-lift-form',
@@ -105,28 +131,6 @@ wendler.maxes.cards.addLiftPanel = {
                             value:10
                         }
                     ]
-                }
-            ]
-        }
-    ],
-    dockedItems:[
-        {
-            xtype:'toolbar',
-            dock:'top',
-            title:"New Lift",
-            items:[
-                {
-                    id:'add-lift-cancel-button',
-                    text:'Cancel',
-                    handler:wendler.maxes.controller.addLiftCancelButtonPressed,
-                    ui:'action'
-                },
-                {xtype:'spacer'},
-                {
-                    id:'add-lift-done-button',
-                    text:'Save',
-                    handler:wendler.maxes.controller.addLiftDoneButtonPressed,
-                    ui:'confirm'
                 }
             ]
         }

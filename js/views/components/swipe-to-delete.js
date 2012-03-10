@@ -1,18 +1,18 @@
 Ext.ns('wendler.components.swipeToDelete');
 
 wendler.components.addSwipeToDelete = function (list, tapAction, deleteAction, selectorInListToHideWhileDeleteIsShown) {
-    list.addListener('itemtap', function (dataview, index, item, e) {
-        wendler.components.swipeToDelete.itemTapWrapper(dataview, index, item, e, tapAction, deleteAction, selectorInListToHideWhileDeleteIsShown);
+    list.addCls('list-swipe-to-delete');
+    list.addListener('itemtap', function (dataview, index, target, record, e) {
+        wendler.components.swipeToDelete.itemTapWrapper(dataview, index, target, e, tapAction, deleteAction, selectorInListToHideWhileDeleteIsShown);
     });
-    list.addListener('itemswipe', function (dataview, index, item, e) {
-        wendler.components.swipeToDelete.itemSwipeWrapper(item, e, selectorInListToHideWhileDeleteIsShown);
+    list.addListener('itemswipe', function (dataview, index, target, record, e) {
+        wendler.components.swipeToDelete.itemSwipeWrapper(target, e, selectorInListToHideWhileDeleteIsShown);
     })
 };
 
 wendler.components.swipeToDelete.itemTapWrapper = function (dataview, index, item, e, tapAction, deleteAction, selectorInListToHideWhileDeleteIsShown) {
     var tapTarget = Ext.get(e.target);
-
-    var rowWithDelete = wendler.components.swipeToDelete.findRowWithDeleteButton(tapTarget.up('.x-list-parent'));
+    var rowWithDelete = wendler.components.swipeToDelete.findRowWithDeleteButtonFromTapTarget(tapTarget);
     if (wendler.components.swipeToDelete.tappingDelete(tapTarget)) {
         deleteAction(dataview, index, item, e);
     }
@@ -26,16 +26,17 @@ wendler.components.swipeToDelete.itemTapWrapper = function (dataview, index, ite
 
 wendler.components.swipeToDelete.itemSwipeWrapper = function (item, e, selectorInListToHideWhileDeleteIsShown) {
     var tapTarget = Ext.get(e.target);
-    var rowWithDelete = wendler.components.swipeToDelete.findRowWithDeleteButton(tapTarget.up('.x-list-parent'));
-    if( rowWithDelete !== null ){
+    var rowWithDelete = wendler.components.swipeToDelete.findRowWithDeleteButton(tapTarget);
+    if (rowWithDelete !== null) {
         wendler.components.swipeToDelete.showHideDeleteButton(rowWithDelete, selectorInListToHideWhileDeleteIsShown);
     }
-    else{
+    else {
         wendler.components.swipeToDelete.showHideDeleteButton(item, selectorInListToHideWhileDeleteIsShown);
     }
 };
 
-wendler.components.swipeToDelete.findRowWithDeleteButton = function (list) {
+wendler.components.swipeToDelete.findRowWithDeleteButtonFromTapTarget = function (tapTarget) {
+    var list = tapTarget.up('.list-swipe-to-delete');
     var deleteContainers = list.query('.delete-button-holder');
     for (var i = 0; i < deleteContainers.length; i++) {
         var deleteContainer = deleteContainers[i];

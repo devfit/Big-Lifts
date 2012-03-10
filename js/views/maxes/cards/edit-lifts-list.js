@@ -4,7 +4,7 @@ wendler.maxes.controller.editLift = function (dataview, index, item, e) {
     var liftModel = wendler.stores.lifts.Lifts.getAt(index);
     var propertyName = liftModel.get('propertyName');
 
-    Ext.getCmp('maxes-edit-lift-panel')._setup(propertyName);
+    wendler.maxes.controller.setupEditLift(propertyName);
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-panel'), {type:'slide', direction:'left'});
 };
 
@@ -33,27 +33,8 @@ wendler.maxes.cards.editMaxesList = {
     layout:'fit',
     items:[
         {
-            id:'maxes-edit-lifts-list',
-            xtype:'list',
-            selectedItemCls:'',
-            store:wendler.stores.lifts.Lifts,
-            itemCls:'lift-list-row',
-            itemTpl:'<table width="100%"><tbody><tr>' +
-                '<td width="60%"><span class="lift-name">{name}</span></td>' +
-                '<td width="40%" class="delete-button-holder hidden"></td>' +
-                '</tr></tbody></table>',
-            onItemDisclosure:true,
-            listeners:{
-                afterrender:function () {
-                    wendler.components.addSwipeToDelete(this, wendler.maxes.controller.editLift, wendler.maxes.controller.deleteLift, '.x-list-disclosure');
-                }
-            }
-        }
-    ],
-    dockedItems:[
-        {
             xtype:'toolbar',
-            dock:'top',
+            docked:'top',
             title:"Edit Lifts",
             items:[
                 {
@@ -71,6 +52,23 @@ wendler.maxes.cards.editMaxesList = {
                     ui:'action'
                 }
             ]
+        },
+        {
+            id:'maxes-edit-lifts-list',
+            xtype:'list',
+            selectedItemCls:'',
+            store:wendler.stores.lifts.Lifts,
+            itemCls:'lift-list-row',
+            itemTpl:'<table width="100%"><tbody><tr>' +
+                '<td width="60%"><span class="lift-name">{name}</span></td>' +
+                '<td width="40%" class="delete-button-holder hidden"></td>' +
+                '</tr></tbody></table>',
+            onItemDisclosure:true,
+            listeners:{
+                initialize:function () {
+                    wendler.components.addSwipeToDelete(this, wendler.maxes.controller.editLift, wendler.maxes.controller.deleteLift, '.x-list-disclosure');
+                }
+            }
         }
     ]
 };
