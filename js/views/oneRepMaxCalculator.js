@@ -77,8 +77,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
                                 xtype:'numberfield',
                                 name:'calculatedMax',
                                 label:'Max',
-                                disabled:true,
-                                disabledCls:'disabledVisible'
+                                readOnly:true
                             }
                         ]
                     },
