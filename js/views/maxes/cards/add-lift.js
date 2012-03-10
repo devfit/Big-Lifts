@@ -9,10 +9,10 @@ wendler.maxes.controller.handleInvalidLift = function (errors) {
     if (nameErrors.length > 0) {
         for (var i in nameErrors) {
             var nameError = nameErrors[i];
-            if (nameError.message === "must be present") {
+            if (nameError.getMessage() === "must be present") {
                 messages.push("Invalid lift name");
             }
-            else if (nameError.message === "nonunique") {
+            else if (nameError.getMessage() === "nonunique") {
                 messages.push("Name must be unique");
             }
         }

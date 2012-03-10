@@ -1,52 +1,30 @@
 "use strict";
 Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
 
-wendler.maxes.controller.setAndFindInvalidLiftErrors = function (errors, messages, oldPropertyName, newPropertyName) {
-    var nameErrors = errors.getByField('propertyName');
-    var maxErrors = errors.getByField('max');
-    var cycleIncreaseErrors = errors.getByField('cycleIncrease');
-    if (nameErrors.length > 0) {
-        for (var i = 0; i < nameErrors.length; i++) {
-            var nameError = nameErrors[i];
-            if (nameError.message === "must be present") {
-                messages.push("Invalid lift name");
-            }
-            else if (nameError.message === "nonunique" && oldPropertyName !== newPropertyName) {
-                messages.push("Name must be unique");
-            }
-        }
-    }
-    if (maxErrors.length > 0) {
-        messages.push("Max must be > 0");
-    }
-    if (cycleIncreaseErrors.length > 0) {
-        messages.push("Cycle Increase must be > 0");
-    }
-};
-
 wendler.maxes.currentEditingLiftProperty = null;
 
 wendler.maxes.controller.editLiftBackButtonPressed = function () {
     var newName = Ext.getCmp('edit-lift-new-name').getValue().trim();
-    var newCycleIncrease = Ext.getCmp('edit-lift-cycle-increase').getValue();
-    var newPropertyName = wendler.models.Lift.sanitizePropertyName(newName);
     var newMax = Ext.getCmp('edit-lift-new-max').getValue();
+    var newPropertyName = wendler.models.Lift.sanitizePropertyName(newName);
+    var newCycleIncrease = Ext.getCmp('edit-lift-cycle-increase').getValue();
 
     var currentModel = wendler.maxes.controller.getCurrentLiftModel();
-    var oldPropertyName = currentModel.get('propertyName');
 
-    var newLiftConfiguration = {name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax};
-    var copyModel = Ext.ModelMgr.create(newLiftConfiguration, 'Lift');
-    newLiftConfiguration.id = currentModel.data.id;
-    var errors = copyModel.validate();
-    var messages = [];
+    var newLiftModel = Ext.ModelMgr.create(
+        {name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax}, 'Lift');
 
-    wendler.maxes.controller.setAndFindInvalidLiftErrors(errors, messages, oldPropertyName, newPropertyName);
+    var errors = newLiftModel.validate();
 
-    if (messages.length === 0) {
-        for (var key in newLiftConfiguration) {
-            if (currentModel.get(key) != newLiftConfiguration[key]) {
-                currentModel.set(key, newLiftConfiguration[key]);
+    if (errors.isValid()) {
+        newLiftModel.set('id', currentModel.data.id);
+        newLiftModel.set('order', currentModel.data.order);
+
+        for (var key in newLiftModel.getData()) {
+            var currentValue = currentModel.get(key);
+            var newValue = newLiftModel.get(key);
+            if (currentValue !== newValue) {
+                currentModel.set(key, newLiftModel.get(key));
                 currentModel.save();
             }
         }
@@ -55,7 +33,7 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
         wendler.maxes.controller.doneWithEditing();
     }
     else {
-        Ext.Msg.alert('Error', messages.join('<br/>'));
+        wendler.maxes.controller.handleInvalidLift(errors);
     }
 };
 

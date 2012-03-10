@@ -26,7 +26,7 @@ wendler.components.swipeToDelete.itemTapWrapper = function (dataview, index, ite
 
 wendler.components.swipeToDelete.itemSwipeWrapper = function (item, e, selectorInListToHideWhileDeleteIsShown) {
     var tapTarget = Ext.get(e.target);
-    var rowWithDelete = wendler.components.swipeToDelete.findRowWithDeleteButton(tapTarget);
+    var rowWithDelete = wendler.components.swipeToDelete.findRowWithDeleteButtonFromTapTarget(tapTarget);
     if (rowWithDelete !== null) {
         wendler.components.swipeToDelete.showHideDeleteButton(rowWithDelete, selectorInListToHideWhileDeleteIsShown);
     }
