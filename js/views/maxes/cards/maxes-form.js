@@ -34,11 +34,7 @@ wendler.maxes.controller.createTrainingMaxesInput = function (record) {
         xtype:'textfield',
         name:liftProperty + "-training",
         value:trainingMax,
-        listeners:{
-            afterrender:function (ele) {
-                ele.fieldEl.dom.readOnly = true;
-            }
-        }
+        readOnly:true
     });
 };
 
