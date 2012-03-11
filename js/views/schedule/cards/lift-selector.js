@@ -16,7 +16,7 @@ wendler.liftSchedule.controller.setupListDoneIcons = function () {
         var liftLists = liftSelector.query('list');
         for (var weekIndex = 0; weekIndex < liftLists.length; weekIndex++) {
             var liftList = liftLists[weekIndex];
-            var liftListEl = liftList.getEl();
+            var liftListEl = liftList.element;
             if (liftListEl) {
                 var listItems = liftListEl.query('.x-list-item');
                 for (var listItemIndex = 0; listItemIndex < listItems.length; listItemIndex++) {
@@ -87,16 +87,16 @@ wendler.views.liftSchedule.liftSelector = {
     xtype:'tabpanel',
     layout:'fit',
     id:'lift-selector',
-    activeItem: wendler.liftSchedule.controller.getStartingWeek(),
+    activeItem:wendler.liftSchedule.controller.getStartingWeek(),
     listeners:{
-        beforeshow:wendler.liftSchedule.controller.setupLiftSelector,
+        show:wendler.liftSchedule.controller.setupLiftSelector,
         beforecardswitch:wendler.liftSchedule.controller.handleWeekChange
     },
-    dockedItems:[
+    items:[
         {
             xtype:'toolbar',
             id:'lift-selector-toolbar',
-            dock:'top',
+            docked:'top',
             title:'Week 1',
             items:[
                 {
@@ -115,9 +115,7 @@ wendler.views.liftSchedule.liftSelector = {
                     handler:wendler.liftSchedule.controller.showLiftsCompletedScreen
                 }
             ]
-        }
-    ],
-    items:[
+        },
         {
             title:'1',
             xtype:'list',

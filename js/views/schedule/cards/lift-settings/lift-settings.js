@@ -14,8 +14,8 @@ wendler.controller.liftSettings.optionButtonPressed = function (option) {
     var prebuiltVariation = wendler.liftProgressions.options[(option - 1)];
     wendler.stores.lifts.LiftProgression.clearFilter();
     wendler.stores.lifts.LiftProgression.each(function (m) {
-        var newProgression = _.find(prebuiltVariation, function(r){
-           return r.data.set === m.data.set && r.data.week === m.data.week;
+        var newProgression = _.find(prebuiltVariation, function (r) {
+            return r.data.set === m.data.set && r.data.week === m.data.week;
         });
 
         m.set('reps', newProgression.data.reps);
@@ -29,20 +29,32 @@ wendler.controller.liftSettings.optionButtonPressed = function (option) {
 wendler.views.liftSchedule.LiftSettings = {
     id:'lift-settings',
     xtype:'panel',
-    bodyPadding:5,
+    padding: 5,
     listeners:{
-        beforeshow:function () {
+        show:function () {
             wendler.navigation.setBackFunction(wendler.controller.liftSettings.returnToLiftSelectFromSettings);
         }
     },
     items:[
+        {
+            xtype:'toolbar',
+            title:'Config',
+            docked:'top',
+            items:[
+                {
+                    id:'lift-settings-back-button',
+                    text:'Back',
+                    ui:'back',
+                    handler:wendler.controller.liftSettings.returnToLiftSelectFromSettings
+                }
+            ]
+        },
         {
             html:'The Wendler 5/3/1 book offers two working-set progression options'
         },
         {
             xtype:'panel',
             layout:'hbox',
-            bodyPadding:0,
             defaults:{
                 bodyPadding:3,
                 flex:1
@@ -79,11 +91,11 @@ wendler.views.liftSchedule.LiftSettings = {
         {
             xtype:'panel',
             layout:'hbox',
-            height:50,
+            height:44,
             defaults:{
                 xtype:'panel',
                 flex:1,
-                bodyPadding:3
+                padding:5
             },
             items:[
                 {
@@ -118,20 +130,6 @@ wendler.views.liftSchedule.LiftSettings = {
             text:'Manual',
             ui:'decline',
             handler:wendler.controller.liftSettings.showEditLiftPercentages
-        }
-    ],
-    dockedItems:[
-        {
-            xtype:'toolbar',
-            title:'Config',
-            items:[
-                {
-                    id:'lift-settings-back-button',
-                    text:'Back',
-                    ui:'back',
-                    handler:wendler.controller.liftSettings.returnToLiftSelectFromSettings
-                }
-            ]
         }
     ]
 };

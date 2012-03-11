@@ -54,20 +54,14 @@ wendler.views.EditLiftPercentages = {
     },
     listeners:{
         beforecardswitch:wendler.controller.settings.liftPercentages.switchLiftWeekForComponent,
-        beforeshow:function () {
+        show:function () {
             wendler.navigation.setBackFunction(wendler.controller.settings.liftPercentages.returnToLiftSettings);
             wendler.controller.settings.liftPercentages.updateLiftPercentaqes();
         }
     },
     items:[
-        {title:'Wk 1'},
-        {title:'Wk 2'},
-        {title:'Wk 3'},
-        {title:'Wk 4'}
-    ],
-    dockedItems:[
         {
-            dock:'top',
+            docked:'top',
             xtype:'toolbar',
             title:'Progressions',
             items:[
@@ -77,7 +71,10 @@ wendler.views.EditLiftPercentages = {
                     handler:wendler.controller.settings.liftPercentages.returnToLiftSettings
                 }
             ]
-        }
+        },
+        {title:'Wk 1'},
+        {title:'Wk 2'},
+        {title:'Wk 3'},
+        {title:'Wk 4'}
     ]
-}
-;
+};
