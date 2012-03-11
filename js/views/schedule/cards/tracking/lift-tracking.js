@@ -157,8 +157,8 @@ wendler.views.liftSchedule.LiftTracking = {
                     name:'estimated-one-rep-max',
                     xtype:'numberfield',
                     label:'Estimated 1RM',
-                    disabled:true,
-                    disabledCls:'disabledVisible'
+                    cls: 'one-rep-max-estimate',
+                    readOnly: true
                 }
             ]
         },

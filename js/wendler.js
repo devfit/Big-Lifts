@@ -30,9 +30,9 @@ wendler.main.start = function () {
                     items:[
 //                new wendler.views.LiftSchedule(),
                         Ext.create('Wendler.views.Maxes'),
+                        Ext.create('Wendler.views.Log'),
                         Ext.create('Wendler.views.OneRepMaxCalculator'),
-                        Ext.create('Wendler.views.More'),
-                        Ext.create('Wendler.views.Log')
+                        Ext.create('Wendler.views.More')
                     ],
                     listeners:{
 //                        beforecardswitch:function () {
