@@ -30,19 +30,22 @@ wendler.stores.migrations.liftCompletionMigration = function () {
 };
 
 
-Ext.regModel('LiftCompletion', {
-    fields:[
-        {name:'id', type:'integer'},
-        {name:'liftPropertyName', type:'string'},
-        {name:'week', type:'integer'},
-        {name:'completed', type:'boolean'}
-    ],
-    proxy:{
-        type:'localstorage',
-        id:'lift-completion-proxy'
+Ext.define('LiftCompletion', {
+    extend:'Ext.data.Model',
+    config:{
+        fields:[
+            {name:'id', type:'integer'},
+            {name:'liftPropertyName', type:'string'},
+            {name:'week', type:'integer'},
+            {name:'completed', type:'boolean'}
+        ],
+        proxy:{
+            type:'localstorage',
+            id:'lift-completion-proxy'
+        }
     }
 });
-wendler.stores.lifts.LiftCompletion = new Ext.data.Store({
+wendler.stores.lifts.LiftCompletion = Ext.create('Ext.data.Store', {
     model:'LiftCompletion',
     listeners:{
         load:function () {

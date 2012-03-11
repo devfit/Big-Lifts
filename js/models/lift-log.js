@@ -1,22 +1,25 @@
 Ext.ns('wendler.defaults', 'wendler.stores.migrations');
-Ext.regModel('LiftLog', {
-    fields:[
-        {name:'id', type:'int'},
-        {name:'liftName', type:'string'},
-        {name:'weight', type:'string'},
-        {name:'units', type:'string'},
-        {name:'reps', type:'int'},
-        {name:'notes', type:'string', defaultValue:''},
-        {name:'expectedReps', type:'int'},
-        {name:'week', type:'int'},
-        {name:'cycle', type:'int'},
-        {name:'timestamp', type:'int'},
-        //type: date is broken on Android 2.2. Maintain this property until all customers have migrated data
-        {name:'date', type:'date'}
-    ],
-    proxy:{
-        type:'localstorage',
-        id:'lift-log-proxy'
+Ext.define('LiftLog', {
+    extend:'Ext.data.Model',
+    config:{
+        fields:[
+            {name:'id', type:'int'},
+            {name:'liftName', type:'string'},
+            {name:'weight', type:'string'},
+            {name:'units', type:'string'},
+            {name:'reps', type:'int'},
+            {name:'notes', type:'string', defaultValue:''},
+            {name:'expectedReps', type:'int'},
+            {name:'week', type:'int'},
+            {name:'cycle', type:'int'},
+            {name:'timestamp', type:'int'},
+            //type: date is broken on Android 2.2. Maintain this property until all customers have migrated data
+            {name:'date', type:'date'}
+        ],
+        proxy:{
+            type:'localstorage',
+            id:'lift-log-proxy'
+        }
     }
 });
 
@@ -45,7 +48,7 @@ wendler.stores.migrations.liftLogMigration = function () {
     });
 };
 
-wendler.stores.LiftLog = new Ext.data.Store({
+wendler.stores.LiftLog = Ext.create('Ext.data.Store', {
     model:'LiftLog',
     listeners:{
         load:function () {

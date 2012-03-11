@@ -1,15 +1,18 @@
 Ext.ns('wendler.liftProgressions', 'wendler.stores.lifts', 'wendler.stores.recovery', 'wendler.defaults');
-Ext.regModel('LiftProgression', {
-    fields:[
-        {name:'id', type:'integer'},
-        {name:'week', type:'integer'},
-        {name:'set', type:'integer'},
-        {name:'reps', type:'integer'},
-        {name:'percentage', type:'integer'}
-    ],
-    proxy:{
-        type:'localstorage',
-        id:'lift-percentages-proxy'
+Ext.define('LiftProgression', {
+    extend:'Ext.data.Model',
+    config:{
+        fields:[
+            {name:'id', type:'integer'},
+            {name:'week', type:'integer'},
+            {name:'set', type:'integer'},
+            {name:'reps', type:'integer'},
+            {name:'percentage', type:'integer'}
+        ],
+        proxy:{
+            type:'localstorage',
+            id:'lift-percentages-proxy'
+        }
     }
 });
 
@@ -85,7 +88,7 @@ wendler.stores.recovery.setupDefaultLiftProgressions = function () {
     );
 };
 
-wendler.stores.lifts.LiftProgression = new Ext.data.Store({
+wendler.stores.lifts.LiftProgression = Ext.create('Ext.data.Store', {
     model:'LiftProgression',
     listeners:{
         load:wendler.stores.recovery.setupDefaultLiftProgressions

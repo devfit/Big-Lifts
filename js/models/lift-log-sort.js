@@ -1,13 +1,16 @@
 Ext.ns('wendler.defaults', 'wendler.stores.migrations');
-Ext.regModel('LiftLogSort', {
-    fields:[
-        {name:'id', type:'int'},
-        {name:'ascending', type:'boolean', defaultValue:false},
-        {name:'property', type:'string', defaultValue:'timestamp'}
-    ],
-    proxy:{
-        type:'localstorage',
-        id:'lift-log-sort-proxy'
+Ext.define('LiftLogSort', {
+    extend:'Ext.data.Model',
+    config:{
+        fields:[
+            {name:'id', type:'int'},
+            {name:'ascending', type:'boolean', defaultValue:false},
+            {name:'property', type:'string', defaultValue:'timestamp'}
+        ],
+        proxy:{
+            type:'localstorage',
+            id:'lift-log-sort-proxy'
+        }
     }
 });
 
@@ -25,7 +28,7 @@ wendler.stores.recovery.setupDefaultSort = function () {
     });
 };
 
-wendler.stores.LiftLogSort = new Ext.data.Store({
+wendler.stores.LiftLogSort = Ext.create('Ext.data.Store', {
     model:'LiftLogSort',
     listeners:{
         load:function () {

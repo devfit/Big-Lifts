@@ -28,7 +28,7 @@ wendler.main.start = function () {
 //                    activeItem:startTab,
                     activeItem:0,
                     items:[
-//                new wendler.views.LiftSchedule(),
+//                        Ext.create('Wendler.views.LiftSchedule'),
                         Ext.create('Wendler.views.Maxes'),
                         Ext.create('Wendler.views.Log'),
                         Ext.create('Wendler.views.OneRepMaxCalculator'),

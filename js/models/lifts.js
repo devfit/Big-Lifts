@@ -18,26 +18,29 @@ wendler.stores.recovery.setupDefaultLifts = function () {
     });
 };
 
-Ext.regModel('Lift', {
-    fields:[
-        {name:'id', type:'integer'},
-        {name:'name', type:'string'},
-        {name:'propertyName', type:'string'},
-        {name:'max', type:'float'},
-        {name:'cycleIncrease', type:'float'},
-        {name:'order', type:'int', defaultValue:-1}
-    ],
-    validations:[
-        {field:'propertyName', type:'custom', message:'nonunique',
-            fn:wendler.models.Lift.uniquePropertyNameValidation},
-        {field:'propertyName', type:'presence'},
-        {field:'max', type:'format', matcher:/^\d\d*$/, message:'Must enter a max'},
-        {field:'max', type:'presence'},
-        {field:'cycleIncrease', type:'presence'}
-    ],
-    proxy:{
-        type:'localstorage',
-        id:'lift-proxy'
+Ext.define('Lift', {
+    extend:'Ext.data.Model',
+    config:{
+        fields:[
+            {name:'id', type:'integer'},
+            {name:'name', type:'string'},
+            {name:'propertyName', type:'string'},
+            {name:'max', type:'float'},
+            {name:'cycleIncrease', type:'float'},
+            {name:'order', type:'int', defaultValue:-1}
+        ],
+        validations:[
+            {field:'propertyName', type:'custom', message:'nonunique',
+                fn:wendler.models.Lift.uniquePropertyNameValidation},
+            {field:'propertyName', type:'presence'},
+            {field:'max', type:'format', matcher:/^\d\d*$/, message:'Must enter a max'},
+            {field:'max', type:'presence'},
+            {field:'cycleIncrease', type:'presence'}
+        ],
+        proxy:{
+            type:'localstorage',
+            id:'lift-proxy'
+        }
     }
 });
 
@@ -76,7 +79,7 @@ wendler.models.Lift.sanitizePropertyName = function (propertyName) {
     return propertyName.toLowerCase().replace(/[^a-z]/g, '');
 };
 
-wendler.stores.lifts.Lifts = new Ext.data.Store({
+wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
     model:'Lift',
     listeners:{
         load:function () {
