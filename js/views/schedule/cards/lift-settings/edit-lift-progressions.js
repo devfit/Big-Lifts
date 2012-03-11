@@ -44,7 +44,7 @@ wendler.views.EditLiftPercentages = {
             {
                 xtype:'list',
                 store:wendler.stores.lifts.LiftProgression,
-                itemCls: 'lift-percentage-row',
+                itemCls:'lift-percentage-row',
                 itemTpl:'<span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>',
                 listeners:{
                     itemtap:wendler.controller.settings.liftPercentages.showEditLiftPercentage
@@ -72,9 +72,9 @@ wendler.views.EditLiftPercentages = {
                 }
             ]
         },
-        {title:'Wk 1'},
-        {title:'Wk 2'},
-        {title:'Wk 3'},
-        {title:'Wk 4'}
+        {title:'Wk 1', layout:'fit'},
+        {title:'Wk 2', layout:'fit'},
+        {title:'Wk 3', layout:'fit'},
+        {title:'Wk 4', layout:'fit'},
     ]
 };

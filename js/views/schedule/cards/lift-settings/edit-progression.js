@@ -9,9 +9,8 @@ wendler.settings.liftPercentages.getCurrentProgression = function () {
 };
 
 wendler.controller.liftPercentages.setupEditLiftProgression = function () {
-    Ext.getCmp('edit-percentage')._rendered = true;
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
-    Ext.get('edit-progression-title').setHTML('Week ' + wendler.settings.liftPercentages.currentWeek + ", Set " + wendler.settings.liftPercentages.currentSet);
+    Ext.get('edit-progression-title').setHtml('Week ' + wendler.settings.liftPercentages.currentWeek + ", Set " + wendler.settings.liftPercentages.currentSet);
     Ext.getCmp('reps-edit-input').setValue(progression.data.reps);
     Ext.getCmp('percentage-edit-input').setValue(progression.data.percentage);
 };
@@ -37,21 +36,18 @@ wendler.controller.liftPercentages.returnToLiftSettings = function () {
 wendler.views.EditPercentage = {
     xtype:'formpanel',
     id:'edit-percentage',
-    _hasBeenRendered:false,
-    bodyStyle: 'padding-top: 0px',
+    bodyStyle:'padding-top: 0px',
     listeners:{
-        beforeshow:function () {
+        show:function () {
             wendler.navigation.setBackFunction(wendler.controller.liftPercentages.returnToLiftSettings);
-            if (this._rendered) {
-                wendler.controller.liftPercentages.setupEditLiftProgression();
-            }
-        },
-        afterlayout:wendler.controller.liftPercentages.setupEditLiftProgression
+            wendler.controller.liftPercentages.setupEditLiftProgression();
+        }
     },
-    dockedItems:[
+    items:[
         {
             id:'edit-percentage-toolbar',
             xtype:'toolbar',
+            docked:'top',
             title:'Progression',
             items:[
                 {
@@ -71,13 +67,12 @@ wendler.views.EditPercentage = {
                     handler:wendler.controller.liftPercentages.saveAndReturnToLiftSettings
                 }
             ]
-        }
-    ],
-    items:[
+        },
         {
             xtype:'fieldset',
+            cls:'fieldset-title-no-margin',
             style:'margin-top: 0px',
-            title: "<div id='edit-progression-title'>Week 1, Set 1</div>",
+            title:"<div id='edit-progression-title'>Week 1, Set 1</div>",
             items:[
                 {
                     id:'reps-edit-input',
