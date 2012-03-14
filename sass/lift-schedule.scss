@@ -29,8 +29,10 @@
 
 
 .lift-row.x-list-item, .lift-percentage-row.x-list-item {
-    min-height: 0;
-    padding: 0.3em;
+    .x-list-item-label{
+        padding: 0.3em;
+        min-height: 0;
+    }
 }
 
 .x-list-item.done .x-list-disclosure {
