@@ -3,6 +3,14 @@ Feature: Editing lifts
   I want to be able to edit lifts
   So that the lift schedule exactly matches my own preferred programming
 
+  Scenario: Max with a decimal point
+    When I navigate to the lift editor
+    And I click edit lifts
+    And I click edit "Squat"
+    And I edit the max to be 100.5
+    And I close the edit lift screen
+    Then I see no error dialog
+
   Scenario: Space in a lift name
     When I navigate to the lift editor
     And I click edit lifts
