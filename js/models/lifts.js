@@ -48,6 +48,8 @@ wendler.defaults.lifts = [
 ];
 
 wendler.stores.migrations.liftModelMigration = function () {
+    var liftOrdersBroken = wendler.stores.migrations.liftOrdersAreBroken();
+
     wendler.stores.lifts.Lifts.each(function (r) {
         if (!r.data.propertyName) {
             var propertyName = wendler.models.Lift.sanitizePropertyName(r.data.name);
@@ -64,11 +66,20 @@ wendler.stores.migrations.liftModelMigration = function () {
             r.save();
         }
 
-        if (r.data.order < 0) {
+        if (liftOrdersBroken) {
             r.set('order', r.data.id);
             r.save();
         }
     });
+};
+
+wendler.stores.migrations.liftOrdersAreBroken = function () {
+    var orders = _.uniq(_.map(wendler.stores.lifts.Lifts.getRange(), function (r) {
+        return r.data.order;
+    }));
+
+    return orders.length != wendler.stores.lifts.Lifts.getCount() ||
+        orders.contains(-1);
 };
 
 wendler.models.Lift.sanitizePropertyName = function (propertyName) {

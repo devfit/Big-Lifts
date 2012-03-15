@@ -10,3 +10,8 @@ end
 Then /^I see no error dialog$/ do
   @driver.find_elements(:class => 'x-msgbox').length.should == 0
 end
+
+Then /^The sort ordering is sensible$/ do
+  liftsBroken = "return wendler.stores.migrations.liftOrdersAreBroken()"
+  liftsBroken.should == false
+end

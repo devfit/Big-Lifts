@@ -7,6 +7,7 @@ Feature: adding lifts
     When I add a new lift named "Clean and Jerk" with max 200
     Then "Clean and Jerk" is added to the edit lifts screen
     And "Clean and Jerk" is added to the lift schedule
+    And The sort ordering is sensible
 
   Scenario: add a new lift with an invalid name
     When I add a new lift named "222" with max 300

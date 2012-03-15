@@ -3,6 +3,13 @@ Feature: Editing lifts
   I want to be able to edit lifts
   So that the lift schedule exactly matches my own preferred programming
 
+  Scenario: Editing a lift does not break ordering
+    When I navigate to the lift editor
+    And I click edit lifts
+    And I click edit "Squat"
+    And I close the edit lift screen
+    Then The sort ordering is sensible
+
   Scenario: Max with a decimal point
     When I navigate to the lift editor
     And I click edit lifts
