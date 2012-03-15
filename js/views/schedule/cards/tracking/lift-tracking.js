@@ -106,6 +106,10 @@ wendler.views.liftSchedule.LiftTracking = {
     listeners:{
         beforeshow:function () {
             wendler.navigation.setBackFunction(wendler.controller.liftTracking.cancelLogTracking);
+        },
+        show:function () {
+            wendler.controller.liftTracking.currentLiftNotes = '';
+            wendler.controller.liftTracking.displayNotes('');
         }
     },
     dockedItems:[

@@ -3,6 +3,19 @@ Feature: Lift tracking
   I want to be able to track my lifts
   To view my progress over time
 
+  Scenario: Notes aren't persisted between lifts
+    When I view the squat lift schedule for week 1
+    And I mark the current lift completed
+    And I tap edit first log notes
+    And I set the first log notes to "Log notes"
+    And I save the lift log
+
+    And I view the press lift schedule for week 1
+    And I mark the current lift completed
+    Then The current notes shows "Tap to edit"
+    And I tap edit first log notes
+    Then The full log notes shows ""
+
   Scenario: Backing out of the lift log
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
