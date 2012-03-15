@@ -10,6 +10,8 @@ Feature: Arrange lifts
     And I tap arrange lifts
     And I tap the arrange TestLift row
     And I tap the move up button
+    And I tap the move up button
+    And I tap the move down button
     And I tap done while arranging lifts
     And I navigate to the lift schedule
     Then The lift schedule orders lifts as Squat, Deadlift, Press, TestLift, Bench

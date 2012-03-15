@@ -12,6 +12,6 @@ Then /^I see no error dialog$/ do
 end
 
 Then /^The sort ordering is sensible$/ do
-  liftsBroken = "return wendler.stores.migrations.liftOrdersAreBroken()"
+  liftsBroken = @driver.execute_script("return wendler.stores.migrations.liftOrdersAreBroken()")
   liftsBroken.should == false
 end
