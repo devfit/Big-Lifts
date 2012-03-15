@@ -57,10 +57,10 @@ wendler.liftSchedule.controller.viewLift = function (view, index) {
     wendler.liftSchedule.currentLiftProperty = record.get('propertyName');
 
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'left'});
-    wendler.liftSchedule.controller.updateLiftValues();
 };
 
 wendler.liftSchedule.controller.handleWeekChange = function (container, newCard, oldCard, index) {
+    alert( "HUZZAH" );
     var week = index + 1;
     Ext.getCmp('lift-selector-toolbar').setTitle('Week ' + week);
     wendler.liftSchedule.currentWeek = week;
@@ -90,7 +90,7 @@ wendler.views.liftSchedule.liftSelector = {
     activeItem:wendler.liftSchedule.controller.getStartingWeek(),
     listeners:{
         show:wendler.liftSchedule.controller.setupLiftSelector,
-        beforecardswitch:wendler.liftSchedule.controller.handleWeekChange
+        activeItemChange:wendler.liftSchedule.controller.handleWeekChange
     },
     items:[
         {

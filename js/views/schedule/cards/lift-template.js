@@ -61,29 +61,9 @@ wendler.views.liftSchedule.liftTemplate = {
     layout:'fit',
     items:[
         {
-            id:'lift-template-list',
-            xtype:'list',
-            store:wendler.stores.lifts.LiftProgression,
-            itemCls:'lift-row',
-            itemTpl:'<p><span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier(values)]}">{reps}</span> ' +
-                '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
-                '<span class="percentage">{percentage}%</span></p>'
-        }
-    ],
-    _hasBeenRendered:false,
-    listeners:{
-        beforeshow:function () {
-            wendler.navigation.setBackFunction(wendler.liftSchedule.controller.returnToLiftSelect);
-        },
-        afterlayout:function () {
-            this._hasBeenRendered = true;
-        }
-    },
-    dockedItems:[
-        {
             xtype:'toolbar',
             id:'lift-template-toolbar',
-            dock:'top',
+            docked:'top',
             items:[
                 {
                     text:'Back',
@@ -99,7 +79,22 @@ wendler.views.liftSchedule.liftTemplate = {
                     handler:wendler.liftSchedule.controller.markLiftCompleted
                 }
             ]
+        },
+        {
+            id:'lift-template-list',
+            xtype:'list',
+            store:wendler.stores.lifts.LiftProgression,
+            itemCls:'lift-row',
+            itemTpl:'<p><span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier (values)]}">{reps}</span> ' +
+                '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
+                '<span class="percentage">{percentage}%</span></p>'
         }
-    ]
-}
-;
+    ],
+    _hasBeenRendered:false,
+    listeners:{
+        show:function () {
+            wendler.navigation.setBackFunction(wendler.liftSchedule.controller.returnToLiftSelect);
+            wendler.liftSchedule.controller.updateLiftValues();
+        }
+    }
+};

@@ -13,7 +13,6 @@ wendler.stores.lifts.LiftCompletion.addListener('update', wendler.liftSchedule.c
 wendler.liftSchedule.controller.setupLiftSchedule = function () {
     wendler.data.disasterRecovery();
     wendler.liftSchedule.controller.setupLiftSelector();
-    wendler.liftSchedule.controller.updateLiftValues();
 };
 
 Ext.define('Wendler.views.LiftSchedule', {
@@ -33,6 +32,9 @@ Ext.define('Wendler.views.LiftSchedule', {
                 id:'first-log-notes-editor',
                 _returnCallback:wendler.controller.liftTracking.returnFromEditNotes
             })
-        ]
+        ],
+        listeners:{
+            show:wendler.liftSchedule.controller.setupLiftSchedule
+        }
     }
 });
