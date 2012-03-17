@@ -5,62 +5,66 @@ wendler.controller.components.notesEditor.returnFromNotesEditor = function (note
     notesEditor._returnCallback(notes);
 };
 
-wendler.controller.components.notesEditor.sanitizeForDisplay = function(notes){
+wendler.controller.components.notesEditor.sanitizeForDisplay = function (notes) {
     var displayableNotes = Ext.util.Format.htmlEncode(notes);
     displayableNotes = displayableNotes.replace(/\n/g, '<br/>');
     return displayableNotes;
 };
 
-wendler.views.log.cards.NotesEditor = Ext.extend(Ext.Panel, {
+Ext.define('Wendler.views.log.cards.NotesEditor', {
+    extend:'Ext.Panel',
     _returnCallback:function (notes) {
     },
     _setNotes:function (notes) {
-        this.down('[name=notes]').setValue(notes);
+//        this.down('[name=notes]').setValue(notes);
     },
-    layout:'fit',
-    listeners:{
-        beforeshow:function (c) {
-            wendler.navigation.setBackFunction(function () {
-                wendler.controller.components.notesEditor.returnFromNotesEditor(c);
-            });
-        }
-    },
-    dockedItems:{
-        xtype:'toolbar',
-        title:'Notes',
+    config:{
+        layout:'fit',
+        listeners:{
+            show:function (c) {
+                wendler.navigation.setBackFunction(function () {
+                    wendler.controller.components.notesEditor.returnFromNotesEditor(c);
+                });
+            }
+        },
+        fullscreen:true,
         items:[
             {
-                text:'Back',
-                ui:'back',
-                handler:function () {
-                    wendler.controller.components.notesEditor.returnFromNotesEditor(this.up('panel'));
-                }
-            }
-        ]
-    },
-    fullscreen:true,
-    items:[
-        {
-            xtype:'formpanel',
-            bodyPadding:'5px',
-            items:[
-                {
-                    xtype:'fieldset',
-                    cls:'notes-form',
-                    items:[
-                        {
-                            xtype:'textareafield',
-                            name:'notes',
-                            listeners:{
-                                afterrender:function (c) {
-                                    var parentHeight = c.up('fieldset').getHeight();
-                                    c.el.down('textarea').setHeight(parentHeight - 7);
+                docked:'top',
+                xtype:'toolbar',
+                title:'Notes',
+                items:[
+                    {
+                        text:'Back',
+                        ui:'back',
+                        handler:function () {
+                            wendler.controller.components.notesEditor.returnFromNotesEditor(this.up('panel'));
+                        }
+                    }
+                ]
+            },
+            {
+                xtype:'formpanel',
+                bodyPadding:'5px',
+                items:[
+                    {
+                        xtype:'fieldset',
+                        cls:'notes-form',
+                        items:[
+                            {
+                                xtype:'textareafield',
+                                name:'notes',
+                                listeners:{
+                                    painted:function (c) {
+                                        var parentHeight = c.up('fieldset').getHeight();
+                                        c.el.down('textarea').setHeight(parentHeight - 7);
+                                    }
                                 }
                             }
-                        }
-                    ]
-                }
-            ]
-        }
-    ]
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
 });

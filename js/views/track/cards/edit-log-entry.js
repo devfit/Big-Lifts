@@ -41,7 +41,7 @@ wendler.controller.logEntry.displayNotes = function (notes) {
     else {
         displayableNotes = displayableNotes = wendler.controller.components.notesEditor.sanitizeForDisplay(notes);
     }
-    Ext.get('edit-log-notes').setHTML(displayableNotes);
+    Ext.get('edit-log-notes').setHtml(displayableNotes);
 };
 
 wendler.controller.logEntry.updateOneRepMax = function () {
@@ -75,7 +75,10 @@ wendler.views.log.cards.EditLogEntry = {
     style:'padding-top:0px',
     bodyStyle:'padding-top:0px',
     listeners:{
-        beforeshow:function () {
+        painted:function () {
+            Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);
+        },
+        show:function () {
             if (Ext.get('edit-log-notes')) {
                 Ext.get('edit-log-notes').removeCls('tapped');
             }
@@ -175,12 +178,7 @@ wendler.views.log.cards.EditLogEntry = {
             bodyPadding:0,
             layout:'fit',
             html:'<div class="x-form-fieldset-title fieldset-title-no-margin">Notes</div>' +
-                '<div id="edit-log-notes" class="log-notes"></div>',
-            listeners:{
-                afterrender:function () {
-                    Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);
-                }
-            }
+                '<div id="edit-log-notes" class="log-notes"></div>'
         }
     ]
 };

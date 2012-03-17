@@ -15,10 +15,10 @@ Ext.define('Wendler.views.Log', {
         items:[
             wendler.views.log.cards.LogList,
             wendler.views.log.cards.EditLogEntry,
-//            new wendler.views.log.cards.NotesEditor({
-//                id:'log-notes-editor',
-//                _returnCallback:wendler.controller.logEntry.returnFromEditNotes
-//            }),
+            Ext.create('Wendler.views.log.cards.NotesEditor', {
+                id:'log-notes-editor',
+                _returnCallback:wendler.controller.logEntry.returnFromEditNotes
+            }),
             wendler.views.log.cards.Export
         ]
     }
