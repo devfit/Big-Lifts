@@ -35,9 +35,9 @@ wendler.main.start = function () {
                         Ext.create('Wendler.views.More')
                     ],
                     listeners:{
-//                        beforecardswitch:function () {
-//                            wendler.navigation.resetBack();
-//                        }
+                        activeitemchange:function () {
+                            wendler.navigation.resetBack();
+                        }
                     }
                 }
             );
