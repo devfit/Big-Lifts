@@ -22,9 +22,9 @@ Ext.define('Wendler.views.LiftSchedule', {
         title:'5/3/1',
         iconCls:'icnBarbell',
         layout:'card',
-        cardSwitchAnimation:'slide',
         activeItem:0,
-        items:[wendler.views.liftSchedule.liftSelector, wendler.views.liftSchedule.liftTemplate,
+        items:[
+            wendler.views.liftSchedule.liftSelector, wendler.views.liftSchedule.liftTemplate,
             wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp,
             wendler.views.liftSchedule.LiftSettings, wendler.views.EditLiftPercentages, wendler.views.EditPercentage,
             wendler.views.liftSchedule.LiftTracking,
