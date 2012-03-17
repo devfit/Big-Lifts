@@ -82,8 +82,9 @@ wendler.views.log.cards.EditLogEntry = {
             wendler.navigation.setBackFunction(wendler.controller.logEntry.backToLogList);
         }
     },
-    dockedItems:[
+    items:[
         {
+            docked:'top',
             id:'edit-log-entry-toolbar',
             xtype:'toolbar',
             title:'',
@@ -102,9 +103,7 @@ wendler.views.log.cards.EditLogEntry = {
                     handler:wendler.controller.logEntry.deleteLogEntry
                 }
             ]
-        }
-    ],
-    items:[
+        },
         {
             xtype:'fieldset',
             style:'margin-top: 7px; margin-bottom: 7px;',

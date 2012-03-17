@@ -5,16 +5,16 @@ $smallerFontSize: 0.85 * $fontSize;
 $dateFontReduction: 0.85;
 
 $mutedBlack: #666;
-span.disclosure-small{
-    float: right;
-    width: 16px;
-    height: 24px;
-    -webkit-mask-image: url('../images/right_arrow_smaller.png');
-    background: grey none;
+span.disclosure-small {
+  float: right;
+  width: 16px;
+  height: 24px;
+  -webkit-mask-image: url('../images/right_arrow_smaller.png');
+  background: grey none;
 }
 
 .hidden {
-    display:none;
+  display: none;
 }
 
 @-webkit-keyframes fade-in {
@@ -30,93 +30,95 @@ span.disclosure-small{
 }
 
 .fade-in {
-    -webkit-animation-name: fade-in;
-    -webkit-animation-duration: 0.3s;
-    -webkit-animation-timing-function: ease-in;
-    -webkit-animation-iteration-count: 1;
+  -webkit-animation-name: fade-in;
+  -webkit-animation-duration: 0.3s;
+  -webkit-animation-timing-function: ease-in;
+  -webkit-animation-iteration-count: 1;
 }
 
 .x-list div.lift-log-row, div.lift-list-row {
+  .x-list-item-label {
     padding-top: 2px;
     padding-bottom: 2px;
-    table{
-        width: 100%;
-    }
+  }
 
-    .lift-name {
-        font-size: $fontSize !important;
-        font-weight: bolder;
-    }
-    .cycle-and-week {
-        color: $mutedBlack;
-        font-size: $smallerFontSize;
-    }
+  table {
+    width: 100%;
+  }
 
-    .weight {
-        font-size: $fontSize !important;
-    }
+  .lift-name {
+    font-size: $fontSize !important;
+    font-weight: bolder;
+  }
+  .cycle-and-week {
+    color: $mutedBlack;
+    font-size: $smallerFontSize;
+  }
 
-    .reps
-    {
-        font-weight: bold;
-        color: $mutedBlack;
-        font-size: $fontSize !important;
-    }
+  .weight {
+    font-size: $fontSize !important;
+  }
 
-    .estimated-one-rep{
-        color: $mutedBlack;
-        font-size: $smallerFontSize;
-    }
+  .reps {
+    font-weight: bold;
+    color: $mutedBlack;
+    font-size: $fontSize !important;
+  }
 
-    td.date-week{
-        text-align: right;
-    }
+  .estimated-one-rep {
+    color: $mutedBlack;
+    font-size: $smallerFontSize;
+  }
 
-    .date, .week {
-        font-size: $dateFontReduction * $fontSize !important;
-        color: $mutedBlack;
-        padding-right:5px;
-    }
+  td.date-week {
+    text-align: right;
+  }
+
+  .date, .week {
+    font-size: $dateFontReduction * $fontSize !important;
+    color: $mutedBlack;
+    padding-right: 5px;
+  }
 }
 
-#lift-log-empty-text{
-    color: #777;
-    text-align: center;
-    width: 100%;
-    padding: 0 1em;
+#lift-log-empty-text {
+  color: #777;
+  text-align: center;
+  width: 100%;
+  padding: 0 1em;
 
-    position: absolute;
-    top: 50%;
-    height: 1em;
-    margin-top: -1.5em;
+  position: absolute;
+  top: 50%;
+  height: 1em;
+  margin-top: -1.5em;
 }
 
 $notesBorderColor: #777777;
-div.log-notes{
-    background-color: white;
-    padding: 5px;
-    border: solid 2px $notesBorderColor;
-    @include border-radius(8px,8px);
+div.log-notes {
+  background-color: white;
+  padding: 5px;
+  border: solid 2px $notesBorderColor;
+  @include border-radius(8px, 8px);
 }
 
 div.log-notes.tapped {
-    color: black;
-    background-color: #77B2F8;
+  color: black;
+  background-color: #77B2F8;
 
-    div.notes-empty-text{
-        color: black;
-    }
+  div.notes-empty-text {
+    color: black;
+  }
 }
 
 div.notes-empty-text {
-    width: 100%;
-    text-align: center;
-    color: #a9a9a9;
+  width: 100%;
+  text-align: center;
+  color: #a9a9a9;
 }
 
-div.notes-form{
-   height: 100%;
-   margin: 0px;
-   border: solid 2px $notesBorderColor;
-   @include border-radius(8px,8px);
+div.notes-form {
+  height: 100%;
+  margin: 0px;
+  border: solid 2px $notesBorderColor;
+  @include border-radius(8px, 8px);
 }

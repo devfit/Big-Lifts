@@ -19,7 +19,9 @@ wendler.controller.liftTracking.logLift = function (data) {
 };
 
 wendler.liftSchedule.controller.allLiftsAreCompleted = function () {
-    var completedUniques = wendler.stores.lifts.LiftCompletion.collect('completed');
+    var completedUniques = _.uniq(_.map(wendler.stores.lifts.LiftCompletion.getRange(), function (r) {
+        return r.data.completed;
+    }));
     return completedUniques.length === 1 && completedUniques[0] === true;
 };
 
