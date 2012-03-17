@@ -40,11 +40,11 @@
     background: green none;
 }
 
-img.done, .x-button img.x-icon-mask.done {
+img.done, .x-button .x-icon-mask.done {
     -webkit-mask-image: url('../images/tick.png');
 }
 
-img.settings, .x-button img.x-icon-mask.settings {
+img.settings, .x-button .x-icon-mask.settings {
     -webkit-mask-image: url('../images/settings.png');
 }
 

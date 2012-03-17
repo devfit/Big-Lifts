@@ -104,12 +104,13 @@ wendler.views.liftSchedule.LiftTracking = {
     id:'lift-tracking',
     scroll:'vertical',
     listeners:{
-        beforeshow:function () {
+        show:function () {
             wendler.navigation.setBackFunction(wendler.controller.liftTracking.cancelLogTracking);
         }
     },
-    dockedItems:[
+    items:[
         {
+            docked:'top',
             xtype:'toolbar',
             title:'Log',
             items:[
@@ -127,9 +128,7 @@ wendler.views.liftSchedule.LiftTracking = {
                     handler:wendler.controller.liftTracking.logAndShowTracking
                 }
             ]
-        }
-    ],
-    items:[
+        },
         {
             xtype:'fieldset',
             style:'margin-top: 0; margin-bottom:7px',
@@ -157,8 +156,8 @@ wendler.views.liftSchedule.LiftTracking = {
                     name:'estimated-one-rep-max',
                     xtype:'numberfield',
                     label:'Estimated 1RM',
-                    cls: 'one-rep-max-estimate',
-                    readOnly: true
+                    cls:'one-rep-max-estimate',
+                    readOnly:true
                 }
             ]
         },
