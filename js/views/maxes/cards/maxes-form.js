@@ -54,18 +54,6 @@ wendler.maxes.controller.showHideTrainingMaxes = function (r, changed) {
     }
 };
 wendler.stores.Settings.addListener('update', wendler.maxes.controller.showHideTrainingMaxes);
-wendler.stores.lifts.Lifts.addListener('update', function (store, record, op) {
-    var propertyName = record.data.propertyName;
-    var max = record.data.max;
-
-    var existingInput = Ext.getCmp('maxes-' + propertyName);
-    if (typeof(existingInput) !== "undefined") {
-        existingInput.setValue(max);
-        var trainingMaxInput = Ext.getCmp('maxes-' + propertyName + '-training');
-        var trainingMaxPercentage = wendler.stores.Settings.first().data['training-max-percentage'] / 100.0;
-        trainingMaxInput.setValue(util.roundNumber(trainingMaxPercentage * max, '0.5', 'normal'));
-    }
-});
 wendler.stores.lifts.Lifts.addListener('beforesync', function () {
     wendler.maxes.controller.rebuildMaxesList();
 });
