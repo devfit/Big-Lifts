@@ -54,17 +54,16 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
     id:'lifts-completed',
     xtype:'formpanel',
     listeners:{
-        afterlayout:function () {
+        show:function () {
             Ext.get('increase-maxes-help-image').addListener('click',
                 wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen);
             wendler.liftSchedule.controller.setNextCycleDefault();
-        },
-        beforeshow:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeLiftCompletedScreen);
         }
     },
-    dockedItems:[
+    items:[
         {
+            docked:'top',
             xtype:'toolbar',
             title:'Finish Cycle?',
             items:[
@@ -76,9 +75,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     handler:wendler.liftSchedule.controller.closeLiftCompletedScreen
                 }
             ]
-        }
-    ],
-    items:[
+        },
         {
             xtype:'fieldset',
             style:'margin-top: 0',

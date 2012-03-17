@@ -14,13 +14,15 @@ wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen = function () {
 wendler.views.liftSchedule.IncreaseMaxesHelp = {
     id:'increase-maxes-help',
     xtype:'panel',
+    layout:'fit',
     listeners:{
-      beforeshow: function(){
-          wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen);
-      }
+        show:function () {
+            wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen);
+        }
     },
-    dockedItems:[
+    items:[
         {
+            docked:'top',
             xtype:'toolbar',
             title:'Max Increases',
             items:[
@@ -31,9 +33,7 @@ wendler.views.liftSchedule.IncreaseMaxesHelp = {
                     handler:wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen
                 }
             ]
-        }
-    ],
-    items:[
+        },
         {
             xtype:'list',
             store:wendler.stores.lifts.Lifts,
