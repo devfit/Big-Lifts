@@ -34,7 +34,8 @@ Ext.define('Wendler.views.LiftSchedule', {
             })
         ],
         listeners:{
-            show:wendler.liftSchedule.controller.setupLiftSchedule
+            show:wendler.liftSchedule.controller.setupLiftSchedule,
+            activeitemchange:wendler.liftSchedule.controller.setupLiftSchedule
         }
     }
 });

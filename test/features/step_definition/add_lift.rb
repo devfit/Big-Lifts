@@ -36,10 +36,10 @@ Then /^"([^"]*)" is ([\w ]+)?added to the lift schedule$/ do |lift, invertCheck|
 end
 
 Then /^I see an error with message "([^"]*)"$/ do |message|
-  @wait.until { @driver.find_elements(:class => 'x-msgbox-body') != [] }
-  @driver.find_element(:class => 'x-msgbox-body').text.should == message
+  sleep @ANIMATION_DELAY
+  @driver.find_element(:class => 'x-msgbox').find_element(:class => 'x-msgbox-text').text.should == message
   @driver.find_element(:class => 'x-msgbox').find_element(:class => 'x-button').click
-  sleep 0.25
+  sleep @ANIMATION_DELAY
 end
 
 Then /^I close the add lift screen$/ do

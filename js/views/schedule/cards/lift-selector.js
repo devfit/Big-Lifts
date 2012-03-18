@@ -59,14 +59,18 @@ wendler.liftSchedule.controller.viewLift = function (view, index) {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'left'});
 };
 
-wendler.liftSchedule.controller.handleWeekChange = function (container, newValue, oldValue, opts) {
+wendler.liftSchedule.controller.getWeekLists = function () {
     var listFilter = new Ext.util.Filter({
         filterFn:function (item) {
             return item.getBaseCls() === "x-list";
         }
     });
-    var items = container.items.filter(listFilter);
-    var week = items.indexOf(newValue) + 1;
+    return Ext.getCmp('lift-schedule').getItems().filter(listFilter);
+};
+
+wendler.liftSchedule.controller.handleWeekChange = function (container, newValue, oldValue, opts) {
+    var lists = wendler.liftSchedule.controller.getWeekLists();
+    var week = lists.indexOf(newValue) + 1;
     Ext.getCmp('lift-selector-toolbar').setTitle('Week ' + week);
     wendler.liftSchedule.currentWeek = week;
 };
@@ -87,6 +91,13 @@ wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex
     var liftPropertyName = wendler.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
     return wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week).get('completed');
 };
+
+wendler.stores.lifts.Lifts.addListener('beforesync', function () {
+    console.log( 'sync' );
+    wendler.liftSchedule.controller.getWeekLists().each(function(list){
+       list.refresh();
+    });
+});
 
 wendler.views.liftSchedule.liftSelector = {
     xtype:'tabpanel',
