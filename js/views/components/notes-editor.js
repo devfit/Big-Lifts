@@ -16,7 +16,7 @@ Ext.define('Wendler.views.log.cards.NotesEditor', {
     _returnCallback:function (notes) {
     },
     _setNotes:function (notes) {
-//        this.down('[name=notes]').setValue(notes);
+        this.down('[name=notes]').setValue(notes);
     },
     config:{
         layout:'fit',
