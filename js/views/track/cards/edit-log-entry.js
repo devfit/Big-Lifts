@@ -58,16 +58,6 @@ wendler.controller.logEntry.editNotes = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-notes-editor'), {type:'slide', direction:'left'});
 };
 
-wendler.controller.logEntry.returnFromEditNotes = function (newNotes) {
-    Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'right'});
-    wendler.controller.logEntry.currentRecord.set('notes', newNotes);
-
-    wendler.controller.logEntry.currentRecord.save();
-    wendler.stores.LiftLog.sync();
-
-    wendler.controller.logEntry.displayNotes(newNotes);
-};
-
 wendler.views.log.cards.EditLogEntry = {
     id:'edit-log-entry',
     xtype:'formpanel',

@@ -13,6 +13,7 @@ wendler.controller.components.notesEditor.sanitizeForDisplay = function (notes) 
 
 Ext.define('Wendler.views.log.cards.NotesEditor', {
     extend:'Ext.Panel',
+    xtype:'noteseditor',
     _returnCallback:function (notes) {
     },
     _setNotes:function (notes) {
@@ -45,6 +46,7 @@ Ext.define('Wendler.views.log.cards.NotesEditor', {
             },
             {
                 xtype:'formpanel',
+                padding:0,
                 bodyPadding:'5px',
                 items:[
                     {
@@ -56,8 +58,10 @@ Ext.define('Wendler.views.log.cards.NotesEditor', {
                                 name:'notes',
                                 listeners:{
                                     painted:function (c) {
+                                        window.test = c;
                                         var parentHeight = c.up('fieldset').getHeight();
-                                        c.el.down('textarea').setHeight(parentHeight - 7);
+                                        console.log( parentHeight );
+                                        c.element.down('textarea').setHeight(parentHeight - 7);
                                     }
                                 }
                             }

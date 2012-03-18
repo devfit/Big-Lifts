@@ -28,10 +28,10 @@ Ext.define('Wendler.views.LiftSchedule', {
             wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp,
             wendler.views.liftSchedule.LiftSettings, wendler.views.EditLiftPercentages, wendler.views.EditPercentage,
             wendler.views.liftSchedule.LiftTracking,
-            Ext.create('Wendler.views.log.cards.NotesEditor', {
-                id:'first-log-notes-editor',
-                _returnCallback:wendler.controller.liftTracking.returnFromEditNotes
-            })
+            {
+                xtype:'firstlognoteseditor',
+                id:'first-log-notes-editor'
+            }
         ],
         listeners:{
             show:wendler.liftSchedule.controller.setupLiftSchedule,
