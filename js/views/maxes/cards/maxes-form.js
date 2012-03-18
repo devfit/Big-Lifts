@@ -38,9 +38,10 @@ wendler.maxes.controller.createTrainingMaxesInput = function (record) {
     });
 };
 
-wendler.maxes.controller.showHideTrainingMaxes = function (r, changed) {
+wendler.maxes.controller.showHideTrainingMaxes = function () {
+    var settings = wendler.stores.Settings.first();
     var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
-    if (changed.data['use-training-max']) {
+    if (settings.data['use-training-max']) {
         if (trainingMaxesPanel.isHidden()) {
             trainingMaxesPanel.flex = 1;
             trainingMaxesPanel.show();
@@ -53,7 +54,7 @@ wendler.maxes.controller.showHideTrainingMaxes = function (r, changed) {
         }
     }
 };
-wendler.stores.Settings.addListener('update', wendler.maxes.controller.showHideTrainingMaxes);
+wendler.stores.Settings.addListener('beforesync', wendler.maxes.controller.showHideTrainingMaxes);
 wendler.stores.lifts.Lifts.addListener('beforesync', function () {
     wendler.maxes.controller.rebuildMaxesList();
 });

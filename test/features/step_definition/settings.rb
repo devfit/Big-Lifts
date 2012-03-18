@@ -7,7 +7,7 @@ Then /^I navigate to the settings page$/ do
 end
 
 Then /^I untoggle use training max$/ do
-  @driver.find_element(:name => 'use-training-max').click()
+  @driver.execute_script("Ext.getCmp('use-training-max-toggle').toggle();Ext.getCmp('use-training-max-toggle').fireEvent('change');")
   sleep @ANIMATION_DELAY
 end
 

@@ -28,6 +28,7 @@ wendler.settings.controller.updateSettings = function (field) {
         }
     }
     settingsRecord.save();
+    wendler.stores.Settings.sync();
 };
 
 wendler.views.SettingsForm = {
@@ -74,7 +75,8 @@ wendler.views.SettingsForm = {
                 {
                     xtype:'togglefield',
                     name:'use-training-max',
-                    label:'Use training max'
+                    label:'Use training max',
+                    id:'use-training-max-toggle'
                 },
                 {
                     xtype:'numberfield',
