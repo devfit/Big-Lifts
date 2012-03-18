@@ -76,7 +76,7 @@ wendler.stores.migrations.liftModelMigration = function () {
 };
 
 wendler.models.Lift.sanitizePropertyName = function (propertyName) {
-    return propertyName.toLowerCase().replace(/[^a-z]/g, '');
+    return propertyName.toLowerCase().replace(/[^a-z\d]/g, '');
 };
 
 wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
