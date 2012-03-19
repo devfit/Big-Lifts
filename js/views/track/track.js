@@ -2,7 +2,7 @@
 Ext.ns('wendler.views', 'wendler.controller.log');
 
 wendler.controller.log.formatDate = function (timestamp) {
-    return new Date(timestamp).toString('M/d/yyyy');
+    return new Date(timestamp).toString('MM/d/yyyy');
 };
 
 Ext.define('Wendler.views.Log', {

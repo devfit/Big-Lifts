@@ -65,7 +65,7 @@ wendler.liftSchedule.controller.getWeekLists = function () {
             return item.getBaseCls() === "x-list";
         }
     });
-    return Ext.getCmp('lift-schedule').getItems().filter(listFilter);
+    return Ext.getCmp('lift-selector').getItems().filter(listFilter);
 };
 
 wendler.liftSchedule.controller.handleWeekChange = function (container, newValue, oldValue, opts) {
@@ -93,7 +93,6 @@ wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex
 };
 
 wendler.stores.lifts.Lifts.addListener('beforesync', function () {
-    console.log( 'sync' );
     wendler.liftSchedule.controller.getWeekLists().each(function(list){
        list.refresh();
     });
