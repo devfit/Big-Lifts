@@ -1,15 +1,15 @@
 When /^I open the 1-rep calculator$/ do
   @main_navigation.navigate_to :one_rep_calculator
-  @wait.until { @driver.find_element(:name => 'weight').displayed? }
-  sleep 0.25
 end
 
 When /^I set weight to (\d+) and reps to (\d+)$/ do |weight, reps|
-  weight_input = @driver.find_element(:name => 'weight')
+  oneRepMaxPage = @driver.find_element(:id => 'one-rep-max-calculator')
+
+  weight_input = oneRepMaxPage.find_element(:name => 'weight')
   weight_input.clear
   weight_input.send_keys weight
 
-  reps_input = @driver.find_element(:name => 'reps')
+  reps_input = oneRepMaxPage.find_element(:name => 'reps')
   reps_input.clear
   reps_input.send_keys reps
   reps_input.send_keys :enter
@@ -22,21 +22,25 @@ end
 
 Then /^I select use for (\w+)$/ do |lift|
   liftSelector = @driver.find_element(:name => 'use-for-lift-select')
-  liftSelectorParent = liftSelector.find_element(:xpath => './..')
+  liftSelectorParent = liftSelector.find_element(:xpath => '..')
   liftSelectorParent.find_element(:class => 'x-field-mask').click
-  sleep 0.25
-
-  floatingSelector = @driver.find_element(:class => 'x-floating')
   sleep @ANIMATION_DELAY
 
-  liftSpan = floatingSelector.find_elements(:tag_name => 'span', :class => 'x-list-label').select { |label|
+  floatingSelector = @driver.find_elements(:class => 'x-floating').select { |floatingItem|
+    floatingItem.attribute('class').include? 'x-container'
+  }[0]
+
+  liftItems = floatingSelector.find_elements(:tag_name => 'div', :class => 'x-list-item-label')
+
+  liftDiv = liftItems.select { |label|
     label.text == lift
   }[0]
-  liftHolder = liftSpan.find_element(:xpath => './../..')
-  liftHolder.click
+
+  liftDiv.click
   sleep @ANIMATION_DELAY
-  if( liftHolder.displayed? )
-    liftHolder.click
+
+  if( liftDiv.displayed? )
+    liftDiv.click
   end
   sleep @ANIMATION_DELAY
 

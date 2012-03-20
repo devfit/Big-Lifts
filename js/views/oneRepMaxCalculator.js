@@ -25,6 +25,7 @@ wendler.oneRepMax.controller.useEstimateForLift = function () {
 Ext.define('Wendler.views.OneRepMaxCalculator', {
     extend:'Ext.Panel',
     config:{
+        id:'one-rep-max-calculator',
         title:'1-Rep Calc',
         iconCls:'search',
         listeners:{
