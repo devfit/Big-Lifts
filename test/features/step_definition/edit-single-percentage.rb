@@ -20,7 +20,7 @@ When /^I select set (\d+) on the manual percentages editor$/ do |set|
 end
 
 When /^I set the manual percentage to (\d+)$/ do |percentage|
-  percentageInput = @driver.find_element(:name => 'percentage-edit-input')
+  percentageInput = @driver.find_element(:id => 'percentage-edit-input').find_element(:tag_name => 'input')
   percentageInput.clear
   percentageInput.send_keys percentage
 end

@@ -4,8 +4,9 @@ Ext.ns('wendler.views', 'wendler.settings.liftPercentages', 'wendler.controller.
 wendler.settings.liftPercentages.currentWeek = 1;
 wendler.settings.liftPercentages.currentSet = null;
 
-wendler.controller.settings.liftPercentages.switchLiftWeekForComponent = function (component, newcard) {
-    wendler.settings.liftPercentages.currentWeek = wendler.controller.settings.liftPercentages.getWeekFromComponent(newcard);
+wendler.controller.settings.liftPercentages.switchLiftWeek = function (container, newValue) {
+    var lists = wendler.controller.settings.liftPercentages.getWeekLists();
+    wendler.settings.liftPercentages.currentWeek = lists.indexOf(newValue) + 1;
     wendler.controller.settings.liftPercentages.updateLiftPercentaqes();
 };
 
@@ -17,13 +18,13 @@ wendler.controller.settings.liftPercentages.updateLiftPercentaqes = function () 
     }
 };
 
-wendler.controller.settings.liftPercentages.getWeekFromComponent = function (component) {
-    if (component === undefined) {
-        return 1;
-    }
-
-    var title = component.title;
-    return parseInt(title.charAt(title.length - 1));
+wendler.controller.settings.liftPercentages.getWeekLists = function () {
+    var listFilter = new Ext.util.Filter({
+        filterFn:function (item) {
+            return item.getBaseCls() === "x-list";
+        }
+    });
+    return Ext.getCmp('edit-lift-percentages').getItems().filter(listFilter);
 };
 
 wendler.controller.settings.liftPercentages.returnToLiftSettings = function () {
@@ -39,21 +40,8 @@ wendler.views.EditLiftPercentages = {
     xtype:'tabpanel',
     id:'edit-lift-percentages',
     title:'Edit',
-    defaults:{
-        items:[
-            {
-                xtype:'list',
-                store:wendler.stores.lifts.LiftProgression,
-                itemCls:'lift-percentage-row',
-                itemTpl:'<span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>',
-                listeners:{
-                    itemtap:wendler.controller.settings.liftPercentages.showEditLiftPercentage
-                }
-            }
-        ]
-    },
     listeners:{
-        beforecardswitch:wendler.controller.settings.liftPercentages.switchLiftWeekForComponent,
+        activeitemchange:wendler.controller.settings.liftPercentages.switchLiftWeek,
         show:function () {
             wendler.navigation.setBackFunction(wendler.controller.settings.liftPercentages.returnToLiftSettings);
             wendler.controller.settings.liftPercentages.updateLiftPercentaqes();
@@ -72,9 +60,45 @@ wendler.views.EditLiftPercentages = {
                 }
             ]
         },
-        {title:'Wk 1', layout:'fit'},
-        {title:'Wk 2', layout:'fit'},
-        {title:'Wk 3', layout:'fit'},
-        {title:'Wk 4', layout:'fit'},
+        {
+            title:'Wk 1',
+            xtype:'list',
+            store:wendler.stores.lifts.LiftProgression,
+            itemCls:'lift-percentage-row',
+            itemTpl:'<span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>',
+            listeners:{
+                itemtap:wendler.controller.settings.liftPercentages.showEditLiftPercentage
+            }
+        },
+        {
+            title:'Wk 2',
+            xtype:'list',
+            store:wendler.stores.lifts.LiftProgression,
+            itemCls:'lift-percentage-row',
+            itemTpl:'<span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>',
+            listeners:{
+                itemtap:wendler.controller.settings.liftPercentages.showEditLiftPercentage
+            }
+        },
+        {
+            title:'Wk 3',
+            xtype:'list',
+            store:wendler.stores.lifts.LiftProgression,
+            itemCls:'lift-percentage-row',
+            itemTpl:'<span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>',
+            listeners:{
+                itemtap:wendler.controller.settings.liftPercentages.showEditLiftPercentage
+            }
+        },
+        {
+            title:'Wk 4',
+            xtype:'list',
+            store:wendler.stores.lifts.LiftProgression,
+            itemCls:'lift-percentage-row',
+            itemTpl:'<span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>',
+            listeners:{
+                itemtap:wendler.controller.settings.liftPercentages.showEditLiftPercentage
+            }
+        },
     ]
 };
