@@ -41,7 +41,7 @@ Then /^The set (\d+) lift percentage shows (\d+)%$/ do |set, percentage|
 end
 
 When /^I set the manual reps to (\d+)$/ do |reps|
-   repsInput = @driver.find_element(:name => 'reps-edit-input')
+   repsInput = @driver.find_element(:id => 'reps-edit-input').find_element(:tag_name => 'input')
    repsInput.clear
    repsInput.send_keys reps
 end
