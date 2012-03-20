@@ -10,13 +10,13 @@ wendler.settings.controller.reloadForm = function () {
     Ext.getCmp('settings-form').hasBeenLoaded = true;
 };
 
-wendler.settings.controller.updateSettings = function (field) {
+wendler.settings.controller.updateSettings = function (field, newValue, oldValue) {
     var settingsForm = Ext.getCmp('settings-form');
     if (!settingsForm.hasBeenLoaded) {
         return;
     }
 
-    if (field.originalValue === 'lbs' && field.value === 'kg') {
+    if (oldValue.data.value === 'lbs' && newValue.data.value === 'kg') {
         wendler.stores.lifts.adjustCycleIncreaseForKg();
     }
 
