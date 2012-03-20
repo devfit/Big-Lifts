@@ -19,14 +19,22 @@ When /^I set the training percentage to (\d+)$/ do |percentage|
 end
 
 When /^I set units to kg$/ do
-  @driver.find_element(:name => 'units').find_element(:xpath => './..').click()
+  settingsForm = @driver.find_element(:id => 'settings-form')
+  unitsInput = settingsForm.find_element(:name => 'units')
+  unitsInput.find_element(:xpath => '..').find_element(:class => 'x-field-mask').click()
   sleep @ANIMATION_DELAY
 
-  unitsSelect = @driver.find_element(:class => 'x-floating').find_elements(:class => 'x-list-item').select { |item|
+  floatingSelector = @driver.find_elements(:class => 'x-floating').select { |floatingItem|
+    floatingItem.attribute('class').include? 'x-container'
+  }[0]
+
+  unitsSelect = floatingSelector.find_elements(:tag_name => 'div', :class => 'x-list-item-label').select { |item|
     item.text() == "kg"
   }[0]
 
   unitsSelect.click()
+  sleep @ANIMATION_DELAY
+  sleep @ANIMATION_DELAY
 end
 
 Then /^The training percentage shows (\d+)$/ do |percentage|
