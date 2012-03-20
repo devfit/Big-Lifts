@@ -58,9 +58,7 @@ Ext.define('Wendler.views.log.cards.NotesEditor', {
                                 name:'notes',
                                 listeners:{
                                     painted:function (c) {
-                                        window.test = c;
-                                        var parentHeight = c.up('fieldset').getHeight();
-                                        console.log( parentHeight );
+                                        var parentHeight = c.up('formpanel').element.getHeight(true);
                                         c.element.down('textarea').setHeight(parentHeight - 7);
                                     }
                                 }
