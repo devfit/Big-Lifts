@@ -92,11 +92,13 @@ wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex
     return wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week).get('completed');
 };
 
-wendler.stores.lifts.Lifts.addListener('beforesync', function () {
-    wendler.liftSchedule.controller.getWeekLists().each(function(list){
-       list.refresh();
+wendler.liftSchedule.controller.refreshLiftSelectorLifts = function () {
+    wendler.liftSchedule.controller.getWeekLists().each(function (list) {
+        list.refresh();
     });
-});
+};
+
+wendler.stores.lifts.Lifts.addListener('beforesync', wendler.liftSchedule.controller.refreshLiftSelectorLifts);
 
 wendler.views.liftSchedule.liftSelector = {
     xtype:'tabpanel',

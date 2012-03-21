@@ -20,16 +20,22 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
         newLiftModel.set('id', currentModel.data.id);
         newLiftModel.set('order', currentModel.data.order);
 
+        var somethingSaved = false;
         for (var key in newLiftModel.getData()) {
             var currentValue = currentModel.get(key);
             var newValue = newLiftModel.get(key);
             if (currentValue !== newValue) {
+                somethingSaved = true;
                 currentModel.set(key, newLiftModel.get(key));
                 currentModel.save();
             }
         }
 
-        wendler.maxes.controller.rebuildMaxesList();
+        if (somethingSaved) {
+            wendler.maxes.controller.rebuildMaxesList();
+            wendler.liftSchedule.controller.refreshLiftSelectorLifts();
+        }
+
         wendler.maxes.controller.doneWithEditing();
     }
     else {
