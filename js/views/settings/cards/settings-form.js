@@ -16,8 +16,10 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
         return;
     }
 
-    if (oldValue.data.value === 'lbs' && newValue.data.value === 'kg') {
-        wendler.stores.lifts.adjustCycleIncreaseForKg();
+    if (typeof(oldValue) !== 'undefined' && typeof(newValue) !== 'undefined' && oldValue.hasOwnProperty('data') && newValue.hasOwnProperty('data')) {
+        if (oldValue.data.value === 'lbs' && newValue.data.value === 'kg') {
+            wendler.stores.lifts.adjustCycleIncreaseForKg();
+        }
     }
 
     var settingsRecord = wendler.stores.Settings.first();

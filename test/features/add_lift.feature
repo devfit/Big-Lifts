@@ -17,8 +17,3 @@ Feature: adding lifts
     Then "Clean and Jerk" is added to the edit lifts screen
     And "Clean and Jerk" is added to the lift schedule
 
-  Scenario: add a new lift with an invalid name
-    When I add a new lift named "222" with max 300
-    Then I see an error with message "Invalid lift name"
-    And I close the add lift screen
-    Then "222" is not added to the edit lifts screen
