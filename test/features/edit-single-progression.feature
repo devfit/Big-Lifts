@@ -8,6 +8,7 @@ Feature: Editing single percentage
     And I open the lift settings configuration
     And I select edit manual percentages
     And I select week 2 for the manual percentages editor
+    Then Lift progressions in the list are visible
     And I select set 2 on the manual percentages editor
     And I set the manual percentage to 55
     And I save the manual progression

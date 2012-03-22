@@ -51,3 +51,11 @@ Then /^The set (\d+) reps shows (\d+)$/ do |set, reps|
   setListItem.text.include?( "#{reps}" ).should == true
 end
 
+Then /^Lift progressions in the list are visible$/ do
+  @driver.find_elements(:class => 'lift-percentage-row').select { |row|
+    row.displayed?
+  }.each do |row|
+     rowTextPresent = row.text == ''
+     rowTextPresent.should == false
+  end
+end
