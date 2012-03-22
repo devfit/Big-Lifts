@@ -12,8 +12,18 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
 };
 
-wendler.liftSchedule.controller.getLastRepsModifier = function (values) {
-    return (values.set === 6 && values.week !== 4) ? 'last' : '';
+wendler.liftSchedule.controller.getLiftRowClass = function (values) {
+    var className = '';
+
+    if( values.set === 6 && values.week !== 4 ){
+        className += 'last '
+    }
+
+    if( values.set <= 3 ){
+        className += 'warmup'
+    }
+
+    return className;
 };
 
 wendler.liftSchedule.controller.updateLiftValues = function () {
@@ -83,9 +93,9 @@ wendler.views.liftSchedule.liftTemplate = {
             xtype:'list',
             store:wendler.stores.lifts.LiftProgression,
             itemCls:'lift-row',
-            itemTpl:'<p><span class="reps {[wendler.liftSchedule.controller.getLastRepsModifier (values)]}">{reps}</span> ' +
+            itemTpl:'<p class="{[wendler.liftSchedule.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
                 '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
-                '<span class="percentage">{percentage}%</span></p>'
+                '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>'
         }
     ],
     listeners:{
