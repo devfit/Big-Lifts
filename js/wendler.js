@@ -10,6 +10,11 @@ wendler.main.markFirstStartup = function () {
 };
 
 wendler.main.start = function () {
+    if( wendler.main.started ){
+        return;
+    }
+    wendler.main.started = true;
+
     var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
     wendler.main.markFirstStartup();
     util.filebackup.loadAllStores();
@@ -44,7 +49,6 @@ wendler.main.start = function () {
     });
 };
 
-if (wendler.main.deviceReady && !wendler.main.started) {
-    wendler.main.started = true;
+if (wendler.main.deviceReady) {
     wendler.main.start();
 }
