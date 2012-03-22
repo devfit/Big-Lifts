@@ -56,8 +56,10 @@ wendler.controller.log.emailExport.createCsvTransformer = function (nameMapper, 
 };
 
 wendler.controller.log.emailExport.ajaxEmailRequest = function (email, data) {
-    var loadingMask = new Ext.LoadMask(Ext.getCmp('export-log').getEl(), {msg:"Exporting..."});
-    loadingMask.show();
+    Ext.Viewport.setMasked({
+        xtype:'loadmask',
+        message:'Exporting...'
+    });
     Ext.Ajax.request({
         url:'http://wendler.herokuapp.com/email',
         method:'POST',
@@ -67,18 +69,18 @@ wendler.controller.log.emailExport.ajaxEmailRequest = function (email, data) {
         },
         success:function () {
             Ext.Msg.alert("Success", "Email sent!");
-            loadingMask.hide();
+            Ext.Viewport.setMasked(false);
         },
         failure:function () {
             Ext.Msg.alert("Error", "Error exporting. Please try again later.");
-            loadingMask.hide();
+            Ext.Viewport.setMasked(false);
         }
     });
 };
 
 wendler.controller.log.emailExport.loadPreviousExportEmail = function () {
     var settings = wendler.stores.Settings.first();
-    Ext.getCmp('export-log').setValues({email:settings.data.exportEmail});
+    Ext.getCmp('export-log').setRecord({email:settings.data.exportEmail});
 };
 
 wendler.views.log.cards.Export = {
