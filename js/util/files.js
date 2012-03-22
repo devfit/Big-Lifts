@@ -43,7 +43,7 @@ util.files.write = function (directory, filename, data, successCallback) {
             fileWriter.onerror = util.files.errorCallback;
             fileWriter.onwriteend = successCallback;
 
-            if (Ext.is.Desktop) {
+            if (Ext.os.is.Linux) {
                 var bb = new window.WebKitBlobBuilder();
                 bb.append(data);
                 fileWriter.write(bb.getBlob('text/plain'));

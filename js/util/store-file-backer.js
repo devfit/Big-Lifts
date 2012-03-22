@@ -1,9 +1,9 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 175;
+util.filebackup.SYNC_MS = 500;
 util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
-util.filebackup.directory = 'wendler531';
+util.filebackup.directory = Ext.os.is.Linux ? null : 'wendler531';
 util.filebackup.saveStore = function (store) {
     var data = util.filebackup.generateDataFromStore(store);
     util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
@@ -55,7 +55,7 @@ util.filebackup.generateFileName = function (store) {
 util.filebackup.watchStoreSync = function (store) {
     if (util.filebackup.fileBackupEnabled) {
         util.filebackup.watchedStores.push(store);
-        store.addListener('update', util.filebackup.storeHasChanged);
+        store.addListener('beforesync', util.filebackup.storeHasChanged);
         store.addListener('remove', util.filebackup.storeHasChanged);
     }
 };

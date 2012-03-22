@@ -17,7 +17,10 @@ wendler.main.start = function () {
 
     var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
     wendler.main.markFirstStartup();
-    util.filebackup.loadAllStores();
+
+    if( !wendler.localStorageExists ){
+        util.filebackup.loadAllStores();
+    }
 
     Ext.application({
         launch:function () {
