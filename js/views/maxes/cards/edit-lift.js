@@ -12,7 +12,7 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
     var currentModel = wendler.maxes.controller.getCurrentLiftModel();
     var oldOrder = currentModel.get('order');
 
-    var newLiftModel = Ext.ModelMgr.create({name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax, order: oldOrder}, 'Lift');
+    var newLiftModel = Ext.create('Lift', {name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax, order:oldOrder});
 
     var errors = newLiftModel.validate();
 

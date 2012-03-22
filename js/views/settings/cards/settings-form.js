@@ -2,7 +2,7 @@ Ext.ns('wendler.settings.controller', 'wendler.views');
 wendler.settings.controller.resetToDefaults = function () {
     wendler.stores.Settings.first().set(wendler.defaults.settings);
     wendler.stores.Settings.sync();
-    Ext.getCmp('settings-form').setRecord(Ext.ModelMgr.create(wendler.defaults.settings, 'Settings'));
+    Ext.getCmp('settings-form').setRecord(Ext.create('Settings', wendler.defaults.settings));
 };
 
 wendler.settings.controller.reloadForm = function () {

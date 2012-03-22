@@ -14,7 +14,7 @@ wendler.maxes.arrangeLifts.moveUp = function () {
             return;
         }
 
-        if (beforeRecord == null) {
+        if (beforeRecord === null) {
             if (r.data.order < selectedRecord.data.order) {
                 beforeRecord = r;
             }
@@ -27,9 +27,8 @@ wendler.maxes.arrangeLifts.moveUp = function () {
         }
     });
 
-    if (beforeRecord != null) {
+    if (beforeRecord !== null) {
         wendler.maxes.arrangeLifts.swapLiftOrder(selectedRecord, beforeRecord);
-        wendler.maxes.arrangeLifts.refreshList();
     }
 };
 
@@ -52,26 +51,20 @@ wendler.maxes.arrangeLifts.moveDown = function () {
         }
     });
 
-    if (afterRecord != null) {
+    if (afterRecord !== null) {
         wendler.maxes.arrangeLifts.swapLiftOrder(selectedRecord, afterRecord);
-        wendler.maxes.arrangeLifts.refreshList();
     }
 };
 
 wendler.maxes.arrangeLifts.swapLiftOrder = function (lift1, lift2) {
-    var order1 = lift1.data.order;
-    var order2 = lift2.data.order;
+    var order1 = lift1.get('order');
+    var order2 = lift2.get('order');
 
     lift1.set('order', order2);
     lift2.set('order', order1);
 
     lift1.save();
     lift2.save();
-};
-
-wendler.maxes.arrangeLifts.refreshList = function () {
-    wendler.stores.lifts.Lifts.sort('order', 'ASC');
-    Ext.getCmp('arrange-lifts-list').refresh();
 };
 
 wendler.maxes.cards.ArrangeLifts = {

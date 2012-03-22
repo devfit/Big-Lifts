@@ -43,8 +43,8 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function () {
     var liftProperty = wendler.models.Lift.sanitizePropertyName(liftName);
     var cycleIncrease = Ext.getCmp('add-lift-cycle-increase').getValue();
 
-    var newLiftModel = Ext.ModelMgr.create(
-        {name:liftName, propertyName:liftProperty, max:liftMax, cycleIncrease:cycleIncrease, order:wendler.maxes.controller.findNextOrdering() }, 'Lift');
+    var newLiftModel = Ext.create('Lift',
+        {name:liftName, propertyName:liftProperty, max:liftMax, cycleIncrease:cycleIncrease, order:wendler.maxes.controller.findNextOrdering() });
     var errors = newLiftModel.validate();
 
     if (!errors.isValid()) {

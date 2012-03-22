@@ -44,10 +44,10 @@ Ext.define('Lift', {
 });
 
 wendler.defaults.lifts = [
-    Ext.ModelMgr.create({name:'Squat', max:200, propertyName:'squat', cycleIncrease:10, order:0}, 'Lift'),
-    Ext.ModelMgr.create({name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10, order:1}, 'Lift'),
-    Ext.ModelMgr.create({name:'Press', max:150, propertyName:'press', cycleIncrease:5, order:2}, 'Lift'),
-    Ext.ModelMgr.create({name:'Bench', max:175, propertyName:'bench', cycleIncrease:5, order:3}, 'Lift')
+    Ext.create('Lift', {name:'Squat', max:200, propertyName:'squat', cycleIncrease:10, order:0}),
+    Ext.create('Lift', {name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10, order:1}),
+    Ext.create('Lift', {name:'Press', max:150, propertyName:'press', cycleIncrease:5, order:2}),
+    Ext.create('Lift', {name:'Bench', max:175, propertyName:'bench', cycleIncrease:5, order:3})
 ];
 
 wendler.stores.migrations.liftModelMigration = function () {
