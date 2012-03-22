@@ -10,15 +10,15 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
     var newCycleIncrease = Ext.getCmp('edit-lift-cycle-increase').getValue();
 
     var currentModel = wendler.maxes.controller.getCurrentLiftModel();
+    var oldOrder = currentModel.get('order');
 
-    var newLiftModel = Ext.ModelMgr.create(
-        {name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax}, 'Lift');
+    var newLiftModel = Ext.ModelMgr.create({name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax, order: oldOrder}, 'Lift');
 
     var errors = newLiftModel.validate();
 
     if (errors.isValid()) {
         newLiftModel.set('id', currentModel.data.id);
-        newLiftModel.set('order', currentModel.data.order);
+
 
         var somethingSaved = false;
         for (var key in newLiftModel.getData()) {

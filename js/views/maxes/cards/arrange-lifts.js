@@ -5,40 +5,68 @@ wendler.maxes.arrangeLifts.doneButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };
 
-wendler.maxes.arrangeLifts.getSelectedIndex = function () {
-    var selected = Ext.getCmp('arrange-lifts-list').getSelection();
-    var index = -1;
-    if (selected.length > 0) {
-        index = wendler.stores.lifts.Lifts.indexOf(selected[0]);
-    }
-    return index;
-};
-
 wendler.maxes.arrangeLifts.moveUp = function () {
-    var index = wendler.maxes.arrangeLifts.getSelectedIndex();
-    if (index >= 1) {
-        wendler.maxes.arrangeLifts.swapLiftsByOrder(index, index - 1);
-    }
+    var selected = Ext.getCmp('arrange-lifts-list').getSelectedRecords();
+    var beforeRecord = null;
 
-    wendler.maxes.arrangeLifts.refreshList();
+    wendler.stores.lifts.Lifts.each(function (r) {
+        if (selectedRecord === r) {
+            return;
+        }
+
+        if (beforeRecord == null) {
+            if (r.data.order < selectedRecord.data.order) {
+                beforeRecord = r;
+            }
+        }
+        else {
+            var testRecordDifference = selectedRecord.data.order - r.data.order;
+            if (testRecordDifference > 0 && testRecordDifference < selectedRecord.data.order - beforeRecord.data.order) {
+                beforeRecord = r;
+            }
+        }
+    });
+
+    if (beforeRecord != null) {
+        wendler.maxes.arrangeLifts.swapLiftOrder(selectedRecord, beforeRecord);
+        wendler.maxes.arrangeLifts.refreshList();
+    }
 };
 
 wendler.maxes.arrangeLifts.moveDown = function () {
-    var index = wendler.maxes.arrangeLifts.getSelectedIndex();
-    if (index < wendler.stores.lifts.Lifts.getCount() - 1) {
-        wendler.maxes.arrangeLifts.swapLiftsByOrder(index, index + 1);
-    }
+    var selectedRecord = Ext.getCmp('arrange-lifts-list').getSelectedRecords()[0];
+    var afterRecord = null;
 
-    wendler.maxes.arrangeLifts.refreshList();
+    wendler.stores.lifts.Lifts.each(function (r) {
+        if (afterRecord == null) {
+            if (r.data.order > selectedRecord.data.order) {
+                afterRecord = r;
+            }
+        }
+        else {
+            var testRecordDifference = r.data.order - selectedRecord.data.order;
+            if (testRecordDifference > 0 && testRecordDifference <
+                afterRecord.data.order - selectedRecord.data.order) {
+                afterRecord = r;
+            }
+        }
+    });
+
+    if (afterRecord != null) {
+        wendler.maxes.arrangeLifts.swapLiftOrder(selectedRecord, afterRecord);
+        wendler.maxes.arrangeLifts.refreshList();
+    }
 };
 
-wendler.maxes.arrangeLifts.swapLiftsByOrder = function (order1, order2) {
-    var order1Record = wendler.stores.lifts.Lifts.findRecord('order', order1);
-    var order2Record = wendler.stores.lifts.Lifts.findRecord('order', order2);
-    order1Record.set('order', order2);
-    order2Record.set('order', order1);
-    order1Record.save();
-    order2Record.save();
+wendler.maxes.arrangeLifts.swapLiftOrder = function (lift1, lift2) {
+    var order1 = lift1.data.order;
+    var order2 = lift2.data.order;
+
+    lift1.set('order', order2);
+    lift2.set('order', order1);
+
+    lift1.save();
+    lift2.save();
 };
 
 wendler.maxes.arrangeLifts.refreshList = function () {
