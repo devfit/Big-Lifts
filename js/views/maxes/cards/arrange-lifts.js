@@ -6,7 +6,7 @@ wendler.maxes.arrangeLifts.doneButtonPressed = function () {
 };
 
 wendler.maxes.arrangeLifts.moveUp = function () {
-    var selected = Ext.getCmp('arrange-lifts-list').getSelectedRecords();
+    var selectedRecord = Ext.getCmp('arrange-lifts-list').getSelection()[0];
     var beforeRecord = null;
 
     wendler.stores.lifts.Lifts.each(function (r) {
@@ -34,7 +34,7 @@ wendler.maxes.arrangeLifts.moveUp = function () {
 };
 
 wendler.maxes.arrangeLifts.moveDown = function () {
-    var selectedRecord = Ext.getCmp('arrange-lifts-list').getSelectedRecords()[0];
+    var selectedRecord = Ext.getCmp('arrange-lifts-list').getSelection()[0];
     var afterRecord = null;
 
     wendler.stores.lifts.Lifts.each(function (r) {

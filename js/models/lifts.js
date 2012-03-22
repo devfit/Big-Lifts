@@ -82,7 +82,7 @@ wendler.stores.migrations.liftOrdersAreBroken = function () {
     }));
 
     return orders.length != wendler.stores.lifts.Lifts.getCount() ||
-        orders.contains(-1);
+        _.include(orders, -1);
 };
 
 wendler.models.Lift.sanitizePropertyName = function (propertyName) {
