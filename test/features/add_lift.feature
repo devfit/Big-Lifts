@@ -10,7 +10,7 @@ Feature: adding lifts
     And The sort ordering is sensible
 
   Scenario: add a new lift with an invalid name
-    When I add a new lift named "222" with max 300
+    When I add a new lift named "" with max 300
     Then I see an error with message "Invalid lift name"
     And I close the add lift screen
     Then "222" is not added to the edit lifts screen

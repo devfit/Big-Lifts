@@ -29,7 +29,13 @@ wendler.maxes.arrangeLifts.moveUp = function () {
 
     if (beforeRecord !== null) {
         wendler.maxes.arrangeLifts.swapLiftOrder(selectedRecord, beforeRecord);
+        wendler.maxes.arrangeLifts.refreshList();
     }
+};
+
+wendler.maxes.arrangeLifts.refreshList = function () {
+    wendler.stores.lifts.Lifts.sort('order', 'ASC');
+    Ext.getCmp('arrange-lifts-list').refresh();
 };
 
 wendler.maxes.arrangeLifts.moveDown = function () {
@@ -53,6 +59,7 @@ wendler.maxes.arrangeLifts.moveDown = function () {
 
     if (afterRecord !== null) {
         wendler.maxes.arrangeLifts.swapLiftOrder(selectedRecord, afterRecord);
+        wendler.maxes.arrangeLifts.refreshList();
     }
 };
 
