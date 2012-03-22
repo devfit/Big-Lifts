@@ -10,7 +10,7 @@ Feature: lifter sets max
 
   Scenarios: different lifts
     | lift  | max | week | warmup1 | warmup2 | warmup3 | work1  | work2  | work3  |
-    | squat | 300 | 1    | 5 110 [warm] 40% | 5 135 [warm] 50% | 3 [warm] 160 60% | 5 175 65% | 5 205 75% | 5 230 85% |
+    | squat | 300 | 1    | 5 110 [warm] 40% | 5 135 [warm] 50% | 3 160 [warm] 60% | 5 175 65% | 5 205 75% | 5 230 85% |
     | squat | 300 | 2    | 5 110 [warm] 40% | 5 135 [warm] 50% | 3 160 [warm] 60% | 3 190 70% | 3 215 80% | 3 245 90% |
     | squat | 300 | 3    | 5 110 [warm] 40% | 5 135 [warm] 50% | 3 160 [warm] 60% | 5 205 75% | 3 230 85% | 1 255 95% |
     | squat | 300 | 4    | 5 110 [warm] 40% | 5 110 [warm] 40% | 5 110 [warm] 40% | 5 110 40% | 5 135 50% | 5 160 60% |
