@@ -26,6 +26,7 @@ Then /^The CSV to export is correct$/ do
   object = results[0]
   object['name'].should == "Squat"
   object['reps'].should == 5
+  object['expected reps'].should == 5
   object['notes'].should == ""
   object['week'].should == 1
   object['weight'].should == "155"

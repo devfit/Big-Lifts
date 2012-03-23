@@ -16,6 +16,7 @@ wendler.controller.log.emailExport.buildCsvToExport = function () {
     var csvKeyMapper = {
         'liftName':'name',
         'reps':'reps',
+        'expectedReps': 'expected reps',
         'notes':'notes',
         'week':'week',
         'weight':'weight',
