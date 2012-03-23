@@ -16,7 +16,7 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
         return;
     }
 
-    if (typeof(oldValue) !== 'undefined' && typeof(newValue) !== 'undefined' && oldValue.hasOwnProperty('data') && newValue.hasOwnProperty('data')) {
+    if (typeof(oldValue) !== 'undefined' && typeof(newValue) !== 'undefined' && _.has(oldValue,'data') && _.has(newValue,'data')) {
         if (oldValue.data.value === 'lbs' && newValue.data.value === 'kg') {
             wendler.stores.lifts.adjustCycleIncreaseForKg();
         }

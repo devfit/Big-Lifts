@@ -16,7 +16,7 @@ wendler.controller.log.emailExport.buildCsvToExport = function () {
     var csvKeyMapper = {
         'liftName':'name',
         'reps':'reps',
-        'expectedReps': 'expected reps',
+        'expectedReps':'expected reps',
         'notes':'notes',
         'week':'week',
         'weight':'weight',
@@ -44,7 +44,7 @@ wendler.controller.log.emailExport.createCsvTransformer = function (nameMapper, 
             var keyReplacement = nameMapper[property];
 
             var value = object[property];
-            if (valueMapper.hasOwnProperty(property)) {
+            if (_.has(valueMapper, property)) {
                 value = valueMapper[property](object);
             }
 

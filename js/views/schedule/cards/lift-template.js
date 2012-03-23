@@ -12,8 +12,15 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
 };
 
-wendler.liftSchedule.controller.getPlateList = function () {
-    return "1,2,3";
+wendler.liftSchedule.controller.getPlateList = function (weight) {
+    var plates = util.formulas.buildPlateListForWeight(weight);
+
+    if (plates.length === 0) {
+        return ""
+    }
+
+
+    return "[ " + plates.join(', ') + " ]";
 };
 
 wendler.liftSchedule.controller.getLiftRowClass = function (values) {
@@ -50,6 +57,10 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
             Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
         }
     }
+};
+
+wendler.liftSchedule.controller.selectThreeLiftsFrom = function (index) {
+    Ext.getCmp('lift-template-list').selectRange(index, index + 2);
 };
 
 wendler.liftSchedule.controller.returnToLiftSelect = function () {
@@ -101,15 +112,16 @@ wendler.views.liftSchedule.liftTemplate = {
             itemTpl:'<p class="{[wendler.liftSchedule.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
                 '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +
-                '<p class="bar-loader-breakdown">[{[wendler.liftSchedule.controller.getPlateList(' +
+                '<p class="bar-loader-breakdown">{[wendler.liftSchedule.controller.getPlateList(' +
                 'wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)' +
-                ')]}]</p>'
+                ')]}</p>'
         }
     ],
     listeners:{
         show:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.controller.returnToLiftSelect);
             wendler.liftSchedule.controller.updateLiftValues();
+            wendler.liftSchedule.controller.selectThreeLiftsFrom(0);
         }
     }
 };

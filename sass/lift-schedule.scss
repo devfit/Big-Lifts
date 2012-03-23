@@ -32,11 +32,6 @@
   .last .reps:after {
     content: '+';
   }
-
-  .bar-loader-breakdown {
-    padding-left: 0.4em;
-    font-size: 60%;
-  }
 }
 
 .lift-row {
@@ -47,10 +42,20 @@
     color: grey;
     margin-right: 10px;
   }
+
+  .bar-loader-breakdown {
+    display: none;
+    padding-left: 0.4em;
+    font-size: 60%;
+  }
 }
 
-.lift-row-selected {
+.lift-row.lift-row-selected {
   background-color: white;
+
+  .bar-loader-breakdown {
+    display: block;
+  }
 }
 
 .lift-row.x-list-item, .lift-percentage-row.x-list-item {
