@@ -213,7 +213,7 @@ wendler.views.log.cards.LogList = {
                 }
             },
             xtype:'list',
-            selectedItemCls:'',
+            selectedCls:'',
             store:wendler.stores.LiftLog,
             itemCls:'lift-log-row',
             emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the 5/3/1 view</div>',

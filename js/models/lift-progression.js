@@ -16,6 +16,14 @@ Ext.define('LiftProgression', {
     }
 });
 
+wendler.stores.lifts.findExpectedRepsForWeek = function (week) {
+    var progressionIndex = wendler.stores.lifts.LiftProgression.findBy(function (r) {
+        return r.get('set') === 6 && r.get('week') === week;
+    });
+
+    return wendler.stores.lifts.LiftProgression.getAt(progressionIndex).get('reps');
+};
+
 wendler.liftProgressions.options = [];
 wendler.liftProgressions.options.push([
     Ext.create('LiftProgression', {week:1, set:1, reps:5, percentage:40}),

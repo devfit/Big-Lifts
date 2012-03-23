@@ -135,10 +135,21 @@ wendler.views.log.cards.EditLogEntry = {
                     xtype:'numberfield',
                     label:'Reps',
                     name:'reps',
-                    labelWidth:'45%',
+                    labelWidth:'50%',
                     listeners:{
                         change:function () {
                             wendler.controller.logEntry.updateOneRepMax();
+                            wendler.controller.logEntry.updateLogEntry();
+                        }
+                    }
+                },
+                {
+                    xtype:'numberfield',
+                    label:'Expected Reps',
+                    name:'expectedReps',
+                    labelWidth:'50%',
+                    listeners:{
+                        change:function () {
                             wendler.controller.logEntry.updateLogEntry();
                         }
                     }

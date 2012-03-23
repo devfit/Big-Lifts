@@ -40,10 +40,19 @@ wendler.stores.migrations.migrateDatesToTimestamps = function (r) {
     }
 };
 
+wendler.stores.migrations.setupExpectedReps = function (r) {
+    if (r.get('expectedReps') <= 0) {
+        r.set('expectedReps', wendler.stores.lifts.findExpectedRepsForWeek(r.get('week')));
+        r.save();
+        wendler.stores.LiftLog.sync();
+    }
+};
+
 wendler.stores.migrations.liftLogMigration = function () {
     util.withNoFilters(wendler.stores.LiftLog, function () {
         wendler.stores.LiftLog.each(function (r) {
             wendler.stores.migrations.migrateDatesToTimestamps(r);
+            wendler.stores.migrations.setupExpectedReps(r);
         });
     });
 };

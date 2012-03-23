@@ -2,10 +2,12 @@
 Ext.ns('wendler.views.liftSchedule', 'wendler.controller.liftTracking');
 
 wendler.controller.liftTracking.logLift = function (data) {
+    var expectedRepsByWeek = wendler.stores.lifts.findExpectedRepsForWeek(data.week);
     wendler.stores.LiftLog.add(
         {
             liftName:data.liftName,
             reps:data.reps,
+            expectedReps:expectedRepsByWeek,
             notes:data.notes,
             week:data.week,
             weight:data.weight,

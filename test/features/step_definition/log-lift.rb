@@ -1,3 +1,19 @@
+When /^I set the log expected reps to (\d+)$/ do |reps|
+  @driver.find_element(:id => 'log').find_element(:name => 'expectedReps').send_keys reps
+end
+
+When /^I set the log reps to (\d+)$/ do |reps|
+  @driver.find_element(:id => 'log').find_element(:name => 'reps').send_keys reps
+end
+
+Then /^The log expected reps is (\d+)$/ do |reps|
+  @driver.find_element(:id => 'log').find_element(:name => 'expectedReps').attribute('value').should == reps
+end
+
+Then /^The log reps is (\d+)$/ do |reps|
+  @driver.find_element(:id => 'log').find_element(:name => 'reps').attribute('value').should == reps
+end
+
 When /^I tap edit first log notes$/ do
   @driver.find_element(:id => 'first-log-notes').click()
   sleep @ANIMATION_DELAY
