@@ -60,7 +60,12 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
 };
 
 wendler.liftSchedule.controller.selectThreeLiftsFrom = function (index) {
-    Ext.getCmp('lift-template-list').selectRange(index, index + 2);
+    var end = index + 2;
+    if (end > wendler.stores.lifts.LiftProgression.getCount() - 1) {
+        end = wendler.stores.lifts.LiftProgression.getCount() - 1;
+    }
+
+    Ext.getCmp('lift-template-list').selectRange(index, end);
 };
 
 wendler.liftSchedule.controller.returnToLiftSelect = function () {
@@ -109,6 +114,11 @@ wendler.views.liftSchedule.liftTemplate = {
             store:wendler.stores.lifts.LiftProgression,
             selectedCls:'lift-row-selected',
             itemCls:'lift-row',
+            listeners:{
+                itemtap:function (c, index) {
+                    wendler.liftSchedule.controller.selectThreeLiftsFrom(index);
+                }
+            },
             itemTpl:'<p class="{[wendler.liftSchedule.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
                 '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +

@@ -18,3 +18,30 @@ Ext.define('Ext.dataview.override', {
         }
     }
 });
+
+//Fix selectRange in lists.
+Ext.define('Ext.dataview.override', {
+    override: 'Ext.dataview.DataView',
+    selectRange: function(startRecord, endRecord, keepExisting) {
+        var me = this,
+            store = me.getStore(),
+            records = [],
+            tmp, i;
+
+        if (me.getDisableSelection()) {
+            return;
+        }
+
+        // swap values
+        if (startRecord > endRecord) {
+            tmp = endRecord;
+            endRecord = startRecord;
+            startRecord = tmp;
+        }
+
+        for (i = startRecord; i <= endRecord; i++) {
+            records.push(store.getAt(i));
+        }
+        this.doMultiSelect(records, keepExisting);
+    }
+});
