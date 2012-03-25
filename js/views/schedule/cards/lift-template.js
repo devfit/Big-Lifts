@@ -119,7 +119,7 @@ wendler.views.liftSchedule.liftTemplate = {
                     wendler.liftSchedule.controller.selectThreeLiftsFrom(index);
                 }
             },
-            itemTpl:'<p class="{[wendler.liftSchedule.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
+            itemTpl:'<p class="reps-weight {[wendler.liftSchedule.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
                 '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +
                 '<p class="bar-loader-breakdown">{[wendler.liftSchedule.controller.getPlateList(' +

@@ -17,7 +17,7 @@ end
 
 Then /^The lift schedule shows "([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)"$/ do |*liftSets|
   liftTemplate = @driver.find_element(:id => 'lift-template')
-  actual_lift_sets = liftTemplate.find_elements(:class => 'lift-row').
+  actual_lift_sets = liftTemplate.find_elements(:class => 'reps-weight').
       select {|i| i.displayed? }.collect { |i| i.text.gsub(/\n+/, " ") }
   actual_lift_sets.should == liftSets
 end
