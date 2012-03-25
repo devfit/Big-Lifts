@@ -87,6 +87,10 @@ wendler.maxes.controller.addLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'), {type:'slide', direction:'left'});
 };
 
+wendler.maxes.controller.barPlateButtonPressed = function(){
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('bar-plate-setup-panel'), {type:'slide', direction:'left'});
+};
+
 wendler.maxes.cards.maxesFormEditable = {
     xtype:'panel',
     flex:3,
@@ -156,6 +160,21 @@ wendler.maxes.cards.maxesForm = {
                     iconMask:true,
                     handler:wendler.maxes.controller.addLiftButtonPressed,
                     ui:'action'
+                }
+            ]
+        },
+        {
+            id:'lift-settings-toolbar',
+            xtype:'toolbar',
+            docked:'bottom',
+            ui:'light',
+            items:[
+                {xtype:'spacer'},
+                {
+                    id:'setup-plates-button',
+                    handler:wendler.maxes.controller.barPlateButtonPressed,
+                    ui:'action',
+                    text:'Bar/Plates'
                 }
             ]
         },

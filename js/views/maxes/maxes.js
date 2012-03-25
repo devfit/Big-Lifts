@@ -16,7 +16,8 @@ Ext.define('Wendler.views.Maxes', {
             wendler.maxes.cards.editMaxesList,
             wendler.maxes.cards.editLiftPanel,
             wendler.maxes.cards.addLiftPanel,
-            wendler.maxes.cards.ArrangeLifts
+            wendler.maxes.cards.ArrangeLifts,
+            wendler.maxes.barSetup.BarSetup
         ]
     }
 });

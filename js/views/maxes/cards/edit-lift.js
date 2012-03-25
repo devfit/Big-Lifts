@@ -19,7 +19,6 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
     if (errors.isValid()) {
         newLiftModel.set('id', currentModel.data.id);
 
-
         var somethingSaved = false;
         for (var key in newLiftModel.getData()) {
             var currentValue = currentModel.get(key);

@@ -157,6 +157,7 @@ wendler.views.log.cards.LogList = {
             docked:'top',
             id:'track-sort-toolbar',
             xtype:'toolbar',
+            ui:'light',
             hidden:true,
             showAnimation:{
                 type:'slide',
