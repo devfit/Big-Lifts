@@ -13,14 +13,14 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
 };
 
 wendler.liftSchedule.controller.getPlateList = function (weight) {
-    var plates = util.formulas.buildPlateListForWeight(weight);
+    var plates = util.formulas.buildPlateListForWeight(weight, wendler.stores.BarWeight.first().get('weight'));
 
     if (plates.length === 0) {
         return ""
     }
 
 
-    return "[ " + plates.join(', ') + " ]";
+    return "[" + plates.join(',') + "]";
 };
 
 wendler.liftSchedule.controller.getLiftRowClass = function (values) {
