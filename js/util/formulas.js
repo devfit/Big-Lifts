@@ -27,3 +27,7 @@ util.formulas.buildPlateListForWeight = function (weight) {
 
     return plates;
 };
+
+util.formulas.lbsToKg = function (lbs) {
+    return util.rounding.roundTo0p1(lbs / 2.2, 'down');
+};

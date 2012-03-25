@@ -101,7 +101,12 @@ util.rounding.roundToClosest5 = function (unroundedNumber, roundingType) {
 
 util.rounding.roundTo0p5 = function (unroundedNumber, roundingType) {
     var numberTimes10 = unroundedNumber * 10;
-    return util.rounding.roundTo5(numberTimes10, roundingType, 'normal') / 10.0;
+    return util.rounding.roundTo5(numberTimes10, roundingType) / 10.0;
+};
+
+util.rounding.roundTo0p1 = function (unroundedNumber, roundingType) {
+    var numberTimes10 = unroundedNumber * 10;
+    return util.rounding.roundTo1(numberTimes10, roundingType) / 10.0;
 };
 
 util.roundNumber = function (unroundedNumber, roundingValue, roundingType) {
