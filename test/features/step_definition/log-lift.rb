@@ -1,9 +1,13 @@
 When /^I set the log expected reps to (\d+)$/ do |reps|
-  @driver.find_element(:id => 'log').find_element(:name => 'expectedReps').send_keys reps
+  expectedRepsInput = @driver.find_element(:id => 'log').find_element(:name => 'expectedReps')
+  expectedRepsInput.clear
+  expectedRepsInput.send_keys reps
 end
 
 When /^I set the log reps to (\d+)$/ do |reps|
-  @driver.find_element(:id => 'log').find_element(:name => 'reps').send_keys reps
+  repsInput = @driver.find_element(:id => 'log').find_element(:name => 'reps')
+  repsInput.clear
+  repsInput.send_keys reps
 end
 
 Then /^The log expected reps is (\d+)$/ do |reps|

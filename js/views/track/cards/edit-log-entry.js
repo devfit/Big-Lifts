@@ -83,6 +83,7 @@ wendler.views.log.cards.EditLogEntry = {
             title:'',
             items:[
                 {
+                    id:'edit-log-back-button',
                     text:'Back',
                     ui:'back',
                     handler:wendler.controller.logEntry.backToLogList

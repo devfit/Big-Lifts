@@ -10,7 +10,7 @@ Feature: Lift tracking
     And I select the log entry for Squat
     And I set the log expected reps to 6
     And I set the log reps to 2
-    And I tap back in the lift log
+    And I return from viewing a log
     And I select the log entry for Squat
     Then The log expected reps is 6
     Then The log reps is 2
