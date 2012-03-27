@@ -8,9 +8,6 @@ wendler.liftSchedule.controller.setupLiftSelector = function () {
     if (cycleButton) {
         cycleButton.setText("Cycle " + cycle);
     }
-
-
-    wendler.liftSchedule.controller.changeWeek(wendler.liftSchedule.controller.getStartingWeek());
 };
 
 wendler.liftSchedule.controller.setupListDoneIcons = function () {
@@ -110,9 +107,12 @@ wendler.stores.lifts.Lifts.addListener('beforesync', wendler.liftSchedule.contro
 wendler.views.liftSchedule.liftSelector = {
     xtype:'tabpanel',
     id:'lift-selector',
-    activeItem:wendler.liftSchedule.controller.getStartingWeek()-1,
+    activeItem:wendler.liftSchedule.controller.getStartingWeek() - 1,
     listeners:{
         show:wendler.liftSchedule.controller.setupLiftSelector,
+        initialize:function () {
+            wendler.liftSchedule.controller.changeWeek(wendler.liftSchedule.controller.getStartingWeek());
+        },
         activeitemchange:wendler.liftSchedule.controller.handleWeekChange
     },
     items:[
