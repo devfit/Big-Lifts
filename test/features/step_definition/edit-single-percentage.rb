@@ -36,8 +36,10 @@ When /^I navigate back to the lift settings from the manual percentages editor$/
 end
 
 Then /^The set (\d+) lift percentage shows (\d+)%$/ do |set, percentage|
-  setListItem = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item')[set.to_i-1]
-  setListItem.text.include?( "#{percentage}%" ).should == true
+  setListItem = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item').select {
+    |listItem| listItem.displayed?
+  }[set.to_i-1]
+  setListItem.text.should include( "#{percentage}%" )
 end
 
 When /^I set the manual reps to (\d+)$/ do |reps|
@@ -47,8 +49,11 @@ When /^I set the manual reps to (\d+)$/ do |reps|
 end
 
 Then /^The set (\d+) reps shows (\d+)$/ do |set, reps|
-  setListItem = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item')[set.to_i-1]
-  setListItem.text.include?( "#{reps}" ).should == true
+  setListItem = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item').select {
+    |listItem| listItem.displayed?
+  }[set.to_i-1]
+
+  setListItem.text.should include( "#{reps}" )
 end
 
 Then /^Lift progressions in the list are visible$/ do
