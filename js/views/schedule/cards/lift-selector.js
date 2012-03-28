@@ -109,7 +109,10 @@ wendler.views.liftSchedule.liftSelector = {
     id:'lift-selector',
     activeItem:wendler.liftSchedule.controller.getStartingWeek() - 1,
     listeners:{
-        show:wendler.liftSchedule.controller.setupLiftSelector,
+        show:function () {
+            wendler.liftSchedule.controller.setupLiftSelector;
+            wendler.navigation.resetBack();
+        },
         initialize:function () {
             wendler.liftSchedule.controller.changeWeek(wendler.liftSchedule.controller.getStartingWeek());
         },

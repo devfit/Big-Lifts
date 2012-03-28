@@ -16,7 +16,7 @@ wendler.controller.log.emailExport.buildCsvToExport = function () {
     var csvKeyMapper = {
         'liftName':'name',
         'reps':'reps',
-        'expectedReps': 'expected reps',
+        'expectedReps':'expected reps',
         'notes':'notes',
         'week':'week',
         'weight':'weight',
@@ -90,8 +90,10 @@ wendler.views.log.cards.Export = {
     scroll:'vertical',
     style:'padding-top:0px',
     listeners:{
-        initialize:function () {
+        show:function () {
             wendler.navigation.setBackFunction(wendler.controller.log.emailExport.returnToTrackingList);
+        },
+        initialize:function () {
             wendler.controller.log.emailExport.loadPreviousExportEmail();
         }
     },
