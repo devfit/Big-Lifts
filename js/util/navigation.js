@@ -3,6 +3,8 @@ Ext.ns('wendler.navigation');
 
 wendler.navigation.resetBack = function () {
     document.removeEventListener("backbutton");
+    wendler.navigation.back = function () {
+    };
 };
 
 wendler.navigation.back = function () {
