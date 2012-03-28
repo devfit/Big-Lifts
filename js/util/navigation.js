@@ -10,5 +10,7 @@ wendler.navigation.back = function () {
 wendler.navigation.setBackFunction = function (backFunction) {
     document.removeEventListener('backbutton');
     wendler.navigation.back = backFunction;
-    document.addEventListener('backbutton', wendler.navigation.back, false);
+    if( wendler.main.deviceReady ){
+        document.addEventListener('backbutton', wendler.navigation.back, false);
+    }
 };
