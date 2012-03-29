@@ -135,6 +135,9 @@ wendler.maxes.cards.maxesForm = {
     id:'maxes-form',
     scroll:'vertical',
     listeners:{
+        show:function () {
+            wendler.navigation.resetBack();
+        },
         painted:function () {
             wendler.maxes.controller.buildMaxesFromStore();
             wendler.maxes.controller.showHideTrainingMaxes(null, wendler.stores.Settings.first());

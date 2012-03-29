@@ -80,6 +80,11 @@ wendler.views.MoreInfoList = {
     xtype:'panel',
     id:'more-info-list-panel',
     layout:'fit',
+    listeners:{
+        show: function(){
+            wendler.navigation.resetBack();
+        }
+    },
     items:[
         {
             docked:'top',

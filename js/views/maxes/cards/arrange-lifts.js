@@ -35,7 +35,10 @@ wendler.maxes.arrangeLifts.moveUp = function () {
 
 wendler.maxes.arrangeLifts.refreshList = function () {
     wendler.stores.lifts.Lifts.sort('order', 'ASC');
-    Ext.getCmp('arrange-lifts-list').refresh();
+    var list = Ext.getCmp('arrange-lifts-list');
+    list.refresh();
+    //TODO: Remove hack when fix is in sencha touch 2. This forces the list to repaint.
+    list.element.dom.offsetHeight;
 };
 
 wendler.maxes.arrangeLifts.moveDown = function () {

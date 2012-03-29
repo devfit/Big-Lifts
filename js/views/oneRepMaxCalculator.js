@@ -29,6 +29,9 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
         title:'1-Rep Calc',
         iconCls:'search',
         listeners:{
+            show:function () {
+                wendler.navigation.resetBack();
+            },
             initialize:wendler.oneRepMax.controller.estimateOneRepMax
         },
         layout:'fit',
@@ -78,7 +81,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
                                 xtype:'numberfield',
                                 name:'calculatedMax',
                                 label:'Max',
-                                cls: 'one-rep-max-estimate',
+                                cls:'one-rep-max-estimate',
                                 readOnly:true
                             }
                         ]

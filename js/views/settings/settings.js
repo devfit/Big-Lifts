@@ -13,7 +13,7 @@ wendler.views.Settings = {
     scroll:'vertical',
     cardSwitchAnimation:'slide',
     listeners:{
-        beforeshow:function () {
+        show:function () {
             wendler.navigation.setBackFunction(wendler.controller.settings.backToMore);
         }
     },

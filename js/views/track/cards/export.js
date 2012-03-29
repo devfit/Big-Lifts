@@ -90,8 +90,10 @@ wendler.views.log.cards.Export = {
     scroll:'vertical',
     style:'padding-top:0px',
     listeners:{
-        initialize:function () {
+        show:function () {
             wendler.navigation.setBackFunction(wendler.controller.log.emailExport.returnToTrackingList);
+        },
+        initialize:function () {
             wendler.controller.log.emailExport.loadPreviousExportEmail();
         }
     },

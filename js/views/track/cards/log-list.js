@@ -129,6 +129,11 @@ wendler.views.log.cards.LogList = {
     id:'log-list',
     xtype:'panel',
     layout:'fit',
+    listeners:{
+        show:function () {
+            wendler.navigation.resetBack();
+        }
+    },
     items:[
         {
             docked:'top',
