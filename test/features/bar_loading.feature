@@ -10,8 +10,8 @@ Feature: bar loading
     And I set the number of 15lbs plates to 0
     And I tap back in the bar plates editor
     And I view the squat lift schedule for week 1
-    And I tap set 1 in the lift template
-    Then The plate breakdown for the current set shows "[10,5,2.5]"
+    And I tap set 2 in the lift template
+    Then The plate breakdown for the current set shows "[10,10,2.5]"
 
   Scenario: 35lb bar
     When I navigate to the lift editor

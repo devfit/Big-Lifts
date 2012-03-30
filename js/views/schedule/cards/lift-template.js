@@ -12,8 +12,27 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
 };
 
+wendler.liftSchedule.controller.getAllPlatePairs = function () {
+    var platePairs = {};
+    wendler.stores.Plates.each(function (r) {
+        var weight = r.get('weightInLbs');
+        platePairs[weight] = parseInt(r.get('count') / 2);
+    });
+
+    return platePairs;
+};
+
 wendler.liftSchedule.controller.getPlateList = function (weight) {
-    var plates = util.formulas.buildPlateListForWeight(weight, wendler.stores.BarWeight.first().get('weight'));
+    var barWeightConfig = wendler.stores.BarWeight.first();
+    var barWeight = barWeightConfig.get('weight');
+    var useCustomPlates = barWeightConfig.get('useCustomPlates');
+
+    var allPlatePairs = undefined;
+    if (useCustomPlates) {
+        allPlatePairs = wendler.liftSchedule.controller.getAllPlatePairs();
+    }
+
+    var plates = util.formulas.buildPlateListForWeight(weight, barWeight, allPlatePairs);
 
     if (plates.length === 0) {
         return ""
