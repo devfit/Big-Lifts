@@ -81,6 +81,7 @@ wendler.maxes.barSetup.BarSetup = {
                             label:'Bar Weight'
                         },
                         {
+                            id:'use-custom-plates-toggle',
                             xtype:'togglefield',
                             name:'useCustomPlates',
                             label:'Custom Plates?'

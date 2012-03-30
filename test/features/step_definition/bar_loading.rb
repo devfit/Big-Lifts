@@ -26,3 +26,13 @@ When /^I tap back in the bar plates editor$/ do
   @driver.find_element(:id => 'bar-setup-back-button').click
   sleep @ANIMATION_DELAY
 end
+
+When /^I toggle on custom plates$/ do
+  @driver.execute_script("Ext.getCmp('use-custom-plates-toggle').toggle();Ext.getCmp('use-custom-plates-toggle').fireEvent('change');")
+  sleep @ANIMATION_DELAY
+end
+
+When /^I set the number of (\d+)lbs plates to (\d+)$/ do |weight, plateNumber|
+  @driver.find_element(:name => "#{weight}-lbs").clear
+  @driver.find_element(:name => "#{weight}-lbs").send_keys plateNumber
+end

@@ -1,7 +1,17 @@
-Feature: adding lifts
+Feature: bar loading
   As a lifter
   I want to be able to see the plates that should be on the bar
   So that I don't have to calculate this manually
+
+  Scenario: Custom plates - no 15s
+    When I navigate to the lift editor
+    And I tap the bar/plates button
+    And I toggle on custom plates
+    And I set the number of 15lbs plates to 0
+    And I tap back in the bar plates editor
+    And I view the squat lift schedule for week 1
+    And I tap set 1 in the lift template
+    Then The plate breakdown for the current set shows "[10,5,2.5]"
 
   Scenario: 35lb bar
     When I navigate to the lift editor
