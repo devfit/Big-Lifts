@@ -8,5 +8,7 @@ Then /^All util plate breakdown suite data is correct$/ do
   @driver.execute_script("return util.formulas.buildPlateListForWeight(115, 45)").should == [35]
   @driver.execute_script("return util.formulas.buildPlateListForWeight(225, 45)").should == [45,45]
   @driver.execute_script("return util.formulas.buildPlateListForWeight(235, 45)").should == [45,45,5]
+
+  @driver.execute_script("return util.formulas.buildPlateListForWeight(235, 45, [45,45,35,35,10,10,5,5])").should == [45,35,10,5]
 end
 
