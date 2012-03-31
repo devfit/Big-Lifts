@@ -1,9 +1,9 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 500;
+util.filebackup.SYNC_MS = 150;
 util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
-util.filebackup.directory = Ext.os.is.Linux ? null : 'wendler531';
+util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store) {
     var data = util.filebackup.generateDataFromStore(store);
     util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
