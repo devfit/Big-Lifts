@@ -13,7 +13,8 @@ Ext.define('Settings', {
             {name:'use-training-max', type:'integer', defaultValue:1},
             {name:'training-max-percentage', type:'integer', defaultValue:90},
             {name:'exportEmail', type:'string', defaultValue:''},
-            {name:'lockPortrait', type:'boolean', defaultValue:false}
+            {name:'lockPortrait', type:'integer', defaultValue:0},
+            {name:'dateFormat', type:'string', defaultValue:'MM/dd/yyyy'}
         ],
         proxy:{
             type:'localstorage',
@@ -67,4 +68,9 @@ wendler.settings.options.roundingType = [
     {text:'Up', value:'up'},
     {text:'Normal', value:'normal'},
     {text:'Down', value:'down'}
+];
+
+wendler.settings.options.dateFormats = [
+    {text: "Month/Day/Year", value: "MM/dd/yyyy"},
+    {text: "Day/Month/Year", value: "dd/MM/yyyy"}
 ];

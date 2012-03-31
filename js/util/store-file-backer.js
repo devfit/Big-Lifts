@@ -6,10 +6,16 @@ util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'und
 util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store) {
     var data = util.filebackup.generateDataFromStore(store);
-    util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
+    if (data !== null) {
+        util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
+    }
 };
 
 util.filebackup.generateDataFromStore = function (store) {
+    if (typeof( store.data ) === 'undefined') {
+        return null
+    }
+
     return Ext.encode(Ext.pluck(store.data.items, 'data'));
 };
 
