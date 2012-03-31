@@ -1,6 +1,6 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 500;
+util.filebackup.SYNC_MS = 150;
 util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
 util.filebackup.directory = Ext.os.is.Linux ? null : 'wendler531';
@@ -47,7 +47,7 @@ util.filebackup.loadStore = function (store) {
 };
 
 util.filebackup.generateFileName = function (store) {
-    var proxyId = store.getProxy().id;
+    var proxyId = store.getProxy().getId();
     proxyId = proxyId.replace('-proxy', '');
     return proxyId + ".json";
 };
