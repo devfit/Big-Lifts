@@ -6,8 +6,10 @@ When /^I tap set (\d+) in the lift template$/ do |set|
   sleep 0.5
 end
 
-Then /^The plate breakdown for the current set shows "(.*?)"$/ do |plates|
-    setListItem = @driver.find_element(:class => 'lift-row-selected')
+Then /^The plate breakdown for set (\d+) shows "(.*?)"$/ do |set, plates|
+    setListItem = @driver.find_elements(:class => 'lift-row').select {|row|
+        row.displayed? }[set.to_i-1]
+
     setListItem.find_element(:class => 'bar-loader-breakdown').text.should == plates
 end
 
