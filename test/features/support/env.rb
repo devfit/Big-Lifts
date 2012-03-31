@@ -3,6 +3,20 @@ require 'selenium-webdriver'
 $LOAD_PATH << File.expand_path('../../../lib', __FILE__)
 require 'wendler531'
 
+Before('@premium') do
+  premiumFileText = File.open("../js/premium.js", "rb").read
+  File.open('../js/premium.js', 'w') {|f|
+    f.write(premiumFileText.gsub(/false/,"true"))
+  }
+end
+
+After('@premium') do
+  premiumFileText = File.open("../js/premium.js", "rb").read
+  File.open('../js/premium.js', 'w') {|f|
+    f.write(premiumFileText.gsub(/true/,"false"))
+  }
+end
+
 Before do
   @ANIMATION_DELAY = 0.8
 

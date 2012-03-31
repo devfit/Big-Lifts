@@ -1,3 +1,4 @@
+@premium
 Feature: bar loading
   As a lifter
   I want to be able to see the plates that should be on the bar
