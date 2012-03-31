@@ -2,8 +2,8 @@
 <widget xmlns="http://www.w3.org/ns/widgets"
         xmlns:gap="http://phonegap.com/ns/1.0"
         id="com.stefankendall.wendler531"
-        versionCode="66"
-        version="36">
+        versionCode="67"
+        version="37">
     <name>Wendler 5/3/1</name>
 
     <description>
