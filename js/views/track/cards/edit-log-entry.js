@@ -60,8 +60,91 @@ wendler.controller.logEntry.editNotes = function () {
 
 wendler.controller.logEntry.getExtDateFormat = function () {
     var dateFormat = wendler.stores.Settings.first().get('dateFormat');
-    dateFormat = dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'y');
+    dateFormat = dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');
     return dateFormat;
+};
+
+wendler.controller.logEntry.updateDateFormat = function(){
+    Ext.getCmp('edit-log-fieldset').removeAll(true);
+    Ext.getCmp('edit-log-fieldset').add(wendler.views.log.cards.generateEditLogEntryFieldsetItems());
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
+};
+
+wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
+    return [
+        {
+            xtype:'datepickerfield',
+            dateFormat:wendler.controller.logEntry.getExtDateFormat(),
+            label:'Date',
+            name:'timestamp',
+            labelWidth:'45%',
+            listeners:{
+                change:wendler.controller.logEntry.updateLogEntry
+            }
+        },
+        {
+            xtype:'numberfield',
+            label:'Cycle',
+            name:'cycle',
+            labelWidth:'45%',
+            listeners:{
+                change:wendler.controller.logEntry.updateLogEntry
+            }
+        },
+        {
+            xtype:'numberfield',
+            label:'Weight',
+            name:'weight',
+            labelWidth:'45%',
+            listeners:{
+                change:function () {
+                    wendler.controller.logEntry.updateOneRepMax();
+                    wendler.controller.logEntry.updateLogEntry();
+                }
+            }
+        },
+        {
+            xtype:'numberfield',
+            label:'Reps',
+            name:'reps',
+            labelWidth:'50%',
+            listeners:{
+                change:function () {
+                    wendler.controller.logEntry.updateOneRepMax();
+                    wendler.controller.logEntry.updateLogEntry();
+                }
+            }
+        },
+        {
+            xtype:'numberfield',
+            label:'Expected Reps',
+            name:'expectedReps',
+            labelWidth:'50%',
+            listeners:{
+                change:function () {
+                    wendler.controller.logEntry.updateLogEntry();
+                }
+            }
+        },
+        {
+            xtype:'numberfield',
+            disabled:true,
+            disabledCls:'disabledVisible',
+            label:'Estimated 1RM',
+            name:'estimatedOneRepMax',
+            labelWidth:'50%'
+        },
+        {
+            xtype:'selectfield',
+            label:'Units',
+            name:'units',
+            options:wendler.settings.options.units,
+            labelWidth:'45%',
+            listeners:{
+                change:wendler.controller.logEntry.updateLogEntry
+            }
+        }
+    ];
 };
 
 wendler.views.log.cards.EditLogEntry = {
@@ -104,82 +187,10 @@ wendler.views.log.cards.EditLogEntry = {
             ]
         },
         {
+            id:'edit-log-fieldset',
             xtype:'fieldset',
             style:'margin-top: 7px; margin-bottom: 7px;',
-            items:[
-                {
-                    xtype:'datepickerfield',
-                    dateFormat:wendler.controller.logEntry.getExtDateFormat(),
-                    label:'Date',
-                    name:'timestamp',
-                    labelWidth:'45%',
-                    listeners:{
-                        change:wendler.controller.logEntry.updateLogEntry
-                    }
-                },
-                {
-                    xtype:'numberfield',
-                    label:'Cycle',
-                    name:'cycle',
-                    labelWidth:'45%',
-                    listeners:{
-                        change:wendler.controller.logEntry.updateLogEntry
-                    }
-                },
-                {
-                    xtype:'numberfield',
-                    label:'Weight',
-                    name:'weight',
-                    labelWidth:'45%',
-                    listeners:{
-                        change:function () {
-                            wendler.controller.logEntry.updateOneRepMax();
-                            wendler.controller.logEntry.updateLogEntry();
-                        }
-                    }
-                },
-                {
-                    xtype:'numberfield',
-                    label:'Reps',
-                    name:'reps',
-                    labelWidth:'50%',
-                    listeners:{
-                        change:function () {
-                            wendler.controller.logEntry.updateOneRepMax();
-                            wendler.controller.logEntry.updateLogEntry();
-                        }
-                    }
-                },
-                {
-                    xtype:'numberfield',
-                    label:'Expected Reps',
-                    name:'expectedReps',
-                    labelWidth:'50%',
-                    listeners:{
-                        change:function () {
-                            wendler.controller.logEntry.updateLogEntry();
-                        }
-                    }
-                },
-                {
-                    xtype:'numberfield',
-                    disabled:true,
-                    disabledCls:'disabledVisible',
-                    label:'Estimated 1RM',
-                    name:'estimatedOneRepMax',
-                    labelWidth:'50%'
-                },
-                {
-                    xtype:'selectfield',
-                    label:'Units',
-                    name:'units',
-                    options:wendler.settings.options.units,
-                    labelWidth:'45%',
-                    listeners:{
-                        change:wendler.controller.logEntry.updateLogEntry
-                    }
-                }
-            ]
+            items:wendler.views.log.cards.generateEditLogEntryFieldsetItems()
         },
         {
             xtype:'panel',

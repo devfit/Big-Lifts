@@ -16,7 +16,7 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
         return;
     }
 
-    if (typeof(oldValue) !== 'undefined' && typeof(newValue) !== 'undefined' && oldValue.hasOwnProperty('data') && newValue.hasOwnProperty('data')) {
+    if (!_.isUndefined(oldValue) && !_.isUndefined(newValue) && _.has(oldValue, 'data') && _.has(newValue, 'data')) {
         if (oldValue.data.value === 'lbs' && newValue.data.value === 'kg') {
             wendler.stores.lifts.adjustCycleIncreaseForKg();
         }
@@ -31,6 +31,10 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
     }
     settingsRecord.save();
     wendler.stores.Settings.sync();
+
+    if (!_.isUndefined(field.getName) && field.getName() === 'dateFormat') {
+        wendler.controller.logEntry.updateDateFormat();
+    }
 };
 
 wendler.views.SettingsForm = {

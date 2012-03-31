@@ -19,7 +19,7 @@ end
 
 Then /^The log date is today formatted as dd\/MM\/yyyy$/ do
     dateText = @driver.find_element(:id => 'edit-log-entry').find_element(:name => 'timestamp').attribute('value')
-    dateText.should equal Time.now.strftime("%d/%m/%Y")
+    dateText.should == Time.now.strftime("%d/%m/%Y")
 end
 
 Then /^The date for the log entry for (\w+) is dd\/MM\/yyyy$/ do |liftName|
