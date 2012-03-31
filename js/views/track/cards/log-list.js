@@ -125,6 +125,10 @@ wendler.controller.logList.updateAscendingText = function () {
     }
 };
 
+wendler.stores.Settings.addListener('beforesync',function(){
+    Ext.getCmp('lift-log-list').refresh();
+});
+
 wendler.views.log.cards.LogList = {
     id:'log-list',
     xtype:'panel',

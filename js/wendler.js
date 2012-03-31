@@ -10,7 +10,7 @@ wendler.main.markFirstStartup = function () {
 };
 
 wendler.main.start = function () {
-    if( wendler.main.started ){
+    if (wendler.main.started) {
         return;
     }
     wendler.main.started = true;
@@ -18,9 +18,7 @@ wendler.main.start = function () {
     var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
     wendler.main.markFirstStartup();
 
-    if( !wendler.localStorageExists ){
-        util.filebackup.loadAllStores();
-    }
+    util.filebackup.loadAllStores();
 
     Ext.application({
         launch:function () {

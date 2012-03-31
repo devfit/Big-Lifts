@@ -1,15 +1,21 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 500;
+util.filebackup.SYNC_MS = 150;
 util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
-util.filebackup.directory = Ext.os.is.Linux ? null : 'wendler531';
+util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store) {
     var data = util.filebackup.generateDataFromStore(store);
-    util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
+    if (data !== null) {
+        util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
+    }
 };
 
 util.filebackup.generateDataFromStore = function (store) {
+    if (typeof( store.data ) === 'undefined') {
+        return null
+    }
+
     return Ext.encode(Ext.pluck(store.data.items, 'data'));
 };
 
@@ -47,7 +53,7 @@ util.filebackup.loadStore = function (store) {
 };
 
 util.filebackup.generateFileName = function (store) {
-    var proxyId = store.getProxy().id;
+    var proxyId = store.getProxy().getId();
     proxyId = proxyId.replace('-proxy', '');
     return proxyId + ".json";
 };

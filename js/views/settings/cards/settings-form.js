@@ -16,7 +16,7 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
         return;
     }
 
-    if (typeof(oldValue) !== 'undefined' && typeof(newValue) !== 'undefined' && _.has(oldValue,'data') && _.has(newValue,'data')) {
+    if (!_.isUndefined(oldValue) && !_.isUndefined(newValue) && _.has(oldValue, 'data') && _.has(newValue, 'data')) {
         if (oldValue.data.value === 'lbs' && newValue.data.value === 'kg') {
             wendler.stores.lifts.adjustCycleIncreaseForKg();
         }
@@ -31,6 +31,10 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
     }
     settingsRecord.save();
     wendler.stores.Settings.sync();
+
+    if (!_.isUndefined(field.getName) && field.getName() === 'dateFormat') {
+        wendler.controller.logEntry.updateDateFormat();
+    }
 };
 
 wendler.views.SettingsForm = {
@@ -89,6 +93,13 @@ wendler.views.SettingsForm = {
                     xtype:'togglefield',
                     name:'lockPortrait',
                     label:'Lock portrait'
+                },
+                {
+                    xtype:'selectfield',
+                    name:'dateFormat',
+                    label:'Date Format',
+                    labelWidth:'39%',
+                    options:wendler.settings.options.dateFormats
                 }
             ]
         },

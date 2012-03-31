@@ -55,7 +55,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
     xtype:'formpanel',
     listeners:{
         show:function () {
-            Ext.get('increase-maxes-help-image').addListener('click',
+            Ext.get('increase-maxes-help-image').addListener('tap',
                 wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen);
             wendler.liftSchedule.controller.setNextCycleDefault();
             wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeLiftCompletedScreen);
