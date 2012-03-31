@@ -17,7 +17,7 @@ util.formulas.buildPlateListForWeight = function (targetWeight, barWeight, avail
 
     var availablePlatePairsCopy = util.formulas.plates.pruneZeroedValues(_.clone(availablePlatePairs));
 
-    var usingCustomPlates = typeof(availablePlatePairsCopy) !== 'undefined';
+    var usingCustomPlates = !_.isUndefined(availablePlatePairsCopy);
 
     if (!usingCustomPlates) {
         availablePlatePairsCopy = {45:1, 35:1, 25:1, 15:1, 10:1, 5:1, 2.5:1};
@@ -38,6 +38,11 @@ util.formulas.buildPlateListForWeight = function (targetWeight, barWeight, avail
             return 2 * p <= targetWeight;
         });
 
+        //if no plates were found, then we can't get closer to the target weight.
+        if (_.isUndefined(plate)) {
+            break;
+        }
+
         if (usingCustomPlates) {
             availablePlatePairsCopy[plate] = availablePlatePairsCopy[plate] - 1;
             if (availablePlatePairsCopy[plate] === 0) {
@@ -53,9 +58,9 @@ util.formulas.buildPlateListForWeight = function (targetWeight, barWeight, avail
 };
 
 
-util.formulas.plates.pruneZeroedValues = function(object){
-    for( var i in object ){
-        if(_.has(object,i) && object[i] === 0){
+util.formulas.plates.pruneZeroedValues = function (object) {
+    for (var i in object) {
+        if (_.has(object, i) && object[i] === 0) {
             delete object[i];
         }
     }
