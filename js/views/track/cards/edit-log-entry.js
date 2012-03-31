@@ -156,8 +156,8 @@ wendler.views.log.cards.EditLogEntry = {
                 },
                 {
                     xtype:'numberfield',
-                    disabled:true,
-                    disabledCls:'disabledVisible',
+                    cls:'one-rep-max-estimate',
+                    readOnly:true,
                     label:'Estimated 1RM',
                     name:'estimatedOneRepMax',
                     labelWidth:'50%'
