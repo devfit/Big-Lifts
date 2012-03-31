@@ -1,8 +1,12 @@
 "use strict";
 Ext.ns('wendler.views', 'wendler.controller.log');
 
+wendler.controller.log.getDateFormat = function(){
+    return 'MM/d/yyyy';
+};
+
 wendler.controller.log.formatDate = function (timestamp) {
-    return new Date(timestamp).toString('MM/d/yyyy');
+    return new Date(timestamp).toString(wendler.controller.log.getDateFormat());
 };
 
 Ext.define('Wendler.views.Log', {
