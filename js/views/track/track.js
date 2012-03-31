@@ -2,7 +2,7 @@
 Ext.ns('wendler.views', 'wendler.controller.log');
 
 wendler.controller.log.getDateFormat = function(){
-    return 'MM/d/yyyy';
+    return wendler.stores.Settings.first().get('dateFormat');
 };
 
 wendler.controller.log.formatDate = function (timestamp) {

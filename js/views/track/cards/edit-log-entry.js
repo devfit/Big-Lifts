@@ -58,6 +58,12 @@ wendler.controller.logEntry.editNotes = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-notes-editor'), {type:'slide', direction:'left'});
 };
 
+wendler.controller.logEntry.getExtDateFormat = function () {
+    var dateFormat = wendler.stores.Settings.first().get('dateFormat');
+    dateFormat = dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'y');
+    return dateFormat;
+};
+
 wendler.views.log.cards.EditLogEntry = {
     id:'edit-log-entry',
     xtype:'formpanel',
@@ -103,6 +109,7 @@ wendler.views.log.cards.EditLogEntry = {
             items:[
                 {
                     xtype:'datepickerfield',
+                    dateFormat:wendler.controller.logEntry.getExtDateFormat(),
                     label:'Date',
                     name:'timestamp',
                     labelWidth:'45%',

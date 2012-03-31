@@ -89,6 +89,13 @@ wendler.views.SettingsForm = {
                     xtype:'togglefield',
                     name:'lockPortrait',
                     label:'Lock portrait'
+                },
+                {
+                    xtype:'selectfield',
+                    name:'dateFormat',
+                    label:'Date Format',
+                    labelWidth:'39%',
+                    options:wendler.settings.options.dateFormats
                 }
             ]
         },
