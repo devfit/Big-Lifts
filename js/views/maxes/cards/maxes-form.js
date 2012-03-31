@@ -87,7 +87,7 @@ wendler.maxes.controller.addLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'), {type:'slide', direction:'left'});
 };
 
-wendler.maxes.controller.barPlateButtonPressed = function(){
+wendler.maxes.controller.barPlateButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('bar-plate-setup-panel'), {type:'slide', direction:'left'});
 };
 
@@ -138,6 +138,25 @@ wendler.maxes.cards.maxesForm = {
         show:function () {
             wendler.navigation.resetBack();
         },
+        initialize:function () {
+            if (wendler.toggles.BarLoading) {
+                this.add({
+                    id:'lift-settings-toolbar',
+                    xtype:'toolbar',
+                    docked:'bottom',
+                    ui:'light',
+                    items:[
+                        {xtype:'spacer'},
+                        {
+                            id:'setup-plates-button',
+                            handler:wendler.maxes.controller.barPlateButtonPressed,
+                            ui:'action',
+                            text:'Bar/Plates'
+                        }
+                    ]
+                });
+            }
+        },
         painted:function () {
             wendler.maxes.controller.buildMaxesFromStore();
             wendler.maxes.controller.showHideTrainingMaxes(null, wendler.stores.Settings.first());
@@ -163,21 +182,6 @@ wendler.maxes.cards.maxesForm = {
                     iconMask:true,
                     handler:wendler.maxes.controller.addLiftButtonPressed,
                     ui:'action'
-                }
-            ]
-        },
-        {
-            id:'lift-settings-toolbar',
-            xtype:'toolbar',
-            docked:'bottom',
-            ui:'light',
-            items:[
-                {xtype:'spacer'},
-                {
-                    id:'setup-plates-button',
-                    handler:wendler.maxes.controller.barPlateButtonPressed,
-                    ui:'action',
-                    text:'Bar/Plates'
                 }
             ]
         },

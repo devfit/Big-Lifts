@@ -78,13 +78,17 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
     }
 };
 
-wendler.liftSchedule.controller.selectThreeLiftsFrom = function (index) {
-    var end = index + 2;
-    if (end > wendler.stores.lifts.LiftProgression.getCount() - 1) {
-        end = wendler.stores.lifts.LiftProgression.getCount() - 1;
+wendler.liftSchedule.controller.selectThreeLiftsFrom = function (startIndex) {
+    var end = startIndex + 2;
+    var lastIndex = wendler.stores.lifts.LiftProgression.getCount() - 1;
+    if (end > lastIndex) {
+        end = lastIndex;
+    }
+    if (startIndex > lastIndex - 2) {
+        startIndex = lastIndex - 2;
     }
 
-    Ext.getCmp('lift-template-list').selectRange(index, end);
+    Ext.getCmp('lift-template-list').selectRange(startIndex, end);
 };
 
 wendler.liftSchedule.controller.returnToLiftSelect = function () {
@@ -141,9 +145,10 @@ wendler.views.liftSchedule.liftTemplate = {
             itemTpl:'<p class="reps-weight {[wendler.liftSchedule.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
                 '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +
-                '<p class="bar-loader-breakdown">{[wendler.liftSchedule.controller.getPlateList(' +
-                'wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)' +
-                ')]}</p>'
+                (wendler.toggles.BarLoading ?
+                    '<p class="bar-loader-breakdown">{[wendler.liftSchedule.controller.getPlateList(' +
+                        'wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)' +
+                        ')]}</p>' : '')
         }
     ],
     listeners:{
