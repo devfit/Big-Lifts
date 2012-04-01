@@ -68,5 +68,9 @@ util.formulas.plates.pruneZeroedValues = function (object) {
 };
 
 util.formulas.calculateRepsToBeatWeight = function (target, currentWeight) {
-    return Math.ceil(((target+1) / currentWeight - 1) / 0.033);
+    var reps = Math.ceil(((target + 1) / currentWeight - 1) / 0.033);
+    if (reps <= 0) {
+        reps = 1;
+    }
+    return reps;
 };
