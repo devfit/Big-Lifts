@@ -97,8 +97,12 @@ wendler.liftSchedule.controller.setupLastOneRepMax = function () {
     });
 
     if (!_.isNull(lastLogRecord)) {
-        var oneRepEstimate = util.formulas.estimateOneRepMax(parseFloat(lastLogRecord.get('weight')), lastLogRecord.get('reps'))
+        var oneRepEstimate = util.formulas.estimateOneRepMax(parseFloat(lastLogRecord.get('weight')), lastLogRecord.get('reps'));
+        var lastSetMax = wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,
+            wendler.stores.lifts.LiftProgression.last().get('percentage'));
+
         Ext.get('last-one-rep-estimate').setHtml(oneRepEstimate);
+        Ext.get('reps-needed-to-beat-last-estimate').setHtml(util.formulas.calculateRepsToBeatWeight(oneRepEstimate, lastSetMax));
         Ext.getCmp('reps-to-beat-toolbar').show();
     }
     else {
@@ -166,9 +170,9 @@ wendler.views.liftSchedule.liftTemplate = {
             docked:'top',
             items:[
                 {
+                    id:'reps-to-beat-panel',
                     xtype:'panel',
                     width:'100%',
-                    padding:'0.828em',
                     html:'<table class="reps-to-beat-text"><tr>' +
                         '<td width="40%">' +
                         'Last: ~<span id="last-one-rep-estimate">000</span>' +
