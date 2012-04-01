@@ -70,11 +70,39 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
                 return record.data.set > 3 && record.data.week == wendler.liftSchedule.currentWeek;
             });
         }
+
+        wendler.liftSchedule.controller.setupLastOneRepMax();
     }
     else {
         if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
             Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
         }
+    }
+};
+
+wendler.liftSchedule.controller.setupLastOneRepMax = function () {
+    var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
+    var lastLogRecord = null;
+    wendler.stores.LiftLog.each(function (r) {
+        if (r.get('liftName') === liftRecord.get('name')) {
+            if (_.isNull(lastLogRecord)) {
+                lastLogRecord = r;
+            }
+            else {
+                if (r.get('timestamp') > lastLogRecord.get('timestamp')) {
+                    lastLogRecord = r;
+                }
+            }
+        }
+    });
+
+    if (!_.isNull(lastLogRecord)) {
+        var oneRepEstimate = util.formulas.estimateOneRepMax(parseFloat(lastLogRecord.get('weight')), lastLogRecord.get('reps'))
+        Ext.get('last-one-rep-estimate').setHtml(oneRepEstimate);
+        Ext.getCmp('reps-to-beat-toolbar').show();
+    }
+    else {
+        Ext.getCmp('reps-to-beat-toolbar').hide();
     }
 };
 
@@ -128,6 +156,27 @@ wendler.views.liftSchedule.liftTemplate = {
                     iconMask:true,
                     ui:'action',
                     handler:wendler.liftSchedule.controller.markLiftCompleted
+                }
+            ]
+        },
+        {
+            xtype:'toolbar',
+            id:'reps-to-beat-toolbar',
+            hidden:true,
+            docked:'top',
+            items:[
+                {
+                    xtype:'panel',
+                    width:'100%',
+                    padding:'0.828em',
+                    html:'<table class="reps-to-beat-text"><tr>' +
+                        '<td width="40%">' +
+                        'Last: ~<span id="last-one-rep-estimate">000</span>' +
+                        '</td>' +
+                        '<td width="60%" style="text-align:right">' +
+                        ' <span>Reps to beat: <span id="reps-needed-to-beat-last-estimate">00</span></span>' +
+                        '</td>' +
+                        '</tr></table>'
                 }
             ]
         },
