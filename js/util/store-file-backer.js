@@ -38,12 +38,12 @@ util.filebackup.loadStore = function (store) {
                 var existingStoreAsString = Ext.encode(Ext.pluck(store.data.items, 'data'));
                 if (fileDataAsString != existingStoreAsString) {
                     store.removeAll();
-                    store.sync();
                     for (var i = 0; i < fileStoreData.length; i++) {
                         store.add(fileStoreData[i]);
                     }
                     store.sync();
                 }
+
             }
         }, function (error) {
             if (error.code === FileError.NOT_FOUND_ERR) {
@@ -81,6 +81,7 @@ util.filebackup.storeHasChanged = function (currentStore) {
 
 util.filebackup.syncStoresToFile = function () {
     _.each(util.filebackup.storesToSync, function (store) {
+        console.log( store.getRange() );
         util.filebackup.saveStore(store);
     });
     util.filebackup.waitingToSync = false;

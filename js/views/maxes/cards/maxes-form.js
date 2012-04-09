@@ -57,14 +57,15 @@ wendler.maxes.controller.showHideTrainingMaxes = function () {
         }
     }
 };
-wendler.stores.Settings.addListener('beforesync', wendler.maxes.controller.showHideTrainingMaxes);
-wendler.stores.lifts.Lifts.addListener('beforesync', wendler.maxes.controller.rebuildMaxesList);
 
 wendler.maxes.controller.rebuildMaxesList = function () {
     Ext.getCmp('maxes-form-items').removeAll();
     Ext.getCmp('training-maxes').removeAll();
     wendler.maxes.controller.buildMaxesFromStore();
 };
+
+wendler.stores.Settings.addListener('beforesync', wendler.maxes.controller.showHideTrainingMaxes);
+wendler.stores.lifts.Lifts.addListener('beforesync', wendler.maxes.controller.rebuildMaxesList);
 
 wendler.maxes.controller.editLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-panel'));
