@@ -1,6 +1,6 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 150;
+util.filebackup.SYNC_MS = 500;
 util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
 util.filebackup.directory = 'wendler531';
@@ -38,6 +38,7 @@ util.filebackup.loadStore = function (store) {
                 var existingStoreAsString = Ext.encode(Ext.pluck(store.data.items, 'data'));
                 if (fileDataAsString != existingStoreAsString) {
                     store.removeAll();
+                    store.sync();
                     for (var i = 0; i < fileStoreData.length; i++) {
                         store.add(fileStoreData[i]);
                     }
