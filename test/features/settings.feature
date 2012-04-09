@@ -6,7 +6,7 @@ Feature: Settings
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 175 65%","5 205 75%","5 230 85%"
     And I return to the lift schedule
     And I navigate to the settings page
-    And I untoggle use training max
+    And I toggle use training max
     And I view the squat lift schedule for week 1
     Then The lift schedule shows "5 120 [warm] 40%","5 150 [warm] 50%","3 180 [warm] 60%","5 195 65%","5 225 75%","5 255 85%"
 

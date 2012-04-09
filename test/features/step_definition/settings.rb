@@ -6,7 +6,7 @@ Then /^I navigate to the settings page$/ do
   sleep @ANIMATION_DELAY
 end
 
-Then /^I untoggle use training max$/ do
+Then /^I toggle use training max$/ do
   @driver.execute_script("Ext.getCmp('use-training-max-toggle').toggle();Ext.getCmp('use-training-max-toggle').fireEvent('change');")
   sleep @ANIMATION_DELAY
 end

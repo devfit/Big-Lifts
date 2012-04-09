@@ -40,25 +40,25 @@ wendler.maxes.controller.createTrainingMaxesInput = function (record) {
 
 wendler.maxes.controller.showHideTrainingMaxes = function () {
     var settings = wendler.stores.Settings.first();
-    var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
-    if (settings.data['use-training-max']) {
-        if (trainingMaxesPanel.isHidden()) {
-            trainingMaxesPanel.flex = 1;
-            trainingMaxesPanel.show();
+
+    if (!_.isUndefined(settings)) {
+        var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
+        if (settings.data['use-training-max']) {
+            if (trainingMaxesPanel.isHidden()) {
+                trainingMaxesPanel.flex = 1;
+                trainingMaxesPanel.show();
+            }
         }
-    }
-    else {
-        if (!trainingMaxesPanel.isHidden()) {
-            trainingMaxesPanel.flex = 0;
-            trainingMaxesPanel.hide();
+        else {
+            if (!trainingMaxesPanel.isHidden()) {
+                trainingMaxesPanel.flex = 0;
+                trainingMaxesPanel.hide();
+            }
         }
     }
 };
 wendler.stores.Settings.addListener('beforesync', wendler.maxes.controller.showHideTrainingMaxes);
-wendler.stores.lifts.Lifts.addListener('beforesync', function () {
-    wendler.maxes.controller.rebuildMaxesList();
-});
-
+wendler.stores.lifts.Lifts.addListener('beforesync', wendler.maxes.controller.rebuildMaxesList);
 
 wendler.maxes.controller.rebuildMaxesList = function () {
     Ext.getCmp('maxes-form-items').removeAll();
@@ -159,7 +159,6 @@ wendler.maxes.cards.maxesForm = {
         },
         painted:function () {
             wendler.maxes.controller.buildMaxesFromStore();
-            wendler.maxes.controller.showHideTrainingMaxes(null, wendler.stores.Settings.first());
         }
     },
     items:[

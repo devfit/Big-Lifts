@@ -32,6 +32,10 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
     settingsRecord.save();
     wendler.stores.Settings.sync();
 
+    //TODO: Remove when beforesync fires properly for toggles
+    wendler.maxes.controller.showHideTrainingMaxes();
+
+
     if (!_.isUndefined(field.getName) && field.getName() === 'dateFormat') {
         wendler.controller.logEntry.updateDateFormat();
     }
