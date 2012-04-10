@@ -10,15 +10,6 @@ wendler.main.markFirstStartup = function () {
 };
 
 wendler.main.start = function () {
-    if (wendler.main.started) {
-        return;
-    }
-    if (!_.isUndefined(navigator.splashscreen)) {
-        navigator.splashscreen.hide();
-    }
-
-    wendler.main.started = true;
-
     var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
     wendler.main.markFirstStartup();
 
@@ -53,7 +44,4 @@ wendler.main.start = function () {
         }
     });
 };
-
-if (wendler.main.deviceReady) {
-    wendler.main.start();
-}
+wendler.main.start();
