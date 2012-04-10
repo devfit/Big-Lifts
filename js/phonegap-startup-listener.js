@@ -1,8 +1,6 @@
 "use strict";
-Ext.ns('wendler.main');
-
+var wendler = {main:{}};
 wendler.main.deviceReady = false;
-
 wendler.main.phoneGapReady = function () {
     wendler.main.deviceReady = true;
     if (typeof( wendler.main.start ) !== 'undefined') {
