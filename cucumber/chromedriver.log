@@ -1,0 +1,97 @@
+[0.000][INFO]:      ChromeDriver 19.0.1068.0 /usr/bin/chromedriver
+[0.246][FINE]:      Initializing session with capabilities {
+   "browserName": "chrome",
+   "chrome.detach": true,
+   "chrome.switches": [ "--allow-file-access-from-files", "--disable-web-security" ],
+   "chromeOptions": {
+      "args": [ "--allow-file-access-from-files", "--disable-web-security" ],
+      "detach": true
+   },
+   "cssSelectorsEnabled": true,
+   "javascriptEnabled": true,
+   "nativeEvents": false,
+   "platform": "ANY",
+   "rotatable": false,
+   "takesScreenshot": false,
+   "version": ""
+}
+
+[0.246][INFO]:      Using named testing interface
+[0.610][INFO]:      Connected to Chrome successfully. Version: 18.0.1025.151
+[0.623][FINE]:      Command received (/session/04c9740f1289f2475ad6991643ee6cff)
+[0.623][FINE]:      Command finished (/session/04c9740f1289f2475ad6991643ee6cff) with response {
+   "sessionId": "04c9740f1289f2475ad6991643ee6cff",
+   "status": 0,
+   "value": {
+      "acceptSslCerts": false,
+      "applicationCacheEnabled": false,
+      "browserConnectionEnabled": false,
+      "browserName": "chrome",
+      "chrome.chromedriverVersion": "19.0.1068.0",
+      "chrome.nativeEvents": false,
+      "cssSelectorsEnabled": true,
+      "databaseEnabled": false,
+      "handlesAlerts": true,
+      "javascriptEnabled": true,
+      "locationContextEnabled": false,
+      "nativeEvents": true,
+      "platform": "linux",
+      "rotatable": false,
+      "takesScreenshot": true,
+      "version": "18.0.1025.151",
+      "webStorageEnabled": false
+   }
+}
+
+[0.625][FINE]:      Command received (/session/04c9740f1289f2475ad6991643ee6cff/url) with params {
+   "url": "file:///home/skendall/work/Wendler-5-3-1/index.html"
+}
+
+[0.625][FINER]:     Waiting for all views to stop loading...
+[0.628][FINER]:     Done waiting for all views to stop loading
+[2.366][FINER]:     Waiting for all views to stop loading...
+[2.370][FINER]:     Done waiting for all views to stop loading
+[2.370][FINE]:      Command finished (/session/04c9740f1289f2475ad6991643ee6cff/url) with response {
+   "sessionId": "04c9740f1289f2475ad6991643ee6cff",
+   "status": 0,
+   "value": {
+
+   }
+}
+
+[2.372][FINE]:      Command received (/session/04c9740f1289f2475ad6991643ee6cff/element) with params {
+   "using": "id",
+   "value": "main-tab-panel"
+}
+
+[2.372][FINER]:     Waiting for all views to stop loading...
+[2.372][FINER]:     Done waiting for all views to stop loading
+[2.397][FINER]:     Waiting for all views to stop loading...
+[2.398][FINER]:     Done waiting for all views to stop loading
+[2.398][FINE]:      Command finished (/session/04c9740f1289f2475ad6991643ee6cff/element) with response {
+   "sessionId": "04c9740f1289f2475ad6991643ee6cff",
+   "status": 0,
+   "value": {
+      "ELEMENT": ":wdc:1334285812912"
+   }
+}
+
+[2.403][FINE]:      Command received (/session/04c9740f1289f2475ad6991643ee6cff/execute) with params {
+   "args": [  ],
+   "script": "return parse.restoreConvertedIds([{recordId:3,userId:'1234'}])"
+}
+
+[2.403][FINER]:     Waiting for all views to stop loading...
+[2.403][FINER]:     Done waiting for all views to stop loading
+[2.409][FINER]:     Waiting for all views to stop loading...
+[2.410][FINER]:     Done waiting for all views to stop loading
+[2.410][FINE]:      Command finished (/session/04c9740f1289f2475ad6991643ee6cff/execute) with response {
+   "sessionId": "04c9740f1289f2475ad6991643ee6cff",
+   "status": 0,
+   "value": [ {
+      "id": 3,
+      "userId": "1234"
+   } ]
+}
+
+[2.412][FINE]:      Command received (/session/04c9740f1289f2475ad6991643ee6cff)
