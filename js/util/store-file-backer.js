@@ -1,6 +1,6 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 500;
+util.filebackup.SYNC_MS = 100;
 util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
 util.filebackup.directory = 'wendler531';
