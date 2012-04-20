@@ -19,7 +19,7 @@ parse.loginUserById = function (id, callback) {
     Ext.Ajax.request({
         url:url,
         method:'GET',
-        headers:_.extend(parse.getAuthenticationHeaders(), {'Content-Type':'application/json'}),
+        headers:_.extend(parse.getParseRequestHeaders()),
         success:function (response) {
             var jsonResponse = JSON.parse(response.responseText);
             callback(jsonResponse);
@@ -36,7 +36,7 @@ parse.createUser = function (userId, callback) {
     Ext.Ajax.request({
             url:url,
             method:'POST',
-            headers:_.extend(parse.getAuthenticationHeaders(), {'Content-Type':'application/json'}),
+            headers:_.extend(parse.getParseRequestHeaders()),
             params:JSON.stringify({
                 username:userId,
                 password:userId
@@ -59,10 +59,10 @@ parse.getRecordsForUser = function (userId, recordName, callback) {
     Ext.Ajax.request({
             url:url,
             method:'GET',
-            headers:_.extend(parse.getAuthenticationHeaders(), {'Content-Type':'application/json'}),
+            headers:_.extend(parse.getParseRequestHeaders()),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
-                callback(parse.restoreConvertedIds(responseJson.results));
+                callback(responseJson.results);
             },
             failure:function (response) {
                 callback(null);
@@ -71,28 +71,14 @@ parse.getRecordsForUser = function (userId, recordName, callback) {
     );
 };
 
-parse.restoreConvertedIds = function (array) {
-    return _.map(array, function (record) {
-        var copy = _.clone(record);
-        var id = copy['recordId'];
-        delete copy['recordId'];
-        copy['id'] = id;
-        return copy;
-    });
-};
-
 parse.saveRecordForUser = function (userId, recordName, record, callback) {
     var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName;
-
-    var recordId = record.id;
-    var recordToSave = _.extend(record, {'userId':userId, 'recordId':recordId});
-    //parse tacitly fails to save the "id" column, copying the value of objectid
-    delete record['id'];
+    var recordToSave = _.extend(record, {'userId':userId});
 
     Ext.Ajax.request({
             url:url,
             method:'POST',
-            headers:_.extend(parse.getAuthenticationHeaders(), {'Content-Type':'application/json'}),
+            headers:_.extend(parse.getParseRequestHeaders()),
             params:JSON.stringify(recordToSave),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
@@ -106,7 +92,23 @@ parse.saveRecordForUser = function (userId, recordName, record, callback) {
 };
 
 parse.updateRecordForUser = function (userId, recordName, record, callback) {
+    var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName;
+    var recordToSave = _.extend(record, {'userId':userId});
 
+    Ext.Ajax.request({
+            url:url,
+            method:'PUT',
+            headers:_.extend(parse.getParseRequestHeaders()),
+            params:JSON.stringify(recordToSave),
+            success:function (response) {
+                var responseJson = JSON.parse(response.responseText);
+                callback(responseJson);
+            },
+            failure:function (response) {
+                callback(null);
+            }
+        }
+    );
 };
 
 parse.getRecordById = function (userId, recordName, recordId, callback) {
@@ -116,7 +118,7 @@ parse.getRecordById = function (userId, recordName, recordId, callback) {
     Ext.Ajax.request({
             url:url,
             method:'GET',
-            headers:_.extend(parse.getAuthenticationHeaders(), {'Content-Type':'application/json'}),
+            headers:_.extend(parse.getParseRequestHeaders()),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
                 callback(responseJson.results);
@@ -128,9 +130,10 @@ parse.getRecordById = function (userId, recordName, recordId, callback) {
     );
 };
 
-parse.getAuthenticationHeaders = function () {
+parse.getParseRequestHeaders = function () {
     return {
         'X-Parse-Application-Id':parse.APP_ID,
-        'X-Parse-REST-API-Key':parse.API_KEY
+        'X-Parse-REST-API-Key':parse.API_KEY,
+        'Content-Type':'application/json'
     };
 };
