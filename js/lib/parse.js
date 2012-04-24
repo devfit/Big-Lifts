@@ -22,7 +22,7 @@ parse.loginUserById = function (id, callback) {
         headers:_.extend(parse.getParseRequestHeaders()),
         success:function (response) {
             var jsonResponse = JSON.parse(response.responseText);
-            callback(jsonResponse);
+            callback(null, jsonResponse);
         },
         failure:function (response) {
             callback(null);
@@ -43,11 +43,10 @@ parse.createUser = function (userId, callback) {
                 uuid:device.uuid
             }),
             success:function (response) {
-                callback(true);
+                callback(null, true);
             },
             failure:function (response) {
-                var responseJson = JSON.parse(response.responseText);
-                callback(false);
+                callback(null, false);
             }
         }
     );
@@ -63,10 +62,10 @@ parse.getRecordsForUser = function (userId, recordName, callback) {
             headers:_.extend(parse.getParseRequestHeaders()),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
-                callback(recordName, responseJson.results);
+                callback(null, recordName, responseJson.results);
             },
             failure:function (response) {
-                callback(recordName, null);
+                callback(null, recordName);
             }
         }
     );
@@ -83,7 +82,7 @@ parse.saveRecordForUser = function (userId, recordName, record, callback) {
             params:JSON.stringify(recordToSave),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
-                callback(responseJson);
+                callback(null, responseJson);
             },
             failure:function (response) {
                 callback(null);
@@ -103,7 +102,7 @@ parse.updateRecordForUser = function (userId, recordName, record, callback) {
             params:JSON.stringify(recordToSave),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
-                callback(responseJson);
+                callback(null, responseJson);
             },
             failure:function (response) {
                 callback(null);
@@ -122,7 +121,7 @@ parse.getRecordById = function (userId, recordName, recordId, callback) {
             headers:_.extend(parse.getParseRequestHeaders()),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
-                callback(responseJson.results);
+                callback(null, responseJson.results);
             },
             failure:function (response) {
                 callback(null);

@@ -14,21 +14,22 @@ util.cloudbackup.watchStoreSync = function (store) {
 };
 
 util.cloudbackup.retrieveCloudData = function () {
-    util.cloudbackup.cloudRetrieveFinished = _.after(util.cloudbackup.watchedStores.length, function () {
+    util.cloudbackup.syncing = true;
+
+    var retrieveCloudDataTasks = _.map(util.cloudbackup.watchedStores, function (store) {
+        return function (callback) {
+            var className = util.proxy.getProxyNameFromStore(store);
+            parse.getRecordsForUser(util.cloudbackup.getUserIdByDeviceId(), className, function (errors, recordName, data) {
+                util.cloudbackup.cloudData[recordName] = data;
+                callback(null);
+            });
+        };
+    });
+
+    async.series(retrieveCloudDataTasks, function () {
         util.cloudbackup.syncing = false;
         util.cloudbackup.watchedStores = [];
     });
-
-    _.each(util.cloudbackup.watchedStores, function (store) {
-        var className = util.proxy.getProxyNameFromStore(store);
-        parse.getRecordsForUser(util.cloudbackup.getUserIdByDeviceId(), className, util.cloudbackup.cloudDataRetrieved);
-    });
-};
-
-util.cloudbackup.cloudRetrieveFinished = null;
-util.cloudbackup.cloudDataRetrieved = function (recordName, data) {
-    util.cloudbackup.cloudData[recordName] = data;
-    util.cloudbackup.cloudRetrieveFinished();
 };
 
 util.cloudbackup.storeHasChanged = function (store) {
@@ -43,18 +44,27 @@ util.cloudbackup.storeHasChanged = function (store) {
 };
 
 util.cloudbackup.syncStoreStoresToCloud = function () {
-    var cloudWriteFinish = _.after(util.cloudbackup.storesToSync.length, function () {
+    var syncStoreTasks = _.map(util.cloudbackup.storesToSync, function (store) {
+        return function (callback) {
+            util.cloudbackup.saveStore(store, callback);
+        }
+    });
+
+    async.series(syncStoreTasks, function () {
         util.cloudbackup.syncing = false;
         util.cloudbackup.storesToSync = [];
     });
-
-    _.each(util.cloudbackup.storesToSync, function (store) {
-        util.cloudbackup.saveStore(store, cloudWriteFinish);
-    });
 };
 
-util.cloudbackup.saveStore = function (store, callback) {
-    console.log(store.getRange());
+util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
+    var className = util.proxy.getProxyNameFromStore(store);
+    var saveRecordTasks = _.map(store.getRange(), function(model){
+       return function(callback){
+           parse.saveRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, model.data, callback);
+       };
+    });
+
+    async.series(saveRecordTasks, entireStoreSavedCallback);
 };
 
 util.cloudbackup.getUserIdByDeviceId = function () {
