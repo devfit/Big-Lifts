@@ -4,10 +4,10 @@ util.filebackup.SYNC_MS = 500;
 util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
 util.filebackup.directory = 'wendler531';
-util.filebackup.saveStore = function (store) {
+util.filebackup.saveStore = function (store, callback) {
     var data = util.filebackup.generateDataFromStore(store);
     if (data !== null) {
-        util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
+        util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data, callback);
     }
 };
 
@@ -60,24 +60,27 @@ util.filebackup.watchStoreSync = function (store) {
     }
 };
 
-util.filebackup.waitingToSync = false;
+util.filebackup.syncing = false;
 util.filebackup.storeHasChanged = function (currentStore) {
     if (!_.include(util.filebackup.storesToSync, currentStore)) {
         util.filebackup.storesToSync.push(currentStore);
 
-        if (!util.filebackup.waitingToSync) {
-            util.filebackup.waitingToSync = true;
+        if (!util.filebackup.syncing) {
+            util.filebackup.syncing = true;
             setTimeout(util.filebackup.syncStoresToFile, util.filebackup.SYNC_MS);
         }
     }
 };
 
 util.filebackup.syncStoresToFile = function () {
-    _.each(util.filebackup.storesToSync, function (store) {
-        util.filebackup.saveStore(store);
+    var fileWriteFinish = _.after(util.filebackup.storesToSync.length, function () {
+        util.filebackup.syncing = false;
+        util.filebackup.storesToSync = [];
     });
-    util.filebackup.waitingToSync = false;
-    util.filebackup.storesToSync = [];
+
+    _.each(util.filebackup.storesToSync, function (store) {
+        util.filebackup.saveStore(store, fileWriteFinish);
+    });
 };
 
 util.filebackup.deleteAllStoreFiles = function () {

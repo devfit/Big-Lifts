@@ -39,7 +39,8 @@ parse.createUser = function (userId, callback) {
             headers:_.extend(parse.getParseRequestHeaders()),
             params:JSON.stringify({
                 username:userId,
-                password:userId
+                password:userId,
+                uuid:device.uuid
             }),
             success:function (response) {
                 callback(true);
@@ -62,10 +63,10 @@ parse.getRecordsForUser = function (userId, recordName, callback) {
             headers:_.extend(parse.getParseRequestHeaders()),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
-                callback(responseJson.results);
+                callback(recordName, responseJson.results);
             },
             failure:function (response) {
-                callback(null);
+                callback(recordName, null);
             }
         }
     );
