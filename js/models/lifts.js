@@ -106,6 +106,7 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
 });
 wendler.stores.lifts.Lifts.load();
 util.filebackup.watchStoreSync(wendler.stores.lifts.Lifts);
+util.cloudbackup.watchStoreSync(wendler.stores.lifts.Lifts);
 
 wendler.stores.lifts.adjustCycleIncreaseForKg = function () {
     var lbToKg = {10:5, 5:2.5};

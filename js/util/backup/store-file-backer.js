@@ -22,12 +22,7 @@ util.filebackup.generateDataFromStore = function (store) {
 util.filebackup.storesToSync = [];
 util.filebackup.watchedStores = [];
 util.filebackup.loadAllStores = function () {
-    if (wendler.main.deviceReady) {
-        _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
-    }
-    else {
-        setTimeout(util.filebackup.loadAllStores, util.filebackup.SYNC_MS);
-    }
+    _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
 };
 
 util.filebackup.loadStore = function (store) {
@@ -54,9 +49,7 @@ util.filebackup.loadStore = function (store) {
 };
 
 util.filebackup.generateFileName = function (store) {
-    var proxyId = store.getProxy().getId();
-    proxyId = proxyId.replace('-proxy', '');
-    return proxyId + ".json";
+    return util.proxy.getProxyNameFromStore(store) + ".json";
 };
 
 util.filebackup.watchStoreSync = function (store) {
@@ -81,7 +74,6 @@ util.filebackup.storeHasChanged = function (currentStore) {
 
 util.filebackup.syncStoresToFile = function () {
     _.each(util.filebackup.storesToSync, function (store) {
-        console.log( store.getRange() );
         util.filebackup.saveStore(store);
     });
     util.filebackup.waitingToSync = false;

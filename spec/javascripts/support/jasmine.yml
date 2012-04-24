@@ -13,6 +13,8 @@
 src_files:
     - js/sencha-touch-2.0.0/sencha-touch-all.js
     - js/lib/underscore-min.js
+    - js/debug.js
+    - js/util/backup/store-cloud-backer.js
     - js/lib/parse.js
 
 # stylesheets
