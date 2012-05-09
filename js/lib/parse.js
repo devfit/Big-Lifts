@@ -91,8 +91,8 @@ parse.saveRecordForUser = function (userId, recordName, record, callback) {
     );
 };
 
-parse.updateRecordForUser = function (userId, recordName, record, callback) {
-    var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName;
+parse.updateRecordForUser = function (userId, recordName, objectId, record, callback) {
+    var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName + "/" + objectId;
     var recordToSave = _.extend(record, {'userId':userId});
 
     Ext.Ajax.request({

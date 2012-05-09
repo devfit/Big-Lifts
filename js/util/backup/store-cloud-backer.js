@@ -59,6 +59,12 @@ util.cloudbackup.syncStoreStoresToCloud = function () {
 util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
     var className = util.proxy.getProxyNameFromStore(store);
     var existingData = util.cloudbackup.cloudData[className];
+    var cloudDataById = {};
+    _.each(existingData,function(r){
+       cloudDataById[r.id] = r;
+    });
+
+
     var newRecordIds = util.cloudbackup.getNewRecordIds(existingData, store);
     var existingRecordIds = util.cloudbackup.getExistingRecordIds(existingData, store);
 
@@ -71,7 +77,14 @@ util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
         };
     });
 
-    async.series(createRecordTasks, entireStoreSavedCallback);
+    var updateRecordTasks = _.map(recordsToUpdate, function (id) {
+        return function (callback) {
+            var model = store.findRecord('id', id);
+            parse.updateRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, model.data, callback);
+        }
+    });
+
+    async.series(_.union(createRecordTasks,updateRecordTasks), entireStoreSavedCallback);
 };
 
 util.cloudbackup.getNewRecordIds = function (existingCloudData, store) {
