@@ -91,6 +91,24 @@ parse.saveRecordForUser = function (userId, recordName, record, callback) {
     );
 };
 
+parse.deleteRecordForUser = function (userId, recordName, objectId, callback) {
+    var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName + "/" + objectId;
+
+    Ext.Ajax.request({
+            url:url,
+            method:'DELETE',
+            headers:_.extend(parse.getParseRequestHeaders()),
+            success:function (response) {
+                var responseJson = JSON.parse(response.responseText);
+                callback(null, responseJson);
+            },
+            failure:function (response) {
+                callback(null);
+            }
+        }
+    );
+};
+
 parse.updateRecordForUser = function (userId, recordName, objectId, record, callback) {
     var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName + "/" + objectId;
     var recordToSave = _.extend(record, {'userId':userId});

@@ -60,15 +60,17 @@ util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
     var className = util.proxy.getProxyNameFromStore(store);
     var existingData = util.cloudbackup.cloudData[className];
     var cloudDataById = {};
-    _.each(existingData,function(r){
-       cloudDataById[r.id] = r;
+    _.each(existingData, function (r) {
+        cloudDataById[r.id] = r;
     });
 
 
     var newRecordIds = util.cloudbackup.getNewRecordIds(existingData, store);
-    var existingRecordIds = util.cloudbackup.getExistingRecordIds(existingData, store);
 
-    var recordsToUpdate = util.cloudbackup.findChangedRecords(existingData, store, existingRecordIds);
+    var existingRecordIds = util.cloudbackup.getExistingRecordIds(existingData, store);
+    var existingIdsToUpdate = util.cloudbackup.findChangedRecords(existingData, store, existingRecordIds);
+
+    var deletedIds = util.cloudbackup.findDeletedRecords(existingData, store);
 
     var createRecordTasks = _.map(newRecordIds, function (id) {
         return function (callback) {
@@ -77,14 +79,20 @@ util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
         };
     });
 
-    var updateRecordTasks = _.map(recordsToUpdate, function (id) {
+    var updateRecordTasks = _.map(existingIdsToUpdate, function (id) {
         return function (callback) {
             var model = store.findRecord('id', id);
             parse.updateRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, model.data, callback);
         }
     });
 
-    async.series(_.union(createRecordTasks,updateRecordTasks), entireStoreSavedCallback);
+    var deleteRecordTasks = _.map(deletedIds, function(id){
+       return function(callback){
+            parse.deleteRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, callback);
+       }
+    });
+
+    async.series(_.union(createRecordTasks, updateRecordTasks, deleteRecordTasks), entireStoreSavedCallback);
 };
 
 util.cloudbackup.getNewRecordIds = function (existingCloudData, store) {
@@ -107,6 +115,23 @@ util.cloudbackup.getExistingRecordIds = function (existingCloudData, store) {
     return _.intersection(currentIds, cloudIds);
 };
 
+util.cloudbackup.findDeletedRecords = function (existingData, store) {
+    var cloudIds = _.map(existingData, function (data) {
+        return data.id;
+    });
+    var currentIds = _.map(store.getRange(), function (model) {
+        return model.data.id;
+    });
+
+    return _.difference(cloudIds, currentIds);
+};
+
+util.cloudbackup.getUserIdByDeviceId = function () {
+    if (!_.isUndefined(device)) {
+        return device.uuid;
+    }
+};
+
 util.cloudbackup.findChangedRecords = function (existingData, store, existingRecordIds) {
     var existingRecordsById = {};
     _.each(existingData, function (data) {
@@ -119,12 +144,6 @@ util.cloudbackup.findChangedRecords = function (existingData, store, existingRec
 
         return !_.isEqual(cloudRecord, currentRecord);
     });
-};
-
-util.cloudbackup.getUserIdByDeviceId = function () {
-    if (!_.isUndefined(device)) {
-        return device.uuid;
-    }
 };
 
 util.cloudbackup.getFieldsFromStore = function (store) {

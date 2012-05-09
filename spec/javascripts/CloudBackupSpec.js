@@ -41,6 +41,16 @@ describe("CloudBackup", function () {
         expect(newRecordIds).toEqual([1, 2]);
     });
 
+    it("should identify deleted record ids", function(){
+        var deletedRecordIds = util.cloudbackup.findDeletedRecords([
+            {id:1},
+            {id:2},
+            {id:3},
+            {id:4}
+        ], store);
+        expect(deletedRecordIds).toEqual([4]);
+    });
+
     it("should get store field names", function () {
         Ext.define('TestModel', {
             extend:'Ext.data.Model',
