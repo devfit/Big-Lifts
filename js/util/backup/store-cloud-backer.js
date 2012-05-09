@@ -13,16 +13,20 @@ util.cloudbackup.watchStoreSync = function (store) {
     store.addListener('remove', util.cloudbackup.storeHasChanged);
 };
 
+util.cloudbackup.retrieveCloudDataTask = function(store,callback){
+    var className = util.proxy.getProxyNameFromStore(store);
+    parse.getRecordsForUser(util.cloudbackup.getUserIdByDeviceId(), className, function (errors, recordName, data) {
+        util.cloudbackup.cloudData[recordName] = data;
+        callback(null);
+    });
+};
+
 util.cloudbackup.retrieveCloudData = function () {
     util.cloudbackup.syncing = true;
 
     var retrieveCloudDataTasks = _.map(util.cloudbackup.watchedStores, function (store) {
         return function (callback) {
-            var className = util.proxy.getProxyNameFromStore(store);
-            parse.getRecordsForUser(util.cloudbackup.getUserIdByDeviceId(), className, function (errors, recordName, data) {
-                util.cloudbackup.cloudData[recordName] = data;
-                callback(null);
-            });
+            util.cloudbackup.retrieveCloudDataTask(store,callback);
         };
     });
 
@@ -88,11 +92,15 @@ util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
 
     var deleteRecordTasks = _.map(deletedIds, function(id){
        return function(callback){
-            parse.deleteRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, callback);
+           parse.deleteRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, callback);
        }
     });
 
-    async.series(_.union(createRecordTasks, updateRecordTasks, deleteRecordTasks), entireStoreSavedCallback);
+    var retrieveCloudData = function(callback){
+        util.cloudbackup.retrieveCloudDataTask(store,callback);
+    };
+
+    async.series(_.union(createRecordTasks, updateRecordTasks, deleteRecordTasks, [retrieveCloudData]), entireStoreSavedCallback);
 };
 
 util.cloudbackup.getNewRecordIds = function (existingCloudData, store) {
