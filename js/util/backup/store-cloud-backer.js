@@ -36,7 +36,7 @@ util.cloudbackup.storeHasChanged = function (store) {
     if (!_.include(util.cloudbackup.storesToSync, store)) {
         util.cloudbackup.storesToSync.push(store);
 
-        if (!util.cloudbackup.syncing) {
+        if (!util.cloudbackup.syncing && navigator.onLine) {
             util.cloudbackup.syncing = true;
             setTimeout(util.cloudbackup.syncStoreStoresToCloud, util.filebackup.SYNC_MS);
         }
