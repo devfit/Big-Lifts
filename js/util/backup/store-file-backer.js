@@ -4,10 +4,10 @@ util.filebackup.SYNC_MS = 100;
 util.filebackup.fileBackupEnabled = Ext.os.is.Linux || typeof(PhoneGap) !== 'undefined';
 
 util.filebackup.directory = 'wendler531';
-util.filebackup.saveStore = function (store) {
+util.filebackup.saveStore = function (store, callback) {
     var data = util.filebackup.generateDataFromStore(store);
     if (data !== null) {
-        util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data);
+        util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data, callback);
     }
 };
 
@@ -22,12 +22,7 @@ util.filebackup.generateDataFromStore = function (store) {
 util.filebackup.storesToSync = [];
 util.filebackup.watchedStores = [];
 util.filebackup.loadAllStores = function () {
-    if (wendler.main.deviceReady) {
-        _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
-    }
-    else {
-        setTimeout(util.filebackup.loadAllStores, util.filebackup.SYNC_MS);
-    }
+    _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
 };
 
 util.filebackup.loadStore = function (store) {
@@ -54,9 +49,7 @@ util.filebackup.loadStore = function (store) {
 };
 
 util.filebackup.generateFileName = function (store) {
-    var proxyId = store.getProxy().getId();
-    proxyId = proxyId.replace('-proxy', '');
-    return proxyId + ".json";
+    return util.proxy.getProxyNameFromStore(store) + ".json";
 };
 
 util.filebackup.watchStoreSync = function (store) {
@@ -67,25 +60,27 @@ util.filebackup.watchStoreSync = function (store) {
     }
 };
 
-util.filebackup.waitingToSync = false;
+util.filebackup.syncing = false;
 util.filebackup.storeHasChanged = function (currentStore) {
     if (!_.include(util.filebackup.storesToSync, currentStore)) {
         util.filebackup.storesToSync.push(currentStore);
 
-        if (!util.filebackup.waitingToSync) {
-            util.filebackup.waitingToSync = true;
+        if (!util.filebackup.syncing) {
+            util.filebackup.syncing = true;
             setTimeout(util.filebackup.syncStoresToFile, util.filebackup.SYNC_MS);
         }
     }
 };
 
 util.filebackup.syncStoresToFile = function () {
-    _.each(util.filebackup.storesToSync, function (store) {
-        console.log( store.getRange() );
-        util.filebackup.saveStore(store);
+    var fileWriteFinish = _.after(util.filebackup.storesToSync.length, function () {
+        util.filebackup.syncing = false;
+        util.filebackup.storesToSync = [];
     });
-    util.filebackup.waitingToSync = false;
-    util.filebackup.storesToSync = [];
+
+    _.each(util.filebackup.storesToSync, function (store) {
+        util.filebackup.saveStore(store, fileWriteFinish);
+    });
 };
 
 util.filebackup.deleteAllStoreFiles = function () {

@@ -135,7 +135,7 @@ task test() << {
         tests.eachParallel { File test ->
             exec {
                 commandLine = ['cucumber', test.getAbsolutePath(), '-f', 'progress']
-                workingDir = new File('./test')
+                workingDir = new File('./cucumber')
             }
         }
     }
