@@ -38,3 +38,4 @@ wendler.stores.LiftLogSort = Ext.create('Ext.data.Store', {
 });
 wendler.stores.LiftLogSort.load();
 util.filebackup.watchStoreSync(wendler.stores.LiftLogSort);
+util.cloudbackup.watchStoreSync(wendler.stores.LiftLogSort);

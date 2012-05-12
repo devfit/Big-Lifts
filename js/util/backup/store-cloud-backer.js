@@ -15,7 +15,7 @@ util.cloudbackup.watchStoreSync = function (store) {
 };
 
 util.cloudbackup.retrieveCloudDataTask = function (store, callback) {
-    var className = util.proxy.getProxyNameFromStore(store);
+    var className = util.cloudbackup.getClassNameForStore(store);
     parse.getRecordsForUser(util.cloudbackup.getUserIdByDeviceId(), className, function (errors, recordName, data) {
         util.cloudbackup.cloudData[recordName] = data;
         callback(null);
@@ -61,7 +61,7 @@ util.cloudbackup.syncStoreStoresToCloud = function () {
 };
 
 util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
-    var className = util.proxy.getProxyNameFromStore(store);
+    var className = util.cloudbackup.getClassNameForStore(store);
     var existingData = util.cloudbackup.cloudData[className];
     var cloudDataById = {};
     _.each(existingData, function (r) {
@@ -169,3 +169,6 @@ util.cloudbackup.getFieldsFromStore = function (store) {
     return _.pluck(store.getModel().getFields().all, '_name');
 };
 
+util.cloudbackup.getClassNameForStore = function(store){
+    return util.proxy.getProxyNameFromStore(store).replace(/-/g,'');
+};

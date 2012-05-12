@@ -67,3 +67,4 @@ wendler.stores.LiftLog = Ext.create('Ext.data.Store', {
 });
 wendler.stores.LiftLog.load();
 util.filebackup.watchStoreSync(wendler.stores.LiftLog);
+util.cloudbackup.watchStoreSync(wendler.stores.LiftLog);
