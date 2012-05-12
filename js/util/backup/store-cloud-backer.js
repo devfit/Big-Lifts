@@ -5,6 +5,7 @@ util.cloudbackup.cloudData = {};
 util.cloudbackup.watchedStores = [];
 util.cloudbackup.storesToSync = [];
 
+util.cloudbackup.dataRetrieved = false;
 util.cloudbackup.syncing = false;
 
 util.cloudbackup.watchStoreSync = function (store) {
@@ -13,7 +14,7 @@ util.cloudbackup.watchStoreSync = function (store) {
     store.addListener('remove', util.cloudbackup.storeHasChanged);
 };
 
-util.cloudbackup.retrieveCloudDataTask = function(store,callback){
+util.cloudbackup.retrieveCloudDataTask = function (store, callback) {
     var className = util.proxy.getProxyNameFromStore(store);
     parse.getRecordsForUser(util.cloudbackup.getUserIdByDeviceId(), className, function (errors, recordName, data) {
         util.cloudbackup.cloudData[recordName] = data;
@@ -26,24 +27,23 @@ util.cloudbackup.retrieveCloudData = function () {
 
     var retrieveCloudDataTasks = _.map(util.cloudbackup.watchedStores, function (store) {
         return function (callback) {
-            util.cloudbackup.retrieveCloudDataTask(store,callback);
+            util.cloudbackup.retrieveCloudDataTask(store, callback);
         };
     });
 
     async.series(retrieveCloudDataTasks, function () {
+        util.cloudbackup.dataRetrieved = true;
         util.cloudbackup.syncing = false;
-        util.cloudbackup.watchedStores = [];
     });
 };
 
 util.cloudbackup.storeHasChanged = function (store) {
-    if (!_.include(util.cloudbackup.storesToSync, store)) {
-        util.cloudbackup.storesToSync.push(store);
-
-        if (!util.cloudbackup.syncing && navigator.onLine) {
-            util.cloudbackup.syncing = true;
-            setTimeout(util.cloudbackup.syncStoreStoresToCloud, util.filebackup.SYNC_MS);
+    if (!util.cloudbackup.syncing && navigator.onLine && util.cloudbackup.dataRetrieved) {
+        if (!_.include(util.cloudbackup.storesToSync, store)) {
+            util.cloudbackup.storesToSync.push(store);
         }
+        util.cloudbackup.syncing = true;
+        setTimeout(util.cloudbackup.syncStoreStoresToCloud, util.filebackup.SYNC_MS);
     }
 };
 
@@ -68,7 +68,6 @@ util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
         cloudDataById[r.id] = r;
     });
 
-
     var newRecordIds = util.cloudbackup.getNewRecordIds(existingData, store);
 
     var existingRecordIds = util.cloudbackup.getExistingRecordIds(existingData, store);
@@ -90,14 +89,14 @@ util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
         }
     });
 
-    var deleteRecordTasks = _.map(deletedIds, function(id){
-       return function(callback){
-           parse.deleteRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, callback);
-       }
+    var deleteRecordTasks = _.map(deletedIds, function (id) {
+        return function (callback) {
+            parse.deleteRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, callback);
+        }
     });
 
-    var retrieveCloudData = function(callback){
-        util.cloudbackup.retrieveCloudDataTask(store,callback);
+    var retrieveCloudData = function (callback) {
+        util.cloudbackup.retrieveCloudDataTask(store, callback);
     };
 
     async.series(_.union(createRecordTasks, updateRecordTasks, deleteRecordTasks, [retrieveCloudData]), entireStoreSavedCallback);
@@ -150,8 +149,20 @@ util.cloudbackup.findChangedRecords = function (existingData, store, existingRec
         var cloudRecord = existingRecordsById[existingId];
         var currentRecord = store.findRecord('id', existingId).data;
 
-        return !_.isEqual(cloudRecord, currentRecord);
+        var fieldsToCompare = util.cloudbackup.getFieldsFromStore(store);
+        var recordsAreEqual = util.cloudbackup.isEqual(fieldsToCompare, cloudRecord, currentRecord);
+        return !recordsAreEqual;
     });
+};
+
+util.cloudbackup.isEqual = function (fields, record1, record2) {
+    var nonMatchingRecord = _.find(fields, function (field) {
+        if (record1[field] !== record2[field]) {
+            return true;
+        }
+    });
+
+    return _.isUndefined(nonMatchingRecord);
 };
 
 util.cloudbackup.getFieldsFromStore = function (store) {

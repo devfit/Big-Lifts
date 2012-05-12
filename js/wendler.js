@@ -43,7 +43,7 @@ wendler.main.start = function () {
                 }
             );
 
-            setTimeout(util.cloudbackup.retrieveCloudData, 1000);
+            util.cloudbackup.retrieveCloudData();
         }
     });
 };
