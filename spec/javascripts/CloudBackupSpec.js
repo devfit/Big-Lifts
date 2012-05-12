@@ -110,6 +110,11 @@ describe("CloudBackup", function () {
 
         expect(util.cloudbackup.findChangedRecords(oneChange, store, [1, 2])).toEqual([1]);
         expect(util.cloudbackup.findChangedRecords(noChanges, store, [1, 2])).toEqual([]);
+    });
 
+    it('should compare record equality', function(){
+        expect(util.cloudbackup.isEqual(['a','b'], {a:1,b:2}, {a:1,b:2,c:3})).toBeTruthy();
+        expect(util.cloudbackup.isEqual(['a','b'], {a:1,b:2}, {a:11,b:22,c:3})).toBeFalsy();
+        expect(util.cloudbackup.isEqual([], {a:3}, {a:5})).toBeTruthy();
     });
 });
