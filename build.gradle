@@ -124,7 +124,7 @@ task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplas
 
 task test() << {
     List<File> tests = []
-    new File('./test').eachFileRecurse {
+    new File('./cucumber').eachFileRecurse {
         if (it.name.endsWith('.feature')) {
             tests << it
         }
