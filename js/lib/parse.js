@@ -52,7 +52,8 @@ parse.createUser = function (userId, callback) {
     );
 };
 
-parse.getRecordsForUser = function (userId, recordName, callback) {
+parse.getRecordsForUser = function (userId, unencodedRecordName, callback) {
+    var recordName = parse.encodeRecordName(unencodedRecordName);
     var queryConstraints = {where:JSON.stringify({userId:userId})};
     var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName + "?" + Ext.urlEncode(queryConstraints);
 
@@ -62,16 +63,17 @@ parse.getRecordsForUser = function (userId, recordName, callback) {
             headers:_.extend(parse.getParseRequestHeaders()),
             success:function (response) {
                 var responseJson = JSON.parse(response.responseText);
-                callback(null, recordName, responseJson.results);
+                callback(null, parse.decodeRecordName(recordName), responseJson.results);
             },
             failure:function (response) {
-                callback(null, recordName);
+                callback(null, parse.decodeRecordName(recordName));
             }
         }
     );
 };
 
-parse.saveRecordForUser = function (userId, recordName, record, callback) {
+parse.saveRecordForUser = function (userId, unencodedRecordName, record, callback) {
+    var recordName = parse.encodeRecordName(unencodedRecordName);
     var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName;
     var recordToSave = _.extend(record, {'userId':userId});
 
@@ -91,7 +93,8 @@ parse.saveRecordForUser = function (userId, recordName, record, callback) {
     );
 };
 
-parse.deleteRecordForUser = function (userId, recordName, objectId, callback) {
+parse.deleteRecordForUser = function (userId, unencodedRecordName, objectId, callback) {
+    var recordName = parse.encodeRecordName(unencodedRecordName);
     var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName + "/" + objectId;
 
     Ext.Ajax.request({
@@ -109,7 +112,8 @@ parse.deleteRecordForUser = function (userId, recordName, objectId, callback) {
     );
 };
 
-parse.updateRecordForUser = function (userId, recordName, objectId, record, callback) {
+parse.updateRecordForUser = function (userId, unencodedRecordName, objectId, record, callback) {
+    var recordName = parse.encodeRecordName(unencodedRecordName);
     var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName + "/" + objectId;
     var recordToSave = _.extend(record, {'userId':userId});
 
@@ -129,7 +133,8 @@ parse.updateRecordForUser = function (userId, recordName, objectId, record, call
     );
 };
 
-parse.getRecordById = function (userId, recordName, recordId, callback) {
+parse.getRecordById = function (userId, unencodedRecordName, recordId, callback) {
+    var recordName = parse.encodeRecordName(unencodedRecordName);
     var queryConstraints = {where:JSON.stringify({userId:userId, recordId:recordId})};
     var url = parse.BASE_URL + "/" + parse.API_VERSION + "/classes/" + recordName + "?" + Ext.urlEncode(queryConstraints);
 
@@ -154,4 +159,12 @@ parse.getParseRequestHeaders = function () {
         'X-Parse-REST-API-Key':parse.API_KEY,
         'Content-Type':'application/json'
     };
+};
+
+parse.encodeRecordName = function (name) {
+    return name.replace(/-/g, '_');
+};
+
+parse.decodeRecordName = function (name) {
+    return name.replace(/_/g, '-');
 };

@@ -15,7 +15,7 @@ util.cloudbackup.watchStoreSync = function (store) {
 };
 
 util.cloudbackup.retrieveCloudDataTask = function (store, callback) {
-    var className = util.cloudbackup.getClassNameForStore(store);
+    var className = util.proxy.getProxyNameFromStore(store);
     parse.getRecordsForUser(util.cloudbackup.getUserIdByDeviceId(), className, function (errors, recordName, data) {
         util.cloudbackup.cloudData[recordName] = data;
         callback(null);
@@ -61,8 +61,8 @@ util.cloudbackup.syncStoreStoresToCloud = function () {
 };
 
 util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
-    var className = util.cloudbackup.getClassNameForStore(store);
-    var existingData = util.cloudbackup.cloudData[className];
+    var recordName = util.proxy.getProxyNameFromStore(store);
+    var existingData = util.cloudbackup.cloudData[recordName];
     var cloudDataById = {};
     _.each(existingData, function (r) {
         cloudDataById[r.id] = r;
@@ -78,20 +78,20 @@ util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
     var createRecordTasks = _.map(newRecordIds, function (id) {
         return function (callback) {
             var model = store.findRecord('id', id);
-            parse.saveRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, model.data, callback);
+            parse.saveRecordForUser(util.cloudbackup.getUserIdByDeviceId(), recordName, model.data, callback);
         };
     });
 
     var updateRecordTasks = _.map(existingIdsToUpdate, function (id) {
         return function (callback) {
             var model = store.findRecord('id', id);
-            parse.updateRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, model.data, callback);
+            parse.updateRecordForUser(util.cloudbackup.getUserIdByDeviceId(), recordName, cloudDataById[id].objectId, model.data, callback);
         }
     });
 
     var deleteRecordTasks = _.map(deletedIds, function (id) {
         return function (callback) {
-            parse.deleteRecordForUser(util.cloudbackup.getUserIdByDeviceId(), className, cloudDataById[id].objectId, callback);
+            parse.deleteRecordForUser(util.cloudbackup.getUserIdByDeviceId(), recordName, cloudDataById[id].objectId, callback);
         }
     });
 
@@ -99,7 +99,8 @@ util.cloudbackup.saveStore = function (store, entireStoreSavedCallback) {
         util.cloudbackup.retrieveCloudDataTask(store, callback);
     };
 
-    async.series(_.union(createRecordTasks, updateRecordTasks, deleteRecordTasks, [retrieveCloudData]), entireStoreSavedCallback);
+    var crudTasks = _.union(createRecordTasks, updateRecordTasks, deleteRecordTasks);
+    async.series(_.union(crudTasks, [retrieveCloudData]), entireStoreSavedCallback);
 };
 
 util.cloudbackup.getNewRecordIds = function (existingCloudData, store) {
@@ -151,6 +152,7 @@ util.cloudbackup.findChangedRecords = function (existingData, store, existingRec
 
         var fieldsToCompare = util.cloudbackup.getFieldsFromStore(store);
         var recordsAreEqual = util.cloudbackup.isEqual(fieldsToCompare, cloudRecord, currentRecord);
+
         return !recordsAreEqual;
     });
 };
@@ -167,8 +169,4 @@ util.cloudbackup.isEqual = function (fields, record1, record2) {
 
 util.cloudbackup.getFieldsFromStore = function (store) {
     return _.pluck(store.getModel().getFields().all, '_name');
-};
-
-util.cloudbackup.getClassNameForStore = function(store){
-    return util.proxy.getProxyNameFromStore(store).replace(/-/g,'');
 };

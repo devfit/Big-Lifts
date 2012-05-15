@@ -93,7 +93,11 @@ wendler.liftSchedule.controller.showLiftsCompletedScreen = function () {
 
 wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex) {
     var liftPropertyName = wendler.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
-    return wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week).get('completed');
+    var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
+    if( liftCompletion ){
+        return liftCompletion.get('completed');
+    }
+    return false;
 };
 
 wendler.liftSchedule.controller.refreshLiftSelectorLifts = function () {
@@ -110,7 +114,7 @@ wendler.views.liftSchedule.liftSelector = {
     activeItem:wendler.liftSchedule.controller.getStartingWeek() - 1,
     listeners:{
         show:function () {
-            wendler.liftSchedule.controller.setupLiftSelector;
+            wendler.liftSchedule.controller.setupLiftSelector();
             wendler.navigation.resetBack();
         },
         initialize:function () {
