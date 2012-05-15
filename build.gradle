@@ -130,6 +130,10 @@ task test() << {
         }
     }
 
+    exec {
+        commandLine = ['rake', 'jasmine:ci']
+        workingDir = new File('./spec')
+    }
 
     GParsPool.withPool(4) {
         tests.eachParallel { File test ->
