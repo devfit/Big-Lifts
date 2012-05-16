@@ -32,8 +32,9 @@ util.cloudbackup.retrieveCloudData = function () {
     });
 
     async.series(retrieveCloudDataTasks, function () {
-        util.cloudbackup.dataRetrieved = true;
-        util.cloudbackup.syncing = false;
+        util.cloudbackup.storesToSync = _.clone(util.cloudbackup.watchedStores);
+        util.cloudbackup.syncing = true;
+        util.cloudbackup.syncStoresToCloud();
     });
 };
 
@@ -43,11 +44,11 @@ util.cloudbackup.storeHasChanged = function (store) {
             util.cloudbackup.storesToSync.push(store);
         }
         util.cloudbackup.syncing = true;
-        setTimeout(util.cloudbackup.syncStoreStoresToCloud, util.filebackup.SYNC_MS);
+        setTimeout(util.cloudbackup.syncStoresToCloud, util.filebackup.SYNC_MS);
     }
 };
 
-util.cloudbackup.syncStoreStoresToCloud = function () {
+util.cloudbackup.syncStoresToCloud = function (callback) {
     var syncStoreTasks = _.map(util.cloudbackup.storesToSync, function (store) {
         return function (callback) {
             util.cloudbackup.saveStore(store, callback);
@@ -57,6 +58,7 @@ util.cloudbackup.syncStoreStoresToCloud = function () {
     async.series(syncStoreTasks, function () {
         util.cloudbackup.syncing = false;
         util.cloudbackup.storesToSync = [];
+        util.cloudbackup.dataRetrieved = true;
     });
 };
 

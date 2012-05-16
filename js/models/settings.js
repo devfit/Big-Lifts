@@ -6,12 +6,12 @@ Ext.define('Settings', {
     config:{
         fields:[
             {name:'id', type:'integer'},
-            {name:'show-warmup-sets', type:'integer'},
+            {name:'showWarmupSets', type:'integer'},
             {name:'units', type:'string'},
-            {name:'rounding-value', type:'string'},
-            {name:'rounding-type', type:'string'},
-            {name:'use-training-max', type:'integer', defaultValue:1},
-            {name:'training-max-percentage', type:'integer', defaultValue:90},
+            {name:'roundingValue', type:'string'},
+            {name:'roundingType', type:'string'},
+            {name:'useTrainingMax', type:'integer', defaultValue:1},
+            {name:'trainingMaxPercentage', type:'integer', defaultValue:90},
             {name:'exportEmail', type:'string', defaultValue:''},
             {name:'lockPortrait', type:'integer', defaultValue:0},
             {name:'dateFormat', type:'string', defaultValue:'MM/dd/yyyy'}
@@ -24,12 +24,12 @@ Ext.define('Settings', {
 });
 
 wendler.defaults.settings = {
-    'show-warmup-sets':1,
+    'showWarmupSets':1,
     units:'lbs',
-    'rounding-value':'5',
-    'rounding-type':'normal',
-    'use-training-max':1,
-    'training-max-percentage':90,
+    'roundingValue':'5',
+    'roundingType':'normal',
+    'useTrainingMax':1,
+    'trainingMaxPercentage':90,
     'exportEmail':'',
     'lockPortrait':false
 };
