@@ -61,7 +61,7 @@ wendler.views.SettingsForm = {
             items:[
                 {
                     xtype:'togglefield',
-                    name:'show-warmup-sets',
+                    name:'showWarmupSets',
                     label:"Show warmup"
                 },
                 {
@@ -72,25 +72,25 @@ wendler.views.SettingsForm = {
                 },
                 {
                     xtype:'selectfield',
-                    name:'rounding-value',
+                    name:'roundingValue',
                     label:'Round to',
                     options:wendler.settings.options.roundingValues
                 },
                 {
                     xtype:'selectfield',
-                    name:'rounding-type',
+                    name:'roundingType',
                     label:'Rounding',
                     options:wendler.settings.options.roundingType
                 },
                 {
                     xtype:'togglefield',
-                    name:'use-training-max',
+                    name:'useTrainingMax',
                     label:'Use training max',
                     id:'use-training-max-toggle'
                 },
                 {
                     xtype:'numberfield',
-                    name:'training-max-percentage',
+                    name:'trainingMaxPercentage',
                     label:'Training %'
                 },
                 {

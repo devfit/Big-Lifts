@@ -12,7 +12,7 @@ Then /^I toggle use training max$/ do
 end
 
 When /^I set the training percentage to (\d+)$/ do |percentage|
-  trainingMaxPercentageInput = @driver.find_element(:name => 'training-max-percentage')
+  trainingMaxPercentageInput = @driver.find_element(:name => 'trainingMaxPercentage')
   trainingMaxPercentageInput.clear()
   trainingMaxPercentageInput.send_keys(percentage)
   sleep @ANIMATION_DELAY

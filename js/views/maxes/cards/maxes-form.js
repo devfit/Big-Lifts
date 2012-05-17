@@ -26,7 +26,7 @@ wendler.maxes.controller.createMaxesInput = function (record) {
 };
 
 wendler.maxes.controller.createTrainingMaxesInput = function (record) {
-    var trainingMaxPercentage = wendler.stores.Settings.first().data['training-max-percentage'] / 100.0;
+    var trainingMaxPercentage = wendler.stores.Settings.first().data['trainingMaxPercentage'] / 100.0;
     var trainingMax = util.roundNumber(trainingMaxPercentage * record.data.max, '0.5', 'normal');
     var liftProperty = record.data.propertyName;
     Ext.getCmp('training-maxes').add({
@@ -43,7 +43,7 @@ wendler.maxes.controller.showHideTrainingMaxes = function () {
 
     if (!_.isUndefined(settings)) {
         var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
-        if (settings.data['use-training-max']) {
+        if (settings.data['useTrainingMax']) {
             if (trainingMaxesPanel.isHidden()) {
                 trainingMaxesPanel.flex = 1;
                 trainingMaxesPanel.show();
@@ -72,7 +72,7 @@ wendler.maxes.controller.editLiftButtonPressed = function () {
 };
 
 wendler.maxes.controller.updateTrainingPercentageDisplay = function () {
-    var trainingMaxPercentage = wendler.stores.Settings.first().data['training-max-percentage'];
+    var trainingMaxPercentage = wendler.stores.Settings.first().data['trainingMaxPercentage'];
     var trainingMaxPercentageIndicator = Ext.get('training-max-percentage-indicator');
     if (trainingMaxPercentageIndicator !== null) {
         trainingMaxPercentageIndicator.setHtml(trainingMaxPercentage);

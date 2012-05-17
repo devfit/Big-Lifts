@@ -3,12 +3,12 @@ Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.controller');
 
 wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     var settings = wendler.stores.Settings.first();
-    var trainingMaxPercentage = wendler.stores.Settings.first().data['training-max-percentage'] / 100.0;
-    var trainingMaxModifier = settings.get('use-training-max') == 1 ? trainingMaxPercentage : 1.0;
+    var trainingMaxPercentage = wendler.stores.Settings.first().data['trainingMaxPercentage'] / 100.0;
+    var trainingMaxModifier = settings.get('useTrainingMax') == 1 ? trainingMaxPercentage : 1.0;
 
     var unroundedWeight = max * percentage * trainingMaxModifier / 100.0;
-    var roundingValue = wendler.stores.Settings.first().data['rounding-value'];
-    var roundingType = wendler.stores.Settings.first().data['rounding-type'];
+    var roundingValue = wendler.stores.Settings.first().data['roundingValue'];
+    var roundingType = wendler.stores.Settings.first().data['roundingType'];
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
 };
 
@@ -57,7 +57,7 @@ wendler.liftSchedule.controller.getLiftRowClass = function (values) {
 };
 
 wendler.liftSchedule.controller.updateLiftValues = function () {
-    var showWarmupSets = wendler.stores.Settings.first().data['show-warmup-sets'];
+    var showWarmupSets = wendler.stores.Settings.first().data['showWarmupSets'];
 
     var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
     if (liftRecord !== null) {

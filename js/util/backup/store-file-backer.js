@@ -22,10 +22,18 @@ util.filebackup.generateDataFromStore = function (store) {
 util.filebackup.storesToSync = [];
 util.filebackup.watchedStores = [];
 util.filebackup.loadAllStores = function () {
-    _.each(util.filebackup.watchedStores, util.filebackup.loadStore);
+    var loadStoreTasks = _.map(util.filebackup.watchedStores, function (store) {
+        return function (callback) {
+            util.filebackup.loadStore(store, callback);
+        };
+    });
+
+    async.parallel(loadStoreTasks, function (errors, success) {
+        wendler.maxes.controller.rebuildMaxesList();
+    });
 };
 
-util.filebackup.loadStore = function (store) {
+util.filebackup.loadStore = function (store, callback) {
     util.withNoFilters(store, function () {
         util.files.read(util.filebackup.directory, util.filebackup.generateFileName(store), function (fileDataAsString) {
             var fileStoreData = JSON.parse(fileDataAsString);
@@ -38,12 +46,15 @@ util.filebackup.loadStore = function (store) {
                     }
                     store.sync();
                 }
-
             }
+
+            callback(null, true);
         }, function (error) {
             if (error.code === FileError.NOT_FOUND_ERR) {
                 util.filebackup.storeHasChanged(store);
             }
+
+            callback(null, false);
         });
     });
 };
