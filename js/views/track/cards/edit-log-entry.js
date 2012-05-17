@@ -153,9 +153,16 @@ wendler.views.log.cards.EditLogEntry = {
     scroll:'vertical',
     style:'padding-top:0px',
     bodyStyle:'padding-top:0px',
+    _listenersBound: false,
     listeners:{
-        painted:function () {
-            Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);
+        painted: function(){
+            if( !this._listenersBound )
+            {
+                Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);
+                this._listenersBound = true;
+            }
+        },
+        initialize:function () {
             Ext.getCmp('edit-log-fieldset').add(wendler.views.log.cards.generateEditLogEntryFieldsetItems());
         },
         show:function () {
