@@ -49,7 +49,6 @@ wendler.stores.Settings = Ext.create('Ext.data.Store',{
         load:wendler.stores.recovery.setupDefaultSettings
     }
 });
-wendler.stores.Settings.load();
 util.filebackup.watchStoreSync(wendler.stores.Settings);
 util.cloudbackup.watchStoreSync(wendler.stores.Settings);
 

@@ -94,7 +94,7 @@ wendler.liftSchedule.controller.showLiftsCompletedScreen = function () {
 wendler.liftSchedule.controller.liftHasBeenCompleted = function (week, liftIndex) {
     var liftPropertyName = wendler.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
     var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
-    if( liftCompletion ){
+    if (liftCompletion) {
         return liftCompletion.get('completed');
     }
     return false;
@@ -106,7 +106,11 @@ wendler.liftSchedule.controller.refreshLiftSelectorLifts = function () {
     });
 };
 
-wendler.stores.lifts.Lifts.addListener('beforesync', wendler.liftSchedule.controller.refreshLiftSelectorLifts);
+wendler.stores.lifts.Lifts.addListener('beforesync', function () {
+    if (wendler.main.deviceReady) {
+        wendler.liftSchedule.controller.refreshLiftSelectorLifts();
+    }
+});
 
 wendler.views.liftSchedule.liftSelector = {
     xtype:'tabpanel',

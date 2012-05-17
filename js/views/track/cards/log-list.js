@@ -20,7 +20,11 @@ wendler.controller.logList.sortAndRefreshList = function () {
     wendler.stores.LiftLog.sort(liftLogSort.data.property, liftLogSort.data.ascending ? 'ASC' : 'DESC');
     Ext.getCmp('lift-log-list').refresh();
 };
-wendler.stores.LiftLog.addListener('beforesync', wendler.controller.logList.sortAndRefreshList);
+wendler.stores.LiftLog.addListener('beforesync', function(){
+    if( wendler.main.deviceReady ){
+        wendler.controller.logList.sortAndRefreshList();
+    }
+});
 
 wendler.controller.logList.showSortMenu = function () {
     var sortToolbar = Ext.getCmp('track-sort-toolbar');
@@ -126,7 +130,9 @@ wendler.controller.logList.updateAscendingText = function () {
 };
 
 wendler.stores.Settings.addListener('beforesync',function(){
-    Ext.getCmp('lift-log-list').refresh();
+    if( wendler.main.deviceReady ){
+        Ext.getCmp('lift-log-list').refresh();
+    }
 });
 
 wendler.views.log.cards.LogList = {

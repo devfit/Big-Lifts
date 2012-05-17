@@ -29,6 +29,5 @@ wendler.stores.CurrentCycle = Ext.create('Ext.data.Store', {
         load:wendler.stores.recovery.setupDefaultCurrentCycle
     }
 });
-wendler.stores.CurrentCycle.load();
 util.filebackup.watchStoreSync(wendler.stores.CurrentCycle);
 util.cloudbackup.watchStoreSync(wendler.stores.CurrentCycle);

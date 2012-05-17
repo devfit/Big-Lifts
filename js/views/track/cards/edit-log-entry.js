@@ -156,6 +156,7 @@ wendler.views.log.cards.EditLogEntry = {
     listeners:{
         painted:function () {
             Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);
+            Ext.getCmp('edit-log-fieldset').add(wendler.views.log.cards.generateEditLogEntryFieldsetItems());
         },
         show:function () {
             if (Ext.get('edit-log-notes')) {
@@ -190,8 +191,7 @@ wendler.views.log.cards.EditLogEntry = {
         {
             id:'edit-log-fieldset',
             xtype:'fieldset',
-            style:'margin-top: 7px; margin-bottom: 7px;',
-            items:wendler.views.log.cards.generateEditLogEntryFieldsetItems()
+            style:'margin-top: 7px; margin-bottom: 7px;'
         },
         {
             xtype:'panel',

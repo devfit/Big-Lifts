@@ -41,19 +41,17 @@ wendler.maxes.controller.createTrainingMaxesInput = function (record) {
 wendler.maxes.controller.showHideTrainingMaxes = function () {
     var settings = wendler.stores.Settings.first();
 
-    if (!_.isUndefined(settings)) {
-        var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
-        if (settings.data['useTrainingMax']) {
-            if (trainingMaxesPanel.isHidden()) {
-                trainingMaxesPanel.flex = 1;
-                trainingMaxesPanel.show();
-            }
+    var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
+    if (settings.data['useTrainingMax']) {
+        if (trainingMaxesPanel.isHidden()) {
+            trainingMaxesPanel.flex = 1;
+            trainingMaxesPanel.show();
         }
-        else {
-            if (!trainingMaxesPanel.isHidden()) {
-                trainingMaxesPanel.flex = 0;
-                trainingMaxesPanel.hide();
-            }
+    }
+    else {
+        if (!trainingMaxesPanel.isHidden()) {
+            trainingMaxesPanel.flex = 0;
+            trainingMaxesPanel.hide();
         }
     }
 };
@@ -64,8 +62,17 @@ wendler.maxes.controller.rebuildMaxesList = function () {
     wendler.maxes.controller.buildMaxesFromStore();
 };
 
-wendler.stores.Settings.addListener('beforesync', wendler.maxes.controller.showHideTrainingMaxes);
-wendler.stores.lifts.Lifts.addListener('beforesync', wendler.maxes.controller.rebuildMaxesList);
+wendler.stores.Settings.addListener('beforesync', function () {
+    if (wendler.main.deviceReady) {
+        wendler.maxes.controller.showHideTrainingMaxes();
+    }
+});
+wendler.stores.lifts.Lifts.addListener('beforesync', function () {
+    if (wendler.main.deviceReady) {
+        wendler.maxes.controller.rebuildMaxesList();
+    }
+});
+
 
 wendler.maxes.controller.editLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-panel'));

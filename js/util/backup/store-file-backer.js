@@ -21,40 +21,47 @@ util.filebackup.generateDataFromStore = function (store) {
 
 util.filebackup.storesToSync = [];
 util.filebackup.watchedStores = [];
-util.filebackup.loadAllStores = function () {
+util.filebackup.loadAllStores = function (storesLoadedCallback) {
     var loadStoreTasks = _.map(util.filebackup.watchedStores, function (store) {
         return function (callback) {
             util.filebackup.loadStore(store, callback);
         };
     });
 
-    async.parallel(loadStoreTasks, function (errors, success) {
-        wendler.maxes.controller.rebuildMaxesList();
-    });
+    async.parallel(loadStoreTasks, storesLoadedCallback);
 };
 
 util.filebackup.loadStore = function (store, callback) {
     util.withNoFilters(store, function () {
         util.files.read(util.filebackup.directory, util.filebackup.generateFileName(store), function (fileDataAsString) {
             var fileStoreData = JSON.parse(fileDataAsString);
+
             if (fileStoreData.length > 0) {
-                var existingStoreAsString = Ext.encode(Ext.pluck(store.data.items, 'data'));
-                if (fileDataAsString != existingStoreAsString) {
-                    store.removeAll();
-                    for (var i = 0; i < fileStoreData.length; i++) {
-                        store.add(fileStoreData[i]);
+                store.addListener('load', function () {
+                    var existingStoreAsString = Ext.encode(Ext.pluck(store.data.items, 'data'));
+                    if (fileDataAsString != existingStoreAsString) {
+                        store.removeAll();
+                        for (var i = 0; i < fileStoreData.length; i++) {
+                            store.add(fileStoreData[i]);
+                        }
+                        store.sync();
                     }
-                    store.sync();
-                }
+                    callback(null, true);
+                });
+                store.load();
             }
-
-            callback(null, true);
+            else {
+                callback(null, true);
+            }
         }, function (error) {
-            if (error.code === FileError.NOT_FOUND_ERR) {
-                util.filebackup.storeHasChanged(store);
-            }
+            store.addListener('load', function () {
+                if (error.code === FileError.NOT_FOUND_ERR) {
+                    util.filebackup.storeHasChanged(store);
+                }
 
-            callback(null, false);
+                callback(null, false);
+            });
+            store.load();
         });
     });
 };

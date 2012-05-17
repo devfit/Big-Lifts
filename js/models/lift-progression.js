@@ -102,6 +102,5 @@ wendler.stores.lifts.LiftProgression = Ext.create('Ext.data.Store', {
         load:wendler.stores.recovery.setupDefaultLiftProgressions
     }
 });
-wendler.stores.lifts.LiftProgression.load();
 util.filebackup.watchStoreSync(wendler.stores.lifts.LiftProgression);
 util.cloudbackup.watchStoreSync(wendler.stores.lifts.LiftProgression);
