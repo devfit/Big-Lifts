@@ -92,12 +92,11 @@ util.files.read = function (directory, filename, successCallback, errorCallback)
         reader.onloadend = function (e) {
             successCallback(e.target.result);
         };
-        reader.onerror = errorCallback;
         reader.readAsText(file);
     };
 
     var fileEntryObtained = function (fileEntry) {
-        fileEntry.file(fileObtained);
+        fileEntry.file(fileObtained, errorCallback);
     };
 
     var fileSystemObtained = function (fileSystem) {
