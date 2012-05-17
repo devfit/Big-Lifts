@@ -19,9 +19,6 @@
     <icon src="icons/icon-72x72.png" width="72" height="72"/>
     <icon src="icons/icon-114x114.png" width="114" height="114"/>
 
-    <gap:splash src="splashes/splash480x800.png" width="480" height="800"/>
-    <gap:splash src="splashes/splash320x480.png" width="320" height="480"/>
-
     <preference name="permissions" value="none"/>
     <feature name="http://api.phonegap.com/1.0/file"/>
 
