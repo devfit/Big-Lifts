@@ -39,6 +39,7 @@ util.filebackup.loadStore = function (store, callback) {
                 store.addListener('load', function () {
                     var existingStoreAsString = Ext.encode(Ext.pluck(store.data.items, 'data'));
                     if (fileDataAsString != existingStoreAsString) {
+                        alert( fileDataAsString );
                         store.removeAll();
                         for (var i = 0; i < fileStoreData.length; i++) {
                             store.add(fileStoreData[i]);
