@@ -27,7 +27,7 @@ wendler.main.start = function () {
                                 docked:'bottom',
                                 layout:{ pack:'center', align:'center' }
                             },
-                            activeItem:0,
+                            activeItem:startTab,
                             items:[
                                 Ext.create('Wendler.views.LiftSchedule'),
                                 Ext.create('Wendler.views.Maxes'),
