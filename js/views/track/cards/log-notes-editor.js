@@ -1,9 +1,12 @@
 wendler.controller.logEntry.returnFromEditNotes = function (newNotes) {
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'right'});
-    wendler.controller.logEntry.currentRecord.set('notes', newNotes);
 
-    wendler.controller.logEntry.currentRecord.save();
-    wendler.stores.LiftLog.sync();
+    if( !_.isUndefined( wendler.controller.logEntry.currentRecord ) ){
+        wendler.controller.logEntry.currentRecord.set('notes', newNotes);
+
+        wendler.controller.logEntry.currentRecord.save();
+        wendler.stores.LiftLog.sync();
+    }
 
     wendler.controller.logEntry.displayNotes(newNotes);
 };

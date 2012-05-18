@@ -55,7 +55,7 @@ util.filebackup.loadStore = function (store, callback) {
             }
         }, function (error) {
             store.addListener('load', function () {
-                if (error.code === FileError.NOT_FOUND_ERR) {
+                if (_.has(error, 'code') && error.code === FileError.NOT_FOUND_ERR) {
                     util.filebackup.storeHasChanged(store);
                 }
 
