@@ -32,9 +32,9 @@ util.files.BYTES_PER_KB = 1024;
 util.files.KB_PER_MB = 1024;
 util.files.requestedFileSystemSizeBytes = Ext.os.is.Linux ? 5 * util.files.KB_PER_MB * util.files.BYTES_PER_KB : 0;
 util.files.requestFileSystem = function (fileSystemObtainedCallback, errorCallback) {
-    window.requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
+    var requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
     var type = typeof(LocalFileSystem) !== 'undefined' ? LocalFileSystem.PERSISTENT : window.TEMPORARY;
-    window.requestFileSystem(type, util.files.requestedFileSystemSizeBytes, fileSystemObtainedCallback, function (error) {
+    requestFileSystem(type, util.files.requestedFileSystemSizeBytes, fileSystemObtainedCallback, function (error) {
         util.files.errorCallback(error);
         if( errorCallback ){
             errorCallback(error);
