@@ -33,7 +33,13 @@ util.filebackup.loadAllStores = function (storesLoadedCallback) {
 util.filebackup.loadStore = function (store, callback) {
     util.withNoFilters(store, function () {
         util.files.read(util.filebackup.directory, util.filebackup.generateFileName(store), function (fileDataAsString) {
-            var fileStoreData = JSON.parse(fileDataAsString);
+            var fileStoreData = null;
+            try {
+                JSON.parse(fileDataAsString);
+            }
+            catch (e) {
+                callback(null, false);
+            }
 
             if (fileStoreData.length > 0) {
                 store.addListener('load', function () {
