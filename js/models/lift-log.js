@@ -12,9 +12,7 @@ Ext.define('LiftLog', {
             {name:'expectedReps', type:'int'},
             {name:'week', type:'int'},
             {name:'cycle', type:'int'},
-            {name:'timestamp', type:'int'},
-            //type: date is broken on Android 2.2. Maintain this property until all customers have migrated data
-            {name:'date', type:'date'}
+            {name:'timestamp', type:'int'}
         ],
         proxy:{
             type:'localstorage',

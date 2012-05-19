@@ -38,18 +38,21 @@ util.cloudbackup.retrieveCloudData = function () {
     });
 };
 
+util.cloudbackup.cloudSyncRetryInterval = 2000;
 util.cloudbackup.storeHasChanged = function (store) {
-    if (!_.include(util.cloudbackup.storesToSync, store)) {
-        util.cloudbackup.storesToSync.push(store);
-    }
+    if (!util.cloudbackup.syncing) {
+        if (!_.include(util.cloudbackup.storesToSync, store)) {
+            util.cloudbackup.storesToSync.push(store);
+        }
 
-    if (!util.cloudbackup.syncing && navigator.onLine && util.cloudbackup.dataRetrieved) {
-        util.cloudbackup.syncing = true;
-        setTimeout(util.cloudbackup.syncStoresToCloud, util.filebackup.SYNC_MS);
+        if (navigator.onLine && util.cloudbackup.dataRetrieved) {
+            setTimeout(util.cloudbackup.syncStoresToCloud, util.filebackup.SYNC_MS);
+        }
     }
 };
 
 util.cloudbackup.syncStoresToCloud = function (callback) {
+    util.cloudbackup.syncing = true;
     var syncStoreTasks = _.map(util.cloudbackup.storesToSync, function (store) {
         return function (callback) {
             util.cloudbackup.saveStore(store, callback);
