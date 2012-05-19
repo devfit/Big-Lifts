@@ -39,10 +39,11 @@ util.cloudbackup.retrieveCloudData = function () {
 };
 
 util.cloudbackup.storeHasChanged = function (store) {
+    if (!_.include(util.cloudbackup.storesToSync, store)) {
+        util.cloudbackup.storesToSync.push(store);
+    }
+
     if (!util.cloudbackup.syncing && navigator.onLine && util.cloudbackup.dataRetrieved) {
-        if (!_.include(util.cloudbackup.storesToSync, store)) {
-            util.cloudbackup.storesToSync.push(store);
-        }
         util.cloudbackup.syncing = true;
         setTimeout(util.cloudbackup.syncStoresToCloud, util.filebackup.SYNC_MS);
     }
