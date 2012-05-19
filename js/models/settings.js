@@ -2,7 +2,7 @@
 Ext.ns('wendler.defaults', 'wendler.stores.recovery', 'wendler.settings.options');
 
 Ext.define('Settings', {
-    extend: 'Ext.data.Model',
+    extend:'Ext.data.Model',
     config:{
         fields:[
             {name:'id', type:'integer'},
@@ -43,13 +43,16 @@ wendler.stores.recovery.setupDefaultSettings = function () {
     });
 };
 
-wendler.stores.Settings = Ext.create('Ext.data.Store',{
+wendler.stores.Settings = Ext.create('Ext.data.Store', {
     model:'Settings',
     listeners:{
-        load:wendler.stores.recovery.setupDefaultSettings
+        load:function () {
+            wendler.stores.recovery.setupDefaultSettings();
+            util.filebackup.watchStoreSync(wendler.stores.Settings);
+        }
     }
 });
-util.filebackup.watchStoreSync(wendler.stores.Settings);
+wendler.stores.Settings.load();
 util.cloudbackup.watchStoreSync(wendler.stores.Settings);
 
 wendler.settings.options.units = [
@@ -71,6 +74,6 @@ wendler.settings.options.roundingType = [
 ];
 
 wendler.settings.options.dateFormats = [
-    {text: "Month/Day/Year", value: "MM/dd/yyyy"},
-    {text: "Day/Month/Year", value: "dd/MM/yyyy"}
+    {text:"Month/Day/Year", value:"MM/dd/yyyy"},
+    {text:"Day/Month/Year", value:"dd/MM/yyyy"}
 ];

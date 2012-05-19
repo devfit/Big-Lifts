@@ -95,6 +95,7 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
         load:function () {
             wendler.stores.recovery.setupDefaultLifts();
             wendler.stores.migrations.liftModelMigration();
+            util.filebackup.watchStoreSync(wendler.stores.lifts.Lifts);
         }
     },
     sorters:[
@@ -104,7 +105,7 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
         }
     ]
 });
-util.filebackup.watchStoreSync(wendler.stores.lifts.Lifts);
+wendler.stores.lifts.Lifts.load();
 util.cloudbackup.watchStoreSync(wendler.stores.lifts.Lifts);
 
 wendler.stores.lifts.adjustCycleIncreaseForKg = function () {

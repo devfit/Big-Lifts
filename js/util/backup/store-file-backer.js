@@ -1,6 +1,6 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 1000;
+util.filebackup.SYNC_MS = 300;
 
 util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store, callback) {
@@ -20,15 +20,6 @@ util.filebackup.generateDataFromStore = function (store) {
 
 util.filebackup.storesToSync = [];
 util.filebackup.watchedStores = [];
-util.filebackup.loadAllStores = function (storesLoadedCallback) {
-    var loadStoreTasks = _.map(util.filebackup.watchedStores, function (store) {
-        return function (callback) {
-            util.filebackup.loadStore(store, callback);
-        };
-    });
-
-    async.parallel(loadStoreTasks, storesLoadedCallback);
-};
 
 util.filebackup.loadStore = function (store, callback) {
     util.withNoFilters(store, function () {
@@ -55,7 +46,6 @@ util.filebackup.loadStore = function (store, callback) {
                     }
                     callback(null, true);
                 });
-                store.load();
             }
             else {
                 callback(null, true);
@@ -68,7 +58,6 @@ util.filebackup.loadStore = function (store, callback) {
 
                 callback(null, false);
             });
-            store.load();
         });
     });
 };

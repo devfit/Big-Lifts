@@ -41,11 +41,12 @@ wendler.stores.BarWeight = Ext.create('Ext.data.Store', {
                     });
                 }
             }
+
+            util.filebackup.watchStoreSync(wendler.stores.BarWeight);
         }
     }
 });
 wendler.stores.BarWeight.load();
-util.filebackup.watchStoreSync(wendler.stores.BarWeight);
 
 Ext.define('Plates', {
     extend:'Ext.data.Model',
@@ -80,8 +81,9 @@ wendler.stores.Plates = Ext.create('Ext.data.Store', {
                 store.add(wendler.stores.defaults.defaultPlates);
                 store.sync();
             }
+            util.filebackup.watchStoreSync(wendler.stores.Plates);
         }
     }
 });
-util.filebackup.watchStoreSync(wendler.stores.Plates);
+wendler.stores.Plates.load();
 util.cloudbackup.watchStoreSync(wendler.stores.Plates);

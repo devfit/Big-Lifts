@@ -50,8 +50,9 @@ wendler.stores.lifts.LiftCompletion = Ext.create('Ext.data.Store', {
     listeners:{
         load:function () {
             wendler.stores.migrations.liftCompletionMigration();
+            util.filebackup.watchStoreSync(wendler.stores.lifts.LiftCompletion);
         }
     }
 });
-util.filebackup.watchStoreSync(wendler.stores.lifts.LiftCompletion);
+wendler.stores.lifts.LiftCompletion.load();
 util.cloudbackup.watchStoreSync(wendler.stores.lifts.LiftCompletion);

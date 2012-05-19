@@ -99,8 +99,11 @@ wendler.stores.recovery.setupDefaultLiftProgressions = function () {
 wendler.stores.lifts.LiftProgression = Ext.create('Ext.data.Store', {
     model:'LiftProgression',
     listeners:{
-        load:wendler.stores.recovery.setupDefaultLiftProgressions
+        load:function(){
+            wendler.stores.recovery.setupDefaultLiftProgressions();
+            util.filebackup.watchStoreSync(wendler.stores.lifts.LiftProgression);
+        }
     }
 });
-util.filebackup.watchStoreSync(wendler.stores.lifts.LiftProgression);
+wendler.stores.lifts.LiftProgression.load();
 util.cloudbackup.watchStoreSync(wendler.stores.lifts.LiftProgression);
