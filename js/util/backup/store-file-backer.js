@@ -1,11 +1,12 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 300;
+util.filebackup.SYNC_MS = 250;
 
 util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store, callback) {
     var data = util.filebackup.generateDataFromStore(store);
     if (data !== null) {
+        console.log ( data );
         util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data, callback);
     }
 };
@@ -30,7 +31,9 @@ util.filebackup.loadStore = function (store, callback) {
             }
             catch (e) {
                 console.log( e );
-                callback(null, false);
+                if( callback ){
+                    callback(null, false);
+                }
                 return;
             }
 
@@ -70,6 +73,7 @@ util.filebackup.watchStoreSync = function (store) {
     util.filebackup.watchedStores.push(store);
     store.addListener('beforesync', util.filebackup.storeHasChanged);
     store.addListener('remove', util.filebackup.storeHasChanged);
+    util.filebackup.loadStore(store);
 };
 
 util.filebackup.syncing = false;
@@ -85,6 +89,7 @@ util.filebackup.storeHasChanged = function (currentStore) {
 };
 
 util.filebackup.syncStoresToFile = function () {
+    console.log( "Syncing" );
     var fileWriteFinish = _.after(util.filebackup.storesToSync.length, function () {
         util.filebackup.syncing = false;
         util.filebackup.storesToSync = [];
