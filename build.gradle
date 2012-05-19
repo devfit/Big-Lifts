@@ -227,7 +227,7 @@ task deploy(dependsOn: ['build']) << {
         workingDir = new File('./build')
     }
     exec {
-        commandLine = ['git', 'push', 'build', 'master']
+        commandLine = ['git', 'push', 'build', 'master', '--force']
         workingDir = new File('./build')
     }
 }
