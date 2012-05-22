@@ -160,6 +160,11 @@ wendler.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
+                    ui: 'decline',
+                    text: 'Rest',
+                    id:'rest-timer'
+                },
+                {
                     id:'mark-lift-completed-button',
                     iconCls:'done',
                     iconMask:true,
