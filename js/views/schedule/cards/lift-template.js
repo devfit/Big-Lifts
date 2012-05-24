@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.controller');
+Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.controller', 'wendler.liftTemplate.controller');
 
 wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     var settings = wendler.stores.Settings.first();
@@ -12,7 +12,7 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
 };
 
-wendler.liftSchedule.controller.getAllPlatePairs = function () {
+wendler.liftTemplate.controller.getAllPlatePairs = function () {
     var platePairs = {};
     wendler.stores.Plates.each(function (r) {
         var weight = r.get('weightInLbs');
@@ -22,14 +22,14 @@ wendler.liftSchedule.controller.getAllPlatePairs = function () {
     return platePairs;
 };
 
-wendler.liftSchedule.controller.getPlateList = function (weight) {
+wendler.liftTemplate.controller.getPlateList = function (weight) {
     var barWeightConfig = wendler.stores.BarWeight.first();
     var barWeight = barWeightConfig.get('weight');
     var useCustomPlates = barWeightConfig.get('useCustomPlates');
 
     var allPlatePairs = undefined;
     if (useCustomPlates) {
-        allPlatePairs = wendler.liftSchedule.controller.getAllPlatePairs();
+        allPlatePairs = wendler.liftTemplate.controller.getAllPlatePairs();
     }
 
     var plates = util.formulas.buildPlateListForWeight(weight, barWeight, allPlatePairs);
@@ -42,7 +42,7 @@ wendler.liftSchedule.controller.getPlateList = function (weight) {
     return "[" + plates.join(',') + "]";
 };
 
-wendler.liftSchedule.controller.getLiftRowClass = function (values) {
+wendler.liftTemplate.controller.getLiftRowClass = function (values) {
     var className = '';
 
     if (values.set === 6 && values.week !== 4) {
@@ -71,7 +71,7 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
             });
         }
 
-        wendler.liftSchedule.controller.setupBestOneRepMax();
+        wendler.liftTemplate.controller.setupBestOneRepMax();
     }
     else {
         if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
@@ -80,7 +80,7 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
     }
 };
 
-wendler.liftSchedule.controller.setupBestOneRepMax = function () {
+wendler.liftTemplate.controller.setupBestOneRepMax = function () {
     if( wendler.liftSchedule.currentWeek === 4 ){
         Ext.getCmp('reps-to-beat-toolbar').hide();
         return;
@@ -115,7 +115,7 @@ wendler.liftSchedule.controller.setupBestOneRepMax = function () {
     }
 };
 
-wendler.liftSchedule.controller.selectThreeLiftsFrom = function (startIndex) {
+wendler.liftTemplate.controller.selectThreeLiftsFrom = function (startIndex) {
     var end = startIndex + 2;
     var lastIndex = wendler.stores.lifts.LiftProgression.getCount() - 1;
     if (end > lastIndex) {
@@ -128,12 +128,16 @@ wendler.liftSchedule.controller.selectThreeLiftsFrom = function (startIndex) {
     Ext.getCmp('lift-template-list').selectRange(startIndex, end);
 };
 
-wendler.liftSchedule.controller.returnToLiftSelect = function () {
+wendler.liftTemplate.controller.returnToLiftSelect = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
 };
 
-wendler.liftSchedule.controller.markLiftCompleted = function () {
+wendler.liftTemplate.controller.markLiftCompleted = function () {
     wendler.controller.liftTracking.showLiftTracking();
+};
+
+wendler.liftTemplate.controller.showRestTimer = function(){
+
 };
 
 wendler.liftSchedule.controller.persistLiftCompletion = function () {
@@ -156,13 +160,16 @@ wendler.views.liftSchedule.liftTemplate = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.liftSchedule.controller.returnToLiftSelect
+                    handler:wendler.liftTemplate.controller.returnToLiftSelect
                 },
                 {xtype:'spacer'},
                 {
+                    id:'rest-timer',
+                    iconCls:'clock',
+                    iconMask:true,
                     ui: 'decline',
                     text: 'Rest',
-                    id:'rest-timer'
+                    handler:wendler.liftTemplate.controller.showRestTimer
                 },
                 {
                     id:'mark-lift-completed-button',
@@ -203,23 +210,23 @@ wendler.views.liftSchedule.liftTemplate = {
             itemCls:'lift-row',
             listeners:{
                 itemtap:function (c, index) {
-                    wendler.liftSchedule.controller.selectThreeLiftsFrom(index);
+                    wendler.liftTemplate.controller.selectThreeLiftsFrom(index);
                 }
             },
-            itemTpl:'<p class="reps-weight {[wendler.liftSchedule.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
+            itemTpl:'<p class="reps-weight {[wendler.liftTemplate.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
                 '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +
                 (wendler.toggles.BarLoading ?
-                    '<p class="bar-loader-breakdown">{[wendler.liftSchedule.controller.getPlateList(' +
+                    '<p class="bar-loader-breakdown">{[wendler.liftTemplate.controller.getPlateList(' +
                         'wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)' +
                         ')]}</p>' : '')
         }
     ],
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftSchedule.controller.returnToLiftSelect);
+            wendler.navigation.setBackFunction(wendler.liftTemplate.controller.returnToLiftSelect);
             wendler.liftSchedule.controller.updateLiftValues();
-            wendler.liftSchedule.controller.selectThreeLiftsFrom(0);
+            wendler.liftTemplate.controller.selectThreeLiftsFrom(0);
         }
     }
 };

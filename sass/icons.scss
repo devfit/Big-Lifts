@@ -5,3 +5,7 @@ img.done, .x-button .x-icon-mask.done {
 img.settings, .x-button .x-icon-mask.settings {
   -webkit-mask-image: url('../images/settings.png');
 }
+
+img.clock, .x-button .x-icon-mask.clock {
+  -webkit-mask-image: url('../images/clock.png');
+}
