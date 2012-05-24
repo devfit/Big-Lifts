@@ -137,7 +137,7 @@ wendler.liftTemplate.controller.markLiftCompleted = function () {
 };
 
 wendler.liftTemplate.controller.showRestTimer = function(){
-
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'), {type:'slide', direction:'right'});
 };
 
 wendler.liftSchedule.controller.persistLiftCompletion = function () {
@@ -164,7 +164,7 @@ wendler.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
-                    id:'rest-timer',
+                    id: 'rest-timer-button',
                     iconCls:'clock',
                     iconMask:true,
                     ui: 'decline',

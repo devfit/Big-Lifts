@@ -26,7 +26,7 @@ Ext.define('Wendler.views.LiftSchedule', {
             wendler.views.liftSchedule.liftSelector, wendler.views.liftSchedule.liftTemplate,
             wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp,
             wendler.views.liftSchedule.LiftSettings, wendler.views.EditLiftPercentages, wendler.views.EditPercentage,
-            wendler.views.liftSchedule.LiftTracking,
+            wendler.views.liftSchedule.LiftTracking, wendler.views.liftSchedule.RestTimer,
             {
                 xtype:'firstlognoteseditor',
                 id:'first-log-notes-editor'
