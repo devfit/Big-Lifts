@@ -21,12 +21,17 @@ Ext.define('Wendler.views.LiftSchedule', {
         title:'5/3/1',
         iconCls:'icnBarbell',
         layout:'card',
-        activeItem:0,
+        activeItem:8,
         items:[
-            wendler.views.liftSchedule.liftSelector, wendler.views.liftSchedule.liftTemplate,
-            wendler.views.liftSchedule.LiftsCompletedScreen, wendler.views.liftSchedule.IncreaseMaxesHelp,
-            wendler.views.liftSchedule.LiftSettings, wendler.views.EditLiftPercentages, wendler.views.EditPercentage,
-            wendler.views.liftSchedule.LiftTracking, wendler.views.liftSchedule.RestTimer,
+            wendler.views.liftSchedule.liftSelector,
+            wendler.views.liftSchedule.liftTemplate,
+            wendler.views.liftSchedule.LiftsCompletedScreen,
+            wendler.views.liftSchedule.IncreaseMaxesHelp,
+            wendler.views.liftSchedule.LiftSettings,
+            wendler.views.EditLiftPercentages,
+            wendler.views.EditPercentage,
+            wendler.views.liftSchedule.LiftTracking,
+            wendler.views.liftSchedule.RestTimer,
             {
                 xtype:'firstlognoteseditor',
                 id:'first-log-notes-editor'

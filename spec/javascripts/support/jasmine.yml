@@ -17,6 +17,7 @@ src_files:
     - js/debug.js
     - js/util/backup/store-cloud-backer.js
     - js/lib/parse.js
+    - js/views/schedule/cards/rest-timer.js
 
 # stylesheets
 #
