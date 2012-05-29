@@ -24,11 +24,6 @@ wendler.restTimer.controller.startTimer = function(){
 wendler.restTimer.controller.timerHasEnded = function(){
     wendler.restTimer.controller.stopTimer();
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
-    wendler.restTimer.controller.playAlertSound();
-};
-
-wendler.restTimer.controller.playAlertSound = function(){
-    new Media('/sounds/cphase5.wav').play();
 };
 
 wendler.restTimer.controller.timerTick = function(){
