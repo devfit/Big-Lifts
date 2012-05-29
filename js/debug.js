@@ -14,4 +14,8 @@ if (Ext.os.is.Linux) {
         window.testData = data;
         console.log(email + " " + data);
     };
+
+    wendler.restTimer.controller.playAlertSound = function(){
+        alert("BEEP");
+    }
 }

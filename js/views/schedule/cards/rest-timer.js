@@ -21,10 +21,20 @@ wendler.restTimer.controller.startTimer = function(){
     Ext.getCmp('stop-timer-button').show();
 };
 
+wendler.restTimer.controller.timerHasEnded = function(){
+    wendler.restTimer.controller.stopTimer();
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
+    wendler.restTimer.controller.playAlertSound();
+};
+
+wendler.restTimer.controller.playAlertSound = function(){
+    new Media('sounds/cphase5.wav').play();
+};
+
 wendler.restTimer.controller.timerTick = function(){
     wendler.restTimer.controller.remainingSeconds--;
     if( wendler.restTimer.controller.remainingSeconds <= 0 ){
-        wendler.restTimer.controller.stopTimer();
+        wendler.restTimer.controller.timerHasEnded();
     }
     else{
         wendler.restTimer.controller.updateTimeDisplay();
@@ -83,15 +93,16 @@ wendler.views.liftSchedule.RestTimer = {
                     items:[
                         {
                             xtype:'container',
+                            padding: '10 0',
                             layout:{
                                 type:'hbox'
                             },
                             defaults:{
-                                width:'50%',
-                                padding:'10 10'
+                                width:'50%'
                             },
                             items:[
                                 {
+                                    padding: '0 5 0 10',
                                     xtype:'container',
                                     items:[
                                         {
@@ -108,6 +119,7 @@ wendler.views.liftSchedule.RestTimer = {
                                 },
                                 {
                                     xtype:'container',
+                                    padding: '0 10 0 5',
                                     items:[
                                         {
                                             xtype:'button',
