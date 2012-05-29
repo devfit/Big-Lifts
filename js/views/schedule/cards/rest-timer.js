@@ -28,7 +28,7 @@ wendler.restTimer.controller.timerHasEnded = function(){
 };
 
 wendler.restTimer.controller.playAlertSound = function(){
-    new Media('sounds/cphase5.wav').play();
+    new Media('/sounds/cphase5.wav').play();
 };
 
 wendler.restTimer.controller.timerTick = function(){
