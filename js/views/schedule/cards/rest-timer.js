@@ -103,6 +103,7 @@ wendler.views.liftSchedule.RestTimer = {
                                     xtype:'container',
                                     items:[
                                         {
+                                            id: 'rest-timer-decrement-button',
                                             xtype:'button',
                                             padding:'10 0',
                                             ui:'decline',
@@ -119,6 +120,7 @@ wendler.views.liftSchedule.RestTimer = {
                                     padding: '0 10 0 5',
                                     items:[
                                         {
+                                            id: 'rest-timer-increment-button',
                                             xtype:'button',
                                             padding:'10 0',
                                             ui:'confirm',
