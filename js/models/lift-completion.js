@@ -34,7 +34,7 @@ Ext.define('LiftCompletion', {
     extend:'Ext.data.Model',
     config:{
         fields:[
-            {name:'id', type:'integer'},
+            {name:'id', type:'string'},
             {name:'liftPropertyName', type:'string'},
             {name:'week', type:'integer'},
             {name:'completed', type:'boolean'}
@@ -50,8 +50,7 @@ wendler.stores.lifts.LiftCompletion = Ext.create('Ext.data.Store', {
     listeners:{
         load:function () {
             wendler.stores.migrations.liftCompletionMigration();
-            util.filebackup.watchStoreSync(wendler.stores.lifts.LiftCompletion);
         }
     }
 });
-wendler.stores.lifts.LiftCompletion.load();
+wendler.stores.push(wendler.stores.lifts.LiftCompletion);

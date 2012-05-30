@@ -5,7 +5,7 @@ Ext.define('Settings', {
     extend:'Ext.data.Model',
     config:{
         fields:[
-            {name:'id', type:'integer'},
+            {name:'id', type:'string'},
             {name:'showWarmupSets', type:'integer'},
             {name:'units', type:'string'},
             {name:'roundingValue', type:'string'},
@@ -48,11 +48,10 @@ wendler.stores.Settings = Ext.create('Ext.data.Store', {
     listeners:{
         load:function () {
             wendler.stores.recovery.setupDefaultSettings();
-            util.filebackup.watchStoreSync(wendler.stores.Settings);
         }
     }
 });
-wendler.stores.Settings.load();
+wendler.stores.push(wendler.stores.Settings);
 
 wendler.settings.options.units = [
     {text:'lbs', value:'lbs'},

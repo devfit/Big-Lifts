@@ -3,7 +3,7 @@ Ext.define('LiftProgression', {
     extend:'Ext.data.Model',
     config:{
         fields:[
-            {name:'id', type:'integer'},
+            {name:'id', type:'string'},
             {name:'week', type:'integer'},
             {name:'set', type:'integer'},
             {name:'reps', type:'integer'},
@@ -101,8 +101,7 @@ wendler.stores.lifts.LiftProgression = Ext.create('Ext.data.Store', {
     listeners:{
         load:function(){
             wendler.stores.recovery.setupDefaultLiftProgressions();
-            util.filebackup.watchStoreSync(wendler.stores.lifts.LiftProgression);
         }
     }
 });
-wendler.stores.lifts.LiftProgression.load();
+wendler.stores.push(wendler.stores.lifts.LiftProgression);

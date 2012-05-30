@@ -68,7 +68,11 @@ util.files.write = function (directory, filename, data, successCallback) {
     var deleteFileAndWrite = function (fileEntry, parentFile) {
         fileEntry.remove(function () {
             parentFile.getFile(filename, {create:true}, writeData);
-        }, util.files.errorCallback);
+        }, function(error){
+            if( error.code === FileError.NOT_FOUND_ERR ){
+                parentFile.getFile(filename, {create:true}, writeData);
+            }
+        });
     };
 
     var getFileFromDirectory = function (parentFile) {

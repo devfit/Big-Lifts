@@ -60,8 +60,7 @@ wendler.stores.LiftLog = Ext.create('Ext.data.Store', {
     listeners:{
         load:function () {
             wendler.stores.migrations.liftLogMigration();
-            util.filebackup.watchStoreSync(wendler.stores.LiftLog);
         }
     }
 });
-wendler.stores.LiftLog.load();
+wendler.stores.push(wendler.stores.LiftLog);

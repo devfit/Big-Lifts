@@ -33,8 +33,8 @@ wendler.stores.LiftLogSort = Ext.create('Ext.data.Store', {
     listeners:{
         load:function () {
             wendler.stores.recovery.setupDefaultSort();
-            util.filebackup.watchStoreSync(wendler.stores.LiftLogSort);
         }
     }
 });
-wendler.stores.LiftLogSort.load();
+util.filebackup.watchStoreSync(wendler.stores.LiftLogSort);
+wendler.stores.push(wendler.stores.LiftLogSort);

@@ -4,7 +4,7 @@ Ext.define('CurrentCycle', {
     extend:'Ext.data.Model',
     config:{
         fields:[
-            {name:'id', type:'integer'},
+            {name:'id', type:'string'},
             {name:'cycle', type:'integer'}
         ],
         proxy:{
@@ -28,8 +28,7 @@ wendler.stores.CurrentCycle = Ext.create('Ext.data.Store', {
     listeners:{
         load:function(){
             wendler.stores.recovery.setupDefaultCurrentCycle();
-            util.filebackup.watchStoreSync(wendler.stores.CurrentCycle);
         }
     }
 });
-wendler.stores.CurrentCycle.load();
+wendler.stores.push(wendler.stores.CurrentCycle);

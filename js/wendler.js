@@ -6,10 +6,15 @@ wendler.main.markFirstStartup = function () {
     if (meta.data.firstTimeInApp) {
         meta.set('firstTimeInApp', false);
         meta.save();
+        wendler.stores.Meta.sync();
     }
 };
 
 wendler.main.start = function () {
+    if( !wendler.loading.loaded ){
+        return;
+    }
+
     var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
     wendler.main.markFirstStartup();
     wendler.main.deviceReady = true;

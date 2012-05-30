@@ -22,7 +22,7 @@ Ext.define('Lift', {
     extend:'Ext.data.Model',
     config:{
         fields:[
-            {name:'id', type:'integer'},
+            {name:'id', type:'string'},
             {name:'name', type:'string'},
             {name:'propertyName', type:'string'},
             {name:'max', type:'float'},
@@ -95,7 +95,6 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
         load:function () {
             wendler.stores.recovery.setupDefaultLifts();
             wendler.stores.migrations.liftModelMigration();
-            util.filebackup.watchStoreSync(wendler.stores.lifts.Lifts);
         }
     },
     sorters:[
@@ -105,7 +104,7 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
         }
     ]
 });
-wendler.stores.lifts.Lifts.load();
+wendler.stores.push(wendler.stores.lifts.Lifts);
 
 wendler.stores.lifts.adjustCycleIncreaseForKg = function () {
     var lbToKg = {10:5, 5:2.5};

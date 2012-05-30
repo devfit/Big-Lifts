@@ -4,7 +4,7 @@ Ext.define('BarWeight', {
     extend:'Ext.data.Model',
     config:{
         fields:[
-            {name:'id', type:'integer'},
+            {name:'id', type:'string'},
             {name:'weight', type:'float'},
             {name:'useCustomPlates', type:'boolean', defaultValue: false}
         ],
@@ -52,7 +52,7 @@ Ext.define('Plates', {
     extend:'Ext.data.Model',
     config:{
         fields:[
-            {name:'id', type:'integer'},
+            {name:'id', type:'string'},
             {name:'weightInLbs', type:'float'},
             {name:'count', type:'integer'}
         ],
@@ -81,8 +81,7 @@ wendler.stores.Plates = Ext.create('Ext.data.Store', {
                 store.add(wendler.stores.defaults.defaultPlates);
                 store.sync();
             }
-            util.filebackup.watchStoreSync(wendler.stores.Plates);
         }
     }
 });
-wendler.stores.Plates.load();
+wendler.stores.push(wendler.stores.Plates);

@@ -3,7 +3,7 @@ Ext.define('Meta', {
     extend:'Ext.data.Model',
     config:{
         fields:[
-            {name:'id', type:'integer'},
+            {name:'id', type:'string'},
             {name:'firstTimeInApp', type:'boolean'}
         ],
         proxy:{
@@ -25,9 +25,7 @@ wendler.stores.Meta = Ext.create('Ext.data.Store', {
                 this.add(wendler.defaults.meta);
                 this.sync();
             }
-
-            util.filebackup.watchStoreSync(wendler.stores.Meta);
         }
     }
 });
-wendler.stores.Meta.load();
+wendler.stores.push(wendler.stores.Meta);
