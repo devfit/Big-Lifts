@@ -38,8 +38,12 @@ util.filebackup.loadStore = function (store, callback) {
 
             if (fileStoreData.length > 0) {
                 for (var i = 0; i < fileStoreData.length; i++) {
-                    var record = Ext.create( store.getProxy().getModel().getName(), fileStoreData[i] );
+                    var fileStoreRecord = fileStoreData[i];
+                    delete fileStoreRecord.id;
+
+                    var record = Ext.create(store.getProxy().getModel().getName(), fileStoreRecord);
                     record.save();
+                    store.add(record);
                 }
                 store.sync();
             }
@@ -71,9 +75,7 @@ util.filebackup.watchStoreSync = function (store) {
 };
 
 util.filebackup.storeHasChanged = function (currentStore) {
-    util.filebackup.saveStore(currentStore, function () {
-        console.log("Store saved");
-    });
+    util.filebackup.saveStore(currentStore, Ext.emptyFn);
 };
 
 util.filebackup.deleteAllStoreFiles = function () {
