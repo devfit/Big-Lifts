@@ -56,6 +56,8 @@ wendler.restTimer.controller.convertSecondsForDisplay = function (totalSeconds) 
     return minutes + ":" + (seconds >= 10 ? seconds : '0' + seconds);
 };
 
+wendler.restTimer.TIME_INTERVAL = 60;
+
 wendler.views.liftSchedule.RestTimer = {
     id:'rest-timer',
     xtype:'panel',
@@ -107,7 +109,7 @@ wendler.views.liftSchedule.RestTimer = {
                                             width:'100%',
                                             text:'-1',
                                             handler:function () {
-                                                wendler.restTimer.controller.addTime(-60);
+                                                wendler.restTimer.controller.addTime(-1 * wendler.restTimer.TIME_INTERVAL);
                                             }
                                         }
                                     ]
@@ -123,7 +125,7 @@ wendler.views.liftSchedule.RestTimer = {
                                             width:'100%',
                                             text:'+1',
                                             handler:function () {
-                                                wendler.restTimer.controller.addTime(60);
+                                                wendler.restTimer.controller.addTime(wendler.restTimer.TIME_INTERVAL);
                                             }
                                         }
                                     ]

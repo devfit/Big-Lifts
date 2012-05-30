@@ -14,4 +14,6 @@ if (Ext.os.is.Linux) {
         window.testData = data;
         console.log(email + " " + data);
     };
+
+    wendler.restTimer.TIME_INTERVAL = 3;
 }

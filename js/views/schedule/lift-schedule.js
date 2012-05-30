@@ -21,7 +21,7 @@ Ext.define('Wendler.views.LiftSchedule', {
         title:'5/3/1',
         iconCls:'icnBarbell',
         layout:'card',
-        activeItem:8,
+        activeItem:0,
         items:[
             wendler.views.liftSchedule.liftSelector,
             wendler.views.liftSchedule.liftTemplate,
