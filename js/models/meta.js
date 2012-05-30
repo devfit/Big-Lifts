@@ -31,4 +31,3 @@ wendler.stores.Meta = Ext.create('Ext.data.Store', {
     }
 });
 wendler.stores.Meta.load();
-util.cloudbackup.watchStoreSync(wendler.stores.Meta);

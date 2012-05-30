@@ -86,4 +86,3 @@ wendler.stores.Plates = Ext.create('Ext.data.Store', {
     }
 });
 wendler.stores.Plates.load();
-util.cloudbackup.watchStoreSync(wendler.stores.Plates);

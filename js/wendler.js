@@ -40,8 +40,6 @@ wendler.main.start = function () {
                     }
                 }
             );
-
-            util.cloudbackup.retrieveCloudData();
         }
     });
 };

@@ -33,4 +33,3 @@ wendler.stores.CurrentCycle = Ext.create('Ext.data.Store', {
     }
 });
 wendler.stores.CurrentCycle.load();
-util.cloudbackup.watchStoreSync(wendler.stores.CurrentCycle);

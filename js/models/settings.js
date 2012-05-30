@@ -53,7 +53,6 @@ wendler.stores.Settings = Ext.create('Ext.data.Store', {
     }
 });
 wendler.stores.Settings.load();
-util.cloudbackup.watchStoreSync(wendler.stores.Settings);
 
 wendler.settings.options.units = [
     {text:'lbs', value:'lbs'},

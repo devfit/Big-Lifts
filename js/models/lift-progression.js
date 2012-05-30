@@ -106,4 +106,3 @@ wendler.stores.lifts.LiftProgression = Ext.create('Ext.data.Store', {
     }
 });
 wendler.stores.lifts.LiftProgression.load();
-util.cloudbackup.watchStoreSync(wendler.stores.lifts.LiftProgression);
