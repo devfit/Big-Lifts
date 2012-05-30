@@ -30,7 +30,7 @@ util.filebackup.loadStore = function (store, callback) {
             }
             catch (e) {
                 store.load();
-                if (callback) {
+                if (!_.isUndefined(callback)) {
                     callback(null, false);
                 }
                 return;

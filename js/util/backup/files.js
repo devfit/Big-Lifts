@@ -34,7 +34,9 @@ util.files.requestedFileSystemSizeBytes = Ext.os.is.Linux ? 5 * util.files.KB_PE
 util.files.requestFileSystem = function (fileSystemObtainedCallback, errorCallback) {
     var requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
     if (_.isUndefined(requestFileSystem)) {
-        errorCallback();
+        if( errorCallback ){
+            errorCallback();
+        }
     }
     else {
         var type = typeof(LocalFileSystem) !== 'undefined' ? LocalFileSystem.PERSISTENT : window.TEMPORARY;
