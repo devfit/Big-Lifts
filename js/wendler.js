@@ -11,8 +11,7 @@ wendler.main.markFirstStartup = function () {
 };
 
 wendler.main.start = function () {
-    if (!wendler.loading.loaded) {
-        console.log("Start called, not yet loaded");
+    if( !wendler.loading.loaded ){
         return;
     }
 
@@ -20,10 +19,8 @@ wendler.main.start = function () {
     wendler.main.markFirstStartup();
     wendler.main.deviceReady = true;
 
-    console.log("Attempting launch");
     Ext.application({
         launch:function () {
-            console.log("Launch fired");
             Ext.create('Ext.tab.Panel', {
                     id:'main-tab-panel',
                     fullscreen:true,
