@@ -176,7 +176,7 @@ wendler.views.liftSchedule.liftTemplate = {
                     iconCls:'done',
                     iconMask:true,
                     ui:'action',
-                    handler:wendler.liftSchedule.controller.markLiftCompleted
+                    handler:wendler.liftTemplate.controller.markLiftCompleted
                 }
             ]
         },

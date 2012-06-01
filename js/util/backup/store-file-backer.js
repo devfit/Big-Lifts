@@ -1,18 +1,20 @@
 Ext.ns('util.filebackup');
 
-util.filebackup.SYNC_MS = 250;
+util.filebackup.SYNC_MS = 200;
 
 util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store, callback) {
     var data = util.filebackup.generateDataFromStore(store);
-    if (data !== null) {
-        util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data, callback);
-    }
+    setTimeout(function(){
+        if (data !== null) {
+            util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data, callback);
+        }
+    }, util.filebackup.SYNC_MS);
 };
 
 util.filebackup.generateDataFromStore = function (store) {
-    if (typeof( store.data ) === 'undefined') {
-        return null
+    if (_.isUndefined(store.data)) {
+        return null;
     }
 
     return Ext.encode(Ext.pluck(store.data.items, 'data'));
