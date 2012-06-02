@@ -1,12 +1,12 @@
 "use strict";
-Ext.ns('wendler.stores.defaults');
+Ext.ns('wendler.stores.defaults', 'wendler.stores.plates');
 Ext.define('BarWeight', {
     extend:'Ext.data.Model',
     config:{
         fields:[
             {name:'id', type:'string'},
             {name:'weight', type:'float'},
-            {name:'useCustomPlates', type:'boolean', defaultValue: false}
+            {name:'useCustomPlates', type:'boolean', defaultValue:false}
         ],
         proxy:{
             type:'localstorage',
@@ -15,7 +15,7 @@ Ext.define('BarWeight', {
     }
 });
 
-wendler.stores.defaults.loadDefaultBarWeight = function(store){
+wendler.stores.defaults.loadDefaultBarWeight = function (store) {
     var settings = wendler.stores.Settings.first();
     if (settings.get('units') === 'lbs') {
         store.add({weight:45});
@@ -32,28 +32,28 @@ wendler.stores.BarWeight = Ext.create('Ext.data.Store', {
     listeners:{
         load:function (store) {
             if (store.getCount() === 0) {
-                if( wendler.stores.Settings.getCount() > 0 ){
+                if (wendler.stores.Settings.getCount() > 0) {
                     wendler.stores.defaults.loadDefaultBarWeight(store);
                 }
-                else{
-                    wendler.stores.Settings.addListener('load', function(){
+                else {
+                    wendler.stores.Settings.addListener('load', function () {
                         wendler.stores.defaults.loadDefaultBarWeight(store);
                     });
                 }
             }
-
-            util.filebackup.watchStoreSync(wendler.stores.BarWeight);
         }
     }
 });
-wendler.stores.BarWeight.load();
+wendler.stores.push(wendler.stores.BarWeight);
 
 Ext.define('Plates', {
     extend:'Ext.data.Model',
     config:{
         fields:[
             {name:'id', type:'string'},
+            {name:'weight', type:'float'},
             {name:'weightInLbs', type:'float'},
+            {name:'units', type:'string'},
             {name:'count', type:'integer'}
         ],
         proxy:{
@@ -64,14 +64,26 @@ Ext.define('Plates', {
 });
 
 wendler.stores.defaults.defaultPlates = [
-    {weightInLbs: 45, count: 6},
-    {weightInLbs: 35, count: 6},
-    {weightInLbs: 25, count: 6},
-    {weightInLbs: 15, count: 6},
-    {weightInLbs: 10, count: 6},
-    {weightInLbs: 5, count: 6},
-    {weightInLbs: 2.5, count: 6}
+    {weight:45, count:6, units:'lbs'},
+    {weight:35, count:6, units:'lbs'},
+    {weight:25, count:6, units:'lbs'},
+    {weight:10, count:6, units:'lbs'},
+    {weight:5, count:6, units:'lbs'},
+    {weight:2.5, count:6, units:'lbs'}
 ];
+
+wendler.stores.plates.migrateWeightInLbsToWeightAndUnits = function (store) {
+    store.each(function (record) {
+        var weightInLbs = record.get('weightInLbs');
+        if (!_.isUndefined(weightInLbs)) {
+            record.set('weight', weightInLbs);
+            record.set('weightInLbs', null);
+            record.set('units', 'lbs');
+            record.save();
+        }
+    });
+    store.sync();
+};
 
 wendler.stores.Plates = Ext.create('Ext.data.Store', {
     model:'Plates',
@@ -80,6 +92,9 @@ wendler.stores.Plates = Ext.create('Ext.data.Store', {
             if (store.getCount() === 0) {
                 store.add(wendler.stores.defaults.defaultPlates);
                 store.sync();
+            }
+            else {
+                wendler.stores.plates.migrateWeightInLbsToWeightAndUnits(this);
             }
         }
     }

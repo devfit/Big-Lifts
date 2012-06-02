@@ -11,13 +11,15 @@
 #   - dist/**/*.js
 #
 src_files:
-    - js/sencha-touch-2.0.0/sencha-touch-all.js
+    - sencha-touch-2.0.0/sencha-touch-all-debug.js
     - js/lib/underscore-min.js
     - js/lib/base52.js
     - js/debug.js
     - js/util/backup/store-cloud-backer.js
     - js/lib/parse.js
     - js/views/schedule/cards/rest-timer.js
+    - js/models/stores.js
+    - js/models/plate_bar_configuration.js
 
 # stylesheets
 #
