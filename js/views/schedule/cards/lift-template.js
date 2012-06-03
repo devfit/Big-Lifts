@@ -15,7 +15,7 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
 wendler.liftTemplate.controller.getAllPlatePairs = function () {
     var platePairs = {};
     wendler.stores.Plates.each(function (r) {
-        var weight = r.get('weightInLbs');
+        var weight = r.get('weight');
         platePairs[weight] = parseInt(r.get('count') / 2);
     });
 

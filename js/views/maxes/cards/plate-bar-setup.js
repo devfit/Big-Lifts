@@ -8,7 +8,7 @@ wendler.maxes.barSetup.platesValueChanged = function (field, newCount) {
     var name = field.getName();
     var plateWeight = parseFloat(name.substring(0, name.indexOf(wendler.maxes.barSetup.PLATE_SUFFIX)));
 
-    var plateRecord = wendler.stores.Plates.findRecord('weightInLbs', plateWeight);
+    var plateRecord = wendler.stores.Plates.findRecord('weight', plateWeight);
     plateRecord.set('count', newCount);
     plateRecord.save();
 };
@@ -43,10 +43,11 @@ wendler.maxes.barSetup.removeLastPlate = function () {
 wendler.maxes.barSetup.addNewPlate = function () {
     var plateValues = Ext.getCmp('bar-setup-form').getValues();
     var weight = plateValues.newPlateWeight;
-    var units = plateValues.newPlateUnits;
 
-    if( weight > 0 ){
-        wendler.stores.Plates.add({weight:weight, units:units, count:2});
+    var recordExists = !_.isNull(wendler.stores.Plates.findRecord('weight', weight));
+
+    if (weight > 0 && !recordExists) {
+        wendler.stores.Plates.add({weight:weight, count:2});
         wendler.stores.Plates.sync();
         wendler.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
     }
@@ -55,12 +56,13 @@ wendler.maxes.barSetup.addNewPlate = function () {
 wendler.maxes.barSetup.PLATE_SUFFIX = '-lbs';
 
 wendler.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
+    var settings = wendler.stores.Settings.first();
     fieldSet.removeAll();
     wendler.stores.Plates.each(function (r) {
         fieldSet.add({
             name:r.get('weight') + wendler.maxes.barSetup.PLATE_SUFFIX,
             xtype:'numberfield',
-            label:r.get('weight') + r.get('units'),
+            label:r.get('weight') + settings.get('units'),
             value:r.get('count')
         });
     });
@@ -149,6 +151,7 @@ wendler.maxes.barSetup.BarSetup = {
                             }
                         },
                         {
+                            id: 'remove-custom-plate-button',
                             xtype:'button',
                             text:'Remove',
                             ui:'decline',
@@ -165,16 +168,11 @@ wendler.maxes.barSetup.BarSetup = {
                                     name:'newPlateWeight',
                                     xtype:'numberfield',
                                     label:'Weight'
-                                },
-                                {
-                                    xtype:'selectfield',
-                                    name:'newPlateUnits',
-                                    label:"Units",
-                                    options:wendler.settings.options.units
                                 }
                             ]
                         },
                         {
+                            id:'add-new-custom-plate-button',
                             xtype:'button',
                             text:'Add',
                             ui:'confirm',

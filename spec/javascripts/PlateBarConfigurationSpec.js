@@ -12,10 +12,8 @@ describe("Plate Bar Configuration Model", function () {
 
         expect(store.first().get('weightInLbs')).toEqual(null);
         expect(store.first().get('weight')).toEqual(45);
-        expect(store.first().get('units')).toEqual('lbs');
 
         expect(store.last().get('weightInLbs')).toEqual(null);
         expect(store.last().get('weight')).toEqual(35);
-        expect(store.last().get('units')).toEqual('lbs');
     });
 });

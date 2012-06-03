@@ -64,21 +64,20 @@ Ext.define('Plates', {
 });
 
 wendler.stores.defaults.defaultPlates = [
-    {weight:45, count:6, units:'lbs'},
-    {weight:35, count:6, units:'lbs'},
-    {weight:25, count:6, units:'lbs'},
-    {weight:10, count:6, units:'lbs'},
-    {weight:5, count:6, units:'lbs'},
-    {weight:2.5, count:6, units:'lbs'}
+    {weight:45, count:6},
+    {weight:35, count:6},
+    {weight:25, count:6},
+    {weight:10, count:6},
+    {weight:5, count:6},
+    {weight:2.5, count:6}
 ];
 
 wendler.stores.plates.migrateWeightInLbsToWeightAndUnits = function (store) {
     store.each(function (record) {
         var weightInLbs = record.get('weightInLbs');
-        if (!_.isUndefined(weightInLbs)) {
+        if (!_.isUndefined(weightInLbs) && !_.isNull(weightInLbs)) {
             record.set('weight', weightInLbs);
             record.set('weightInLbs', null);
-            record.set('units', 'lbs');
             record.save();
         }
     });
