@@ -1,2 +1,2 @@
 Ext.ns('wendler');
-wendler.version=53;
+wendler.version=54;
