@@ -28,7 +28,7 @@ wendler.controller.liftSettings.optionButtonPressed = function (option) {
 
 wendler.views.liftSchedule.LiftSettings = {
     id:'lift-settings',
-    xtype:'panel',
+    xtype:'formpanel',
     padding: 5,
     listeners:{
         show:function () {
@@ -94,11 +94,12 @@ wendler.views.liftSchedule.LiftSettings = {
             height:44,
             defaults:{
                 xtype:'panel',
-                flex:1,
-                padding:5
+                flex:1
             },
             items:[
                 {
+                    xtype: 'container',
+                    padding: '5 3 0 0',
                     items:[
                         {
                             id:'progression-option-1',
@@ -111,6 +112,8 @@ wendler.views.liftSchedule.LiftSettings = {
                     ]
                 },
                 {
+                    xtype: 'container',
+                    padding: '5 0 0 3',
                     items:[
                         {
                             id:'progression-option-2',
