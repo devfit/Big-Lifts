@@ -1,0 +1,4 @@
+/* Fixes tab icons disappearing */
+.x-tabbar > * {
+    z-index: 1;
+}
