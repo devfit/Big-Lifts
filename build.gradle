@@ -290,6 +290,13 @@ task useReleaseSigningKey(dependsOn: [getAuthToken]) << {
     println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
 }
 
+task useProReleaseSigningKey(dependsOn: [getAuthToken]) << {
+    def id = getIdForAppName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 5/3/1")
+    def devKeyId = getSigningKeyByName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 531 Pro")
+    String newKeyJson = "data={\"keys\":{\"ios\":${devKeyId}}}"
+    println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
+}
+
 task buildStatus(dependsOn: [getAuthToken]) << {
     def allAppsResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps?auth_token=${authToken}"])
     println JsonOutput.prettyPrint(JsonOutput.toJson(allAppsResult.apps[0].status))
