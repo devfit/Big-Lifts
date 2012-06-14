@@ -300,3 +300,21 @@ task buildStatus(dependsOn: [getAuthToken]) << {
     def allAppsResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps?auth_token=${authToken}"])
     println JsonOutput.prettyPrint(JsonOutput.toJson(allAppsResult.apps[0].status))
 }
+
+task buildNativeAndroidDebug() << {
+    copy {
+        from 'build'
+        exclude '.git'
+        into 'native/android/assets/www'
+    }
+    copy {
+        from 'native/android'
+        include 'cordova-*.js'
+        into 'native/android/assets/www'
+    }
+
+    exec {
+        commandLine = ['ant', 'clean', 'debug']
+        workingDir = new File('./native/android')
+    }
+}
