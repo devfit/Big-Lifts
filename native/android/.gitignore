@@ -1,0 +1,6 @@
+assets
+bin
+*.apk
+*.ap_.d
+*.ap_
+*.apk.d
