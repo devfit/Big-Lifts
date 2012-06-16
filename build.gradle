@@ -339,3 +339,9 @@ task buildNativeAndroidDebug(dependsOn: [setupAndroidAppIcons, setupAndroidAsset
         workingDir = new File('./native/android')
     }
 }
+
+task installNativeAndroidDebug(dependsOn: [buildNativeAndroidDebug]) << {
+    exec {
+        commandLine = ['adb', 'install', '-r', './native/android/bin/Wendler5_3_1-debug.apk']
+    }
+}
