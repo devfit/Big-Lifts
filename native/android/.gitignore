@@ -1,5 +1,7 @@
 assets
 bin
+gen
+*.dex
 *.apk
 *.ap_.d
 *.ap_
