@@ -301,16 +301,37 @@ task buildStatus(dependsOn: [getAuthToken]) << {
     println JsonOutput.prettyPrint(JsonOutput.toJson(allAppsResult.apps[0].status))
 }
 
-task buildNativeAndroidDebug() << {
+task setupAndroidAppIcons() << {
+    List drawableLocations = ['native/android/res/drawable', 'native/android/res/drawable-hdpi', 'native/android/res/drawable-ldpi'
+            , 'native/android/res/drawable-mdpi', 'native/android/res/drawable-xhdpi']
+    for( String location : drawableLocations ){
+        copy {
+            from 'distribution/icons'
+            include 'icon-114x114.png'
+            into location
+            rename { filename ->
+                'icon.png'
+            }
+        }
+    }
+}
+
+task setupAndroidAssets() << {
     copy {
         from 'build'
         exclude '.git'
         into 'native/android/assets/www'
     }
+}
+
+task buildNativeAndroidDebug(dependsOn: [setupAndroidAppIcons, setupAndroidAssets]) << {
     copy {
         from 'native/android'
         include 'cordova-*.js'
         into 'native/android/assets/www'
+        rename { filename ->
+            "phonegap.js"
+        }
     }
 
     exec {
