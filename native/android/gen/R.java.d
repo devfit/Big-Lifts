@@ -1,4 +1,4 @@
-/home/skendall/work/Wendler-5-3-1/native/android/gen/org/apache/cordova/example/R.java \
+/home/skendall/work/Wendler-5-3-1/native/android/gen/com/stefankendall/wendler531/R.java \
  : /home/skendall/work/Wendler-5-3-1/native/android/res/drawable-hdpi/icon.png \
 /home/skendall/work/Wendler-5-3-1/native/android/res/drawable-hdpi/ic_launcher.png \
 /home/skendall/work/Wendler-5-3-1/native/android/res/values/strings.xml \
