@@ -301,16 +301,30 @@ task buildStatus(dependsOn: [getAuthToken]) << {
     println JsonOutput.prettyPrint(JsonOutput.toJson(allAppsResult.apps[0].status))
 }
 
+final List ANDROID_DRAWABLE_LOCATIONS = ['native/android/res/drawable', 'native/android/res/drawable-hdpi', 'native/android/res/drawable-ldpi'
+        , 'native/android/res/drawable-mdpi', 'native/android/res/drawable-xhdpi']
+
 task setupAndroidAppIcons() << {
-    List drawableLocations = ['native/android/res/drawable', 'native/android/res/drawable-hdpi', 'native/android/res/drawable-ldpi'
-            , 'native/android/res/drawable-mdpi', 'native/android/res/drawable-xhdpi']
-    for( String location : drawableLocations ){
+    for( String location : ANDROID_DRAWABLE_LOCATIONS ){
         copy {
             from 'distribution/icons'
             include 'icon-114x114.png'
             into location
             rename { filename ->
                 'icon.png'
+            }
+        }
+    }
+}
+
+task setupAndroidSplashScreens() << {
+    for( String location : ANDROID_DRAWABLE_LOCATIONS ){
+        copy {
+            from 'distribution/splashes'
+            include 'splash480x800.png'
+            into location
+            rename { filename ->
+                'splash.png'
             }
         }
     }
