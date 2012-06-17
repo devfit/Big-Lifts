@@ -37,12 +37,7 @@ wendler.main.start = function () {
                         Ext.create('Wendler.views.Log'),
                         Ext.create('Wendler.views.OneRepMaxCalculator'),
                         Ext.create('Wendler.views.More')
-                    ],
-                    listeners:{
-                        activeitemchange:function () {
-                            wendler.navigation.resetBack();
-                        }
-                    }
+                    ]
                 }
             );
         }

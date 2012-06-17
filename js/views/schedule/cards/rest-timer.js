@@ -14,29 +14,29 @@ wendler.restTimer.controller.addTime = function (seconds) {
     wendler.restTimer.controller.updateTimeDisplay();
 };
 
-wendler.restTimer.controller.startTimer = function(){
+wendler.restTimer.controller.startTimer = function () {
     var ONE_SECOND = 1000;
     wendler.restTimer.controller.timerId = setInterval(wendler.restTimer.controller.timerTick, ONE_SECOND);
     Ext.getCmp('start-timer-button').hide();
     Ext.getCmp('stop-timer-button').show();
 };
 
-wendler.restTimer.controller.timerHasEnded = function(){
+wendler.restTimer.controller.timerHasEnded = function () {
     wendler.restTimer.controller.stopTimer();
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
 };
 
-wendler.restTimer.controller.timerTick = function(){
+wendler.restTimer.controller.timerTick = function () {
     wendler.restTimer.controller.remainingSeconds--;
-    if( wendler.restTimer.controller.remainingSeconds <= 0 ){
+    if (wendler.restTimer.controller.remainingSeconds <= 0) {
         wendler.restTimer.controller.timerHasEnded();
     }
-    else{
+    else {
         wendler.restTimer.controller.updateTimeDisplay();
     }
 };
 
-wendler.restTimer.controller.stopTimer = function(){
+wendler.restTimer.controller.stopTimer = function () {
     clearTimeout(wendler.restTimer.controller.timerId);
 
     Ext.getCmp('stop-timer-button').hide();
@@ -62,6 +62,11 @@ wendler.views.liftSchedule.RestTimer = {
     id:'rest-timer',
     xtype:'panel',
     layout:'fit',
+    listeners:{
+        show:function () {
+            wendler.navigation.setBackFunction(wendler.restTimer.controller.returnToLiftTemplate);
+        }
+    },
     items:[
         {
             xtype:'toolbar',
@@ -90,7 +95,7 @@ wendler.views.liftSchedule.RestTimer = {
                     items:[
                         {
                             xtype:'container',
-                            padding: '10 0',
+                            padding:'10 0',
                             layout:{
                                 type:'hbox'
                             },
@@ -99,11 +104,11 @@ wendler.views.liftSchedule.RestTimer = {
                             },
                             items:[
                                 {
-                                    padding: '0 5 0 10',
+                                    padding:'0 5 0 10',
                                     xtype:'container',
                                     items:[
                                         {
-                                            id: 'rest-timer-decrement-button',
+                                            id:'rest-timer-decrement-button',
                                             xtype:'button',
                                             padding:'10 0',
                                             ui:'decline',
@@ -117,10 +122,10 @@ wendler.views.liftSchedule.RestTimer = {
                                 },
                                 {
                                     xtype:'container',
-                                    padding: '0 10 0 5',
+                                    padding:'0 10 0 5',
                                     items:[
                                         {
-                                            id: 'rest-timer-increment-button',
+                                            id:'rest-timer-increment-button',
                                             xtype:'button',
                                             padding:'10 0',
                                             ui:'confirm',
@@ -135,21 +140,21 @@ wendler.views.liftSchedule.RestTimer = {
                             ]
                         },
                         {
-                            xtype: 'container',
-                            padding: '0 10 0 10',
+                            xtype:'container',
+                            padding:'0 10 0 10',
                             items:[
                                 {
-                                    id: 'start-timer-button',
-                                    xtype: 'button',
-                                    text: 'Start',
-                                    handler: wendler.restTimer.controller.startTimer
+                                    id:'start-timer-button',
+                                    xtype:'button',
+                                    text:'Start',
+                                    handler:wendler.restTimer.controller.startTimer
                                 },
                                 {
-                                    id: 'stop-timer-button',
-                                    hidden: true,
-                                    xtype: 'button',
-                                    text: 'Stop',
-                                    handler: wendler.restTimer.controller.stopTimer
+                                    id:'stop-timer-button',
+                                    hidden:true,
+                                    xtype:'button',
+                                    text:'Stop',
+                                    handler:wendler.restTimer.controller.stopTimer
                                 }
                             ]
                         }

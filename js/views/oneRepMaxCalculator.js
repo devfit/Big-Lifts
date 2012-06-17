@@ -30,7 +30,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
         iconCls:'search',
         listeners:{
             show:function () {
-                wendler.navigation.resetBack();
+                wendler.navigation.unbindBackEvent();
             },
             initialize:wendler.oneRepMax.controller.estimateOneRepMax
         },

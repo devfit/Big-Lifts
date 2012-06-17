@@ -82,7 +82,7 @@ wendler.views.MoreInfoList = {
     layout:'fit',
     listeners:{
         show: function(){
-            wendler.navigation.resetBack();
+            wendler.navigation.unbindBackEvent();
         }
     },
     items:[

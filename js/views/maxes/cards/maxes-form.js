@@ -144,7 +144,7 @@ wendler.maxes.cards.maxesForm = {
     scroll:'vertical',
     listeners:{
         show:function () {
-            wendler.navigation.resetBack();
+            wendler.navigation.unbindBackEvent();
         },
         initialize:function () {
             if (wendler.toggles.BarLoading) {
