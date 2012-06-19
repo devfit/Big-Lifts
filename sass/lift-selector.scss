@@ -34,6 +34,14 @@
   }
 }
 
+.x-tab.completed {
+  background-image: url(../images/tick.png);
+  background-repeat: no-repeat;
+  background-size: 70%;
+  opacity: 30%;
+  color: white;
+}
+
 .lift-row {
   .percentage {
     float: right;
