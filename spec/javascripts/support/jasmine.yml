@@ -15,7 +15,7 @@ src_files:
     - js/lib/underscore-min.js
     - js/lib/base52.js
     - js/debug.js
-    - js/util/backup/store-cloud-backer.js
+    - js/util/formulas.js
     - js/lib/parse.js
     - js/views/schedule/cards/rest-timer.js
     - js/models/stores.js
