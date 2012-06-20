@@ -15,6 +15,10 @@ wendler.main.start = function () {
         return;
     }
 
+    if( navigator.splashcreen ){
+        navigator.splashscreen.hide();
+    }
+
     var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
     wendler.main.markFirstStartup();
     wendler.main.deviceReady = true;
