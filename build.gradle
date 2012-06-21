@@ -305,7 +305,7 @@ final List ANDROID_DRAWABLE_LOCATIONS = ['native/android/res/drawable', 'native/
         , 'native/android/res/drawable-mdpi', 'native/android/res/drawable-xhdpi']
 
 task setupAndroidAppIcons() << {
-    for( String location : ANDROID_DRAWABLE_LOCATIONS ){
+    for (String location : ANDROID_DRAWABLE_LOCATIONS) {
         copy {
             from 'distribution/icons'
             include 'icon-114x114.png'
@@ -318,7 +318,7 @@ task setupAndroidAppIcons() << {
 }
 
 task setupAndroidSplashScreens() << {
-    for( String location : ANDROID_DRAWABLE_LOCATIONS ){
+    for (String location : ANDROID_DRAWABLE_LOCATIONS) {
         copy {
             from 'distribution/splashes'
             include 'splash480x800.png'
@@ -330,13 +330,15 @@ task setupAndroidSplashScreens() << {
     }
 }
 
-task setupAndroidAssets() << {
+task setupAndroidAppFiles() << {
     copy {
         from 'build'
         exclude '.git'
         into 'native/android/assets/www'
     }
+}
 
+task setupAndroidPhonegapFiles() << {
     copy {
         from 'native/android'
         include 'cordova-*.js'
@@ -347,17 +349,35 @@ task setupAndroidAssets() << {
     }
 }
 
-task buildNativeAndroidDebug(dependsOn: [setupAndroidAppIcons, setupAndroidAssets]) << {
+task setupAndroidSoundFiles() << {
+    copy {
+        from './sounds'
+        into './native/android/assets/sounds'
+        include '*.*'
+    }
+}
+
+task cleanAndroidAssets() << {
+    delete('./native/android/assets')
+    ANDROID_DRAWABLE_LOCATIONS.each {
+        delete(it)
+    }
+}
+
+task setupAndroidAssets(dependsOn: [setupAndroidAppIcons, setupAndroidSplashScreens, setupAndroidAppFiles, setupAndroidPhonegapFiles, setupAndroidSoundFiles]) << {
+}
+
+task buildNativeAndroidDebug(dependsOn: [cleanAndroidAssets, setupAndroidAssets]) << {
     exec {
         commandLine = ['ant', 'clean', 'debug']
         workingDir = new File('./native/android')
     }
 }
 
-task buildNativeAndroidRelease(dependsOn: [setupAndroidAppIcons, setupAndroidAssets]) << {
+task buildNativeAndroidRelease(dependsOn: [cleanAndroidAssets, setupAndroidAssets]) << {
     exec {
         commandLine = ['ant', 'clean', 'release']
-        workingDir = new File('./native/android')
+        workingDir = new File('./native/android/sounds')
     }
 }
 

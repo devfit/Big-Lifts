@@ -23,7 +23,19 @@ wendler.restTimer.controller.startTimer = function () {
 
 wendler.restTimer.controller.timerHasEnded = function () {
     wendler.restTimer.controller.stopTimer();
+    wendler.restTimer.controller.playTimerEndSound();
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
+};
+
+wendler.restTimer.controller.playTimerEndSound = function () {
+    if (!_.isUndefined(Media)) {
+        var restSound = new Media("/android_asset/sounds/1khz_1_5s.mp3",
+            function () {
+            }, function (error) {
+                console.log(error);
+            });
+        restSound.play();
+    }
 };
 
 wendler.restTimer.controller.timerTick = function () {
