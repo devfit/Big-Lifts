@@ -336,9 +336,7 @@ task setupAndroidAssets() << {
         exclude '.git'
         into 'native/android/assets/www'
     }
-}
 
-task buildNativeAndroidDebug(dependsOn: [setupAndroidAppIcons, setupAndroidAssets]) << {
     copy {
         from 'native/android'
         include 'cordova-*.js'
@@ -347,9 +345,18 @@ task buildNativeAndroidDebug(dependsOn: [setupAndroidAppIcons, setupAndroidAsset
             "phonegap.js"
         }
     }
+}
 
+task buildNativeAndroidDebug(dependsOn: [setupAndroidAppIcons, setupAndroidAssets]) << {
     exec {
         commandLine = ['ant', 'clean', 'debug']
+        workingDir = new File('./native/android')
+    }
+}
+
+task buildNativeAndroidRelease(dependsOn: [setupAndroidAppIcons, setupAndroidAssets]) << {
+    exec {
+        commandLine = ['ant', 'clean', 'release']
         workingDir = new File('./native/android')
     }
 }
