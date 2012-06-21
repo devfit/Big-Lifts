@@ -6,3 +6,4 @@ gen
 *.ap_.d
 *.ap_
 *.apk.d
+secure.properties
