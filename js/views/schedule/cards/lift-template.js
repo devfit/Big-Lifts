@@ -168,7 +168,6 @@ wendler.views.liftSchedule.liftTemplate = {
                     iconCls:'clock',
                     iconMask:true,
                     ui: 'decline',
-                    text: 'Rest',
                     handler:wendler.liftTemplate.controller.showRestTimer
                 },
                 {
