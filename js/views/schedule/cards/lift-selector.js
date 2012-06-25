@@ -112,6 +112,14 @@ wendler.stores.lifts.Lifts.addListener('beforesync', function () {
     }
 });
 
+wendler.liftSchedule.setupCheckedTitleWeeks = function (panel) {
+    var startingWeekIndex = wendler.liftSchedule.controller.getStartingWeek() - 1;
+    var completedWeekTabs = _.first(panel.down('.tabbar').query('.tab'), startingWeekIndex);
+    _.each(completedWeekTabs, function (tab) {
+        tab.addCls('completed');
+    });
+};
+
 wendler.views.liftSchedule.liftSelector = {
     xtype:'tabpanel',
     id:'lift-selector',
@@ -119,6 +127,7 @@ wendler.views.liftSchedule.liftSelector = {
     listeners:{
         show:function () {
             wendler.liftSchedule.controller.setupLiftSelector();
+            wendler.liftSchedule.setupCheckedTitleWeeks(this);
             wendler.navigation.unbindBackEvent();
         },
         initialize:function () {
