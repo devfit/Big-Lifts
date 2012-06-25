@@ -28,7 +28,7 @@ wendler.restTimer.controller.timerHasEnded = function () {
 };
 
 wendler.restTimer.controller.playTimerEndSound = function () {
-    if (!_.isUndefined(Media)) {
+    if (typeof(Media) !== 'undefined') {
         var restSound = new Media("/android_asset/sounds/1khz_1_5s.mp3",
             function () {
             }, function (error) {
