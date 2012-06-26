@@ -150,11 +150,6 @@ def getGitStatus() {
     p.text
 }
 
-def gitHasNoChangesToCommit() {
-    String gitStatus = getGitStatus()
-    return gitStatus.contains('no changes added to commit') || gitStatus.contains('nothing to commit')
-}
-
 def incrementJsVersion() {
     File versionFile = new File('js/version.js')
     String oldVersionCallback = versionFile.text
@@ -171,19 +166,18 @@ def incrementJsVersion() {
     return version
 }
 
-def incrementConfigVersion() {
-    File configFile = new File('config.xml')
+def incrementAndroidConfigVersion() {
+    File configFile = new File('native/android/AndroidManifest.xml')
     String oldConfig = configFile.text
-    def versionPattern = /version="(\d+)"/
-    def matcher = (oldConfig =~ versionPattern)
-    long newVersion = (matcher[0][1] as long) + 1
 
-    def versionCodePattern = /versionCode="(\d+)"/
-    matcher = (oldConfig =~ versionCodePattern)
-    long newVersionCode = (matcher[0][1] as long) + 1
+    def versionPattern = /android:versionName="(\d+)"/
+    long newVersion = ((oldConfig =~ versionPattern)[0][1] as long) + 1
+
+    def versionCodePattern = /android:versionCode="(\d+)"/
+    long newVersionCode = ((oldConfig =~ versionCodePattern)[0][1] as long) + 1
 
     String newConfig = oldConfig.replaceAll(versionPattern,
-            'version="' + newVersion + '"').replaceAll(versionCodePattern, 'versionCode="' + newVersionCode + '"')
+            'android:versionName="' + newVersion + '"').replaceAll(versionCodePattern, 'android:versionCode="' + newVersionCode + '"')
 
     configFile.withWriter { w ->
         w.write(newConfig);
@@ -193,23 +187,8 @@ def incrementConfigVersion() {
 }
 
 task version << {
-    if (!gitHasNoChangesToCommit()) {
-        throw new GradleException("There are git changes to commit. Commit or unstage changes to version this release.")
-    }
-    else {
-        def version = incrementJsVersion()
-        incrementConfigVersion()
-
-        exec {
-            commandLine = ['git', 'add', 'js/version.js', 'config.xml']
-        }
-        exec {
-            commandLine = ['git', 'commit', '-m', 'Incrementing build version']
-        }
-        exec {
-            commandLine = ['git', 'tag', version]
-        }
-    }
+    incrementJsVersion()
+    incrementAndroidConfigVersion()
 }
 
 task deploy(dependsOn: ['build']) << {
