@@ -18,7 +18,7 @@ wendler.liftSchedule.increaseMaxes.bindInputElements = function(){
 };
 
 wendler.liftSchedule.increaseMaxes.updateCycleIncrease = function (changedInput) {
-    var name = changedInput.target.name;
+    var name = changedInput.target.getAttribute('data-lift');
     var value = parseInt(changedInput.target.value);
     var liftRecord = wendler.stores.lifts.Lifts.findRecord('name', name);
     liftRecord.set('cycleIncrease', value);
@@ -61,7 +61,7 @@ wendler.views.liftSchedule.IncreaseMaxesHelp = {
             store:wendler.stores.lifts.Lifts,
             itemTpl:'<table style="width:100%"><tbody><tr>' +
                 '<td style="width:33%">{name}</td>' +
-                '<td style="width:33%"><input style="color:green; width:50px" name="{propertyName}" type="number" value="{cycleIncrease}"/></td>' +
+                '<td style="width:33%"><input style="color:green; width:50px" data-lift="{propertyName}" type="number" value="{cycleIncrease}"/></td>' +
                 '<td style="width:34%">{max} → {[values.max+values.cycleIncrease]}</td>' +
                 '</tr></tbody></table>'
         }

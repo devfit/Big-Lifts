@@ -112,12 +112,22 @@ wendler.stores.lifts.Lifts.addListener('beforesync', function () {
     }
 });
 
-wendler.liftSchedule.setupCheckedTitleWeeks = function (panel) {
+wendler.liftSchedule.setupCheckedTitleWeeks = function () {
     var startingWeekIndex = wendler.liftSchedule.controller.getStartingWeek() - 1;
-    var completedWeekTabs = _.first(panel.down('.tabbar').query('.tab'), startingWeekIndex);
-    _.each(completedWeekTabs, function (tab) {
-        tab.addCls('completed');
-    });
+    var tabs = Ext.getCmp('lift-selector').down('.tabbar').query('.tab');
+
+    if (startingWeekIndex === 0) {
+        _.each(tabs, function (tab) {
+            tab.removeCls('completed');
+        });
+    }
+    else {
+        var completedWeekTabs = _.first(tabs, startingWeekIndex);
+        _.each(completedWeekTabs, function (tab) {
+            tab.addCls('completed');
+        });
+    }
+
 };
 
 wendler.views.liftSchedule.liftSelector = {
@@ -127,7 +137,7 @@ wendler.views.liftSchedule.liftSelector = {
     listeners:{
         show:function () {
             wendler.liftSchedule.controller.setupLiftSelector();
-            wendler.liftSchedule.setupCheckedTitleWeeks(this);
+            wendler.liftSchedule.setupCheckedTitleWeeks();
             wendler.navigation.unbindBackEvent();
         },
         initialize:function () {

@@ -8,3 +8,28 @@ Feature: Increasing the cycle
     When I check off all lifts
     And I hit done on the lift completion screen
     Then the cycle is increased
+
+  Scenario: Week checkmarks are removed when a cycle is completed
+    When I view the squat lift schedule for week 1
+    When I mark the current lift completed
+    And I save the lift log
+
+    When I view the deadlift lift schedule for week 1
+    When I mark the current lift completed
+    And I save the lift log
+
+    When I view the press lift schedule for week 1
+    When I mark the current lift completed
+    And I save the lift log
+
+    When I view the bench lift schedule for week 1
+    When I mark the current lift completed
+    And I save the lift log
+
+    When I navigate to the lift schedule
+    And I click the increase cycle button
+    And I hit done on the lift completion screen
+
+    And I navigate to the lift schedule
+    And I select week 2
+    Then The week 1 tab does not have a checkmark

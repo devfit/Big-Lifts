@@ -17,13 +17,20 @@ When /^I edit the cycle increase to be ([\d\.]+)$/ do |increase|
 end
 
 When /^I check off all lifts$/ do
-  for week in 1..4
-    #SELECT THE WEEK
-    @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-tab')[week-1].click()
+  checkLiftsScript = <<END
+  wendler.stores.lifts.LiftCompletion.each(function(r){
+  if(!(r.data.liftPropertyName === 'bench' && r.data.week === 4 )){
+    r.set('completed',true); r.save(); wendler.stores.lifts.LiftCompletion.sync();
+  }
+  });
+END
+    @driver.execute_script(checkLiftsScript)
+
+    @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-tab')[3].click()
     sleep @ANIMATION_DELAY
 
     liftListItemsLength = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }.length
-    for liftIndex in 1..liftListItemsLength
+    liftIndex = 4;
       liftListItem = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }[liftIndex-1]
       liftListItem.click()
       sleep @ANIMATION_DELAY
@@ -39,8 +46,6 @@ When /^I check off all lifts$/ do
 
       #RETURN TO LIFT SCHEDULE
       @main_navigation.navigate_to(:lift_schedule)
-    end
-  end
 end
 
 

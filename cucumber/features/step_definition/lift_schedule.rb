@@ -6,6 +6,10 @@ When /^I set the (\w+) max to (\d+)$/ do |liftProperty, max|
   liftInput.send_keys max
 end
 
+When /^I select week (\d+)$/ do |week|
+  @lift_schedule_navigator.selectWeek(week)
+end
+
 When /^I view the (\w+) lift schedule for week (\d+)$/ do |liftProperty, week|
   @main_navigation.navigate_to(:lift_schedule)
   @lift_schedule_navigator.selectWeek(week)
