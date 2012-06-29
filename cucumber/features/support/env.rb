@@ -18,6 +18,12 @@ After('@premium') do
 end
 
 Before do
+  if ENV["HEADLESS"] == 'true'
+    require "headless"
+    @headless = Headless.new
+    @headless.start
+  end
+
   @ANIMATION_DELAY = 0.8
 
   testFile = ENV['TEST_FILE'] || 'index.html'
@@ -31,5 +37,6 @@ Before do
 end
 
 After do
+  @headless.destroy if defined?(@headless)
   @driver.quit
 end
