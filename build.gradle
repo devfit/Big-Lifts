@@ -356,7 +356,7 @@ task buildNativeAndroidDebug(dependsOn: [cleanAndroidAssets, setupAndroidAssets]
 task buildNativeAndroidRelease(dependsOn: [cleanAndroidAssets, setupAndroidAssets]) << {
     exec {
         commandLine = ['ant', 'clean', 'release']
-        workingDir = new File('./native/android/sounds')
+        workingDir = new File('./native/android')
     }
 }
 
