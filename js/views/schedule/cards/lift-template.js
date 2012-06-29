@@ -164,6 +164,7 @@ wendler.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
+                    style: 'z-index: 11',
                     id: 'rest-timer-button',
                     iconCls:'clock',
                     iconMask:true,
@@ -171,6 +172,7 @@ wendler.views.liftSchedule.liftTemplate = {
                     handler:wendler.liftTemplate.controller.showRestTimer
                 },
                 {
+                    style: 'z-index: 11',
                     id:'mark-lift-completed-button',
                     iconCls:'done',
                     iconMask:true,
