@@ -33,6 +33,7 @@ wendler.stores.migrations.liftCompletionMigration = function () {
 Ext.define('LiftCompletion', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'liftPropertyName', type:'string'},

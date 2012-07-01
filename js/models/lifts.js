@@ -21,6 +21,7 @@ wendler.stores.recovery.setupDefaultLifts = function () {
 Ext.define('Lift', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'name', type:'string'},

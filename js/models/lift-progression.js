@@ -2,6 +2,7 @@ Ext.ns('wendler.liftProgressions', 'wendler.stores.lifts', 'wendler.stores.recov
 Ext.define('LiftProgression', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'week', type:'integer'},

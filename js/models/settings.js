@@ -4,6 +4,7 @@ Ext.ns('wendler.defaults', 'wendler.stores.recovery', 'wendler.settings.options'
 Ext.define('Settings', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'showWarmupSets', type:'integer'},
