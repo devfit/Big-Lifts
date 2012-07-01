@@ -2,6 +2,7 @@ Ext.ns('wendler.defaults', 'wendler.stores');
 Ext.define('Meta', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'firstTimeInApp', type:'boolean'}

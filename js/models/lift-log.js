@@ -2,6 +2,7 @@ Ext.ns('wendler.defaults', 'wendler.stores.migrations');
 Ext.define('LiftLog', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'int'},
             {name:'liftName', type:'string'},

@@ -3,6 +3,7 @@ Ext.ns('wendler.stores.defaults', 'wendler.stores.plates');
 Ext.define('BarWeight', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'weight', type:'float'},
@@ -49,6 +50,7 @@ wendler.stores.push(wendler.stores.BarWeight);
 Ext.define('Plates', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'weight', type:'float'},

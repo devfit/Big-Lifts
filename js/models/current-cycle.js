@@ -3,6 +3,7 @@ Ext.ns('wendler.stores.recovery');
 Ext.define('CurrentCycle', {
     extend:'Ext.data.Model',
     config:{
+        identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'cycle', type:'integer'}
