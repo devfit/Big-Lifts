@@ -23,6 +23,7 @@ Ext.define('Wendler.views.LiftSchedule', {
         layout:'card',
         activeItem:0,
         items:[
+            wendler.views.liftSchedule.assistance.AssistanceChooser,
             wendler.views.liftSchedule.liftSelector,
             wendler.views.liftSchedule.liftTemplate,
             wendler.views.liftSchedule.LiftsCompletedScreen,
