@@ -7,7 +7,7 @@ wendler.views.liftSchedule.assistance.continueToLog = function () {
 };
 
 wendler.views.liftSchedule.assistance.showBoringButBig = function () {
-    console.log("Boring but big");
+
 };
 
 wendler.views.liftSchedule.assistance.assistanceOptions = [
