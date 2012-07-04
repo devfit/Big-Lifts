@@ -1,12 +1,36 @@
 Ext.ns("wendler.views.liftSchedule.assistance");
 
+
+wendler.views.liftSchedule.assistance.continueToLog = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+    Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+};
+
+wendler.views.liftSchedule.assistance.showBoringButBig = function () {
+    console.log("Boring but big");
+};
+
 wendler.views.liftSchedule.assistance.assistanceOptions = [
-    {text:'None', value:'none'},
-    {text:'Boring But Big', value:'none'}
+    {text:'None', handler:wendler.views.liftSchedule.assistance.continueToLog },
+    {text:'Boring But Big', handler:wendler.views.liftSchedule.assistance.showBoringButBig}
 ];
 
+wendler.views.liftSchedule.assistance.nextButtonPressed = function () {
+    var selection = Ext.getCmp('assistance-chooser-list').getSelection();
+    if (selection != []) {
+        selection[0].get('handler').call();
+    }
+};
+
+
 wendler.views.liftSchedule.assistance.AssistanceChooser = {
-    xtype:'formpanel',
+    xtype:'panel',
+    layout:'fit',
+    listeners:{
+        show:function () {
+            Ext.getCmp('assistance-chooser-list').select(0);
+        }
+    },
     items:[
         {
             docked:'top',
@@ -15,20 +39,14 @@ wendler.views.liftSchedule.assistance.AssistanceChooser = {
             items:[
                 {xtype:'button', text:'Back', ui:'back'},
                 {xtype:'spacer'},
-                {xtype:'button', text:'Next', ui:'confirm'}
+                {xtype:'button', text:'Next', ui:'confirm', handler:wendler.views.liftSchedule.assistance.nextButtonPressed}
             ]
         },
         {
-            xtype:'fieldset',
-            cls:'fieldset-title-no-margin',
-            items:[
-                {
-                    xtype:'selectfield',
-                    name:'assistance-program',
-                    label:'Type',
-                    options:wendler.views.liftSchedule.assistance.assistanceOptions
-                }
-            ]
+            id:'assistance-chooser-list',
+            xtype:'list',
+            itemTpl:'{text}',
+            data:wendler.views.liftSchedule.assistance.assistanceOptions
         }
     ]
 };
