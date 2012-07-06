@@ -9,11 +9,10 @@ public class App extends DroidGap {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        super.setIntegerProperty("loadUrlTimeoutValue", 70000);
-        super.setIntegerProperty("splashscreen", R.drawable.splash);
+        super.init();
 
-        int TEN_SECONDS = 10000;
-        super.loadUrl("file:///android_asset/www/index.html", TEN_SECONDS);
+        super.setIntegerProperty("loadUrlTimeoutValue", 70000);
+        super.loadUrl("file:///android_asset/www/index.html");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 }
