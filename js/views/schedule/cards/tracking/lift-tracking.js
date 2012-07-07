@@ -1,7 +1,7 @@
 "use strict";
-Ext.ns('wendler.views.liftSchedule', 'wendler.controller.liftTracking');
+Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.liftTracking');
 
-wendler.controller.liftTracking.logLift = function (data) {
+wendler.liftSchedule.liftTracking.logLift = function (data) {
     var expectedRepsByWeek = wendler.stores.lifts.findExpectedRepsForWeek(data.week);
     wendler.stores.LiftLog.add(
         {
@@ -20,15 +20,22 @@ wendler.controller.liftTracking.logLift = function (data) {
     wendler.stores.LiftLog.sync();
 };
 
-wendler.liftSchedule.controller.allLiftsAreCompleted = function () {
+wendler.liftSchedule.liftTracking.allLiftsAreCompleted = function () {
     var completedUniques = _.uniq(_.map(wendler.stores.lifts.LiftCompletion.getRange(), function (r) {
         return r.data.completed;
     }));
     return completedUniques.length === 1 && completedUniques[0] === true;
 };
 
-wendler.controller.liftTracking.logAndShowTracking = function () {
-    wendler.liftSchedule.controller.persistLiftCompletion();
+wendler.liftSchedule.liftTracking.persistLiftCompletion = function () {
+    var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
+    liftCompletion.set('completed', true);
+    liftCompletion.save();
+    wendler.stores.lifts.LiftCompletion.sync();
+};
+
+wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
+    wendler.liftSchedule.liftTracking.persistLiftCompletion();
 
     var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6);
     var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).data.name;
@@ -36,63 +43,48 @@ wendler.controller.liftTracking.logAndShowTracking = function () {
 
     var formValues = Ext.getCmp('lift-tracking').getValues();
     var reps = formValues['reps'];
-    var notes = wendler.controller.liftTracking.currentLiftNotes;
+    var notes = wendler.liftSchedule.liftTracking.currentLiftNotes;
     var week = wendler.liftSchedule.currentWeek;
     var weight = formValues['weight'];
     var cycle = wendler.stores.CurrentCycle.first().data.cycle;
     var units = wendler.stores.Settings.first().data.units;
 
-    wendler.controller.liftTracking.logLift({liftName:liftName, reps:reps, notes:notes, week:week, weight:weight, cycle:cycle, units:units, expectedReps:expectedReps});
+    wendler.liftSchedule.liftTracking.logLift({liftName:liftName, reps:reps, notes:notes, week:week, weight:weight, cycle:cycle, units:units, expectedReps:expectedReps});
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
 
-    if (wendler.liftSchedule.controller.allLiftsAreCompleted()) {
-        wendler.liftSchedule.controller.showLiftsCompletedScreen();
+    if (wendler.liftSchedule.liftTracking.allLiftsAreCompleted()) {
+        wendler.liftSchedule.liftTracking.showLiftsCompletedScreen();
     }
     else {
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
     }
 };
 
-wendler.controller.liftTracking.recomputeOneRepMax = function () {
+wendler.liftSchedule.liftTracking.recomputeOneRepMax = function () {
     var formValues = Ext.getCmp('lift-tracking').getValues();
     formValues['estimated-one-rep-max'] = util.formulas.estimateOneRepMax(formValues.weight, formValues.reps);
     Ext.getCmp('lift-tracking').setValues(formValues);
 };
 
-wendler.controller.liftTracking.showLiftTracking = function () {
-    var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6).data;
-    var reps = liftProgression.reps;
-    var weight = wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax, liftProgression.percentage);
-    var formValues = {
-        'reps':reps,
-        'weight':weight,
-        'estimated-one-rep-max':util.formulas.estimateOneRepMax(weight, reps),
-        'notes':''
-    };
-
-    Ext.getCmp('lift-tracking').setValues(formValues);
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'), {type:'slide', direction:'left'});
-};
-
-wendler.controller.liftTracking.currentLiftNotes = '';
-wendler.controller.liftTracking.editNotes = function () {
+wendler.liftSchedule.liftTracking.currentLiftNotes = '';
+wendler.liftSchedule.liftTracking.editNotes = function () {
     Ext.get('first-log-notes').addCls('tapped');
-    Ext.getCmp('first-log-notes-editor')._setNotes(wendler.controller.liftTracking.currentLiftNotes);
+    Ext.getCmp('first-log-notes-editor')._setNotes(wendler.liftSchedule.liftTracking.currentLiftNotes);
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('first-log-notes-editor'), {type:'slide', direction:'left'});
 };
 
-wendler.controller.liftTracking.displayNotes = function (notes) {
+wendler.liftSchedule.liftTracking.displayNotes = function (notes) {
     var displayableNotes = null;
     if (notes === "") {
         displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
     }
     else {
-        displayableNotes = wendler.controller.components.notesEditor.sanitizeForDisplay(notes);
+        displayableNotes = wendler.liftSchedule.components.notesEditor.sanitizeForDisplay(notes);
     }
     Ext.get('first-log-notes').setHtml(displayableNotes);
 };
 
-wendler.controller.liftTracking.cancelLogTracking = function () {
+wendler.liftSchedule.liftTracking.cancelLogTracking = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'right'});
 };
 
@@ -102,9 +94,9 @@ wendler.views.liftSchedule.LiftTracking = {
     scroll:'vertical',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.controller.liftTracking.cancelLogTracking);
-            wendler.controller.liftTracking.currentLiftNotes = '';
-            wendler.controller.liftTracking.displayNotes('');
+            wendler.navigation.setBackFunction(wendler.liftSchedule.liftTracking.cancelLogTracking);
+            wendler.liftSchedule.liftTracking.currentLiftNotes = '';
+            wendler.liftSchedule.liftTracking.displayNotes('');
         }
     },
     items:[
@@ -117,14 +109,14 @@ wendler.views.liftSchedule.LiftTracking = {
                     id:'log-lift-back-button',
                     ui:'back',
                     text:'Back',
-                    handler:wendler.controller.liftTracking.cancelLogTracking
+                    handler:wendler.liftSchedule.liftTracking.cancelLogTracking
                 },
                 {xtype:'spacer'},
                 {
                     id:'log-lift-save-button',
                     ui:'confirm',
                     text:'Save',
-                    handler:wendler.controller.liftTracking.logAndShowTracking
+                    handler:wendler.liftSchedule.liftTracking.logAndShowTracking
                 }
             ]
         },
@@ -138,7 +130,7 @@ wendler.views.liftSchedule.LiftTracking = {
                     xtype:'numberfield',
                     label:'Last set reps',
                     listeners:{
-                        change:wendler.controller.liftTracking.recomputeOneRepMax
+                        change:wendler.liftSchedule.liftTracking.recomputeOneRepMax
                     }
                 },
                 {
@@ -147,7 +139,7 @@ wendler.views.liftSchedule.LiftTracking = {
                     xtype:'numberfield',
                     label:'Weight',
                     listeners:{
-                        change:wendler.controller.liftTracking.recomputeOneRepMax
+                        change:wendler.liftSchedule.liftTracking.recomputeOneRepMax
                     }
                 },
                 {
@@ -168,7 +160,7 @@ wendler.views.liftSchedule.LiftTracking = {
                 '<div id="first-log-notes" class="log-notes"><div class="notes-empty-text">Tap to edit</div></div>',
             listeners:{
                 painted:function () {
-                    Ext.get('first-log-notes').addListener('tap', wendler.controller.liftTracking.editNotes);
+                    Ext.get('first-log-notes').addListener('tap', wendler.liftSchedule.liftTracking.editNotes);
                 }
             }
         }

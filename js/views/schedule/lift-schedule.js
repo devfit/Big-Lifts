@@ -5,14 +5,10 @@ wendler.liftSchedule.currentShowingMax = -1;
 wendler.liftSchedule.currentLiftProperty = null;
 wendler.liftSchedule.currentWeek = 1;
 
-wendler.liftSchedule.controller.liftCompletionChange = function () {
-    wendler.liftSchedule.controller.setupListDoneIcons();
+wendler.liftSchedule.liftCompletionChange = function () {
+    wendler.liftSchedule.liftSelector.setupListDoneIcons();
 };
-wendler.stores.lifts.LiftCompletion.addListener('update', wendler.liftSchedule.controller.liftCompletionChange);
-
-wendler.liftSchedule.controller.setupLiftSchedule = function () {
-    wendler.liftSchedule.controller.setupLiftSelector();
-};
+wendler.stores.lifts.LiftCompletion.addListener('update', wendler.liftSchedule.liftCompletionChange);
 
 Ext.define('Wendler.views.LiftSchedule', {
     extend:'Ext.Panel',
@@ -23,7 +19,6 @@ Ext.define('Wendler.views.LiftSchedule', {
         layout:'card',
         activeItem:0,
         items:[
-            wendler.views.liftSchedule.assistance.BoringButBig,
             wendler.views.liftSchedule.liftSelector,
             wendler.views.liftSchedule.liftTemplate,
             wendler.views.liftSchedule.LiftsCompletedScreen,
@@ -34,14 +29,16 @@ Ext.define('Wendler.views.LiftSchedule', {
             wendler.views.liftSchedule.LiftTracking,
             wendler.views.liftSchedule.RestTimer,
             wendler.views.liftSchedule.assistance.AssistanceChooser,
+            wendler.views.liftSchedule.assistance.BoringButBig,
+
             {
                 xtype:'firstlognoteseditor',
                 id:'first-log-notes-editor'
             }
         ],
         listeners:{
-            show:wendler.liftSchedule.controller.setupLiftSchedule,
-            activeitemchange:wendler.liftSchedule.controller.setupLiftSchedule
+            show:wendler.liftSchedule.liftSelector.setupLiftSelector,
+            activeitemchange:wendler.liftSchedule.liftSelector.setupLiftSelector
         }
     }
 });

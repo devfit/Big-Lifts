@@ -1,7 +1,23 @@
 "use strict";
-Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.controller', 'wendler.liftTemplate.controller');
+Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.liftTemplate');
 
-wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
+wendler.liftSchedule.liftTemplate.showLiftTracking = function () {
+    var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6).data;
+    var reps = liftProgression.reps;
+    var weight = wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax, liftProgression.percentage);
+    var formValues = {
+        'reps':reps,
+        'weight':weight,
+        'estimated-one-rep-max':util.formulas.estimateOneRepMax(weight, reps),
+        'notes':''
+    };
+
+    Ext.getCmp('lift-tracking').setValues(formValues);
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'), {type:'slide', direction:'left'});
+};
+
+
+wendler.liftSchedule.liftTemplate.formatLiftWeight = function (max, percentage) {
     var settings = wendler.stores.Settings.first();
     var trainingMaxPercentage = wendler.stores.Settings.first().data['trainingMaxPercentage'] / 100.0;
     var trainingMaxModifier = settings.get('useTrainingMax') == 1 ? trainingMaxPercentage : 1.0;
@@ -12,7 +28,7 @@ wendler.liftSchedule.controller.formatLiftWeight = function (max, percentage) {
     return util.roundNumber(unroundedWeight, roundingValue, roundingType);
 };
 
-wendler.liftTemplate.controller.getAllPlatePairs = function () {
+wendler.liftSchedule.liftTemplate.getAllPlatePairs = function () {
     var platePairs = {};
     wendler.stores.Plates.each(function (r) {
         var weight = r.get('weight');
@@ -22,7 +38,7 @@ wendler.liftTemplate.controller.getAllPlatePairs = function () {
     return platePairs;
 };
 
-wendler.liftTemplate.controller.getPlateList = function (weight) {
+wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
     var barWeightConfig = wendler.stores.BarWeight.first();
     var barWeight = barWeightConfig.get('weight');
     var useCustomPlates = barWeightConfig.get('useCustomPlates');
@@ -42,7 +58,7 @@ wendler.liftTemplate.controller.getPlateList = function (weight) {
     return "[" + plates.join(',') + "]";
 };
 
-wendler.liftTemplate.controller.getLiftRowClass = function (values) {
+wendler.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
     var className = '';
 
     if (values.set === 6 && values.week !== 4) {
@@ -56,7 +72,7 @@ wendler.liftTemplate.controller.getLiftRowClass = function (values) {
     return className;
 };
 
-wendler.liftSchedule.controller.updateLiftValues = function () {
+wendler.liftSchedule.liftTemplate.updateLiftValues = function () {
     var showWarmupSets = wendler.stores.Settings.first().data['showWarmupSets'];
 
     var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
@@ -71,7 +87,7 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
             });
         }
 
-        wendler.liftTemplate.controller.setupBestOneRepMax();
+        wendler.liftSchedule.liftTemplate.setupBestOneRepMax();
     }
     else {
         if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
@@ -80,7 +96,7 @@ wendler.liftSchedule.controller.updateLiftValues = function () {
     }
 };
 
-wendler.liftTemplate.controller.setupBestOneRepMax = function () {
+wendler.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
     if( wendler.liftSchedule.currentWeek === 4 ){
         Ext.getCmp('reps-to-beat-toolbar').hide();
         return;
@@ -103,7 +119,7 @@ wendler.liftTemplate.controller.setupBestOneRepMax = function () {
     });
 
     if (!_.isNull(bestLogRecordOneRepEstimate)) {
-        var lastSetMax = wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,
+        var lastSetMax = wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax,
             wendler.stores.lifts.LiftProgression.last().get('percentage'));
 
         Ext.get('last-one-rep-estimate').setHtml(bestLogRecordOneRepEstimate);
@@ -115,7 +131,7 @@ wendler.liftTemplate.controller.setupBestOneRepMax = function () {
     }
 };
 
-wendler.liftTemplate.controller.selectThreeLiftsFrom = function (startIndex) {
+wendler.liftSchedule.liftTemplate.selectThreeLiftsFrom = function (startIndex) {
     var end = startIndex + 2;
     var lastIndex = wendler.stores.lifts.LiftProgression.getCount() - 1;
     if (end > lastIndex) {
@@ -128,23 +144,16 @@ wendler.liftTemplate.controller.selectThreeLiftsFrom = function (startIndex) {
     Ext.getCmp('lift-template-list').selectRange(startIndex, end);
 };
 
-wendler.liftTemplate.controller.returnToLiftSelect = function () {
+wendler.liftSchedule.liftTemplate.returnToLiftSelect = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
 };
 
-wendler.liftTemplate.controller.markLiftCompleted = function () {
-    wendler.controller.liftTracking.showLiftTracking();
+wendler.liftSchedule.liftTemplate.markLiftCompleted = function () {
+    wendler.liftSchedule.liftTemplate.showLiftTracking();
 };
 
-wendler.liftTemplate.controller.showRestTimer = function(){
+wendler.liftSchedule.liftTemplate.showRestTimer = function(){
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'), {type:'slide', direction:'right'});
-};
-
-wendler.liftSchedule.controller.persistLiftCompletion = function () {
-    var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
-    liftCompletion.set('completed', true);
-    liftCompletion.save();
-    wendler.stores.lifts.LiftCompletion.sync();
 };
 
 wendler.views.liftSchedule.liftTemplate = {
@@ -160,7 +169,7 @@ wendler.views.liftSchedule.liftTemplate = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.liftTemplate.controller.returnToLiftSelect
+                    handler:wendler.liftSchedule.liftTemplate.returnToLiftSelect
                 },
                 {xtype:'spacer'},
                 {
@@ -169,7 +178,7 @@ wendler.views.liftSchedule.liftTemplate = {
                     iconCls:'clock',
                     iconMask:true,
                     ui: 'decline',
-                    handler:wendler.liftTemplate.controller.showRestTimer
+                    handler:wendler.liftSchedule.liftTemplate.showRestTimer
                 },
                 {
                     style: 'z-index: 11',
@@ -177,7 +186,7 @@ wendler.views.liftSchedule.liftTemplate = {
                     iconCls:'done',
                     iconMask:true,
                     ui:'action',
-                    handler:wendler.liftTemplate.controller.markLiftCompleted
+                    handler:wendler.liftSchedule.liftTemplate.markLiftCompleted
                 }
             ]
         },
@@ -211,23 +220,23 @@ wendler.views.liftSchedule.liftTemplate = {
             itemCls:'lift-row',
             listeners:{
                 itemtap:function (c, index) {
-                    wendler.liftTemplate.controller.selectThreeLiftsFrom(index);
+                    wendler.liftSchedule.liftTemplate.selectThreeLiftsFrom(index);
                 }
             },
-            itemTpl:'<p class="reps-weight {[wendler.liftTemplate.controller.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
-                '<span>{[wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
+            itemTpl:'<p class="reps-weight {[wendler.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
+                '<span>{[wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +
                 (wendler.toggles.BarLoading ?
-                    '<p class="bar-loader-breakdown">{[wendler.liftTemplate.controller.getPlateList(' +
-                        'wendler.liftSchedule.controller.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)' +
+                    '<p class="bar-loader-breakdown">{[wendler.liftSchedule.liftTemplate.getPlateList(' +
+                        'wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)' +
                         ')]}</p>' : '')
         }
     ],
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftTemplate.controller.returnToLiftSelect);
-            wendler.liftSchedule.controller.updateLiftValues();
-            wendler.liftTemplate.controller.selectThreeLiftsFrom(0);
+            wendler.navigation.setBackFunction(wendler.liftSchedule.liftTemplate.returnToLiftSelect);
+            wendler.liftSchedule.liftTemplate.updateLiftValues();
+            wendler.liftSchedule.liftTemplate.selectThreeLiftsFrom(0);
         }
     }
 };

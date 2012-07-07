@@ -5,7 +5,7 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
     lift.set('max', newValue);
     lift.save();
     wendler.stores.lifts.Lifts.sync();
-    wendler.liftSchedule.controller.updateLiftValues();
+    wendler.liftSchedule.lfitTemplate.updateLiftValues();
 };
 
 wendler.maxes.controller.buildMaxesFromStore = function () {

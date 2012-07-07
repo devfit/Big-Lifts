@@ -4,7 +4,7 @@ Ext.define('LiftLog', {
     config:{
         identifier: 'uuid',
         fields:[
-            {name:'id', type:'int'},
+            {name:'id', type:'string'},
             {name:'liftName', type:'string'},
             {name:'weight', type:'string'},
             {name:'units', type:'string'},
