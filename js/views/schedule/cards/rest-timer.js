@@ -1,33 +1,37 @@
-Ext.ns('wendler.views.liftSchedule', 'wendler.restTimer.controller');
-wendler.restTimer.controller.returnToLiftTemplate = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
+Ext.ns('wendler.views.liftSchedule', 'wendler.restTimer');
+
+wendler.restTimer.remainingSeconds = 0;
+wendler.restTimer.timerId = null;
+wendler.restTimer.backLocation = '';
+
+wendler.restTimer.back = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp(wendler.restTimer.backLocation));
 };
 
-wendler.restTimer.controller.remainingSeconds = 0;
-wendler.restTimer.controller.timerId = null;
-wendler.restTimer.controller.addTime = function (seconds) {
-    wendler.restTimer.controller.remainingSeconds += seconds;
-    if (wendler.restTimer.controller.remainingSeconds < 0) {
-        wendler.restTimer.controller.remainingSeconds = 0;
+
+wendler.restTimer.addTime = function (seconds) {
+    wendler.restTimer.remainingSeconds += seconds;
+    if (wendler.restTimer.remainingSeconds < 0) {
+        wendler.restTimer.remainingSeconds = 0;
     }
 
-    wendler.restTimer.controller.updateTimeDisplay();
+    wendler.restTimer.updateTimeDisplay();
 };
 
-wendler.restTimer.controller.startTimer = function () {
+wendler.restTimer.startTimer = function () {
     var ONE_SECOND = 1000;
-    wendler.restTimer.controller.timerId = setInterval(wendler.restTimer.controller.timerTick, ONE_SECOND);
+    wendler.restTimer.timerId = setInterval(wendler.restTimer.timerTick, ONE_SECOND);
     Ext.getCmp('start-timer-button').hide();
     Ext.getCmp('stop-timer-button').show();
 };
 
-wendler.restTimer.controller.timerHasEnded = function () {
-    wendler.restTimer.controller.stopTimer();
-    wendler.restTimer.controller.playTimerEndSound();
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
+wendler.restTimer.timerHasEnded = function () {
+    wendler.restTimer.stopTimer();
+    wendler.restTimer.playTimerEndSound();
+    wendler.restTimer.back();
 };
 
-wendler.restTimer.controller.playTimerEndSound = function () {
+wendler.restTimer.playTimerEndSound = function () {
     if (typeof(Media) !== 'undefined') {
         var restSound = new Media("/android_asset/sounds/1khz_1_5s.mp3",
             function () {
@@ -38,31 +42,31 @@ wendler.restTimer.controller.playTimerEndSound = function () {
     }
 };
 
-wendler.restTimer.controller.timerTick = function () {
-    wendler.restTimer.controller.remainingSeconds--;
-    if (wendler.restTimer.controller.remainingSeconds <= 0) {
-        wendler.restTimer.controller.timerHasEnded();
+wendler.restTimer.timerTick = function () {
+    wendler.restTimer.remainingSeconds--;
+    if (wendler.restTimer.remainingSeconds <= 0) {
+        wendler.restTimer.timerHasEnded();
     }
     else {
-        wendler.restTimer.controller.updateTimeDisplay();
+        wendler.restTimer.updateTimeDisplay();
     }
 };
 
-wendler.restTimer.controller.stopTimer = function () {
-    clearTimeout(wendler.restTimer.controller.timerId);
+wendler.restTimer.stopTimer = function () {
+    clearTimeout(wendler.restTimer.timerId);
 
     Ext.getCmp('stop-timer-button').hide();
     Ext.getCmp('start-timer-button').show();
 
-    wendler.restTimer.controller.remainingSeconds = 0;
-    wendler.restTimer.controller.updateTimeDisplay();
+    wendler.restTimer.remainingSeconds = 0;
+    wendler.restTimer.updateTimeDisplay();
 };
 
-wendler.restTimer.controller.updateTimeDisplay = function () {
-    Ext.get('rest-timer-time').setHtml(wendler.restTimer.controller.convertSecondsForDisplay(wendler.restTimer.controller.remainingSeconds));
+wendler.restTimer.updateTimeDisplay = function () {
+    Ext.get('rest-timer-time').setHtml(wendler.restTimer.convertSecondsForDisplay(wendler.restTimer.remainingSeconds));
 };
 
-wendler.restTimer.controller.convertSecondsForDisplay = function (totalSeconds) {
+wendler.restTimer.convertSecondsForDisplay = function (totalSeconds) {
     var minutes = parseInt(totalSeconds / 60);
     var seconds = totalSeconds % 60;
     return minutes + ":" + (seconds >= 10 ? seconds : '0' + seconds);
@@ -76,7 +80,7 @@ wendler.views.liftSchedule.RestTimer = {
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.restTimer.controller.returnToLiftTemplate);
+            wendler.navigation.setBackFunction(wendler.restTimer.back);
         }
     },
     items:[
@@ -88,7 +92,7 @@ wendler.views.liftSchedule.RestTimer = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.restTimer.controller.returnToLiftTemplate
+                    handler:wendler.restTimer.back
                 }
             ]
         },
@@ -127,7 +131,7 @@ wendler.views.liftSchedule.RestTimer = {
                                             width:'100%',
                                             text:'-1',
                                             handler:function () {
-                                                wendler.restTimer.controller.addTime(-1 * wendler.restTimer.TIME_INTERVAL);
+                                                wendler.restTimer.addTime(-1 * wendler.restTimer.TIME_INTERVAL);
                                             }
                                         }
                                     ]
@@ -144,7 +148,7 @@ wendler.views.liftSchedule.RestTimer = {
                                             width:'100%',
                                             text:'+1',
                                             handler:function () {
-                                                wendler.restTimer.controller.addTime(wendler.restTimer.TIME_INTERVAL);
+                                                wendler.restTimer.addTime(wendler.restTimer.TIME_INTERVAL);
                                             }
                                         }
                                     ]
@@ -159,14 +163,14 @@ wendler.views.liftSchedule.RestTimer = {
                                     id:'start-timer-button',
                                     xtype:'button',
                                     text:'Start',
-                                    handler:wendler.restTimer.controller.startTimer
+                                    handler:wendler.restTimer.startTimer
                                 },
                                 {
                                     id:'stop-timer-button',
                                     hidden:true,
                                     xtype:'button',
                                     text:'Stop',
-                                    handler:wendler.restTimer.controller.stopTimer
+                                    handler:wendler.restTimer.stopTimer
                                 }
                             ]
                         }

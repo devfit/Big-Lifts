@@ -42,6 +42,11 @@ wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect = function
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
 };
 
+wendler.liftSchedule.assistance.boringButBig.showRestTimer = function () {
+    wendler.restTimer.backLocation = 'boring-but-big';
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'));
+};
+
 wendler.views.liftSchedule.assistance.BoringButBig = {
     xtype:'panel',
     id:'boring-but-big',
@@ -58,6 +63,15 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                     handler:wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect
                 },
                 {xtype:'spacer'},
+                {
+                    style:'z-index: 11',
+                    id:'boring-but-big-rest-timer-button',
+                    cls:'rest-timer-button',
+                    iconCls:'clock',
+                    iconMask:true,
+                    ui:'decline',
+                    handler:wendler.liftSchedule.assistance.boringButBig.showRestTimer
+                },
                 {
                     style:'z-index: 11',
                     id:'boring-but-big-done-button',
@@ -78,11 +92,11 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                 '<span>{weight}</span>' +
                 '<span class="percentage">{percentage}%</span></p>' +
                 (wendler.toggles.BarLoading ?
-                '<p class="bar-loader-breakdown">' +
-                    '{[values.set > 1 ? "" : wendler.liftSchedule.liftTemplate.getPlateList(wendler.liftSchedule.liftTemplate.formatLiftWeight(' +
-                    'wendler.liftSchedule.currentShowingMax,values.percentage))]}' +
-                    '</p>' :
-                '')
+                    '<p class="bar-loader-breakdown">' +
+                        '{[values.set > 1 ? "" : wendler.liftSchedule.liftTemplate.getPlateList(wendler.liftSchedule.liftTemplate.formatLiftWeight(' +
+                        'wendler.liftSchedule.currentShowingMax,values.percentage))]}' +
+                        '</p>' :
+                    '')
         }
     ],
     listeners:{

@@ -97,7 +97,7 @@ wendler.liftSchedule.liftTemplate.updateLiftValues = function () {
 };
 
 wendler.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
-    if( wendler.liftSchedule.currentWeek === 4 ){
+    if (wendler.liftSchedule.currentWeek === 4) {
         Ext.getCmp('reps-to-beat-toolbar').hide();
         return;
     }
@@ -152,7 +152,8 @@ wendler.liftSchedule.liftTemplate.markLiftCompleted = function () {
     wendler.liftSchedule.liftTemplate.showLiftTracking();
 };
 
-wendler.liftSchedule.liftTemplate.showRestTimer = function(){
+wendler.liftSchedule.liftTemplate.showRestTimer = function () {
+    wendler.restTimer.backLocation = 'lift-template';
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'), {type:'slide', direction:'right'});
 };
 
@@ -173,15 +174,16 @@ wendler.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
-                    style: 'z-index: 11',
-                    id: 'rest-timer-button',
+                    style:'z-index: 11',
+                    id:'rest-timer-button',
+                    cls:'rest-timer-button',
                     iconCls:'clock',
                     iconMask:true,
-                    ui: 'decline',
+                    ui:'decline',
                     handler:wendler.liftSchedule.liftTemplate.showRestTimer
                 },
                 {
-                    style: 'z-index: 11',
+                    style:'z-index: 11',
                     id:'mark-lift-completed-button',
                     iconCls:'done',
                     iconMask:true,
