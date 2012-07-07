@@ -6,6 +6,7 @@ wendler.views.liftSchedule.assistance.continueToLog = function () {
 };
 
 wendler.views.liftSchedule.assistance.showBoringButBig = function () {
+    console.log( "CALLED" );
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 

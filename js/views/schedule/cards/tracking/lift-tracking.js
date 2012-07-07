@@ -34,9 +34,7 @@ wendler.liftSchedule.liftTracking.persistLiftCompletion = function () {
     wendler.stores.lifts.LiftCompletion.sync();
 };
 
-wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
-    wendler.liftSchedule.liftTracking.persistLiftCompletion();
-
+wendler.liftSchedule.liftTracking.persistLog = function () {
     var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6);
     var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).data.name;
     var expectedReps = liftProgression.data.reps;
@@ -50,13 +48,24 @@ wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
     var units = wendler.stores.Settings.first().data.units;
 
     wendler.liftSchedule.liftTracking.logLift({liftName:liftName, reps:reps, notes:notes, week:week, weight:weight, cycle:cycle, units:units, expectedReps:expectedReps});
+};
+
+wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
+    wendler.liftSchedule.liftTracking.persistLiftCompletion();
+    wendler.liftSchedule.liftTracking.persistLog();
+
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
 
     if (wendler.liftSchedule.liftTracking.allLiftsAreCompleted()) {
         wendler.liftSchedule.liftTracking.showLiftsCompletedScreen();
     }
     else {
-        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+        if( wendler.toggles.Assistance ){
+            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
+        }
+        else {
+            Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+        }
     }
 };
 
