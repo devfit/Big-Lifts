@@ -84,6 +84,20 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
             ]
         },
         {
+            xtype:'toolbar',
+            ui:'light',
+            docked:'top',
+            items:[
+                {
+                    xtype:'panel',
+                    width:'100%',
+                    id: 'bbbTopBar',
+                    style:'text-align:right',
+                    html:'<label for="bbbPercentage">%</label><input type="number" name="bbbPercentage" value="50"/>'
+                }
+            ]
+        },
+        {
             id:'boring-but-big-list',
             xtype:'list',
             store:wendler.liftSchedule.assistance.boringButBig.liftStore,
