@@ -331,7 +331,7 @@ task setupAndroidPhonegapFiles() << {
 task setupAndroidSoundFiles() << {
     copy {
         from './sounds'
-        into './native/android/assets/sounds'
+        into './native/android/assets/www/sounds'
         include '*.*'
     }
 }

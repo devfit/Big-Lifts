@@ -33,7 +33,8 @@ wendler.restTimer.timerHasEnded = function () {
 
 wendler.restTimer.playTimerEndSound = function () {
     if (typeof(Media) !== 'undefined') {
-        var restSound = new Media("/android_asset/sounds/1khz_1_5s.mp3",
+        var soundPath = util.phonegap.getResourcesPath() + "/sounds/1khz_1_5s.mp3";
+        var restSound = new Media(soundPath,
             function () {
             }, function (error) {
                 console.log(error);
