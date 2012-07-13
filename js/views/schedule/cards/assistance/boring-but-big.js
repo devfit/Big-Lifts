@@ -21,11 +21,10 @@ wendler.liftSchedule.assistance.boringButBig.liftStore = Ext.create('Ext.data.St
     model:'BoringButBigLift'
 });
 
-wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore = function () {
+wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore = function (bbbPercentage) {
     var store = wendler.liftSchedule.assistance.boringButBig.liftStore;
     store.removeAll();
 
-    var bbbPercentage = 50;
     var liftWeight = wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax, bbbPercentage);
 
     for (var i = 0; i < 5; i++) {
@@ -45,6 +44,11 @@ wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect = function
 wendler.liftSchedule.assistance.boringButBig.showRestTimer = function () {
     wendler.restTimer.backLocation = 'boring-but-big';
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'));
+};
+
+wendler.liftSchedule.assistance.boringButBig.percentageChange = function (event) {
+    var newValue = event.target.value;
+    wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore(newValue);
 };
 
 wendler.views.liftSchedule.assistance.BoringButBig = {
@@ -91,9 +95,15 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                 {
                     xtype:'panel',
                     width:'100%',
-                    id: 'bbbTopBar',
+                    id:'bbbTopBar',
                     style:'text-align:right',
-                    html:'<label for="bbbPercentage">%</label><input type="number" name="bbbPercentage" value="50"/>'
+                    html:'<label for="bbbPercentage">%</label><input type="number" name="bbbPercentage" value="50"/>',
+                    listeners:{
+                        initialize:function () {
+                            Ext.get(this.element.query('input[name="bbbPercentage"]')[0]).addListener('keyup',
+                                wendler.liftSchedule.assistance.boringButBig.percentageChange);
+                        }
+                    }
                 }
             ]
         },
@@ -115,7 +125,7 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
     ],
     listeners:{
         show:function () {
-            wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore();
+            wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore(50);
             wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect);
         }
     }
