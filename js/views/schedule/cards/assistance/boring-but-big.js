@@ -22,6 +22,10 @@ wendler.liftSchedule.assistance.boringButBig.liftStore = Ext.create('Ext.data.St
 });
 
 wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore = function (bbbPercentage) {
+    if (!bbbPercentage) {
+        bbbPercentage = 0;
+    }
+
     var store = wendler.liftSchedule.assistance.boringButBig.liftStore;
     store.removeAll();
 
@@ -97,10 +101,13 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                     width:'100%',
                     id:'bbbTopBar',
                     style:'text-align:right',
-                    html:'<label for="bbbPercentage">%</label><input type="number" name="bbbPercentage" value="50"/>',
+                    html:'<label for="bbbPercentage">%</label><input type="number" name="bbbPercentage" value=""/>',
                     listeners:{
                         initialize:function () {
-                            Ext.get(this.element.query('input[name="bbbPercentage"]')[0]).addListener('keyup',
+                            var bbbPercentageInput = Ext.get(this.element.query('input[name="bbbPercentage"]')[0]);
+                            window.test = this;
+                            bbbPercentageInput.setValue(wendler.stores.assistance.BoringButBigPercentage.first().get('percentage'));
+                            bbbPercentageInput.addListener('keyup',
                                 wendler.liftSchedule.assistance.boringButBig.percentageChange);
                         }
                     }
