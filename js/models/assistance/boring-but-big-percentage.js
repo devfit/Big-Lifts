@@ -15,7 +15,7 @@ Ext.define('BoringButBigPercentage', {
 });
 
 wendler.stores.assistance.BoringButBigPercentage = Ext.create('Ext.data.Store', {
-    model:'Meta',
+    model:'BoringButBigPercentage',
     listeners:{
         load:function () {
             if (this.getCount() == 0) {

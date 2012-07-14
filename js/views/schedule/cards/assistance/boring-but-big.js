@@ -105,8 +105,7 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                     listeners:{
                         initialize:function () {
                             var bbbPercentageInput = Ext.get(this.element.query('input[name="bbbPercentage"]')[0]);
-                            window.test = this;
-                            bbbPercentageInput.setValue(wendler.stores.assistance.BoringButBigPercentage.first().get('percentage'));
+                            bbbPercentageInput.dom.value = wendler.stores.assistance.BoringButBigPercentage.first().get('percentage');
                             bbbPercentageInput.addListener('keyup',
                                 wendler.liftSchedule.assistance.boringButBig.percentageChange);
                         }
