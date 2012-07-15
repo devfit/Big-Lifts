@@ -1,16 +1,16 @@
-Ext.ns('wendler.views.log.cards', 'wendler.controller.log.emailExport');
+Ext.ns('wendler.views.log.cards', 'wendler.log.emailExport');
 
-wendler.controller.log.emailExport.returnToTrackingList = function () {
+wendler.log.emailExport.returnToTrackingList = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
 };
 
-wendler.controller.log.emailExport.exportLog = function () {
-    var data = wendler.controller.log.emailExport.buildCsvToExport();
+wendler.log.emailExport.exportLog = function () {
+    var data = wendler.log.emailExport.buildCsvToExport();
     var email = Ext.getCmp('export-log').getValues().email;
-    wendler.controller.log.emailExport.ajaxEmailRequest(email, data);
+    wendler.log.emailExport.ajaxEmailRequest(email, data);
 };
 
-wendler.controller.log.emailExport.buildCsvToExport = function () {
+wendler.log.emailExport.buildCsvToExport = function () {
     var objects = Ext.pluck(wendler.stores.LiftLog.data.items, 'data');
 
     var csvKeyMapper = {
@@ -28,16 +28,16 @@ wendler.controller.log.emailExport.buildCsvToExport = function () {
 
     var csvValueMapper = {
         'date':function (object) {
-            return wendler.controller.log.formatDate(object.timestamp);
+            return wendler.log.formatDate(object.timestamp);
         }
     };
 
-    var csvObjects = _.map(objects, wendler.controller.log.emailExport.createCsvTransformer(csvKeyMapper, csvValueMapper));
+    var csvObjects = _.map(objects, wendler.log.emailExport.createCsvTransformer(csvKeyMapper, csvValueMapper));
 
     return Ext.encode(csvObjects);
 };
 
-wendler.controller.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper) {
+wendler.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper) {
     var transformer = function (object) {
         var csvObject = {};
         for (var property in nameMapper) {
@@ -56,7 +56,7 @@ wendler.controller.log.emailExport.createCsvTransformer = function (nameMapper, 
     return transformer;
 };
 
-wendler.controller.log.emailExport.ajaxEmailRequest = function (email, data) {
+wendler.log.emailExport.ajaxEmailRequest = function (email, data) {
     Ext.Viewport.setMasked({
         xtype:'loadmask',
         message:'Exporting...'
@@ -79,7 +79,7 @@ wendler.controller.log.emailExport.ajaxEmailRequest = function (email, data) {
     });
 };
 
-wendler.controller.log.emailExport.loadPreviousExportEmail = function () {
+wendler.log.emailExport.loadPreviousExportEmail = function () {
     var settings = wendler.stores.Settings.first();
     Ext.getCmp('export-log').setRecord({email:settings.data.exportEmail});
 };
@@ -91,10 +91,10 @@ wendler.views.log.cards.Export = {
     style:'padding-top:0px',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.controller.log.emailExport.returnToTrackingList);
+            wendler.navigation.setBackFunction(wendler.log.emailExport.returnToTrackingList);
         },
         initialize:function () {
-            wendler.controller.log.emailExport.loadPreviousExportEmail();
+            wendler.log.emailExport.loadPreviousExportEmail();
         }
     },
     items:[
@@ -107,7 +107,7 @@ wendler.views.log.cards.Export = {
                     xtype:'button',
                     ui:'back',
                     text:'Back',
-                    handler:wendler.controller.log.emailExport.returnToTrackingList
+                    handler:wendler.log.emailExport.returnToTrackingList
                 },
                 {xtype:'spacer'},
                 {
@@ -115,7 +115,7 @@ wendler.views.log.cards.Export = {
                     xtype:'button',
                     ui:'confirm',
                     text:'Send',
-                    handler:wendler.controller.log.emailExport.exportLog
+                    handler:wendler.log.emailExport.exportLog
                 }
 
             ]

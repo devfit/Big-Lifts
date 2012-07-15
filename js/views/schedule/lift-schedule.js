@@ -19,7 +19,6 @@ Ext.define('Wendler.views.LiftSchedule', {
         layout:'card',
         activeItem:0,
         items:[
-            wendler.views.liftSchedule.assistance.BoringButBig,
             wendler.views.liftSchedule.liftSelector,
             wendler.views.liftSchedule.liftTemplate,
             wendler.views.liftSchedule.LiftsCompletedScreen,
@@ -30,6 +29,7 @@ Ext.define('Wendler.views.LiftSchedule', {
             wendler.views.liftSchedule.LiftTracking,
             wendler.views.liftSchedule.RestTimer,
             wendler.views.liftSchedule.assistance.AssistanceChooser,
+            wendler.views.liftSchedule.assistance.BoringButBig,
 
             {
                 xtype:'firstlognoteseditor',

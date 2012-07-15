@@ -1,28 +1,28 @@
 "use strict";
-Ext.ns('wendler.views.log.cards', 'wendler.controller.logEntry');
+Ext.ns('wendler.views.log.cards', 'wendler.logEntry');
 
-wendler.controller.logEntry.backToLogList = function () {
+wendler.logEntry.backToLogList = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
 };
 
-wendler.controller.logEntry.updateLogEntry = function () {
+wendler.logEntry.updateLogEntry = function () {
     var values = Ext.getCmp('edit-log-entry').getValues();
     values['timestamp'] = values['timestamp'].getTime();
 
-    wendler.controller.logEntry.currentRecord.set(values);
-    wendler.controller.logEntry.currentRecord.save();
+    wendler.logEntry.currentRecord.set(values);
+    wendler.logEntry.currentRecord.save();
     wendler.stores.LiftLog.sync();
 };
 
-wendler.controller.logEntry.deleteLogEntry = function () {
-    wendler.stores.LiftLog.remove(wendler.controller.logEntry.currentRecord);
+wendler.logEntry.deleteLogEntry = function () {
+    wendler.stores.LiftLog.remove(wendler.logEntry.currentRecord);
     wendler.stores.LiftLog.sync();
-    wendler.controller.logEntry.backToLogList();
+    wendler.logEntry.backToLogList();
 };
 
-wendler.controller.logEntry.currentRecord = null;
-wendler.controller.logEntry.setupLogEntry = function (logRecord) {
-    wendler.controller.logEntry.currentRecord = logRecord;
+wendler.logEntry.currentRecord = null;
+wendler.logEntry.setupLogEntry = function (logRecord) {
+    wendler.logEntry.currentRecord = logRecord;
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
     Ext.getCmp('edit-log-entry-toolbar').setTitle(logRecord.data.liftName);
 
@@ -30,21 +30,21 @@ wendler.controller.logEntry.setupLogEntry = function (logRecord) {
     formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
     formValues['timestamp'] = new Date(logRecord.data.timestamp);
     Ext.getCmp('edit-log-entry').setValues(formValues);
-    wendler.controller.logEntry.displayNotes(logRecord.data.notes);
+    wendler.logEntry.displayNotes(logRecord.data.notes);
 };
 
-wendler.controller.logEntry.displayNotes = function (notes) {
+wendler.logEntry.displayNotes = function (notes) {
     var displayableNotes = null;
     if (notes === "") {
         displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
     }
     else {
-        displayableNotes = displayableNotes = wendler.controller.components.notesEditor.sanitizeForDisplay(notes);
+        displayableNotes = displayableNotes = wendler.components.notesEditor.sanitizeForDisplay(notes);
     }
     Ext.get('edit-log-notes').setHtml(displayableNotes);
 };
 
-wendler.controller.logEntry.updateOneRepMax = function () {
+wendler.logEntry.updateOneRepMax = function () {
     var formValues = Ext.getCmp('edit-log-entry').getValues();
     var newOneRepSetter = {
         estimatedOneRepMax:util.formulas.estimateOneRepMax(formValues.weight, formValues.reps)
@@ -52,19 +52,19 @@ wendler.controller.logEntry.updateOneRepMax = function () {
     Ext.getCmp('edit-log-entry').setValues(newOneRepSetter);
 };
 
-wendler.controller.logEntry.editNotes = function () {
+wendler.logEntry.editNotes = function () {
     Ext.get('edit-log-notes').addCls('tapped');
-    Ext.getCmp('log-notes-editor')._setNotes(wendler.controller.logEntry.currentRecord.get('notes'));
+    Ext.getCmp('log-notes-editor')._setNotes(wendler.logEntry.currentRecord.get('notes'));
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-notes-editor'), {type:'slide', direction:'left'});
 };
 
-wendler.controller.logEntry.getExtDateFormat = function () {
+wendler.logEntry.getExtDateFormat = function () {
     var dateFormat = wendler.stores.Settings.first().get('dateFormat');
     dateFormat = dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');
     return dateFormat;
 };
 
-wendler.controller.logEntry.updateDateFormat = function () {
+wendler.logEntry.updateDateFormat = function () {
     Ext.getCmp('edit-log-fieldset').removeAll(true);
     Ext.getCmp('edit-log-fieldset').add(wendler.views.log.cards.generateEditLogEntryFieldsetItems());
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
@@ -74,12 +74,12 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
     return [
         {
             xtype:'datepickerfield',
-            dateFormat:wendler.controller.logEntry.getExtDateFormat(),
+            dateFormat:wendler.logEntry.getExtDateFormat(),
             label:'Date',
             name:'timestamp',
             labelWidth:'45%',
             listeners:{
-                change:wendler.controller.logEntry.updateLogEntry
+                change:wendler.logEntry.updateLogEntry
             }
         },
         {
@@ -88,7 +88,7 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             name:'cycle',
             labelWidth:'45%',
             listeners:{
-                change:wendler.controller.logEntry.updateLogEntry
+                change:wendler.logEntry.updateLogEntry
             }
         },
         {
@@ -98,8 +98,8 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             labelWidth:'45%',
             listeners:{
                 change:function () {
-                    wendler.controller.logEntry.updateOneRepMax();
-                    wendler.controller.logEntry.updateLogEntry();
+                    wendler.logEntry.updateOneRepMax();
+                    wendler.logEntry.updateLogEntry();
                 }
             }
         },
@@ -110,8 +110,8 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             labelWidth:'50%',
             listeners:{
                 change:function () {
-                    wendler.controller.logEntry.updateOneRepMax();
-                    wendler.controller.logEntry.updateLogEntry();
+                    wendler.logEntry.updateOneRepMax();
+                    wendler.logEntry.updateLogEntry();
                 }
             }
         },
@@ -122,7 +122,7 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             labelWidth:'50%',
             listeners:{
                 change:function () {
-                    wendler.controller.logEntry.updateLogEntry();
+                    wendler.logEntry.updateLogEntry();
                 }
             }
         },
@@ -141,7 +141,7 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             options:wendler.settings.options.units,
             labelWidth:'45%',
             listeners:{
-                change:wendler.controller.logEntry.updateLogEntry
+                change:wendler.logEntry.updateLogEntry
             }
         }
     ];
@@ -158,7 +158,7 @@ wendler.views.log.cards.EditLogEntry = {
         painted: function(){
             if( !this._listenersBound )
             {
-                Ext.get('edit-log-notes').addListener('tap', wendler.controller.logEntry.editNotes);
+                Ext.get('edit-log-notes').addListener('tap', wendler.logEntry.editNotes);
                 this._listenersBound = true;
             }
         },
@@ -169,7 +169,7 @@ wendler.views.log.cards.EditLogEntry = {
             if (Ext.get('edit-log-notes')) {
                 Ext.get('edit-log-notes').removeCls('tapped');
             }
-            wendler.navigation.setBackFunction(wendler.controller.logEntry.backToLogList);
+            wendler.navigation.setBackFunction(wendler.logEntry.backToLogList);
         }
     },
     items:[
@@ -183,7 +183,7 @@ wendler.views.log.cards.EditLogEntry = {
                     id:'edit-log-back-button',
                     text:'Back',
                     ui:'back',
-                    handler:wendler.controller.logEntry.backToLogList
+                    handler:wendler.logEntry.backToLogList
                 },
                 {xtype:'spacer'},
                 {
@@ -191,7 +191,7 @@ wendler.views.log.cards.EditLogEntry = {
                     ui:'decline',
                     iconMask:true,
                     iconCls:'trash',
-                    handler:wendler.controller.logEntry.deleteLogEntry
+                    handler:wendler.logEntry.deleteLogEntry
                 }
             ]
         },

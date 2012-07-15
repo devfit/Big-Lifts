@@ -37,7 +37,7 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
 
 
     if (!_.isUndefined(field.getName) && field.getName() === 'dateFormat') {
-        wendler.controller.logEntry.updateDateFormat();
+        wendler.logEntry.updateDateFormat();
     }
 };
 

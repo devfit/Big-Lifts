@@ -9,7 +9,7 @@ if (Ext.os.is.Linux) {
         }
     };
 
-    wendler.controller.log.emailExport.ajaxEmailRequest = function (email, data) {
+    wendler.log.emailExport.ajaxEmailRequest = function (email, data) {
         window.testEmail = email;
         window.testData = data;
         console.log(email + " " + data);
