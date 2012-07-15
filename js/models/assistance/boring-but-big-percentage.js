@@ -5,7 +5,7 @@ Ext.define('BoringButBigPercentage', {
         identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
-            {name:'percentage', type:'integer'}
+            {name:'percentage', type:'int'}
         ],
         proxy:{
             type:'localstorage',

@@ -55,6 +55,35 @@ wendler.liftSchedule.assistance.boringButBig.percentageChange = function (event)
     wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore(newValue);
 };
 
+wendler.liftSchedule.assistance.boringButBig.liftsComplete = function () {
+    wendler.liftSchedule.assistance.boringButBig.saveAssistanceWork();
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+    Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+};
+
+wendler.liftSchedule.assistance.boringButBig.saveAssistanceWork = function () {
+    var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).get('name');
+    var bbbPercentage = parseInt(Ext.getCmp('boring-but-big').element.query('[name=bbbPercentage]')[0].value);
+    var weight = wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax, bbbPercentage);
+
+    var assistanceRecord = {
+        movement:liftName,
+        sets:5,
+        reps:10,
+        weight:weight,
+        timestamp:new Date().getTime()
+    };
+
+    wendler.stores.assistance.Activity.add(assistanceRecord);
+    wendler.stores.assistance.Activity.sync();
+};
+
+wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle = function () {
+    var toolbar = Ext.getCmp('boring-but-big').down('toolbar');
+    var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).get('name');
+    toolbar.setTitle(liftName);
+};
+
 wendler.views.liftSchedule.assistance.BoringButBig = {
     xtype:'panel',
     id:'boring-but-big',
@@ -63,7 +92,6 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
         {
             xtype:'toolbar',
             docked:'top',
-            title:'Boring But Big',
             items:[
                 {
                     text:'Back',
@@ -86,8 +114,7 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                     iconCls:'done',
                     iconMask:true,
                     ui:'action',
-                    handler:function () {
-                    }
+                    handler:wendler.liftSchedule.assistance.boringButBig.liftsComplete
                 }
             ]
         },
@@ -131,6 +158,10 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
     ],
     listeners:{
         show:function () {
+            wendler.liftSchedule.currentLiftProperty = 'squat';
+            wendler.liftSchedule.currentShowingMax = 200;
+
+            wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle();
             wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore(50);
             wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect);
         }
