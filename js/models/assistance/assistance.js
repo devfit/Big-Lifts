@@ -18,7 +18,7 @@ Ext.define('AssistanceActivity', {
     }
 });
 
-wendler.stores.assistance.Activity = Ext.create('Ext.data.Store', {
+wendler.stores.assistance.ActivityLog = Ext.create('Ext.data.Store', {
     model:'AssistanceActivity'
 });
-wendler.stores.push(wendler.stores.assistance.Activity);
+wendler.stores.push(wendler.stores.assistance.ActivityLog);

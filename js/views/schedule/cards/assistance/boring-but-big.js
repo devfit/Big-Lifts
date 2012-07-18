@@ -74,8 +74,8 @@ wendler.liftSchedule.assistance.boringButBig.saveAssistanceWork = function () {
         timestamp:new Date().getTime()
     };
 
-    wendler.stores.assistance.Activity.add(assistanceRecord);
-    wendler.stores.assistance.Activity.sync();
+    wendler.stores.assistance.ActivityLog.add(assistanceRecord);
+    wendler.stores.assistance.ActivityLog.sync();
 };
 
 wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle = function () {
