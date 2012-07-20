@@ -9,3 +9,4 @@ test/*.log
 binaries
 chromedriver.log
 .DS_Store
+Gemfile.lock
