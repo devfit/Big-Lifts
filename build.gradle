@@ -365,3 +365,11 @@ task installNativeAndroidDebug(dependsOn: [buildNativeAndroidDebug]) << {
         commandLine = ['adb', 'install', '-r', './native/android/bin/Wendler5_3_1-debug.apk']
     }
 }
+
+task copyToDropbox() << {
+    copy {
+        from 'native/android/bin'
+        into '/Users/stefankendall/Dropbox/public/Wendler531/Samsung'
+        include 'Wendler5_3_1-release.apk'
+    }
+}
