@@ -5,7 +5,7 @@ util.filebackup.SYNC_MS = 200;
 util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store, callback) {
     var data = util.filebackup.generateDataFromStore(store);
-    setTimeout(function(){
+    setTimeout(function () {
         if (data !== null) {
             util.files.write(util.filebackup.directory, util.filebackup.generateFileName(store), data, callback);
         }
@@ -88,3 +88,12 @@ util.filebackup.deleteAllStoreFiles = function () {
         });
     });
 };
+
+if (wendler.isBrokenTouchWiz) {
+    util.filebackup.saveStore = function () {
+    };
+    util.filebackup.loadStore = function () {
+    };
+    util.filebackup.deleteAllStoreFiles = function () {
+    };
+}

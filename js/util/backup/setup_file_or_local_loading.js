@@ -1,8 +1,8 @@
 Ext.ns('wendler');
+wendler.isBrokenTouchWiz = _.isDefined(PhoneGap) && _.isUndefined(window.requestFileSystem);
 if (localStorage.length === 0) {
-    var isBrokenTouchWiz = _.isDefined(PhoneGap) && _.isUndefined(window.requestFileSystem);
     wendler.loadingFromFile = true;
-    if( !isBrokenTouchWiz ){
+    if( !wendler.isBrokenTouchWiz ){
         wendler.loadingFromFile = false;
     }
 }
