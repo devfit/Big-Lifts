@@ -8,3 +8,4 @@ test/*.log
 *.scssc
 binaries
 chromedriver.log
+.DS_Store
