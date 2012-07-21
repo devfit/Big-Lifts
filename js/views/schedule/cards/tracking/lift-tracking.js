@@ -28,7 +28,7 @@ wendler.liftSchedule.controller.allLiftsAreCompleted = function () {
 };
 
 wendler.controller.liftTracking.logAndShowTracking = function () {
-    wendler.liftSchedule.controller.persistLiftCompletion();
+    wendler.liftTemplate.persistLiftCompletion();
 
     var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6);
     var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).data.name;
