@@ -27,9 +27,6 @@ wendler.liftSchedule.liftTracking.allLiftsAreCompleted = function () {
     return completedUniques.length === 1 && completedUniques[0] === true;
 };
 
-wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
-    wendler.liftSchedule.liftTracking.persistLiftCompletion();
-
 wendler.liftSchedule.liftTracking.persistLog = function () {
     var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6);
     var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).data.name;
@@ -47,7 +44,7 @@ wendler.liftSchedule.liftTracking.persistLog = function () {
 };
 
 wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
-    wendler.liftSchedule.liftTracking.persistLiftCompletion();
+    wendler.liftSchedule.liftTemplate.persistLiftCompletion();
     wendler.liftSchedule.liftTracking.persistLog();
 
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
@@ -56,12 +53,12 @@ wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
         wendler.liftSchedule.liftTracking.showLiftsCompletedScreen();
     }
     else {
-        if( wendler.toggles.Assistance ){
+        if (wendler.toggles.Assistance) {
             Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
-    }
-    else {
-        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
-    }
+        }
+        else {
+            Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+        }
     }
 };
 

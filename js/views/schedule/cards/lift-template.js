@@ -157,7 +157,7 @@ wendler.liftSchedule.liftTemplate.showRestTimer = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'), {type:'slide', direction:'right'});
 };
 
-wendler.liftTemplate.persistLiftCompletion = function () {
+wendler.liftSchedule.liftTemplate.persistLiftCompletion = function () {
     var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
     liftCompletion.set('completed', true);
     liftCompletion.save();

@@ -46,11 +46,21 @@ wendler.logList.showMovementTypeSelectMenu = function () {
     wendler.logList.toggleVisibility(Ext.getCmp('track-show-movement-type-toolbar'));
 };
 
-wendler.logList.changeMovementType = function (selectedButton) {
+wendler.logList.changeMovementTypeButtons = function (selectedButton) {
     _.each(Ext.getCmp('track-show-movement-type-toolbar').query('button'), function (button) {
         button.setUi('normal')
     });
     selectedButton.setUi('confirm');
+};
+
+wendler.logList.changeMovementTypeToLifts = function (selectedButton) {
+    wendler.logList.changeMovementTypeButtons(selectedButton);
+    Ext.getCmp('log-list-container').setActiveItem(Ext.getCmp('lift-log-list'));
+};
+
+wendler.logList.changeMovementTypeToAssistance = function (selectedButton) {
+    wendler.logList.changeMovementTypeButtons(selectedButton);
+    Ext.getCmp('log-list-container').setActiveItem(Ext.getCmp('log-assistance-list'));
 };
 
 wendler.logList.sortBy = function (selectedProperty) {
@@ -161,34 +171,42 @@ wendler.views.log.cards.LogList = {
     },
     items:[
         {
+            id:'showTypeTrackToolbar',
             docked:'top',
             xtype:'toolbar',
             title:'Track',
-            items:[
-                {
-                    id:'track-sort-button',
-                    xtype:'button',
-                    ui:'action',
-                    text:'Sort...',
-                    handler:wendler.logList.showSortMenu
-                },
-                {
-                    id:'track-show-button',
-                    xtype:'button',
-                    ui:'action',
-                    text:'Show...',
-                    handler:wendler.logList.showMovementTypeSelectMenu
-                },
-                {xtype:'spacer'},
-                {
-                    id:'export-log-button',
-                    xtype:'button',
-                    iconMask:true,
-                    iconCls:'action',
-                    ui:'action',
-                    handler:wendler.logList.showExportLog
+            listeners:{
+                initialize:function () {
+                    this.add(
+                        {
+                            id:'track-sort-button',
+                            xtype:'button',
+                            ui:'action',
+                            text:'Sort...',
+                            handler:wendler.logList.showSortMenu
+                        }
+                    );
+
+                    if (wendler.toggles.Assistance) {
+                        this.add({
+                            id:'track-show-button',
+                            xtype:'button',
+                            ui:'action',
+                            text:'Show...',
+                            handler:wendler.logList.showMovementTypeSelectMenu
+                        });
+                    }
+                    this.add({xtype:'spacer'});
+                    this.add({
+                        id:'export-log-button',
+                        xtype:'button',
+                        iconMask:true,
+                        iconCls:'action',
+                        ui:'action',
+                        handler:wendler.logList.showExportLog
+                    });
                 }
-            ]
+            }
         },
         {
             id:'track-sort-toolbar',
@@ -245,6 +263,7 @@ wendler.views.log.cards.LogList = {
             id:'track-show-movement-type-toolbar',
             docked:'top',
             ui:'light',
+            hidden:true,
             xtype:'toolbar',
             showAnimation:{
                 type:'slide',
@@ -255,57 +274,64 @@ wendler.views.log.cards.LogList = {
                     xtype:'button',
                     text:'Lifts',
                     ui:'confirm',
-                    handler:wendler.logList.changeMovementType
+                    handler:wendler.logList.changeMovementTypeToLifts
                 },
                 {
                     xtype:'button',
                     text:'Assistance',
-                    handler:wendler.logList.changeMovementType
+                    handler:wendler.logList.changeMovementTypeToAssistance
                 }
             ]
         },
-//        {
-//            id:'lift-log-list',
-//            listeners:{
-//                initialize:function () {
-//                    wendler.logList.sortAndRefreshList();
-//                    wendler.components.addSwipeToDelete(this, wendler.logList.showLogEntry,
-//                        wendler.logList.deleteLogEntry, '.date-week');
-//                }
-//            },
-//            xtype:'list',
-//            selectedCls:'',
-//            store:wendler.stores.LiftLog,
-//            itemCls:'lift-log-row',
-//            emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
-//            itemTpl:'<table><tbody><tr>' +
-//                '<td width="30%"><div class="lift-name">{liftName}</div><div class="cycle-and-week">C{cycle} W{week}</div></td>' +
-//                '<td width="30%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div>' +
-//                '<div class="estimated-one-rep">~{[util.formulas.estimateOneRepMax(values.weight,values.reps)]}</div></td>' +
-//                '<td width="40%" class="date-week">' +
-//                '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span><span class="disclosure-small"></span>' +
-//                '</td><td width="40%" class="delete-button-holder hidden"></td>' +
-//                '</tr></tbody></table>'
-//        },
         {
-            id:'log-assistance-list',
-            listeners:{
-                initialize:function () {
-                    wendler.components.addSwipeToDelete(this, Ext.emptyFn, Ext.emptyFn, '.date-week');
+            id:'log-list-container',
+            xtype:'container',
+            layout:'card',
+            activeItem:0,
+            items:[
+                {
+                    id:'lift-log-list',
+                    listeners:{
+                        initialize:function () {
+                            wendler.logList.sortAndRefreshList();
+                            wendler.components.addSwipeToDelete(this, wendler.logList.showLogEntry,
+                                wendler.logList.deleteLogEntry, '.date-week');
+                        }
+                    },
+                    xtype:'list',
+                    selectedCls:'',
+                    store:wendler.stores.LiftLog,
+                    itemCls:'lift-log-row',
+                    emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
+                    itemTpl:'<table><tbody><tr>' +
+                        '<td width="30%"><div class="lift-name">{liftName}</div><div class="cycle-and-week">C{cycle} W{week}</div></td>' +
+                        '<td width="30%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div>' +
+                        '<div class="estimated-one-rep">~{[util.formulas.estimateOneRepMax(values.weight,values.reps)]}</div></td>' +
+                        '<td width="40%" class="date-week">' +
+                        '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span><span class="disclosure-small"></span>' +
+                        '</td><td width="40%" class="delete-button-holder hidden"></td>' +
+                        '</tr></tbody></table>'
+                },
+                {
+                    id:'log-assistance-list',
+                    listeners:{
+                        initialize:function () {
+                            wendler.components.addSwipeToDelete(this, Ext.emptyFn, Ext.emptyFn, '.date-week');
+                        }
+                    },
+                    xtype:'list',
+                    selectedCls:'',
+                    store:wendler.stores.assistance.ActivityLog,
+                    itemCls:'lift-log-row',
+                    itemTpl:'<table><tbody><tr>' +
+                        '<td width="30%"><div class="lift-name">{movement}</div><div class="cycle-and-week">Sets: {sets}</div></td>' +
+                        '<td width="30%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div></td>' +
+                        '<td width="40%" class="date-week">' +
+                        '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span>' +
+                        '</td><td width="40%" class="delete-button-holder hidden"></td>' +
+                        '</tr></tbody></table>'
                 }
-            },
-            xtype:'list',
-            selectedCls:'',
-            store:wendler.stores.assistance.ActivityLog,
-            itemCls:'lift-log-row',
-            itemTpl:'<table><tbody><tr>' +
-                '<td width="30%"><div class="lift-name">{movement}</div><div class="cycle-and-week">Sets: {sets}</div></td>' +
-                '<td width="30%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div></td>' +
-                '<td width="40%" class="date-week">' +
-                '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span>' +
-                '</td><td width="40%" class="delete-button-holder hidden"></td>' +
-                '</tr></tbody></table>'
+            ]
         }
-
     ]
 };
