@@ -20,6 +20,7 @@ wendler.log.emailExport.buildCsvToExport = function () {
         'notes':'notes',
         'week':'week',
         'weight':'weight',
+        'estimatedOneRepMax':'estimated one rep max',
         'cycle':'cycle',
         'date':'date',
         'timestamp':'timestamp',
@@ -29,6 +30,9 @@ wendler.log.emailExport.buildCsvToExport = function () {
     var csvValueMapper = {
         'date':function (object) {
             return wendler.log.formatDate(object.timestamp);
+        },
+        'estimatedOneRepMax':function (object) {
+            return util.formulas.estimateOneRepMax(object.weight, object.reps);
         }
     };
 
@@ -43,9 +47,12 @@ wendler.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper
         for (var property in nameMapper) {
             var keyReplacement = nameMapper[property];
 
-            var value = object[property];
+            var value = null;
             if (_.has(valueMapper, property)) {
                 value = valueMapper[property](object);
+            }
+            else {
+                value = object[property];
             }
 
             csvObject[keyReplacement] = value;

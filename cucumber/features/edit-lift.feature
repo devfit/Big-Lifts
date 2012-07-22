@@ -26,3 +26,14 @@ Feature: Editing lifts
     And I close the edit lift screen
     And I click edit lifts
     Then There are 4 lifts in the edit lifts list
+
+  Scenario: Lift can be saved immediately after its name is changed
+    When I navigate to the lift editor
+    And I click edit lifts
+    And I click edit "Squat"
+    And I edit the name to be "Squat2"
+    And I close the edit lift screen
+    And I view the squat2 lift schedule for week 1
+    When I mark the current lift completed
+    And I save the lift log
+    Then I am on the track tab

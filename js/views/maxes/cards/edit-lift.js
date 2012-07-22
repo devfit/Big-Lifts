@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
+Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller', 'wendler.editLift');
 
 wendler.maxes.currentEditingLiftProperty = null;
 
@@ -18,6 +18,8 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
 
     if (errors.isValid()) {
         newLiftModel.set('id', currentModel.data.id);
+
+        wendler.editLift.updateAssociatedLiftCompletion(currentModel.get('propertyName'), newLiftModel.get('propertyName'));
 
         var somethingSaved = false;
         for (var key in newLiftModel.getData()) {
@@ -39,6 +41,18 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
     }
     else {
         wendler.maxes.controller.handleInvalidLift(errors);
+    }
+};
+
+wendler.editLift.updateAssociatedLiftCompletion = function (oldPropertyName, newPropertyName) {
+    if (oldPropertyName !== newPropertyName) {
+        wendler.stores.lifts.LiftCompletion.each(function(record){
+            if( record.get('liftPropertyName') === oldPropertyName ){
+                record.set('liftPropertyName', newPropertyName);
+                record.save();
+            }
+        });
+        wendler.stores.lifts.LiftCompletion.sync();
     }
 };
 

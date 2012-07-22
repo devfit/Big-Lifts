@@ -15,3 +15,7 @@ Then /^The sort ordering is sensible$/ do
   liftsBroken = @driver.execute_script("return wendler.stores.migrations.liftOrdersAreBroken()")
   liftsBroken.should == false
 end
+
+Then /^I am on the track tab$/ do
+  @driver.find_element(:id => 'log').displayed?.should == true
+end

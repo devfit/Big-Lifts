@@ -1,5 +1,5 @@
 "use strict";
-if (Ext.os.is.Linux) {
+if (Ext.os.is.Linux || Ext.os.is.MacOS) {
     window.device = {
         name:"Chrome",
         uuid:'1234',

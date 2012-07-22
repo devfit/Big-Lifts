@@ -27,7 +27,6 @@ util.files.errorCallback = function (e) {
     console.log('Error: ' + msg);
 };
 
-
 util.files.BYTES_PER_KB = 1024;
 util.files.KB_PER_MB = 1024;
 util.files.requestedFileSystemSizeBytes = Ext.os.is.Linux ? 5 * util.files.KB_PER_MB * util.files.BYTES_PER_KB : 0;

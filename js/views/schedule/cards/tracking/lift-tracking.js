@@ -27,12 +27,8 @@ wendler.liftSchedule.liftTracking.allLiftsAreCompleted = function () {
     return completedUniques.length === 1 && completedUniques[0] === true;
 };
 
-wendler.liftSchedule.liftTracking.persistLiftCompletion = function () {
-    var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
-    liftCompletion.set('completed', true);
-    liftCompletion.save();
-    wendler.stores.lifts.LiftCompletion.sync();
-};
+wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
+    wendler.liftSchedule.liftTracking.persistLiftCompletion();
 
 wendler.liftSchedule.liftTracking.persistLog = function () {
     var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6);
@@ -62,10 +58,10 @@ wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
     else {
         if( wendler.toggles.Assistance ){
             Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
-        }
-        else {
-            Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
-        }
+    }
+    else {
+        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+    }
     }
 };
 
