@@ -2,9 +2,10 @@ Ext.ns('wendler.stores.assistance');
 Ext.define('AssistanceActivity', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
+            {name:'assistanceType', type:'string'},
             {name:'movement', type:'string'},
             {name:'weight', type:'float'},
             {name:'sets', type:'int'},

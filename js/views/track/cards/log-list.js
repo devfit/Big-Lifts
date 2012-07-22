@@ -182,7 +182,7 @@ wendler.views.log.cards.LogList = {
                             id:'track-sort-button',
                             xtype:'button',
                             ui:'action',
-                            text:'Sort...',
+                            text:'Sort',
                             handler:wendler.logList.showSortMenu
                         }
                     );
@@ -192,7 +192,7 @@ wendler.views.log.cards.LogList = {
                             id:'track-show-button',
                             xtype:'button',
                             ui:'action',
-                            text:'Show...',
+                            text:'Show',
                             handler:wendler.logList.showMovementTypeSelectMenu
                         });
                     }
@@ -324,9 +324,10 @@ wendler.views.log.cards.LogList = {
                     store:wendler.stores.assistance.ActivityLog,
                     itemCls:'lift-log-row',
                     itemTpl:'<table><tbody><tr>' +
-                        '<td width="30%"><div class="lift-name">{movement}</div><div class="cycle-and-week">Sets: {sets}</div></td>' +
-                        '<td width="30%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div></td>' +
-                        '<td width="40%" class="date-week">' +
+                        '<td width="15%">{assistanceType}</td>' +
+                        '<td width="25%"><div class="lift-name">{movement}</div><div class="cycle-and-week">Sets: {sets}</div></td>' +
+                        '<td width="25%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div></td>' +
+                        '<td width="35%" class="date-week">' +
                         '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span>' +
                         '</td><td width="40%" class="delete-button-holder hidden"></td>' +
                         '</tr></tbody></table>'

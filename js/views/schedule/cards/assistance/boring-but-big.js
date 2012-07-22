@@ -68,6 +68,7 @@ wendler.liftSchedule.assistance.boringButBig.saveAssistanceWork = function () {
 
     var assistanceRecord = {
         movement:liftName,
+        assistanceType:'BBB',
         sets:5,
         reps:10,
         weight:weight,
