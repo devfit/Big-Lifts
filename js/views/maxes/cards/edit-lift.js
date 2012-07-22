@@ -34,7 +34,7 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
 
         if (somethingSaved) {
             wendler.maxes.controller.rebuildMaxesList();
-            wendler.liftSchedule.controller.refreshLiftSelectorLifts();
+            wendler.liftSchedule.liftSelector.refreshLiftSelectorLifts();
         }
 
         wendler.maxes.controller.doneWithEditing();

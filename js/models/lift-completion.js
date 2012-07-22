@@ -11,29 +11,47 @@ wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropert
 
 wendler.stores.migrations.liftCompletionMigration = function () {
     util.withNoFilters(wendler.stores.lifts.LiftCompletion, function () {
-        for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
-            var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
-
-            var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
-                return r.get('liftPropertyName') === liftPropertyName;
-            });
-
-            if (existingLiftCompletion === -1) {
-                for (var week = 1; week <= 4; week++) {
-                    wendler.stores.lifts.LiftCompletion.add(
-                        {liftPropertyName:liftPropertyName, week:week, completed:false});
-                }
-            }
-        }
+        wendler.stores.migrations.addMissingLiftCompletions();
+        wendler.stores.migrations.removeDeadLiftCompletions();
         wendler.stores.lifts.LiftCompletion.sync();
     });
 };
 
+wendler.stores.migrations.addMissingLiftCompletions = function () {
+    for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
+        var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
+
+        var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+            return r.get('liftPropertyName') === liftPropertyName;
+        });
+
+        if (existingLiftCompletion === -1) {
+            for (var week = 1; week <= 4; week++) {
+                wendler.stores.lifts.LiftCompletion.add(
+                    {liftPropertyName:liftPropertyName, week:week, completed:false});
+            }
+        }
+    }
+};
+
+wendler.stores.migrations.removeDeadLiftCompletions = function () {
+    var liftNames = _.map(wendler.stores.lifts.Lifts.getData().all, function (r) {
+        return r.get('propertyName');
+    });
+
+    wendler.stores.lifts.LiftCompletion.each(function (record) {
+        if (_.indexOf(liftNames, record.get('liftPropertyName')) === -1) {
+            wendler.stores.lifts.LiftCompletion.remove(record);
+        }
+    });
+
+    wendler.stores.lifts.LiftCompletion.sync();
+};
 
 Ext.define('LiftCompletion', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'liftPropertyName', type:'string'},
