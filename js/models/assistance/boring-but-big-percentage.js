@@ -25,4 +25,5 @@ wendler.stores.assistance.BoringButBigPercentage = Ext.create('Ext.data.Store', 
         }
     }
 });
+
 wendler.stores.push(wendler.stores.assistance.BoringButBigPercentage);

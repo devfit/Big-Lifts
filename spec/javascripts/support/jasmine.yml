@@ -18,10 +18,12 @@ src_files:
     - js/util/formulas.js
     - js/lib/parse.js
     - js/views/schedule/cards/rest-timer.js
+    - js/views/schedule/cards/assistance/assistance-chooser.js
     - js/models/stores.js
     - js/models/lifts.js
     - js/models/lift-completion.js
     - js/models/plate_bar_configuration.js
+    - js/models/assistance/assistance.js
 
 # stylesheets
 #
