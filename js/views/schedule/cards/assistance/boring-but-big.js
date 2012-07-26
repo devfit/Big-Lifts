@@ -147,7 +147,7 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
             store:wendler.liftSchedule.assistance.boringButBig.liftStore,
             itemCls:'lift-row',
             itemTpl:'<p class="reps-weight"><span class="reps">{reps}</span> ' +
-                '<span>{weight}</span>' +
+                '<span class="weight">{weight}</span>' +
                 '<span class="percentage">{percentage}%</span></p>' +
                 (wendler.toggles.BarLoading ?
                     '<p class="bar-loader-breakdown">' +

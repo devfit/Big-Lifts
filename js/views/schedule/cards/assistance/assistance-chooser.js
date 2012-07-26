@@ -74,7 +74,7 @@ wendler.views.liftSchedule.assistance.AssistanceChooser = {
             items:[
                 {xtype:'button', text:'Back', ui:'back', handler:wendler.views.liftSchedule.assistance.returnToLift},
                 {xtype:'spacer'},
-                {xtype:'button', text:'Next', ui:'confirm', handler:wendler.views.liftSchedule.assistance.nextButtonPressed}
+                {id:'assistance-chooser-next-button', xtype:'button', text:'Next', ui:'confirm', handler:wendler.views.liftSchedule.assistance.nextButtonPressed}
             ]
         },
         {

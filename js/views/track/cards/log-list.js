@@ -36,30 +36,23 @@ wendler.logList.toggleVisibility = function (component) {
 };
 
 wendler.logList.showSortMenu = function () {
-    Ext.getCmp('track-show-movement-type-toolbar').hide();
     wendler.logList.toggleVisibility(Ext.getCmp('track-sort-toolbar'));
     wendler.logList.updateUiForSortButtons();
 };
 
-wendler.logList.showMovementTypeSelectMenu = function () {
+wendler.logList.changeMovementTypeCalled = function(){
     Ext.getCmp('track-sort-toolbar').hide();
-    wendler.logList.toggleVisibility(Ext.getCmp('track-show-movement-type-toolbar'));
+    wendler.logList.toggleVisibility(Ext.getCmp('track-lifts-movement-type-button'));
+    wendler.logList.toggleVisibility(Ext.getCmp('track-assistance-movement-type-button'));
 };
 
-wendler.logList.changeMovementTypeButtons = function (selectedButton) {
-    _.each(Ext.getCmp('track-show-movement-type-toolbar').query('button'), function (button) {
-        button.setUi('normal')
-    });
-    selectedButton.setUi('confirm');
-};
-
-wendler.logList.changeMovementTypeToLifts = function (selectedButton) {
-    wendler.logList.changeMovementTypeButtons(selectedButton);
+wendler.logList.changeMovementTypeToLifts = function () {
+    wendler.logList.changeMovementTypeCalled();
     Ext.getCmp('log-list-container').setActiveItem(Ext.getCmp('lift-log-list'));
 };
 
-wendler.logList.changeMovementTypeToAssistance = function (selectedButton) {
-    wendler.logList.changeMovementTypeButtons(selectedButton);
+wendler.logList.changeMovementTypeToAssistance = function () {
+    wendler.logList.changeMovementTypeCalled();
     Ext.getCmp('log-list-container').setActiveItem(Ext.getCmp('log-assistance-list'));
 };
 
@@ -189,11 +182,18 @@ wendler.views.log.cards.LogList = {
 
                     if (wendler.toggles.Assistance) {
                         this.add({
-                            id:'track-show-button',
+                            id:'track-lifts-movement-type-button',
                             xtype:'button',
-                            ui:'action',
-                            text:'Show',
-                            handler:wendler.logList.showMovementTypeSelectMenu
+                            text:'Lifts',
+                            handler:wendler.logList.changeMovementTypeToAssistance
+                        });
+
+                        this.add({
+                            id:'track-assistance-movement-type-button',
+                            hidden:true,
+                            xtype:'button',
+                            text:'Assistance',
+                            handler:wendler.logList.changeMovementTypeToLifts
                         });
                     }
                     this.add({xtype:'spacer'});
@@ -256,30 +256,6 @@ wendler.views.log.cards.LogList = {
                     handler:function () {
                         wendler.logList.sortBy('timestamp');
                     }
-                }
-            ]
-        },
-        {
-            id:'track-show-movement-type-toolbar',
-            docked:'top',
-            ui:'light',
-            hidden:true,
-            xtype:'toolbar',
-            showAnimation:{
-                type:'slide',
-                direction:'down'
-            },
-            items:[
-                {
-                    xtype:'button',
-                    text:'Lifts',
-                    ui:'confirm',
-                    handler:wendler.logList.changeMovementTypeToLifts
-                },
-                {
-                    xtype:'button',
-                    text:'Assistance',
-                    handler:wendler.logList.changeMovementTypeToAssistance
                 }
             ]
         },
