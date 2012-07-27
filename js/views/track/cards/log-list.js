@@ -11,6 +11,12 @@ wendler.logList.deleteLogEntry = function (dataview, index, item, e) {
     Ext.getCmp('lift-log-list').refresh();
 };
 
+wendler.logList.deleteAssistanceEntry = function (dataview, index, item, e) {
+    wendler.stores.assistance.ActivityLog.removeAt(index);
+    wendler.stores.assistance.ActivityLog.sync();
+    Ext.getCmp('log-assistance-list').refresh();
+};
+
 wendler.logList.showExportLog = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('export-log'), {type:'slide', direction:'left'});
 };
@@ -292,7 +298,7 @@ wendler.views.log.cards.LogList = {
                     id:'log-assistance-list',
                     listeners:{
                         initialize:function () {
-                            wendler.components.addSwipeToDelete(this, Ext.emptyFn, Ext.emptyFn, '.date-week');
+                            wendler.components.addSwipeToDelete(this, Ext.emptyFn, wendler.logList.deleteAssistanceEntry, '.date-week');
                         }
                     },
                     xtype:'list',
