@@ -159,9 +159,6 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
     ],
     listeners:{
         show:function () {
-            wendler.liftSchedule.currentLiftProperty = 'squat';
-            wendler.liftSchedule.currentShowingMax = 200;
-
             wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle();
             wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore(50);
             wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect);

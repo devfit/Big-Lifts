@@ -7,7 +7,7 @@ When /^I select "([^"]*)" assistance work$/ do |assistanceName|
 end
 
 Then /^The first boring but big lift weight is (\d+)$/ do |weight|
-    @driver.find_element(:id => 'boring-but-big').find_elements(:class => 'weight')[0].text().should == weight
+  @driver.find_element(:id => 'boring-but-big').find_elements(:class => 'weight')[0].text().should == weight
 end
 
 When /^I set the BBB percentage to (\d+)$/ do |percentage|
@@ -17,7 +17,22 @@ When /^I set the BBB percentage to (\d+)$/ do |percentage|
 end
 
 When /^I save the boring but big assistance work$/ do
-   @driver.find_element(:id => 'boring-but-big-done-button').click()
-   sleep @ANIMATION_DELAY
+  @driver.find_element(:id => 'boring-but-big-done-button').click()
+  sleep @ANIMATION_DELAY
+end
+
+Then /^I tap the track "([^"]*)" button$/ do |trackButtonText|
+  trackTypeButton = @driver.find_element(:id => 'showTypeTrackToolbar').find_elements(:class => 'x-button').select { |button|
+    button.text() == trackButtonText }[0]
+  trackTypeButton.click()
+end
+
+Then /^I see (\d+) assistance log entry for "([^"]*)"$/ do |numberOfEntries, entryText|
+  logRows = @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'lift-log-row')
+  logRows.length.should == numberOfEntries.to_i
+
+  logRow = logRows[0]
+  repsWeight = logRow.find_element(:class => "reps").text() + logRow.find_element(:class => 'weight').text()
+  repsWeight.should == entryText
 end
 
