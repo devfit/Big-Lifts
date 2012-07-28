@@ -384,7 +384,23 @@ task setupIosPhonegap() << {
     }
 }
 
-task setupIosAssets(dependsOn: [setupIosPhonegap, setupIosAppFiles]) << {}
+task setupIosIcons() << {
+    Map iconMappings = [
+            'icon-114x114.png': 'icon@2x.png',
+            'icon-72x72.png': 'icon-72.png',
+            'icon-57x57.png': 'icon.png'
+    ]
+    for (Map.Entry iconMapping : iconMappings) {
+        copy {
+            from 'distribution/icons'
+            include iconMapping.key
+            into 'native/ios/Wendler531/Resources/icons'
+            rename { filename -> iconMapping.value }
+        }
+    }
+}
+
+task setupIosAssets(dependsOn: [setupIosIcons, setupIosPhonegap, setupIosAppFiles]) << {}
 
 task copyToDropbox() << {
     copy {
