@@ -400,7 +400,11 @@ task setupIosIcons() << {
     }
 }
 
-task setupIosAssets(dependsOn: [setupIosIcons, setupIosPhonegap, setupIosAppFiles]) << {}
+task setupIosSplashScreen() << {
+
+}
+
+task setupIosAssets(dependsOn: [setupIosIcons, setupIosSplashScreen, setupIosPhonegap, setupIosAppFiles]) << {}
 
 task copyToDropbox() << {
     copy {
