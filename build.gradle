@@ -366,6 +366,26 @@ task installNativeAndroidDebug(dependsOn: [buildNativeAndroidDebug]) << {
     }
 }
 
+task setupIosAppFiles() << {
+    copy {
+        from 'build'
+        exclude '.git'
+        into 'native/ios/www'
+    }
+}
+task setupIosPhonegap() << {
+    copy {
+        from 'native/ios'
+        include 'cordova-*.js'
+        into 'native/ios/www'
+        rename { filename ->
+            "phonegap.js"
+        }
+    }
+}
+
+task setupIosAssets(dependsOn: [setupIosPhonegap, setupIosAppFiles]) << {}
+
 task copyToDropbox() << {
     copy {
         from 'native/android/bin'
