@@ -24,28 +24,28 @@ When /^I check off all lifts$/ do
   }
   });
 END
-    @driver.execute_script(checkLiftsScript)
+  @driver.execute_script(checkLiftsScript)
 
-    @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-tab')[3].click()
-    sleep @ANIMATION_DELAY
+  @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-tab')[3].click()
+  sleep @ANIMATION_DELAY
 
-    liftListItemsLength = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }.length
-    liftIndex = 4;
-      liftListItem = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }[liftIndex-1]
-      liftListItem.click()
-      sleep @ANIMATION_DELAY
+  liftListItemsLength = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }.length
+  liftIndex = 4;
+  liftListItem = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }[liftIndex-1]
+  liftListItem.click()
+  sleep @ANIMATION_DELAY
 
-      #MARK LIFT COMPLETED
-      @driver.find_element(:id => 'mark-lift-completed-button').click()
-      sleep @ANIMATION_DELAY
+  #MARK LIFT COMPLETED
+  @driver.find_element(:id => 'mark-lift-completed-button').click()
+  sleep @ANIMATION_DELAY
 
-      #LOG LIFT
-      liftTrackingPanel = @driver.find_element(:id => 'lift-tracking')
-      liftTrackingPanel.find_element(:id => 'log-lift-save-button').click()
-      sleep @ANIMATION_DELAY
+  #LOG LIFT
+  liftTrackingPanel = @driver.find_element(:id => 'lift-tracking')
+  liftTrackingPanel.find_element(:id => 'log-lift-save-button').click()
+  sleep @ANIMATION_DELAY
 
-      #RETURN TO LIFT SCHEDULE
-      @main_navigation.navigate_to(:lift_schedule)
+  #RETURN TO LIFT SCHEDULE
+  @main_navigation.navigate_to(:lift_schedule)
 end
 
 

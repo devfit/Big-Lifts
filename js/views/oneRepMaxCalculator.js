@@ -1,14 +1,14 @@
 "use strict";
-Ext.ns('wendler', 'wendler.views', 'wendler.oneRepMax', 'wendler.oneRepMax.controller');
+Ext.ns('wendler', 'wendler.views', 'wendler.oneRepMax', 'wendler.oneRepMax');
 
-wendler.oneRepMax.controller.estimateOneRepMax = function () {
+wendler.oneRepMax.estimateOneRepMax = function () {
     var weight = Ext.getCmp('one-rep-weight').getValue();
     var reps = Ext.getCmp('one-rep-reps').getValue();
     var estimate = util.formulas.estimateOneRepMax(weight, reps);
     Ext.getCmp('one-rep-estimate').setValue(estimate);
 };
 
-wendler.oneRepMax.controller.useEstimateForLift = function () {
+wendler.oneRepMax.useEstimateForLift = function () {
     var lift = Ext.getCmp('use-lift-select').getValue();
     var estimate = Ext.getCmp('one-rep-estimate').getValue();
 
@@ -32,7 +32,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
             show:function () {
                 wendler.navigation.unbindBackEvent();
             },
-            initialize:wendler.oneRepMax.controller.estimateOneRepMax
+            initialize:wendler.oneRepMax.estimateOneRepMax
         },
         layout:'fit',
         items:[
@@ -53,7 +53,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
                         defaults:{
                             labelWidth:'35%',
                             listeners:{
-                                change:wendler.oneRepMax.controller.estimateOneRepMax
+                                change:wendler.oneRepMax.estimateOneRepMax
                             }
                         },
                         items:[
@@ -109,7 +109,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
                                 xtype:'button',
                                 id:'use-max-button',
                                 text:'Use Max',
-                                handler:wendler.oneRepMax.controller.useEstimateForLift
+                                handler:wendler.oneRepMax.useEstimateForLift
                             }
                         ]
                     }

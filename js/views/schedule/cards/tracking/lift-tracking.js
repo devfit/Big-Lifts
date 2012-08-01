@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.liftTracking');
+Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.liftTracking', 'wendler.liftTracking');
 
 wendler.liftSchedule.liftTracking.logLift = function (data) {
     var expectedRepsByWeek = wendler.stores.lifts.findExpectedRepsForWeek(data.week);
@@ -34,7 +34,7 @@ wendler.liftSchedule.liftTracking.persistLog = function () {
 
     var formValues = Ext.getCmp('lift-tracking').getValues();
     var reps = formValues['reps'];
-    var notes = wendler.liftSchedule.liftTracking.currentLiftNotes;
+    var notes = wendler.liftTracking.currentLiftNotes;
     var week = wendler.liftSchedule.currentWeek;
     var weight = formValues['weight'];
     var cycle = wendler.stores.CurrentCycle.first().data.cycle;
@@ -50,7 +50,7 @@ wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
 
     if (wendler.liftSchedule.liftTracking.allLiftsAreCompleted()) {
-        wendler.liftSchedule.liftTracking.showLiftsCompletedScreen();
+        wendler.liftSchedule.liftSelector.showLiftsCompletedScreen ();
     }
     else {
         if (wendler.toggles.Assistance) {
@@ -68,10 +68,10 @@ wendler.liftSchedule.liftTracking.recomputeOneRepMax = function () {
     Ext.getCmp('lift-tracking').setValues(formValues);
 };
 
-wendler.liftSchedule.liftTracking.currentLiftNotes = '';
+wendler.liftTracking.currentLiftNotes = '';
 wendler.liftSchedule.liftTracking.editNotes = function () {
     Ext.get('first-log-notes').addCls('tapped');
-    Ext.getCmp('first-log-notes-editor')._setNotes(wendler.liftSchedule.liftTracking.currentLiftNotes);
+    Ext.getCmp('first-log-notes-editor')._setNotes(wendler.liftTracking.currentLiftNotes);
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('first-log-notes-editor'), {type:'slide', direction:'left'});
 };
 
@@ -81,7 +81,7 @@ wendler.liftSchedule.liftTracking.displayNotes = function (notes) {
         displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
     }
     else {
-        displayableNotes = wendler.liftSchedule.components.notesEditor.sanitizeForDisplay(notes);
+        displayableNotes = wendler.components.notesEditor.sanitizeForDisplay(notes);
     }
     Ext.get('first-log-notes').setHtml(displayableNotes);
 };
@@ -97,7 +97,7 @@ wendler.views.liftSchedule.LiftTracking = {
     listeners:{
         show:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.liftTracking.cancelLogTracking);
-            wendler.liftSchedule.liftTracking.currentLiftNotes = '';
+            wendler.liftTracking.currentLiftNotes = '';
             wendler.liftSchedule.liftTracking.displayNotes('');
         }
     },

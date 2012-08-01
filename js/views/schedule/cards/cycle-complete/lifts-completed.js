@@ -7,7 +7,7 @@ wendler.liftSchedule.controller.unmarkAllLifts = function () {
         r.save();
     });
 
-    wendler.liftSchedule.controller.liftCompletionChange();
+    wendler.liftSchedule.liftCompletionChange();
 };
 
 wendler.liftSchedule.controller.saveAndCloseLiftCompletedScreen = function () {
@@ -21,7 +21,7 @@ wendler.liftSchedule.controller.saveAndCloseLiftCompletedScreen = function () {
     wendler.liftSchedule.controller.unmarkAllLifts();
 
     if (Ext.getCmp('increase-maxes-toggle').getValue() === 1) {
-        wendler.liftSchedule.controller.increaseMaxesByCycleIncrease();
+        wendler.liftSchedule.increaseMaxesByCycleIncrease();
     }
 
     wendler.liftSchedule.controller.closeLiftCompletedScreen();
@@ -32,7 +32,7 @@ wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
         {type:'slide', direction:'up'});
 };
 
-wendler.liftSchedule.controller.increaseMaxesByCycleIncrease = function () {
+wendler.liftSchedule.increaseMaxesByCycleIncrease = function () {
     wendler.stores.lifts.Lifts.each(function (r) {
         var max = r.data.max;
         var cycleIncrease = r.data.cycleIncrease;
