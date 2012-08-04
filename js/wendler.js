@@ -10,14 +10,13 @@ wendler.main.markFirstStartup = function () {
     }
 };
 
+wendler.main.started = false;
 wendler.main.start = function () {
-    if( !wendler.loading.loaded ){
+    if (!wendler.loading.loaded || wendler.main.started) {
         return;
     }
 
-    if( navigator.splashcreen ){
-        navigator.splashscreen.hide();
-    }
+    wendler.main.started = true;
 
     var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
     wendler.main.markFirstStartup();

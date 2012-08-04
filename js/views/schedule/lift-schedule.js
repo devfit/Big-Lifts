@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.views', 'wendler.liftSchedule.controller');
+Ext.ns('wendler.views', 'wendler.liftSchedule');
 
 wendler.liftSchedule.currentShowingMax = -1;
 wendler.liftSchedule.currentLiftProperty = null;

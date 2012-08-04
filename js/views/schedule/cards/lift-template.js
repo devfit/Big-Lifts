@@ -45,7 +45,7 @@ wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
 
     var allPlatePairs = undefined;
     if (useCustomPlates) {
-        allPlatePairs = wendler.liftTemplate.controller.getAllPlatePairs();
+        allPlatePairs = wendler.liftSchedule.liftTemplate.getAllPlatePairs();
     }
 
     var plates = util.formulas.buildPlateListForWeight(weight, barWeight, allPlatePairs);
@@ -53,7 +53,6 @@ wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
     if (plates.length === 0) {
         return ""
     }
-
 
     return "[" + plates.join(',') + "]";
 };

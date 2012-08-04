@@ -14,7 +14,7 @@ Feature: Lift tracking
     And I select the log entry for Squat
     Then The log expected reps is 6
     Then The log reps is 2
-
+#
   Scenario: Notes aren't persisted between lifts
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
