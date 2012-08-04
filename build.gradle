@@ -401,7 +401,11 @@ task setupIosIcons() << {
 }
 
 task setupIosSplashScreen() << {
-
+    copy {
+        from 'distribution'
+        into 'build'
+        include 'splashes/**/*.png'
+    }
 }
 
 task setupIosAssets(dependsOn: [setupIosIcons, setupIosSplashScreen, setupIosPhonegap, setupIosAppFiles]) << {}
