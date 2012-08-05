@@ -144,12 +144,6 @@ task test() << {
     }
 }
 
-def getGitStatus() {
-    def p = ['git', 'status'].execute()
-    p.waitFor()
-    p.text
-}
-
 def incrementJsVersion() {
     File versionFile = new File('js/version.js')
     String oldVersionCallback = versionFile.text
