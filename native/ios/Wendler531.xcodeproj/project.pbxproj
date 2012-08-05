@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		028A655F15CCB1E1000A43D7 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 028A655E15CCB1E1000A43D7 /* Default.png */; };
 		028A656215CCB214000A43D7 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 028A656015CCB1F1000A43D7 /* Default@2x.png */; };
+		02AE2A2D15CDFF3E006E868E /* icon-144x144.png in Resources */ = {isa = PBXBuildFile; fileRef = 02AE2A2C15CDFF3E006E868E /* icon-144x144.png */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -82,6 +83,7 @@
 		028A655E15CCB1E1000A43D7 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
 		028A656015CCB1F1000A43D7 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
 		028A656315CCB299000A43D7 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
+		02AE2A2C15CDFF3E006E868E /* icon-144x144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-144x144.png"; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -192,6 +194,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				02AE2A2C15CDFF3E006E868E /* icon-144x144.png */,
 				028A656315CCB299000A43D7 /* Default-Portrait~ipad.png */,
 				028A656015CCB1F1000A43D7 /* Default@2x.png */,
 				028A655E15CCB1E1000A43D7 /* Default.png */,
@@ -422,6 +425,7 @@
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				028A655F15CCB1E1000A43D7 /* Default.png in Resources */,
 				028A656215CCB214000A43D7 /* Default@2x.png in Resources */,
+				02AE2A2D15CDFF3E006E868E /* icon-144x144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
