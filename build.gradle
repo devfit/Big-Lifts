@@ -360,6 +360,11 @@ task installNativeAndroidDebug(dependsOn: [buildNativeAndroidDebug]) << {
     }
 }
 
+task cleanIosAssets() << {
+    delete('./native/ios/www')
+    mkdir('./native/ios/www')
+}
+
 task setupIosAppFiles() << {
     copy {
         from 'build'
@@ -403,6 +408,8 @@ task setupIosSplashScreen() << {
 }
 
 task setupIosAssets(dependsOn: [setupIosIcons, setupIosSplashScreen, setupIosPhonegap, setupIosAppFiles]) << {}
+
+task buildNativeIosRelease(dependsOn: [cleanIosAssets, setupIosAssets]) << {}
 
 task copyToDropbox() << {
     copy {
