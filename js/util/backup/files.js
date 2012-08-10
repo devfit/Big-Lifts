@@ -33,7 +33,7 @@ util.files.requestedFileSystemSizeBytes = Ext.os.is.Linux ? 5 * util.files.KB_PE
 util.files.requestFileSystem = function (fileSystemObtainedCallback, errorCallback) {
     var requestFileSystem = window.requestFileSystem || window.webkitRequestFileSystem;
     if (_.isUndefined(requestFileSystem)) {
-        if( errorCallback ){
+        if (errorCallback) {
             errorCallback();
         }
     }
@@ -54,7 +54,7 @@ util.files.write = function (directory, filename, data, successCallback) {
             fileWriter.onerror = util.files.errorCallback;
             fileWriter.onwriteend = successCallback;
 
-            if (Ext.os.is.Linux) {
+            if (Ext.os.is.Linux || Ext.os.is.MacOS) {
                 var bb = new window.WebKitBlobBuilder();
                 bb.append(data);
                 fileWriter.write(bb.getBlob('text/plain'));
@@ -69,8 +69,8 @@ util.files.write = function (directory, filename, data, successCallback) {
     var deleteFileAndWrite = function (fileEntry, parentFile) {
         fileEntry.remove(function () {
             parentFile.getFile(filename, {create:true}, writeData);
-        }, function(error){
-            if( error.code === FileError.NOT_FOUND_ERR ){
+        }, function (error) {
+            if (error.code === FileError.NOT_FOUND_ERR) {
                 parentFile.getFile(filename, {create:true}, writeData);
             }
         });

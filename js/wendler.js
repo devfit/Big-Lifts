@@ -12,7 +12,7 @@ wendler.main.markFirstStartup = function () {
 
 wendler.main.started = false;
 wendler.main.start = function () {
-    if (!wendler.loading.loaded || wendler.main.started) {
+    if (wendler.main.started) {
         return;
     }
 
@@ -46,5 +46,3 @@ wendler.main.start = function () {
         }
     });
 };
-
-wendler.main.start();
