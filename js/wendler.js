@@ -18,8 +18,6 @@ wendler.main.start = function () {
 
 wendler.main.loadApplication = function () {
     if (wendler.main.started && wendler.main.deviceReady) {
-        wendler.main.markFirstStartup();
-
         var app = Ext.getCmp('main-tab-panel');
         app.add(Ext.create('Wendler.views.LiftSchedule'));
         app.add(Ext.create('Wendler.views.Maxes'));
@@ -27,7 +25,9 @@ wendler.main.loadApplication = function () {
         app.add(Ext.create('Wendler.views.OneRepMaxCalculator'));
         app.add(Ext.create('Wendler.views.More'));
 
-        app.setActiveItem(wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0);
+        var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
+        wendler.main.markFirstStartup();
+        app.setActiveItem(startTab);
     }
 };
 
