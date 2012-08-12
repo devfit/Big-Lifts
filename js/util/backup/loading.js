@@ -7,9 +7,11 @@ wendler.loading.loadStore = function (store, callback) {
         });
     }
     else {
-        store.load(function () {
-            util.filebackup.watchStoreSync(store);
-            callback();
+        store.load({
+            callback:function () {
+                util.filebackup.watchStoreSync(store);
+                callback();
+            }
         });
     }
 };

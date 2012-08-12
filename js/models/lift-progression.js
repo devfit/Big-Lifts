@@ -2,7 +2,7 @@ Ext.ns('wendler.liftProgressions', 'wendler.stores.lifts', 'wendler.stores.recov
 Ext.define('LiftProgression', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'week', type:'integer'},
@@ -100,7 +100,7 @@ wendler.stores.recovery.setupDefaultLiftProgressions = function () {
 wendler.stores.lifts.LiftProgression = Ext.create('Ext.data.Store', {
     model:'LiftProgression',
     listeners:{
-        load:function(){
+        load:function () {
             wendler.stores.recovery.setupDefaultLiftProgressions();
         }
     }
