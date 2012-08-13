@@ -108,7 +108,7 @@ wendler.liftSchedule.liftSelector.refreshLiftSelectorLifts = function () {
 };
 
 wendler.stores.lifts.Lifts.addListener('beforesync', function () {
-    if (wendler.main.deviceReady) {
+    if (wendler.main.started) {
         wendler.liftSchedule.liftSelector.refreshLiftSelectorLifts();
     }
 });

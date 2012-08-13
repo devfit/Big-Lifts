@@ -27,7 +27,7 @@ wendler.logList.sortAndRefreshList = function () {
     Ext.getCmp('lift-log-list').refresh();
 };
 wendler.stores.LiftLog.addListener('beforesync', function () {
-    if (wendler.main.deviceReady) {
+    if (wendler.main.started) {
         wendler.logList.sortAndRefreshList();
     }
 });
@@ -154,7 +154,7 @@ wendler.logList.updateAscendingText = function () {
 };
 
 wendler.stores.Settings.addListener('beforesync', function () {
-    if (wendler.main.deviceReady) {
+    if (wendler.main.started) {
         Ext.getCmp('lift-log-list').refresh();
     }
 });
