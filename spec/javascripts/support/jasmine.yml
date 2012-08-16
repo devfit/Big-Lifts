@@ -16,6 +16,7 @@ src_files:
     - js/lib/base52.js
     - js/debug.js
     - js/util/formulas.js
+    - js/util/filters.js
     - js/lib/parse.js
     - js/views/schedule/cards/rest-timer.js
     - js/views/schedule/cards/assistance/assistance-chooser.js
