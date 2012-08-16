@@ -21,12 +21,6 @@ When /^I save the boring but big assistance work$/ do
   sleep @ANIMATION_DELAY
 end
 
-Then /^I tap the track "([^"]*)" button$/ do |trackButtonText|
-  trackTypeButton = @driver.find_element(:id => 'showTypeTrackToolbar').find_elements(:class => 'x-button').select { |button|
-    button.text() == trackButtonText }[0]
-  trackTypeButton.click()
-end
-
 Then /^I see (\d+) assistance log entry for "([^"]*)"$/ do |numberOfEntries, entryText|
   logRows = @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'lift-log-row')
   logRows.length.should == numberOfEntries.to_i

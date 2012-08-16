@@ -4,7 +4,7 @@ Then /^"(.*?)" assistance work is selected$/ do |assistance_text|
 end
 
 Then /^I tap "(.*?)" to change the log type$/ do |button_text|
-  button = @driver.find_elements(:class => 'x-button', :text => button_text).select { |button| button.displayed? }[0]
+  button = @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == button_text }[0]
   button.click
 end
 
