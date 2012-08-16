@@ -190,7 +190,7 @@ wendler.views.log.cards.LogList = {
                         this.add({
                             id:'track-lifts-movement-type-button',
                             xtype:'button',
-                            text:'Lifts',
+                            text:'Asst.',
                             handler:wendler.logList.changeMovementTypeToAssistance
                         });
 
@@ -198,7 +198,7 @@ wendler.views.log.cards.LogList = {
                             id:'track-assistance-movement-type-button',
                             hidden:true,
                             xtype:'button',
-                            text:'Asst.',
+                            text:'Lifts',
                             handler:wendler.logList.changeMovementTypeToLifts
                         });
                     }

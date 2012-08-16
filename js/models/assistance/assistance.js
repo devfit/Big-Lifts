@@ -20,6 +20,13 @@ Ext.define('AssistanceActivity', {
 });
 
 wendler.stores.assistance.ActivityLog = Ext.create('Ext.data.Store', {
-    model:'AssistanceActivity'
+    model:'AssistanceActivity',
+    filters:[
+        {
+            filterFn:function (item) {
+                return item.get("assistanceType") !== "NONE";
+            }
+        }
+    ]
 });
 wendler.stores.push(wendler.stores.assistance.ActivityLog);
