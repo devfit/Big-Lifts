@@ -384,17 +384,17 @@ task setupIosPhonegap() << {
 }
 
 task setupIosIcons() << {
-    Map iconMappings = [
-            'icon-114x114.png': 'icon@2x.png',
-            'icon-72x72.png': 'icon-72.png',
-            'icon-57x57.png': 'icon.png'
+    List icons = [
+            'icon-144x144.png',
+            'icon-114x114.png',
+            'icon-72x72.png',
+            'icon-57x57.png'
     ]
-    for (Map.Entry iconMapping : iconMappings) {
+    for (String icon : icons) {
         copy {
             from 'distribution/icons'
-            include iconMapping.key
-            into 'native/ios/Wendler531/Resources/icons'
-            rename { filename -> iconMapping.value }
+            include icons
+            into 'native/ios/'
         }
     }
 }
@@ -409,7 +409,7 @@ task setupIosSplashScreen() << {
 
 task setupIosAssets(dependsOn: [setupIosIcons, setupIosSplashScreen, setupIosPhonegap, setupIosAppFiles]) << {}
 
-task buildNativeIosRelease(dependsOn: [cleanIosAssets, setupIosAssets]) << {}
+task setupIosForBuild(dependsOn: [cleanIosAssets, setupIosAssets]) << {}
 
 task copyToDropbox() << {
     copy {
