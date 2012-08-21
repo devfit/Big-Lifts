@@ -45,6 +45,7 @@
     [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
         
     [CDVURLProtocol registerURLProtocol];
+    [UIApplication sharedApplication].idleTimerDisabled = YES;
     
     return [super init];
 }
