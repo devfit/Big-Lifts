@@ -118,8 +118,15 @@ task clean << {
     delete gitBackupDirectory
 }
 
-task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplashes, compressJs, copyCss]) << {
+task copySoundFiles() << {
+    copy {
+        from './sounds'
+        into './build/sounds'
+        include '*.*'
+    }
 }
+
+task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplashes, compressJs, copyCss, copySoundFiles]) << {}
 
 task test() << {
     List<File> tests = []
@@ -187,7 +194,7 @@ task incrementIosVersion(dependsOn: []) << {
     long newLongVersion = ((oldPlist =~ longVersionPattern)[0][1] as long) + 1
 
     String newPlist = oldPlist.replaceAll(shortVersionPattern, "<key>CFBundleShortVersionString</key>\n\t<string>${newShortVersion}</string>")
-    .replaceAll(longVersionPattern, "<key>CFBundleVersion</key>\n\t<string>${newLongVersion}</string>")
+            .replaceAll(longVersionPattern, "<key>CFBundleVersion</key>\n\t<string>${newLongVersion}</string>")
 
     println newPlist
 }
@@ -331,14 +338,6 @@ task setupAndroidPhonegapFiles() << {
     }
 }
 
-task setupAndroidSoundFiles() << {
-    copy {
-        from './sounds'
-        into './native/android/assets/www/sounds'
-        include '*.*'
-    }
-}
-
 task cleanAndroidAssets() << {
     delete('./native/android/assets')
     ANDROID_DRAWABLE_LOCATIONS.each {
@@ -346,7 +345,7 @@ task cleanAndroidAssets() << {
     }
 }
 
-task setupAndroidAssets(dependsOn: [setupAndroidAppIcons, setupAndroidSplashScreens, setupAndroidAppFiles, setupAndroidPhonegapFiles, setupAndroidSoundFiles]) << {
+task setupAndroidAssets(dependsOn: [setupAndroidAppIcons, setupAndroidSplashScreens, setupAndroidAppFiles, setupAndroidPhonegapFiles]) << {
 }
 
 task buildNativeAndroidDebug(dependsOn: [cleanAndroidAssets, setupAndroidAssets]) << {
@@ -418,7 +417,7 @@ task setupIosSplashScreen() << {
 
 task setupIosAssets(dependsOn: [setupIosIcons, setupIosSplashScreen, setupIosPhonegap, setupIosAppFiles]) << {}
 
-task setupIosForBuild(dependsOn: [cleanIosAssets, setupIosAssets]) << {}
+task prepareIos(dependsOn: [cleanIosAssets, setupIosAssets]) << {}
 
 task copyToDropbox() << {
     copy {

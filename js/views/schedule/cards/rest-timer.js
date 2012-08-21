@@ -33,13 +33,18 @@ wendler.restTimer.timerHasEnded = function () {
 
 wendler.restTimer.playTimerEndSound = function () {
     if (typeof(Media) !== 'undefined') {
-        var soundPath = util.phonegap.getResourcesPath() + "/sounds/1khz_1_5s.mp3";
-        var restSound = new Media(soundPath,
-            function () {
-            }, function (error) {
-                console.log(error);
-            });
-        restSound.play();
+        if (Ext.os.is.Android) {
+            var soundPath = util.phonegap.getResourcesPath() + "/sounds/1khz_1_5s.mp3";
+            var restSound = new Media(soundPath,
+                function () {
+                }, function (error) {
+                    console.log(error);
+                });
+            restSound.play();
+        }
+        else {
+            new Ext.Audio({hidden:true, url:'sounds/1khz_1_5s.mp3'}).play();
+        }
     }
 };
 
