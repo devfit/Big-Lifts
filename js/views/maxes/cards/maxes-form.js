@@ -63,12 +63,12 @@ wendler.maxes.controller.rebuildMaxesList = function () {
 };
 
 wendler.stores.Settings.addListener('beforesync', function () {
-    if (wendler.main.deviceReady) {
+    if (wendler.main.started) {
         wendler.maxes.controller.showHideTrainingMaxes();
     }
 });
 wendler.stores.lifts.Lifts.addListener('beforesync', function () {
-    if (wendler.main.deviceReady) {
+    if (wendler.main.started) {
         wendler.maxes.controller.rebuildMaxesList();
     }
 });

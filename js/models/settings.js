@@ -4,7 +4,7 @@ Ext.ns('wendler.defaults', 'wendler.stores.recovery', 'wendler.settings.options'
 Ext.define('Settings', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'showWarmupSets', type:'integer'},
@@ -60,6 +60,7 @@ wendler.settings.options.units = [
 ];
 
 wendler.settings.options.roundingValues = [
+    {text:'0.5', value:'0.5'},
     {text:'1', value:'1'},
     {text:'2.5', value:'2.5'},
     {text:'5', value:'5'},

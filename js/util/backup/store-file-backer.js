@@ -24,41 +24,39 @@ util.filebackup.storesToSync = [];
 util.filebackup.watchedStores = [];
 
 util.filebackup.loadStore = function (store, callback) {
-    util.withNoFilters(store, function () {
-        util.files.read(util.filebackup.directory, util.filebackup.generateFileName(store), function (fileDataAsString) {
-            var fileStoreData = null;
-            try {
-                fileStoreData = JSON.parse(fileDataAsString);
-            }
-            catch (e) {
-                store.load();
+    util.files.read(util.filebackup.directory, util.filebackup.generateFileName(store), function (fileDataAsString) {
+        var fileStoreData = null;
+        try {
+            fileStoreData = JSON.parse(fileDataAsString);
+        }
+        catch (e) {
+            store.load(function () {
                 if (!_.isUndefined(callback)) {
                     callback(null, false);
                 }
-                return;
+            });
+            return;
+        }
+
+        if (fileStoreData.length > 0) {
+            for (var i = 0; i < fileStoreData.length; i++) {
+                var fileStoreRecord = fileStoreData[i];
+                delete fileStoreRecord.id;
+
+                var record = Ext.create(store.getProxy().getModel().getName(), fileStoreRecord);
+                record.save();
+                store.add(record);
             }
+            store.sync();
+        }
 
-            if (fileStoreData.length > 0) {
-                for (var i = 0; i < fileStoreData.length; i++) {
-                    var fileStoreRecord = fileStoreData[i];
-                    delete fileStoreRecord.id;
-
-                    var record = Ext.create(store.getProxy().getModel().getName(), fileStoreRecord);
-                    record.save();
-                    store.add(record);
-                }
-                store.sync();
-            }
-
-            store.load();
-
+        store.load(function () {
             if (!_.isUndefined(callback)) {
                 callback(null, true);
             }
-
-
-        }, function (error) {
-            store.load();
+        });
+    }, function (error) {
+        store.load(function () {
             if (!_.isUndefined(callback)) {
                 callback(null, false);
             }
@@ -88,12 +86,3 @@ util.filebackup.deleteAllStoreFiles = function () {
         });
     });
 };
-
-if (wendler.isBrokenTouchWiz) {
-    util.filebackup.saveStore = function () {
-    };
-    util.filebackup.loadStore = function () {
-    };
-    util.filebackup.deleteAllStoreFiles = function () {
-    };
-}

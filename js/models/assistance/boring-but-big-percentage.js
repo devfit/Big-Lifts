@@ -1,4 +1,4 @@
-Ext.ns('wendler.defaults', 'wendler.stores.assistance');
+Ext.ns('wendler.stores.assistance');
 Ext.define('BoringButBigPercentage', {
     extend:'Ext.data.Model',
     config:{

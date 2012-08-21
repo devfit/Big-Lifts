@@ -1,8 +1,23 @@
 Ext.ns("wendler.views.liftSchedule.assistance");
 
 wendler.views.liftSchedule.assistance.continueToLog = function () {
+    wendler.views.liftSchedule.assistance.saveNoAssistance();
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
     Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+};
+
+wendler.views.liftSchedule.assistance.saveNoAssistance = function () {
+    var assistanceRecord = {
+        movement:null,
+        assistanceType:'NONE',
+        sets:null,
+        reps:null,
+        weight:null,
+        timestamp:new Date().getTime()
+    };
+
+    wendler.stores.assistance.ActivityLog.add(assistanceRecord);
+    wendler.stores.assistance.ActivityLog.sync();
 };
 
 wendler.views.liftSchedule.assistance.showBoringButBig = function () {
@@ -26,21 +41,22 @@ wendler.views.liftSchedule.assistance.returnToLift = function () {
 };
 
 wendler.views.liftSchedule.assistance.getLastAssistanceType = function () {
-    if (wendler.stores.assistance.ActivityLog.getCount() > 0) {
-        var highestTimestamp = 0;
-        var lastAssistanceRecord = null;
-        wendler.stores.assistance.ActivityLog.each(function (record) {
-            if (record.get('timestamp') > highestTimestamp) {
-                lastAssistanceRecord = record;
-                highestTimestamp = record.get('timestamp');
-            }
-        });
+    var assistanceType = null;
+    util.withNoFilters(wendler.stores.assistance.ActivityLog, function () {
+        if (wendler.stores.assistance.ActivityLog.getCount() > 0) {
+            var highestTimestamp = 0;
+            var lastAssistanceRecord = null;
+            wendler.stores.assistance.ActivityLog.each(function (record) {
+                if (record.get('timestamp') > highestTimestamp) {
+                    lastAssistanceRecord = record;
+                    highestTimestamp = record.get('timestamp');
+                }
+            });
 
-        return lastAssistanceRecord.get('assistanceType');
-    }
-    else {
-        return null;
-    }
+            assistanceType = lastAssistanceRecord.get('assistanceType');
+        }
+    });
+    return assistanceType;
 };
 
 wendler.views.liftSchedule.assistance.highlightLastChosenAssistance = function () {

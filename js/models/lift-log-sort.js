@@ -37,5 +37,4 @@ wendler.stores.LiftLogSort = Ext.create('Ext.data.Store', {
         }
     }
 });
-util.filebackup.watchStoreSync(wendler.stores.LiftLogSort);
 wendler.stores.push(wendler.stores.LiftLogSort);

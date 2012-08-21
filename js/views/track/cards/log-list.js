@@ -27,7 +27,7 @@ wendler.logList.sortAndRefreshList = function () {
     Ext.getCmp('lift-log-list').refresh();
 };
 wendler.stores.LiftLog.addListener('beforesync', function () {
-    if (wendler.main.deviceReady) {
+    if (wendler.main.started) {
         wendler.logList.sortAndRefreshList();
     }
 });
@@ -154,7 +154,7 @@ wendler.logList.updateAscendingText = function () {
 };
 
 wendler.stores.Settings.addListener('beforesync', function () {
-    if (wendler.main.deviceReady) {
+    if (wendler.main.started) {
         Ext.getCmp('lift-log-list').refresh();
     }
 });
@@ -190,7 +190,7 @@ wendler.views.log.cards.LogList = {
                         this.add({
                             id:'track-lifts-movement-type-button',
                             xtype:'button',
-                            text:'Lifts',
+                            text:'Asst.',
                             handler:wendler.logList.changeMovementTypeToAssistance
                         });
 
@@ -198,7 +198,7 @@ wendler.views.log.cards.LogList = {
                             id:'track-assistance-movement-type-button',
                             hidden:true,
                             xtype:'button',
-                            text:'Asst.',
+                            text:'Lifts',
                             handler:wendler.logList.changeMovementTypeToLifts
                         });
                     }
