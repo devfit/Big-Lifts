@@ -144,7 +144,7 @@ task test() << {
     }
 }
 
-def incrementJsVersion() {
+task incrementJsVersion << {
     File versionFile = new File('js/version.js')
     String oldVersionCallback = versionFile.text
     def versionPattern = /version=(\d+);/
@@ -156,11 +156,9 @@ def incrementJsVersion() {
     versionFile.withWriter { w ->
         w.write(newVersionCallback);
     }
-
-    return version
 }
 
-def incrementAndroidConfigVersion() {
+task incrementAndroidVersion << {
     File configFile = new File('native/android/AndroidManifest.xml')
     String oldConfig = configFile.text
 
@@ -176,14 +174,25 @@ def incrementAndroidConfigVersion() {
     configFile.withWriter { w ->
         w.write(newConfig);
     }
-
-    return newVersion
 }
 
-task version << {
-    incrementJsVersion()
-    incrementAndroidConfigVersion()
+task incrementIosVersion(dependsOn: []) << {
+    File appPlist = new File('native/ios/Wendler531/Wendler531-Info.plist')
+    String oldPlist = appPlist.text
+
+    def shortVersionPattern = /(?ms)<key>CFBundleShortVersionString<\\/key>.*?<string>(.*?)<\\/string>/
+    long newShortVersion = ((oldPlist =~ shortVersionPattern)[0][1] as long) + 1
+
+    def longVersionPattern = /(?ms)<key>CFBundleVersion<\\/key>.*?<string>(.*?)<\\/string>/
+    long newLongVersion = ((oldPlist =~ longVersionPattern)[0][1] as long) + 1
+
+    String newPlist = oldPlist.replaceAll(shortVersionPattern, "<key>CFBundleShortVersionString</key>\n\t<string>${newShortVersion}</string>")
+    .replaceAll(longVersionPattern, "<key>CFBundleVersion</key>\n\t<string>${newLongVersion}</string>")
+
+    println newPlist
 }
+
+task version(dependsOn: [incrementJsVersion, incrementAndroidVersion]) << {}
 
 task deploy(dependsOn: ['build']) << {
     exec {
