@@ -8,7 +8,6 @@ wendler.restTimer.back = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp(wendler.restTimer.backLocation));
 };
 
-
 wendler.restTimer.addTime = function (seconds) {
     wendler.restTimer.remainingSeconds += seconds;
     if (wendler.restTimer.remainingSeconds < 0) {

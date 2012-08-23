@@ -18,17 +18,6 @@ wendler.maxes.barSetup.barValueChanged = function () {
     var barWeight = wendler.stores.BarWeight.first();
     barWeight.set(barPlateValues);
     barWeight.save();
-    wendler.maxes.barSetup.showHidePlateSetup();
-};
-
-wendler.maxes.barSetup.showHidePlateSetup = function () {
-    var customPlatesContainer = Ext.getCmp('custom-plates-container');
-    if (wendler.stores.BarWeight.first().get('useCustomPlates')) {
-        customPlatesContainer.show();
-    }
-    else {
-        customPlatesContainer.hide();
-    }
 };
 
 wendler.maxes.barSetup.removeLastPlate = function () {
@@ -76,7 +65,6 @@ wendler.maxes.barSetup.BarSetup = {
         show:function () {
             wendler.navigation.setBackFunction(wendler.maxes.barSetup.backButtonPressed);
             Ext.getCmp('bar-setup-form').setRecord(wendler.stores.BarWeight.first());
-            wendler.maxes.barSetup.showHidePlateSetup();
         }
     },
     items:[
@@ -115,26 +103,19 @@ wendler.maxes.barSetup.BarSetup = {
                             xtype:'numberfield',
                             name:'weight',
                             label:'Bar Weight'
-                        },
-                        {
-                            id:'use-custom-plates-toggle',
-                            xtype:'togglefield',
-                            name:'useCustomPlates',
-                            label:'Custom Plates?'
                         }
                     ]
                 },
                 {
                     id:'custom-plates-container',
                     xtype:'container',
-                    hidden:true,
                     items:[
                         {
                             id:'plates-setup-fieldset',
                             xtype:'fieldset',
                             cls:'fieldset-title-no-margin',
                             style:'margin-top: 0; margin-bottom: 0.5em',
-                            title:'Weight<span style="float:right">#</span>',
+                            title:'Plates<span style="float:right">#</span>',
                             defaults:{
                                 autoCapitalize:false,
                                 autoCorrect:false,

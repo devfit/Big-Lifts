@@ -6,8 +6,7 @@ Ext.define('BarWeight', {
         identifier: 'uuid',
         fields:[
             {name:'id', type:'string'},
-            {name:'weight', type:'float'},
-            {name:'useCustomPlates', type:'boolean', defaultValue:false}
+            {name:'weight', type:'float'}
         ],
         proxy:{
             type:'localstorage',

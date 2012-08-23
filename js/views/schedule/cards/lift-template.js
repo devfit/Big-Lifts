@@ -41,12 +41,8 @@ wendler.liftSchedule.liftTemplate.getAllPlatePairs = function () {
 wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
     var barWeightConfig = wendler.stores.BarWeight.first();
     var barWeight = barWeightConfig.get('weight');
-    var useCustomPlates = barWeightConfig.get('useCustomPlates');
 
-    var allPlatePairs = undefined;
-    if (useCustomPlates) {
-        allPlatePairs = wendler.liftSchedule.liftTemplate.getAllPlatePairs();
-    }
+    var allPlatePairs = wendler.liftSchedule.liftTemplate.getAllPlatePairs();
 
     var plates = util.formulas.buildPlateListForWeight(weight, barWeight, allPlatePairs);
 
@@ -96,7 +92,7 @@ wendler.liftSchedule.liftTemplate.updateLiftValues = function () {
 };
 
 wendler.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
-    if( wendler.liftSchedule.currentWeek === 4 ){
+    if (wendler.liftSchedule.currentWeek === 4) {
         Ext.getCmp('reps-to-beat-toolbar').hide();
         return;
     }
@@ -180,16 +176,16 @@ wendler.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
-                    style: 'z-index: 11',
-                    id: 'rest-timer-button',
+                    style:'z-index: 11',
+                    id:'rest-timer-button',
                     cls:'rest-timer-button',
                     iconCls:'clock',
                     iconMask:true,
-                    ui: 'decline',
+                    ui:'decline',
                     handler:wendler.liftSchedule.liftTemplate.showRestTimer
                 },
                 {
-                    style: 'z-index: 11',
+                    style:'z-index: 11',
                     id:'mark-lift-completed-button',
                     iconCls:'done',
                     iconMask:true,
