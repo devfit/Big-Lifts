@@ -6,7 +6,8 @@ Feature: Editing single percentage
   Scenario: Edit single percentage
     When I view the lift schedule
     And I open the lift settings configuration
-    And I select edit manual percentages
+    And I switch to the custom percentages template
+    And I tap the use template button
     And I select week 2 for the manual percentages editor
     Then Lift progressions in the list are visible
     And I select set 2 on the manual percentages editor
@@ -20,7 +21,8 @@ Feature: Editing single percentage
   Scenario: Edit single reps
     When I view the lift schedule
     And I open the lift settings configuration
-    And I select edit manual percentages
+    And I switch to the custom percentages template
+    And I tap the use template button
     And I select week 2 for the manual percentages editor
     And I select set 2 on the manual percentages editor
     And I set the manual reps to 7

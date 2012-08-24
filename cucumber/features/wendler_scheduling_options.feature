@@ -3,22 +3,32 @@ Feature: Selecting wendler options
   I want to be able to select my wendler progression percentages option
   So that I can easily set the percentages for both programs
 
-  Scenario: Select wendler progression option 2
+  Scenario: Heavier lift template
     When I view the lift schedule
     And I open the lift settings configuration
-    And I select wendler progression option 2
+    And I select the "Heavier" lift template
     And I confirm the wendler progression change
     And I navigate back to the lift selector from lift settings
     And I set the squat max to 300
     And I view the squat lift schedule for week 1
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 205 75%","5 215 80%","5 230 85%"
 
-  Scenario: Select wendler progression option 1
+  Scenario: Fresher lift template
     When I view the lift schedule
     And I open the lift settings configuration
-    And I select wendler progression option 1
+    And I select the "Fresher" lift template
     And I confirm the wendler progression change
     And I navigate back to the lift selector from lift settings
     And I set the squat max to 300
     And I view the squat lift schedule for week 1
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 175 65%","5 205 75%","5 230 85%"
+
+  Scenario: Powerlifting template
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I select the "Powerlifting" lift template
+    And I confirm the wendler progression change
+    And I navigate back to the lift selector from lift settings
+    And I set the squat max to 300
+    And I view the squat lift schedule for week 1
+    Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","3 190 70%","3 215 80%","3 245 90%"

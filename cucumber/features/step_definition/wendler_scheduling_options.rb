@@ -1,26 +1,36 @@
 When /^I view the lift schedule$/ do
-    @main_navigation.navigate_to(:lift_schedule)
+  @main_navigation.navigate_to(:lift_schedule)
 end
 
 When /^I open the lift settings configuration$/ do
-   @driver.find_element( :id => 'lift-schedule-settings-button' ).click()
-   sleep @ANIMATION_DELAY
+  @driver.find_element(:id => 'lift-schedule-settings-button').click()
+  sleep @ANIMATION_DELAY
 end
 
-When /^I select wendler progression option (\d+)$/ do |option|
-   @driver.find_element( :id => "progression-option-#{option}" ).click();
-   sleep @ANIMATION_DELAY
+When /^I select the "(.*?)" lift template$/ do |assistance_template|
+  until displayed_lift_settings_page().find_element(:class => 'x-title').text() == assistance_template do
+    displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Next" }[0].click
+    sleep @ANIMATION_DELAY
+  end
+
+  displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Use" }[0].click
+  sleep @ANIMATION_DELAY
 end
 
 When /^I confirm the wendler progression change$/ do
-    msgBox = @driver.find_element(:class => 'x-msgbox')
-    okButton = msgBox.find_element(:class => 'x-button')
+  msg_box = @driver.find_element(:class => 'x-msgbox')
+  ok_button = msg_box.find_element(:class => 'x-button')
 
-    okButton.click()
-    sleep @ANIMATION_DELAY
+  ok_button.click()
+  sleep @ANIMATION_DELAY
 end
 
 When /^I navigate back to the lift selector from lift settings$/ do
-   @driver.find_element( :id => 'lift-settings-back-button' ).click();
-   sleep @ANIMATION_DELAY
+  until displayed_lift_settings_page().find_element(:class => 'x-title').text() == "Fresher" do
+    displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Back" }[0].click
+    sleep @ANIMATION_DELAY
+  end
+
+  displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Back" }[0].click
+  sleep @ANIMATION_DELAY
 end

@@ -10,29 +10,29 @@ Then /^(\w+) max is set to ([\d\.]+)$/ do |lift, newmax|
 end
 
 When /^I edit the cycle increase to be ([\d\.]+)$/ do |increase|
-  cycleIncrease = @driver.find_element(:name => 'edit-lift-cycle-increase')
-  cycleIncrease.clear
-  cycleIncrease.send_keys(increase)
+  cycle_increase = @driver.find_element(:name => 'edit-lift-cycle-increase')
+  cycle_increase.clear
+  cycle_increase.send_keys(increase)
   sleep 0.5
 end
 
 When /^I check off all lifts$/ do
-  checkLiftsScript = <<END
+  check_lifts_script = <<END
   wendler.stores.lifts.LiftCompletion.each(function(r){
   if(!(r.data.liftPropertyName === 'bench' && r.data.week === 4 )){
     r.set('completed',true); r.save(); wendler.stores.lifts.LiftCompletion.sync();
   }
   });
 END
-  @driver.execute_script(checkLiftsScript)
+  @driver.execute_script(check_lifts_script)
 
   @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-tab')[3].click()
   sleep @ANIMATION_DELAY
 
-  liftListItemsLength = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }.length
-  liftIndex = 4;
-  liftListItem = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }[liftIndex-1]
-  liftListItem.click()
+  lift_list_items_length = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }.length
+  lift_index = 4
+  lift_list_item = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }[lift_index-1]
+  lift_list_item.click()
   sleep @ANIMATION_DELAY
 
   #MARK LIFT COMPLETED
@@ -40,8 +40,8 @@ END
   sleep @ANIMATION_DELAY
 
   #LOG LIFT
-  liftTrackingPanel = @driver.find_element(:id => 'lift-tracking')
-  liftTrackingPanel.find_element(:id => 'log-lift-save-button').click()
+  lift_tracking_panel = @driver.find_element(:id => 'lift-tracking')
+  lift_tracking_panel.find_element(:id => 'log-lift-save-button').click()
   sleep @ANIMATION_DELAY
 
   #RETURN TO LIFT SCHEDULE

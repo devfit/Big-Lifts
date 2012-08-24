@@ -1,8 +1,8 @@
 Then /^I navigate to the settings page$/ do
   @main_navigation.navigate_to(:more)
-  moreInfoList = @driver.find_element(:id => 'more-info-list').find_elements(:class => 'x-list-item')
-  settingsMenuItem = moreInfoList.select { |item| item.text == 'Settings' }[0]
-  settingsMenuItem.click()
+  more_info_list = @driver.find_element(:id => 'more-info-list').find_elements(:class => 'x-list-item')
+  settings_menu_item = more_info_list.select { |item| item.text == 'Settings' }[0]
+  settings_menu_item.click()
   sleep @ANIMATION_DELAY
 end
 
@@ -12,37 +12,37 @@ Then /^I toggle use training max$/ do
 end
 
 When /^I set the training percentage to (\d+)$/ do |percentage|
-  trainingMaxPercentageInput = @driver.find_element(:name => 'trainingMaxPercentage')
-  trainingMaxPercentageInput.clear()
-  trainingMaxPercentageInput.send_keys(percentage)
+  training_max_percentage_input = @driver.find_element(:name => 'trainingMaxPercentage')
+  training_max_percentage_input.clear()
+  training_max_percentage_input.send_keys(percentage)
   sleep @ANIMATION_DELAY
 end
 
 When /^I set units to kg$/ do
-  settingsForm = @driver.find_element(:id => 'settings-form')
-  unitsInput = settingsForm.find_element(:name => 'units')
-  unitsInput.find_element(:xpath => '..').find_element(:class => 'x-field-mask').click()
+  settings_form = @driver.find_element(:id => 'settings-form')
+  units_input = settings_form.find_element(:name => 'units')
+  units_input.find_element(:xpath => '..').find_element(:class => 'x-field-mask').click()
   sleep @ANIMATION_DELAY
 
-  floatingSelector = @driver.find_elements(:class => 'x-floating').select { |floatingItem|
+  floating_selector = @driver.find_elements(:class => 'x-floating').select { |floatingItem|
     floatingItem.attribute('class').include? 'x-container'
   }[0]
 
-  unitsSelect = floatingSelector.find_elements(:tag_name => 'div', :class => 'x-list-item-label').select { |item|
+  units_select = floating_selector.find_elements(:tag_name => 'div', :class => 'x-list-item-label').select { |item|
     item.text() == "kg"
   }[0]
 
-  unitsSelect.click()
+  units_select.click()
   sleep @ANIMATION_DELAY
   sleep @ANIMATION_DELAY
 end
 
 Then /^The training percentage shows (\d+)$/ do |percentage|
-  trainingPercentageText = @driver.find_element(:id => 'training-max-percentage-indicator').text
-  trainingPercentageText.include?(percentage).should == true
+  training_percentage_text = @driver.find_element(:id => 'training-max-percentage-indicator').text
+  training_percentage_text.include?(percentage).should be_true
 end
 
 Then /^The calculated squat training max is (\d+)$/ do |trainingMax|
-  trainingValue = @driver.find_element(:name => 'squat-training').attribute('value')
-  trainingValue.should == trainingMax
+  training_value = @driver.find_element(:name => 'squat-training').attribute('value')
+  training_value.should == trainingMax
 end
