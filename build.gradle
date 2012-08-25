@@ -183,7 +183,7 @@ task incrementAndroidVersion << {
     }
 }
 
-task incrementIosVersion(dependsOn: []) << {
+task incrementIosVersion << {
     File appPlist = new File('native/ios/Wendler531/Wendler531-Info.plist')
     String oldPlist = appPlist.text
 
@@ -196,7 +196,9 @@ task incrementIosVersion(dependsOn: []) << {
     String newPlist = oldPlist.replaceAll(shortVersionPattern, "<key>CFBundleShortVersionString</key>\n\t<string>${newShortVersion}</string>")
             .replaceAll(longVersionPattern, "<key>CFBundleVersion</key>\n\t<string>${newLongVersion}</string>")
 
-    println newPlist
+    appPlist.withWriter { w ->
+        w.write(newPlist)
+    }
 }
 
 task version(dependsOn: [incrementJsVersion, incrementAndroidVersion, incrementIosVersion]) << {}
