@@ -199,7 +199,7 @@ task incrementIosVersion(dependsOn: []) << {
     println newPlist
 }
 
-task version(dependsOn: [incrementJsVersion, incrementAndroidVersion]) << {}
+task version(dependsOn: [incrementJsVersion, incrementAndroidVersion, incrementIosVersion]) << {}
 
 task deploy(dependsOn: ['build']) << {
     exec {
