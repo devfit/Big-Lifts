@@ -12,10 +12,6 @@
 	<string>icon-57x57.png</string>
 	<key>CFBundleIconFiles</key>
 	<array>
-		<string>icon.png</string>
-		<string>icon@2x.png</string>
-		<string>icon-72.png</string>
-		<string>icon-72@2x.png</string>
 		<string>Default.png</string>
 		<string>Default@2x.png</string>
 		<string>Default@2x.png</string>
