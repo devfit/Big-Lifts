@@ -1,4 +1,4 @@
-Ext.ns("wendler.views.liftSchedule.assistance");
+Ext.ns("wendler.views.liftSchedule.assistance", 'wendler.liftSchedule.assistance');
 
 wendler.views.liftSchedule.assistance.continueToLog = function () {
     wendler.views.liftSchedule.assistance.saveNoAssistance();
@@ -24,9 +24,14 @@ wendler.views.liftSchedule.assistance.showBoringButBig = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 
+wendler.views.liftSchedule.assistance.showTriumvirate = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('triumvirate'));
+};
+
 wendler.views.liftSchedule.assistance.assistanceOptions = [
     {text:'None', assistanceType:'NONE', handler:wendler.views.liftSchedule.assistance.continueToLog },
-    {text:'Boring But Big', assistanceType:'BBB', handler:wendler.views.liftSchedule.assistance.showBoringButBig}
+    {text:'Boring But Big', assistanceType:'BBB', handler:wendler.views.liftSchedule.assistance.showBoringButBig},
+    {text:'Triumvirate', assistanceType:'Triumvirate', handler:wendler.views.liftSchedule.assistance.showTriumvirate}
 ];
 
 wendler.views.liftSchedule.assistance.nextButtonPressed = function () {
@@ -70,6 +75,10 @@ wendler.views.liftSchedule.assistance.highlightLastChosenAssistance = function (
     }
 
     Ext.getCmp('assistance-chooser-list').select(selectedIndex);
+};
+
+wendler.liftSchedule.assistance.returnToAssistanceSelect = function(){
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
 };
 
 wendler.views.liftSchedule.assistance.AssistanceChooser = {

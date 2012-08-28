@@ -41,10 +41,6 @@ wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore = function
     }
 };
 
-wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
-};
-
 wendler.liftSchedule.assistance.boringButBig.showRestTimer = function () {
     wendler.restTimer.backLocation = 'boring-but-big';
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'));
@@ -97,7 +93,7 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect
+                    handler:wendler.liftSchedule.assistance.returnToAssistanceSelect
                 },
                 {xtype:'spacer'},
                 {
@@ -161,7 +157,7 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
         show:function () {
             wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle();
             wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore(50);
-            wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.boringButBig.returnToAssistanceSelect);
+            wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.returnToAssistanceSelect);
         }
     }
 };
