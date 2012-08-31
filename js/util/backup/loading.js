@@ -22,7 +22,17 @@ wendler.loading.loadTasks = _.map(wendler.stores, function (store) {
     }
 });
 
-async.series(wendler.loading.loadTasks, function () {
-    wendler.main.start();
-});
+wendler.loading.load = function () {
+    async.series(wendler.loading.loadTasks, function () {
+        wendler.main.start();
+    });
+};
+
+if (wendler.loadingFromFile) {
+    document.addEventListener("deviceready", wendler.loading.load, false);
+}
+else {
+    wendler.loading.load();
+}
+
 
