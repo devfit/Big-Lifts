@@ -8,7 +8,8 @@ Ext.define('TriumvirateMovement', {
             {name:'liftProperty', type:'string'},
             {name:'name', type:'string'},
             {name:'sets', type:'integer'},
-            {name:'reps', type:'integer'}
+            {name:'reps', type:'integer'},
+            {name:'weight', type:'integer', defaultValue: 0}
         ],
         proxy:{
             type:'localstorage',

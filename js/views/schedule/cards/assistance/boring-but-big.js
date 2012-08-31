@@ -70,7 +70,6 @@ wendler.liftSchedule.assistance.boringButBig.saveAssistanceWork = function () {
         weight:weight,
         timestamp:new Date().getTime()
     };
-
     wendler.stores.assistance.ActivityLog.add(assistanceRecord);
     wendler.stores.assistance.ActivityLog.sync();
 };

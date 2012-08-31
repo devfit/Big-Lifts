@@ -13,6 +13,5 @@ Then /^The week (\d+) tab does not have a checkmark$/ do |week|
     tab.displayed? && tab.text() == week
   }[0]
 
-  tabIncludesCompleted = tab.attribute('class').include?('completed')
-  tabIncludesCompleted.should == false
+  tab.attribute('class').include?('completed').should be_false
 end
