@@ -2,4 +2,4 @@
 Ext.ns('wendler.toggles');
 
 wendler.toggles.BarLoading = wendler.premium;
-wendler.toggles.Assistance = true;
+wendler.toggles.Assistance = wendler.premium;
