@@ -48,20 +48,22 @@ wendler.views.liftSchedule.assistance.TriumvirateMovementEditor = {
                 {
                     xtype:'textfield',
                     label:'Name',
-                    name:'name',
-                    value:''
+                    name:'name'
                 },
                 {
                     xtype:'numberfield',
                     label:'Sets',
-                    name:'sets',
-                    value:''
+                    name:'sets'
                 },
                 {
                     xtype:'numberfield',
                     label:'Reps',
-                    name:'reps',
-                    value:''
+                    name:'reps'
+                },
+                {
+                    xtype: 'numberfield',
+                    label:'Weight',
+                    name:'weight'
                 }
             ]
         }

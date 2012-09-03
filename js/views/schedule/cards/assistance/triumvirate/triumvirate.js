@@ -29,7 +29,7 @@ wendler.liftSchedule.assistance.triumvirate.logMovements = function () {
     Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
 };
 
-wendler.liftSchedule.assistance.triumvirate.getUnits = function(){
+wendler.liftSchedule.assistance.triumvirate.getUnits = function () {
     return wendler.stores.Settings.first().get('units');
 };
 
@@ -63,7 +63,9 @@ wendler.views.liftSchedule.assistance.Triumvirate = {
             xtype:'list',
             store:wendler.stores.assistance.TriumvirateMovement,
             itemTpl:"<table class='triumvirate-table'><tbody><tr>" +
-                "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x {weight}{[wendler.liftSchedule.assistance.triumvirate.getUnits()]}</td>" +
+                "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x " +
+                "{[wendler.logList.getWeightDisplay(values.weight)]}" +
+                "{[wendler.liftSchedule.assistance.triumvirate.getUnits()]}</td>" +
                 "</tr></tbody></table>",
             listeners:{
                 initialize:function (list) {
