@@ -46,7 +46,7 @@ wendler.logList.showSortMenu = function () {
     wendler.logList.updateUiForSortButtons();
 };
 
-wendler.logList.changeMovementTypeCalled = function(){
+wendler.logList.changeMovementTypeCalled = function () {
     Ext.getCmp('track-sort-toolbar').hide();
     wendler.logList.toggleVisibility(Ext.getCmp('track-lifts-movement-type-button'));
     wendler.logList.toggleVisibility(Ext.getCmp('track-assistance-movement-type-button'));
@@ -151,6 +151,10 @@ wendler.logList.updateAscendingText = function () {
         sortNameButton.setText(liftNameText);
         sortNameActiveButton.setText(liftNameText);
     }
+};
+
+wendler.logList.getWeightDisplay = function (weight) {
+    return (weight == 0 || weight == null) ? "[?]" : weight;
 };
 
 wendler.stores.Settings.addListener('beforesync', function () {
@@ -308,7 +312,10 @@ wendler.views.log.cards.LogList = {
                     itemTpl:'<table><tbody><tr>' +
                         '<td width="15%">{assistanceType}</td>' +
                         '<td width="25%"><div class="lift-name">{movement}</div><div class="cycle-and-week">Sets: {sets}</div></td>' +
-                        '<td width="25%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div></td>' +
+                        '<td width="25%"><div>' +
+                        '<span class="reps">{reps}x</span> ' +
+                        '<span class="weight">{[wendler.logList.getWeightDisplay(values.weight)]}</span>' +
+                        '</div></td>' +
                         '<td width="35%" class="date-week">' +
                         '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span>' +
                         '</td><td width="40%" class="delete-button-holder hidden"></td>' +

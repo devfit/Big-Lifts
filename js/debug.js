@@ -16,4 +16,6 @@ if (Ext.os.is.Linux || Ext.os.is.MacOS) {
     };
 
     wendler.restTimer.TIME_INTERVAL = 3;
+
+    wendler.loadingFromFile = false;
 }

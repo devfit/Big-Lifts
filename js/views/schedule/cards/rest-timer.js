@@ -18,6 +18,10 @@ wendler.restTimer.addTime = function (seconds) {
 };
 
 wendler.restTimer.startTimer = function () {
+    var restTime = wendler.stores.RestTime.first();
+    restTime.set('restTimeInSeconds', wendler.restTimer.remainingSeconds);
+    restTime.save();
+
     var ONE_SECOND = 1000;
     wendler.restTimer.timerId = setInterval(wendler.restTimer.timerTick, ONE_SECOND);
     Ext.getCmp('start-timer-button').hide();
@@ -85,6 +89,8 @@ wendler.views.liftSchedule.RestTimer = {
     layout:'fit',
     listeners:{
         show:function () {
+            wendler.restTimer.remainingSeconds = wendler.stores.RestTime.first().get('restTimeInSeconds');
+            wendler.restTimer.updateTimeDisplay();
             wendler.navigation.setBackFunction(wendler.restTimer.back);
         }
     },
