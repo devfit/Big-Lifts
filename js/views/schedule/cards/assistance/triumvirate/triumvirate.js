@@ -17,7 +17,7 @@ wendler.liftSchedule.assistance.triumvirate.logMovements = function () {
             assistanceType:'Triumvirate',
             sets:record.get('sets'),
             reps:record.get('reps'),
-            weight:null,
+            weight:record.get('weight'),
             timestamp:new Date().getTime()
         };
 
