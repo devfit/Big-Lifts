@@ -11,5 +11,11 @@ if (Ext.os.is.Linux || Ext.os.is.MacOS) {
 
     wendler.restTimer.TIME_INTERVAL = 3;
 
+    wendler.log.emailExport.ajaxEmailRequest = function (email, data) {
+        window.testEmail = email;
+        window.testData = data;
+        console.log(email + " " + data);
+    };
+
     wendler.loadingFromFile = false;
 }
