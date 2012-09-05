@@ -80,6 +80,10 @@ wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle = function () {
     toolbar.setTitle(liftName);
 };
 
+wendler.liftSchedule.assistance.boringButBig.showNotesEditor = function(){
+   Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-notes'));
+};
+
 wendler.views.liftSchedule.assistance.BoringButBig = {
     xtype:'panel',
     id:'boring-but-big',
@@ -119,6 +123,11 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
             ui:'light',
             docked:'top',
             items:[
+                {
+                    xtype:'button',
+                    text:'Notes',
+                    handler:wendler.liftSchedule.assistance.boringButBig.showNotesEditor
+                },
                 {
                     xtype:'panel',
                     width:'100%',

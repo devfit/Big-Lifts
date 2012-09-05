@@ -35,6 +35,10 @@ Ext.define('Wendler.views.LiftSchedule', {
             {
                 xtype:'firstlognoteseditor',
                 id:'first-log-notes-editor'
+            },
+            {
+                xtype:'boringbutbignotes',
+                id:'boring-but-big-notes'
             }
         ],
         listeners:{
