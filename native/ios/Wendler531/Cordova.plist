@@ -43,6 +43,7 @@
 	<key>BackupWebStorage</key>
 	<true/>
 	<key>ExternalHosts</key>
+	<string>*</string>
 	<array/>
 	<key>Plugins</key>
 	<dict>

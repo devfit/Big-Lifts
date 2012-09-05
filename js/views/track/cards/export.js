@@ -42,7 +42,7 @@ wendler.log.emailExport.buildCsvToExport = function () {
 };
 
 wendler.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper) {
-    var transformer = function (object) {
+    return function (object) {
         var csvObject = {};
         for (var property in nameMapper) {
             var keyReplacement = nameMapper[property];
@@ -59,15 +59,20 @@ wendler.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper
         }
         return csvObject;
     };
-
-    return transformer;
 };
 
+wendler.log.emailExport.saveUsedEmail = function (email) {
+    var settings = wendler.stores.Settings.first();
+    settings.set('exportEmail', email);
+    settings.save();
+};
 wendler.log.emailExport.ajaxEmailRequest = function (email, data) {
+    wendler.log.emailExport.saveUsedEmail(email);
     Ext.Viewport.setMasked({
         xtype:'loadmask',
         message:'Exporting...'
     });
+    console.log( data );
     Ext.Ajax.request({
         url:'http://wendler.herokuapp.com/email',
         method:'POST',
@@ -88,7 +93,7 @@ wendler.log.emailExport.ajaxEmailRequest = function (email, data) {
 
 wendler.log.emailExport.loadPreviousExportEmail = function () {
     var settings = wendler.stores.Settings.first();
-    Ext.getCmp('export-log').setRecord({email:settings.data.exportEmail});
+    Ext.getCmp('export-log').down('[name=email]').setValue(settings.get('exportEmail'));
 };
 
 wendler.views.log.cards.Export = {
@@ -98,10 +103,8 @@ wendler.views.log.cards.Export = {
     style:'padding-top:0px',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.log.emailExport.returnToTrackingList);
-        },
-        initialize:function () {
             wendler.log.emailExport.loadPreviousExportEmail();
+            wendler.navigation.setBackFunction(wendler.log.emailExport.returnToTrackingList);
         }
     },
     items:[
@@ -134,14 +137,7 @@ wendler.views.log.cards.Export = {
                 {
                     name:'email',
                     xtype:'emailfield',
-                    label:'Email',
-                    listeners:{
-                        change:function (c, value) {
-                            var settings = wendler.stores.Settings.first();
-                            settings.set('exportEmail', value);
-                            settings.save();
-                        }
-                    }
+                    label:'Email'
                 }
             ]
         }
