@@ -9,7 +9,7 @@ Ext.define('TriumvirateMovement', {
             {name:'name', type:'string'},
             {name:'sets', type:'integer'},
             {name:'reps', type:'integer'},
-            {name:'weight', type:'integer', defaultValue: 0}
+            {name:'weight', type:'integer', defaultValue:0}
         ],
         proxy:{
             type:'localstorage',
@@ -29,6 +29,23 @@ wendler.stores.assistance.defaultTriumvirate = [
     {liftProperty:'bench', name:'Dumbbell Row', sets:5, reps:15}
 ];
 
+wendler.stores.migrations.triumvirateMovementsMigration = function () {
+    wendler.stores.lifts.Lifts.each(function (lift) {
+        var existingMovement = wendler.stores.assistance.TriumvirateMovement.findRecord('liftProperty', lift.get('propertyName'));
+        if (!existingMovement) {
+            for (var i = 0; i < 2; i++) {
+                wendler.stores.assistance.TriumvirateMovement.add({
+                    liftProperty:lift.get('propertyName'),
+                    name:'?',
+                    sets:5,
+                    reps:15
+                });
+            }
+            wendler.stores.assistance.TriumvirateMovement.sync();
+        }
+    });
+};
+
 wendler.stores.assistance.TriumvirateMovement = Ext.create('Ext.data.Store', {
     model:'TriumvirateMovement',
     listeners:{
@@ -37,6 +54,7 @@ wendler.stores.assistance.TriumvirateMovement = Ext.create('Ext.data.Store', {
                 this.add(wendler.stores.assistance.defaultTriumvirate);
                 this.sync();
             }
+            wendler.stores.migrations.triumvirateMovementsMigration();
         }
     }
 });

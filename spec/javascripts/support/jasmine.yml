@@ -25,6 +25,7 @@ src_files:
     - js/models/lift-completion.js
     - js/models/plate_bar_configuration.js
     - js/models/assistance/assistance.js
+    - js/models/assistance/triumvirate.js
 
 # stylesheets
 #

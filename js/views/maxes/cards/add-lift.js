@@ -51,15 +51,18 @@ wendler.maxes.controller.addLiftDoneButtonPressed = function () {
         wendler.maxes.controller.handleInvalidLift(errors);
     }
     else {
-        wendler.stores.lifts.Lifts.add(newLiftModel);
-        wendler.stores.lifts.Lifts.sync();
-
-        wendler.stores.migrations.liftCompletionMigration();
-        wendler.maxes.controller.rebuildMaxesList();
-
+        wendler.maxes.controller.saveNewLift(newLiftModel);
         Ext.getCmp('maxes-add-lift-form').reset();
         wendler.maxes.controller.doneWithEditing();
     }
+};
+
+wendler.maxes.controller.saveNewLift = function(newLiftModel){
+    wendler.stores.lifts.Lifts.add(newLiftModel);
+    wendler.stores.lifts.Lifts.sync();
+    wendler.stores.migrations.liftCompletionMigration();
+    wendler.stores.migrations.triumvirateMovementsMigration();
+    wendler.maxes.controller.rebuildMaxesList();
 };
 
 wendler.maxes.controller.addLiftCancelButtonPressed = function () {
