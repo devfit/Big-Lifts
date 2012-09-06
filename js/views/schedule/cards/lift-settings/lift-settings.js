@@ -125,6 +125,10 @@ wendler.views.liftSchedule.LiftSettings = {
             wendler.navigation.setBackFunction(wendler.liftSettings.returnToLiftSelectFromSettings);
         }
     },
+    defaults:{
+        xtype:'formpanel',
+        scroll:'vertical'
+    },
     items:[
         {
             padding:5,

@@ -676,7 +676,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Kendall";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -686,7 +686,7 @@
 				INFOPLIST_FILE = "Wendler531/Wendler531-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = Wendler531;
-				PROVISIONING_PROFILE = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
+				PROVISIONING_PROFILE = "019B48DF-1566-4E69-BDE1-F0090AFEAC87";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -695,7 +695,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Kendall";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Wendler531/Wendler531-Prefix.pch";
@@ -703,7 +703,7 @@
 				INFOPLIST_FILE = "Wendler531/Wendler531-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
 				PRODUCT_NAME = Wendler531;
-				PROVISIONING_PROFILE = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
+				PROVISIONING_PROFILE = "019B48DF-1566-4E69-BDE1-F0090AFEAC87";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
