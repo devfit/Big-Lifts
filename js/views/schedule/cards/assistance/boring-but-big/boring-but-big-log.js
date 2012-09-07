@@ -14,7 +14,7 @@ wendler.liftSchedule.assistance.boringButBig.showNotesEditor = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-notes'));
 };
 
-wendler.liftSchedule.assistance.boringButBig.getBbbLiftWeight = function(){
+wendler.liftSchedule.assistance.boringButBig.getBbbLiftWeight = function () {
     var bbbPercentage = parseInt(Ext.getCmp('boring-but-big').element.query('[name=bbbPercentage]')[0].value);
     return wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax, bbbPercentage);
 };
@@ -38,7 +38,8 @@ wendler.liftSchedule.assistance.boringButBig.saveAssistanceWork = function () {
         sets:5,
         reps:10,
         weight:wendler.liftSchedule.assistance.boringButBig.getBbbLiftWeight(),
-        timestamp:new Date().getTime()
+        timestamp:new Date().getTime(),
+        notes:wendler.liftSchedule.assistance.boringButBig.currentNotes
     };
     wendler.stores.assistance.ActivityLog.add(assistanceRecord);
     wendler.stores.assistance.ActivityLog.sync();

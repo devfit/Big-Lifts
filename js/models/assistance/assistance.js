@@ -10,7 +10,8 @@ Ext.define('AssistanceActivity', {
             {name:'weight', type:'float'},
             {name:'sets', type:'int'},
             {name:'reps', type:'int'},
-            {name:'timestamp', type:'int'}
+            {name:'timestamp', type:'int'},
+            {name:'notes', type:'string', defaultValue:''}
         ],
         proxy:{
             type:'localstorage',

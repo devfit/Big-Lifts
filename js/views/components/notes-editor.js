@@ -5,6 +5,17 @@ wendler.components.notesEditor.returnFromNotesEditor = function (notesEditor) {
     notesEditor._returnCallback(notes);
 };
 
+wendler.components.notesEditor.displayNotes = function (contentId, notes) {
+    var displayableNotes = null;
+    if (notes === "") {
+        displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
+    }
+    else {
+        displayableNotes = wendler.components.notesEditor.sanitizeForDisplay(notes);
+    }
+    Ext.get(contentId).setHtml(displayableNotes);
+};
+
 wendler.components.notesEditor.sanitizeForDisplay = function (notes) {
     var displayableNotes = Ext.util.Format.htmlEncode(notes);
     displayableNotes = displayableNotes.replace(/\n/g, '<br/>');
