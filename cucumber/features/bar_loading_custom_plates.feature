@@ -4,6 +4,13 @@ Feature: bar loading - custom plates
   I want to be able to use custom plate configurations
   So that I can exactly describe what weights I have for the bar loading assistance
 
+  Scenario: Adding 2kg
+    When I navigate to the lift editor
+    And I tap the bar/plates button
+    And I set the new plate weight to 2
+    And I tap add new plate
+    Then There are 7 custom plate entries
+
   Scenario: No duplicate weights are allowed
     When I navigate to the lift editor
     And I tap the bar/plates button

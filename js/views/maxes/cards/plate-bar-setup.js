@@ -33,7 +33,9 @@ wendler.maxes.barSetup.addNewPlate = function () {
     var plateValues = Ext.getCmp('bar-setup-form').getValues();
     var weight = plateValues.newPlateWeight;
 
-    var recordExists = !_.isNull(wendler.stores.Plates.findRecord('weight', weight));
+    var recordExists = wendler.stores.Plates.findBy(function (p) {
+        return p.get('weight') == weight;
+    }) !== -1;
 
     if (weight > 0 && !recordExists) {
         wendler.stores.Plates.add({weight:weight, count:2});
@@ -132,7 +134,7 @@ wendler.maxes.barSetup.BarSetup = {
                             }
                         },
                         {
-                            id: 'remove-custom-plate-button',
+                            id:'remove-custom-plate-button',
                             xtype:'button',
                             text:'Remove',
                             ui:'decline',
