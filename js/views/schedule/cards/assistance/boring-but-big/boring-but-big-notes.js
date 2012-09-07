@@ -3,7 +3,7 @@ Ext.ns('Wendler.views.assistance', 'wendler.liftSchedule.assistance.boringButBig
 wendler.liftSchedule.assistance.boringButBig.currentNotes = "";
 wendler.liftSchedule.assistance.boringButBig.returnToBoringButBig = function(notes){
     wendler.liftSchedule.assistance.boringButBig.currentNotes = notes;
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-log'));
 };
 
 Ext.define('Wendler.views.assistance.BoringButBigNotes', {
@@ -12,7 +12,7 @@ Ext.define('Wendler.views.assistance.BoringButBigNotes', {
     _returnCallback:wendler.liftSchedule.assistance.boringButBig.returnToBoringButBig,
     listeners:{
         show:function(){
-            console.log( "Load this bitch" );
+            this._setNotes(wendler.liftSchedule.assistance.boringButBig.currentNotes);
         }
     }
 });

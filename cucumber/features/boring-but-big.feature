@@ -14,6 +14,7 @@ Feature: Boring But Big - Assistance Work
     And I set the BBB percentage to 60
     Then The first boring but big lift weight is 110
     And I save the boring but big assistance work
+    And I save the boring but big log
     Then I am on the track tab
     And I tap "Asst." to change the log type
     Then I see 1 assistance log entry for "10x110"

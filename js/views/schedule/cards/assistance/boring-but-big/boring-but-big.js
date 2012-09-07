@@ -52,36 +52,13 @@ wendler.liftSchedule.assistance.boringButBig.percentageChange = function (event)
 };
 
 wendler.liftSchedule.assistance.boringButBig.liftsComplete = function () {
-    wendler.liftSchedule.assistance.boringButBig.saveAssistanceWork();
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
-    Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
-};
-
-wendler.liftSchedule.assistance.boringButBig.saveAssistanceWork = function () {
-    var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).get('name');
-    var bbbPercentage = parseInt(Ext.getCmp('boring-but-big').element.query('[name=bbbPercentage]')[0].value);
-    var weight = wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax, bbbPercentage);
-
-    var assistanceRecord = {
-        movement:liftName,
-        assistanceType:'BBB',
-        sets:5,
-        reps:10,
-        weight:weight,
-        timestamp:new Date().getTime()
-    };
-    wendler.stores.assistance.ActivityLog.add(assistanceRecord);
-    wendler.stores.assistance.ActivityLog.sync();
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-log'));
 };
 
 wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle = function () {
     var toolbar = Ext.getCmp('boring-but-big').down('toolbar');
     var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).get('name');
     toolbar.setTitle(liftName);
-};
-
-wendler.liftSchedule.assistance.boringButBig.showNotesEditor = function(){
-   Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-notes'));
 };
 
 wendler.views.liftSchedule.assistance.BoringButBig = {
@@ -123,11 +100,6 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
             ui:'light',
             docked:'top',
             items:[
-                {
-                    xtype:'button',
-                    text:'Notes',
-                    handler:wendler.liftSchedule.assistance.boringButBig.showNotesEditor
-                },
                 {
                     xtype:'panel',
                     width:'100%',

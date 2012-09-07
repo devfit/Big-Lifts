@@ -21,6 +21,11 @@ When /^I save the boring but big assistance work$/ do
   sleep @ANIMATION_DELAY
 end
 
+When /^I save the boring but big log$/ do
+  @driver.find_element(:id => 'boring-but-big-save-log-button').click()
+  sleep @ANIMATION_DELAY
+end
+
 Then /^I see (\d+) assistance log entry for "([^"]*)"$/ do |numberOfEntries, entryText|
   logRows = @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'lift-log-row')
   logRows.length.should == numberOfEntries.to_i
