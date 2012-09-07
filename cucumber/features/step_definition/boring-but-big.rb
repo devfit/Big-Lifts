@@ -1,6 +1,6 @@
 When /^I select "([^"]*)" assistance work$/ do |assistanceName|
-  assistanceListItem = @driver.find_element(:id => 'assistance-chooser').find_elements(:class => 'x-list-item').select { |item| item.text() == assistanceName }[0]
-  assistanceListItem.click()
+  assistance_list_item = @driver.find_element(:id => 'assistance-chooser').find_elements(:class => 'x-list-item').select { |item| item.text() == assistanceName }[0]
+  assistance_list_item.click()
 
   @driver.find_element(:id => 'assistance-chooser-next-button').click()
   sleep @ANIMATION_DELAY
@@ -11,9 +11,9 @@ Then /^The first boring but big lift weight is (\d+)$/ do |weight|
 end
 
 When /^I set the BBB percentage to (\d+)$/ do |percentage|
-  bbbPercentageInput = @driver.find_element(:name => 'bbbPercentage')
-  bbbPercentageInput.clear
-  bbbPercentageInput.send_keys percentage
+  bbb_percentage_iput = @driver.find_element(:name => 'bbbPercentage')
+  bbb_percentage_iput.clear
+  bbb_percentage_iput.send_keys percentage
 end
 
 When /^I save the boring but big assistance work$/ do
@@ -27,11 +27,41 @@ When /^I save the boring but big log$/ do
 end
 
 Then /^I see (\d+) assistance log entry for "([^"]*)"$/ do |numberOfEntries, entryText|
-  logRows = @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'lift-log-row')
-  logRows.length.should == numberOfEntries.to_i
+  log_rows = @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'lift-log-row')
+  log_rows.length.should == numberOfEntries.to_i
 
-  logRow = logRows[0]
-  repsWeight = logRow.find_element(:class => "reps").text() + logRow.find_element(:class => 'weight').text()
-  repsWeight.should == entryText
+  log_row = log_rows[0]
+  reps_weight = log_row.find_element(:class => "reps").text() + log_row.find_element(:class => 'weight').text()
+  reps_weight.should == entryText
 end
 
+Then /^I tap edit boring but big notes$/ do
+  @driver.find_element(:id => 'bbb-log-notes').click
+  sleep @ANIMATION_DELAY
+end
+
+Then /^I set the boring but big notes to "(.*?)"$/ do |notes|
+  boring_but_big_notes = @driver.find_element(:id => 'boring-but-big-notes')
+  boring_but_big_notes.find_element(:name => 'notes').send_keys(notes)
+end
+
+Then /^I return from the boring but big notes$/ do
+  @driver.find_element(:id => 'boring-but-big-notes').find_elements(:class => 'x-button').select { |button|
+    button.text() == 'Back'
+  }[0].click
+
+  sleep @ANIMATION_DELAY
+end
+
+When /^I tap (\w+) log entry (\d+)$/ do |assistance_type, row_entry|
+  row = @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'x-list-item').select { |row|
+    row.text().include? assistance_type
+  }[row_entry.to_i - 1]
+
+  row.click
+  sleep @ANIMATION_DELAY
+end
+
+Then /^The assistance details notes shows "([^"]*?)"$/ do
+
+end
