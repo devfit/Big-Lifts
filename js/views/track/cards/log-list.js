@@ -26,11 +26,32 @@ wendler.logList.showExportLog = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('export-log'), {type:'slide', direction:'left'});
 };
 
-wendler.logList.sortAndRefreshList = function () {
-    var liftLogSort = wendler.stores.LiftLogSort.first();
-    wendler.stores.LiftLog.sort(liftLogSort.data.property, liftLogSort.data.ascending ? 'ASC' : 'DESC');
+wendler.logList.sortLifts = function (sortProperty, sortDirection) {
+    wendler.stores.LiftLog.sort(sortProperty, sortDirection);
     Ext.getCmp('lift-log-list').refresh();
 };
+
+wendler.logList.sortAssistance = function (sortProperty, sortDirection) {
+    var assistanceProperty = {
+        'liftName':'movement',
+        'timestamp':'timestamp'
+    }[sortProperty];
+    wendler.stores.assistance.ActivityLog.sort(assistanceProperty, sortDirection);
+    var logAssistanceList = Ext.getCmp('log-assistance-list');
+    if( logAssistanceList ){
+        Ext.getCmp('log-assistance-list').refresh();
+    }
+};
+
+wendler.logList.sortAndRefreshList = function () {
+    var liftLogSort = wendler.stores.LiftLogSort.first();
+
+    var sortDirection = liftLogSort.data.ascending ? 'ASC' : 'DESC';
+    var sortProperty = liftLogSort.data.property;
+    wendler.logList.sortLifts(sortProperty, sortDirection);
+    wendler.logList.sortAssistance(sortProperty, sortDirection);
+};
+
 wendler.stores.LiftLog.addListener('beforesync', function () {
     if (wendler.main.started) {
         wendler.logList.sortAndRefreshList();
