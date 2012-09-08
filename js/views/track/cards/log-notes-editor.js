@@ -9,7 +9,7 @@ wendler.logEntry.returnFromEditNotes = function (newNotes) {
         wendler.stores.LiftLog.sync();
     }
 
-    wendler.logEntry.displayNotes(newNotes);
+    wendler.components.notesEditor.displayNotes('edit-log-notes', newNotes);
 };
 
 Ext.define('Wendler.views.log.cards.LogNotesEditor', {

@@ -30,18 +30,7 @@ wendler.logEntry.setupLogEntry = function (logRecord) {
     formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
     formValues['timestamp'] = new Date(logRecord.data.timestamp);
     Ext.getCmp('edit-log-entry').setValues(formValues);
-    wendler.logEntry.displayNotes(logRecord.data.notes);
-};
-
-wendler.logEntry.displayNotes = function (notes) {
-    var displayableNotes = null;
-    if (notes === "") {
-        displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
-    }
-    else {
-        displayableNotes = displayableNotes = wendler.components.notesEditor.sanitizeForDisplay(notes);
-    }
-    Ext.get('edit-log-notes').setHtml(displayableNotes);
+    wendler.components.notesEditor.displayNotes('edit-log-notes', logRecord.data.notes);
 };
 
 wendler.logEntry.updateOneRepMax = function () {
@@ -153,11 +142,10 @@ wendler.views.log.cards.EditLogEntry = {
     scroll:'vertical',
     style:'padding-top:0px',
     bodyStyle:'padding-top:0px',
-    _listenersBound: false,
+    _listenersBound:false,
     listeners:{
-        painted: function(){
-            if( !this._listenersBound )
-            {
+        painted:function () {
+            if (!this._listenersBound) {
                 Ext.get('edit-log-notes').addListener('tap', wendler.logEntry.editNotes);
                 this._listenersBound = true;
             }
@@ -198,7 +186,8 @@ wendler.views.log.cards.EditLogEntry = {
         {
             id:'edit-log-fieldset',
             xtype:'fieldset',
-            style:'margin-top: 7px; margin-bottom: 7px;'
+            cls:'fieldset-title-no-margin',
+            style:'margin-bottom: 7px;'
         },
         {
             xtype:'panel',

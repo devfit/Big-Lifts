@@ -75,17 +75,6 @@ wendler.liftSchedule.liftTracking.editNotes = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('first-log-notes-editor'), {type:'slide', direction:'left'});
 };
 
-wendler.liftSchedule.liftTracking.displayNotes = function (notes) {
-    var displayableNotes = null;
-    if (notes === "") {
-        displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
-    }
-    else {
-        displayableNotes = wendler.components.notesEditor.sanitizeForDisplay(notes);
-    }
-    Ext.get('first-log-notes').setHtml(displayableNotes);
-};
-
 wendler.liftSchedule.liftTracking.cancelLogTracking = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'right'});
 };
@@ -98,7 +87,7 @@ wendler.views.liftSchedule.LiftTracking = {
         show:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.liftTracking.cancelLogTracking);
             wendler.liftTracking.currentLiftNotes = '';
-            wendler.liftSchedule.liftTracking.displayNotes('');
+            wendler.components.notesEditor.displayNotes('first-log-notes', '');
         }
     },
     items:[

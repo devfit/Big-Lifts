@@ -1,7 +1,7 @@
 "use strict";
 Ext.ns('wendler.views', 'wendler.log');
 
-wendler.log.getDateFormat = function(){
+wendler.log.getDateFormat = function () {
     return wendler.stores.Settings.first().get('dateFormat');
 };
 
@@ -19,6 +19,7 @@ Ext.define('Wendler.views.Log', {
         items:[
             wendler.views.log.cards.LogList,
             wendler.views.log.cards.EditLogEntry,
+            wendler.views.log.cards.EditAssistanceLogEntry,
             {
                 xtype:'lognoteseditor',
                 id:'log-notes-editor'

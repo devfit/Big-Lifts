@@ -5,6 +5,11 @@ wendler.logList.showLogEntry = function (dataview, index, item, e) {
     wendler.logEntry.setupLogEntry(logRecord);
 };
 
+wendler.logList.showAssistanceLogEntry = function (dataview, index, item, e) {
+    var assistanceLogRecord = wendler.stores.assistance.ActivityLog.getAt(index);
+    wendler.logEntry.setupAssistanceLogEntry(assistanceLogRecord);
+};
+
 wendler.logList.deleteLogEntry = function (dataview, index, item, e) {
     wendler.stores.LiftLog.removeAt(index);
     wendler.stores.LiftLog.sync();
@@ -302,7 +307,11 @@ wendler.views.log.cards.LogList = {
                     id:'log-assistance-list',
                     listeners:{
                         initialize:function () {
-                            wendler.components.addSwipeToDelete(this, Ext.emptyFn, wendler.logList.deleteAssistanceEntry, '.date-week');
+                            wendler.components.addSwipeToDelete(
+                                this,
+                                wendler.logList.showAssistanceLogEntry,
+                                wendler.logList.deleteAssistanceEntry,
+                                '.date-week');
                         }
                     },
                     xtype:'list',
