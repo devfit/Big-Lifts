@@ -20,6 +20,11 @@ wendler.logEntry.updateAssistanceLogEntry = function () {
     wendler.stores.assistance.ActivityLog.sync();
 };
 
+wendler.logEntry.editAssistanceNotes = function () {
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('assistance-log-notes-editor'));
+    Ext.getCmp('assistance-log-notes-editor')._setNotes(wendler.logEntry.currentAssistanceRecord.get('notes'));
+};
+
 wendler.logEntry.deleteAssistanceLogEntry = function () {
 
 };
@@ -31,7 +36,7 @@ wendler.views.log.cards.EditAssistanceLogEntry = {
     _listenersBound:false,
     listeners:{
         painted:function () {
-            Ext.get('edit-assistance-log-notes').addListener('tap', wendler.logEntry.editNotes);
+            Ext.get('edit-assistance-log-notes').addListener('tap', wendler.logEntry.editAssistanceNotes);
         },
         show:function () {
             wendler.navigation.setBackFunction(wendler.logEntry.backToLogList);
@@ -63,9 +68,9 @@ wendler.views.log.cards.EditAssistanceLogEntry = {
             style:'margin-bottom: 7px;',
             xtype:'fieldset',
             defaults:{
-              listeners:{
-                  change:wendler.logEntry.updateAssistanceLogEntry
-              }
+                listeners:{
+                    change:wendler.logEntry.updateAssistanceLogEntry
+                }
             },
             items:[
                 {

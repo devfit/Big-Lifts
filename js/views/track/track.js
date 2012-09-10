@@ -24,6 +24,10 @@ Ext.define('Wendler.views.Log', {
                 xtype:'lognoteseditor',
                 id:'log-notes-editor'
             },
+            {
+                xtype:'assistancelognoteseditor',
+                id:'assistance-log-notes-editor'
+            },
             wendler.views.log.cards.Export
         ]
     }
