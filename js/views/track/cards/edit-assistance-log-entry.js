@@ -26,7 +26,9 @@ wendler.logEntry.editAssistanceNotes = function () {
 };
 
 wendler.logEntry.deleteAssistanceLogEntry = function () {
-
+    wendler.stores.assistance.ActivityLog.remove(wendler.logEntry.currentAssistanceRecord);
+    wendler.stores.assistance.ActivityLog.sync();
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
 };
 
 wendler.views.log.cards.EditAssistanceLogEntry = {
@@ -55,6 +57,7 @@ wendler.views.log.cards.EditAssistanceLogEntry = {
                 },
                 {xtype:'spacer'},
                 {
+                    id:'assistance-log-delete-button',
                     ui:'decline',
                     iconMask:true,
                     iconCls:'trash',

@@ -18,3 +18,16 @@ Then /^The assistance log notes shows "(.*?)"$/ do |notes|
   log_notes = @driver.find_element(:id => 'edit-assistance-log-notes').text()
   log_notes.should == notes
 end
+
+Then /^I tap the delete assistance log button$/ do
+  @driver.find_element(:id => 'assistance-log-delete-button').click
+  sleep @ANIMATION_DELAY
+end
+
+Then /^I am on the assistance log list$/ do
+  @driver.find_element(:id => 'log-assistance-list').should be_displayed
+end
+
+Then /^There are (\d+) assistance log entries$/ do |entry_count|
+  @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'x-list-item').length.should == entry_count.to_i
+end
