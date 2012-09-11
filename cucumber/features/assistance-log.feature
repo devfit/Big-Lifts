@@ -1,3 +1,4 @@
+@premium
 Feature: Assistance log
 
   Scenario: Viewing BBB lifts, Changing the percentage, and viewing the log
