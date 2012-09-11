@@ -26,5 +26,6 @@ Then /^The date for the log entry for (\w+) is dd\/MM\/yyyy$/ do |liftName|
     logListItems = @driver.find_element(:id => 'lift-log-list').find_elements(:class => 'x-list-item')
     listItem = logListItems.select { |listItem| listItem.text.include?(liftName) }[0]
     dateText = listItem.find_element(:class => 'date').text
+    debugger
     dateText.should == Time.now.strftime("%d/%m/%Y")
 end

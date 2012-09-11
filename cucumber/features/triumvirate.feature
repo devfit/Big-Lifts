@@ -13,8 +13,8 @@ Feature: Triumvirate - Assistance Work
     And I save the triumvirate assistance work
     Then I am on the track tab
     And I tap "Asst." to change the log type
-    Then Assistance log entry 1 shows "Triumvirate Leg Press Sets: 5 15x [?]"
-    Then Assistance log entry 2 shows "Triumvirate Leg Curl Sets: 5 15x [?]"
+    Then Assistance log entry 1 shows "Tri. Leg Curl Sets: 5 15x [?]"
+    Then Assistance log entry 2 shows "Tri. Leg Press Sets: 5 15x [?]"
 
   Scenario: Changing triumvirate lift movements
     And I view the squat lift schedule for week 1
@@ -30,4 +30,5 @@ Feature: Triumvirate - Assistance Work
     And I save the triumvirate assistance work
     Then I am on the track tab
     And I tap "Asst." to change the log type
-    Then Assistance log entry 1 shows "Triumvirate Good Morning Sets: 5 15x 65"
+    Then Assistance log entry 1 shows "Tri. Leg Curl Sets: 5 15x [?]"
+    Then Assistance log entry 2 shows "Tri. Good Morning Sets: 5 15x 65"

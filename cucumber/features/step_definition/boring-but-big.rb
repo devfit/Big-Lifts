@@ -1,5 +1,7 @@
 When /^I select "([^"]*)" assistance work$/ do |assistanceName|
-  assistance_list_item = @driver.find_element(:id => 'assistance-chooser').find_elements(:class => 'x-list-item').select { |item| item.text() == assistanceName }[0]
+  assistance_list_items = @driver.find_element(:id => 'assistance-chooser').find_elements(:class => 'x-list-item')
+
+  assistance_list_item = assistance_list_items.select { |item| item.text() == assistanceName }[0]
   assistance_list_item.click()
 
   @driver.find_element(:id => 'assistance-chooser-next-button').click()

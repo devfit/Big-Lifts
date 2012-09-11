@@ -19,6 +19,7 @@ wendler.main.start = function () {
 wendler.main.loadApplication = function () {
     if (wendler.main.started && wendler.main.deviceReady) {
         var app = Ext.getCmp('main-tab-panel');
+        app.setHidden(true);
         app.add(Ext.create('Wendler.views.LiftSchedule'));
         app.add(Ext.create('Wendler.views.Maxes'));
         app.add(Ext.create('Wendler.views.Log'));
@@ -28,6 +29,7 @@ wendler.main.loadApplication = function () {
         var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
         wendler.main.markFirstStartup();
         app.setActiveItem(startTab);
+        app.setHidden(false);
     }
 };
 
