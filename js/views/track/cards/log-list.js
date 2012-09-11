@@ -38,7 +38,7 @@ wendler.logList.sortAssistance = function (sortProperty, sortDirection) {
     }[sortProperty];
     wendler.stores.assistance.ActivityLog.sort(assistanceProperty, sortDirection);
     var logAssistanceList = Ext.getCmp('log-assistance-list');
-    if( logAssistanceList ){
+    if (logAssistanceList) {
         Ext.getCmp('log-assistance-list').refresh();
     }
 };
@@ -177,6 +177,15 @@ wendler.logList.updateAscendingText = function () {
         sortNameButton.setText(liftNameText);
         sortNameActiveButton.setText(liftNameText);
     }
+};
+
+wendler.logList.getAssistanceTypeDisplay = function (assistanceType) {
+    var displayMapping = {'Triumvirate':'Tri.'};
+    var displayType = assistanceType;
+    if (displayMapping[assistanceType]) {
+        displayType = displayMapping[assistanceType];
+    }
+    return displayType;
 };
 
 wendler.logList.getWeightDisplay = function (weight) {
@@ -340,7 +349,7 @@ wendler.views.log.cards.LogList = {
                     store:wendler.stores.assistance.ActivityLog,
                     itemCls:'lift-log-row',
                     itemTpl:'<table><tbody><tr>' +
-                        '<td width="15%">{assistanceType}</td>' +
+                        '<td width="15%">{[wendler.logList.getAssistanceTypeDisplay(values.assistanceType)]}</td>' +
                         '<td width="25%"><div class="lift-name">{movement}</div><div class="cycle-and-week">Sets: {sets}</div></td>' +
                         '<td width="25%"><div>' +
                         '<span class="reps">{reps}x</span> ' +
