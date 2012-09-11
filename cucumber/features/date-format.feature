@@ -10,5 +10,5 @@ Feature: Using a different date format for the log
     And I mark the current lift completed
     And I save the lift log
     Then The date for the log entry for Squat is dd/MM/yyyy
-    And I select the log entry for Squat
-    Then The log date is today formatted as dd/MM/yyyy
+#    And I select the log entry for Squat
+#    Then The log date is today formatted as dd/MM/yyyy
