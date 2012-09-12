@@ -184,20 +184,25 @@ task incrementAndroidVersion << {
 }
 
 task incrementIosVersion << {
-    File appPlist = new File('native/ios/Wendler531/Wendler531-Info.plist')
-    String oldPlist = appPlist.text
+    List<File> appPlists = [
+            new File('native/ios/Wendler531/Wendler531-Info.plist'),
+            new File('native/ios/Wendler531/WendlerPro-Info.plist')
+    ]
+    appPlists.each { File appPlist ->
+        String oldPlist = appPlist.text
 
-    def shortVersionPattern = /(?ms)<key>CFBundleShortVersionString<\\/key>.*?<string>(.*?)<\\/string>/
-    long newShortVersion = ((oldPlist =~ shortVersionPattern)[0][1] as long) + 1
+        def shortVersionPattern = /(?ms)<key>CFBundleShortVersionString<\\/key>.*?<string>(.*?)<\\/string>/
+        long newShortVersion = ((oldPlist =~ shortVersionPattern)[0][1] as long) + 1
 
-    def longVersionPattern = /(?ms)<key>CFBundleVersion<\\/key>.*?<string>(.*?)<\\/string>/
-    long newLongVersion = ((oldPlist =~ longVersionPattern)[0][1] as long) + 1
+        def longVersionPattern = /(?ms)<key>CFBundleVersion<\\/key>.*?<string>(.*?)<\\/string>/
+        long newLongVersion = ((oldPlist =~ longVersionPattern)[0][1] as long) + 1
 
-    String newPlist = oldPlist.replaceAll(shortVersionPattern, "<key>CFBundleShortVersionString</key>\n\t<string>${newShortVersion}</string>")
-            .replaceAll(longVersionPattern, "<key>CFBundleVersion</key>\n\t<string>${newLongVersion}</string>")
+        String newPlist = oldPlist.replaceAll(shortVersionPattern, "<key>CFBundleShortVersionString</key>\n\t<string>${newShortVersion}</string>")
+                .replaceAll(longVersionPattern, "<key>CFBundleVersion</key>\n\t<string>${newLongVersion}</string>")
 
-    appPlist.withWriter { w ->
-        w.write(newPlist)
+        appPlist.withWriter { w ->
+            w.write(newPlist)
+        }
     }
 }
 
