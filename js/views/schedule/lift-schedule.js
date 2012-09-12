@@ -30,11 +30,16 @@ Ext.define('Wendler.views.LiftSchedule', {
             wendler.views.liftSchedule.RestTimer,
             wendler.views.liftSchedule.assistance.AssistanceChooser,
             wendler.views.liftSchedule.assistance.BoringButBig,
+            wendler.liftSchedule.assistance.boringButBig.Log,
             wendler.views.liftSchedule.assistance.Triumvirate,
             wendler.views.liftSchedule.assistance.TriumvirateMovementEditor,
             {
                 xtype:'firstlognoteseditor',
                 id:'first-log-notes-editor'
+            },
+            {
+                xtype:'boringbutbignotes',
+                id:'boring-but-big-notes'
             }
         ],
         listeners:{

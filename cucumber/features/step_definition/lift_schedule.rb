@@ -1,9 +1,12 @@
+def maxes_form_item_of_name(name)
+  @driver.find_element(:id => 'maxes-form-items').find_element(:name => name)
+end
+
 When /^I set the (\w+) max to (\d+)$/ do |liftProperty, max|
   @main_navigation.navigate_to(:lift_editor)
-
-  lift_input = @driver.find_element(:id => 'maxes-form-items').find_element(:name => liftProperty)
-  lift_input.clear
-  lift_input.send_keys max
+  maxes_form_item_of_name(liftProperty).clear
+  maxes_form_item_of_name(liftProperty).clear
+  maxes_form_item_of_name(liftProperty).send_keys max
 end
 
 When /^I select week (\d+)$/ do |week|

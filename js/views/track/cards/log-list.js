@@ -5,6 +5,11 @@ wendler.logList.showLogEntry = function (dataview, index, item, e) {
     wendler.logEntry.setupLogEntry(logRecord);
 };
 
+wendler.logList.showAssistanceLogEntry = function (dataview, index, item, e) {
+    var assistanceLogRecord = wendler.stores.assistance.ActivityLog.getAt(index);
+    wendler.logEntry.setupAssistanceLogEntry(assistanceLogRecord);
+};
+
 wendler.logList.deleteLogEntry = function (dataview, index, item, e) {
     wendler.stores.LiftLog.removeAt(index);
     wendler.stores.LiftLog.sync();
@@ -21,11 +26,32 @@ wendler.logList.showExportLog = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('export-log'), {type:'slide', direction:'left'});
 };
 
-wendler.logList.sortAndRefreshList = function () {
-    var liftLogSort = wendler.stores.LiftLogSort.first();
-    wendler.stores.LiftLog.sort(liftLogSort.data.property, liftLogSort.data.ascending ? 'ASC' : 'DESC');
+wendler.logList.sortLifts = function (sortProperty, sortDirection) {
+    wendler.stores.LiftLog.sort(sortProperty, sortDirection);
     Ext.getCmp('lift-log-list').refresh();
 };
+
+wendler.logList.sortAssistance = function (sortProperty, sortDirection) {
+    var assistanceProperty = {
+        'liftName':'movement',
+        'timestamp':'timestamp'
+    }[sortProperty];
+    wendler.stores.assistance.ActivityLog.sort(assistanceProperty, sortDirection);
+    var logAssistanceList = Ext.getCmp('log-assistance-list');
+    if (logAssistanceList) {
+        Ext.getCmp('log-assistance-list').refresh();
+    }
+};
+
+wendler.logList.sortAndRefreshList = function () {
+    var liftLogSort = wendler.stores.LiftLogSort.first();
+
+    var sortDirection = liftLogSort.data.ascending ? 'ASC' : 'DESC';
+    var sortProperty = liftLogSort.data.property;
+    wendler.logList.sortLifts(sortProperty, sortDirection);
+    wendler.logList.sortAssistance(sortProperty, sortDirection);
+};
+
 wendler.stores.LiftLog.addListener('beforesync', function () {
     if (wendler.main.started) {
         wendler.logList.sortAndRefreshList();
@@ -151,6 +177,15 @@ wendler.logList.updateAscendingText = function () {
         sortNameButton.setText(liftNameText);
         sortNameActiveButton.setText(liftNameText);
     }
+};
+
+wendler.logList.getAssistanceTypeDisplay = function (assistanceType) {
+    var displayMapping = {'Triumvirate':'Tri.'};
+    var displayType = assistanceType;
+    if (displayMapping[assistanceType]) {
+        displayType = displayMapping[assistanceType];
+    }
+    return displayType;
 };
 
 wendler.logList.getWeightDisplay = function (weight) {
@@ -302,7 +337,11 @@ wendler.views.log.cards.LogList = {
                     id:'log-assistance-list',
                     listeners:{
                         initialize:function () {
-                            wendler.components.addSwipeToDelete(this, Ext.emptyFn, wendler.logList.deleteAssistanceEntry, '.date-week');
+                            wendler.components.addSwipeToDelete(
+                                this,
+                                wendler.logList.showAssistanceLogEntry,
+                                wendler.logList.deleteAssistanceEntry,
+                                '.date-week');
                         }
                     },
                     xtype:'list',
@@ -310,7 +349,7 @@ wendler.views.log.cards.LogList = {
                     store:wendler.stores.assistance.ActivityLog,
                     itemCls:'lift-log-row',
                     itemTpl:'<table><tbody><tr>' +
-                        '<td width="15%">{assistanceType}</td>' +
+                        '<td width="15%">{[wendler.logList.getAssistanceTypeDisplay(values.assistanceType)]}</td>' +
                         '<td width="25%"><div class="lift-name">{movement}</div><div class="cycle-and-week">Sets: {sets}</div></td>' +
                         '<td width="25%"><div>' +
                         '<span class="reps">{reps}x</span> ' +
