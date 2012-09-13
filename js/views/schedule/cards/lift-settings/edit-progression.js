@@ -19,17 +19,14 @@ wendler.liftPercentages.showEditLiftProgression = function (week, set) {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-percentage'), {type:'slide', direction:'left'});
 };
 
-wendler.liftPercentages.saveAndReturnToLiftSettings = function () {
+wendler.liftPercentages.returnToLiftSettings = function () {
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
     var newPercentage = Ext.getCmp('percentage-edit-input').getValue();
     var newReps = Ext.getCmp('reps-edit-input').getValue();
     progression.set('percentage', newPercentage);
     progression.set('reps', newReps);
     progression.save();
-    wendler.liftPercentages.returnToLiftSettings();
-};
 
-wendler.liftPercentages.returnToLiftSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
 };
 
@@ -48,23 +45,13 @@ wendler.views.EditPercentage = {
             id:'edit-percentage-toolbar',
             xtype:'toolbar',
             docked:'top',
-            title:'Progression',
+            title:'Edit',
             items:[
                 {
                     xtype:'button',
                     ui:'back',
-                    text:'Cancel',
+                    text:'Back',
                     handler:wendler.liftPercentages.returnToLiftSettings
-                },
-                {
-                    xtype:'spacer'
-                },
-                {
-                    id:'edit-percentage-save-button',
-                    xtype:'button',
-                    ui:'action',
-                    text:'Save',
-                    handler:wendler.liftPercentages.saveAndReturnToLiftSettings
                 }
             ]
         },

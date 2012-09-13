@@ -37,8 +37,8 @@ When /^I set the manual percentage to (\d+)$/ do |percentage|
   percentage_input.send_keys percentage
 end
 
-When /^I save the manual progression$/ do
-  @driver.find_element(:id => 'edit-percentage-save-button').click()
+When /^I tap back when viewing a manual progression$/ do
+  @driver.find_element(:id => 'edit-percentage-toolbar').find_element(:class => 'x-button-back').click()
   sleep @ANIMATION_DELAY
 end
 

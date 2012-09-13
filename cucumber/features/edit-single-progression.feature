@@ -12,7 +12,7 @@ Feature: Editing single percentage
     Then Lift progressions in the list are visible
     And I select set 2 on the manual percentages editor
     And I set the manual percentage to 55
-    And I save the manual progression
+    And I tap back when viewing a manual progression
     And I navigate back to the lift settings from the manual percentages editor
     And I navigate back to the lift selector from lift settings
     And I view the squat lift schedule for week 2
@@ -26,7 +26,7 @@ Feature: Editing single percentage
     And I select week 2 for the manual percentages editor
     And I select set 2 on the manual percentages editor
     And I set the manual reps to 7
-    And I save the manual progression
+    And I tap back when viewing a manual progression
     And I navigate back to the lift settings from the manual percentages editor
     And I navigate back to the lift selector from lift settings
     And I view the squat lift schedule for week 2

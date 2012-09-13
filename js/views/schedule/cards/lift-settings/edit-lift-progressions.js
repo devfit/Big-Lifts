@@ -20,7 +20,7 @@ wendler.settings.liftPercentages.updateLiftPercentaqes = function () {
 wendler.settings.liftPercentages.getWeekLists = function () {
     var listFilter = new Ext.util.Filter({
         filterFn:function (item) {
-            return item.getBaseCls() === "x-list";
+            return item.getBaseCls() === "x-panel";
         }
     });
     return Ext.getCmp('edit-lift-percentages').getItems().filter(listFilter);
@@ -35,7 +35,46 @@ wendler.settings.liftPercentages.showEditLiftPercentage = function (view, index)
     wendler.liftPercentages.showEditLiftProgression();
 };
 
-wendler.settings.liftPercentages.LIST_TEMPLATE = '<span class="reps {[wendler.liftSchedule.liftTemplate.getLiftRowClass(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>';
+wendler.settings.liftPercentages.addSet = function () {
+    wendler.stores.lifts.LiftProgression.add({
+        week:wendler.settings.liftPercentages.currentWeek,
+        set:wendler.stores.lifts.LiftProgression.max('set')+1,
+        reps:0,
+        percentage:0
+    });
+    wendler.stores.lifts.LiftProgression.sync();
+};
+
+wendler.settings.liftPercentages.createTab = function (week) {
+    return {
+        xtype:'panel',
+        layout:'vbox',
+        title:week,
+        items:[
+            {
+                flex:4,
+                xtype:'list',
+                store:wendler.stores.lifts.LiftProgression,
+                itemCls:'lift-percentage-row',
+                itemTpl:'<span class="reps {[wendler.liftSchedule.liftTemplate.getLiftRowClass(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>',
+                listeners:{
+                    itemtap:wendler.settings.liftPercentages.showEditLiftPercentage
+                }
+            },
+            {
+                xtype:'panel',
+                padding:3,
+                items:[
+                    {
+                        xtype:'button',
+                        text:'Add set',
+                        handler:wendler.settings.liftPercentages.addSet
+                    }
+                ]
+            }
+        ]
+    };
+};
 
 wendler.views.EditLiftPercentages = {
     xtype:'tabpanel',
@@ -52,7 +91,7 @@ wendler.views.EditLiftPercentages = {
         {
             docked:'top',
             xtype:'toolbar',
-            title:'Progressions',
+            title:'Weeks',
             items:[
                 {
                     text:'Back',
@@ -61,45 +100,9 @@ wendler.views.EditLiftPercentages = {
                 }
             ]
         },
-        {
-            title:'Wk 1',
-            xtype:'list',
-            store:wendler.stores.lifts.LiftProgression,
-            itemCls:'lift-percentage-row',
-            itemTpl:wendler.settings.liftPercentages.LIST_TEMPLATE,
-            listeners:{
-                itemtap:wendler.settings.liftPercentages.showEditLiftPercentage
-            }
-        },
-        {
-            title:'Wk 2',
-            xtype:'list',
-            store:wendler.stores.lifts.LiftProgression,
-            itemCls:'lift-percentage-row',
-            itemTpl:wendler.settings.liftPercentages.LIST_TEMPLATE,
-            listeners:{
-                itemtap:wendler.settings.liftPercentages.showEditLiftPercentage
-            }
-        },
-        {
-            title:'Wk 3',
-            xtype:'list',
-            store:wendler.stores.lifts.LiftProgression,
-            itemCls:'lift-percentage-row',
-            itemTpl:wendler.settings.liftPercentages.LIST_TEMPLATE,
-            listeners:{
-                itemtap:wendler.settings.liftPercentages.showEditLiftPercentage
-            }
-        },
-        {
-            title:'Wk 4',
-            xtype:'list',
-            store:wendler.stores.lifts.LiftProgression,
-            itemCls:'lift-percentage-row',
-            itemTpl:wendler.settings.liftPercentages.LIST_TEMPLATE,
-            listeners:{
-                itemtap:wendler.settings.liftPercentages.showEditLiftPercentage
-            }
-        }
+        wendler.settings.liftPercentages.createTab(1),
+        wendler.settings.liftPercentages.createTab(2),
+        wendler.settings.liftPercentages.createTab(3),
+        wendler.settings.liftPercentages.createTab(4)
     ]
 };
