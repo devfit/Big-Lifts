@@ -60,6 +60,8 @@ wendler.settings.options.units = [
 ];
 
 wendler.settings.options.roundingValues = [
+    {text:'0.25', value:'0.25'},
+    {text:'0.75', value:'0.75'},
     {text:'0.5', value:'0.5'},
     {text:'1', value:'1'},
     {text:'2.5', value:'2.5'},

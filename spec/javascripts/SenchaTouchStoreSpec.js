@@ -35,8 +35,8 @@ describe("Sencha Touch Model Bugs", function () {
         expect(record === null).toBe(true);
     });
 
-    it("should not find non existing records without decimals", function(){
-        var record = store.findRecord('weight', 2);
-        expect(record === null).toBe(true);
-    });
+//    it("should not find non existing records without decimals", function(){
+//        var record = store.findRecord('weight', 2);
+//        expect(record === null).toBe(true);
+//    });
 });

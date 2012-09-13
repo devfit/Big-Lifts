@@ -104,6 +104,11 @@ util.rounding.roundTo0p5 = function (unroundedNumber, roundingType) {
     return util.rounding.roundTo5(numberTimes10, roundingType) / 10.0;
 };
 
+util.rounding.roundTo0p25 = function (unroundedNumber, roundingType) {
+    var numberTimes10 = unroundedNumber * 10;
+    return util.rounding.roundTo2p5(numberTimes10, roundingType) / 10.0;
+};
+
 util.rounding.roundTo0p1 = function (unroundedNumber, roundingType) {
     var numberTimes10 = unroundedNumber * 10;
     return util.rounding.roundTo1(numberTimes10, roundingType) / 10.0;
@@ -111,6 +116,7 @@ util.rounding.roundTo0p1 = function (unroundedNumber, roundingType) {
 
 util.roundNumber = function (unroundedNumber, roundingValue, roundingType) {
     var roundingMethods = {
+        '0.25':util.rounding.roundTo0p25,
         '0.5':util.rounding.roundTo0p5,
         '1':util.rounding.roundTo1,
         '2.5':util.rounding.roundTo2p5,
