@@ -1,39 +1,3 @@
-.lift-row, .lift-percentage-row {
-  font-size: 1.5em;
-
-  .reps {
-    font-weight: bolder;
-    padding-right: 1em;
-    padding-left: 0.4em;
-  }
-
-  .reps:after {
-    content: 'x';
-  }
-
-  .last .reps {
-    color: #338533;
-  }
-
-  .warmup .reps {
-    color: #666666;
-  }
-
-  .warmup-indicator {
-    display: none;
-  }
-
-  .warmup .warmup-indicator {
-    display: inline;
-    padding-right: 7px;
-    font-size: 90%;
-  }
-
-  .last .reps:after {
-    content: '+';
-  }
-}
-
 .x-tab.completed {
   background-image: url(../images/tick.png);
   background-repeat: no-repeat;

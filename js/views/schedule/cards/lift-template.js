@@ -57,7 +57,7 @@ wendler.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
     var className = '';
 
     if (values.set === 6 && values.week !== 4) {
-        className += 'last '
+        className += 'amrap '
     }
 
     if (values.set <= 3) {

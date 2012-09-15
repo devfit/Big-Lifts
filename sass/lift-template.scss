@@ -14,3 +14,42 @@
 .x-button.rest-timer-button {
   padding-left: 0;
 }
+
+.lift-row, .lift-percentage-row {
+  font-size: 1.5em;
+
+  .reps {
+    font-weight: bolder;
+    padding-right: 1em;
+    padding-left: 0.4em;
+
+    &:after {
+      content: 'x';
+    }
+  }
+
+  .amrap {
+    .reps {
+      color: #338533;
+
+      &:after {
+        content: '+';
+      }
+    }
+  }
+
+  .warmup-indicator {
+    display: none;
+  }
+
+  .warmup {
+    .reps {
+      color: #666666;
+    }
+    .warmup-indicator {
+      display: inline;
+      padding-right: 7px;
+      font-size: 90%;
+    }
+  }
+}
