@@ -16,11 +16,11 @@ wendler.liftPercentages.setupEditLiftProgression = function () {
 };
 
 wendler.liftPercentages.showEditLiftProgression = function (currentSet) {
-    if( currentSet ){
+    if (currentSet) {
         wendler.settings.liftPercentages.currentSet = currentSet;
     }
 
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-percentage'), {type:'slide', direction:'left'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-progression'), {type:'slide', direction:'left'});
 };
 
 wendler.liftPercentages.returnToLiftSettings = function () {
@@ -34,9 +34,9 @@ wendler.liftPercentages.returnToLiftSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
 };
 
-wendler.views.EditPercentage = {
+wendler.views.EditProgression = {
     xtype:'formpanel',
-    id:'edit-percentage',
+    id:'edit-progression',
     bodyStyle:'padding-top: 0px',
     listeners:{
         show:function () {
@@ -46,7 +46,7 @@ wendler.views.EditPercentage = {
     },
     items:[
         {
-            id:'edit-percentage-toolbar',
+            id:'edit-progression-toolbar',
             xtype:'toolbar',
             docked:'top',
             title:'Edit',
@@ -64,17 +64,23 @@ wendler.views.EditPercentage = {
             cls:'fieldset-title-no-margin',
             style:'margin-top: 0px',
             title:"<div id='edit-progression-title'>Week 1, Set 1</div>",
+            defaults:{
+                labelWidth:'50%'
+            },
             items:[
                 {
                     id:'reps-edit-input',
                     xtype:'numberfield',
-                    labelWidth:'50%',
                     label:'Reps'
+                },
+                {
+                    xtype:'checkboxfield',
+                    label:'AMRAP',
+                    name:'amrap'
                 },
                 {
                     id:'percentage-edit-input',
                     xtype:'numberfield',
-                    labelWidth:'50%',
                     label:'Percentage'
                 }
             ]

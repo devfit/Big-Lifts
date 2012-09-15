@@ -1,5 +1,19 @@
 Feature: Manual lift template
 
+  Scenario: Adding a set and marking it amrap
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I switch to the custom percentages template
+    And I tap the use template button
+    And I select week 1 for the manual percentages editor
+    And I select set 5 on the manual percentages editor
+    And I check the amrap custom set checkbox
+    And I tap back when viewing a manual progression
+    And I navigate back to the lift settings from the manual percentages editor
+    And I navigate back to the lift selector from lift settings
+    And I view the squat lift schedule for week 1
+    Then Set 5 is marked as AMRAP
+
   Scenario: Add a set
     When I view the lift schedule
     And I open the lift settings configuration
