@@ -13,7 +13,7 @@ Feature: Manual lift template
     And I navigate back to the lift settings from the manual percentages editor
     And I navigate back to the lift selector from lift settings
     And I view the squat lift schedule for week 2
-    Then The set 7 lift percentage shows 100%
+    Then The lift schedule shows "5 70 [warm] 40%,5 90 [warm] 50%,3 110 [warm] 60%,3 125 70%,3 145 80%,3 160 90%,1 180 100%"
 
   Scenario: Edit single percentage
     When I view the lift schedule

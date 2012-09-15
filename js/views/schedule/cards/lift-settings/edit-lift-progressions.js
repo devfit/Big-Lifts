@@ -31,18 +31,19 @@ wendler.settings.liftPercentages.returnToLiftSettings = function () {
 };
 
 wendler.settings.liftPercentages.showEditLiftPercentage = function (view, index) {
-    wendler.settings.liftPercentages.currentSet = index + 1;
-    wendler.liftPercentages.showEditLiftProgression();
+    wendler.liftPercentages.showEditLiftProgression(index + 1);
 };
 
 wendler.settings.liftPercentages.addSet = function () {
+    var newSet = wendler.stores.lifts.LiftProgression.max('set') + 1;
     wendler.stores.lifts.LiftProgression.add({
         week:wendler.settings.liftPercentages.currentWeek,
-        set:wendler.stores.lifts.LiftProgression.max('set')+1,
+        set:newSet,
         reps:0,
         percentage:0
     });
     wendler.stores.lifts.LiftProgression.sync();
+    wendler.liftPercentages.showEditLiftProgression(newSet);
 };
 
 wendler.settings.liftPercentages.createTab = function (week) {

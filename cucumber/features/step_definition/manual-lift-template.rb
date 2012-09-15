@@ -76,3 +76,11 @@ Then /^Lift progressions in the list are visible$/ do
     row_text_present.should be_false
   end
 end
+
+When /^I tap the add set button$/ do
+  @driver.find_elements(:class => 'x-button').select{|button|
+    button.displayed? && button.text() == 'Add set'
+  }[0].click
+
+  sleep @ANIMATION_DELAY
+end

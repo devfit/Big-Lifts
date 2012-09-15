@@ -15,7 +15,11 @@ wendler.liftPercentages.setupEditLiftProgression = function () {
     Ext.getCmp('percentage-edit-input').setValue(progression.data.percentage);
 };
 
-wendler.liftPercentages.showEditLiftProgression = function (week, set) {
+wendler.liftPercentages.showEditLiftProgression = function (currentSet) {
+    if( currentSet ){
+        wendler.settings.liftPercentages.currentSet = currentSet;
+    }
+
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-percentage'), {type:'slide', direction:'left'});
 };
 

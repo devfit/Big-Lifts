@@ -30,8 +30,15 @@ Then /^I back out of viewing the lift$/ do
 end
 
 Then /^The lift schedule shows "([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)"$/ do |*liftSets|
+  get_actual_lift_sets().should == liftSets
+end
+
+Then /^The lift schedule shows "([^"]+)"$/ do |expected_sets|
+  get_actual_lift_sets().should == expected_sets.split(',')
+end
+
+def get_actual_lift_sets()
   lift_template = @driver.find_element(:id => 'lift-template')
-  actual_lift_sets = lift_template.find_elements(:class => 'reps-weight').
+  lift_template.find_elements(:class => 'reps-weight').
       select { |i| i.displayed? }.collect { |i| i.text.gsub(/\n+/, " ") }
-  actual_lift_sets.should == liftSets
 end
