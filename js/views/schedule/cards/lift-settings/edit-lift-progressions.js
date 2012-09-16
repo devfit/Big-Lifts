@@ -34,6 +34,14 @@ wendler.settings.liftPercentages.showEditLiftPercentage = function (view, index)
     wendler.liftPercentages.showEditLiftProgression(index + 1);
 };
 
+wendler.settings.liftPercentages.deleteLiftProgression = function (view, index) {
+    var set = index + 1;
+    var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', set);
+
+    wendler.stores.lifts.LiftProgression.remove(liftProgression);
+    wendler.stores.lifts.LiftProgression.sync();
+};
+
 wendler.settings.liftPercentages.addSet = function () {
     var newSet = wendler.stores.lifts.LiftProgression.max('set') + 1;
     wendler.stores.lifts.LiftProgression.add({
@@ -65,9 +73,9 @@ wendler.settings.liftPercentages.createTab = function (week) {
                     '<td width="40%" class="delete-button-holder hidden"></td>' +
                     '</tr></tbody></table>',
                 listeners:{
-                    initialize:function(){
+                    initialize:function () {
                         wendler.components.addSwipeToDelete(this, wendler.settings.liftPercentages.showEditLiftPercentage,
-                            Ext.emptyFn, '.no-delete-button');
+                            wendler.settings.liftPercentages.deleteLiftProgression, '.no-delete-button');
                     }
                 }
             },
