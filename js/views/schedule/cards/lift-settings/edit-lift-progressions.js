@@ -40,7 +40,8 @@ wendler.settings.liftPercentages.addSet = function () {
         week:wendler.settings.liftPercentages.currentWeek,
         set:newSet,
         reps:0,
-        percentage:0
+        percentage:0,
+        amrap:false
     });
     wendler.stores.lifts.LiftProgression.sync();
     wendler.liftPercentages.showEditLiftProgression(newSet);
@@ -57,7 +58,8 @@ wendler.settings.liftPercentages.createTab = function (week) {
                 xtype:'list',
                 store:wendler.stores.lifts.LiftProgression,
                 itemCls:'lift-percentage-row',
-                itemTpl:'<span class="reps {[wendler.liftSchedule.liftTemplate.getLiftRowClass(values)]}">{reps}</span> <span class="percentage">{percentage}%</span><span class="disclosure"></span>',
+                itemTpl:'<p class="{[wendler.liftSchedule.liftTemplate.getLiftRowClass(values)]}"><span class="reps">{reps}</span> ' +
+                    '<span class="percentage">{percentage}%</span><span class="disclosure"></span></p>',
                 listeners:{
                     itemtap:wendler.settings.liftPercentages.showEditLiftPercentage
                 }

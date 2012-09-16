@@ -50,7 +50,7 @@ wendler.defaults.liftProgression = [
     Ext.create('LiftProgression', {week:4, set:3, reps:5, percentage:40, amrap:false}),
     Ext.create('LiftProgression', {week:4, set:4, reps:5, percentage:40, amrap:false}),
     Ext.create('LiftProgression', {week:4, set:5, reps:5, percentage:50, amrap:false}),
-    Ext.create('LiftProgression', {week:4, set:6, reps:5, percentage:60, amrap:true})
+    Ext.create('LiftProgression', {week:4, set:6, reps:5, percentage:60, amrap:false})
 ];
 
 wendler.stores.recovery.setupDefaultLiftProgressions = function (store) {
@@ -66,7 +66,7 @@ wendler.stores.recovery.setupDefaultLiftProgressions = function (store) {
 wendler.liftProgressions.setupAmrapForSixthSet = function (store) {
     store.each(function (record) {
         if (record.get('amrap') === null) {
-            record.set('amrap', record.get('set') === 6);
+            record.set('amrap', record.get('set') === 6 && record.get('week') !== 4);
         }
     });
 };

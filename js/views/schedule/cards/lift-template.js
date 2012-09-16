@@ -56,7 +56,7 @@ wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
 wendler.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
     var className = '';
 
-    if (values.set === 6 && values.week !== 4) {
+    if (values.amrap) {
         className += 'amrap '
     }
 

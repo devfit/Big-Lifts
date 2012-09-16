@@ -11,8 +11,7 @@ wendler.settings.liftPercentages.getCurrentProgression = function () {
 wendler.liftPercentages.setupEditLiftProgression = function () {
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
     Ext.get('edit-progression-title').setHtml('Week ' + wendler.settings.liftPercentages.currentWeek + ", Set " + wendler.settings.liftPercentages.currentSet);
-    Ext.getCmp('reps-edit-input').setValue(progression.data.reps);
-    Ext.getCmp('percentage-edit-input').setValue(progression.data.percentage);
+    Ext.getCmp('edit-progression').setRecord(progression);
 };
 
 wendler.liftPercentages.showEditLiftProgression = function (currentSet) {
@@ -25,10 +24,10 @@ wendler.liftPercentages.showEditLiftProgression = function (currentSet) {
 
 wendler.liftPercentages.returnToLiftSettings = function () {
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
-    var newPercentage = Ext.getCmp('percentage-edit-input').getValue();
-    var newReps = Ext.getCmp('reps-edit-input').getValue();
-    progression.set('percentage', newPercentage);
-    progression.set('reps', newReps);
+    var values = Ext.getCmp('edit-progression').getValues();
+    progression.set('percentage', values.percentage);
+    progression.set('reps', values.reps);
+    progression.set('amrap', values.amrap);
     progression.save();
 
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
@@ -37,7 +36,6 @@ wendler.liftPercentages.returnToLiftSettings = function () {
 wendler.views.EditProgression = {
     xtype:'formpanel',
     id:'edit-progression',
-    bodyStyle:'padding-top: 0px',
     listeners:{
         show:function () {
             wendler.navigation.setBackFunction(wendler.liftPercentages.returnToLiftSettings);
@@ -71,6 +69,7 @@ wendler.views.EditProgression = {
                 {
                     id:'reps-edit-input',
                     xtype:'numberfield',
+                    name:'reps',
                     label:'Reps'
                 },
                 {
@@ -81,6 +80,7 @@ wendler.views.EditProgression = {
                 {
                     id:'percentage-edit-input',
                     xtype:'numberfield',
+                    name:'percentage',
                     label:'Percentage'
                 }
             ]
