@@ -15,10 +15,55 @@
   padding-left: 0;
 }
 
+$liftRowFontSize: 1.5em;
+.lift-row {
+  .percentage {
+    float: right;
+    color: grey;
+    margin-right: 10px;
+  }
+
+  .bar-loader-breakdown {
+    display: none;
+    padding-left: 0.4em;
+    font-size: 60%;
+  }
+}
+
+.lift-row.lift-row-selected {
+  background-color: white;
+
+  .bar-loader-breakdown {
+    display: block;
+  }
+}
+
+.lift-row.x-list-item, .lift-percentage-row.x-list-item {
+  .x-list-item-label {
+    padding: 0.2em;
+    min-height: 0;
+  }
+}
+
+.lift-percentage-row {
+  .percentage {
+    font-size: $liftRowFontSize;
+  }
+}
+
+.lift-row {
+  .percentage {
+    font-size: 1.2em;
+  }
+}
+
 .lift-row, .lift-percentage-row {
-  font-size: 1.5em;
+  .delete-button-holder {
+    font-size: inherit;
+  }
 
   .reps {
+    font-size: $liftRowFontSize;
     font-weight: bolder;
     padding-right: 1em;
     padding-left: 0.4em;
@@ -26,6 +71,10 @@
     &:after {
       content: 'x';
     }
+  }
+
+  .weight {
+    font-size: $liftRowFontSize;
   }
 
   .amrap {
@@ -49,7 +98,7 @@
     .warmup-indicator {
       display: inline;
       padding-right: 7px;
-      font-size: 90%;
+      font-size: 0.7em;
     }
   }
 }

@@ -58,10 +58,17 @@ wendler.settings.liftPercentages.createTab = function (week) {
                 xtype:'list',
                 store:wendler.stores.lifts.LiftProgression,
                 itemCls:'lift-percentage-row',
-                itemTpl:'<p class="{[wendler.liftSchedule.liftTemplate.getLiftRowClass(values)]}"><span class="reps">{reps}</span> ' +
-                    '<span class="percentage">{percentage}%</span><span class="disclosure"></span></p>',
+                itemTpl:'<table width="100%"><tbody><tr>' +
+                    '<td width="60%"><div class="{[wendler.liftSchedule.liftTemplate.getLiftRowClass(values)]}">' +
+                    '<span class="reps">{reps}</span> <span class="percentage">{percentage}%</span></div>' +
+                    '<td width="40%" class="no-delete-button"></td>' +
+                    '<td width="40%" class="delete-button-holder hidden"></td>' +
+                    '</tr></tbody></table>',
                 listeners:{
-                    itemtap:wendler.settings.liftPercentages.showEditLiftPercentage
+                    initialize:function(){
+                        wendler.components.addSwipeToDelete(this, wendler.settings.liftPercentages.showEditLiftPercentage,
+                            Ext.emptyFn, '.no-delete-button');
+                    }
                 }
             },
             {

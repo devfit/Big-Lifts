@@ -6,37 +6,6 @@
   color: white;
 }
 
-.lift-row {
-  .percentage {
-    float: right;
-    font-size: 0.7em !important;
-    margin-top: 0.3em;
-    color: grey;
-    margin-right: 10px;
-  }
-
-  .bar-loader-breakdown {
-    display: none;
-    padding-left: 0.4em;
-    font-size: 60%;
-  }
-}
-
-.lift-row.lift-row-selected {
-  background-color: white;
-
-  .bar-loader-breakdown {
-    display: block;
-  }
-}
-
-.lift-row.x-list-item, .lift-percentage-row.x-list-item {
-  .x-list-item-label {
-    padding: 0.2em;
-    min-height: 0;
-  }
-}
-
 .x-list-item.done .x-list-disclosure {
   -webkit-mask: 0 0 url('../images/tick.png');
   background: green none;
