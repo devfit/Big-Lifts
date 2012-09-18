@@ -1,7 +1,5 @@
 @premium
 Feature: Triumvirate - Assistance Work
-  As a lifter
-  I want to be able to get and track triumvirate assistance
 
   Scenario: Viewing Triumvirate lifts for non-default lifts
     When I add a new lift named "Clean" with max 200
