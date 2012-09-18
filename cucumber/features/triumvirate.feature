@@ -20,8 +20,8 @@ Feature: Triumvirate - Assistance Work
     And I save the triumvirate assistance work
     Then I am on the track tab
     And I tap "Asst." to change the log type
-    Then Assistance log entry 1 shows "Move1 Sets: 5 15x [?]"
-    Then Assistance log entry 2 shows "Move2 Sets: 5 15x [?]"
+    Then Assistance log entry 1 shows "Move2 Sets: 5 15x [?]"
+    Then Assistance log entry 2 shows "Move1 Sets: 5 15x [?]"
 
   Scenario: Viewing Triumvirate lifts and viewing the log
     And I view the squat lift schedule for week 1
