@@ -57,7 +57,7 @@ Feature: Lift tracking
     And I return from viewing a log
     Then The squat long entry date in the log list is today
 
-  Scenario: Deleting a lift log
+  Scenario: Deleting a lift log entry
     When I view the press lift schedule for week 1
     And I mark the current lift completed
     And I save the lift log
