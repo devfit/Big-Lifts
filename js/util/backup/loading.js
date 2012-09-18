@@ -23,7 +23,7 @@ wendler.loading.loadTasks = _.map(wendler.stores, function (store) {
 });
 
 wendler.loading.load = function () {
-    async.series(wendler.loading.loadTasks, function () {
+    async.parallel(wendler.loading.loadTasks, function () {
         wendler.main.start();
     });
 };
