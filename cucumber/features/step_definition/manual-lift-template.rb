@@ -37,11 +37,6 @@ When /^I set the manual percentage to (\d+)$/ do |percentage|
   percentage_input.send_keys percentage
 end
 
-When /^I tap back when viewing a manual progression$/ do
-  @driver.find_element(:id => 'edit-progression-toolbar').find_element(:class => 'x-button-back').click()
-  sleep @ANIMATION_DELAY
-end
-
 When /^I navigate back to the lift settings from the manual percentages editor$/ do
   @driver.find_element(:id => 'edit-lift-percentages').find_element(:class => 'x-button-back').click()
   sleep @ANIMATION_DELAY
@@ -90,6 +85,11 @@ When /^I check the amrap custom set checkbox$/ do
 end
 
 Then /^Set (\d+) is marked as AMRAP$/ do |set_number|
-  row = @driver.find_elements(:class => 'reps-weight').select { |row| row.displayed? }[set_number.to_i - 1]
-  row.attribute('class').should include('amrap')
+  row = @driver.find_elements(:class => 'lift-row').select { |row| row.displayed? }[set_number.to_i - 1]
+  row.find_element(:tag_name => 'p').attribute('class').should include('amrap')
+end
+
+When /^I tap back$/ do
+  @driver.find_elements(:class => 'x-button-back').select { |button| button.text() == 'Back' && button.displayed? }[0].click
+  sleep @ANIMATION_DELAY
 end

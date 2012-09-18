@@ -31,7 +31,7 @@ Feature: Lift tracking
   Scenario: Backing out of the lift log
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I tap back in the lift log
+    And I tap back
     Then I am returned to the lift schedule and no log is saved
 
   Scenario: Lift logging

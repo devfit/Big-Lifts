@@ -13,10 +13,10 @@ Feature: Triumvirate - Assistance Work
     Then Triumvirate movement 2 is "? 5 sets 15x [?]lbs"
     And I tap triumvirate row 1
     And I change the triumvirate movement name to "Move1"
-    And I tap back from editing the triumvirate movement
+    And I tap back
     And I tap triumvirate row 2
     And I change the triumvirate movement name to "Move2"
-    And I tap back from editing the triumvirate movement
+    And I tap back
     And I save the triumvirate assistance work
     Then I am on the track tab
     And I tap "Asst." to change the log type
@@ -45,7 +45,7 @@ Feature: Triumvirate - Assistance Work
     And I tap triumvirate row 1
     And I change the triumvirate movement name to "Good Morning"
     And I change the triumvirate movement weight to 65
-    And I tap back from editing the triumvirate movement
+    And I tap back
     Then Triumvirate movement 1 is "Good Morning 5 sets 15x 65lbs"
     And I save the triumvirate assistance work
     Then I am on the track tab

@@ -39,6 +39,6 @@ end
 
 def get_actual_lift_sets()
   lift_template = @driver.find_element(:id => 'lift-template')
-  lift_template.find_elements(:class => 'reps-weight').
+  lift_template.find_elements(:class => 'lift-row').
       select { |i| i.displayed? }.collect { |i| i.text.gsub(/\n+/, " ") }
 end

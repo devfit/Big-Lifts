@@ -67,9 +67,3 @@ Then /^I am returned to the lift schedule and no log is saved$/ do
 
   @driver.execute_script("return wendler.stores.LiftLog.getCount()").should == 0
 end
-
-When /^I tap back in the lift log$/ do
-  @driver.find_element(:id => 'log-lift-back-button').click()
-  sleep @ANIMATION_DELAY
-end
-

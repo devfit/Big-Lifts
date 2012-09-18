@@ -14,7 +14,7 @@ Feature: Assistance log
     And I tap BBB log entry 1
     And I tap the assistance log notes
     And I set the assistance log notes to "Felt okay. Coulda been better"
-    And I tap back from the assistance log notes
+    And I tap back
     Then The assistance log notes shows "Felt okay. Coulda been better"
 
   Scenario: Deleting assistance log entry

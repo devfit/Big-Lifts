@@ -237,6 +237,11 @@ wendler.views.liftSchedule.liftTemplate = {
         }
     ],
     listeners:{
+        painted:function () {
+            wendler.stores.lifts.LiftProgression.addListener('beforesync', function () {
+                Ext.getCmp('lift-template-list').refresh();
+            });
+        },
         show:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.liftTemplate.returnToLiftSelect);
             wendler.liftSchedule.liftTemplate.updateLiftValues();

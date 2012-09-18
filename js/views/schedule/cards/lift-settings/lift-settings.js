@@ -104,15 +104,9 @@ wendler.liftSettings.setupLiftScheme = function (scheme) {
     //It's almost as if the records are marked to be deleted twice.
     var prebuiltVariation = wendler.liftProgressions.options[scheme];
     wendler.stores.lifts.LiftProgression.clearFilter();
-    wendler.stores.lifts.LiftProgression.each(function (m) {
-        var newProgression = _.find(prebuiltVariation, function (r) {
-            return r.data.set === m.data.set && r.data.week === m.data.week;
-        });
-
-        m.set('reps', newProgression.data.reps);
-        m.set('percentage', newProgression.data.percentage);
-        m.save();
-    });
+    wendler.stores.lifts.LiftProgression.removeAll();
+    wendler.stores.lifts.LiftProgression.add(prebuiltVariation);
+    wendler.stores.lifts.LiftProgression.sync();
 
     Ext.Msg.alert('Lifts Updated', 'The lift scheme has been updated', Ext.emptyFn);
 };
