@@ -28,6 +28,7 @@ wendler.liftPercentages.returnToLiftSettings = function () {
     progression.set('percentage', values.percentage);
     progression.set('reps', values.reps);
     progression.set('amrap', values.amrap);
+    progression.set('warmup', values.warmup);
     progression.save();
 
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
@@ -76,6 +77,11 @@ wendler.views.EditProgression = {
                     xtype:'checkboxfield',
                     label:'AMRAP',
                     name:'amrap'
+                },
+                {
+                    xtype:'checkboxfield',
+                    label:'Warmup',
+                    name:'warmup'
                 },
                 {
                     id:'percentage-edit-input',

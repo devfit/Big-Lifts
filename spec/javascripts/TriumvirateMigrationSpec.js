@@ -6,7 +6,7 @@ describe("Triumvirate Migrations", function () {
         wendler.stores.lifts.Lifts.add({name:'Clean', propertyName:'clean', max:300});
         wendler.stores.lifts.Lifts.sync();
 
-        wendler.stores.migrations.triumvirateMovementsMigration();
+        wendler.stores.migrations.triumvirateMovementsMigration(wendler.stores.assistance.TriumvirateMovement);
 
         var NUMBER_OF_LIFTS = 5;
         var MOVEMENTS_PER_LIFT = 2;

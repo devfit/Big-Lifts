@@ -5,7 +5,10 @@ describe("Lift Completion Model and Store", function () {
         wendler.stores.lifts.Lifts.add({propertyName:'squat'});
 
         expect(wendler.stores.lifts.LiftCompletion.getCount()).toEqual(2);
+
         wendler.stores.migrations.removeDeadLiftCompletions();
+        wendler.stores.lifts.Lifts.fireEvent('load');
+
         expect(wendler.stores.lifts.LiftCompletion.getCount()).toEqual(1);
     });
 });

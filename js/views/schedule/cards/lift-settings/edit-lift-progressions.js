@@ -49,7 +49,8 @@ wendler.settings.liftPercentages.addSet = function () {
         set:newSet,
         reps:0,
         percentage:0,
-        amrap:false
+        amrap:false,
+        warmup:false
     });
     wendler.stores.lifts.LiftProgression.sync();
     wendler.liftPercentages.showEditLiftProgression(newSet);

@@ -60,7 +60,7 @@ wendler.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
         className += 'amrap '
     }
 
-    if (values.set <= 3) {
+    if (values.warmup) {
         className += 'warmup'
     }
 

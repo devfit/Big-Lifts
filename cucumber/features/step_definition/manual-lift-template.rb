@@ -80,13 +80,13 @@ When /^I tap the add set button$/ do
   sleep @ANIMATION_DELAY
 end
 
-When /^I check the amrap custom set checkbox$/ do
-  @driver.find_element(:id => 'edit-progression').find_element(:name => 'amrap').find_element(:xpath => './..').click
+When /^I check the (\w+) custom set checkbox$/ do |custom_set_field|
+  @driver.find_element(:id => 'edit-progression').find_element(:name => custom_set_field).find_element(:xpath => './..').click
 end
 
-Then /^Set (\d+) is marked as AMRAP$/ do |set_number|
+Then /^Set (\d+) is marked as (\w+)/ do |set_number, marked_as_class|
   row = @driver.find_elements(:class => 'lift-row').select { |row| row.displayed? }[set_number.to_i - 1]
-  row.find_element(:tag_name => 'p').attribute('class').should include('amrap')
+  row.find_element(:tag_name => 'p').attribute('class').should include(marked_as_class)
 end
 
 When /^I tap back$/ do
