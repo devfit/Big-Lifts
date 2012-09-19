@@ -11,32 +11,31 @@ wendler.settings.liftPercentages.getCurrentProgression = function () {
 wendler.liftPercentages.setupEditLiftProgression = function () {
     var progression = wendler.settings.liftPercentages.getCurrentProgression();
     Ext.get('edit-progression-title').setHtml('Week ' + wendler.settings.liftPercentages.currentWeek + ", Set " + wendler.settings.liftPercentages.currentSet);
-    Ext.getCmp('reps-edit-input').setValue(progression.data.reps);
-    Ext.getCmp('percentage-edit-input').setValue(progression.data.percentage);
+    Ext.getCmp('edit-progression').setRecord(progression);
 };
 
-wendler.liftPercentages.showEditLiftProgression = function (week, set) {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-percentage'), {type:'slide', direction:'left'});
-};
+wendler.liftPercentages.showEditLiftProgression = function (currentSet) {
+    if (currentSet) {
+        wendler.settings.liftPercentages.currentSet = currentSet;
+    }
 
-wendler.liftPercentages.saveAndReturnToLiftSettings = function () {
-    var progression = wendler.settings.liftPercentages.getCurrentProgression();
-    var newPercentage = Ext.getCmp('percentage-edit-input').getValue();
-    var newReps = Ext.getCmp('reps-edit-input').getValue();
-    progression.set('percentage', newPercentage);
-    progression.set('reps', newReps);
-    progression.save();
-    wendler.liftPercentages.returnToLiftSettings();
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-progression'), {type:'slide', direction:'left'});
 };
 
 wendler.liftPercentages.returnToLiftSettings = function () {
+    var progression = wendler.settings.liftPercentages.getCurrentProgression();
+    var values = Ext.getCmp('edit-progression').getValues();
+    progression.set('percentage', values.percentage);
+    progression.set('reps', values.reps);
+    progression.set('amrap', values.amrap);
+    progression.save();
+
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
 };
 
-wendler.views.EditPercentage = {
+wendler.views.EditProgression = {
     xtype:'formpanel',
-    id:'edit-percentage',
-    bodyStyle:'padding-top: 0px',
+    id:'edit-progression',
     listeners:{
         show:function () {
             wendler.navigation.setBackFunction(wendler.liftPercentages.returnToLiftSettings);
@@ -45,26 +44,16 @@ wendler.views.EditPercentage = {
     },
     items:[
         {
-            id:'edit-percentage-toolbar',
+            id:'edit-progression-toolbar',
             xtype:'toolbar',
             docked:'top',
-            title:'Progression',
+            title:'Edit',
             items:[
                 {
                     xtype:'button',
                     ui:'back',
-                    text:'Cancel',
+                    text:'Back',
                     handler:wendler.liftPercentages.returnToLiftSettings
-                },
-                {
-                    xtype:'spacer'
-                },
-                {
-                    id:'edit-percentage-save-button',
-                    xtype:'button',
-                    ui:'action',
-                    text:'Save',
-                    handler:wendler.liftPercentages.saveAndReturnToLiftSettings
                 }
             ]
         },
@@ -73,17 +62,25 @@ wendler.views.EditPercentage = {
             cls:'fieldset-title-no-margin',
             style:'margin-top: 0px',
             title:"<div id='edit-progression-title'>Week 1, Set 1</div>",
+            defaults:{
+                labelWidth:'50%'
+            },
             items:[
                 {
                     id:'reps-edit-input',
                     xtype:'numberfield',
-                    labelWidth:'50%',
+                    name:'reps',
                     label:'Reps'
+                },
+                {
+                    xtype:'checkboxfield',
+                    label:'AMRAP',
+                    name:'amrap'
                 },
                 {
                     id:'percentage-edit-input',
                     xtype:'numberfield',
-                    labelWidth:'50%',
+                    name:'percentage',
                     label:'Percentage'
                 }
             ]

@@ -1,76 +1,9 @@
-.lift-row, .lift-percentage-row {
-  font-size: 1.5em;
-
-  .reps {
-    font-weight: bolder;
-    padding-right: 1em;
-    padding-left: 0.4em;
-  }
-
-  .reps:after {
-    content: 'x';
-  }
-
-  .last .reps {
-    color: #338533;
-  }
-
-  .warmup .reps {
-    color: #666666;
-  }
-
-  .warmup-indicator {
-    display: none;
-  }
-
-  .warmup .warmup-indicator {
-    display: inline;
-    padding-right: 7px;
-    font-size: 90%;
-  }
-
-  .last .reps:after {
-    content: '+';
-  }
-}
-
 .x-tab.completed {
   background-image: url(../images/tick.png);
   background-repeat: no-repeat;
   background-size: 70%;
   opacity: 30%;
   color: white;
-}
-
-.lift-row {
-  .percentage {
-    float: right;
-    font-size: 0.7em !important;
-    margin-top: 0.3em;
-    color: grey;
-    margin-right: 10px;
-  }
-
-  .bar-loader-breakdown {
-    display: none;
-    padding-left: 0.4em;
-    font-size: 60%;
-  }
-}
-
-.lift-row.lift-row-selected {
-  background-color: white;
-
-  .bar-loader-breakdown {
-    display: block;
-  }
-}
-
-.lift-row.x-list-item, .lift-percentage-row.x-list-item {
-  .x-list-item-label {
-    padding: 0.2em;
-    min-height: 0;
-  }
 }
 
 .x-list-item.done .x-list-disclosure {

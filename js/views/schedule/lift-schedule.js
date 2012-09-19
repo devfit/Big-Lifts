@@ -25,7 +25,7 @@ Ext.define('Wendler.views.LiftSchedule', {
             wendler.views.liftSchedule.IncreaseMaxesHelp,
             wendler.views.liftSchedule.LiftSettings,
             wendler.views.EditLiftPercentages,
-            wendler.views.EditPercentage,
+            wendler.views.EditProgression,
             wendler.views.liftSchedule.LiftTracking,
             wendler.views.liftSchedule.RestTimer,
             wendler.views.liftSchedule.assistance.AssistanceChooser,

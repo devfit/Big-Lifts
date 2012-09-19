@@ -1,7 +1,4 @@
-Feature: Selecting wendler options
-  As a lifter
-  I want to be able to select my wendler progression percentages option
-  So that I can easily set the percentages for both programs
+Feature: Lift templates
 
   Scenario: Heavier lift template
     When I view the lift schedule
@@ -12,6 +9,7 @@ Feature: Selecting wendler options
     And I set the squat max to 300
     And I view the squat lift schedule for week 1
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 205 75%","5 215 80%","5 230 85%"
+    And Set 6 is marked as AMRAP
 
   Scenario: Fresher lift template
     When I view the lift schedule
@@ -22,6 +20,7 @@ Feature: Selecting wendler options
     And I set the squat max to 300
     And I view the squat lift schedule for week 1
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 175 65%","5 205 75%","5 230 85%"
+    And Set 6 is marked as AMRAP
 
   Scenario: Powerlifting template
     When I view the lift schedule
@@ -32,3 +31,4 @@ Feature: Selecting wendler options
     And I set the squat max to 300
     And I view the squat lift schedule for week 1
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","3 190 70%","3 215 80%","3 245 90%"
+    And Set 6 is marked as AMRAP

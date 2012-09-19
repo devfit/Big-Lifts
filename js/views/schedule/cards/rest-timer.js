@@ -89,8 +89,10 @@ wendler.views.liftSchedule.RestTimer = {
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.restTimer.remainingSeconds = wendler.stores.RestTime.first().get('restTimeInSeconds');
-            wendler.restTimer.updateTimeDisplay();
+            if (wendler.restTimer.remainingSeconds === 0) {
+                wendler.restTimer.remainingSeconds = wendler.stores.RestTime.first().get('restTimeInSeconds');
+                wendler.restTimer.updateTimeDisplay();
+            }
             wendler.navigation.setBackFunction(wendler.restTimer.back);
         }
     },

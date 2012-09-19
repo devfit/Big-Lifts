@@ -11,6 +11,10 @@ Then /^The rest timer shows "(.*?)"$/ do |time|
   @driver.find_element(:id => 'rest-timer-time').text().should == time
 end
 
+Then /^The rest timer does not show "(.*?)"$/ do |time|
+  @driver.find_element(:id => 'rest-timer-time').text().should_not == time
+end
+
 Then /^I tap the rest timer start button$/ do
   @driver.find_element(:id => 'start-timer-button').click()
 end

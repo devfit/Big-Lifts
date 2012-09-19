@@ -24,6 +24,7 @@ src_files:
     - js/models/stores.js
     - js/models/lifts.js
     - js/models/lift-completion.js
+    - js/models/lift-progression.js
     - js/models/plate_bar_configuration.js
     - js/models/assistance/assistance.js
     - js/models/assistance/triumvirate.js

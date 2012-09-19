@@ -31,7 +31,7 @@ Feature: Lift tracking
   Scenario: Backing out of the lift log
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I tap back in the lift log
+    And I tap back
     Then I am returned to the lift schedule and no log is saved
 
   Scenario: Lift logging
@@ -57,7 +57,7 @@ Feature: Lift tracking
     And I return from viewing a log
     Then The squat long entry date in the log list is today
 
-  Scenario: Deleting a lift log
+  Scenario: Deleting a lift log entry
     When I view the press lift schedule for week 1
     And I mark the current lift completed
     And I save the lift log

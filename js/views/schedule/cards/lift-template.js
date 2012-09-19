@@ -56,8 +56,8 @@ wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
 wendler.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
     var className = '';
 
-    if (values.set === 6 && values.week !== 4) {
-        className += 'last '
+    if (values.amrap) {
+        className += 'amrap '
     }
 
     if (values.set <= 3) {
@@ -227,8 +227,8 @@ wendler.views.liftSchedule.liftTemplate = {
                     wendler.liftSchedule.liftTemplate.selectThreeLiftsFrom(index);
                 }
             },
-            itemTpl:'<p class="reps-weight {[wendler.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
-                '<span>{[wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
+            itemTpl:'<p class="{[wendler.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
+                '<span class="weight">{[wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax,values.percentage)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +
                 (wendler.toggles.BarLoading ?
                     '<p class="bar-loader-breakdown">{[wendler.liftSchedule.liftTemplate.getPlateList(' +
@@ -237,6 +237,11 @@ wendler.views.liftSchedule.liftTemplate = {
         }
     ],
     listeners:{
+        painted:function () {
+            wendler.stores.lifts.LiftProgression.addListener('beforesync', function () {
+                Ext.getCmp('lift-template-list').refresh();
+            });
+        },
         show:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.liftTemplate.returnToLiftSelect);
             wendler.liftSchedule.liftTemplate.updateLiftValues();

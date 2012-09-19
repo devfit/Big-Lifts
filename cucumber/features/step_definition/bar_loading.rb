@@ -24,11 +24,6 @@ When /^I set the bar weight to (\d+)$/ do |weight|
     barWeightInput.send_keys weight
 end
 
-When /^I tap back in the bar plates editor$/ do
-  @driver.find_element(:id => 'bar-setup-back-button').click
-  sleep @ANIMATION_DELAY
-end
-
 When /^I set the number of (\d+)lbs plates to (\d+)$/ do |weight, plateNumber|
   @driver.find_element(:name => "#{weight}-lbs").clear
   @driver.find_element(:name => "#{weight}-lbs").send_keys plateNumber

@@ -30,9 +30,3 @@ Then /^I change the triumvirate movement weight to (\d+)$/ do |weight|
   weight_input.clear
   weight_input.send_keys weight
 end
-
-Then /^I tap back from editing the triumvirate movement$/ do
-  buttons = @driver.find_element(:id => 'triumvirate-movement-editor').find_elements(:class => 'x-button')
-  buttons.select { |button| button.text() == "Back" }[0].click
-  sleep @ANIMATION_DELAY
-end

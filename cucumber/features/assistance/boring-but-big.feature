@@ -1,8 +1,5 @@
 @premium
 Feature: Boring But Big - Assistance Work
-  As a lifter
-  I want to be able to get and track BBB work
-  So that I can integrate my assistance work into my app programming
 
   Scenario: Viewing BBB lifts, Changing the percentage, and viewing the log
     When I set the squat max to 200
