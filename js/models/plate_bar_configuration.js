@@ -3,7 +3,7 @@ Ext.ns('wendler.stores.defaults', 'wendler.stores.plates');
 Ext.define('BarWeight', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'weight', type:'float'}
@@ -32,14 +32,9 @@ wendler.stores.BarWeight = Ext.create('Ext.data.Store', {
     listeners:{
         load:function (store) {
             if (store.getCount() === 0) {
-                if (wendler.stores.Settings.getCount() > 0) {
+                util.withLoadedStore(wendler.stores.Settings, function () {
                     wendler.stores.defaults.loadDefaultBarWeight(store);
-                }
-                else {
-                    wendler.stores.Settings.addListener('load', function () {
-                        wendler.stores.defaults.loadDefaultBarWeight(store);
-                    });
-                }
+                });
             }
         }
     }
@@ -49,7 +44,7 @@ wendler.stores.push(wendler.stores.BarWeight);
 Ext.define('Plates', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'weight', type:'float'},

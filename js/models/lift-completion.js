@@ -18,34 +18,38 @@ wendler.stores.migrations.liftCompletionMigration = function () {
 };
 
 wendler.stores.migrations.addMissingLiftCompletions = function () {
-    for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
-        var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
+    util.withLoadedStore(wendler.stores.lifts.Lifts, function () {
+        for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
+            var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
 
-        var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
-            return r.get('liftPropertyName') === liftPropertyName;
-        });
+            var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+                return r.get('liftPropertyName') === liftPropertyName;
+            });
 
-        if (existingLiftCompletion === -1) {
-            for (var week = 1; week <= 4; week++) {
-                wendler.stores.lifts.LiftCompletion.add(
-                    {liftPropertyName:liftPropertyName, week:week, completed:false});
+            if (existingLiftCompletion === -1) {
+                for (var week = 1; week <= 4; week++) {
+                    wendler.stores.lifts.LiftCompletion.add(
+                        {liftPropertyName:liftPropertyName, week:week, completed:false});
+                }
             }
         }
-    }
+    });
 };
 
 wendler.stores.migrations.removeDeadLiftCompletions = function () {
-    var liftNames = _.map(wendler.stores.lifts.Lifts.getData().all, function (r) {
-        return r.get('propertyName');
-    });
+    util.withLoadedStore(wendler.stores.lifts.Lifts, function () {
+        var liftNames = _.map(wendler.stores.lifts.Lifts.getData().all, function (r) {
+            return r.get('propertyName');
+        });
 
-    wendler.stores.lifts.LiftCompletion.each(function (record) {
-        if (_.indexOf(liftNames, record.get('liftPropertyName')) === -1) {
-            wendler.stores.lifts.LiftCompletion.remove(record);
-        }
-    });
+        wendler.stores.lifts.LiftCompletion.each(function (record) {
+            if (_.indexOf(liftNames, record.get('liftPropertyName')) === -1) {
+                wendler.stores.lifts.LiftCompletion.remove(record);
+            }
+        });
 
-    wendler.stores.lifts.LiftCompletion.sync();
+        wendler.stores.lifts.LiftCompletion.sync();
+    });
 };
 
 Ext.define('LiftCompletion', {
