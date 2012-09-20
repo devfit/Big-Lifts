@@ -61,7 +61,7 @@ wendler.maxes.controller.saveNewLift = function(newLiftModel){
     wendler.stores.lifts.Lifts.add(newLiftModel);
     wendler.stores.lifts.Lifts.sync();
     wendler.stores.migrations.liftCompletionMigration();
-    wendler.stores.migrations.triumvirateMovementsMigration();
+    wendler.stores.migrations.triumvirateMovementsMigration(wendler.stores.assistance.TriumvirateMovement);
     wendler.maxes.controller.rebuildMaxesList();
 };
 
