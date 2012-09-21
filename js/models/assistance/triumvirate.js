@@ -31,7 +31,7 @@ wendler.stores.assistance.defaultTriumvirate = [
 
 wendler.stores.migrations.triumvirateMovementsMigration = function (store) {
     util.withLoadedStore(wendler.stores.lifts.Lifts, function(){
-        console.log( "LOADED" );
+
         wendler.stores.lifts.Lifts.each(function (lift) {
             var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
             if (!existingMovement) {

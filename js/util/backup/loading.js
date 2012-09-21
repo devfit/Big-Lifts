@@ -22,14 +22,23 @@ wendler.loading.loadTasks = _.map(wendler.stores, function (store) {
     }
 });
 
+wendler.loading.loadingStarted = false;
 wendler.loading.load = function () {
-    async.parallel(wendler.loading.loadTasks, function () {
-        wendler.main.start();
-    });
+    if (!wendler.loading.loadingStarted) {
+        wendler.loading.loadingStarted = true;
+        async.parallel(wendler.loading.loadTasks, function () {
+            wendler.main.start();
+        });
+    }
 };
 
 if (wendler.loadingFromFile) {
     document.addEventListener("deviceready", wendler.loading.load, false);
+    setTimeout(function () {
+        if (!wendler.loading.loadingStarted) {
+            wendler.loading.load();
+        }
+    }, 1000 * 3);
 }
 else {
     wendler.loading.load();
