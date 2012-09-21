@@ -36,9 +36,10 @@ if (wendler.loadingFromFile) {
     document.addEventListener("deviceready", wendler.loading.load, false);
     setTimeout(function () {
         if (!wendler.loading.loadingStarted) {
+            wendler.loadingFromFile = false;
             wendler.loading.load();
         }
-    }, 1000 * 3);
+    }, 1500);
 }
 else {
     wendler.loading.load();
