@@ -13,7 +13,7 @@ public class App extends DroidGap {
         super.setIntegerProperty("splashscreen", R.drawable.splash);
         super.setIntegerProperty("loadUrlTimeoutValue", 70000);
         appView.addJavascriptInterface(new ScreenLockingInterface(this), "ScreenLock");
-        appView.addJavascriptInterface(new NotificationSoundInterface(this), "Notifier");
+        appView.addJavascriptInterface(new AudioInfo(this), "AudioInfo");
         super.loadUrl("file:///android_asset/www/index.html");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }

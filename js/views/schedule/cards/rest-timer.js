@@ -34,10 +34,27 @@ wendler.restTimer.timerHasEnded = function () {
     wendler.restTimer.back();
 };
 
+wendler.restTimer.checkIfSoundMuted = function () {
+    if (window.AudioInfo) {
+        var soundWontPlay = window.AudioInfo.getVolume() == 0 || window.AudioInfo.isMuted();
+        Ext.getCmp('sound-muted-notice').setHidden(!soundWontPlay);
+    }
+};
+
 wendler.restTimer.playTimerEndSound = function () {
-    new Ext.Audio({hidden:true, url:'sounds/1khz_1_5s.mp3'}).play();
-    if (window.Notifier) {
-        window.Notifier.playAlert();
+    if (typeof(Media) !== 'undefined') {
+        if (Ext.os.is.Android) {
+            var soundPath = util.phonegap.getResourcesPath() + "/sounds/1khz_1_5s.mp3";
+            var restSound = new Media(soundPath,
+                function () {
+                }, function (error) {
+                    console.log(error);
+                });
+            restSound.play();
+        }
+        else {
+            new Ext.Audio({hidden:true, url:'sounds/1khz_1_5s.mp3'}).play();
+        }
     }
 };
 
@@ -79,6 +96,7 @@ wendler.views.liftSchedule.RestTimer = {
     layout:'fit',
     listeners:{
         show:function () {
+            wendler.restTimer.checkIfSoundMuted();
             if (wendler.restTimer.remainingSeconds === 0) {
                 wendler.restTimer.remainingSeconds = wendler.stores.RestTime.first().get('restTimeInSeconds');
                 wendler.restTimer.updateTimeDisplay();
@@ -109,7 +127,7 @@ wendler.views.liftSchedule.RestTimer = {
             items:[
                 {
                     xtype:'container',
-                    flex:1,
+                    flex:4,
                     layout:'vbox',
                     items:[
                         {
@@ -181,9 +199,18 @@ wendler.views.liftSchedule.RestTimer = {
                 },
                 {
                     xtype:'panel',
-                    flex:1,
+                    flex:4,
                     padding:'0 5',
                     html:'<div id="rest-timer-time">0:00</div>'
+                },
+                {
+                    id:'sound-muted-notice',
+                    xtype:'panel',
+                    flex:1,
+                    hidden:true,
+                    style:'color:gray',
+                    html:'<div style="text-align:center">The volume is 0 or muted.</div>',
+                    padding:'0 10'
                 }
             ]
         }
