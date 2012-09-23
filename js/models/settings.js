@@ -44,14 +44,21 @@ wendler.stores.recovery.setupDefaultSettings = function () {
     });
 };
 
+wendler.settings.lockPortrait = function (shouldLockPortrait) {
+    if (window.ScreenLock) {
+        window.ScreenLock.lockPortrait(shouldLockPortrait === 1);
+    }
+};
 wendler.stores.Settings = Ext.create('Ext.data.Store', {
     model:'Settings',
     listeners:{
         load:function () {
             wendler.stores.recovery.setupDefaultSettings();
+            wendler.settings.lockPortrait(this.first().get('lockPortrait'));
         }
     }
 });
+
 wendler.stores.push(wendler.stores.Settings);
 
 wendler.settings.options.units = [

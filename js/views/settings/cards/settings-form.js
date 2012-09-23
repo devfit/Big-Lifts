@@ -34,7 +34,7 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
 
     //TODO: Remove when beforesync fires properly for toggles
     wendler.maxes.controller.showHideTrainingMaxes();
-
+    wendler.settings.lockPortrait(settingsRecord.get('lockPortrait'));
 
     if (!_.isUndefined(field.getName) && field.getName() === 'dateFormat') {
         wendler.logEntry.updateDateFormat();
