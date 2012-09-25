@@ -23,14 +23,19 @@ wendler.maxes.controller.editLiftsDoneButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };
 
-wendler.maxes.controller.showArrangeLifts = function(){
+wendler.maxes.controller.showArrangeLifts = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('arrange-lifts'));
+};
+
+wendler.maxes.controller.enableLiftChecked = function (checkbox, event) {
+    event.stopEvent();
+    var propertyName = checkbox.element.up('table').getAttribute('data-lift-property');
 };
 
 wendler.maxes.cards.editMaxesList = {
     id:'maxes-edit-lifts-panel',
     xtype:'panel',
-    layout:'fit',
+    layout:'vbox',
     items:[
         {
             xtype:'toolbar',
@@ -38,7 +43,7 @@ wendler.maxes.cards.editMaxesList = {
             title:"Edit Lifts",
             items:[
                 {
-                    id: 'arrange-lifts-button',
+                    id:'arrange-lifts-button',
                     xtype:'button',
                     text:'Arrange',
                     handler:wendler.maxes.controller.showArrangeLifts,
@@ -54,19 +59,41 @@ wendler.maxes.cards.editMaxesList = {
             ]
         },
         {
+            id:'edit-lifts-label',
+            xtype:'panel',
+            html:'Active?',
+            flex:1
+        },
+        {
             id:'maxes-edit-lifts-list',
             xtype:'list',
             selectedItemCls:'',
+            flex:6,
             store:wendler.stores.lifts.Lifts,
             itemCls:'lift-list-row',
-            itemTpl:'<table width="100%"><tbody><tr>' +
-                '<td width="60%"><span class="lift-name">{name}</span></td>' +
+            itemTpl:'<table data-lift-property="{propertyName}" width="100%"><tbody><tr>' +
+                '<td width="20%" class="enable-lift-checkbox"></td>' +
+                '<td width="40%"><span class="lift-name">{name}</span></td>' +
                 '<td width="40%" class="delete-button-holder hidden"></td>' +
                 '</tr></tbody></table>',
             onItemDisclosure:true,
             listeners:{
                 initialize:function () {
                     wendler.components.addSwipeToDelete(this, wendler.maxes.controller.editLift, wendler.maxes.controller.deleteLift, '.x-list-disclosure');
+                },
+                painted:function () {
+                    _.each(this.element.query('.enable-lift-checkbox'), function (domElement) {
+                        var liftProperty = Ext.get(domElement).up('table').getAttribute('data-lift-property');
+                        var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', liftProperty);
+                        Ext.field.Checkbox.create({
+                            renderTo:domElement,
+                            listeners:{
+                                check:wendler.maxes.controller.enableLiftChecked,
+                                uncheck:wendler.maxes.controller.enableLiftChecked
+                            },
+                            checked:lift.get('enabled')
+                        });
+                    });
                 }
             }
         }

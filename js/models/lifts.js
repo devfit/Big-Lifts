@@ -3,10 +3,8 @@ Ext.ns('wendler.stores.lifts', 'wendler.defaults');
 Ext.ns('wendler.stores.migrations', 'wendler.models.Lift', 'wendler.stores.recovery');
 
 wendler.models.Lift.uniquePropertyNameValidation = function (propertyName) {
-    var liftIsUnique = wendler.stores.lifts.Lifts.find('propertyName', propertyName, 0,
+    return wendler.stores.lifts.Lifts.find('propertyName', propertyName, 0,
         false, true, true) == -1;
-
-    return liftIsUnique;
 };
 
 wendler.stores.recovery.setupDefaultLifts = function () {
@@ -28,7 +26,8 @@ Ext.define('Lift', {
             {name:'propertyName', type:'string'},
             {name:'max', type:'float'},
             {name:'cycleIncrease', type:'float'},
-            {name:'order', type:'int', defaultValue:-1}
+            {name:'order', type:'int', defaultValue:-1},
+            {name:'enabled', type:'boolean', defaultValue:true}
         ],
         validations:[
             {field:'propertyName', type:'custom', message:'nonunique',
