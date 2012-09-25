@@ -152,13 +152,6 @@ wendler.liftSchedule.liftTemplate.showRestTimer = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'), {type:'slide', direction:'right'});
 };
 
-wendler.liftSchedule.liftTemplate.persistLiftCompletion = function () {
-    var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
-    liftCompletion.set('completed', true);
-    liftCompletion.save();
-    wendler.stores.lifts.LiftCompletion.sync();
-};
-
 wendler.views.liftSchedule.liftTemplate = {
     xtype:'panel',
     id:'lift-template',

@@ -43,8 +43,15 @@ wendler.liftSchedule.liftTracking.persistLog = function () {
     wendler.liftSchedule.liftTracking.logLift({liftName:liftName, reps:reps, notes:notes, week:week, weight:weight, cycle:cycle, units:units, expectedReps:expectedReps});
 };
 
+wendler.liftSchedule.liftTracking.persistLiftCompletion = function () {
+    var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(wendler.liftSchedule.currentLiftProperty, wendler.liftSchedule.currentWeek);
+    liftCompletion.set('completed', true);
+    liftCompletion.save();
+    wendler.stores.lifts.LiftCompletion.sync();
+};
+
 wendler.liftSchedule.liftTracking.logAndShowTracking = function () {
-    wendler.liftSchedule.liftTemplate.persistLiftCompletion();
+    wendler.liftSchedule.liftTracking.persistLiftCompletion();
     wendler.liftSchedule.liftTracking.persistLog();
 
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));

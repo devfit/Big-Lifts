@@ -15,3 +15,14 @@ Then /^The "(.*?)" edit lift row still has a checkbox$/ do |lift_name|
 
   row.find_elements(:class => 'x-input-checkbox').should_not be_empty
 end
+
+Then /^Week (\d+) of the lift selector is marked complete$/ do |week|
+  week_tab = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-tab').
+      select { |tab| tab.displayed? && tab.text().include?(week) }[0]
+
+  week_tab.attribute('class').should include 'completed'
+end
+
+Then /^The lift template title is "(\w+)"$/ do |lift_name|
+  @driver.find_element(:id => 'lift-template-toolbar').find_element(:class => 'x-title').text().should include lift_name
+end

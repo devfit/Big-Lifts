@@ -35,24 +35,30 @@ wendler.liftSchedule.liftSelector.setupListDoneIcons = function () {
 };
 
 wendler.liftSchedule.liftSelector.getStartingWeek = function () {
-    var weekCompleted = {1:true, 2:true, 3:true, 4:true};
+    var weeksCompleted = {};
     wendler.stores.lifts.LiftCompletion.each(function (record) {
-        weekCompleted[record.data.week] &= record.data.completed;
+        var week = record.data.week;
+        if (!_.has(weeksCompleted, week)) {
+            weeksCompleted[week] = true;
+        }
+
+        var enabled = wendler.stores.lifts.Lifts.findRecord('propertyName', record.get('liftPropertyName')).get('enabled');
+        if( enabled ){
+            weeksCompleted[week] &= record.data.completed;
+        }
     });
 
-    var startingWeek;
-    for (var i = 1; i <= 4; i++) {
-        if (!weekCompleted[i]) {
-            startingWeek = i;
-            break;
-        }
-    }
+    var lastNotCompletedWeek = _.find(_.keys(weeksCompleted), function (key) {
+        return !weeksCompleted[key];
+    });
 
-    return startingWeek;
+    lastNotCompletedWeek = _.isUndefined(lastNotCompletedWeek) ? _.last(_.keys(weeksCompleted)) : lastNotCompletedWeek;
+
+    return parseInt(lastNotCompletedWeek);
 };
 
 wendler.liftSchedule.liftSelector.viewLift = function (view, index) {
-    var record = wendler.stores.lifts.Lifts.getAt(index);
+    var record = wendler.stores.lifts.EnabledLifts.getAt(index);
 
     Ext.getCmp('lift-template-toolbar').setTitle(record.get('name'));
     wendler.liftSchedule.currentLiftProperty = record.get('propertyName');
@@ -93,7 +99,7 @@ wendler.liftSchedule.liftSelector.showLiftsCompletedScreen = function () {
 };
 
 wendler.liftSchedule.liftSelector.liftHasBeenCompleted = function (week, liftIndex) {
-    var liftPropertyName = wendler.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
+    var liftPropertyName = wendler.stores.lifts.EnabledLifts.getAt(liftIndex).get('propertyName');
     var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
     if (liftCompletion) {
         return liftCompletion.get('completed');
