@@ -28,13 +28,37 @@ wendler.maxes.controller.showArrangeLifts = function () {
 };
 
 wendler.maxes.controller.enableLiftChecked = function (checkbox, event) {
-    event.stopEvent();
     var propertyName = checkbox.element.up('table').getAttribute('data-lift-property');
     var checked = checkbox.isChecked();
     var record = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
     record.set('enabled', checked);
     record.save();
     wendler.stores.lifts.Lifts.sync();
+
+    wendler.maxes.controller.rerenderAllCheckboxes(Ext.getCmp('maxes-edit-lifts-list'));
+    event.stopEvent();
+
+};
+
+wendler.maxes.controller.renderCheckboxForLift = function (lift, domElement) {
+    Ext.field.Checkbox.create({
+        renderTo:domElement,
+        listeners:{
+            check:wendler.maxes.controller.enableLiftChecked,
+            uncheck:wendler.maxes.controller.enableLiftChecked
+        },
+        checked:lift.get('enabled')
+    });
+};
+
+wendler.maxes.controller.rerenderAllCheckboxes = function (parent) {
+    _.each(parent.element.query('.enable-lift-checkbox'), function (domElement) {
+        if (Ext.get(domElement).down('.x-field-checkbox') == null) {
+            var liftProperty = Ext.get(domElement).up('table').getAttribute('data-lift-property');
+            var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', liftProperty);
+            wendler.maxes.controller.renderCheckboxForLift(lift, domElement);
+        }
+    });
 };
 
 wendler.maxes.cards.editMaxesList = {
@@ -82,27 +106,12 @@ wendler.maxes.cards.editMaxesList = {
                 '<td width="40%" class="delete-button-holder hidden"></td>' +
                 '</tr></tbody></table>',
             onItemDisclosure:true,
-            _isPainted:false,
             listeners:{
                 initialize:function () {
                     wendler.components.addSwipeToDelete(this, wendler.maxes.controller.editLift, wendler.maxes.controller.deleteLift, '.x-list-disclosure');
                 },
                 painted:function () {
-                    if (!this._isPainted) {
-                        _.each(this.element.query('.enable-lift-checkbox'), function (domElement) {
-                            var liftProperty = Ext.get(domElement).up('table').getAttribute('data-lift-property');
-                            var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', liftProperty);
-                            Ext.field.Checkbox.create({
-                                renderTo:domElement,
-                                listeners:{
-                                    check:wendler.maxes.controller.enableLiftChecked,
-                                    uncheck:wendler.maxes.controller.enableLiftChecked
-                                },
-                                checked:lift.get('enabled')
-                            });
-                        });
-                    }
-                    this._isPainted = true;
+                    wendler.maxes.controller.rerenderAllCheckboxes(this);
                 }
             }
         }
