@@ -19,7 +19,7 @@ wendler.stores.recovery.setupDefaultLifts = function () {
 Ext.define('Lift', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'name', type:'string'},
@@ -95,6 +95,28 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
         load:function () {
             wendler.stores.recovery.setupDefaultLifts();
             wendler.stores.migrations.liftModelMigration();
+            wendler.stores.lifts.EnabledLifts.load();
+        },
+        beforesync:function () {
+            wendler.stores.lifts.EnabledLifts.fireEvent('beforesync');
+        }
+    },
+    sorters:[
+        {
+            property:'order',
+            direction:'ASC'
+        }
+    ]
+});
+
+wendler.stores.lifts.EnabledLifts = Ext.create('Ext.data.Store', {
+    model:'Lift',
+    listeners:{
+        load:function () {
+            this.filter({property:'enabled', value:true});
+        },
+        beforesync:function () {
+            this.filter({property:'enabled', value:true});
         }
     },
     sorters:[

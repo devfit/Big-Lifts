@@ -107,7 +107,7 @@ wendler.liftSchedule.liftSelector.refreshLiftSelectorLifts = function () {
     });
 };
 
-wendler.stores.lifts.Lifts.addListener('beforesync', function () {
+wendler.stores.lifts.EnabledLifts.addListener('beforesync', function () {
     if (wendler.main.started) {
         wendler.liftSchedule.liftSelector.refreshLiftSelectorLifts();
     }
@@ -173,7 +173,7 @@ wendler.views.liftSchedule.liftSelector = {
         {
             title:'1',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -183,7 +183,7 @@ wendler.views.liftSchedule.liftSelector = {
         {
             title:'2',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -193,7 +193,7 @@ wendler.views.liftSchedule.liftSelector = {
         {
             title:'3',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -203,7 +203,7 @@ wendler.views.liftSchedule.liftSelector = {
         {
             title:'4',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
