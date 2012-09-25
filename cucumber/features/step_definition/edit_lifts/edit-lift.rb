@@ -12,10 +12,10 @@ Then /^I see no error dialog$/ do
 end
 
 Then /^The sort ordering is sensible$/ do
-  liftsBroken = @driver.execute_script("return wendler.stores.migrations.liftOrdersAreBroken()")
-  liftsBroken.should == false
+  lifts_broken = @driver.execute_script("return wendler.stores.migrations.liftOrdersAreBroken()")
+  lifts_broken.should == be_false
 end
 
 Then /^I am on the track tab$/ do
-  @driver.find_element(:id => 'log').displayed?.should == true
+  @driver.find_element(:id => 'log').displayed?.should be_true
 end
