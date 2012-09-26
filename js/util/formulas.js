@@ -20,7 +20,7 @@ util.formulas.buildPlateListForWeight = function (targetWeight, barWeight, avail
     var usingCustomPlates = !_.isUndefined(availablePlatePairsCopy);
 
     if (!usingCustomPlates) {
-        availablePlatePairsCopy = {45:1, 35:1, 25:1, 15:1, 10:1, 5:1, 2.5:1};
+        availablePlatePairsCopy = {45:1, 35:1, 25:1, 10:1, 5:1, 2.5:1};
     }
 
     targetWeight -= barWeight;
