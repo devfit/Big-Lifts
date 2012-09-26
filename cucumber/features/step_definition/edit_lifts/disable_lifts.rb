@@ -26,3 +26,7 @@ end
 Then /^The lift template title is "(\w+)"$/ do |lift_name|
   @driver.find_element(:id => 'lift-template-toolbar').find_element(:class => 'x-title').text().should include lift_name
 end
+
+Then /^I am prompted with the cycle complete dialog$/ do
+  @driver.find_element(:id => 'cycle-complete').should be_displayed
+end

@@ -1,5 +1,6 @@
 "use strict";
 if (Ext.os.is.Linux || Ext.os.is.MacOS) {
+    Ext.ns('wendler.log.emailExport', 'wendler.restTimer');
     window.device = {
         name:"Chrome",
         uuid:'1234',

@@ -13,16 +13,11 @@
 src_files:
     - sencha-touch-2.0.0/sencha-touch-all-debug.js
     - js/lib/underscore-min.js
-    - js/lib/base52.js
     - js/debug.js
     - js/util/stores.js
     - js/util/formulas.js
     - js/util/filters.js
     - js/util/rounding.js
-    - js/lib/parse.js
-    - js/views/schedule/cards/lift-selector.js
-    - js/views/schedule/cards/rest-timer.js
-    - js/views/schedule/cards/assistance/assistance-chooser.js
     - js/models/stores.js
     - js/models/lifts.js
     - js/models/lift-completion.js
@@ -30,6 +25,10 @@ src_files:
     - js/models/plate_bar_configuration.js
     - js/models/assistance/assistance.js
     - js/models/assistance/triumvirate.js
+    - js/views/schedule/cards/lift-selector.js
+    - js/views/schedule/cards/tracking/lift-tracking.js
+    - js/views/schedule/cards/rest-timer.js
+    - js/views/schedule/cards/assistance/assistance-chooser.js
 
 # stylesheets
 #

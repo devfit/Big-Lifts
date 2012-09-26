@@ -7,7 +7,7 @@ wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen = function () {
 };
 
 wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lifts-completed'),
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'),
         {type:'slide', direction:'left'});
 };
 

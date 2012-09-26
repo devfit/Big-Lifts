@@ -1,5 +1,4 @@
-Ext.ns('wendler.views.liftSchedule');
-Ext.ns('wendler.liftSchedule.liftSelector');
+Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.liftSelector', 'wendler.main');
 
 wendler.liftSchedule.liftSelector.setupLiftSelector = function () {
     wendler.liftSchedule.liftSelector.setupListDoneIcons();
@@ -94,7 +93,7 @@ wendler.liftSchedule.liftSelector.showLiftScheduleSettings = function () {
 wendler.liftSchedule.lastActiveTab = null;
 wendler.liftSchedule.liftSelector.showLiftsCompletedScreen = function () {
     wendler.liftSchedule.lastActiveTab = Ext.getCmp('lift-schedule').getActiveItem();
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lifts-completed'),
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'),
         {type:'slide', direction:'down'});
 };
 

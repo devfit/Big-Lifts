@@ -1,4 +1,29 @@
 Feature: Disabling lifts
+  Scenario: Completing a cycle with lifts disabled
+    tuh do
+
+  Scenario: When a lift is disabled, completing enabled lifts triggers the cycle increase
+    When I navigate to the lift editor
+    And I click edit lifts
+    And I disable "Squat"
+    And I disable "Deadlift"
+    And I disable "Press"
+    And I tap the "Done" button
+    And I navigate to the lift schedule
+    When I view the bench lift schedule for week 1
+    When I mark the current lift completed
+    And I save the lift log
+    When I view the bench lift schedule for week 2
+    When I mark the current lift completed
+    And I save the lift log
+    When I view the bench lift schedule for week 3
+    When I mark the current lift completed
+    And I save the lift log
+    When I view the bench lift schedule for week 4
+    When I mark the current lift completed
+    And I save the lift log
+    Then I am prompted with the cycle complete dialog
+
   Scenario: When a lift is disabled, selecting a lift selects the displayed lift, and not the index of the disabled lift
     When I navigate to the lift editor
     And I click edit lifts
