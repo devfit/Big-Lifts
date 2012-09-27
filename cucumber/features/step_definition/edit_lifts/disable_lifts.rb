@@ -30,3 +30,16 @@ end
 Then /^I am prompted with the cycle complete dialog$/ do
   @driver.find_element(:id => 'cycle-complete').should be_displayed
 end
+
+When /^I tap the increase maxes help button$/ do
+  @driver.find_element(:id => 'increase-maxes-help-image').click
+  sleep @ANIMATION_DELAY
+end
+
+Then /^The help screen shows lifts "([^"]*?)"$/ do |lifts|
+  expected_lifts = lifts.split ','
+  actual_lift_rows = @driver.find_element(:id => 'increase-maxes-help').find_elements(:class => 'x-list-item')
+  actual_lifts = actual_lift_rows.collect { |row| row.find_element(:tag_name => 'td').text() }
+
+  actual_lifts.should == expected_lifts
+end

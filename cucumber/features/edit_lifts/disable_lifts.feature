@@ -2,7 +2,7 @@ Feature: Disabling lifts
   Scenario: Completing a cycle with lifts disabled
     tuh do
 
-  Scenario: When a lift is disabled, completing enabled lifts triggers the cycle increase
+  Scenario: When a lift is disabled, completing enabled lifts triggers the cycle increase, and only enabled lifts are shown
     When I navigate to the lift editor
     And I click edit lifts
     And I disable "Squat"
@@ -23,6 +23,8 @@ Feature: Disabling lifts
     When I mark the current lift completed
     And I save the lift log
     Then I am prompted with the cycle complete dialog
+    And I tap the increase maxes help button
+    Then The help screen shows lifts "Bench"
 
   Scenario: When a lift is disabled, selecting a lift selects the displayed lift, and not the index of the disabled lift
     When I navigate to the lift editor

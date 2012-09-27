@@ -50,6 +50,11 @@ wendler.liftSchedule.cycleComplete.setNextCycleDefault = function () {
     Ext.getCmp('cycle-complete').setValues(formValues);
 };
 
+wendler.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('increase-maxes-help'),
+        {type:'slide', direction:'right'});
+};
+
 wendler.views.liftSchedule.LiftsCompletedScreen = {
     id:'cycle-complete',
     xtype:'formpanel',
