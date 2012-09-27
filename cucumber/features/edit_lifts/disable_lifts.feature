@@ -25,6 +25,8 @@ Feature: Disabling lifts
     Then I am prompted with the cycle complete dialog
     And I tap the increase maxes help button
     Then The help screen shows lifts "Bench"
+    And I tap the "Back" button
+
 
   Scenario: When a lift is disabled, selecting a lift selects the displayed lift, and not the index of the disabled lift
     When I navigate to the lift editor

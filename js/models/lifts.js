@@ -99,6 +99,9 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
         },
         beforesync:function () {
             wendler.stores.lifts.EnabledLifts.fireEvent('beforesync');
+        },
+        write:function () {
+            wendler.stores.lifts.EnabledLifts.load();
         }
     },
     sorters:[

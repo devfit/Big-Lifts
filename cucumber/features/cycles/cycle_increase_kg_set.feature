@@ -14,7 +14,7 @@ Feature: Cycle increase is adjusted for kg
 
     When I navigate to the lift schedule
     And I click the increase cycle button
-    And I hit done on the lift completion screen
+    And I tap the "Done" button
     Then The max for Squat is set to 305
     Then The max for Deadlift is set to 305
     Then The max for Press is set to 102.5

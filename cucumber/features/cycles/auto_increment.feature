@@ -8,7 +8,7 @@ Feature: Auto-increment lift maxes
     When I set the press max to 100
     And I navigate to the lift schedule
     And I check off all lifts
-    And I hit done on the lift completion screen
+    And I tap the "Done" button
     Then squat max is set to 210
     Then press max is set to 105
 
@@ -20,5 +20,5 @@ Feature: Auto-increment lift maxes
     And I close the edit lift screen
     And I navigate to the lift schedule
     And I check off all lifts
-    And I hit done on the lift completion screen
+    And I tap the "Done" button
     Then squat max is set to 202.5

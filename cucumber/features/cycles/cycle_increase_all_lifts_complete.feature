@@ -6,7 +6,7 @@ Feature: Increasing the cycle
   Scenario: Check all lifts to increase the cycle
     When I navigate to the lift schedule
     When I check off all lifts
-    And I hit done on the lift completion screen
+    And I tap the "Done" button
     Then the cycle is increased
 
   Scenario: Week checkmarks are removed when a cycle is completed
@@ -28,7 +28,7 @@ Feature: Increasing the cycle
 
     When I navigate to the lift schedule
     And I click the increase cycle button
-    And I hit done on the lift completion screen
+    And I tap the "Done" button
 
     And I navigate to the lift schedule
     And I select week 2

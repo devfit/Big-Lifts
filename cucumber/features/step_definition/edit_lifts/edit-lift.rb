@@ -13,7 +13,7 @@ end
 
 Then /^The sort ordering is sensible$/ do
   lifts_broken = @driver.execute_script("return wendler.stores.migrations.liftOrdersAreBroken()")
-  lifts_broken.should == be_false
+  lifts_broken.should be_false
 end
 
 Then /^I am on the track tab$/ do

@@ -18,13 +18,13 @@ wendler.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen = function ()
     currentCycle.save();
     wendler.stores.CurrentCycle.sync();
 
-    wendler.liftSchedule.controller.unmarkAllLifts();
+    wendler.liftSchedule.cycleComplete.unmarkAllLifts();
 
     if (Ext.getCmp('increase-maxes-toggle').getValue() === 1) {
         wendler.liftSchedule.increaseMaxesByCycleIncrease();
     }
 
-    wendler.liftSchedule.controller.closeLiftCompletedScreen();
+    wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen();
 };
 
 wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen = function () {
