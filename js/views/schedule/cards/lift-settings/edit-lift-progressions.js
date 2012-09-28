@@ -76,7 +76,7 @@ wendler.settings.liftPercentages.createTab = function (week) {
                 listeners:{
                     initialize:function () {
                         wendler.components.addSwipeToDelete(this, wendler.settings.liftPercentages.showEditLiftPercentage,
-                            wendler.settings.liftPercentages.deleteLiftProgression, '.no-delete-button');
+                            wendler.settings.liftPercentages.deleteLiftProgression, Ext.emptyFn, '.no-delete-button');
                     }
                 }
             },

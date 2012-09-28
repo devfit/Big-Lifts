@@ -1,6 +1,10 @@
 #edit-lifts-label {
-  background-color: #F7F7F7;
+  color: white;
   padding-left: 5px;
+}
+
+#active-lifts-help-image {
+  padding-right: 5px;
 }
 
 #maxes-edit-lifts-panel {
@@ -14,5 +18,12 @@
 
   .lift-name {
     padding-left: 5px;
+  }
+
+  .enable-lift-checkbox {
+    padding-left: 4px;
+    .x-container {
+      border: solid 2px gray;
+    }
   }
 }

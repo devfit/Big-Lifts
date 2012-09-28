@@ -1,4 +1,4 @@
-Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller.editLiftsList');
+Ext.ns('wendler.maxes.cards', 'wendler.maxes.edit', 'wendler.maxes.controller.editLiftsList');
 
 wendler.maxes.controller.editLift = function (dataview, index, item, e) {
     var liftModel = wendler.stores.lifts.Lifts.getAt(index);
@@ -61,10 +61,20 @@ wendler.maxes.controller.rerenderAllCheckboxes = function (parent) {
     });
 };
 
+wendler.maxes.edit.togglePlaceHolder = function (dataview, index, target, record, e) {
+    var placeholder = Ext.get(Ext.get(target).findParent('.lift-list-row')).down('.placeholder');
+    if (placeholder.hasCls('hidden')) {
+        placeholder.removeCls('hidden');
+    }
+    else {
+        placeholder.addCls('hidden');
+    }
+};
+
 wendler.maxes.cards.editMaxesList = {
     id:'maxes-edit-lifts-panel',
     xtype:'panel',
-    layout:'vbox',
+    layout:'fit',
     items:[
         {
             xtype:'toolbar',
@@ -88,27 +98,46 @@ wendler.maxes.cards.editMaxesList = {
             ]
         },
         {
-            id:'edit-lifts-label',
-            xtype:'panel',
-            html:'Active?',
-            flex:1
+            xtype:'toolbar',
+            docked:'top',
+            ui:'light',
+            items:[
+                {
+                    id:'edit-lifts-label',
+                    xtype:'panel',
+                    html:'Active?'
+                },
+                {xtype:'spacer'},
+                {
+                    xtype:'panel',
+                    html:'<img id="active-lifts-help-image" src="images/question.png"/>',
+                    listeners:{
+                        painted:function () {
+                            Ext.get('active-lifts-help-image').addListener('tap', function () {
+                                Ext.Msg.alert("Inactive Lifts", "Inactive lifts will not appear in the lift list, and their maxes will not increase between cycles");
+                            });
+                        }
+                    }
+                }
+            ]
         },
         {
             id:'maxes-edit-lifts-list',
             xtype:'list',
             selectedItemCls:'',
-            flex:6,
             store:wendler.stores.lifts.Lifts,
             itemCls:'lift-list-row',
             itemTpl:'<table data-lift-property="{propertyName}" width="100%"><tbody><tr>' +
                 '<td width="20%" class="enable-lift-checkbox"></td>' +
                 '<td width="40%"><span class="lift-name">{name}</span></td>' +
+                '<td width="40%" class="placeholder"></td>' +
                 '<td width="40%" class="delete-button-holder hidden"></td>' +
                 '</tr></tbody></table>',
             onItemDisclosure:true,
             listeners:{
                 initialize:function () {
-                    wendler.components.addSwipeToDelete(this, wendler.maxes.controller.editLift, wendler.maxes.controller.deleteLift, '.x-list-disclosure');
+                    wendler.components.addSwipeToDelete(this, wendler.maxes.controller.editLift, wendler.maxes.controller.deleteLift,
+                        wendler.maxes.edit.togglePlaceHolder, '.x-list-disclosure');
                 },
                 painted:function () {
                     wendler.maxes.controller.rerenderAllCheckboxes(this);
