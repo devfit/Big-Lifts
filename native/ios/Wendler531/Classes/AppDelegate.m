@@ -29,7 +29,6 @@
 #import "MainViewController.h"
 
 #import <Cordova/CDVPlugin.h>
-#import <Cordova/CDVURLProtocol.h>
 
 
 @implementation AppDelegate
@@ -37,17 +36,15 @@
 @synthesize window, viewController;
 
 - (id) init
-{	
+{
 	/** If you need to do any extra app-specific initialization, you can do it here
 	 *  -jm
 	 **/
-    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage]; 
+    NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage];
     [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
-        
-    [CDVURLProtocol registerURLProtocol];
-    [UIApplication sharedApplication].idleTimerDisabled = YES;
     
-    return [super init];
+    self = [super init];
+    return self;
 }
 
 #pragma UIApplicationDelegate implementation
@@ -56,27 +53,26 @@
  * This is main kick off after the app inits, the views and Settings are setup here. (preferred - iOS4 and up)
  */
 - (BOOL) application:(UIApplication*)application didFinishLaunchingWithOptions:(NSDictionary*)launchOptions
-{    
+{
     NSURL* url = [launchOptions objectForKey:UIApplicationLaunchOptionsURLKey];
     NSString* invokeString = nil;
     
     if (url && [url isKindOfClass:[NSURL class]]) {
         invokeString = [url absoluteString];
 		NSLog(@"Wendler531 launchOptions = %@", url);
-    }    
+    }
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    self.window = [[[UIWindow alloc] initWithFrame:screenBounds] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:screenBounds];
     self.window.autoresizesSubviews = YES;
     
-    CGRect viewBounds = [[UIScreen mainScreen] applicationFrame];
-    
-    self.viewController = [[[MainViewController alloc] init] autorelease];
+    self.viewController = [[MainViewController alloc] init];
     self.viewController.useSplashScreen = YES;
     self.viewController.wwwFolderName = @"www";
     self.viewController.startPage = @"index.html";
     self.viewController.invokeString = invokeString;
-    self.viewController.view.frame = viewBounds;
+    
+    // NOTE: To control the view's frame size, override [self.viewController viewWillAppear:] in your view controller.
     
     // check whether the current orientation is supported: if it is, keep it, rather than forcing a rotation
     BOOL forceStartupRotation = YES;
@@ -88,23 +84,27 @@
     }
     
     if (UIDeviceOrientationIsValidInterfaceOrientation(curDevOrientation)) {
-        for (NSNumber *orient in self.viewController.supportedOrientations) {
-            if ([orient intValue] == curDevOrientation) {
-                forceStartupRotation = NO;
-                break;
-            }
+        if ([self.viewController supportsOrientation:curDevOrientation]) {
+            forceStartupRotation = NO;
         }
-    } 
+    }
     
     if (forceStartupRotation) {
-        NSLog(@"supportedOrientations: %@", self.viewController.supportedOrientations);
-        // The first item in the supportedOrientations array is the start orientation (guaranteed to be at least Portrait)
-        UIInterfaceOrientation newOrient = [[self.viewController.supportedOrientations objectAtIndex:0] intValue];
+        UIInterfaceOrientation newOrient;
+        if ([self.viewController supportsOrientation:UIInterfaceOrientationPortrait])
+            newOrient = UIInterfaceOrientationPortrait;
+        else if ([self.viewController supportsOrientation:UIInterfaceOrientationLandscapeLeft])
+            newOrient = UIInterfaceOrientationLandscapeLeft;
+        else if ([self.viewController supportsOrientation:UIInterfaceOrientationLandscapeRight])
+            newOrient = UIInterfaceOrientationLandscapeRight;
+        else
+            newOrient = UIInterfaceOrientationPortraitUpsideDown;
+        
         NSLog(@"AppDelegate forcing status bar to: %d from: %d", newOrient, curDevOrientation);
         [[UIApplication sharedApplication] setStatusBarOrientation:newOrient];
     }
     
-    [self.window addSubview:self.viewController.view];
+    self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
     return YES;
@@ -112,25 +112,27 @@
 
 // this happens while we are running ( in the background, or from within our own app )
 // only valid if Wendler531-Info.plist specifies a protocol to handle
-- (BOOL) application:(UIApplication*)application handleOpenURL:(NSURL*)url 
+- (BOOL) application:(UIApplication*)application handleOpenURL:(NSURL*)url
 {
-    if (!url) { 
-        return NO; 
+    if (!url) {
+        return NO;
     }
     
 	// calls into javascript global function 'handleOpenURL'
     NSString* jsString = [NSString stringWithFormat:@"handleOpenURL(\"%@\");", url];
     [self.viewController.webView stringByEvaluatingJavaScriptFromString:jsString];
     
-    // all plugins will get the notification, and their handlers will be called 
+    // all plugins will get the notification, and their handlers will be called
     [[NSNotificationCenter defaultCenter] postNotification:[NSNotification notificationWithName:CDVPluginHandleOpenURLNotification object:url]];
     
-    return YES;    
+    return YES;
 }
 
-- (void) dealloc
+- (NSUInteger) application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-	[super dealloc];
+    // IPhone doesn't support upside down by default, while the IPad does.  Override to allow all orientations always, and let the root view controller decide whats allowed (the supported orientations mask gets intersected).
+    NSUInteger supportedInterfaceOrientations = (1 << UIInterfaceOrientationPortrait) | (1 << UIInterfaceOrientationLandscapeLeft) | (1 << UIInterfaceOrientationLandscapeRight) | (1 << UIInterfaceOrientationPortraitUpsideDown);
+    return supportedInterfaceOrientations;
 }
 
 @end
