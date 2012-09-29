@@ -320,7 +320,7 @@ wendler.views.log.cards.LogList = {
                         initialize:function () {
                             wendler.logList.sortAndRefreshList();
                             wendler.components.addSwipeToDelete(this, wendler.logList.showLogEntry,
-                                wendler.logList.deleteLogEntry, '.date-week');
+                                wendler.logList.deleteLogEntry, Ext.emptyFn, '.date-week');
                         }
                     },
                     xtype:'list',
@@ -347,6 +347,7 @@ wendler.views.log.cards.LogList = {
                                 this,
                                 wendler.logList.showAssistanceLogEntry,
                                 wendler.logList.deleteAssistanceEntry,
+                                Ext.emptyFn,
                                 '.date-week');
                         }
                     },
@@ -363,6 +364,7 @@ wendler.views.log.cards.LogList = {
                         '</div></td>' +
                         '<td width="35%" class="date-week">' +
                         '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span>' +
+                        '</td><td width="40%" class="delete-button-holder hidden"></td>' +
                         '</td><td width="40%" class="delete-button-holder hidden"></td>' +
                         '</tr></tbody></table>'
                 }

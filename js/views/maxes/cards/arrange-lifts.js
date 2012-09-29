@@ -75,6 +75,7 @@ wendler.maxes.arrangeLifts.swapLiftOrder = function (lift1, lift2) {
 
     lift1.save();
     lift2.save();
+    wendler.stores.lifts.Lifts.sync();
 };
 
 wendler.maxes.cards.ArrangeLifts = {

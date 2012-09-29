@@ -3,10 +3,8 @@ Ext.ns('wendler.stores.lifts', 'wendler.defaults');
 Ext.ns('wendler.stores.migrations', 'wendler.models.Lift', 'wendler.stores.recovery');
 
 wendler.models.Lift.uniquePropertyNameValidation = function (propertyName) {
-    var liftIsUnique = wendler.stores.lifts.Lifts.find('propertyName', propertyName, 0,
+    return wendler.stores.lifts.Lifts.find('propertyName', propertyName, 0,
         false, true, true) == -1;
-
-    return liftIsUnique;
 };
 
 wendler.stores.recovery.setupDefaultLifts = function () {
@@ -21,14 +19,15 @@ wendler.stores.recovery.setupDefaultLifts = function () {
 Ext.define('Lift', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'name', type:'string'},
             {name:'propertyName', type:'string'},
             {name:'max', type:'float'},
             {name:'cycleIncrease', type:'float'},
-            {name:'order', type:'int', defaultValue:-1}
+            {name:'order', type:'int', defaultValue:-1},
+            {name:'enabled', type:'boolean', defaultValue:true}
         ],
         validations:[
             {field:'propertyName', type:'custom', message:'nonunique',
@@ -96,6 +95,31 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
         load:function () {
             wendler.stores.recovery.setupDefaultLifts();
             wendler.stores.migrations.liftModelMigration();
+            wendler.stores.lifts.EnabledLifts.load();
+        },
+        beforesync:function () {
+            wendler.stores.lifts.EnabledLifts.fireEvent('beforesync');
+        },
+        write:function () {
+            wendler.stores.lifts.EnabledLifts.load();
+        }
+    },
+    sorters:[
+        {
+            property:'order',
+            direction:'ASC'
+        }
+    ]
+});
+
+wendler.stores.lifts.EnabledLifts = Ext.create('Ext.data.Store', {
+    model:'Lift',
+    listeners:{
+        load:function () {
+            this.filter({property:'enabled', value:true});
+        },
+        beforesync:function () {
+            this.filter({property:'enabled', value:true});
         }
     },
     sorters:[

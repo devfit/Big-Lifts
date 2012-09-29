@@ -1,5 +1,4 @@
-Ext.ns('wendler.views.liftSchedule');
-Ext.ns('wendler.liftSchedule.liftSelector');
+Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.liftSelector', 'wendler.main');
 
 wendler.liftSchedule.liftSelector.setupLiftSelector = function () {
     wendler.liftSchedule.liftSelector.setupListDoneIcons();
@@ -35,24 +34,30 @@ wendler.liftSchedule.liftSelector.setupListDoneIcons = function () {
 };
 
 wendler.liftSchedule.liftSelector.getStartingWeek = function () {
-    var weekCompleted = {1:true, 2:true, 3:true, 4:true};
+    var weeksCompleted = {};
     wendler.stores.lifts.LiftCompletion.each(function (record) {
-        weekCompleted[record.data.week] &= record.data.completed;
+        var week = record.data.week;
+        if (!_.has(weeksCompleted, week)) {
+            weeksCompleted[week] = true;
+        }
+
+        var enabled = wendler.stores.lifts.Lifts.findRecord('propertyName', record.get('liftPropertyName')).get('enabled');
+        if( enabled ){
+            weeksCompleted[week] &= record.data.completed;
+        }
     });
 
-    var startingWeek;
-    for (var i = 1; i <= 4; i++) {
-        if (!weekCompleted[i]) {
-            startingWeek = i;
-            break;
-        }
-    }
+    var lastNotCompletedWeek = _.find(_.keys(weeksCompleted), function (key) {
+        return !weeksCompleted[key];
+    });
 
-    return startingWeek;
+    lastNotCompletedWeek = _.isUndefined(lastNotCompletedWeek) ? _.last(_.keys(weeksCompleted)) : lastNotCompletedWeek;
+
+    return parseInt(lastNotCompletedWeek);
 };
 
 wendler.liftSchedule.liftSelector.viewLift = function (view, index) {
-    var record = wendler.stores.lifts.Lifts.getAt(index);
+    var record = wendler.stores.lifts.EnabledLifts.getAt(index);
 
     Ext.getCmp('lift-template-toolbar').setTitle(record.get('name'));
     wendler.liftSchedule.currentLiftProperty = record.get('propertyName');
@@ -88,12 +93,12 @@ wendler.liftSchedule.liftSelector.showLiftScheduleSettings = function () {
 wendler.liftSchedule.lastActiveTab = null;
 wendler.liftSchedule.liftSelector.showLiftsCompletedScreen = function () {
     wendler.liftSchedule.lastActiveTab = Ext.getCmp('lift-schedule').getActiveItem();
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lifts-completed'),
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'),
         {type:'slide', direction:'down'});
 };
 
 wendler.liftSchedule.liftSelector.liftHasBeenCompleted = function (week, liftIndex) {
-    var liftPropertyName = wendler.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
+    var liftPropertyName = wendler.stores.lifts.EnabledLifts.getAt(liftIndex).get('propertyName');
     var liftCompletion = wendler.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
     if (liftCompletion) {
         return liftCompletion.get('completed');
@@ -107,7 +112,7 @@ wendler.liftSchedule.liftSelector.refreshLiftSelectorLifts = function () {
     });
 };
 
-wendler.stores.lifts.Lifts.addListener('beforesync', function () {
+wendler.stores.lifts.EnabledLifts.addListener('beforesync', function () {
     if (wendler.main.started) {
         wendler.liftSchedule.liftSelector.refreshLiftSelectorLifts();
     }
@@ -173,7 +178,7 @@ wendler.views.liftSchedule.liftSelector = {
         {
             title:'1',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -183,7 +188,7 @@ wendler.views.liftSchedule.liftSelector = {
         {
             title:'2',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -193,7 +198,7 @@ wendler.views.liftSchedule.liftSelector = {
         {
             title:'3',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -203,7 +208,7 @@ wendler.views.liftSchedule.liftSelector = {
         {
             title:'4',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{

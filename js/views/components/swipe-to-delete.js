@@ -1,11 +1,12 @@
 Ext.ns('wendler.components.swipeToDelete');
 
-wendler.components.addSwipeToDelete = function (list, tapAction, deleteAction, selectorInListToHideWhileDeleteIsShown) {
+wendler.components.addSwipeToDelete = function (list, tapAction, deleteAction, swipeAction, selectorInListToHideWhileDeleteIsShown) {
     list.addCls('list-swipe-to-delete');
     list.addListener('itemtap', function (dataview, index, target, record, e) {
         wendler.components.swipeToDelete.itemTapWrapper(dataview, index, target, e, tapAction, deleteAction, selectorInListToHideWhileDeleteIsShown);
     });
     list.addListener('itemswipe', function (dataview, index, target, record, e) {
+        swipeAction(dataview, index, target, record, e);
         wendler.components.swipeToDelete.itemSwipeWrapper(target, e, selectorInListToHideWhileDeleteIsShown);
     })
 };

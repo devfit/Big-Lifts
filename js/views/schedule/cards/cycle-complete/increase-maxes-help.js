@@ -1,13 +1,8 @@
 "use strict";
-Ext.ns('wendler.liftSchedule.controller', 'wendler.views.liftSchedule', 'wendler.liftSchedule.increaseMaxes');
+Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.increaseMaxes');
 
-wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('increase-maxes-help'),
-        {type:'slide', direction:'right'});
-};
-
-wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lifts-completed'),
+wendler.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'),
         {type:'slide', direction:'left'});
 };
 
@@ -35,7 +30,7 @@ wendler.views.liftSchedule.IncreaseMaxesHelp = {
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen);
+            wendler.navigation.setBackFunction(wendler.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen);
         },
         initialize:function () {
             wendler.liftSchedule.increaseMaxes.bindInputElements();
@@ -51,14 +46,14 @@ wendler.views.liftSchedule.IncreaseMaxesHelp = {
                     xtype:'button',
                     text:'Back',
                     ui:'back',
-                    handler:wendler.liftSchedule.controller.closeIncreaseMaxesHelpScreen
+                    handler:wendler.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen
                 }
             ]
         },
         {
             id:'increase-maxes-display-list',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:wendler.stores.lifts.EnabledLifts,
             itemTpl:'<table style="width:100%"><tbody><tr>' +
                 '<td style="width:33%">{name}</td>' +
                 '<td style="width:33%"><input style="color:green; width:50px" data-lift="{propertyName}" type="number" value="{cycleIncrease}"/></td>' +

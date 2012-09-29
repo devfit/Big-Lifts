@@ -1,7 +1,7 @@
 "use strict";
-Ext.ns('wendler.liftSchedule.controller', 'wendler.views.liftSchedule');
+Ext.ns('wendler.liftSchedule.cycleComplete', 'wendler.views.liftSchedule');
 
-wendler.liftSchedule.controller.unmarkAllLifts = function () {
+wendler.liftSchedule.cycleComplete.unmarkAllLifts = function () {
     wendler.stores.lifts.LiftCompletion.each(function (r) {
         r.set('completed', false);
         r.save();
@@ -10,24 +10,24 @@ wendler.liftSchedule.controller.unmarkAllLifts = function () {
     wendler.liftSchedule.liftCompletionChange();
 };
 
-wendler.liftSchedule.controller.saveAndCloseLiftCompletedScreen = function () {
+wendler.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen = function () {
     var currentCycle = wendler.stores.CurrentCycle.first();
 
-    var newCycle = Ext.getCmp('lifts-completed').getValues()['new-cycle'];
+    var newCycle = Ext.getCmp('cycle-complete').getValues()['new-cycle'];
     currentCycle.set('cycle', newCycle);
     currentCycle.save();
     wendler.stores.CurrentCycle.sync();
 
-    wendler.liftSchedule.controller.unmarkAllLifts();
+    wendler.liftSchedule.cycleComplete.unmarkAllLifts();
 
     if (Ext.getCmp('increase-maxes-toggle').getValue() === 1) {
         wendler.liftSchedule.increaseMaxesByCycleIncrease();
     }
 
-    wendler.liftSchedule.controller.closeLiftCompletedScreen();
+    wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen();
 };
 
-wendler.liftSchedule.controller.closeLiftCompletedScreen = function () {
+wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen = function () {
     Ext.getCmp('lift-schedule').setActiveItem(wendler.liftSchedule.lastActiveTab,
         {type:'slide', direction:'up'});
 };
@@ -43,22 +43,27 @@ wendler.liftSchedule.increaseMaxesByCycleIncrease = function () {
     wendler.stores.lifts.Lifts.sync();
 };
 
-wendler.liftSchedule.controller.setNextCycleDefault = function () {
-    var formValues = Ext.getCmp('lifts-completed').getValues();
+wendler.liftSchedule.cycleComplete.setNextCycleDefault = function () {
+    var formValues = Ext.getCmp('cycle-complete').getValues();
     var currentCycle = wendler.stores.CurrentCycle.first();
     formValues['new-cycle'] = currentCycle.data.cycle + 1;
-    Ext.getCmp('lifts-completed').setValues(formValues);
+    Ext.getCmp('cycle-complete').setValues(formValues);
+};
+
+wendler.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('increase-maxes-help'),
+        {type:'slide', direction:'right'});
 };
 
 wendler.views.liftSchedule.LiftsCompletedScreen = {
-    id:'lifts-completed',
+    id:'cycle-complete',
     xtype:'formpanel',
     listeners:{
         show:function () {
             Ext.get('increase-maxes-help-image').addListener('tap',
-                wendler.liftSchedule.controller.showIncreaseMaxesHelpScreen);
-            wendler.liftSchedule.controller.setNextCycleDefault();
-            wendler.navigation.setBackFunction(wendler.liftSchedule.controller.closeLiftCompletedScreen);
+                wendler.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen);
+            wendler.liftSchedule.cycleComplete.setNextCycleDefault();
+            wendler.navigation.setBackFunction(wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen);
         }
     },
     items:[
@@ -72,7 +77,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     xtype:'button',
                     text:'Cancel',
                     ui:'back',
-                    handler:wendler.liftSchedule.controller.closeLiftCompletedScreen
+                    handler:wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen
                 }
             ]
         },
@@ -99,7 +104,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     id:'lifts-complete-done-button',
                     xtype:'button',
                     text:'Done',
-                    handler:wendler.liftSchedule.controller.saveAndCloseLiftCompletedScreen
+                    handler:wendler.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen
                 }
             ]
         }

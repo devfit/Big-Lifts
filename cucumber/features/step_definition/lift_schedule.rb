@@ -37,6 +37,12 @@ Then /^The lift schedule shows "([^"]+)"$/ do |expected_sets|
   get_actual_lift_sets().should == expected_sets.split(',')
 end
 
+Then /^The lift selector shows "([^"]+)"$/ do |expected_lifts|
+  lift_rows = @driver.find_element(:id => "lift-selector").find_elements(:class => 'x-list-item').select { |list_item| list_item.displayed? }
+  lift_text = lift_rows.collect { |row| row.text() }
+  lift_text.should == expected_lifts.split(',')
+end
+
 def get_actual_lift_sets()
   lift_template = @driver.find_element(:id => 'lift-template')
   lift_template.find_elements(:class => 'lift-row').
