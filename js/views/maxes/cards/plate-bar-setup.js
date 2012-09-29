@@ -59,6 +59,28 @@ wendler.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
     });
 };
 
+wendler.maxes.barSetup.platesAreDefault = function (comparisonPlates) {
+    var actualPlateWeights = [];
+    wendler.stores.Plates.each(function (p) {
+        actualPlateWeights.push({weight:p.get('weight'), count:p.get('count')});
+    });
+
+    return _.isEqual(actualPlateWeights, comparisonPlates);
+};
+
+wendler.maxes.barSetup.adjustPlatesForUnits = function (units) {
+    if (units == 'kg' && wendler.maxes.barSetup.platesAreDefault(wendler.stores.defaults.defaultPlatesLbs)) {
+        wendler.stores.Plates.removeAll();
+        wendler.stores.Plates.add(wendler.stores.defaults.defaultPlatesKg);
+    }
+    else if (units == 'lbs' && wendler.maxes.barSetup.platesAreDefault(wendler.stores.defaults.defaultPlatesKg)) {
+        wendler.stores.Plates.removeAll();
+        wendler.stores.Plates.add(wendler.stores.defaults.defaultPlatesLbs);
+    }
+
+    wendler.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
+};
+
 wendler.maxes.barSetup.BarSetup = {
     xtype:'panel',
     id:'bar-plate-setup-panel',

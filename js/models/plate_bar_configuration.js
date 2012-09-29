@@ -59,13 +59,22 @@ Ext.define('Plates', {
     }
 });
 
-wendler.stores.defaults.defaultPlates = [
+wendler.stores.defaults.defaultPlatesLbs = [
     {weight:45, count:6},
     {weight:35, count:6},
     {weight:25, count:6},
     {weight:10, count:6},
     {weight:5, count:6},
     {weight:2.5, count:6}
+];
+
+wendler.stores.defaults.defaultPlatesKg = [
+    {weight:25, count:6},
+    {weight:20, count:6},
+    {weight:10, count:6},
+    {weight:5, count:6},
+    {weight:2.5, count:6},
+    {weight:1.25, count:6}
 ];
 
 wendler.stores.plates.migrateWeightInLbsToWeightAndUnits = function (store) {
@@ -85,7 +94,7 @@ wendler.stores.Plates = Ext.create('Ext.data.Store', {
     listeners:{
         load:function (store) {
             if (store.getCount() === 0) {
-                store.add(wendler.stores.defaults.defaultPlates);
+                store.add(wendler.stores.defaults.defaultPlatesLbs);
                 store.sync();
             }
             else {

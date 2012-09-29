@@ -1,5 +1,4 @@
 describe("Plate Bar Configuration Model", function () {
-
     it("should migrate weightInLbs to weight and units", function () {
         var store = Ext.create('Ext.data.Store', {
             model:'Plates'

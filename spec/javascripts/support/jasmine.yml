@@ -28,6 +28,7 @@ src_files:
     - js/views/schedule/cards/lift-selector.js
     - js/views/schedule/cards/tracking/lift-tracking.js
     - js/views/schedule/cards/rest-timer.js
+    - js/views/maxes/cards/plate-bar-setup.js
     - js/views/schedule/cards/assistance/assistance-chooser.js
 
 # stylesheets
