@@ -1,4 +1,9 @@
 describe("Lift Completion Model and Store", function () {
+    beforeEach(function(){
+        wendler.stores.lifts.LiftCompletion.removeAll();
+        wendler.stores.lifts.Lifts.removeAll();
+    });
+
     it("should remove lift completions that no longer have associated lifts", function () {
         wendler.stores.lifts.LiftCompletion.add({liftPropertyName:'squat'});
         wendler.stores.lifts.LiftCompletion.add({liftPropertyName:'squat2'});

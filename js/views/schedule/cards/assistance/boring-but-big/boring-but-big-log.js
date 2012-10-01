@@ -16,7 +16,7 @@ wendler.liftSchedule.assistance.boringButBig.showNotesEditor = function () {
 
 wendler.liftSchedule.assistance.boringButBig.getBbbLiftWeight = function () {
     var bbbPercentage = parseInt(Ext.getCmp('boring-but-big').element.query('[name=bbbPercentage]')[0].value);
-    return wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax, bbbPercentage);
+    return wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax), bbbPercentage);
 };
 
 wendler.liftSchedule.assistance.boringButBig.setupLogData = function () {

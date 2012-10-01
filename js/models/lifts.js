@@ -115,9 +115,6 @@ wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
 wendler.stores.lifts.EnabledLifts = Ext.create('Ext.data.Store', {
     model:'Lift',
     listeners:{
-        load:function () {
-            this.filter({property:'enabled', value:true});
-        },
         beforesync:function () {
             this.filter({property:'enabled', value:true});
         }

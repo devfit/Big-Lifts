@@ -84,9 +84,16 @@ When /^I check the (\w+) custom set checkbox$/ do |custom_set_field|
   @driver.find_element(:id => 'edit-progression').find_element(:name => custom_set_field).find_element(:xpath => './..').click
 end
 
-Then /^Set (\d+) is marked as (\w+)/ do |set_number, marked_as_class|
+Then /^Set (\d+) is ([\w\s]*?)marked as (\w+)/ do |set_number, not_modifier, marked_as_class|
   row = @driver.find_elements(:class => 'lift-row').select { |row| row.displayed? }[set_number.to_i - 1]
-  row.find_element(:tag_name => 'p').attribute('class').should include(marked_as_class)
+
+  row_class = row.find_element(:tag_name => 'p').attribute('class')
+
+  if not_modifier == "not "
+    row_class.should_not include(marked_as_class)
+  else
+    row_class.should include(marked_as_class)
+  end
 end
 
 When /^I tap back$/ do

@@ -20,6 +20,7 @@ src_files:
     - js/util/rounding.js
     - js/models/stores.js
     - js/models/lifts.js
+    - js/models/templates/meet_goal.js
     - js/models/lift-completion.js
     - js/models/lift-progression.js
     - js/models/plate_bar_configuration.js

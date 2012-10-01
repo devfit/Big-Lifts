@@ -29,7 +29,7 @@ wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore = function
     var store = wendler.liftSchedule.assistance.boringButBig.liftStore;
     store.removeAll();
 
-    var liftWeight = wendler.liftSchedule.liftTemplate.formatLiftWeight(wendler.liftSchedule.currentShowingMax, bbbPercentage);
+    var liftWeight = wendler.weight.format(wendler.weight.lowerMaxToTrainingMaxwendler(wendler.liftSchedule.currentShowingMax), bbbPercentage);
 
     for (var i = 0; i < 5; i++) {
         store.add({
@@ -127,8 +127,11 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                 '<span class="percentage">{percentage}%</span></p>' +
                 (wendler.toggles.BarLoading ?
                     '<p class="bar-loader-breakdown">' +
-                        '{[values.set > 1 ? "" : wendler.liftSchedule.liftTemplate.getPlateList(wendler.liftSchedule.liftTemplate.formatLiftWeight(' +
-                        'wendler.liftSchedule.currentShowingMax,values.percentage))]}' +
+                        '{[values.set > 1 ? "" : ' +
+                        'wendler.liftSchedule.liftTemplate.getPlateList(' +
+                        'wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax),values.percentage))' +
+                        ')' +
+                        ']}' +
                         '</p>' :
                     '')
         }

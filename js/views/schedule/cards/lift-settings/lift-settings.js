@@ -17,87 +17,6 @@ wendler.liftSettings.carouselForward = function () {
     liftSettings.setActiveItem(liftSettings.getActiveIndex() + 1);
 };
 
-wendler.liftProgressions.options = {
-    "fresher":[
-        Ext.create('LiftProgression', {week:1, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:4, reps:5, percentage:65, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:1, set:5, reps:5, percentage:75, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:1, set:6, reps:5, percentage:85, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:4, reps:3, percentage:70, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:5, reps:3, percentage:80, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:6, reps:3, percentage:90, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:4, reps:5, percentage:75, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:5, reps:3, percentage:85, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:6, reps:1, percentage:95, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:2, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:3, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:4, reps:5, percentage:40, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:5, reps:5, percentage:50, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:6, reps:5, percentage:60, amrap:false, warmup:false})
-    ],
-    "heavier":[
-        Ext.create('LiftProgression', {week:1, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:4, reps:5, percentage:75, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:1, set:5, reps:5, percentage:80, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:1, set:6, reps:5, percentage:85, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:4, reps:3, percentage:80, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:5, reps:3, percentage:85, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:6, reps:3, percentage:90, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:4, reps:5, percentage:75, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:5, reps:3, percentage:85, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:6, reps:1, percentage:95, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:2, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:3, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:4, reps:5, percentage:40, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:5, reps:5, percentage:50, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:6, reps:5, percentage:60, amrap:false, warmup:false})
-    ],
-    "powerlifting":[
-        Ext.create('LiftProgression', {week:1, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:1, set:4, reps:3, percentage:70, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:1, set:5, reps:3, percentage:80, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:1, set:6, reps:3, percentage:90, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:2, set:4, reps:5, percentage:65, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:5, reps:5, percentage:75, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:2, set:6, reps:5, percentage:85, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:3, reps:3, percentage:60, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:3, set:4, reps:5, percentage:75, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:5, reps:3, percentage:85, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:3, set:6, reps:1, percentage:95, amrap:true, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:2, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:3, reps:5, percentage:40, amrap:false, warmup:true}),
-        Ext.create('LiftProgression', {week:4, set:4, reps:5, percentage:40, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:5, reps:5, percentage:50, amrap:false, warmup:false}),
-        Ext.create('LiftProgression', {week:4, set:6, reps:5, percentage:60, amrap:false, warmup:false})
-    ]
-};
-
 wendler.liftSettings.setupLiftScheme = function (scheme) {
     //TODO: Figure out weird saving behavior. On the very first load, and only on mobile safari, if the records
     //being saved are the *same* as those that exist, on page reload, the count of the store will be 0.
@@ -108,7 +27,10 @@ wendler.liftSettings.setupLiftScheme = function (scheme) {
     wendler.stores.lifts.LiftProgression.add(prebuiltVariation);
     wendler.stores.lifts.LiftProgression.sync();
 
-    Ext.Msg.alert('Lifts Updated', 'The lift scheme has been updated', Ext.emptyFn);
+    var customMessages = {'powerlifting':'Meet goals have been defaulted to your 1RM estimates. You can change meet goals on the lifts tab.'};
+    var message = _.has(customMessages, scheme) ? customMessages[scheme] : 'The lift scheme has been updated';
+
+    Ext.Msg.alert('Lifts Updated', message, Ext.emptyFn);
 };
 
 wendler.views.liftSchedule.LiftSettings = {
@@ -237,13 +159,13 @@ wendler.views.liftSchedule.LiftSettings = {
                     ]
                 },
                 {
-                    html:'<div class="example-percentages">' +
+                    html:'<div class="example-percentages"><span style="font-weight:bold">Pre-Meet (raw)</span>' +
                         '<table>' +
                         '<thead><tr><th>Week</th><th>Scheme</th></tr></thead>' +
                         '<tbody class="example-percentages-table">' +
-                        '<tr><td>1</td><td>3x 70, 3x 80, 3x 90<p>2/3 singles</p></td></tr>' +
+                        '<tr><td>1</td><td>3x 70, 3x 80, 3x 90<p>1x 85 goal, 1x92.5 goal</p></td></tr>' +
                         '<tr><td>2</td><td>5x 65, 5x 75, 5x 85</td></tr>' +
-                        '<tr><td>3</td><td>5x 75, 3x 85, 1x 95<p>1/2 singles</p></td></tr>' +
+                        '<tr><td>3</td><td>5x 75, 3x 85, 1x 95<p>1x 85 goal, 1x95 goal</p></td></tr>' +
                         '<tr><td>4</td><td>5x 40, 5x 50, 5x 60</td></tr></tbody>' +
                         '</table>' +
                         '</div>',
