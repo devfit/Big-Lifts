@@ -12,7 +12,7 @@ Ext.define('MeetGoal', {
         ],
         proxy:{
             type:'localstorage',
-            id:'lift-proxy'
+            id:'meet-goal-proxy'
         }
     }
 });
