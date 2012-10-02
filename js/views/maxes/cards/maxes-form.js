@@ -81,7 +81,6 @@ wendler.stores.lifts.Lifts.addListener('beforesync', function () {
     }
 });
 
-
 wendler.maxes.controller.editLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-panel'));
 };
@@ -119,6 +118,9 @@ wendler.maxes.showHideMeetGoals = function () {
         var template = wendler.stores.Template.first();
         if (template.get('hasMeetGoals')) {
             Ext.getCmp('meet-goals').show();
+        }
+        else {
+            Ext.getCmp('meet-goals').hide();
         }
     }
 };

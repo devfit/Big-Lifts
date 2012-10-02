@@ -5,5 +5,5 @@ When /^I set the (\w+) meet goal to (\d+)$/ do |lift, weight|
 end
 
 Then /^Meet goals are not visible$/ do
-  @driver.find_element(:id => 'meet-goals').should be_displayed
+  @driver.find_element(:id => 'meet-goals').should_not be_displayed
 end
