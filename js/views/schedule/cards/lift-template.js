@@ -18,9 +18,12 @@ wendler.liftSchedule.liftTemplate.showLiftTracking = function () {
 
 
 wendler.liftSchedule.liftTemplate.formatLiftWeight = function (values) {
-    var max = wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax);
+    var max = null;
     if (values.goalLift) {
-        max = wendler.liftSchedule.currentShowingMax;
+        max = wendler.stores.lifts.MeetGoals.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).get('weight');
+    }
+    else {
+        max = wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax);
     }
     return wendler.weight.format(max, values.percentage);
 };
@@ -54,28 +57,37 @@ wendler.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
 };
 
 wendler.liftSchedule.liftTemplate.updateLiftValues = function () {
-    var showWarmupSets = wendler.stores.Settings.first().data['showWarmupSets'];
+    if (!wendler.liftSchedule.currentLiftProperty) {
+        return;
+    }
 
     var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
-    if (liftRecord !== null) {
+    if (liftRecord === null) {
+        if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
+            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+        }
+        return;
+    }
+
+    var settings = wendler.stores.Settings.first();
+    if (settings) {
+        var showWarmupSets = settings.get('showWarmupSets');
         wendler.liftSchedule.currentShowingMax = liftRecord.data.max;
         wendler.stores.lifts.LiftProgression.clearFilter();
         wendler.stores.lifts.LiftProgression.filter("week", wendler.liftSchedule.currentWeek);
 
         if (!showWarmupSets) {
             wendler.stores.lifts.LiftProgression.filterBy(function (record) {
-                return record.data.set > 3 && record.data.week == wendler.liftSchedule.currentWeek;
+                return !record.get('warmup') && record.data.week == wendler.liftSchedule.currentWeek;
             });
         }
 
         wendler.liftSchedule.liftTemplate.setupBestOneRepMax();
     }
-    else {
-        if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
-            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
-        }
-    }
 };
+
+wendler.stores.lifts.Lifts.addListener('beforesync', wendler.liftSchedule.liftTemplate.updateLiftValues);
+wendler.stores.lifts.MeetGoals.addListener('beforesync', wendler.liftSchedule.liftTemplate.updateLiftValues);
 
 wendler.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
     if (wendler.liftSchedule.currentWeek === 4) {

@@ -27,6 +27,14 @@ wendler.liftSettings.setupLiftScheme = function (scheme) {
     wendler.stores.lifts.LiftProgression.add(prebuiltVariation);
     wendler.stores.lifts.LiftProgression.sync();
 
+    var template = wendler.stores.Template.first();
+    template.set('name', scheme);
+    template.set('hasMeetGoals', scheme === "powerlifting");
+    wendler.stores.Template.sync();
+
+    wendler.stores.lifts.MeetGoals.removeAll();
+    wendler.stores.lifts.syncMeetGoalsToLifts();
+
     var customMessages = {'powerlifting':'Meet goals have been defaulted to your 1RM estimates. You can change meet goals on the lifts tab.'};
     var message = _.has(customMessages, scheme) ? customMessages[scheme] : 'The lift scheme has been updated';
 

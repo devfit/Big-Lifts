@@ -5,7 +5,6 @@ wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
     lift.set('max', newValue);
     lift.save();
     wendler.stores.lifts.Lifts.sync();
-    wendler.liftSchedule.liftTemplate.updateLiftValues();
 };
 
 wendler.maxes.controller.buildMaxesFromStore = function () {
@@ -16,8 +15,17 @@ wendler.maxes.controller.buildMaxesFromStore = function () {
 wendler.maxes.controller.createMaxesInput = function (record) {
     var liftName = record.data.name;
     var liftProperty = record.data.propertyName;
+
     Ext.getCmp('maxes-form-items').add({
         id:'maxes-' + liftProperty,
+        xtype:'numberfield',
+        name:liftProperty,
+        label:liftName,
+        value:record.data.max
+    });
+
+    Ext.getCmp('meet-goals').add({
+        id:'meet-goal-' + liftProperty,
         xtype:'numberfield',
         name:liftProperty,
         label:liftName,
@@ -99,6 +107,24 @@ wendler.maxes.controller.barPlateButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('bar-plate-setup-panel'), {type:'slide', direction:'left'});
 };
 
+wendler.maxes.meetGoalsChanged = function (el, newValue) {
+    var meetGoal = wendler.stores.lifts.MeetGoals.findRecord('propertyName', el.getName());
+    meetGoal.set('weight', newValue);
+    meetGoal.save();
+    wendler.stores.lifts.MeetGoals.sync();
+};
+
+wendler.maxes.showHideMeetGoals = function () {
+    if (Ext.getCmp('meet-goals')) {
+        var template = wendler.stores.Template.first();
+        if (template.get('hasMeetGoals')) {
+            Ext.getCmp('meet-goals').show();
+        }
+    }
+};
+
+wendler.stores.Template.addListener('beforesync', wendler.maxes.showHideMeetGoals);
+
 wendler.maxes.cards.maxesFormEditable = {
     xtype:'panel',
     flex:3,
@@ -108,10 +134,25 @@ wendler.maxes.cards.maxesFormEditable = {
             id:'maxes-form-items',
             xtype:'fieldset',
             cls:'fieldset-title-no-margin',
+            style:'margin-bottom:0.5em',
             title:'Maxes',
             defaults:{
                 listeners:{
                     change:wendler.maxes.controller.liftValuesChanged
+                },
+                labelWidth:'45%',
+                useClearIcon:true
+            }
+        },
+        {
+            id:'meet-goals',
+            hidden:true,
+            xtype:'fieldset',
+            cls:'fieldset-title-no-margin',
+            title:'Meet Goals',
+            defaults:{
+                listeners:{
+                    change:wendler.maxes.meetGoalsChanged
                 },
                 labelWidth:'45%',
                 useClearIcon:true
@@ -145,6 +186,7 @@ wendler.maxes.cards.maxesForm = {
     listeners:{
         show:function () {
             wendler.navigation.unbindBackEvent();
+            wendler.maxes.showHideMeetGoals();
         },
         initialize:function () {
             if (wendler.toggles.BarLoading) {
