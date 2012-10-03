@@ -66,7 +66,7 @@ wendler.views.log.cards.EditAssistanceLogEntry = {
             ]
         },
         {
-            id:'edit-log-fieldset',
+            id:'edit-assistance-log-fieldset',
             cls:'fieldset-title-no-margin',
             style:'margin-bottom: 7px;',
             xtype:'fieldset',

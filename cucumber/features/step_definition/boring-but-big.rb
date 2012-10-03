@@ -68,3 +68,9 @@ Then /^The assistance details notes shows "([^"]*?)"$/ do |notes|
   log_notes = @driver.find_element(:id => 'edit-assistance-log-notes').text()
   log_notes.should == notes
 end
+
+Then /^I set the assistance log reps to (\d+)$/ do |reps|
+  reps_input = @driver.find_element(:id => 'edit-assistance-log-fieldset').find_element(:name => 'reps')
+  reps_input.clear
+  reps_input.send_keys reps
+end

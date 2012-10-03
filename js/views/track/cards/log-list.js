@@ -349,6 +349,10 @@ wendler.views.log.cards.LogList = {
                                 wendler.logList.deleteAssistanceEntry,
                                 Ext.emptyFn,
                                 '.date-week');
+
+                            wendler.stores.assistance.ActivityLog.addListener('beforesync', function () {
+                                Ext.getCmp('log-assistance-list').refresh();
+                            });
                         }
                     },
                     xtype:'list',
