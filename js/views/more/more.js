@@ -1,6 +1,4 @@
 "use strict";
-Ext.ns('wendler.views', 'wendler.controller.more', 'wendler.more');
-
 Ext.define('Wendler.views.More', {
     extend:'Ext.Panel',
     config:{
