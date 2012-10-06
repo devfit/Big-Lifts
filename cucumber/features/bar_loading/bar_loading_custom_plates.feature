@@ -4,7 +4,20 @@ Feature: bar loading - custom plates
   I want to be able to use custom plate configurations
   So that I can exactly describe what weights I have for the bar loading assistance
 
-  Scenario: Adding 2kg
+  Scenario: Not having enough plates to make a weight
+    When I navigate to the lift editor
+    And I tap the bar/plates button
+    And I tap remove plate
+    And I tap remove plate
+    And I tap remove plate
+    And I tap remove plate
+    And I tap remove plate
+    And I tap the "Back" button
+    And I view the squat lift schedule for week 1
+    And I tap set 6 in the lift template
+    Then The plate breakdown for set 6 shows "[45] need plates"
+
+  Scenario: Adding 2kg and avoid ExtJS store bugs
     When I navigate to the lift editor
     And I tap the bar/plates button
     And I set the new plate weight to 2

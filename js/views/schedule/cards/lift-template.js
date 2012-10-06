@@ -44,12 +44,16 @@ wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
     var allPlatePairs = wendler.liftSchedule.liftTemplate.getAllPlatePairs();
 
     var plates = util.formulas.buildPlateListForWeight(weight, barWeight, allPlatePairs);
+    var totalWeight = _.reduce(plates, function (sum, plate) {
+        return sum + plate * 2;
+    }, 0) + barWeight;
 
-    if (plates.length === 0) {
-        return ""
+    var plateString = plates.length === 0 ? "" : "[" + plates.join(',') + "]";
+    if (totalWeight !== barWeight) {
+        plateString = "<span class='invalid-plates'>" + plateString + " need plates" + "</span>";
     }
 
-    return "[" + plates.join(',') + "]";
+    return plateString;
 };
 
 wendler.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
