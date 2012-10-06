@@ -69,13 +69,13 @@ wendler.maxes.barSetup.platesAreDefault = function (comparisonPlates) {
 };
 
 wendler.maxes.barSetup.adjustPlatesForUnits = function (units) {
-    if (units == 'kg' && wendler.maxes.barSetup.platesAreDefault(wendler.stores.defaults.defaultPlatesLbs)) {
+    if (units == 'kg' && wendler.maxes.barSetup.platesAreDefault(wendler.stores.Plates.DEFAULT_PLATES_LBS)) {
         wendler.stores.Plates.removeAll();
-        wendler.stores.Plates.add(wendler.stores.defaults.defaultPlatesKg);
+        wendler.stores.Plates.add(wendler.stores.Plates.DEFAULT_PLATES_KG);
     }
-    else if (units == 'lbs' && wendler.maxes.barSetup.platesAreDefault(wendler.stores.defaults.defaultPlatesKg)) {
+    else if (units == 'lbs' && wendler.maxes.barSetup.platesAreDefault(wendler.stores.Plates.DEFAULT_PLATES_KG)) {
         wendler.stores.Plates.removeAll();
-        wendler.stores.Plates.add(wendler.stores.defaults.defaultPlatesLbs);
+        wendler.stores.Plates.add(wendler.stores.Plates.DEFAULT_PLATES_LBS);
     }
 
     wendler.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));

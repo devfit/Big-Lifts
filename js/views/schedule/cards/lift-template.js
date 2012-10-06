@@ -39,7 +39,8 @@ wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
     }, 0) + barWeight;
 
     var plateString = plates.length === 0 ? "" : "[" + plates.join(',') + "]";
-    if (totalWeight !== barWeight) {
+
+    if (totalWeight !== weight) {
         plateString = "<span class='invalid-plates'>" + plateString + " need plates" + "</span>";
     }
 

@@ -1,4 +1,4 @@
-Ext.ns('wendler.stores.plates', 'wendler.stores.defaults');
+Ext.ns('wendler.stores.plates');
 
 Ext.define('Plates', {
     extend:'Ext.data.Model',
@@ -17,24 +17,6 @@ Ext.define('Plates', {
         }
     }
 });
-
-wendler.stores.defaults.defaultPlatesLbs = [
-    {weight:45, count:6},
-    {weight:35, count:6},
-    {weight:25, count:6},
-    {weight:10, count:6},
-    {weight:5, count:6},
-    {weight:2.5, count:6}
-];
-
-wendler.stores.defaults.defaultPlatesKg = [
-    {weight:25, count:6},
-    {weight:20, count:6},
-    {weight:10, count:6},
-    {weight:5, count:6},
-    {weight:2.5, count:6},
-    {weight:1.25, count:6}
-];
 
 wendler.stores.plates.migrateWeightInLbsToWeightAndUnits = function (store) {
     store.each(function (record) {
@@ -59,12 +41,28 @@ Ext.define("PlateStore", {
 
         return platePairs;
     },
+    DEFAULT_PLATES_LBS:[
+        {weight:45, count:6},
+        {weight:35, count:6},
+        {weight:25, count:6},
+        {weight:10, count:6},
+        {weight:5, count:6},
+        {weight:2.5, count:6}
+    ],
+    DEFAULT_PLATES_KG:[
+        {weight:25, count:6},
+        {weight:20, count:6},
+        {weight:10, count:6},
+        {weight:5, count:6},
+        {weight:2.5, count:6},
+        {weight:1.25, count:6}
+    ],
     config:{
         model:'Plates',
         listeners:{
             load:function (store) {
                 if (store.getCount() === 0) {
-                    store.add(wendler.stores.defaults.defaultPlatesLbs);
+                    store.add(wendler.stores.Plates.DEFAULT_PLATES_LBS);
                     store.sync();
                 }
                 else {

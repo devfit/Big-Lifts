@@ -1,5 +1,4 @@
 describe("Plate Breakdown Formulas", function () {
-
     it("should prune zeroed values from a plate configuration", function () {
         expect(util.formulas.plates.pruneZeroedValues({a:1, b:0})).toEqual({"a":1});
         expect(util.formulas.plates.pruneZeroedValues({})).toEqual({});
