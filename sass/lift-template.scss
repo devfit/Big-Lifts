@@ -17,24 +17,18 @@
 
 $liftRowFontSize: 1.5em;
 .lift-row {
-  .percentage {
-    float: right;
-    color: grey;
-    margin-right: 10px;
-  }
-
-  .bar-loader-breakdown {
-    display: none;
-    padding-left: 0.4em;
-    font-size: 90%;
-  }
-}
-
-.lift-row.lift-row-selected {
   background-color: white;
 
   .bar-loader-breakdown {
     display: block;
+    padding-left: 0.4em;
+    font-size: 90%;
+  }
+
+  .percentage {
+    float: right;
+    color: grey;
+    margin-right: 10px;
   }
 }
 

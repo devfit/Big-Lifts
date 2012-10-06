@@ -14,7 +14,6 @@ Feature: bar loading - custom plates
     And I tap remove plate
     And I tap the "Back" button
     And I view the squat lift schedule for week 1
-    And I tap set 6 in the lift template
     Then The plate breakdown for set 6 shows "[45] need plates"
 
   Scenario: Adding 2kg and avoid ExtJS store bugs

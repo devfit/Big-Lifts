@@ -118,19 +118,6 @@ wendler.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
     }
 };
 
-wendler.liftSchedule.liftTemplate.selectThreeLiftsFrom = function (startIndex) {
-    var end = startIndex + 2;
-    var lastIndex = wendler.stores.lifts.LiftProgression.getCount() - 1;
-    if (end > lastIndex) {
-        end = lastIndex;
-    }
-    if (startIndex > lastIndex - 2) {
-        startIndex = lastIndex - 2;
-    }
-
-    Ext.getCmp('lift-template-list').selectRange(startIndex, end);
-};
-
 wendler.liftSchedule.liftTemplate.returnToLiftSelect = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
 };
@@ -209,13 +196,7 @@ wendler.views.liftSchedule.liftTemplate = {
             id:'lift-template-list',
             xtype:'list',
             store:wendler.stores.lifts.LiftProgression,
-            selectedCls:'lift-row-selected',
             itemCls:'lift-row',
-            listeners:{
-                itemtap:function (c, index) {
-                    wendler.liftSchedule.liftTemplate.selectThreeLiftsFrom(index);
-                }
-            },
             itemTpl:'<p class="{[wendler.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
                 '<span class="weight">{[wendler.liftSchedule.liftTemplate.formatLiftWeight(values)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {[wendler.liftSchedule.liftTemplate.formatPercentage(values.percentage)]}%</span></p>' +
@@ -234,7 +215,6 @@ wendler.views.liftSchedule.liftTemplate = {
         show:function () {
             wendler.navigation.setBackFunction(wendler.liftSchedule.liftTemplate.returnToLiftSelect);
             wendler.liftSchedule.liftTemplate.updateLiftValues();
-            wendler.liftSchedule.liftTemplate.selectThreeLiftsFrom(0);
         }
     }
 };
