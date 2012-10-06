@@ -23,7 +23,8 @@ src_files:
     - js/models/templates/meet_goal.js
     - js/models/lift-completion.js
     - js/models/lift-progression.js
-    - js/models/plate_bar_configuration.js
+    - js/models/plates/plates.js
+    - js/models/plates/bar.js
     - js/models/assistance/assistance.js
     - js/models/assistance/triumvirate.js
     - js/views/schedule/cards/lift-selector.js

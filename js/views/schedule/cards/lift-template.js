@@ -28,20 +28,10 @@ wendler.liftSchedule.liftTemplate.formatLiftWeight = function (values) {
     return wendler.weight.format(max, values.percentage);
 };
 
-wendler.liftSchedule.liftTemplate.getAllPlatePairs = function () {
-    var platePairs = {};
-    wendler.stores.Plates.each(function (r) {
-        var weight = r.get('weight');
-        platePairs[weight] = parseInt(r.get('count') / 2);
-    });
-
-    return platePairs;
-};
-
 wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
     var barWeight = wendler.stores.BarWeight.first().get('weight');
 
-    var allPlatePairs = wendler.liftSchedule.liftTemplate.getAllPlatePairs();
+    var allPlatePairs = wendler.stores.Plates.getAllPlatePairs();
 
     var plates = util.formulas.buildPlateListForWeight(weight, barWeight, allPlatePairs);
     var totalWeight = _.reduce(plates, function (sum, plate) {
