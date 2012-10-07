@@ -10,7 +10,7 @@ wendler.models.Lift.uniquePropertyNameValidation = function (propertyName) {
 wendler.stores.recovery.setupDefaultLifts = function () {
     util.withNoFilters(wendler.stores.lifts.Lifts, function () {
         if (wendler.stores.lifts.Lifts.getCount() == 0) {
-            wendler.stores.lifts.Lifts.add(wendler.defaults.lifts);
+            wendler.stores.lifts.Lifts.add(wendler.stores.lifts.Lifts.DEFAULT_LIFTS);
             wendler.stores.lifts.Lifts.sync();
         }
     });
@@ -43,13 +43,6 @@ Ext.define('Lift', {
     }
 });
 
-wendler.defaults.lifts = [
-    Ext.create('Lift', {name:'Squat', max:200, propertyName:'squat', cycleIncrease:10, order:0}),
-    Ext.create('Lift', {name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10, order:1}),
-    Ext.create('Lift', {name:'Press', max:150, propertyName:'press', cycleIncrease:5, order:2}),
-    Ext.create('Lift', {name:'Bench', max:175, propertyName:'bench', cycleIncrease:5, order:3})
-];
-
 wendler.stores.migrations.liftModelMigration = function () {
     var liftOrdersBroken = wendler.stores.migrations.liftOrdersAreBroken();
 
@@ -61,7 +54,7 @@ wendler.stores.migrations.liftModelMigration = function () {
         }
 
         if (r.data.cycleIncrease === 0) {
-            var defaultModel = _.find(wendler.defaults.lifts, function (d) {
+            var defaultModel = _.find(wendler.stores.lifts.Lifts.DEFAULT_LIFTS, function (d) {
                 return d.data.propertyName === r.data.propertyName
             });
             var cycleIncrease = defaultModel.data.cycleIncrease;
@@ -89,29 +82,46 @@ wendler.models.Lift.sanitizePropertyName = function (propertyName) {
     return propertyName.toLowerCase().replace(/[^a-z\d]/g, '');
 };
 
-wendler.stores.lifts.Lifts = Ext.create('Ext.data.Store', {
-    model:'Lift',
-    listeners:{
-        load:function () {
-            wendler.stores.recovery.setupDefaultLifts();
-            wendler.stores.migrations.liftModelMigration();
-            wendler.stores.lifts.EnabledLifts.load();
-        },
-        beforesync:function () {
-            wendler.stores.lifts.EnabledLifts.fireEvent('beforesync');
-        },
-        write:function () {
-            wendler.stores.lifts.EnabledLifts.load();
-        }
+Ext.define('Lifts', {
+    extend:'Ext.data.Store',
+    getUniqueLiftNames:function () {
+        var liftNameSet = {};
+        this.each(function (r) {
+            liftNameSet[r.get('name')] = 1;
+        });
+        return _.keys(liftNameSet);
     },
-    sorters:[
-        {
-            property:'order',
-            direction:'ASC'
-        }
-    ]
+    DEFAULT_LIFTS:[
+        Ext.create('Lift', {name:'Squat', max:200, propertyName:'squat', cycleIncrease:10, order:0}),
+        Ext.create('Lift', {name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10, order:1}),
+        Ext.create('Lift', {name:'Press', max:150, propertyName:'press', cycleIncrease:5, order:2}),
+        Ext.create('Lift', {name:'Bench', max:175, propertyName:'bench', cycleIncrease:5, order:3})
+    ],
+    config:{
+        model:'Lift',
+        listeners:{
+            load:function () {
+                wendler.stores.recovery.setupDefaultLifts();
+                wendler.stores.migrations.liftModelMigration();
+                wendler.stores.lifts.EnabledLifts.load();
+            },
+            beforesync:function () {
+                wendler.stores.lifts.EnabledLifts.fireEvent('beforesync');
+            },
+            write:function () {
+                wendler.stores.lifts.EnabledLifts.load();
+            }
+        },
+        sorters:[
+            {
+                property:'order',
+                direction:'ASC'
+            }
+        ]
+    }
 });
 
+wendler.stores.lifts.Lifts = Ext.create('Lifts');
 wendler.stores.lifts.EnabledLifts = Ext.create('Ext.data.Store', {
     model:'Lift',
     listeners:{

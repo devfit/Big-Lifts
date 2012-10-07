@@ -194,7 +194,11 @@ wendler.logList.getWeightDisplay = function (weight) {
 
 wendler.logList.deloadMarker = function (week) {
     return week === 4 ? "[D]" : "";
-}
+};
+
+wendler.logList.showChart = function(){
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('graph'));
+};
 
 wendler.stores.Settings.addListener('beforesync', function () {
     if (wendler.main.started) {
@@ -246,6 +250,13 @@ wendler.views.log.cards.LogList = {
                         });
                     }
                     this.add({xtype:'spacer'});
+                    this.add({
+                        id:'show-chart-button',
+                        xtype:'button',
+                        text:'CHART',
+                        ui:'action',
+                        handler:wendler.logList.showChart
+                    });
                     this.add({
                         id:'export-log-button',
                         xtype:'button',

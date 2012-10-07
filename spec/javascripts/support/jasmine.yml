@@ -13,7 +13,9 @@
 src_files:
     - sencha-touch-2.0.0/sencha-touch-all-debug.js
     - js/lib/underscore-min.js
+    - js/lib/date.js
     - js/debug.js
+    - js/util/graph/graph-util.js
     - js/util/stores.js
     - js/util/formulas.js
     - js/util/filters.js
@@ -21,6 +23,7 @@ src_files:
     - js/models/stores.js
     - js/models/lifts.js
     - js/models/templates/meet_goal.js
+    - js/models/lift-log.js
     - js/models/lift-completion.js
     - js/models/lift-progression.js
     - js/models/plates/plates.js
