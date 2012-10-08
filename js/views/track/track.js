@@ -16,7 +16,6 @@ Ext.define('Wendler.views.Log', {
         iconCls:'bookmarks',
         layout:'card',
         title:'Track',
-        activeItem:7,
         items:[
             wendler.views.log.cards.LogList,
             wendler.views.log.cards.EditLogEntry,

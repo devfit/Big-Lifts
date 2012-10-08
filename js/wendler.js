@@ -26,8 +26,7 @@ wendler.main.loadApplication = function () {
         app.add(Ext.create('Wendler.views.OneRepMaxCalculator'));
         app.add(Ext.create('Wendler.views.More'));
 
-//        var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
-        var startTab = 2;
+        var startTab = wendler.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
         wendler.main.markFirstStartup();
         app.setActiveItem(startTab);
         app.setHidden(false);

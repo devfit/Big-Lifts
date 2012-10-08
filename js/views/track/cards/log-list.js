@@ -253,7 +253,8 @@ wendler.views.log.cards.LogList = {
                     this.add({
                         id:'show-chart-button',
                         xtype:'button',
-                        text:'CHART',
+                        iconCls:'chart',
+                        iconMask:true,
                         ui:'action',
                         handler:wendler.logList.showChart
                     });
