@@ -15,14 +15,14 @@ When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
 end
 
 Then /^"([^"]*)" is ([\w ]+)?added to the edit lifts screen$/ do |lift, invertCheck|
-  liftShouldBeAdded = invertCheck == nil
+  lift_should_be_added = invertCheck == nil
 
   @main_navigation.navigate_to(:lift_editor)
 
-  liftList = @driver.find_element(:id => 'maxes-form-items')
-  liftIsShown = liftList.text.include? lift
+  lift_list = @driver.find_element(:id => 'maxes-form-items')
+  lift_is_shown = lift_list.text.include? lift
 
-  liftIsShown.should == liftShouldBeAdded
+  lift_is_shown.should == lift_should_be_added
 end
 
 Then /^"([^"]*)" is ([\w ]+)?added to the lift schedule$/ do |lift, invertCheck|
@@ -39,16 +39,6 @@ Then /^I see an error with message "([^"]*)"$/ do |message|
   sleep @ANIMATION_DELAY
   @driver.find_element(:class => 'x-msgbox').find_element(:class => 'x-msgbox-text').text.should == message
   @driver.find_element(:class => 'x-msgbox').find_element(:class => 'x-button').click
-  sleep @ANIMATION_DELAY
-end
-
-Then /^I close the add lift screen$/ do
-  @driver.find_element(:id => 'add-lift-cancel-button').click
-  sleep @ANIMATION_DELAY
-end
-
-When /^I click edit lifts$/ do
-  @driver.find_element(:id => 'edit-lifts-button').click()
   sleep @ANIMATION_DELAY
 end
 

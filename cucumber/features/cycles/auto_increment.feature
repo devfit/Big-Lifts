@@ -14,7 +14,7 @@ Feature: Auto-increment lift maxes
 
   Scenario: Fractional lift increase
     When I set the squat max to 200
-    And I click edit lifts
+    And I tap the "Edit" button
     And I click edit "Squat"
     And I edit the cycle increase to be 2.5
     And I tap the "Back" button

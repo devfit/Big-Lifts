@@ -6,7 +6,7 @@ Feature: Arrange lifts
   Scenario: Arrange a newly added lift
     When I navigate to the lift editor
     When I add a new lift named "TestLift" with max 100
-    And I click edit lifts
+    And I tap the "Edit" button
     And I tap arrange lifts
     And I tap the arrange TestLift row
     And I tap the move up button
@@ -18,7 +18,7 @@ Feature: Arrange lifts
 
   Scenario: Moving the top item down 1
     When I navigate to the lift editor
-    And I click edit lifts
+    And I tap the "Edit" button
     And I tap arrange lifts
     And I tap the arrange Squat row
     And I tap the move down button
@@ -28,7 +28,7 @@ Feature: Arrange lifts
 
   Scenario: Moving the bottom item up 1
     When I navigate to the lift editor
-    And I click edit lifts
+    And I tap the "Edit" button
     And I tap arrange lifts
     And I tap the arrange Bench row
     And I tap the move up button

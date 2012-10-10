@@ -4,7 +4,7 @@ Feature: Disabling lifts
 
   Scenario: When a lift is disabled, completing enabled lifts triggers the cycle increase, and only enabled lifts are shown
     When I navigate to the lift editor
-    And I click edit lifts
+    And I tap the "Edit" button
     And I disable "Squat"
     And I disable "Deadlift"
     And I disable "Press"
@@ -30,7 +30,7 @@ Feature: Disabling lifts
 
   Scenario: When a lift is disabled, selecting a lift selects the displayed lift, and not the index of the disabled lift
     When I navigate to the lift editor
-    And I click edit lifts
+    And I tap the "Edit" button
     And I disable "Squat"
     And I tap the "Done" button
     And I navigate to the lift schedule
@@ -39,7 +39,7 @@ Feature: Disabling lifts
 
   Scenario: Weeks can be checked with lifts disabled
     When I navigate to the lift editor
-    And I click edit lifts
+    And I tap the "Edit" button
     And I disable "Squat"
     And I disable "Deadlift"
     And I disable "Press"
@@ -53,7 +53,7 @@ Feature: Disabling lifts
 
   Scenario: Disabled lifts do not appear in the lift schedule
     When I navigate to the lift editor
-    And I click edit lifts
+    And I tap the "Edit" button
     And I disable "Squat"
     And I tap the "Done" button
     And I navigate to the lift schedule
@@ -61,6 +61,6 @@ Feature: Disabling lifts
 
   Scenario: Checking a disable lift checkbox does not cause it to disappear
     When I navigate to the lift editor
-    And I click edit lifts
+    And I tap the "Edit" button
     And I disable "Squat"
     Then The "Squat" edit lift row still has a checkbox

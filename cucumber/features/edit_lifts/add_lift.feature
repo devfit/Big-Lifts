@@ -12,12 +12,12 @@ Feature: adding lifts
   Scenario: add a new lift with an invalid name
     When I add a new lift named "" with max 300
     Then I see an error with message "Invalid lift name"
-    And I close the add lift screen
+    And I tap the "Cancel" button
     Then "222" is not added to the edit lifts screen
 
   Scenario: newly added lift can be edited
     When I add a new lift named "TestLift" with max 100
-    And I click edit lifts
+    And I tap the "Edit" button
     And I click edit "TestLift"
     And I edit the name to be "TestLift2"
     And I tap the "Back" button
