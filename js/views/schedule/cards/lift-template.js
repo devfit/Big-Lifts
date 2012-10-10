@@ -30,6 +30,10 @@ wendler.liftSchedule.liftTemplate.formatLiftWeight = function (values) {
 
 wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
     var barWeight = wendler.stores.BarWeight.first().get('weight');
+    var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
+    if (liftRecord.get("customBarWeight")) {
+        barWeight = liftRecord.get("customBarWeight");
+    }
 
     var allPlatePairs = wendler.stores.Plates.getAllPlatePairs();
 

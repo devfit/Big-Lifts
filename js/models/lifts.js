@@ -27,7 +27,8 @@ Ext.define('Lift', {
             {name:'max', type:'float'},
             {name:'cycleIncrease', type:'float'},
             {name:'order', type:'int', defaultValue:-1},
-            {name:'enabled', type:'boolean', defaultValue:true}
+            {name:'enabled', type:'boolean', defaultValue:true},
+            {name:'customBarWeight', type:'int', defaultValue:null}
         ],
         validations:[
             {field:'propertyName', type:'custom', message:'nonunique',
