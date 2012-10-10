@@ -3,8 +3,15 @@ Then /^There are (\d+) lifts in the edit lifts list$/ do |count|
 end
 
 When /^I edit the max to be ([\d\.]+)$/ do |max|
-  @driver.find_element(:name => 'edit-lift-new-max').clear()
-  @driver.find_element(:name => 'edit-lift-new-max').send_keys(max)
+  max_input = @driver.find_element(:id => 'edit-lift-form').find_element(:name => 'max')
+  max_input.clear()
+  max_input.send_keys(max)
+end
+
+When /^I edit the cycle increase to be ([\d\.]+)$/ do |increase|
+  cycle_increase = @driver.find_element(:id => 'edit-lift-form').find_element(:name => 'cycleIncrease')
+  cycle_increase.clear
+  cycle_increase.send_keys(increase)
 end
 
 Then /^I see no error dialog$/ do

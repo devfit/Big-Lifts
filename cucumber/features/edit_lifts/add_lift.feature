@@ -20,6 +20,6 @@ Feature: adding lifts
     And I click edit lifts
     And I click edit "TestLift"
     And I edit the name to be "TestLift2"
-    And I close the edit lift screen
+    And I tap the "Back" button
     Then "TestLift2" is added to the edit lifts screen
     And "TestLift2" is added to the lift schedule

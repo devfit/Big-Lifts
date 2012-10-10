@@ -9,13 +9,6 @@ Then /^(\w+) max is set to ([\d\.]+)$/ do |lift, newmax|
   @driver.find_element(:name => lift).attribute('value').should == newmax
 end
 
-When /^I edit the cycle increase to be ([\d\.]+)$/ do |increase|
-  cycle_increase = @driver.find_element(:name => 'edit-lift-cycle-increase')
-  cycle_increase.clear
-  cycle_increase.send_keys(increase)
-  sleep 0.5
-end
-
 When /^I check off all lifts$/ do
   check_lifts_script = <<END
   wendler.stores.lifts.LiftCompletion.each(function(r){

@@ -48,24 +48,19 @@ Then /^I close the add lift screen$/ do
 end
 
 When /^I click edit lifts$/ do
-   @driver.find_element(:id => 'edit-lifts-button').click()
-   sleep @ANIMATION_DELAY
+  @driver.find_element(:id => 'edit-lifts-button').click()
+  sleep @ANIMATION_DELAY
 end
 
 When /^I click edit "([^"]*)"$/ do |lift|
-     editLiftsList = @driver.find_element(:id => 'maxes-edit-lifts-list')
-     editLiftsList.find_elements(:class => 'x-list-item').select{|l| l.text == lift}[0].click()
+  edit_lifts_list = @driver.find_element(:id => 'maxes-edit-lifts-list')
+  edit_lifts_list.find_elements(:class => 'x-list-item').select { |l| l.text == lift }[0].click()
 end
 
-When /^I close the edit lift screen$/ do
-    @driver.find_element(:id => 'edit-lift-back-button').click
-    sleep @ANIMATION_DELAY
-end
-
-When /^I edit the name to be "([^"]*)"$/ do |newLiftName|
-   editLiftInput = @driver.find_element(:name => 'edit-lift-new-name')
-   editLiftInput.clear
-   editLiftInput.send_keys( newLiftName )
+When /^I edit the name to be "([^"]*)"$/ do |new_lift_name|
+  edit_lift_input = @driver.find_element(:id => 'edit-lift-form').find_element(:name => 'name')
+  edit_lift_input.clear
+  edit_lift_input.send_keys(new_lift_name)
 end
 
 
