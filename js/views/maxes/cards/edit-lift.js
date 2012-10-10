@@ -3,17 +3,15 @@ Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller', 'wendler.editLift');
 
 wendler.maxes.currentEditingLiftProperty = null;
 
-wendler.maxes.controller.editLiftBackButtonPressed = function () {
-    var newName = Ext.getCmp('edit-lift-new-name').getValue().trim();
-    var newMax = Ext.getCmp('edit-lift-new-max').getValue();
-    var newPropertyName = wendler.models.Lift.sanitizePropertyName(newName);
-    var newCycleIncrease = Ext.getCmp('edit-lift-cycle-increase').getValue();
+wendler.maxes.editLiftBackButtonPressed = function () {
+    var formValues = Ext.getCmp('edit-lift-form').getValues();
+    formValues.name = formValues.name.trim();
+    formValues.propertyName = wendler.models.Lift.sanitizePropertyName(formValues.name);
 
     var currentModel = wendler.maxes.controller.getCurrentLiftModel();
-    var oldOrder = currentModel.get('order');
+    formValues.order = currentModel.get('order');
 
-    var newLiftModel = Ext.create('Lift', {name:newName, propertyName:newPropertyName, cycleIncrease:newCycleIncrease, max:newMax, order:oldOrder});
-
+    var newLiftModel = Ext.create('Lift', formValues);
     var errors = newLiftModel.validate();
 
     if (errors.isValid()) {
@@ -46,8 +44,8 @@ wendler.maxes.controller.editLiftBackButtonPressed = function () {
 
 wendler.editLift.updateAssociatedLiftCompletion = function (oldPropertyName, newPropertyName) {
     if (oldPropertyName !== newPropertyName) {
-        wendler.stores.lifts.LiftCompletion.each(function(record){
-            if( record.get('liftPropertyName') === oldPropertyName ){
+        wendler.stores.lifts.LiftCompletion.each(function (record) {
+            if (record.get('liftPropertyName') === oldPropertyName) {
                 record.set('liftPropertyName', newPropertyName);
                 record.save();
             }
@@ -83,29 +81,29 @@ wendler.maxes.controller.deleteLiftButtonPressed = function () {
 };
 
 wendler.maxes.controller.setupEditLift = function (propertyName) {
-    wendler.navigation.setBackFunction(wendler.maxes.controller.editLiftBackButtonPressed);
     var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
     wendler.maxes.currentEditingLiftProperty = propertyName;
-    Ext.getCmp('maxes-edit-lift-toolbar').setTitle(lift.data.name);
-    Ext.getCmp('edit-lift-new-name').setValue(lift.data.name);
-    Ext.getCmp('edit-lift-new-max').setValue(lift.data.max);
-    Ext.getCmp('edit-lift-cycle-increase').setValue(lift.data.cycleIncrease);
+    Ext.getCmp('edit-lift-form').setValues(lift.data);
 };
 
 wendler.maxes.cards.editLiftPanel = {
     xtype:'panel',
     id:'maxes-edit-lift-panel',
     layout:'fit',
+    listeners:{
+        show:function () {
+            wendler.navigation.setBackFunction(wendler.maxes.editLiftBackButtonPressed);
+        }
+    },
     items:[
         {
-            id:'maxes-edit-lift-toolbar',
             xtype:'toolbar',
             docked:'top',
+            title:"Edit",
             items:[
                 {
-                    id:'edit-lift-back-button',
                     text:'Back',
-                    handler:wendler.maxes.controller.editLiftBackButtonPressed,
+                    handler:wendler.maxes.editLiftBackButtonPressed,
                     ui:'back'
                 },
                 {xtype:'spacer'},
@@ -119,6 +117,7 @@ wendler.maxes.cards.editLiftPanel = {
             ]
         },
         {
+            id:'edit-lift-form',
             xtype:'formpanel',
             items:[
                 {
@@ -130,21 +129,19 @@ wendler.maxes.cards.editLiftPanel = {
                     items:[
                         {
                             xtype:'textfield',
-                            name:'edit-lift-new-name',
-                            id:'edit-lift-new-name',
+                            name:'name',
                             label:'Name'
                         },
                         {
                             xtype:'textfield',
-                            name:'edit-lift-new-max',
-                            id:'edit-lift-new-max',
+                            name:'max',
                             label:'Max'
                         },
                         {
                             xtype:'textfield',
-                            name:'edit-lift-cycle-increase',
-                            id:'edit-lift-cycle-increase',
-                            label:'Increase at end of cycle'
+                            name:'cycleIncrease',
+                            labelWidth:'66%',
+                            label:'Cycle Increase'
                         }
                     ]
                 }
