@@ -61,7 +61,10 @@ Ext.define('Wendler.LiftGraph', {
                     position:'bottom',
                     label:{
                         renderer:function (date) {
-                            return date.toString('MM/dd');
+                            var dateFormat = wendler.stores.Settings.first().get('dateFormat');
+                            var datePieces = dateFormat.split("/");
+                            var format = datePieces[0] + "/" + datePieces[1];
+                            return date.toString(format);
                         },
                         rotate:{
                             degrees:315
