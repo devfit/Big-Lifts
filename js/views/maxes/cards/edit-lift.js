@@ -83,7 +83,11 @@ wendler.maxes.controller.deleteLiftButtonPressed = function () {
 wendler.maxes.controller.setupEditLift = function (propertyName) {
     var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
     wendler.maxes.currentEditingLiftProperty = propertyName;
-    Ext.getCmp('edit-lift-form').setValues(lift.data);
+
+    var formValues = _.clone(lift.data);
+    formValues.customBarWeight = null;
+
+    Ext.getCmp('edit-lift-form').setValues(formValues);
 };
 
 wendler.maxes.cards.editLiftPanel = {
@@ -126,24 +130,37 @@ wendler.maxes.cards.editLiftPanel = {
                     defaults:{
                         labelWidth:'40%'
                     },
-                    items:[
-                        {
-                            xtype:'textfield',
-                            name:'name',
-                            label:'Name'
-                        },
-                        {
-                            xtype:'textfield',
-                            name:'max',
-                            label:'Max'
-                        },
-                        {
-                            xtype:'textfield',
-                            name:'cycleIncrease',
-                            labelWidth:'66%',
-                            label:'Cycle Increase'
+                    listeners:{
+                        initialize:function () {
+                            this.add([
+                                {
+                                    xtype:'textfield',
+                                    name:'name',
+                                    label:'Name'
+                                },
+                                {
+                                    xtype:'numberfield',
+                                    name:'max',
+                                    label:'Max'
+                                },
+                                {
+                                    xtype:'numberfield',
+                                    name:'cycleIncrease',
+                                    labelWidth:'66%',
+                                    label:'Cycle Increase'
+                                }
+                            ]);
+
+                            if (wendler.toggles.BarLoading) {
+                                this.add({
+                                    xtype:'numberfield',
+                                    name:'customBarWeight',
+                                    labelWidth:'66%',
+                                    label:'Bar Weight'
+                                });
+                            }
                         }
-                    ]
+                    }
                 }
             ]
         }
