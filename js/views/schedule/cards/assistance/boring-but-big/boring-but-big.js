@@ -41,6 +41,18 @@ wendler.liftSchedule.assistance.boringButBig.showNotesEditor = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-notes'));
 };
 
+wendler.liftSchedule.assistance.boringButBig.editBbbMovement = function (dataview, index) {
+    var movement = wendler.stores.assistance.BoringButBig.getAt(index);
+    wendler.liftSchedule.assistance.boringButBig.showEditBbbMovement(movement);
+};
+
+wendler.stores.assistance.BoringButBig.addListener('beforesync', function () {
+    var list = Ext.getCmp('boring-but-big-list');
+    if (list) {
+        list.refresh();
+    }
+});
+
 wendler.views.liftSchedule.assistance.BoringButBig = {
     xtype:'panel',
     id:'boring-but-big',
@@ -109,12 +121,17 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
             xtype:'list',
             store:wendler.stores.assistance.BoringButBig,
             itemTpl:"<table class='assistance-table'><tbody><tr>" +
-                "<td width='50%'><span class='name'>{name}</b></td>" +
+                "<td width='50%'><span class='name'>{[wendler.stores.assistance.BoringButBig.getNameForRecord(values)]}</b></td>" +
                 "<td width='20%'>{sets} sets</td>" +
                 "<td style='text-align:right;' width='30%'>{reps}x " +
                 "<span class='weight'>{[wendler.weight.format(wendler.stores.assistance.BoringButBig.getWeightForRecord(values))]}</span>" +
                 "{[wendler.stores.Settings.first().get('units')]}</td>" +
-                "</tr></tbody></table>"
+                "</tr></tbody></table>",
+            listeners:{
+                initialize:function (list) {
+                    list.addListener('itemtap', wendler.liftSchedule.assistance.boringButBig.editBbbMovement);
+                }
+            }
         },
         {
             flex:1,

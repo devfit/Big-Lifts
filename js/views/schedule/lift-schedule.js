@@ -30,6 +30,7 @@ Ext.define('Wendler.views.LiftSchedule', {
             wendler.views.liftSchedule.RestTimer,
             wendler.views.liftSchedule.assistance.AssistanceChooser,
             wendler.views.liftSchedule.assistance.BoringButBig,
+            wendler.views.liftSchedule.assistance.BoringButBigMovementEditor,
             wendler.views.liftSchedule.assistance.Triumvirate,
             wendler.views.liftSchedule.assistance.TriumvirateMovementEditor,
             {

@@ -6,7 +6,9 @@ Ext.define('BoringButBigLift', {
         identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
+
             {name:'lift_id', type:'string'},
+            {name:'movement_lift_id', type:'string'},
             {name:'name', type:'string'},
             {name:'weight', type:'float'},
             {name:'reps', type:'int'},
@@ -27,9 +29,17 @@ Ext.define('BoringButBigStore', {
             return data.weight;
         }
 
-        var associatedLift = wendler.stores.lifts.Lifts.findRecord('id', data.lift_id);
+        var associatedLift = wendler.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
         return wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(associatedLift.get('max')),
             wendler.stores.assistance.BoringButBigPercentage.first().get('percentage'));
+    },
+    getNameForRecord:function (data) {
+        if (data.name) {
+            return data.name;
+        }
+
+        var associatedLift = wendler.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
+        return associatedLift.get('name');
     },
     config:{
         model:'BoringButBigLift',
@@ -38,14 +48,14 @@ Ext.define('BoringButBigStore', {
                 if (this.getCount() === 0) {
                     util.withLoadedStore(wendler.stores.lifts.Lifts, function () {
                         wendler.stores.lifts.Lifts.each(function (r) {
-                            var bbbRecord = {
-                                name:r.get("name"),
-                                lift_id:r.get("id"),
+                            wendler.stores.assistance.BoringButBig.add({
+                                name:null,
+                                lift_id:r.get('id'),
+                                movement_lift_id:r.get('id'),
                                 weight:null,
                                 reps:10,
                                 sets:5
-                            };
-                            wendler.stores.assistance.BoringButBig.add(bbbRecord);
+                            });
                         });
                         wendler.stores.assistance.BoringButBig.sync();
                     });
