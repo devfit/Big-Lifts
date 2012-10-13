@@ -18,11 +18,6 @@ When /^I set the BBB percentage to (\d+)$/ do |percentage|
   bbb_percentage_iput.send_keys percentage
 end
 
-When /^I save the boring but big assistance work$/ do
-  @driver.find_element(:id => 'boring-but-big-done-button').click()
-  sleep @ANIMATION_DELAY
-end
-
 When /^I save the boring but big log$/ do
   @driver.find_element(:id => 'boring-but-big-save-log-button').click()
   sleep @ANIMATION_DELAY
@@ -35,11 +30,6 @@ Then /^I see (\d+) assistance log entry for "([^"]*)"$/ do |numberOfEntries, ent
   log_row = log_rows[0]
   reps_weight = log_row.find_element(:class => "reps").text() + log_row.find_element(:class => 'weight').text()
   reps_weight.should == entryText
-end
-
-Then /^I tap edit boring but big notes$/ do
-  @driver.find_element(:id => 'bbb-log-notes').click
-  sleep @ANIMATION_DELAY
 end
 
 Then /^I set the boring but big notes to "(.*?)"$/ do |notes|

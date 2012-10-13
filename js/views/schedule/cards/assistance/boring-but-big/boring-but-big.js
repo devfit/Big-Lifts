@@ -13,14 +13,32 @@ wendler.liftSchedule.assistance.boringButBig.percentageChange = function (event)
 };
 
 wendler.liftSchedule.assistance.boringButBig.liftsComplete = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-log'));
+    wendler.stores.assistance.BoringButBig.each(function (movement) {
+        var assistanceRecord = {
+            movement:movement.get('name'),
+            assistanceType:'BBB',
+            sets:movement.get('sets'),
+            reps:movement.get('reps'),
+            weight:wendler.stores.assistance.BoringButBig.getWeightForRecord(movement.data),
+            timestamp:new Date().getTime(),
+            notes:wendler.liftSchedule.assistance.boringButBig.currentNotes
+        };
+        wendler.stores.assistance.ActivityLog.add(assistanceRecord);
+        wendler.stores.assistance.ActivityLog.sync();
+    });
+
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+    Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
 };
 
 wendler.liftSchedule.assistance.boringButBig.filterLifts = function () {
     wendler.stores.assistance.BoringButBig.clearFilter();
     var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
-    window.test = lift;
     wendler.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
+};
+
+wendler.liftSchedule.assistance.boringButBig.showNotesEditor = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-notes'));
 };
 
 wendler.views.liftSchedule.assistance.BoringButBig = {
@@ -43,7 +61,6 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                 },
                 {xtype:'spacer'},
                 {
-                    style:'z-index: 11',
                     id:'boring-but-big-rest-timer-button',
                     cls:'rest-timer-button',
                     iconCls:'clock',
@@ -52,11 +69,9 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                     handler:wendler.liftSchedule.assistance.boringButBig.showRestTimer
                 },
                 {
-                    style:'z-index: 11',
                     id:'boring-but-big-done-button',
-                    iconCls:'done',
-                    iconMask:true,
-                    ui:'action',
+                    text:'Save',
+                    ui:'confirm',
                     handler:wendler.liftSchedule.assistance.boringButBig.liftsComplete
                 }
             ]
@@ -66,6 +81,11 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
             ui:'light',
             docked:'top',
             items:[
+                {
+                    xtype:'button',
+                    text:'Notes',
+                    handler:wendler.liftSchedule.assistance.boringButBig.showNotesEditor
+                },
                 {
                     xtype:'panel',
                     width:'100%',

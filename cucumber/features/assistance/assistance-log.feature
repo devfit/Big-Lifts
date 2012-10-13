@@ -7,8 +7,7 @@ Feature: Assistance log
     And I mark the current lift completed
     And I save the lift log
     And I select "Boring But Big" assistance work
-    And I save the boring but big assistance work
-    And I save the boring but big log
+    And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
     And I tap BBB log entry 1
@@ -23,14 +22,13 @@ Feature: Assistance log
     And I mark the current lift completed
     And I save the lift log
     And I select "Boring But Big" assistance work
-    And I save the boring but big assistance work
+    And I tap the "Save" button
     And I save the boring but big log
     And I view the squat lift schedule for week 2
     And I mark the current lift completed
     And I save the lift log
     And I select "Boring But Big" assistance work
-    And I save the boring but big assistance work
-    And I save the boring but big log
+    And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
     And I tap BBB log entry 1

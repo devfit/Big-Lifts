@@ -7,6 +7,7 @@ Feature: Adjusting the weights to kg
     And I navigate to the lift editor
     And I tap the bar/plates button
     Then The plates list shows "25kg,20kg,10kg,5kg,2.5kg,1.25kg"
+    The Bar weight shows
 
   Scenario: Maxes are cut in half for kg settings
     When I set the squat max to 300

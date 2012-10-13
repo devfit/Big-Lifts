@@ -28,8 +28,8 @@ Ext.define('BoringButBigStore', {
         }
 
         var associatedLift = wendler.stores.lifts.Lifts.findRecord('id', data.lift_id);
-        return wendler.weight.lowerMaxToTrainingMax(associatedLift.get('max')) *
-            wendler.stores.assistance.BoringButBigPercentage.first().get('percentage') / 100.0;
+        return wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(associatedLift.get('max')),
+            wendler.stores.assistance.BoringButBigPercentage.first().get('percentage'));
     },
     config:{
         model:'BoringButBigLift',

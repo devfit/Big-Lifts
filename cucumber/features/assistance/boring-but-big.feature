@@ -7,8 +7,7 @@ Feature: Boring But Big - Assistance Work
     And I mark the current lift completed
     And I save the lift log
     And I select "Boring But Big" assistance work
-    And I save the boring but big assistance work
-    And I save the boring but big log
+    And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
     Then I see 1 assistance log entry for "10x90"
@@ -26,11 +25,10 @@ Feature: Boring But Big - Assistance Work
     Then The first boring but big lift weight is 90
     And I set the BBB percentage to 60
     Then The first boring but big lift weight is 110
-    And I save the boring but big assistance work
-    And I tap edit boring but big notes
+    And I tap the "Notes" button
     And I set the boring but big notes to "Felt okay. A little slow on the last set"
     And I return from the boring but big notes
-    And I save the boring but big log
+    And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
     Then I see 1 assistance log entry for "10x110"
