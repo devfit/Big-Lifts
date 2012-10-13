@@ -8,10 +8,12 @@ src_files:
     - js/util/formulas.js
     - js/util/filters.js
     - js/util/rounding.js
+    - js/util/weight-formatter.js
     - js/models/stores.js
     - js/models/lifts.js
     - js/models/templates/meet_goal.js
     - js/models/lift-log.js
+    - js/models/settings.js
     - js/models/lift-completion.js
     - js/models/lift-progression.js
     - js/models/plates/plates.js
@@ -19,6 +21,7 @@ src_files:
     - js/models/assistance/assistance.js
     - js/models/assistance/triumvirate.js
     - js/models/assistance/boring-but-big.js
+    - js/models/assistance/boring-but-big-percentage.js
     - js/views/schedule/cards/lift-selector.js
     - js/views/schedule/cards/tracking/lift-tracking.js
     - js/views/schedule/cards/rest-timer.js

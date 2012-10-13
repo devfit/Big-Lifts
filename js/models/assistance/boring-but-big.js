@@ -19,25 +19,40 @@ Ext.define('BoringButBigLift', {
     }
 });
 
-wendler.stores.assistance.BoringButBig = Ext.create('Ext.data.Store', {
-    model:'BoringButBigLift',
-    listeners:{
-        load:function () {
-            if (this.getCount() === 0) {
-                util.withLoadedStore(wendler.stores.lifts.Lifts, function () {
-                    wendler.stores.lifts.Lifts.each(function (r) {
-                        var bbbRecord = {
-                            name:r.get("name"),
-                            lift_id:r.get("id"),
-                            weight:null,
-                            reps:10,
-                            sets:5
-                        };
-                        wendler.stores.assistance.BoringButBig.add(bbbRecord);
+
+Ext.define('BoringButBigStore', {
+    extend:'Ext.data.Store',
+    getWeightForRecord:function (data) {
+        if (data.weight) {
+            return data.weight;
+        }
+
+        var associatedLift = wendler.stores.lifts.Lifts.findRecord('id', data.lift_id);
+        return wendler.weight.lowerMaxToTrainingMax(associatedLift.get('max')) *
+            wendler.stores.assistance.BoringButBigPercentage.first().get('percentage') / 100.0;
+    },
+    config:{
+        model:'BoringButBigLift',
+        listeners:{
+            load:function () {
+                if (this.getCount() === 0) {
+                    util.withLoadedStore(wendler.stores.lifts.Lifts, function () {
+                        wendler.stores.lifts.Lifts.each(function (r) {
+                            var bbbRecord = {
+                                name:r.get("name"),
+                                lift_id:r.get("id"),
+                                weight:null,
+                                reps:10,
+                                sets:5
+                            };
+                            wendler.stores.assistance.BoringButBig.add(bbbRecord);
+                        });
+                        wendler.stores.assistance.BoringButBig.sync();
                     });
-                    wendler.stores.assistance.BoringButBig.sync();
-                });
+                }
             }
         }
     }
 });
+
+wendler.stores.assistance.BoringButBig = Ext.create('BoringButBigStore');
