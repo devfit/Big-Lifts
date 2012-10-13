@@ -56,3 +56,4 @@ Ext.define('BoringButBigStore', {
 });
 
 wendler.stores.assistance.BoringButBig = Ext.create('BoringButBigStore');
+wendler.stores.push(wendler.stores.assistance.BoringButBig);

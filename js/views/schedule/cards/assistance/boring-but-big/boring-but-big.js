@@ -9,21 +9,32 @@ wendler.liftSchedule.assistance.boringButBig.percentageChange = function (event)
     var newValue = event.target.value;
     wendler.stores.assistance.BoringButBigPercentage.first().set('percentage', newValue);
     wendler.stores.assistance.BoringButBigPercentage.sync();
+    Ext.getCmp('boring-but-big-list').refresh();
 };
 
 wendler.liftSchedule.assistance.boringButBig.liftsComplete = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-log'));
 };
 
+wendler.liftSchedule.assistance.boringButBig.filterLifts = function () {
+    wendler.stores.assistance.BoringButBig.clearFilter();
+    var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
+    window.test = lift;
+    wendler.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
+};
+
 wendler.views.liftSchedule.assistance.BoringButBig = {
     xtype:'panel',
     id:'boring-but-big',
-    layout:'fit',
-    title:'BBB',
+    layout:{
+        type:'vbox',
+        align:'stretch'
+    },
     items:[
         {
             xtype:'toolbar',
             docked:'top',
+            title:"BBB",
             items:[
                 {
                     text:'Back',
@@ -74,17 +85,26 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
         },
         {
             id:'boring-but-big-list',
+            flex:2,
             xtype:'list',
-            store:wendler.liftSchedule.assistance.boringButBig.liftStore,
-            itemTpl:"<table class='triumvirate-table'><tbody><tr>" +
-                "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x " +
-                "{[wendler.logList.getWeightDisplay(values.weight)]}" +
+            store:wendler.stores.assistance.BoringButBig,
+            itemTpl:"<table class='assistance-table'><tbody><tr>" +
+                "<td width='50%'><span class='name'>{name}</b></td>" +
+                "<td width='20%'>{sets} sets</td>" +
+                "<td style='text-align:right;' width='30%'>{reps}x " +
+                "<span class='weight'>{[wendler.weight.format(wendler.stores.assistance.BoringButBig.getWeightForRecord(values))]}</span>" +
                 "{[wendler.stores.Settings.first().get('units')]}</td>" +
                 "</tr></tbody></table>"
+        },
+        {
+            flex:1,
+            cls:'tap-to-edit',
+            html:'Tap row to edit'
         }
     ],
     listeners:{
         show:function () {
+            wendler.liftSchedule.assistance.boringButBig.filterLifts();
             wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.returnToAssistanceSelect);
         }
     }
