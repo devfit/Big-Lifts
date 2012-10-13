@@ -1,45 +1,4 @@
 Ext.ns('wendler.views.liftSchedule.assistance', 'wendler.liftSchedule.assistance.boringButBig');
-Ext.define('BoringButBigLift', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'weight', type:'string'},
-            {name:'reps', type:'int'},
-            {name:'percentage', type:'int'},
-            {name:'set', type:'int'}
-        ],
-        proxy:{
-            type:'memory',
-            id:'lift-log-proxy'
-        }
-    }
-});
-
-wendler.liftSchedule.assistance.boringButBig.liftStore = Ext.create('Ext.data.Store', {
-    model:'BoringButBigLift'
-});
-
-wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore = function (bbbPercentage) {
-    if (!bbbPercentage) {
-        bbbPercentage = 0;
-    }
-
-    var store = wendler.liftSchedule.assistance.boringButBig.liftStore;
-    store.removeAll();
-
-    var liftWeight = wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax), bbbPercentage);
-
-    for (var i = 0; i < 5; i++) {
-        store.add({
-            set:(i + 1),
-            weight:liftWeight,
-            reps:'10',
-            percentage:bbbPercentage
-        });
-    }
-};
 
 wendler.liftSchedule.assistance.boringButBig.showRestTimer = function () {
     wendler.restTimer.backLocation = 'boring-but-big';
@@ -48,23 +7,19 @@ wendler.liftSchedule.assistance.boringButBig.showRestTimer = function () {
 
 wendler.liftSchedule.assistance.boringButBig.percentageChange = function (event) {
     var newValue = event.target.value;
-    wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore(newValue);
+    wendler.stores.assistance.BoringButBigPercentage.first().set('percentage', newValue);
+    wendler.stores.assistance.BoringButBigPercentage.sync();
 };
 
 wendler.liftSchedule.assistance.boringButBig.liftsComplete = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-log'));
 };
 
-wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle = function () {
-    var toolbar = Ext.getCmp('boring-but-big').down('toolbar');
-    var liftName = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).get('name');
-    toolbar.setTitle(liftName);
-};
-
 wendler.views.liftSchedule.assistance.BoringButBig = {
     xtype:'panel',
     id:'boring-but-big',
     layout:'fit',
+    title:'BBB',
     items:[
         {
             xtype:'toolbar',
@@ -121,25 +76,15 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
             id:'boring-but-big-list',
             xtype:'list',
             store:wendler.liftSchedule.assistance.boringButBig.liftStore,
-            itemCls:'lift-row',
-            itemTpl:'<p class="reps-weight"><span class="reps">{reps}</span> ' +
-                '<span class="weight">{weight}</span>' +
-                '<span class="percentage">{percentage}%</span></p>' +
-                (wendler.toggles.BarLoading ?
-                    '<p class="bar-loader-breakdown">' +
-                        '{[values.set > 1 ? "" : ' +
-                        'wendler.liftSchedule.liftTemplate.getPlateList(' +
-                        'wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax),values.percentage)' +
-                        ')' +
-                        ']}' +
-                        '</p>' :
-                    '')
+            itemTpl:"<table class='triumvirate-table'><tbody><tr>" +
+                "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x " +
+                "{[wendler.logList.getWeightDisplay(values.weight)]}" +
+                "{[wendler.stores.Settings.first().get('units')]}</td>" +
+                "</tr></tbody></table>"
         }
     ],
     listeners:{
         show:function () {
-            wendler.liftSchedule.assistance.boringButBig.setCurrentLiftTitle();
-            wendler.liftSchedule.assistance.boringButBig.setupAssistanceLiftStore(50);
             wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.returnToAssistanceSelect);
         }
     }
