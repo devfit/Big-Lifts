@@ -15,7 +15,7 @@ wendler.liftSchedule.assistance.boringButBig.percentageChange = function (event)
 wendler.liftSchedule.assistance.boringButBig.liftsComplete = function () {
     wendler.stores.assistance.BoringButBig.each(function (movement) {
         var assistanceRecord = {
-            movement:movement.get('name'),
+            movement:wendler.stores.assistance.BoringButBig.getNameForRecord(movement.data),
             assistanceType:'BBB',
             sets:movement.get('sets'),
             reps:movement.get('reps'),
