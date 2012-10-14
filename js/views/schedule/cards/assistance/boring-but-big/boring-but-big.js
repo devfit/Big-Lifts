@@ -32,7 +32,7 @@ wendler.liftSchedule.assistance.boringButBig.liftsComplete = function () {
 };
 
 wendler.liftSchedule.assistance.boringButBig.filterLifts = function () {
-    wendler.stores.assistance.BoringButBig.clearFilter();
+    wendler.stores.assistance.BoringButBig.clearFilter(true);
     var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
     wendler.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
 };
@@ -52,6 +52,25 @@ wendler.stores.assistance.BoringButBig.addListener('beforesync', function () {
         list.refresh();
     }
 });
+
+wendler.liftSchedule.assistance.boringButBig.getPlateBreakdown = function (values) {
+    if (!values.movement_lift_id) {
+        return;
+    }
+
+    var max = wendler.stores.lifts.Lifts.findRecord('id', values.movement_lift_id).get('max');
+    var trainingAdjustedMax = wendler.weight.lowerMaxToTrainingMax(max);
+    var bbbWeight = trainingAdjustedMax * wendler.stores.assistance.BoringButBigPercentage.first().get('percentage') / 100.0;
+    var plateList = wendler.liftSchedule.liftTemplate.getPlateList(
+        wendler.weight.format(bbbWeight));
+
+    return "<table class='assistance-table'><tbody><tr>" +
+        "<td width='70%'></td>" +
+        "<td style='text-align:right;' width='30%'>" +
+        '<p class="bar-loader-breakdown">' + plateList + '</p>' +
+        "</td>" +
+        "</tr></tbody></table>";
+};
 
 wendler.views.liftSchedule.assistance.BoringButBig = {
     xtype:'panel',
@@ -126,7 +145,7 @@ wendler.views.liftSchedule.assistance.BoringButBig = {
                 "<td style='text-align:right;' width='30%'>{reps}x " +
                 "<span class='weight'>{[wendler.weight.format(wendler.stores.assistance.BoringButBig.getWeightForRecord(values))]}</span>" +
                 "{[wendler.stores.Settings.first().get('units')]}</td>" +
-                "</tr></tbody></table>",
+                "</tr></tbody></table>{[wendler.liftSchedule.assistance.boringButBig.getPlateBreakdown(values)]}",
             listeners:{
                 initialize:function (list) {
                     list.addListener('itemtap', wendler.liftSchedule.assistance.boringButBig.editBbbMovement);

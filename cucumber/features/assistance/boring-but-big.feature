@@ -1,6 +1,18 @@
 @premium
 Feature: Boring But Big - Assistance Work
 
+  Scenario: BBB primary movements show plate breakdowns
+    When I set the squat max to 200
+    And I set the press max to 150
+    And I view the squat lift schedule for week 1
+    And I mark the current lift completed
+    And I save the lift log
+    And I select "Boring But Big" assistance work
+    And I tap the first boring but big entry
+    And I set the boring but big lift to "Press"
+    And I tap the "Back" button
+    Then The BBB list item 1 contains "[10,2.5]"
+
   Scenario: Boring But Big associated lift can be changed
     When I set the squat max to 200
     And I view the squat lift schedule for week 1

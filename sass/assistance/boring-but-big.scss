@@ -1,6 +1,8 @@
 #boring-but-big {
   .bar-loader-breakdown {
-    display: inherit;
+    display: block;
+    font-size: 90%;
+    color: grey;
   }
 }
 
@@ -8,6 +10,6 @@
   text-align: right;
   color: white;
   input {
-    width:33%;
+    width: 33%;
   }
 }
