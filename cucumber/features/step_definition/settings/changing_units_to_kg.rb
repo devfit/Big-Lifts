@@ -7,3 +7,7 @@ Then /^The plates list shows "([^"]*?)"$/ do |plates|
   actual_plates = get_displayed_plates()
   actual_plates.should == expected_plates
 end
+
+Then /^The bar weight is ([\d\.]+)$/ do |bar_weight|
+  @driver.find_element(:id => 'bar-setup-fieldset').find_element(:name => 'weight').attribute('value').should == bar_weight
+end

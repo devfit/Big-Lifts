@@ -78,6 +78,14 @@ wendler.maxes.barSetup.adjustPlatesForUnits = function (units) {
         wendler.stores.Plates.add(wendler.stores.Plates.DEFAULT_PLATES_LBS);
     }
 
+    var barWeight = wendler.stores.BarWeight.first();
+    if (units === 'kg' && barWeight.get('weight') === 45) {
+        barWeight.set('weight', 20.4);
+    }
+    else if (units === 'kg' && barWeight.get('weight') === 20.4) {
+        barWeight.set('weight', 45);
+    }
+
     wendler.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
 };
 
