@@ -64,3 +64,21 @@ Then /^I set the assistance log reps to (\d+)$/ do |reps|
   reps_input.clear
   reps_input.send_keys reps
 end
+
+When /^I tap the first boring but big entry$/ do
+  @driver.find_element(:id => 'boring-but-big').find_elements(:class => 'x-list-item')[0].click
+  sleep @ANIMATION_DELAY
+end
+
+When /^I set the boring but big lift to "(.*?)"$/ do |lift_name|
+  @sencha_helper.select_combobox @driver.find_element(:id => 'bbb-movement-editor').find_element(:name => 'lift'), lift_name
+end
+
+Then /^The BBB list item (\d+) contains "(.*?)"$/ do |list_item_number, text|
+  bbb_list_items = @driver.find_element(:id => 'boring-but-big').find_elements(:class => 'x-list-item')
+  bbb_list_items[list_item_number.to_i - 1].text().should include text
+end
+
+Then /^I see an assistance log entry containing "(.*?)"$/ do |text|
+  @driver.find_element(:id => 'log-assistance-list').text().should include text
+end

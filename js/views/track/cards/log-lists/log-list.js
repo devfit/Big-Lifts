@@ -1,81 +1,18 @@
 Ext.ns('wendler.views.log.cards', 'wendler.logList');
 
-wendler.logList.showLogEntry = function (dataview, index, item, e) {
-    var logRecord = wendler.stores.LiftLog.getAt(index);
-    wendler.logEntry.setupLogEntry(logRecord);
-};
-
-wendler.logList.showAssistanceLogEntry = function (dataview, index, item, e) {
-    var assistanceLogRecord = wendler.stores.assistance.ActivityLog.getAt(index);
-    wendler.logEntry.setupAssistanceLogEntry(assistanceLogRecord);
-};
-
-wendler.logList.deleteLogEntry = function (dataview, index, item, e) {
-    wendler.stores.LiftLog.removeAt(index);
-    wendler.stores.LiftLog.sync();
-    Ext.getCmp('lift-log-list').refresh();
-};
-
-wendler.logList.deleteAssistanceEntry = function (dataview, index, item, e) {
-    wendler.stores.assistance.ActivityLog.removeAt(index);
-    wendler.stores.assistance.ActivityLog.sync();
-    Ext.getCmp('log-assistance-list').refresh();
-};
-
 wendler.logList.showExportLog = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('export-log'), {type:'slide', direction:'left'});
 };
 
-wendler.logList.sortLifts = function (sortProperty, sortDirection) {
-    wendler.stores.LiftLog.sort(sortProperty, sortDirection);
-    Ext.getCmp('lift-log-list').refresh();
-};
-
-wendler.logList.sortAssistance = function (sortProperty, sortDirection) {
-    var assistanceProperty = {
-        'liftName':'movement',
-        'timestamp':'timestamp'
-    }[sortProperty];
-    wendler.stores.assistance.ActivityLog.sort(assistanceProperty, sortDirection);
-    var logAssistanceList = Ext.getCmp('log-assistance-list');
-    if (logAssistanceList) {
-        Ext.getCmp('log-assistance-list').refresh();
-    }
-};
-
-wendler.logList.sortAndRefreshList = function () {
-    var liftLogSort = wendler.stores.LiftLogSort.first();
-
-    var sortDirection = liftLogSort.data.ascending ? 'ASC' : 'DESC';
-    var sortProperty = liftLogSort.data.property;
-    wendler.logList.sortLifts(sortProperty, sortDirection);
-    wendler.logList.sortAssistance(sortProperty, sortDirection);
-};
-
-wendler.stores.LiftLog.addListener('beforesync', function () {
-    if (wendler.main.started) {
-        wendler.logList.sortAndRefreshList();
-    }
-});
-
-wendler.logList.toggleVisibility = function (component) {
-    if (component.isHidden()) {
-        component.show();
-    }
-    else {
-        component.hide();
-    }
-};
-
 wendler.logList.showSortMenu = function () {
-    wendler.logList.toggleVisibility(Ext.getCmp('track-sort-toolbar'));
+    util.components.toggleVisibility(Ext.getCmp('track-sort-toolbar'));
     wendler.logList.updateUiForSortButtons();
 };
 
 wendler.logList.changeMovementTypeCalled = function () {
     Ext.getCmp('track-sort-toolbar').hide();
-    wendler.logList.toggleVisibility(Ext.getCmp('track-lifts-movement-type-button'));
-    wendler.logList.toggleVisibility(Ext.getCmp('track-assistance-movement-type-button'));
+    util.components.toggleVisibility(Ext.getCmp('track-lifts-movement-type-button'));
+    util.components.toggleVisibility(Ext.getCmp('track-assistance-movement-type-button'));
 };
 
 wendler.logList.changeMovementTypeToLifts = function () {
@@ -179,32 +116,9 @@ wendler.logList.updateAscendingText = function () {
     }
 };
 
-wendler.logList.getAssistanceTypeDisplay = function (assistanceType) {
-    var displayMapping = {'Triumvirate':'Tri.'};
-    var displayType = assistanceType;
-    if (displayMapping[assistanceType]) {
-        displayType = displayMapping[assistanceType];
-    }
-    return displayType;
-};
-
-wendler.logList.getWeightDisplay = function (weight) {
-    return (weight == 0 || weight == null) ? "[?]" : weight;
-};
-
-wendler.logList.deloadMarker = function (week) {
-    return week === 4 ? "[D]" : "";
-};
-
 wendler.logList.showChart = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('graph'));
 };
-
-wendler.stores.Settings.addListener('beforesync', function () {
-    if (wendler.main.started) {
-        Ext.getCmp('lift-log-list').refresh();
-    }
-});
 
 wendler.views.log.cards.LogList = {
     id:'log-list',
@@ -328,64 +242,8 @@ wendler.views.log.cards.LogList = {
             layout:'card',
             activeItem:0,
             items:[
-                {
-                    id:'lift-log-list',
-                    listeners:{
-                        initialize:function () {
-                            wendler.logList.sortAndRefreshList();
-                            wendler.components.addSwipeToDelete(this, wendler.logList.showLogEntry,
-                                wendler.logList.deleteLogEntry, Ext.emptyFn, '.date-week');
-                        }
-                    },
-                    xtype:'list',
-                    selectedCls:'',
-                    store:wendler.stores.LiftLog,
-                    itemCls:'lift-log-row',
-                    emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
-                    itemTpl:'<table><tbody><tr>' +
-                        '<td width="32%"><div class="lift-name">{liftName}</div><div class="cycle-and-week">C{cycle} W{week} ' +
-                        '<span class="deload-indicator">{[wendler.logList.deloadMarker(values.week)]}</span>' +
-                        '</div></td>' +
-                        '<td width="28%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div>' +
-                        '<div class="estimated-one-rep">~{[util.formulas.estimateOneRepMax(values.weight,values.reps)]}</div></td>' +
-                        '<td width="40%" class="date-week">' +
-                        '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span><span class="disclosure-small"></span>' +
-                        '</td><td width="40%" class="delete-button-holder hidden"></td>' +
-                        '</tr></tbody></table>'
-                },
-                {
-                    id:'log-assistance-list',
-                    listeners:{
-                        initialize:function () {
-                            wendler.components.addSwipeToDelete(
-                                this,
-                                wendler.logList.showAssistanceLogEntry,
-                                wendler.logList.deleteAssistanceEntry,
-                                Ext.emptyFn,
-                                '.date-week');
-
-                            wendler.stores.assistance.ActivityLog.addListener('beforesync', function () {
-                                Ext.getCmp('log-assistance-list').refresh();
-                            });
-                        }
-                    },
-                    xtype:'list',
-                    selectedCls:'',
-                    store:wendler.stores.assistance.ActivityLog,
-                    itemCls:'lift-log-row',
-                    itemTpl:'<table><tbody><tr>' +
-                        '<td width="15%">{[wendler.logList.getAssistanceTypeDisplay(values.assistanceType)]}</td>' +
-                        '<td width="25%"><div class="lift-name">{movement}</div><div class="cycle-and-week">Sets: {sets}</div></td>' +
-                        '<td width="25%"><div>' +
-                        '<span class="reps">{reps}x</span> ' +
-                        '<span class="weight">{[wendler.logList.getWeightDisplay(values.weight)]}</span>' +
-                        '</div></td>' +
-                        '<td width="35%" class="date-week">' +
-                        '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span>' +
-                        '</td><td width="40%" class="delete-button-holder hidden"></td>' +
-                        '</td><td width="40%" class="delete-button-holder hidden"></td>' +
-                        '</tr></tbody></table>'
-                }
+                wendler.logList.liftLogList,
+                wendler.logList.assistanceList
             ]
         }
     ]

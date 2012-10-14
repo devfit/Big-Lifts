@@ -2,19 +2,20 @@ require 'selenium-webdriver'
 require 'ruby-debug'
 
 $LOAD_PATH << File.expand_path('../../../lib', __FILE__)
-require 'wendler531'
+require 'navigation'
+require 'sencha_helper'
 
 Before('@premium') do
-  premiumFileText = File.open("../js/premium.js", "rb").read
+  premium_file_text = File.open("../js/premium.js", "rb").read
   File.open('../js/premium.js', 'w') { |f|
-    f.write(premiumFileText.gsub(/false/, "true"))
+    f.write(premium_file_text.gsub(/false/, "true"))
   }
 end
 
 After('@premium') do
-  premiumFileText = File.open("../js/premium.js", "rb").read
+  premium_file_text = File.open("../js/premium.js", "rb").read
   File.open('../js/premium.js', 'w') { |f|
-    f.write(premiumFileText.gsub(/true/, "false"))
+    f.write(premium_file_text.gsub(/true/, "false"))
   }
 end
 
@@ -35,6 +36,7 @@ Before do
 
   @main_navigation = MainNavigation.new(@driver, @ANIMATION_DELAY)
   @lift_schedule_navigator = LiftScheduleNavigator.new(@driver, @ANIMATION_DELAY)
+  @sencha_helper = SenchaHelper.new(@driver, @ANIMATION_DELAY)
 end
 
 After do

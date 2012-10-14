@@ -1,6 +1,20 @@
 @premium
 Feature: Boring But Big - Assistance Work
 
+  Scenario: Boring But Big associated lift can be changed
+    When I set the squat max to 200
+    And I view the squat lift schedule for week 1
+    And I mark the current lift completed
+    And I save the lift log
+    And I select "Boring But Big" assistance work
+    And I tap the first boring but big entry
+    And I set the boring but big lift to "Press"
+    And I tap the "Back" button
+    Then The BBB list item 1 contains "Press"
+    And I tap the "Save" button
+    And I tap "Asst." to change the log type
+    Then I see an assistance log entry containing "Press"
+
   Scenario: Changes in the assistance list should be reflected immediately after a BBB entry is edited
     When I set the squat max to 200
     And I view the squat lift schedule for week 1
