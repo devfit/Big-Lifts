@@ -26,9 +26,11 @@ wendler.loading.loadingStarted = false;
 wendler.loading.load = function () {
     if (!wendler.loading.loadingStarted) {
         wendler.loading.loadingStarted = true;
-        async.parallel(wendler.loading.loadTasks, function () {
-            wendler.main.start();
-        });
+        setTimeout(function () {
+            async.parallel(wendler.loading.loadTasks, function () {
+                wendler.main.start();
+            });
+        }, 0);
     }
 };
 
