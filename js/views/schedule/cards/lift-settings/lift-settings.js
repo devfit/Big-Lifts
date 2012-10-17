@@ -1,39 +1,39 @@
-Ext.ns('wendler.views.liftSchedule', 'wendler.liftSettings', 'wendler.liftProgressions');
-wendler.liftSettings.returnToLiftSelectFromSettings = function () {
+Ext.ns('biglifts.views.liftSchedule', 'biglifts.liftSettings', 'biglifts.liftProgressions');
+biglifts.liftSettings.returnToLiftSelectFromSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
 };
 
-wendler.liftSettings.showEditLiftPercentages = function () {
+biglifts.liftSettings.showEditLiftPercentages = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'left'});
 };
 
-wendler.liftSettings.carouselBack = function () {
+biglifts.liftSettings.carouselBack = function () {
     var liftSettings = Ext.getCmp('lift-settings');
     liftSettings.setActiveItem(liftSettings.getActiveIndex() - 1);
 };
 
-wendler.liftSettings.carouselForward = function () {
+biglifts.liftSettings.carouselForward = function () {
     var liftSettings = Ext.getCmp('lift-settings');
     liftSettings.setActiveItem(liftSettings.getActiveIndex() + 1);
 };
 
-wendler.liftSettings.setupLiftScheme = function (scheme) {
+biglifts.liftSettings.setupLiftScheme = function (scheme) {
     //TODO: Figure out weird saving behavior. On the very first load, and only on mobile safari, if the records
     //being saved are the *same* as those that exist, on page reload, the count of the store will be 0.
     //It's almost as if the records are marked to be deleted twice.
-    var prebuiltVariation = wendler.liftProgressions.options[scheme];
-    wendler.stores.lifts.LiftProgression.clearFilter();
-    wendler.stores.lifts.LiftProgression.removeAll();
-    wendler.stores.lifts.LiftProgression.add(prebuiltVariation);
-    wendler.stores.lifts.LiftProgression.sync();
+    var prebuiltVariation = biglifts.liftProgressions.options[scheme];
+    biglifts.stores.lifts.LiftProgression.clearFilter();
+    biglifts.stores.lifts.LiftProgression.removeAll();
+    biglifts.stores.lifts.LiftProgression.add(prebuiltVariation);
+    biglifts.stores.lifts.LiftProgression.sync();
 
-    var template = wendler.stores.Template.first();
+    var template = biglifts.stores.Template.first();
     template.set('name', scheme);
     template.set('hasMeetGoals', scheme === "powerlifting");
-    wendler.stores.Template.sync();
+    biglifts.stores.Template.sync();
 
-    wendler.stores.lifts.MeetGoals.removeAll();
-    wendler.stores.lifts.syncMeetGoalsToLifts();
+    biglifts.stores.lifts.MeetGoals.removeAll();
+    biglifts.stores.lifts.syncMeetGoalsToLifts();
 
     var customMessages = {'powerlifting':'Meet goals have been defaulted to your 1RM estimates. You can change meet goals on the lifts tab.'};
     var message = _.has(customMessages, scheme) ? customMessages[scheme] : 'The lift scheme has been updated';
@@ -41,12 +41,12 @@ wendler.liftSettings.setupLiftScheme = function (scheme) {
     Ext.Msg.alert('Lifts Updated', message, Ext.emptyFn);
 };
 
-wendler.views.liftSchedule.LiftSettings = {
+biglifts.views.liftSchedule.LiftSettings = {
     id:'lift-settings',
     xtype:'carousel',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftSettings.returnToLiftSelectFromSettings);
+            biglifts.navigation.setBackFunction(biglifts.liftSettings.returnToLiftSelectFromSettings);
         }
     },
     defaults:{
@@ -66,13 +66,13 @@ wendler.views.liftSchedule.LiftSettings = {
                             id:'lift-settings-back-button',
                             text:'Back',
                             ui:'back',
-                            handler:wendler.liftSettings.returnToLiftSelectFromSettings
+                            handler:biglifts.liftSettings.returnToLiftSelectFromSettings
                         },
                         {xtype:'spacer'},
                         {
                             text:'Next',
                             ui:'forward',
-                            handler:wendler.liftSettings.carouselForward
+                            handler:biglifts.liftSettings.carouselForward
                         }
                     ]
                 },
@@ -95,7 +95,7 @@ wendler.views.liftSchedule.LiftSettings = {
                     ui:'confirm',
                     text:'Use',
                     handler:function () {
-                        wendler.liftSettings.setupLiftScheme("fresher");
+                        biglifts.liftSettings.setupLiftScheme("fresher");
                     }
                 }
             ]
@@ -111,13 +111,13 @@ wendler.views.liftSchedule.LiftSettings = {
                         {
                             text:'Back',
                             ui:'back',
-                            handler:wendler.liftSettings.carouselBack
+                            handler:biglifts.liftSettings.carouselBack
                         },
                         {xtype:'spacer'},
                         {
                             text:'Next',
                             ui:'forward',
-                            handler:wendler.liftSettings.carouselForward
+                            handler:biglifts.liftSettings.carouselForward
                         }
                     ]
                 },
@@ -140,7 +140,7 @@ wendler.views.liftSchedule.LiftSettings = {
                     ui:'confirm',
                     text:'Use',
                     handler:function () {
-                        wendler.liftSettings.setupLiftScheme("heavier");
+                        biglifts.liftSettings.setupLiftScheme("heavier");
                     }
                 }
             ]
@@ -156,13 +156,13 @@ wendler.views.liftSchedule.LiftSettings = {
                         {
                             text:'Back',
                             ui:'back',
-                            handler:wendler.liftSettings.carouselBack
+                            handler:biglifts.liftSettings.carouselBack
                         },
                         {xtype:'spacer'},
                         {
                             text:'Next',
                             ui:'forward',
-                            handler:wendler.liftSettings.carouselForward
+                            handler:biglifts.liftSettings.carouselForward
                         }
                     ]
                 },
@@ -185,7 +185,7 @@ wendler.views.liftSchedule.LiftSettings = {
                     ui:'confirm',
                     text:'Use',
                     handler:function () {
-                        wendler.liftSettings.setupLiftScheme("powerlifting");
+                        biglifts.liftSettings.setupLiftScheme("powerlifting");
                     }
                 }
             ]
@@ -201,7 +201,7 @@ wendler.views.liftSchedule.LiftSettings = {
                         {
                             text:'Back',
                             ui:'back',
-                            handler:wendler.liftSettings.carouselBack
+                            handler:biglifts.liftSettings.carouselBack
                         }
                     ]
                 },
@@ -214,7 +214,7 @@ wendler.views.liftSchedule.LiftSettings = {
                     xtype:'button',
                     text:'Use',
                     ui:'confirm',
-                    handler:wendler.liftSettings.showEditLiftPercentages
+                    handler:biglifts.liftSettings.showEditLiftPercentages
                 }
             ]
         }

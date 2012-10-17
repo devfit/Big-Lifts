@@ -1,39 +1,39 @@
 "use strict";
-Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.increaseMaxes');
+Ext.ns('biglifts.views.liftSchedule', 'biglifts.liftSchedule.increaseMaxes');
 
-wendler.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen = function () {
+biglifts.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'),
         {type:'slide', direction:'left'});
 };
 
-wendler.liftSchedule.increaseMaxes.bindInputElements = function(){
+biglifts.liftSchedule.increaseMaxes.bindInputElements = function(){
     _.each(Ext.getCmp('increase-maxes-help').element.query('input'), function (input) {
-        Ext.get(input).addListener('blur', wendler.liftSchedule.increaseMaxes.updateCycleIncrease);
+        Ext.get(input).addListener('blur', biglifts.liftSchedule.increaseMaxes.updateCycleIncrease);
     })
 };
 
-wendler.liftSchedule.increaseMaxes.updateCycleIncrease = function (changedInput) {
+biglifts.liftSchedule.increaseMaxes.updateCycleIncrease = function (changedInput) {
     var name = changedInput.target.getAttribute('data-lift');
     var value = parseInt(changedInput.target.value);
-    var liftRecord = wendler.stores.lifts.Lifts.findRecord('name', name);
+    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('name', name);
     liftRecord.set('cycleIncrease', value);
     liftRecord.save();
 
     Ext.getCmp('increase-maxes-display-list').refresh();
-    wendler.liftSchedule.increaseMaxes.bindInputElements();
+    biglifts.liftSchedule.increaseMaxes.bindInputElements();
 };
 
 
-wendler.views.liftSchedule.IncreaseMaxesHelp = {
+biglifts.views.liftSchedule.IncreaseMaxesHelp = {
     id:'increase-maxes-help',
     xtype:'panel',
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen);
+            biglifts.navigation.setBackFunction(biglifts.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen);
         },
         initialize:function () {
-            wendler.liftSchedule.increaseMaxes.bindInputElements();
+            biglifts.liftSchedule.increaseMaxes.bindInputElements();
         }
     },
     items:[
@@ -46,14 +46,14 @@ wendler.views.liftSchedule.IncreaseMaxesHelp = {
                     xtype:'button',
                     text:'Back',
                     ui:'back',
-                    handler:wendler.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen
+                    handler:biglifts.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen
                 }
             ]
         },
         {
             id:'increase-maxes-display-list',
             xtype:'list',
-            store:wendler.stores.lifts.EnabledLifts,
+            store:biglifts.stores.lifts.EnabledLifts,
             itemTpl:'<table style="width:100%"><tbody><tr>' +
                 '<td style="width:33%">{name}</td>' +
                 '<td style="width:33%"><input style="color:green; width:50px" data-lift="{propertyName}" type="number" value="{cycleIncrease}"/></td>' +

@@ -65,5 +65,5 @@ Then /^I am returned to the lift schedule and no log is saved$/ do
   lift_template_visible = @driver.find_element(:id => 'lift-template').displayed?
   lift_template_visible.should be_true
 
-  @driver.execute_script("return wendler.stores.LiftLog.getCount()").should == 0
+  @driver.execute_script("return biglifts.stores.LiftLog.getCount()").should == 0
 end

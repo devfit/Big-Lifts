@@ -1,11 +1,11 @@
 "use strict";
-Ext.ns('wendler.views', 'wendler.controller.settings');
+Ext.ns('biglifts.views', 'biglifts.controller.settings');
 
-wendler.controller.settings.backToMore = function () {
+biglifts.controller.settings.backToMore = function () {
     Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'), {type:'slide', direction:'right'});
 };
 
-wendler.views.Settings = {
+biglifts.views.Settings = {
     xtype:'panel',
     id:'settings',
     iconCls:'settings',
@@ -14,7 +14,7 @@ wendler.views.Settings = {
     cardSwitchAnimation:'slide',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.controller.settings.backToMore);
+            biglifts.navigation.setBackFunction(biglifts.controller.settings.backToMore);
         }
     },
     items:[
@@ -27,10 +27,10 @@ wendler.views.Settings = {
                     xtype:'button',
                     text:'Back',
                     ui:'back',
-                    handler:wendler.controller.settings.backToMore
+                    handler:biglifts.controller.settings.backToMore
                 }
             ]
         },
-        wendler.views.SettingsForm
+        biglifts.views.SettingsForm
     ]
 };

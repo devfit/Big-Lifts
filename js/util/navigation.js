@@ -1,32 +1,32 @@
 "use strict";
-Ext.ns('wendler.navigation');
+Ext.ns('biglifts.navigation');
 
-wendler.navigation.backEventBound = false;
-wendler.navigation.backFunction = Ext.emptyFn;
+biglifts.navigation.backEventBound = false;
+biglifts.navigation.backFunction = Ext.emptyFn;
 
-wendler.navigation.back = function () {
-    wendler.navigation.backFunction();
+biglifts.navigation.back = function () {
+    biglifts.navigation.backFunction();
 };
 
-wendler.navigation.bindBackEvent = function () {
-    if( !wendler.navigation.backEventBound ){
-        document.addEventListener('backbutton', wendler.navigation.back);
-        wendler.navigation.backEventBound = true;
+biglifts.navigation.bindBackEvent = function () {
+    if( !biglifts.navigation.backEventBound ){
+        document.addEventListener('backbutton', biglifts.navigation.back);
+        biglifts.navigation.backEventBound = true;
     }
 };
 
-wendler.navigation.unbindBackEvent = function () {
-    if( wendler.navigation.backEventBound ){
-        document.removeEventListener('backbutton', wendler.navigation.back);
-        wendler.navigation.backEventBound = false;
+biglifts.navigation.unbindBackEvent = function () {
+    if( biglifts.navigation.backEventBound ){
+        document.removeEventListener('backbutton', biglifts.navigation.back);
+        biglifts.navigation.backEventBound = false;
     }
 };
 
 document.addEventListener('deviceready', function () {
-    wendler.navigation.bindBackEvent();
+    biglifts.navigation.bindBackEvent();
 });
 
-wendler.navigation.setBackFunction = function (backFunction) {
-    wendler.navigation.backFunction = backFunction;
-    wendler.navigation.bindBackEvent();
+biglifts.navigation.setBackFunction = function (backFunction) {
+    biglifts.navigation.backFunction = backFunction;
+    biglifts.navigation.bindBackEvent();
 };

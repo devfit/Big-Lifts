@@ -1,4 +1,4 @@
-Ext.ns('wendler.defaults', 'wendler.stores.migrations');
+Ext.ns('biglifts.defaults', 'biglifts.stores.migrations');
 Ext.define('LiftLog', {
     extend:'Ext.data.Model',
     config:{
@@ -22,46 +22,46 @@ Ext.define('LiftLog', {
     }
 });
 
-wendler.stores.migrations.migrateDatesToTimestamps = function (r) {
+biglifts.stores.migrations.migrateDatesToTimestamps = function (r) {
     var date = r.get('date');
     var timestamp = r.get('timestamp');
     if (timestamp === 0) {
         if (date === null) {
             r.set('timestamp', new Date().getTime());
             r.save();
-            wendler.stores.LiftLog.sync();
+            biglifts.stores.LiftLog.sync();
         }
         else {
             r.set('timestamp', date.getTime());
             r.save();
-            wendler.stores.LiftLog.sync();
+            biglifts.stores.LiftLog.sync();
         }
     }
 };
 
-wendler.stores.migrations.setupExpectedReps = function (r) {
+biglifts.stores.migrations.setupExpectedReps = function (r) {
     if (r.get('expectedReps') <= 0) {
-        r.set('expectedReps', wendler.stores.lifts.findExpectedRepsForWeek(r.get('week')));
+        r.set('expectedReps', biglifts.stores.lifts.findExpectedRepsForWeek(r.get('week')));
         r.save();
-        wendler.stores.LiftLog.sync();
+        biglifts.stores.LiftLog.sync();
     }
 };
 
-wendler.stores.migrations.liftLogMigration = function () {
-    util.withNoFilters(wendler.stores.LiftLog, function () {
-        wendler.stores.LiftLog.each(function (r) {
-            wendler.stores.migrations.migrateDatesToTimestamps(r);
-            wendler.stores.migrations.setupExpectedReps(r);
+biglifts.stores.migrations.liftLogMigration = function () {
+    util.withNoFilters(biglifts.stores.LiftLog, function () {
+        biglifts.stores.LiftLog.each(function (r) {
+            biglifts.stores.migrations.migrateDatesToTimestamps(r);
+            biglifts.stores.migrations.setupExpectedReps(r);
         });
     });
 };
 
-wendler.stores.LiftLog = Ext.create('Ext.data.Store', {
+biglifts.stores.LiftLog = Ext.create('Ext.data.Store', {
     model:'LiftLog',
     listeners:{
         load:function () {
-            wendler.stores.migrations.liftLogMigration();
+            biglifts.stores.migrations.liftLogMigration();
         }
     }
 });
-wendler.stores.push(wendler.stores.LiftLog);
+biglifts.stores.push(biglifts.stores.LiftLog);

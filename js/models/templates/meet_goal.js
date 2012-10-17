@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.stores.lifts');
+Ext.ns('biglifts.stores.lifts');
 
 Ext.define('MeetGoal', {
     extend:'Ext.data.Model',
@@ -17,32 +17,32 @@ Ext.define('MeetGoal', {
     }
 });
 
-wendler.stores.lifts.syncMeetGoalsToLifts = function () {
+biglifts.stores.lifts.syncMeetGoalsToLifts = function () {
     var allPropertyNames = [];
-    wendler.stores.lifts.Lifts.each(function (lift) {
+    biglifts.stores.lifts.Lifts.each(function (lift) {
         var propertyName = lift.get('propertyName');
         allPropertyNames.push(propertyName);
-        if (!wendler.stores.lifts.MeetGoals.findRecord('propertyName', propertyName)) {
-            wendler.stores.lifts.MeetGoals.add({propertyName:propertyName, weight:lift.get('max')})
+        if (!biglifts.stores.lifts.MeetGoals.findRecord('propertyName', propertyName)) {
+            biglifts.stores.lifts.MeetGoals.add({propertyName:propertyName, weight:lift.get('max')})
         }
     });
 
-    wendler.stores.lifts.MeetGoals.filterBy(function (meetGoal) {
+    biglifts.stores.lifts.MeetGoals.filterBy(function (meetGoal) {
         return _.indexOf(allPropertyNames, meetGoal.get('propertyName')) === -1;
     });
 
-    wendler.stores.lifts.MeetGoals.each(function (deadMeetGoal) {
-        wendler.stores.lifts.MeetGoals.remove(deadMeetGoal);
+    biglifts.stores.lifts.MeetGoals.each(function (deadMeetGoal) {
+        biglifts.stores.lifts.MeetGoals.remove(deadMeetGoal);
     });
-    wendler.stores.lifts.MeetGoals.sync();
-    wendler.stores.lifts.MeetGoals.clearFilter();
+    biglifts.stores.lifts.MeetGoals.sync();
+    biglifts.stores.lifts.MeetGoals.clearFilter();
 };
 
-wendler.stores.lifts.MeetGoals = Ext.create('Ext.data.Store', {
+biglifts.stores.lifts.MeetGoals = Ext.create('Ext.data.Store', {
     model:'MeetGoal',
     listeners:{
         load:function () {
-            wendler.stores.lifts.syncMeetGoalsToLifts();
+            biglifts.stores.lifts.syncMeetGoalsToLifts();
         }
     },
     sorters:[
@@ -52,8 +52,8 @@ wendler.stores.lifts.MeetGoals = Ext.create('Ext.data.Store', {
         }
     ]
 });
-wendler.stores.lifts.Lifts.addListener('beforesync', function(){
-    wendler.stores.lifts.syncMeetGoalsToLifts();
+biglifts.stores.lifts.Lifts.addListener('beforesync', function(){
+    biglifts.stores.lifts.syncMeetGoalsToLifts();
 });
 
-wendler.stores.push(wendler.stores.lifts.MeetGoals);
+biglifts.stores.push(biglifts.stores.lifts.MeetGoals);

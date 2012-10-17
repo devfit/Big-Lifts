@@ -1,4 +1,4 @@
-Ext.ns('wendler.defaults', 'wendler.stores');
+Ext.ns('biglifts.defaults', 'biglifts.stores');
 Ext.define('Meta', {
     extend:'Ext.data.Model',
     config:{
@@ -14,19 +14,19 @@ Ext.define('Meta', {
     }
 });
 
-wendler.defaults.meta = {
+biglifts.defaults.meta = {
     firstTimeInApp:true
 };
 
-wendler.stores.Meta = Ext.create('Ext.data.Store', {
+biglifts.stores.Meta = Ext.create('Ext.data.Store', {
     model:'Meta',
     listeners:{
         load:function () {
             if (this.getCount() == 0) {
-                this.add(wendler.defaults.meta);
+                this.add(biglifts.defaults.meta);
                 this.sync();
             }
         }
     }
 });
-wendler.stores.push(wendler.stores.Meta);
+biglifts.stores.push(biglifts.stores.Meta);

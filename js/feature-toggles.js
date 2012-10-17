@@ -1,6 +1,6 @@
 "use strict";
-Ext.ns('wendler.toggles');
+Ext.ns('biglifts.toggles');
 
-wendler.toggles.BarLoading = wendler.premium;
-wendler.toggles.Assistance = wendler.premium;
-wendler.toggles.Graphs = wendler.premium;
+biglifts.toggles.BarLoading = biglifts.premium;
+biglifts.toggles.Assistance = biglifts.premium;
+biglifts.toggles.Graphs = biglifts.premium;

@@ -17,7 +17,7 @@ When /^I select the "(.*?)" lift template$/ do |assistance_template|
   sleep @ANIMATION_DELAY
 end
 
-When /^I confirm the wendler progression change$/ do
+When /^I confirm the progression change$/ do
   msg_box = @driver.find_element(:class => 'x-msgbox')
   ok_button = msg_box.find_element(:class => 'x-button')
 

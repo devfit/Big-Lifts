@@ -1,4 +1,4 @@
-Ext.ns('wendler.liftProgressions', 'wendler.stores.lifts', 'wendler.stores.recovery', 'wendler.defaults');
+Ext.ns('biglifts.liftProgressions', 'biglifts.stores.lifts', 'biglifts.stores.recovery', 'biglifts.defaults');
 Ext.define('LiftProgression', {
     extend:'Ext.data.Model',
     config:{
@@ -20,15 +20,15 @@ Ext.define('LiftProgression', {
     }
 });
 
-wendler.stores.lifts.findExpectedRepsForWeek = function (week) {
-    var progressionIndex = wendler.stores.lifts.LiftProgression.findBy(function (r) {
+biglifts.stores.lifts.findExpectedRepsForWeek = function (week) {
+    var progressionIndex = biglifts.stores.lifts.LiftProgression.findBy(function (r) {
         return r.get('set') === 6 && r.get('week') === week;
     });
 
-    return wendler.stores.lifts.LiftProgression.getAt(progressionIndex).get('reps');
+    return biglifts.stores.lifts.LiftProgression.getAt(progressionIndex).get('reps');
 };
 
-wendler.liftProgressions.options = {
+biglifts.liftProgressions.options = {
     "fresher":[
         Ext.create('LiftProgression', {week:1, set:1, reps:5, percentage:40, amrap:false, warmup:true}),
         Ext.create('LiftProgression', {week:1, set:2, reps:5, percentage:50, amrap:false, warmup:true}),
@@ -113,17 +113,17 @@ wendler.liftProgressions.options = {
     ]
 };
 
-wendler.stores.recovery.setupDefaultLiftProgressions = function (store) {
+biglifts.stores.recovery.setupDefaultLiftProgressions = function (store) {
     util.withNoFilters(store, function () {
             if (store.getCount() === 0) {
-                store.add(wendler.liftProgressions.options["fresher"]);
+                store.add(biglifts.liftProgressions.options["fresher"]);
                 store.sync();
             }
         }
     );
 };
 
-wendler.liftProgressions.setupAmrapForSixthSet = function (store) {
+biglifts.liftProgressions.setupAmrapForSixthSet = function (store) {
     store.each(function (record) {
         if (record.get('amrap') === null) {
             record.set('amrap', record.get('set') === 6 && record.get('week') !== 4);
@@ -132,7 +132,7 @@ wendler.liftProgressions.setupAmrapForSixthSet = function (store) {
     store.sync();
 };
 
-wendler.liftProgressions.setupWarmupForFirstThreeSets = function (store) {
+biglifts.liftProgressions.setupWarmupForFirstThreeSets = function (store) {
     store.each(function (record) {
         if (record.get('warmup') === null) {
             record.set('warmup', record.get('set') <= 3);
@@ -141,14 +141,14 @@ wendler.liftProgressions.setupWarmupForFirstThreeSets = function (store) {
     store.sync();
 };
 
-wendler.stores.lifts.LiftProgression = Ext.create('Ext.data.Store', {
+biglifts.stores.lifts.LiftProgression = Ext.create('Ext.data.Store', {
     model:'LiftProgression',
     listeners:{
         load:function () {
-            wendler.stores.recovery.setupDefaultLiftProgressions(this);
-            wendler.liftProgressions.setupAmrapForSixthSet(this);
-            wendler.liftProgressions.setupWarmupForFirstThreeSets(this);
+            biglifts.stores.recovery.setupDefaultLiftProgressions(this);
+            biglifts.liftProgressions.setupAmrapForSixthSet(this);
+            biglifts.liftProgressions.setupWarmupForFirstThreeSets(this);
         }
     }
 });
-wendler.stores.push(wendler.stores.lifts.LiftProgression);
+biglifts.stores.push(biglifts.stores.lifts.LiftProgression);

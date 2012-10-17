@@ -1,19 +1,19 @@
 describe("Lift Completion Model and Store", function () {
     beforeEach(function(){
-        wendler.stores.lifts.LiftCompletion.removeAll();
-        wendler.stores.lifts.Lifts.removeAll();
+        biglifts.stores.lifts.LiftCompletion.removeAll();
+        biglifts.stores.lifts.Lifts.removeAll();
     });
 
     it("should remove lift completions that no longer have associated lifts", function () {
-        wendler.stores.lifts.LiftCompletion.add({liftPropertyName:'squat'});
-        wendler.stores.lifts.LiftCompletion.add({liftPropertyName:'squat2'});
-        wendler.stores.lifts.Lifts.add({propertyName:'squat'});
+        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'squat'});
+        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'squat2'});
+        biglifts.stores.lifts.Lifts.add({propertyName:'squat'});
 
-        expect(wendler.stores.lifts.LiftCompletion.getCount()).toEqual(2);
+        expect(biglifts.stores.lifts.LiftCompletion.getCount()).toEqual(2);
 
-        wendler.stores.migrations.removeDeadLiftCompletions();
-        wendler.stores.lifts.Lifts.fireEvent('load');
+        biglifts.stores.migrations.removeDeadLiftCompletions();
+        biglifts.stores.lifts.Lifts.fireEvent('load');
 
-        expect(wendler.stores.lifts.LiftCompletion.getCount()).toEqual(1);
+        expect(biglifts.stores.lifts.LiftCompletion.getCount()).toEqual(1);
     });
 });

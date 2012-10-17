@@ -1,2 +1,2 @@
-Ext.ns('wendler');
-wendler.stores = [];
+Ext.ns('biglifts');
+biglifts.stores = [];

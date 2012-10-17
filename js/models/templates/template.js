@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.stores.lifts');
+Ext.ns('biglifts.stores.lifts');
 
 Ext.define('Template', {
     extend:'Ext.data.Model',
@@ -17,7 +17,7 @@ Ext.define('Template', {
     }
 });
 
-wendler.stores.Template = Ext.create('Ext.data.Store', {
+biglifts.stores.Template = Ext.create('Ext.data.Store', {
     model:'Template',
     listeners:{
         load:function (store) {
@@ -29,4 +29,4 @@ wendler.stores.Template = Ext.create('Ext.data.Store', {
     }
 });
 
-wendler.stores.push(wendler.stores.Template);
+biglifts.stores.push(biglifts.stores.Template);

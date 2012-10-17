@@ -1,28 +1,28 @@
-Ext.ns('wendler.views.log.cards', 'wendler.components.notesEditor');
+Ext.ns('biglifts.views.log.cards', 'biglifts.components.notesEditor');
 
-wendler.components.notesEditor.returnFromNotesEditor = function (notesEditor) {
+biglifts.components.notesEditor.returnFromNotesEditor = function (notesEditor) {
     var notes = notesEditor.down('[name=notes]').getValue();
     notesEditor._returnCallback(notes);
 };
 
-wendler.components.notesEditor.displayNotes = function (contentId, notes) {
+biglifts.components.notesEditor.displayNotes = function (contentId, notes) {
     var displayableNotes = null;
     if (notes === "") {
         displayableNotes = "<div class='notes-empty-text'>Tap to edit</div>";
     }
     else {
-        displayableNotes = wendler.components.notesEditor.sanitizeForDisplay(notes);
+        displayableNotes = biglifts.components.notesEditor.sanitizeForDisplay(notes);
     }
     Ext.get(contentId).setHtml(displayableNotes);
 };
 
-wendler.components.notesEditor.sanitizeForDisplay = function (notes) {
+biglifts.components.notesEditor.sanitizeForDisplay = function (notes) {
     var displayableNotes = Ext.util.Format.htmlEncode(notes);
     displayableNotes = displayableNotes.replace(/\n/g, '<br/>');
     return displayableNotes;
 };
 
-Ext.define('Wendler.views.log.cards.NotesEditor', {
+Ext.define('biglifts.views.log.cards.NotesEditor', {
     extend:'Ext.Panel',
     xtype:'noteseditor',
     _returnCallback:function (notes) {
@@ -34,8 +34,8 @@ Ext.define('Wendler.views.log.cards.NotesEditor', {
         layout:'fit',
         listeners:{
             show:function (c) {
-                wendler.navigation.setBackFunction(function () {
-                    wendler.components.notesEditor.returnFromNotesEditor(c);
+                biglifts.navigation.setBackFunction(function () {
+                    biglifts.components.notesEditor.returnFromNotesEditor(c);
                 });
             }
         },
@@ -50,7 +50,7 @@ Ext.define('Wendler.views.log.cards.NotesEditor', {
                         text:'Back',
                         ui:'back',
                         handler:function () {
-                            wendler.components.notesEditor.returnFromNotesEditor(this.up('panel'));
+                            biglifts.components.notesEditor.returnFromNotesEditor(this.up('panel'));
                         }
                     }
                 ]

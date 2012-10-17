@@ -1,12 +1,12 @@
-Ext.ns("wendler.views.liftSchedule.assistance", 'wendler.liftSchedule.assistance');
+Ext.ns("biglifts.views.liftSchedule.assistance", 'biglifts.liftSchedule.assistance');
 
-wendler.views.liftSchedule.assistance.continueToLog = function () {
-    wendler.views.liftSchedule.assistance.saveNoAssistance();
+biglifts.views.liftSchedule.assistance.continueToLog = function () {
+    biglifts.views.liftSchedule.assistance.saveNoAssistance();
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
     Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
 };
 
-wendler.views.liftSchedule.assistance.saveNoAssistance = function () {
+biglifts.views.liftSchedule.assistance.saveNoAssistance = function () {
     var assistanceRecord = {
         movement:null,
         assistanceType:'NONE',
@@ -16,42 +16,42 @@ wendler.views.liftSchedule.assistance.saveNoAssistance = function () {
         timestamp:new Date().getTime()
     };
 
-    wendler.stores.assistance.ActivityLog.add(assistanceRecord);
-    wendler.stores.assistance.ActivityLog.sync();
+    biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
+    biglifts.stores.assistance.ActivityLog.sync();
 };
 
-wendler.views.liftSchedule.assistance.showBoringButBig = function () {
+biglifts.views.liftSchedule.assistance.showBoringButBig = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 
-wendler.views.liftSchedule.assistance.showTriumvirate = function () {
+biglifts.views.liftSchedule.assistance.showTriumvirate = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('triumvirate'));
 };
 
-wendler.views.liftSchedule.assistance.assistanceOptions = [
-    {text:'None', assistanceType:'NONE', handler:wendler.views.liftSchedule.assistance.continueToLog },
-    {text:'Boring But Big', assistanceType:'BBB', handler:wendler.views.liftSchedule.assistance.showBoringButBig},
-    {text:'Triumvirate', assistanceType:'Triumvirate', handler:wendler.views.liftSchedule.assistance.showTriumvirate}
+biglifts.views.liftSchedule.assistance.assistanceOptions = [
+    {text:'None', assistanceType:'NONE', handler:biglifts.views.liftSchedule.assistance.continueToLog },
+    {text:'Boring But Big', assistanceType:'BBB', handler:biglifts.views.liftSchedule.assistance.showBoringButBig},
+    {text:'Triumvirate', assistanceType:'Triumvirate', handler:biglifts.views.liftSchedule.assistance.showTriumvirate}
 ];
 
-wendler.views.liftSchedule.assistance.nextButtonPressed = function () {
+biglifts.views.liftSchedule.assistance.nextButtonPressed = function () {
     var selection = Ext.getCmp('assistance-chooser-list').getSelection();
     if (selection != []) {
         selection[0].get('handler').call();
     }
 };
 
-wendler.views.liftSchedule.assistance.returnToLift = function () {
+biglifts.views.liftSchedule.assistance.returnToLift = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
 };
 
-wendler.views.liftSchedule.assistance.getLastAssistanceType = function () {
+biglifts.views.liftSchedule.assistance.getLastAssistanceType = function () {
     var assistanceType = null;
-    util.withNoFilters(wendler.stores.assistance.ActivityLog, function () {
-        if (wendler.stores.assistance.ActivityLog.getCount() > 0) {
+    util.withNoFilters(biglifts.stores.assistance.ActivityLog, function () {
+        if (biglifts.stores.assistance.ActivityLog.getCount() > 0) {
             var highestTimestamp = 0;
             var lastAssistanceRecord = null;
-            wendler.stores.assistance.ActivityLog.each(function (record) {
+            biglifts.stores.assistance.ActivityLog.each(function (record) {
                 if (record.get('timestamp') > highestTimestamp) {
                     lastAssistanceRecord = record;
                     highestTimestamp = record.get('timestamp');
@@ -64,31 +64,31 @@ wendler.views.liftSchedule.assistance.getLastAssistanceType = function () {
     return assistanceType;
 };
 
-wendler.views.liftSchedule.assistance.highlightLastChosenAssistance = function () {
+biglifts.views.liftSchedule.assistance.highlightLastChosenAssistance = function () {
     var selectedIndex = 0;
-    var assistanceType = wendler.views.liftSchedule.assistance.getLastAssistanceType();
+    var assistanceType = biglifts.views.liftSchedule.assistance.getLastAssistanceType();
     if (assistanceType !== null) {
-        var assistanceRecord = _.find(wendler.views.liftSchedule.assistance.assistanceOptions, function (option) {
+        var assistanceRecord = _.find(biglifts.views.liftSchedule.assistance.assistanceOptions, function (option) {
             return option.assistanceType === assistanceType;
         });
-        selectedIndex = _.indexOf(wendler.views.liftSchedule.assistance.assistanceOptions, assistanceRecord);
+        selectedIndex = _.indexOf(biglifts.views.liftSchedule.assistance.assistanceOptions, assistanceRecord);
     }
 
     Ext.getCmp('assistance-chooser-list').select(selectedIndex);
 };
 
-wendler.liftSchedule.assistance.returnToAssistanceSelect = function(){
+biglifts.liftSchedule.assistance.returnToAssistanceSelect = function(){
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
 };
 
-wendler.views.liftSchedule.assistance.AssistanceChooser = {
+biglifts.views.liftSchedule.assistance.AssistanceChooser = {
     id:'assistance-chooser',
     xtype:'panel',
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.views.liftSchedule.assistance.highlightLastChosenAssistance();
-            wendler.navigation.setBackFunction(wendler.views.liftSchedule.assistance.returnToLift);
+            biglifts.views.liftSchedule.assistance.highlightLastChosenAssistance();
+            biglifts.navigation.setBackFunction(biglifts.views.liftSchedule.assistance.returnToLift);
         }
     },
     items:[
@@ -97,16 +97,16 @@ wendler.views.liftSchedule.assistance.AssistanceChooser = {
             xtype:'toolbar',
             title:'Assistance',
             items:[
-                {xtype:'button', text:'Back', ui:'back', handler:wendler.views.liftSchedule.assistance.returnToLift},
+                {xtype:'button', text:'Back', ui:'back', handler:biglifts.views.liftSchedule.assistance.returnToLift},
                 {xtype:'spacer'},
-                {id:'assistance-chooser-next-button', xtype:'button', text:'Next', ui:'confirm', handler:wendler.views.liftSchedule.assistance.nextButtonPressed}
+                {id:'assistance-chooser-next-button', xtype:'button', text:'Next', ui:'confirm', handler:biglifts.views.liftSchedule.assistance.nextButtonPressed}
             ]
         },
         {
             id:'assistance-chooser-list',
             xtype:'list',
             itemTpl:'{text}',
-            data:wendler.views.liftSchedule.assistance.assistanceOptions
+            data:biglifts.views.liftSchedule.assistance.assistanceOptions
         }
     ]
 };

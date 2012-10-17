@@ -1,4 +1,4 @@
-Ext.ns('wendler.stores.assistance');
+Ext.ns('biglifts.stores.assistance');
 
 Ext.define('BoringButBigLift', {
     extend:'Ext.data.Model',
@@ -29,16 +29,16 @@ Ext.define('BoringButBigStore', {
             return data.weight;
         }
 
-        var associatedLift = wendler.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
-        return wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(associatedLift.get('max')),
-            wendler.stores.assistance.BoringButBigPercentage.first().get('percentage'));
+        var associatedLift = biglifts.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
+        return biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(associatedLift.get('max')),
+            biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage'));
     },
     getNameForRecord:function (data) {
         if (data.name) {
             return data.name;
         }
 
-        var associatedLift = wendler.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
+        var associatedLift = biglifts.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
         return associatedLift.get('name');
     },
     config:{
@@ -46,9 +46,9 @@ Ext.define('BoringButBigStore', {
         listeners:{
             load:function () {
                 if (this.getCount() === 0) {
-                    util.withLoadedStore(wendler.stores.lifts.Lifts, function () {
-                        wendler.stores.lifts.Lifts.each(function (r) {
-                            wendler.stores.assistance.BoringButBig.add({
+                    util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
+                        biglifts.stores.lifts.Lifts.each(function (r) {
+                            biglifts.stores.assistance.BoringButBig.add({
                                 name:null,
                                 lift_id:r.get('id'),
                                 movement_lift_id:r.get('id'),
@@ -57,7 +57,7 @@ Ext.define('BoringButBigStore', {
                                 sets:5
                             });
                         });
-                        wendler.stores.assistance.BoringButBig.sync();
+                        biglifts.stores.assistance.BoringButBig.sync();
                     });
                 }
             }
@@ -65,5 +65,5 @@ Ext.define('BoringButBigStore', {
     }
 });
 
-wendler.stores.assistance.BoringButBig = Ext.create('BoringButBigStore');
-wendler.stores.push(wendler.stores.assistance.BoringButBig);
+biglifts.stores.assistance.BoringButBig = Ext.create('BoringButBigStore');
+biglifts.stores.push(biglifts.stores.assistance.BoringButBig);

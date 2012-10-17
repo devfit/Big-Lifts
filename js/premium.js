@@ -1,3 +1,3 @@
 "use strict";
-Ext.ns("wendler");
-wendler.premium=false;
+Ext.ns("biglifts");
+biglifts.premium=false;

@@ -1,34 +1,34 @@
 "use strict";
-Ext.ns('wendler.stores.lifts', 'wendler.defaults');
-Ext.ns('wendler.stores.migrations');
+Ext.ns('biglifts.stores.lifts', 'biglifts.defaults');
+Ext.ns('biglifts.stores.migrations');
 
-wendler.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropertyName, week) {
-    var completionIndex = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+biglifts.stores.lifts.findLiftCompletionByPropertyAndWeek = function (liftPropertyName, week) {
+    var completionIndex = biglifts.stores.lifts.LiftCompletion.findBy(function (r) {
         return r.get('liftPropertyName') === liftPropertyName && r.get('week') === week;
     });
-    return wendler.stores.lifts.LiftCompletion.getAt(completionIndex);
+    return biglifts.stores.lifts.LiftCompletion.getAt(completionIndex);
 };
 
-wendler.stores.migrations.liftCompletionMigration = function () {
-    util.withNoFilters(wendler.stores.lifts.LiftCompletion, function () {
-        wendler.stores.migrations.addMissingLiftCompletions();
-        wendler.stores.migrations.removeDeadLiftCompletions();
-        wendler.stores.lifts.LiftCompletion.sync();
+biglifts.stores.migrations.liftCompletionMigration = function () {
+    util.withNoFilters(biglifts.stores.lifts.LiftCompletion, function () {
+        biglifts.stores.migrations.addMissingLiftCompletions();
+        biglifts.stores.migrations.removeDeadLiftCompletions();
+        biglifts.stores.lifts.LiftCompletion.sync();
     });
 };
 
-wendler.stores.migrations.addMissingLiftCompletions = function () {
-    util.withLoadedStore(wendler.stores.lifts.Lifts, function () {
-        for (var i = 0; i < wendler.stores.lifts.Lifts.getCount(); i++) {
-            var liftPropertyName = wendler.stores.lifts.Lifts.getAt(i).get('propertyName');
+biglifts.stores.migrations.addMissingLiftCompletions = function () {
+    util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
+        for (var i = 0; i < biglifts.stores.lifts.Lifts.getCount(); i++) {
+            var liftPropertyName = biglifts.stores.lifts.Lifts.getAt(i).get('propertyName');
 
-            var existingLiftCompletion = wendler.stores.lifts.LiftCompletion.findBy(function (r) {
+            var existingLiftCompletion = biglifts.stores.lifts.LiftCompletion.findBy(function (r) {
                 return r.get('liftPropertyName') === liftPropertyName;
             });
 
             if (existingLiftCompletion === -1) {
                 for (var week = 1; week <= 4; week++) {
-                    wendler.stores.lifts.LiftCompletion.add(
+                    biglifts.stores.lifts.LiftCompletion.add(
                         {liftPropertyName:liftPropertyName, week:week, completed:false});
                 }
             }
@@ -36,19 +36,19 @@ wendler.stores.migrations.addMissingLiftCompletions = function () {
     });
 };
 
-wendler.stores.migrations.removeDeadLiftCompletions = function () {
-    util.withLoadedStore(wendler.stores.lifts.Lifts, function () {
-        var liftNames = _.map(wendler.stores.lifts.Lifts.getData().all, function (r) {
+biglifts.stores.migrations.removeDeadLiftCompletions = function () {
+    util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
+        var liftNames = _.map(biglifts.stores.lifts.Lifts.getData().all, function (r) {
             return r.get('propertyName');
         });
 
-        wendler.stores.lifts.LiftCompletion.each(function (record) {
+        biglifts.stores.lifts.LiftCompletion.each(function (record) {
             if (_.indexOf(liftNames, record.get('liftPropertyName')) === -1) {
-                wendler.stores.lifts.LiftCompletion.remove(record);
+                biglifts.stores.lifts.LiftCompletion.remove(record);
             }
         });
 
-        wendler.stores.lifts.LiftCompletion.sync();
+        biglifts.stores.lifts.LiftCompletion.sync();
     });
 };
 
@@ -68,12 +68,12 @@ Ext.define('LiftCompletion', {
         }
     }
 });
-wendler.stores.lifts.LiftCompletion = Ext.create('Ext.data.Store', {
+biglifts.stores.lifts.LiftCompletion = Ext.create('Ext.data.Store', {
     model:'LiftCompletion',
     listeners:{
         load:function () {
-            wendler.stores.migrations.liftCompletionMigration();
+            biglifts.stores.migrations.liftCompletionMigration();
         }
     }
 });
-wendler.stores.push(wendler.stores.lifts.LiftCompletion);
+biglifts.stores.push(biglifts.stores.lifts.LiftCompletion);

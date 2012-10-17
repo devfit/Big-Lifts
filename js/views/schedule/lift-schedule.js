@@ -1,16 +1,16 @@
 "use strict";
-Ext.ns('wendler.views', 'wendler.liftSchedule');
+Ext.ns('biglifts.views', 'biglifts.liftSchedule');
 
-wendler.liftSchedule.currentShowingMax = -1;
-wendler.liftSchedule.currentLiftProperty = null;
-wendler.liftSchedule.currentWeek = 1;
+biglifts.liftSchedule.currentShowingMax = -1;
+biglifts.liftSchedule.currentLiftProperty = null;
+biglifts.liftSchedule.currentWeek = 1;
 
-wendler.liftSchedule.liftCompletionChange = function () {
-    wendler.liftSchedule.liftSelector.setupListDoneIcons();
+biglifts.liftSchedule.liftCompletionChange = function () {
+    biglifts.liftSchedule.liftSelector.setupListDoneIcons();
 };
-wendler.stores.lifts.LiftCompletion.addListener('update', wendler.liftSchedule.liftCompletionChange);
+biglifts.stores.lifts.LiftCompletion.addListener('update', biglifts.liftSchedule.liftCompletionChange);
 
-Ext.define('Wendler.views.LiftSchedule', {
+Ext.define('biglifts.views.LiftSchedule', {
     extend:'Ext.Panel',
     config:{
         id:'lift-schedule',
@@ -19,20 +19,20 @@ Ext.define('Wendler.views.LiftSchedule', {
         layout:'card',
         activeItem:0,
         items:[
-            wendler.views.liftSchedule.liftSelector,
-            wendler.views.liftSchedule.liftTemplate,
-            wendler.views.liftSchedule.LiftsCompletedScreen,
-            wendler.views.liftSchedule.IncreaseMaxesHelp,
-            wendler.views.liftSchedule.LiftSettings,
-            wendler.views.EditLiftPercentages,
-            wendler.views.EditProgression,
-            wendler.views.liftSchedule.LiftTracking,
-            wendler.views.liftSchedule.RestTimer,
-            wendler.views.liftSchedule.assistance.AssistanceChooser,
-            wendler.views.liftSchedule.assistance.BoringButBig,
-            wendler.views.liftSchedule.assistance.BoringButBigMovementEditor,
-            wendler.views.liftSchedule.assistance.Triumvirate,
-            wendler.views.liftSchedule.assistance.TriumvirateMovementEditor,
+            biglifts.views.liftSchedule.liftSelector,
+            biglifts.views.liftSchedule.liftTemplate,
+            biglifts.views.liftSchedule.LiftsCompletedScreen,
+            biglifts.views.liftSchedule.IncreaseMaxesHelp,
+            biglifts.views.liftSchedule.LiftSettings,
+            biglifts.views.EditLiftPercentages,
+            biglifts.views.EditProgression,
+            biglifts.views.liftSchedule.LiftTracking,
+            biglifts.views.liftSchedule.RestTimer,
+            biglifts.views.liftSchedule.assistance.AssistanceChooser,
+            biglifts.views.liftSchedule.assistance.BoringButBig,
+            biglifts.views.liftSchedule.assistance.BoringButBigMovementEditor,
+            biglifts.views.liftSchedule.assistance.Triumvirate,
+            biglifts.views.liftSchedule.assistance.TriumvirateMovementEditor,
             {
                 xtype:'firstlognoteseditor',
                 id:'first-log-notes-editor'
@@ -43,8 +43,8 @@ Ext.define('Wendler.views.LiftSchedule', {
             }
         ],
         listeners:{
-            show:wendler.liftSchedule.liftSelector.setupLiftSelector,
-            activeitemchange:wendler.liftSchedule.liftSelector.setupLiftSelector
+            show:biglifts.liftSchedule.liftSelector.setupLiftSelector,
+            activeitemchange:biglifts.liftSchedule.liftSelector.setupLiftSelector
         }
     }
 });

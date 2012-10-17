@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.stores.recovery');
+Ext.ns('biglifts.stores.recovery');
 Ext.define('CurrentCycle', {
     extend:'Ext.data.Model',
     config:{
@@ -15,21 +15,21 @@ Ext.define('CurrentCycle', {
     }
 });
 
-wendler.stores.recovery.setupDefaultCurrentCycle = function () {
-    util.withNoFilters(wendler.stores.CurrentCycle, function () {
-        if (wendler.stores.CurrentCycle.getCount() == 0) {
-            wendler.stores.CurrentCycle.add({cycle:1});
-            wendler.stores.CurrentCycle.sync();
+biglifts.stores.recovery.setupDefaultCurrentCycle = function () {
+    util.withNoFilters(biglifts.stores.CurrentCycle, function () {
+        if (biglifts.stores.CurrentCycle.getCount() == 0) {
+            biglifts.stores.CurrentCycle.add({cycle:1});
+            biglifts.stores.CurrentCycle.sync();
         }
     });
 };
 
-wendler.stores.CurrentCycle = Ext.create('Ext.data.Store', {
+biglifts.stores.CurrentCycle = Ext.create('Ext.data.Store', {
     model:'CurrentCycle',
     listeners:{
         load:function(){
-            wendler.stores.recovery.setupDefaultCurrentCycle();
+            biglifts.stores.recovery.setupDefaultCurrentCycle();
         }
     }
 });
-wendler.stores.push(wendler.stores.CurrentCycle);
+biglifts.stores.push(biglifts.stores.CurrentCycle);

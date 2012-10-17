@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.stores.defaults');
+Ext.ns('biglifts.stores.defaults');
 Ext.define('BarWeight', {
     extend:'Ext.data.Model',
     config:{
@@ -15,8 +15,8 @@ Ext.define('BarWeight', {
     }
 });
 
-wendler.stores.defaults.loadDefaultBarWeight = function (store) {
-    var settings = wendler.stores.Settings.first();
+biglifts.stores.defaults.loadDefaultBarWeight = function (store) {
+    var settings = biglifts.stores.Settings.first();
     if (settings.get('units') === 'lbs') {
         store.add({weight:45});
     }
@@ -27,16 +27,16 @@ wendler.stores.defaults.loadDefaultBarWeight = function (store) {
     store.sync();
 };
 
-wendler.stores.BarWeight = Ext.create('Ext.data.Store', {
+biglifts.stores.BarWeight = Ext.create('Ext.data.Store', {
     model:'BarWeight',
     listeners:{
         load:function (store) {
             if (store.getCount() === 0) {
-                util.withLoadedStore(wendler.stores.Settings, function () {
-                    wendler.stores.defaults.loadDefaultBarWeight(store);
+                util.withLoadedStore(biglifts.stores.Settings, function () {
+                    biglifts.stores.defaults.loadDefaultBarWeight(store);
                 });
             }
         }
     }
 });
-wendler.stores.push(wendler.stores.BarWeight);
+biglifts.stores.push(biglifts.stores.BarWeight);

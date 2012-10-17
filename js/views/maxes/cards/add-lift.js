@@ -1,6 +1,6 @@
-Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
+Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.controller');
 
-wendler.maxes.controller.handleInvalidLift = function (errors) {
+biglifts.maxes.controller.handleInvalidLift = function (errors) {
     var nameErrors = errors.getByField('propertyName');
     var maxErrors = errors.getByField('max');
     var cycleIncreaseErrors = errors.getByField('cycleIncrease');
@@ -27,56 +27,56 @@ wendler.maxes.controller.handleInvalidLift = function (errors) {
     Ext.Msg.alert('Error', messages.join('<br/>'));
 };
 
-wendler.maxes.controller.findNextOrdering = function () {
+biglifts.maxes.controller.findNextOrdering = function () {
     var orders = [];
-    util.withNoFilters(wendler.stores.lifts.Lifts, function () {
-        orders = _.map(wendler.stores.lifts.Lifts.getRange(), function (record) {
+    util.withNoFilters(biglifts.stores.lifts.Lifts, function () {
+        orders = _.map(biglifts.stores.lifts.Lifts.getRange(), function (record) {
             return record.data.order;
         });
     });
     return _.max(orders) + 1;
 };
 
-wendler.maxes.controller.addLiftDoneButtonPressed = function () {
+biglifts.maxes.controller.addLiftDoneButtonPressed = function () {
     var liftName = Ext.getCmp('add-lift-new-name').getValue();
     var liftMax = Ext.getCmp('add-lift-new-max').getValue();
-    var liftProperty = wendler.models.Lift.sanitizePropertyName(liftName);
+    var liftProperty = biglifts.models.Lift.sanitizePropertyName(liftName);
     var cycleIncrease = Ext.getCmp('add-lift-cycle-increase').getValue();
 
     var newLiftModel = Ext.create('Lift',
-        {name:liftName, propertyName:liftProperty, max:liftMax, cycleIncrease:cycleIncrease, order:wendler.maxes.controller.findNextOrdering() });
+        {name:liftName, propertyName:liftProperty, max:liftMax, cycleIncrease:cycleIncrease, order:biglifts.maxes.controller.findNextOrdering() });
     var errors = newLiftModel.validate();
 
     if (!errors.isValid()) {
-        wendler.maxes.controller.handleInvalidLift(errors);
+        biglifts.maxes.controller.handleInvalidLift(errors);
     }
     else {
-        wendler.maxes.controller.saveNewLift(newLiftModel);
+        biglifts.maxes.controller.saveNewLift(newLiftModel);
         Ext.getCmp('maxes-add-lift-form').reset();
-        wendler.maxes.controller.doneWithEditing();
+        biglifts.maxes.controller.doneWithEditing();
     }
 };
 
-wendler.maxes.controller.saveNewLift = function(newLiftModel){
-    wendler.stores.lifts.Lifts.add(newLiftModel);
-    wendler.stores.lifts.Lifts.sync();
-    wendler.stores.migrations.liftCompletionMigration();
-    wendler.stores.migrations.triumvirateMovementsMigration(wendler.stores.assistance.TriumvirateMovement);
-    wendler.maxes.controller.rebuildMaxesList();
+biglifts.maxes.controller.saveNewLift = function(newLiftModel){
+    biglifts.stores.lifts.Lifts.add(newLiftModel);
+    biglifts.stores.lifts.Lifts.sync();
+    biglifts.stores.migrations.liftCompletionMigration();
+    biglifts.stores.migrations.triumvirateMovementsMigration(biglifts.stores.assistance.TriumvirateMovement);
+    biglifts.maxes.controller.rebuildMaxesList();
 };
 
-wendler.maxes.controller.addLiftCancelButtonPressed = function () {
+biglifts.maxes.controller.addLiftCancelButtonPressed = function () {
     Ext.getCmp('maxes-add-lift-form').reset();
-    wendler.maxes.controller.doneWithEditing();
+    biglifts.maxes.controller.doneWithEditing();
 };
 
-wendler.maxes.cards.addLiftPanel = {
+biglifts.maxes.cards.addLiftPanel = {
     xtype:'panel',
     id:'maxes-add-lift-panel',
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.maxes.controller.addLiftCancelButtonPressed);
+            biglifts.navigation.setBackFunction(biglifts.maxes.controller.addLiftCancelButtonPressed);
         }
     },
     items:[
@@ -88,14 +88,14 @@ wendler.maxes.cards.addLiftPanel = {
                 {
                     id:'add-lift-cancel-button',
                     text:'Cancel',
-                    handler:wendler.maxes.controller.addLiftCancelButtonPressed,
+                    handler:biglifts.maxes.controller.addLiftCancelButtonPressed,
                     ui:'action'
                 },
                 {xtype:'spacer'},
                 {
                     id:'add-lift-done-button',
                     text:'Save',
-                    handler:wendler.maxes.controller.addLiftDoneButtonPressed,
+                    handler:biglifts.maxes.controller.addLiftDoneButtonPressed,
                     ui:'confirm'
                 }
             ]

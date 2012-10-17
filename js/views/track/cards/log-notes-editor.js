@@ -1,19 +1,19 @@
-Ext.ns('wendler.logEntry');
-wendler.logEntry.returnFromEditNotes = function (newNotes) {
+Ext.ns('biglifts.logEntry');
+biglifts.logEntry.returnFromEditNotes = function (newNotes) {
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'right'});
 
-    if (wendler.logEntry.currentRecord) {
-        wendler.logEntry.currentRecord.set('notes', newNotes);
+    if (biglifts.logEntry.currentRecord) {
+        biglifts.logEntry.currentRecord.set('notes', newNotes);
 
-        wendler.logEntry.currentRecord.save();
-        wendler.stores.LiftLog.sync();
+        biglifts.logEntry.currentRecord.save();
+        biglifts.stores.LiftLog.sync();
     }
 
-    wendler.components.notesEditor.displayNotes('edit-log-notes', newNotes);
+    biglifts.components.notesEditor.displayNotes('edit-log-notes', newNotes);
 };
 
-Ext.define('Wendler.views.log.cards.LogNotesEditor', {
-    extend:'Wendler.views.log.cards.NotesEditor',
+Ext.define('biglifts.views.log.cards.LogNotesEditor', {
+    extend:'biglifts.views.log.cards.NotesEditor',
     xtype:'lognoteseditor',
-    _returnCallback:wendler.logEntry.returnFromEditNotes
+    _returnCallback:biglifts.logEntry.returnFromEditNotes
 });

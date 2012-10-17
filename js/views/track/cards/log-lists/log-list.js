@@ -1,32 +1,32 @@
-Ext.ns('wendler.views.log.cards', 'wendler.logList');
+Ext.ns('biglifts.views.log.cards', 'biglifts.logList');
 
-wendler.logList.showExportLog = function () {
+biglifts.logList.showExportLog = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('export-log'), {type:'slide', direction:'left'});
 };
 
-wendler.logList.showSortMenu = function () {
+biglifts.logList.showSortMenu = function () {
     util.components.toggleVisibility(Ext.getCmp('track-sort-toolbar'));
-    wendler.logList.updateUiForSortButtons();
+    biglifts.logList.updateUiForSortButtons();
 };
 
-wendler.logList.changeMovementTypeCalled = function () {
+biglifts.logList.changeMovementTypeCalled = function () {
     Ext.getCmp('track-sort-toolbar').hide();
     util.components.toggleVisibility(Ext.getCmp('track-lifts-movement-type-button'));
     util.components.toggleVisibility(Ext.getCmp('track-assistance-movement-type-button'));
 };
 
-wendler.logList.changeMovementTypeToLifts = function () {
-    wendler.logList.changeMovementTypeCalled();
+biglifts.logList.changeMovementTypeToLifts = function () {
+    biglifts.logList.changeMovementTypeCalled();
     Ext.getCmp('log-list-container').setActiveItem(Ext.getCmp('lift-log-list'));
 };
 
-wendler.logList.changeMovementTypeToAssistance = function () {
-    wendler.logList.changeMovementTypeCalled();
+biglifts.logList.changeMovementTypeToAssistance = function () {
+    biglifts.logList.changeMovementTypeCalled();
     Ext.getCmp('log-list-container').setActiveItem(Ext.getCmp('log-assistance-list'));
 };
 
-wendler.logList.sortBy = function (selectedProperty) {
-    var liftLogSort = wendler.stores.LiftLogSort.first();
+biglifts.logList.sortBy = function (selectedProperty) {
+    var liftLogSort = biglifts.stores.LiftLogSort.first();
     var property = liftLogSort.get('property');
     if (property === selectedProperty) {
         liftLogSort.set('ascending', !liftLogSort.data.ascending);
@@ -42,12 +42,12 @@ wendler.logList.sortBy = function (selectedProperty) {
     }
     liftLogSort.save();
 
-    wendler.logList.updateUiForSortButtons();
-    wendler.logList.sortAndRefreshList();
+    biglifts.logList.updateUiForSortButtons();
+    biglifts.logList.sortAndRefreshList();
 };
 
-wendler.logList.updateUiForSortButtons = function () {
-    var liftLogSort = wendler.stores.LiftLogSort.first();
+biglifts.logList.updateUiForSortButtons = function () {
+    var liftLogSort = biglifts.stores.LiftLogSort.first();
 
     var sortNameButton = Ext.getCmp('sort-name-button');
     var sortNameActiveButton = Ext.getCmp('sort-name-button-active');
@@ -69,10 +69,10 @@ wendler.logList.updateUiForSortButtons = function () {
         sortDateActiveButton.show();
     }
 
-    wendler.logList.updateAscendingText();
+    biglifts.logList.updateAscendingText();
 };
 
-wendler.logList.PROPERTY_TO_ASCENDING_TEXT = {
+biglifts.logList.PROPERTY_TO_ASCENDING_TEXT = {
     'liftName':{
         'ASC':'A-Z',
         'DESC':'Z-A'
@@ -83,13 +83,13 @@ wendler.logList.PROPERTY_TO_ASCENDING_TEXT = {
     }
 };
 
-wendler.logList.DEFAULT_PROPERTY_ASCENDING = {
+biglifts.logList.DEFAULT_PROPERTY_ASCENDING = {
     'liftName':'ASC',
     'timestamp':'DESC'
 };
 
-wendler.logList.updateAscendingText = function () {
-    var liftLogSort = wendler.stores.LiftLogSort.first();
+biglifts.logList.updateAscendingText = function () {
+    var liftLogSort = biglifts.stores.LiftLogSort.first();
 
     var sortNameButton = Ext.getCmp('sort-name-button');
     var sortNameActiveButton = Ext.getCmp('sort-name-button-active');
@@ -99,34 +99,34 @@ wendler.logList.updateAscendingText = function () {
     var sortProperty = liftLogSort.data.property;
     var sortDirectionText = liftLogSort.data.ascending ? "ASC" : "DESC";
     if (sortProperty === "liftName") {
-        sortNameButton.setText(wendler.logList.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
-        sortNameActiveButton.setText(wendler.logList.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
+        sortNameButton.setText(biglifts.logList.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
+        sortNameActiveButton.setText(biglifts.logList.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
 
-        var dateText = wendler.logList.PROPERTY_TO_ASCENDING_TEXT['timestamp'][wendler.logList.DEFAULT_PROPERTY_ASCENDING['timestamp']];
+        var dateText = biglifts.logList.PROPERTY_TO_ASCENDING_TEXT['timestamp'][biglifts.logList.DEFAULT_PROPERTY_ASCENDING['timestamp']];
         sortDateButton.setText(dateText);
         sortDateActiveButton.setText(dateText);
     }
     else if (sortProperty === "timestamp") {
-        sortDateButton.setText(wendler.logList.PROPERTY_TO_ASCENDING_TEXT['timestamp'][sortDirectionText]);
-        sortDateActiveButton.setText(wendler.logList.PROPERTY_TO_ASCENDING_TEXT['timestamp'][sortDirectionText]);
+        sortDateButton.setText(biglifts.logList.PROPERTY_TO_ASCENDING_TEXT['timestamp'][sortDirectionText]);
+        sortDateActiveButton.setText(biglifts.logList.PROPERTY_TO_ASCENDING_TEXT['timestamp'][sortDirectionText]);
 
-        var liftNameText = wendler.logList.PROPERTY_TO_ASCENDING_TEXT['liftName'][wendler.logList.DEFAULT_PROPERTY_ASCENDING['liftName']];
+        var liftNameText = biglifts.logList.PROPERTY_TO_ASCENDING_TEXT['liftName'][biglifts.logList.DEFAULT_PROPERTY_ASCENDING['liftName']];
         sortNameButton.setText(liftNameText);
         sortNameActiveButton.setText(liftNameText);
     }
 };
 
-wendler.logList.showChart = function () {
+biglifts.logList.showChart = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('graph'));
 };
 
-wendler.views.log.cards.LogList = {
+biglifts.views.log.cards.LogList = {
     id:'log-list',
     xtype:'panel',
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.navigation.unbindBackEvent();
+            biglifts.navigation.unbindBackEvent();
         }
     },
     items:[
@@ -143,16 +143,16 @@ wendler.views.log.cards.LogList = {
                             xtype:'button',
                             ui:'action',
                             text:'Sort',
-                            handler:wendler.logList.showSortMenu
+                            handler:biglifts.logList.showSortMenu
                         }
                     );
 
-                    if (wendler.toggles.Assistance) {
+                    if (biglifts.toggles.Assistance) {
                         this.add({
                             id:'track-lifts-movement-type-button',
                             xtype:'button',
                             text:'Asst.',
-                            handler:wendler.logList.changeMovementTypeToAssistance
+                            handler:biglifts.logList.changeMovementTypeToAssistance
                         });
 
                         this.add({
@@ -160,18 +160,18 @@ wendler.views.log.cards.LogList = {
                             hidden:true,
                             xtype:'button',
                             text:'Lifts',
-                            handler:wendler.logList.changeMovementTypeToLifts
+                            handler:biglifts.logList.changeMovementTypeToLifts
                         });
                     }
                     this.add({xtype:'spacer'});
-                    if (wendler.toggles.Graphs) {
+                    if (biglifts.toggles.Graphs) {
                         this.add({
                             id:'show-chart-button',
                             xtype:'button',
                             iconCls:'chart',
                             iconMask:true,
                             ui:'action',
-                            handler:wendler.logList.showChart
+                            handler:biglifts.logList.showChart
                         });
                     }
                     this.add({
@@ -180,7 +180,7 @@ wendler.views.log.cards.LogList = {
                         iconMask:true,
                         iconCls:'action',
                         ui:'action',
-                        handler:wendler.logList.showExportLog
+                        handler:biglifts.logList.showExportLog
                     });
                 }
             }
@@ -202,7 +202,7 @@ wendler.views.log.cards.LogList = {
                     xtype:'button',
                     text:"A-Z",
                     handler:function () {
-                        wendler.logList.sortBy('liftName');
+                        biglifts.logList.sortBy('liftName');
                     }
                 },
                 {
@@ -212,7 +212,7 @@ wendler.views.log.cards.LogList = {
                     xtype:'button',
                     text:"A-Z",
                     handler:function () {
-                        wendler.logList.sortBy('liftName');
+                        biglifts.logList.sortBy('liftName');
                     }
                 },
                 {
@@ -221,7 +221,7 @@ wendler.views.log.cards.LogList = {
                     xtype:'button',
                     text:"Newest",
                     handler:function () {
-                        wendler.logList.sortBy('timestamp');
+                        biglifts.logList.sortBy('timestamp');
                     }
                 },
                 {
@@ -231,7 +231,7 @@ wendler.views.log.cards.LogList = {
                     xtype:'button',
                     text:"Newest",
                     handler:function () {
-                        wendler.logList.sortBy('timestamp');
+                        biglifts.logList.sortBy('timestamp');
                     }
                 }
             ]
@@ -242,8 +242,8 @@ wendler.views.log.cards.LogList = {
             layout:'card',
             activeItem:0,
             items:[
-                wendler.logList.liftLogList,
-                wendler.logList.assistanceList
+                biglifts.logList.liftLogList,
+                biglifts.logList.assistanceList
             ]
         }
     ]

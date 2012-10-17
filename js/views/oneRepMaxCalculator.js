@@ -1,14 +1,14 @@
 "use strict";
-Ext.ns('wendler', 'wendler.views', 'wendler.oneRepMax', 'wendler.oneRepMax');
+Ext.ns('biglifts', 'biglifts.views', 'biglifts.oneRepMax', 'biglifts.oneRepMax');
 
-wendler.oneRepMax.estimateOneRepMax = function () {
+biglifts.oneRepMax.estimateOneRepMax = function () {
     var weight = Ext.getCmp('one-rep-weight').getValue();
     var reps = Ext.getCmp('one-rep-reps').getValue();
     var estimate = util.formulas.estimateOneRepMax(weight, reps);
     Ext.getCmp('one-rep-estimate').setValue(estimate);
 };
 
-wendler.oneRepMax.useEstimateForLift = function () {
+biglifts.oneRepMax.useEstimateForLift = function () {
     var lift = Ext.getCmp('use-lift-select').getValue();
     var estimate = Ext.getCmp('one-rep-estimate').getValue();
 
@@ -22,7 +22,7 @@ wendler.oneRepMax.useEstimateForLift = function () {
     });
 };
 
-Ext.define('Wendler.views.OneRepMaxCalculator', {
+Ext.define('biglifts.views.OneRepMaxCalculator', {
     extend:'Ext.Panel',
     config:{
         id:'one-rep-max-calculator',
@@ -30,9 +30,9 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
         iconCls:'search',
         listeners:{
             show:function () {
-                wendler.navigation.unbindBackEvent();
+                biglifts.navigation.unbindBackEvent();
             },
-            initialize:wendler.oneRepMax.estimateOneRepMax
+            initialize:biglifts.oneRepMax.estimateOneRepMax
         },
         layout:'fit',
         items:[
@@ -53,7 +53,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
                         defaults:{
                             labelWidth:'35%',
                             listeners:{
-                                change:wendler.oneRepMax.estimateOneRepMax
+                                change:biglifts.oneRepMax.estimateOneRepMax
                             }
                         },
                         items:[
@@ -99,7 +99,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
                                 valueField:'propertyName',
                                 displayField:'name',
                                 label:'Lift',
-                                store:wendler.stores.lifts.Lifts
+                                store:biglifts.stores.lifts.Lifts
                             },
                             {
                                 xtype:'spacer',
@@ -109,7 +109,7 @@ Ext.define('Wendler.views.OneRepMaxCalculator', {
                                 xtype:'button',
                                 id:'use-max-button',
                                 text:'Use Max',
-                                handler:wendler.oneRepMax.useEstimateForLift
+                                handler:biglifts.oneRepMax.useEstimateForLift
                             }
                         ]
                     }

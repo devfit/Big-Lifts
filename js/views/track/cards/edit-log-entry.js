@@ -1,28 +1,28 @@
 "use strict";
-Ext.ns('wendler.views.log.cards', 'wendler.logEntry');
+Ext.ns('biglifts.views.log.cards', 'biglifts.logEntry');
 
-wendler.logEntry.backToLogList = function () {
+biglifts.logEntry.backToLogList = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
 };
 
-wendler.logEntry.updateLogEntry = function () {
+biglifts.logEntry.updateLogEntry = function () {
     var values = Ext.getCmp('edit-log-entry').getValues();
     values['timestamp'] = values['timestamp'].getTime();
 
-    wendler.logEntry.currentRecord.set(values);
-    wendler.logEntry.currentRecord.save();
-    wendler.stores.LiftLog.sync();
+    biglifts.logEntry.currentRecord.set(values);
+    biglifts.logEntry.currentRecord.save();
+    biglifts.stores.LiftLog.sync();
 };
 
-wendler.logEntry.deleteLogEntry = function () {
-    wendler.stores.LiftLog.remove(wendler.logEntry.currentRecord);
-    wendler.stores.LiftLog.sync();
-    wendler.logEntry.backToLogList();
+biglifts.logEntry.deleteLogEntry = function () {
+    biglifts.stores.LiftLog.remove(biglifts.logEntry.currentRecord);
+    biglifts.stores.LiftLog.sync();
+    biglifts.logEntry.backToLogList();
 };
 
-wendler.logEntry.currentRecord = null;
-wendler.logEntry.setupLogEntry = function (logRecord) {
-    wendler.logEntry.currentRecord = logRecord;
+biglifts.logEntry.currentRecord = null;
+biglifts.logEntry.setupLogEntry = function (logRecord) {
+    biglifts.logEntry.currentRecord = logRecord;
     Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
     Ext.getCmp('edit-log-entry-toolbar').setTitle(logRecord.data.liftName);
 
@@ -30,10 +30,10 @@ wendler.logEntry.setupLogEntry = function (logRecord) {
     formValues['estimatedOneRepMax'] = util.formulas.estimateOneRepMax(logRecord.data.weight, logRecord.data.reps);
     formValues['timestamp'] = new Date(logRecord.data.timestamp);
     Ext.getCmp('edit-log-entry').setValues(formValues);
-    wendler.components.notesEditor.displayNotes('edit-log-notes', logRecord.data.notes);
+    biglifts.components.notesEditor.displayNotes('edit-log-notes', logRecord.data.notes);
 };
 
-wendler.logEntry.updateOneRepMax = function () {
+biglifts.logEntry.updateOneRepMax = function () {
     var formValues = Ext.getCmp('edit-log-entry').getValues();
     var newOneRepSetter = {
         estimatedOneRepMax:util.formulas.estimateOneRepMax(formValues.weight, formValues.reps)
@@ -41,34 +41,34 @@ wendler.logEntry.updateOneRepMax = function () {
     Ext.getCmp('edit-log-entry').setValues(newOneRepSetter);
 };
 
-wendler.logEntry.editNotes = function () {
+biglifts.logEntry.editNotes = function () {
     Ext.get('edit-log-notes').addCls('tapped');
-    Ext.getCmp('log-notes-editor')._setNotes(wendler.logEntry.currentRecord.get('notes'));
+    Ext.getCmp('log-notes-editor')._setNotes(biglifts.logEntry.currentRecord.get('notes'));
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-notes-editor'), {type:'slide', direction:'left'});
 };
 
-wendler.logEntry.getExtDateFormat = function () {
-    var dateFormat = wendler.stores.Settings.first().get('dateFormat');
+biglifts.logEntry.getExtDateFormat = function () {
+    var dateFormat = biglifts.stores.Settings.first().get('dateFormat');
     dateFormat = dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');
     return dateFormat;
 };
 
-wendler.logEntry.updateDateFormat = function () {
+biglifts.logEntry.updateDateFormat = function () {
     Ext.getCmp('edit-log-fieldset').removeAll(true);
-    Ext.getCmp('edit-log-fieldset').add(wendler.views.log.cards.generateEditLogEntryFieldsetItems());
+    Ext.getCmp('edit-log-fieldset').add(biglifts.views.log.cards.generateEditLogEntryFieldsetItems());
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
 };
 
-wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
+biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {
     return [
         {
             xtype:'datepickerfield',
-            dateFormat:wendler.logEntry.getExtDateFormat(),
+            dateFormat:biglifts.logEntry.getExtDateFormat(),
             label:'Date',
             name:'timestamp',
             labelWidth:'45%',
             listeners:{
-                change:wendler.logEntry.updateLogEntry
+                change:biglifts.logEntry.updateLogEntry
             }
         },
         {
@@ -77,7 +77,7 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             name:'cycle',
             labelWidth:'45%',
             listeners:{
-                change:wendler.logEntry.updateLogEntry
+                change:biglifts.logEntry.updateLogEntry
             }
         },
         {
@@ -87,8 +87,8 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             labelWidth:'45%',
             listeners:{
                 change:function () {
-                    wendler.logEntry.updateOneRepMax();
-                    wendler.logEntry.updateLogEntry();
+                    biglifts.logEntry.updateOneRepMax();
+                    biglifts.logEntry.updateLogEntry();
                 }
             }
         },
@@ -99,8 +99,8 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             labelWidth:'50%',
             listeners:{
                 change:function () {
-                    wendler.logEntry.updateOneRepMax();
-                    wendler.logEntry.updateLogEntry();
+                    biglifts.logEntry.updateOneRepMax();
+                    biglifts.logEntry.updateLogEntry();
                 }
             }
         },
@@ -111,7 +111,7 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             labelWidth:'50%',
             listeners:{
                 change:function () {
-                    wendler.logEntry.updateLogEntry();
+                    biglifts.logEntry.updateLogEntry();
                 }
             }
         },
@@ -127,16 +127,16 @@ wendler.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             xtype:'selectfield',
             label:'Units',
             name:'units',
-            options:wendler.settings.options.units,
+            options:biglifts.settings.options.units,
             labelWidth:'45%',
             listeners:{
-                change:wendler.logEntry.updateLogEntry
+                change:biglifts.logEntry.updateLogEntry
             }
         }
     ];
 };
 
-wendler.views.log.cards.EditLogEntry = {
+biglifts.views.log.cards.EditLogEntry = {
     id:'edit-log-entry',
     xtype:'formpanel',
     scroll:'vertical',
@@ -146,18 +146,18 @@ wendler.views.log.cards.EditLogEntry = {
     listeners:{
         painted:function () {
             if (!this._listenersBound) {
-                Ext.get('edit-log-notes').addListener('tap', wendler.logEntry.editNotes);
+                Ext.get('edit-log-notes').addListener('tap', biglifts.logEntry.editNotes);
                 this._listenersBound = true;
             }
         },
         initialize:function () {
-            Ext.getCmp('edit-log-fieldset').add(wendler.views.log.cards.generateEditLogEntryFieldsetItems());
+            Ext.getCmp('edit-log-fieldset').add(biglifts.views.log.cards.generateEditLogEntryFieldsetItems());
         },
         show:function () {
             if (Ext.get('edit-log-notes')) {
                 Ext.get('edit-log-notes').removeCls('tapped');
             }
-            wendler.navigation.setBackFunction(wendler.logEntry.backToLogList);
+            biglifts.navigation.setBackFunction(biglifts.logEntry.backToLogList);
         }
     },
     items:[
@@ -171,7 +171,7 @@ wendler.views.log.cards.EditLogEntry = {
                     id:'edit-log-back-button',
                     text:'Back',
                     ui:'back',
-                    handler:wendler.logEntry.backToLogList
+                    handler:biglifts.logEntry.backToLogList
                 },
                 {xtype:'spacer'},
                 {
@@ -179,7 +179,7 @@ wendler.views.log.cards.EditLogEntry = {
                     ui:'decline',
                     iconMask:true,
                     iconCls:'trash',
-                    handler:wendler.logEntry.deleteLogEntry
+                    handler:biglifts.logEntry.deleteLogEntry
                 }
             ]
         },

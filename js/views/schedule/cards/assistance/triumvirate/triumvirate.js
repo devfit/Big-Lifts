@@ -1,17 +1,17 @@
-Ext.ns('wendler.views.liftSchedule.assistance', 'wendler.liftSchedule.assistance.triumvirate');
+Ext.ns('biglifts.views.liftSchedule.assistance', 'biglifts.liftSchedule.assistance.triumvirate');
 
-wendler.liftSchedule.assistance.triumvirate.editTriumvirateMovement = function (dataview, index) {
-    var movement = wendler.stores.assistance.TriumvirateMovement.getAt(index);
-    wendler.liftSchedule.assistance.triumvirate.showEditTriumvirateMovement(movement);
+biglifts.liftSchedule.assistance.triumvirate.editTriumvirateMovement = function (dataview, index) {
+    var movement = biglifts.stores.assistance.TriumvirateMovement.getAt(index);
+    biglifts.liftSchedule.assistance.triumvirate.showEditTriumvirateMovement(movement);
 };
 
-wendler.liftSchedule.assistance.triumvirate.filterTriumvirateMovements = function () {
-    wendler.stores.assistance.TriumvirateMovement.clearFilter();
-    wendler.stores.assistance.TriumvirateMovement.filter('liftProperty', wendler.liftSchedule.currentLiftProperty);
+biglifts.liftSchedule.assistance.triumvirate.filterTriumvirateMovements = function () {
+    biglifts.stores.assistance.TriumvirateMovement.clearFilter();
+    biglifts.stores.assistance.TriumvirateMovement.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
 };
 
-wendler.liftSchedule.assistance.triumvirate.logMovements = function () {
-    wendler.stores.assistance.TriumvirateMovement.each(function (record) {
+biglifts.liftSchedule.assistance.triumvirate.logMovements = function () {
+    biglifts.stores.assistance.TriumvirateMovement.each(function (record) {
         var assistanceRecord = {
             movement:record.get('name'),
             assistanceType:'Triumvirate',
@@ -21,15 +21,15 @@ wendler.liftSchedule.assistance.triumvirate.logMovements = function () {
             timestamp:new Date().getTime()
         };
 
-        wendler.stores.assistance.ActivityLog.add(assistanceRecord);
-        wendler.stores.assistance.ActivityLog.sync();
+        biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
+        biglifts.stores.assistance.ActivityLog.sync();
     });
 
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
     Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
 };
 
-wendler.views.liftSchedule.assistance.Triumvirate = {
+biglifts.views.liftSchedule.assistance.Triumvirate = {
     xtype:'panel',
     id:'triumvirate',
     layout:'vbox',
@@ -42,7 +42,7 @@ wendler.views.liftSchedule.assistance.Triumvirate = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.liftSchedule.assistance.returnToAssistanceSelect
+                    handler:biglifts.liftSchedule.assistance.returnToAssistanceSelect
                 },
                 {
                     xtype:'spacer'
@@ -50,22 +50,22 @@ wendler.views.liftSchedule.assistance.Triumvirate = {
                 {
                     text:'Save',
                     ui:'confirm',
-                    handler:wendler.liftSchedule.assistance.triumvirate.logMovements
+                    handler:biglifts.liftSchedule.assistance.triumvirate.logMovements
                 }
             ]
         },
         {
             flex:2,
             xtype:'list',
-            store:wendler.stores.assistance.TriumvirateMovement,
+            store:biglifts.stores.assistance.TriumvirateMovement,
             itemTpl:"<table class='assistance-table'><tbody><tr>" +
                 "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x " +
-                "{[wendler.logList.getWeightDisplay(values.weight)]}" +
-                "{[wendler.stores.Settings.first().get('units')]}</td>" +
+                "{[biglifts.logList.getWeightDisplay(values.weight)]}" +
+                "{[biglifts.stores.Settings.first().get('units')]}</td>" +
                 "</tr></tbody></table>",
             listeners:{
                 initialize:function (list) {
-                    list.addListener('itemtap', wendler.liftSchedule.assistance.triumvirate.editTriumvirateMovement);
+                    list.addListener('itemtap', biglifts.liftSchedule.assistance.triumvirate.editTriumvirateMovement);
                 }
             }
         },
@@ -77,8 +77,8 @@ wendler.views.liftSchedule.assistance.Triumvirate = {
     ],
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.returnToAssistanceSelect);
-            wendler.liftSchedule.assistance.triumvirate.filterTriumvirateMovements();
+            biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.returnToAssistanceSelect);
+            biglifts.liftSchedule.assistance.triumvirate.filterTriumvirateMovements();
         }
     }
 };

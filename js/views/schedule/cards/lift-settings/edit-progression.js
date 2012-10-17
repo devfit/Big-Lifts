@@ -1,29 +1,29 @@
 "use strict";
-Ext.ns('wendler.views', 'wendler.settings.liftPercentages', 'wendler.liftPercentages');
+Ext.ns('biglifts.views', 'biglifts.settings.liftPercentages', 'biglifts.liftPercentages');
 
-wendler.settings.liftPercentages.getCurrentProgression = function () {
-    var progressionIndex = wendler.stores.lifts.LiftProgression.findBy(function (r) {
-        return r.data.set == wendler.settings.liftPercentages.currentSet && r.data.week == wendler.settings.liftPercentages.currentWeek;
+biglifts.settings.liftPercentages.getCurrentProgression = function () {
+    var progressionIndex = biglifts.stores.lifts.LiftProgression.findBy(function (r) {
+        return r.data.set == biglifts.settings.liftPercentages.currentSet && r.data.week == biglifts.settings.liftPercentages.currentWeek;
     });
-    return wendler.stores.lifts.LiftProgression.getAt(progressionIndex);
+    return biglifts.stores.lifts.LiftProgression.getAt(progressionIndex);
 };
 
-wendler.liftPercentages.setupEditLiftProgression = function () {
-    var progression = wendler.settings.liftPercentages.getCurrentProgression();
-    Ext.get('edit-progression-title').setHtml('Week ' + wendler.settings.liftPercentages.currentWeek + ", Set " + wendler.settings.liftPercentages.currentSet);
+biglifts.liftPercentages.setupEditLiftProgression = function () {
+    var progression = biglifts.settings.liftPercentages.getCurrentProgression();
+    Ext.get('edit-progression-title').setHtml('Week ' + biglifts.settings.liftPercentages.currentWeek + ", Set " + biglifts.settings.liftPercentages.currentSet);
     Ext.getCmp('edit-progression').setRecord(progression);
 };
 
-wendler.liftPercentages.showEditLiftProgression = function (currentSet) {
+biglifts.liftPercentages.showEditLiftProgression = function (currentSet) {
     if (currentSet) {
-        wendler.settings.liftPercentages.currentSet = currentSet;
+        biglifts.settings.liftPercentages.currentSet = currentSet;
     }
 
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-progression'), {type:'slide', direction:'left'});
 };
 
-wendler.liftPercentages.returnToLiftSettings = function () {
-    var progression = wendler.settings.liftPercentages.getCurrentProgression();
+biglifts.liftPercentages.returnToLiftSettings = function () {
+    var progression = biglifts.settings.liftPercentages.getCurrentProgression();
     var values = Ext.getCmp('edit-progression').getValues();
     progression.set('percentage', values.percentage);
     progression.set('reps', values.reps);
@@ -34,13 +34,13 @@ wendler.liftPercentages.returnToLiftSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
 };
 
-wendler.views.EditProgression = {
+biglifts.views.EditProgression = {
     xtype:'formpanel',
     id:'edit-progression',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftPercentages.returnToLiftSettings);
-            wendler.liftPercentages.setupEditLiftProgression();
+            biglifts.navigation.setBackFunction(biglifts.liftPercentages.returnToLiftSettings);
+            biglifts.liftPercentages.setupEditLiftProgression();
         }
     },
     items:[
@@ -54,7 +54,7 @@ wendler.views.EditProgression = {
                     xtype:'button',
                     ui:'back',
                     text:'Back',
-                    handler:wendler.liftPercentages.returnToLiftSettings
+                    handler:biglifts.liftPercentages.returnToLiftSettings
                 }
             ]
         },

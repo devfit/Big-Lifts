@@ -1,4 +1,4 @@
-Ext.ns('wendler.defaults', 'wendler.stores.migrations');
+Ext.ns('biglifts.defaults', 'biglifts.stores.migrations');
 Ext.define('LiftLogSort', {
     extend:'Ext.data.Model',
     config:{
@@ -15,26 +15,26 @@ Ext.define('LiftLogSort', {
     }
 });
 
-wendler.defaults.liftLogSort = {
+biglifts.defaults.liftLogSort = {
     'ascending':false,
     'property':'timestamp'
 };
 
-wendler.stores.recovery.setupDefaultSort = function () {
-    util.withNoFilters(wendler.stores.LiftLogSort, function () {
-        if (wendler.stores.LiftLogSort.getCount() == 0) {
-            wendler.stores.LiftLogSort.add(wendler.defaults.liftLogSort);
-            wendler.stores.LiftLogSort.sync();
+biglifts.stores.recovery.setupDefaultSort = function () {
+    util.withNoFilters(biglifts.stores.LiftLogSort, function () {
+        if (biglifts.stores.LiftLogSort.getCount() == 0) {
+            biglifts.stores.LiftLogSort.add(biglifts.defaults.liftLogSort);
+            biglifts.stores.LiftLogSort.sync();
         }
     });
 };
 
-wendler.stores.LiftLogSort = Ext.create('Ext.data.Store', {
+biglifts.stores.LiftLogSort = Ext.create('Ext.data.Store', {
     model:'LiftLogSort',
     listeners:{
         load:function () {
-            wendler.stores.recovery.setupDefaultSort();
+            biglifts.stores.recovery.setupDefaultSort();
         }
     }
 });
-wendler.stores.push(wendler.stores.LiftLogSort);
+biglifts.stores.push(biglifts.stores.LiftLogSort);

@@ -1,47 +1,47 @@
-Ext.ns('wendler.views.liftSchedule', 'wendler.restTimer');
+Ext.ns('biglifts.views.liftSchedule', 'biglifts.restTimer');
 
-wendler.restTimer.remainingSeconds = 0;
-wendler.restTimer.timerId = null;
-wendler.restTimer.backLocation = '';
+biglifts.restTimer.remainingSeconds = 0;
+biglifts.restTimer.timerId = null;
+biglifts.restTimer.backLocation = '';
 
-wendler.restTimer.back = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp(wendler.restTimer.backLocation));
+biglifts.restTimer.back = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp(biglifts.restTimer.backLocation));
 };
 
-wendler.restTimer.addTime = function (seconds) {
-    wendler.restTimer.remainingSeconds += seconds;
-    if (wendler.restTimer.remainingSeconds < 0) {
-        wendler.restTimer.remainingSeconds = 0;
+biglifts.restTimer.addTime = function (seconds) {
+    biglifts.restTimer.remainingSeconds += seconds;
+    if (biglifts.restTimer.remainingSeconds < 0) {
+        biglifts.restTimer.remainingSeconds = 0;
     }
 
-    wendler.restTimer.updateTimeDisplay();
+    biglifts.restTimer.updateTimeDisplay();
 };
 
-wendler.restTimer.startTimer = function () {
-    var restTime = wendler.stores.RestTime.first();
-    restTime.set('restTimeInSeconds', wendler.restTimer.remainingSeconds);
+biglifts.restTimer.startTimer = function () {
+    var restTime = biglifts.stores.RestTime.first();
+    restTime.set('restTimeInSeconds', biglifts.restTimer.remainingSeconds);
     restTime.save();
 
     var ONE_SECOND = 1000;
-    wendler.restTimer.timerId = setInterval(wendler.restTimer.timerTick, ONE_SECOND);
+    biglifts.restTimer.timerId = setInterval(biglifts.restTimer.timerTick, ONE_SECOND);
     Ext.getCmp('start-timer-button').hide();
     Ext.getCmp('stop-timer-button').show();
 };
 
-wendler.restTimer.timerHasEnded = function () {
-    wendler.restTimer.stopTimer();
-    wendler.restTimer.playTimerEndSound();
-    wendler.restTimer.back();
+biglifts.restTimer.timerHasEnded = function () {
+    biglifts.restTimer.stopTimer();
+    biglifts.restTimer.playTimerEndSound();
+    biglifts.restTimer.back();
 };
 
-wendler.restTimer.checkIfSoundMuted = function () {
+biglifts.restTimer.checkIfSoundMuted = function () {
     if (window.AudioInfo) {
         var soundWontPlay = window.AudioInfo.getVolume() == 0 || window.AudioInfo.isMuted();
         Ext.getCmp('sound-muted-notice').setHidden(!soundWontPlay);
     }
 };
 
-wendler.restTimer.playTimerEndSound = function () {
+biglifts.restTimer.playTimerEndSound = function () {
     if (typeof(Media) !== 'undefined') {
         if (Ext.os.is.Android) {
             var soundPath = util.phonegap.getResourcesPath() + "/sounds/1khz_1_5s.mp3";
@@ -58,50 +58,50 @@ wendler.restTimer.playTimerEndSound = function () {
     }
 };
 
-wendler.restTimer.timerTick = function () {
-    wendler.restTimer.remainingSeconds--;
-    if (wendler.restTimer.remainingSeconds <= 0) {
-        wendler.restTimer.timerHasEnded();
+biglifts.restTimer.timerTick = function () {
+    biglifts.restTimer.remainingSeconds--;
+    if (biglifts.restTimer.remainingSeconds <= 0) {
+        biglifts.restTimer.timerHasEnded();
     }
     else {
-        wendler.restTimer.updateTimeDisplay();
+        biglifts.restTimer.updateTimeDisplay();
     }
 };
 
-wendler.restTimer.stopTimer = function () {
-    clearTimeout(wendler.restTimer.timerId);
+biglifts.restTimer.stopTimer = function () {
+    clearTimeout(biglifts.restTimer.timerId);
 
     Ext.getCmp('stop-timer-button').hide();
     Ext.getCmp('start-timer-button').show();
 
-    wendler.restTimer.remainingSeconds = 0;
-    wendler.restTimer.updateTimeDisplay();
+    biglifts.restTimer.remainingSeconds = 0;
+    biglifts.restTimer.updateTimeDisplay();
 };
 
-wendler.restTimer.updateTimeDisplay = function () {
-    Ext.get('rest-timer-time').setHtml(wendler.restTimer.convertSecondsForDisplay(wendler.restTimer.remainingSeconds));
+biglifts.restTimer.updateTimeDisplay = function () {
+    Ext.get('rest-timer-time').setHtml(biglifts.restTimer.convertSecondsForDisplay(biglifts.restTimer.remainingSeconds));
 };
 
-wendler.restTimer.convertSecondsForDisplay = function (totalSeconds) {
+biglifts.restTimer.convertSecondsForDisplay = function (totalSeconds) {
     var minutes = parseInt(totalSeconds / 60);
     var seconds = totalSeconds % 60;
     return minutes + ":" + (seconds >= 10 ? seconds : '0' + seconds);
 };
 
-wendler.restTimer.TIME_INTERVAL = 60;
+biglifts.restTimer.TIME_INTERVAL = 60;
 
-wendler.views.liftSchedule.RestTimer = {
+biglifts.views.liftSchedule.RestTimer = {
     id:'rest-timer',
     xtype:'panel',
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.restTimer.checkIfSoundMuted();
-            if (wendler.restTimer.remainingSeconds === 0) {
-                wendler.restTimer.remainingSeconds = wendler.stores.RestTime.first().get('restTimeInSeconds');
-                wendler.restTimer.updateTimeDisplay();
+            biglifts.restTimer.checkIfSoundMuted();
+            if (biglifts.restTimer.remainingSeconds === 0) {
+                biglifts.restTimer.remainingSeconds = biglifts.stores.RestTime.first().get('restTimeInSeconds');
+                biglifts.restTimer.updateTimeDisplay();
             }
-            wendler.navigation.setBackFunction(wendler.restTimer.back);
+            biglifts.navigation.setBackFunction(biglifts.restTimer.back);
         }
     },
     items:[
@@ -113,7 +113,7 @@ wendler.views.liftSchedule.RestTimer = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.restTimer.back
+                    handler:biglifts.restTimer.back
                 }
             ]
         },
@@ -152,7 +152,7 @@ wendler.views.liftSchedule.RestTimer = {
                                             width:'100%',
                                             text:'-1',
                                             handler:function () {
-                                                wendler.restTimer.addTime(-1 * wendler.restTimer.TIME_INTERVAL);
+                                                biglifts.restTimer.addTime(-1 * biglifts.restTimer.TIME_INTERVAL);
                                             }
                                         }
                                     ]
@@ -169,7 +169,7 @@ wendler.views.liftSchedule.RestTimer = {
                                             width:'100%',
                                             text:'+1',
                                             handler:function () {
-                                                wendler.restTimer.addTime(wendler.restTimer.TIME_INTERVAL);
+                                                biglifts.restTimer.addTime(biglifts.restTimer.TIME_INTERVAL);
                                             }
                                         }
                                     ]
@@ -184,14 +184,14 @@ wendler.views.liftSchedule.RestTimer = {
                                     id:'start-timer-button',
                                     xtype:'button',
                                     text:'Start',
-                                    handler:wendler.restTimer.startTimer
+                                    handler:biglifts.restTimer.startTimer
                                 },
                                 {
                                     id:'stop-timer-button',
                                     hidden:true,
                                     xtype:'button',
                                     text:'Stop',
-                                    handler:wendler.restTimer.stopTimer
+                                    handler:biglifts.restTimer.stopTimer
                                 }
                             ]
                         }

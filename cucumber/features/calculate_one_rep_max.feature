@@ -1,7 +1,4 @@
-Feature: adding lifts
-  As a lifter
-  I want to be able to calculate one-rep maxes based on known prior lifts
-  So that I can create a reasonable lifting plan for Wendler 5/3/1
+Feature: One rep max calculator
 
   Scenario Outline: Use estimated max for actual max
     When I open the 1-rep calculator

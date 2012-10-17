@@ -7,7 +7,7 @@ describe("Plate Bar Configuration Model", function () {
         store.add({weightInLbs:45, count:2});
         store.add({weightInLbs:35, count:2});
         store.sync();
-        wendler.stores.plates.migrateWeightInLbsToWeightAndUnits(store);
+        biglifts.stores.plates.migrateWeightInLbsToWeightAndUnits(store);
 
         expect(store.first().get('weightInLbs')).toEqual(null);
         expect(store.first().get('weight')).toEqual(45);

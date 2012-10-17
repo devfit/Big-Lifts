@@ -1,5 +1,5 @@
 "use strict";
-Ext.define('Wendler.views.More', {
+Ext.define('biglifts.views.More', {
     extend:'Ext.Panel',
     config:{
         id:'more',
@@ -8,8 +8,8 @@ Ext.define('Wendler.views.More', {
         layout:'card',
         activeItem:0,
         items:[
-            wendler.views.MoreInfoList,
-            wendler.views.Settings
+            biglifts.views.MoreInfoList,
+            biglifts.views.Settings
         ]
     }
 });

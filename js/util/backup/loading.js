@@ -1,6 +1,6 @@
-Ext.ns('wendler.loading');
-wendler.loading.loadStore = function (store, callback) {
-    if (wendler.loadingFromFile) {
+Ext.ns('biglifts.loading');
+biglifts.loading.loadStore = function (store, callback) {
+    if (biglifts.loadingFromFile) {
         util.filebackup.loadStore(store, function () {
             util.filebackup.watchStoreSync(store);
             callback();
@@ -16,35 +16,35 @@ wendler.loading.loadStore = function (store, callback) {
     }
 };
 
-wendler.loading.loadTasks = _.map(wendler.stores, function (store) {
+biglifts.loading.loadTasks = _.map(biglifts.stores, function (store) {
     return function (callback) {
-        wendler.loading.loadStore(store, callback);
+        biglifts.loading.loadStore(store, callback);
     }
 });
 
-wendler.loading.loadingStarted = false;
-wendler.loading.load = function () {
-    if (!wendler.loading.loadingStarted) {
-        wendler.loading.loadingStarted = true;
+biglifts.loading.loadingStarted = false;
+biglifts.loading.load = function () {
+    if (!biglifts.loading.loadingStarted) {
+        biglifts.loading.loadingStarted = true;
         setTimeout(function () {
-            async.parallel(wendler.loading.loadTasks, function () {
-                wendler.main.start();
+            async.parallel(biglifts.loading.loadTasks, function () {
+                biglifts.main.start();
             });
         }, 0);
     }
 };
 
-if (wendler.loadingFromFile) {
-    document.addEventListener("deviceready", wendler.loading.load, false);
+if (biglifts.loadingFromFile) {
+    document.addEventListener("deviceready", biglifts.loading.load, false);
     setTimeout(function () {
-        if (!wendler.loading.loadingStarted) {
-            wendler.loadingFromFile = false;
-            wendler.loading.load();
+        if (!biglifts.loading.loadingStarted) {
+            biglifts.loadingFromFile = false;
+            biglifts.loading.load();
         }
     }, 1500);
 }
 else {
-    wendler.loading.load();
+    biglifts.loading.load();
 }
 
 

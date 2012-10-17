@@ -1,13 +1,13 @@
-Ext.ns('wendler.views.liftSchedule.assistance', 'wendler.liftSchedule.assistance.boringButBig');
+Ext.ns('biglifts.views.liftSchedule.assistance', 'biglifts.liftSchedule.assistance.boringButBig');
 
-wendler.liftSchedule.assistance.boringButBig.movementBeingEdited = null;
+biglifts.liftSchedule.assistance.boringButBig.movementBeingEdited = null;
 
-wendler.liftSchedule.assistance.boringButBig.showEditBbbMovement = function (movement) {
-    wendler.liftSchedule.assistance.boringButBig.movementBeingEdited = movement;
+biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement = function (movement) {
+    biglifts.liftSchedule.assistance.boringButBig.movementBeingEdited = movement;
 
     var formRecord = _.clone(movement.data);
     if (formRecord.lift_id) {
-        var lift = wendler.stores.lifts.Lifts.findRecord('id', formRecord.movement_lift_id);
+        var lift = biglifts.stores.lifts.Lifts.findRecord('id', formRecord.movement_lift_id);
         formRecord.lift = lift.get('propertyName');
     }
 
@@ -15,28 +15,28 @@ wendler.liftSchedule.assistance.boringButBig.showEditBbbMovement = function (mov
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('bbb-movement-editor'));
 };
 
-wendler.liftSchedule.assistance.boringButBig.returnToBbb = function () {
-    wendler.liftSchedule.assistance.boringButBig.saveMovementChange();
+biglifts.liftSchedule.assistance.boringButBig.returnToBbb = function () {
+    biglifts.liftSchedule.assistance.boringButBig.saveMovementChange();
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 
-wendler.liftSchedule.assistance.boringButBig.saveMovementChange = function () {
+biglifts.liftSchedule.assistance.boringButBig.saveMovementChange = function () {
     var movementEditor = Ext.getCmp('bbb-movement-editor');
     var newValues = movementEditor.getValues();
 
-    var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', newValues.lift);
+    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', newValues.lift);
     var newRecordData = {
         sets:newValues.sets,
         reps:newValues.reps,
         movement_lift_id:lift.get('id')
     };
 
-    var record = wendler.liftSchedule.assistance.boringButBig.movementBeingEdited;
+    var record = biglifts.liftSchedule.assistance.boringButBig.movementBeingEdited;
     record.set(Ext.merge(_.clone(record.data), newRecordData));
     record.save();
 };
 
-wendler.views.liftSchedule.assistance.BoringButBigMovementEditor = {
+biglifts.views.liftSchedule.assistance.BoringButBigMovementEditor = {
     xtype:'formpanel',
     id:'bbb-movement-editor',
     items:[
@@ -49,7 +49,7 @@ wendler.views.liftSchedule.assistance.BoringButBigMovementEditor = {
                     xtype:'button',
                     ui:'back',
                     text:'Back',
-                    handler:wendler.liftSchedule.assistance.boringButBig.returnToBbb
+                    handler:biglifts.liftSchedule.assistance.boringButBig.returnToBbb
                 }
             ]
         },
@@ -63,7 +63,7 @@ wendler.views.liftSchedule.assistance.BoringButBigMovementEditor = {
                     valueField:'propertyName',
                     displayField:'name',
                     label:'Lift',
-                    store:wendler.stores.lifts.Lifts
+                    store:biglifts.stores.lifts.Lifts
                 },
                 {
                     xtype:'textfield',
@@ -92,7 +92,7 @@ wendler.views.liftSchedule.assistance.BoringButBigMovementEditor = {
     ],
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.boringButBig.returnToBbb);
+            biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.boringButBig.returnToBbb);
         }
     }
 };

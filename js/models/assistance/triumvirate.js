@@ -1,4 +1,4 @@
-Ext.ns('wendler.stores.assistance');
+Ext.ns('biglifts.stores.assistance');
 Ext.define('TriumvirateMovement', {
     extend:'Ext.data.Model',
     config:{
@@ -18,7 +18,7 @@ Ext.define('TriumvirateMovement', {
     }
 });
 
-wendler.stores.assistance.defaultTriumvirate = [
+biglifts.stores.assistance.defaultTriumvirate = [
     {liftProperty:'squat', name:'Leg Press', sets:5, reps:15},
     {liftProperty:'squat', name:'Leg Curl', sets:5, reps:15},
     {liftProperty:'deadlift', name:'Good Morning', sets:5, reps:15},
@@ -29,10 +29,10 @@ wendler.stores.assistance.defaultTriumvirate = [
     {liftProperty:'bench', name:'Dumbbell Row', sets:5, reps:15}
 ];
 
-wendler.stores.migrations.triumvirateMovementsMigration = function (store) {
-    util.withLoadedStore(wendler.stores.lifts.Lifts, function(){
+biglifts.stores.migrations.triumvirateMovementsMigration = function (store) {
+    util.withLoadedStore(biglifts.stores.lifts.Lifts, function(){
 
-        wendler.stores.lifts.Lifts.each(function (lift) {
+        biglifts.stores.lifts.Lifts.each(function (lift) {
             var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
             if (!existingMovement) {
                 for (var i = 0; i < 2; i++) {
@@ -49,17 +49,17 @@ wendler.stores.migrations.triumvirateMovementsMigration = function (store) {
     });
 };
 
-wendler.stores.assistance.TriumvirateMovement = Ext.create('Ext.data.Store', {
+biglifts.stores.assistance.TriumvirateMovement = Ext.create('Ext.data.Store', {
     model:'TriumvirateMovement',
     listeners:{
         load:function () {
             if (this.getCount() == 0) {
-                this.add(wendler.stores.assistance.defaultTriumvirate);
+                this.add(biglifts.stores.assistance.defaultTriumvirate);
                 this.sync();
             }
-            wendler.stores.migrations.triumvirateMovementsMigration(this);
+            biglifts.stores.migrations.triumvirateMovementsMigration(this);
         }
     }
 });
 
-wendler.stores.push(wendler.stores.assistance.TriumvirateMovement);
+biglifts.stores.push(biglifts.stores.assistance.TriumvirateMovement);

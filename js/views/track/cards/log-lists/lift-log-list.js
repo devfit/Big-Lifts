@@ -1,68 +1,68 @@
-Ext.ns('wendler.logList');
+Ext.ns('biglifts.logList');
 
-wendler.logList.sortAndRefreshList = function () {
-    var liftLogSort = wendler.stores.LiftLogSort.first();
+biglifts.logList.sortAndRefreshList = function () {
+    var liftLogSort = biglifts.stores.LiftLogSort.first();
 
     var sortDirection = liftLogSort.data.ascending ? 'ASC' : 'DESC';
     var sortProperty = liftLogSort.data.property;
-    wendler.logList.sortLifts(sortProperty, sortDirection);
-    wendler.logList.sortAssistance(sortProperty, sortDirection);
+    biglifts.logList.sortLifts(sortProperty, sortDirection);
+    biglifts.logList.sortAssistance(sortProperty, sortDirection);
 };
 
-wendler.logList.sortLifts = function (sortProperty, sortDirection) {
-    wendler.stores.LiftLog.sort(sortProperty, sortDirection);
+biglifts.logList.sortLifts = function (sortProperty, sortDirection) {
+    biglifts.stores.LiftLog.sort(sortProperty, sortDirection);
     Ext.getCmp('lift-log-list').refresh();
 };
 
-wendler.logList.showLogEntry = function (dataview, index, item, e) {
-    var logRecord = wendler.stores.LiftLog.getAt(index);
-    wendler.logEntry.setupLogEntry(logRecord);
+biglifts.logList.showLogEntry = function (dataview, index, item, e) {
+    var logRecord = biglifts.stores.LiftLog.getAt(index);
+    biglifts.logEntry.setupLogEntry(logRecord);
 };
 
-wendler.logList.deleteLogEntry = function (dataview, index, item, e) {
-    wendler.stores.LiftLog.removeAt(index);
-    wendler.stores.LiftLog.sync();
+biglifts.logList.deleteLogEntry = function (dataview, index, item, e) {
+    biglifts.stores.LiftLog.removeAt(index);
+    biglifts.stores.LiftLog.sync();
     Ext.getCmp('lift-log-list').refresh();
 };
 
-wendler.logList.deloadMarker = function (week) {
+biglifts.logList.deloadMarker = function (week) {
     return week === 4 ? "[D]" : "";
 };
 
-wendler.stores.LiftLog.addListener('beforesync', function () {
-    if (wendler.main.started) {
-        wendler.logList.sortAndRefreshList();
+biglifts.stores.LiftLog.addListener('beforesync', function () {
+    if (biglifts.main.started) {
+        biglifts.logList.sortAndRefreshList();
     }
 });
 
-wendler.stores.Settings.addListener('beforesync', function () {
-    if (wendler.main.started) {
+biglifts.stores.Settings.addListener('beforesync', function () {
+    if (biglifts.main.started) {
         Ext.getCmp('lift-log-list').refresh();
     }
 });
 
-wendler.logList.liftLogList = {
+biglifts.logList.liftLogList = {
     id:'lift-log-list',
     listeners:{
         initialize:function () {
-            wendler.logList.sortAndRefreshList();
-            wendler.components.addSwipeToDelete(this, wendler.logList.showLogEntry,
-                wendler.logList.deleteLogEntry, Ext.emptyFn, '.date-week');
+            biglifts.logList.sortAndRefreshList();
+            biglifts.components.addSwipeToDelete(this, biglifts.logList.showLogEntry,
+                biglifts.logList.deleteLogEntry, Ext.emptyFn, '.date-week');
         }
     },
     xtype:'list',
     selectedCls:'',
-    store:wendler.stores.LiftLog,
+    store:biglifts.stores.LiftLog,
     itemCls:'lift-log-row',
     emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
     itemTpl:'<table><tbody><tr>' +
         '<td width="32%"><div class="lift-name">{liftName}</div><div class="cycle-and-week">C{cycle} W{week} ' +
-        '<span class="deload-indicator">{[wendler.logList.deloadMarker(values.week)]}</span>' +
+        '<span class="deload-indicator">{[biglifts.logList.deloadMarker(values.week)]}</span>' +
         '</div></td>' +
         '<td width="28%"><div><span class="reps">{reps}x</span> <span class="weight">{weight}</span></div>' +
         '<div class="estimated-one-rep">~{[util.formulas.estimateOneRepMax(values.weight,values.reps)]}</div></td>' +
         '<td width="40%" class="date-week">' +
-        '<span class="date">{[wendler.log.formatDate(values.timestamp)]}</span><span class="disclosure-small"></span>' +
+        '<span class="date">{[biglifts.log.formatDate(values.timestamp)]}</span><span class="disclosure-small"></span>' +
         '</td><td width="40%" class="delete-button-holder hidden"></td>' +
         '</tr></tbody></table>'
 };

@@ -1,23 +1,23 @@
 "use strict";
-Ext.ns('wendler.views', 'wendler.settings.liftPercentages');
+Ext.ns('biglifts.views', 'biglifts.settings.liftPercentages');
 
-wendler.settings.liftPercentages.currentWeek = 1;
-wendler.settings.liftPercentages.currentSet = null;
+biglifts.settings.liftPercentages.currentWeek = 1;
+biglifts.settings.liftPercentages.currentSet = null;
 
-wendler.settings.liftPercentages.switchLiftWeek = function (container, newValue) {
-    var lists = wendler.settings.liftPercentages.getWeekLists();
-    wendler.settings.liftPercentages.currentWeek = lists.indexOf(newValue) + 1;
-    wendler.settings.liftPercentages.updateLiftPercentaqes();
+biglifts.settings.liftPercentages.switchLiftWeek = function (container, newValue) {
+    var lists = biglifts.settings.liftPercentages.getWeekLists();
+    biglifts.settings.liftPercentages.currentWeek = lists.indexOf(newValue) + 1;
+    biglifts.settings.liftPercentages.updateLiftPercentaqes();
 };
 
-wendler.settings.liftPercentages.updateLiftPercentaqes = function () {
-    if (wendler.settings.liftPercentages.currentWeek) {
-        wendler.stores.lifts.LiftProgression.clearFilter();
-        wendler.stores.lifts.LiftProgression.filter("week", wendler.settings.liftPercentages.currentWeek);
+biglifts.settings.liftPercentages.updateLiftPercentaqes = function () {
+    if (biglifts.settings.liftPercentages.currentWeek) {
+        biglifts.stores.lifts.LiftProgression.clearFilter();
+        biglifts.stores.lifts.LiftProgression.filter("week", biglifts.settings.liftPercentages.currentWeek);
     }
 };
 
-wendler.settings.liftPercentages.getWeekLists = function () {
+biglifts.settings.liftPercentages.getWeekLists = function () {
     var listFilter = new Ext.util.Filter({
         filterFn:function (item) {
             return item.getBaseCls() === "x-panel";
@@ -26,37 +26,37 @@ wendler.settings.liftPercentages.getWeekLists = function () {
     return Ext.getCmp('edit-lift-percentages').getItems().filter(listFilter);
 };
 
-wendler.settings.liftPercentages.returnToLiftSettings = function () {
+biglifts.settings.liftPercentages.returnToLiftSettings = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'), {type:'slide', direction:'right'});
 };
 
-wendler.settings.liftPercentages.showEditLiftPercentage = function (view, index) {
-    wendler.liftPercentages.showEditLiftProgression(index + 1);
+biglifts.settings.liftPercentages.showEditLiftPercentage = function (view, index) {
+    biglifts.liftPercentages.showEditLiftProgression(index + 1);
 };
 
-wendler.settings.liftPercentages.deleteLiftProgression = function (view, index) {
+biglifts.settings.liftPercentages.deleteLiftProgression = function (view, index) {
     var set = index + 1;
-    var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', set);
+    var liftProgression = biglifts.stores.lifts.LiftProgression.findRecord('set', set);
 
-    wendler.stores.lifts.LiftProgression.remove(liftProgression);
-    wendler.stores.lifts.LiftProgression.sync();
+    biglifts.stores.lifts.LiftProgression.remove(liftProgression);
+    biglifts.stores.lifts.LiftProgression.sync();
 };
 
-wendler.settings.liftPercentages.addSet = function () {
-    var newSet = wendler.stores.lifts.LiftProgression.max('set') + 1;
-    wendler.stores.lifts.LiftProgression.add({
-        week:wendler.settings.liftPercentages.currentWeek,
+biglifts.settings.liftPercentages.addSet = function () {
+    var newSet = biglifts.stores.lifts.LiftProgression.max('set') + 1;
+    biglifts.stores.lifts.LiftProgression.add({
+        week:biglifts.settings.liftPercentages.currentWeek,
         set:newSet,
         reps:0,
         percentage:0,
         amrap:false,
         warmup:false
     });
-    wendler.stores.lifts.LiftProgression.sync();
-    wendler.liftPercentages.showEditLiftProgression(newSet);
+    biglifts.stores.lifts.LiftProgression.sync();
+    biglifts.liftPercentages.showEditLiftProgression(newSet);
 };
 
-wendler.settings.liftPercentages.createTab = function (week) {
+biglifts.settings.liftPercentages.createTab = function (week) {
     return {
         xtype:'panel',
         layout:'vbox',
@@ -65,18 +65,18 @@ wendler.settings.liftPercentages.createTab = function (week) {
             {
                 flex:4,
                 xtype:'list',
-                store:wendler.stores.lifts.LiftProgression,
+                store:biglifts.stores.lifts.LiftProgression,
                 itemCls:'lift-percentage-row',
                 itemTpl:'<table width="100%"><tbody><tr>' +
-                    '<td width="60%"><div class="{[wendler.liftSchedule.liftTemplate.getLiftRowClass(values)]}">' +
+                    '<td width="60%"><div class="{[biglifts.liftSchedule.liftTemplate.getLiftRowClass(values)]}">' +
                     '<span class="reps">{reps}</span> <span class="percentage">{percentage}%</span></div>' +
                     '<td width="40%" class="no-delete-button"></td>' +
                     '<td width="40%" class="delete-button-holder hidden"></td>' +
                     '</tr></tbody></table>',
                 listeners:{
                     initialize:function () {
-                        wendler.components.addSwipeToDelete(this, wendler.settings.liftPercentages.showEditLiftPercentage,
-                            wendler.settings.liftPercentages.deleteLiftProgression, Ext.emptyFn, '.no-delete-button');
+                        biglifts.components.addSwipeToDelete(this, biglifts.settings.liftPercentages.showEditLiftPercentage,
+                            biglifts.settings.liftPercentages.deleteLiftProgression, Ext.emptyFn, '.no-delete-button');
                     }
                 }
             },
@@ -87,7 +87,7 @@ wendler.settings.liftPercentages.createTab = function (week) {
                     {
                         xtype:'button',
                         text:'Add set',
-                        handler:wendler.settings.liftPercentages.addSet
+                        handler:biglifts.settings.liftPercentages.addSet
                     }
                 ]
             }
@@ -95,15 +95,15 @@ wendler.settings.liftPercentages.createTab = function (week) {
     };
 };
 
-wendler.views.EditLiftPercentages = {
+biglifts.views.EditLiftPercentages = {
     xtype:'tabpanel',
     id:'edit-lift-percentages',
     title:'Edit',
     listeners:{
-        activeitemchange:wendler.settings.liftPercentages.switchLiftWeek,
+        activeitemchange:biglifts.settings.liftPercentages.switchLiftWeek,
         show:function () {
-            wendler.navigation.setBackFunction(wendler.settings.liftPercentages.returnToLiftSettings);
-            wendler.settings.liftPercentages.updateLiftPercentaqes();
+            biglifts.navigation.setBackFunction(biglifts.settings.liftPercentages.returnToLiftSettings);
+            biglifts.settings.liftPercentages.updateLiftPercentaqes();
         }
     },
     items:[
@@ -115,13 +115,13 @@ wendler.views.EditLiftPercentages = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.settings.liftPercentages.returnToLiftSettings
+                    handler:biglifts.settings.liftPercentages.returnToLiftSettings
                 }
             ]
         },
-        wendler.settings.liftPercentages.createTab(1),
-        wendler.settings.liftPercentages.createTab(2),
-        wendler.settings.liftPercentages.createTab(3),
-        wendler.settings.liftPercentages.createTab(4)
+        biglifts.settings.liftPercentages.createTab(1),
+        biglifts.settings.liftPercentages.createTab(2),
+        biglifts.settings.liftPercentages.createTab(3),
+        biglifts.settings.liftPercentages.createTab(4)
     ]
 };

@@ -1,17 +1,17 @@
-Ext.ns('wendler.views.log.cards', 'wendler.log.emailExport');
+Ext.ns('biglifts.views.log.cards', 'biglifts.log.emailExport');
 
-wendler.log.emailExport.returnToTrackingList = function () {
+biglifts.log.emailExport.returnToTrackingList = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
 };
 
-wendler.log.emailExport.exportLog = function () {
-    var data = wendler.log.emailExport.buildCsvToExport();
+biglifts.log.emailExport.exportLog = function () {
+    var data = biglifts.log.emailExport.buildCsvToExport();
     var email = Ext.getCmp('export-log').getValues().email;
-    wendler.log.emailExport.ajaxEmailRequest(email, data);
+    biglifts.log.emailExport.ajaxEmailRequest(email, data);
 };
 
-wendler.log.emailExport.buildCsvToExport = function () {
-    var objects = Ext.pluck(wendler.stores.LiftLog.data.items, 'data');
+biglifts.log.emailExport.buildCsvToExport = function () {
+    var objects = Ext.pluck(biglifts.stores.LiftLog.data.items, 'data');
 
     var csvKeyMapper = {
         'liftName':'name',
@@ -29,19 +29,19 @@ wendler.log.emailExport.buildCsvToExport = function () {
 
     var csvValueMapper = {
         'date':function (object) {
-            return wendler.log.formatDate(object.timestamp);
+            return biglifts.log.formatDate(object.timestamp);
         },
         'estimatedOneRepMax':function (object) {
             return util.formulas.estimateOneRepMax(object.weight, object.reps);
         }
     };
 
-    var csvObjects = _.map(objects, wendler.log.emailExport.createCsvTransformer(csvKeyMapper, csvValueMapper));
+    var csvObjects = _.map(objects, biglifts.log.emailExport.createCsvTransformer(csvKeyMapper, csvValueMapper));
 
     return Ext.encode(csvObjects);
 };
 
-wendler.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper) {
+biglifts.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper) {
     return function (object) {
         var csvObject = {};
         for (var property in nameMapper) {
@@ -61,20 +61,20 @@ wendler.log.emailExport.createCsvTransformer = function (nameMapper, valueMapper
     };
 };
 
-wendler.log.emailExport.saveUsedEmail = function (email) {
-    var settings = wendler.stores.Settings.first();
+biglifts.log.emailExport.saveUsedEmail = function (email) {
+    var settings = biglifts.stores.Settings.first();
     settings.set('exportEmail', email);
     settings.save();
 };
-wendler.log.emailExport.ajaxEmailRequest = function (email, data) {
-    wendler.log.emailExport.saveUsedEmail(email);
+biglifts.log.emailExport.ajaxEmailRequest = function (email, data) {
+    biglifts.log.emailExport.saveUsedEmail(email);
     Ext.Viewport.setMasked({
         xtype:'loadmask',
         message:'Exporting...'
     });
     console.log( data );
     Ext.Ajax.request({
-        url:'http://wendler.herokuapp.com/email',
+        url:'http://biglifts.herokuapp.com/email',
         method:'POST',
         params:{
             email:email,
@@ -91,20 +91,20 @@ wendler.log.emailExport.ajaxEmailRequest = function (email, data) {
     });
 };
 
-wendler.log.emailExport.loadPreviousExportEmail = function () {
-    var settings = wendler.stores.Settings.first();
+biglifts.log.emailExport.loadPreviousExportEmail = function () {
+    var settings = biglifts.stores.Settings.first();
     Ext.getCmp('export-log').down('[name=email]').setValue(settings.get('exportEmail'));
 };
 
-wendler.views.log.cards.Export = {
+biglifts.views.log.cards.Export = {
     id:'export-log',
     xtype:'formpanel',
     scroll:'vertical',
     style:'padding-top:0px',
     listeners:{
         show:function () {
-            wendler.log.emailExport.loadPreviousExportEmail();
-            wendler.navigation.setBackFunction(wendler.log.emailExport.returnToTrackingList);
+            biglifts.log.emailExport.loadPreviousExportEmail();
+            biglifts.navigation.setBackFunction(biglifts.log.emailExport.returnToTrackingList);
         }
     },
     items:[
@@ -117,7 +117,7 @@ wendler.views.log.cards.Export = {
                     xtype:'button',
                     ui:'back',
                     text:'Back',
-                    handler:wendler.log.emailExport.returnToTrackingList
+                    handler:biglifts.log.emailExport.returnToTrackingList
                 },
                 {xtype:'spacer'},
                 {
@@ -125,7 +125,7 @@ wendler.views.log.cards.Export = {
                     xtype:'button',
                     ui:'confirm',
                     text:'Send',
-                    handler:wendler.log.emailExport.exportLog
+                    handler:biglifts.log.emailExport.exportLog
                 }
 
             ]

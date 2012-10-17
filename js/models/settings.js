@@ -1,5 +1,5 @@
 "use strict";
-Ext.ns('wendler.defaults', 'wendler.stores.recovery', 'wendler.settings.options');
+Ext.ns('biglifts.defaults', 'biglifts.stores.recovery', 'biglifts.settings.options');
 
 Ext.define('Settings', {
     extend:'Ext.data.Model',
@@ -24,7 +24,7 @@ Ext.define('Settings', {
     }
 });
 
-wendler.defaults.settings = {
+biglifts.defaults.settings = {
     'showWarmupSets':1,
     units:'lbs',
     'roundingValue':'5',
@@ -35,38 +35,38 @@ wendler.defaults.settings = {
     'lockPortrait':false
 };
 
-wendler.stores.recovery.setupDefaultSettings = function () {
-    util.withNoFilters(wendler.stores.Settings, function () {
-        if (wendler.stores.Settings.getCount() == 0) {
-            wendler.stores.Settings.add(wendler.defaults.settings);
-            wendler.stores.Settings.sync();
+biglifts.stores.recovery.setupDefaultSettings = function () {
+    util.withNoFilters(biglifts.stores.Settings, function () {
+        if (biglifts.stores.Settings.getCount() == 0) {
+            biglifts.stores.Settings.add(biglifts.defaults.settings);
+            biglifts.stores.Settings.sync();
         }
     });
 };
 
-wendler.settings.lockPortrait = function (shouldLockPortrait) {
+biglifts.settings.lockPortrait = function (shouldLockPortrait) {
     if (window.ScreenLock) {
         window.ScreenLock.lockPortrait(shouldLockPortrait === 1);
     }
 };
-wendler.stores.Settings = Ext.create('Ext.data.Store', {
+biglifts.stores.Settings = Ext.create('Ext.data.Store', {
     model:'Settings',
     listeners:{
         load:function () {
-            wendler.stores.recovery.setupDefaultSettings();
-            wendler.settings.lockPortrait(this.first().get('lockPortrait'));
+            biglifts.stores.recovery.setupDefaultSettings();
+            biglifts.settings.lockPortrait(this.first().get('lockPortrait'));
         }
     }
 });
 
-wendler.stores.push(wendler.stores.Settings);
+biglifts.stores.push(biglifts.stores.Settings);
 
-wendler.settings.options.units = [
+biglifts.settings.options.units = [
     {text:'lbs', value:'lbs'},
     {text:'kg', value:'kg'}
 ];
 
-wendler.settings.options.roundingValues = [
+biglifts.settings.options.roundingValues = [
     {text:'0.25', value:'0.25'},
     {text:'0.75', value:'0.75'},
     {text:'0.5', value:'0.5'},
@@ -76,13 +76,13 @@ wendler.settings.options.roundingValues = [
     {text:'Closest 5', value:'closest5'}
 ];
 
-wendler.settings.options.roundingType = [
+biglifts.settings.options.roundingType = [
     {text:'Up', value:'up'},
     {text:'Normal', value:'normal'},
     {text:'Down', value:'down'}
 ];
 
-wendler.settings.options.dateFormats = [
+biglifts.settings.options.dateFormats = [
     {text:"Month/Day/Year", value:"MM/dd/yyyy"},
     {text:"Day/Month/Year", value:"dd/MM/yyyy"}
 ];

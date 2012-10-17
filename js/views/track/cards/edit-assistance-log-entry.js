@@ -1,47 +1,47 @@
 "use strict";
-Ext.ns('wendler.views.log.cards', 'wendler.logEntry');
+Ext.ns('biglifts.views.log.cards', 'biglifts.logEntry');
 
-wendler.logEntry.currentAssistanceRecord = null;
+biglifts.logEntry.currentAssistanceRecord = null;
 
-wendler.logEntry.setupAssistanceLogEntry = function (assistanceRecord) {
-    wendler.logEntry.currentAssistanceRecord = assistanceRecord;
+biglifts.logEntry.setupAssistanceLogEntry = function (assistanceRecord) {
+    biglifts.logEntry.currentAssistanceRecord = assistanceRecord;
     Ext.getCmp('log').setActiveItem('edit-assistance-log-entry', {type:'slide', direction:'left'});
     Ext.getCmp('edit-assistance-log-entry-toolbar').setTitle(assistanceRecord.get('movement'));
 
     Ext.getCmp('edit-assistance-log-entry').setValues(assistanceRecord.data);
-    wendler.components.notesEditor.displayNotes('edit-assistance-log-notes', assistanceRecord.data.notes);
+    biglifts.components.notesEditor.displayNotes('edit-assistance-log-notes', assistanceRecord.data.notes);
 };
 
-wendler.logEntry.updateAssistanceLogEntry = function () {
+biglifts.logEntry.updateAssistanceLogEntry = function () {
     var values = Ext.getCmp('edit-assistance-log-entry').getValues();
 
-    wendler.logEntry.currentAssistanceRecord.set(values);
-    wendler.logEntry.currentAssistanceRecord.save();
-    wendler.stores.assistance.ActivityLog.sync();
+    biglifts.logEntry.currentAssistanceRecord.set(values);
+    biglifts.logEntry.currentAssistanceRecord.save();
+    biglifts.stores.assistance.ActivityLog.sync();
 };
 
-wendler.logEntry.editAssistanceNotes = function () {
+biglifts.logEntry.editAssistanceNotes = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('assistance-log-notes-editor'));
-    Ext.getCmp('assistance-log-notes-editor')._setNotes(wendler.logEntry.currentAssistanceRecord.get('notes'));
+    Ext.getCmp('assistance-log-notes-editor')._setNotes(biglifts.logEntry.currentAssistanceRecord.get('notes'));
 };
 
-wendler.logEntry.deleteAssistanceLogEntry = function () {
-    wendler.stores.assistance.ActivityLog.remove(wendler.logEntry.currentAssistanceRecord);
-    wendler.stores.assistance.ActivityLog.sync();
+biglifts.logEntry.deleteAssistanceLogEntry = function () {
+    biglifts.stores.assistance.ActivityLog.remove(biglifts.logEntry.currentAssistanceRecord);
+    biglifts.stores.assistance.ActivityLog.sync();
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
 };
 
-wendler.views.log.cards.EditAssistanceLogEntry = {
+biglifts.views.log.cards.EditAssistanceLogEntry = {
     id:'edit-assistance-log-entry',
     xtype:'formpanel',
     scroll:'vertical',
     _listenersBound:false,
     listeners:{
         painted:function () {
-            Ext.get('edit-assistance-log-notes').addListener('tap', wendler.logEntry.editAssistanceNotes);
+            Ext.get('edit-assistance-log-notes').addListener('tap', biglifts.logEntry.editAssistanceNotes);
         },
         show:function () {
-            wendler.navigation.setBackFunction(wendler.logEntry.backToLogList);
+            biglifts.navigation.setBackFunction(biglifts.logEntry.backToLogList);
         }
     },
     items:[
@@ -53,7 +53,7 @@ wendler.views.log.cards.EditAssistanceLogEntry = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.logEntry.backToLogList
+                    handler:biglifts.logEntry.backToLogList
                 },
                 {xtype:'spacer'},
                 {
@@ -61,7 +61,7 @@ wendler.views.log.cards.EditAssistanceLogEntry = {
                     ui:'decline',
                     iconMask:true,
                     iconCls:'trash',
-                    handler:wendler.logEntry.deleteAssistanceLogEntry
+                    handler:biglifts.logEntry.deleteAssistanceLogEntry
                 }
             ]
         },
@@ -72,7 +72,7 @@ wendler.views.log.cards.EditAssistanceLogEntry = {
             xtype:'fieldset',
             defaults:{
                 listeners:{
-                    change:wendler.logEntry.updateAssistanceLogEntry
+                    change:biglifts.logEntry.updateAssistanceLogEntry
                 }
             },
             items:[

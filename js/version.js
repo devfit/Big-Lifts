@@ -1,2 +1,2 @@
-Ext.ns('wendler');
-wendler.version=74;
+Ext.ns('biglifts');
+biglifts.version=74;

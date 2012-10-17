@@ -1,4 +1,4 @@
-Ext.ns('wendler.stores.plates');
+Ext.ns('biglifts.stores.plates');
 
 Ext.define('Plates', {
     extend:'Ext.data.Model',
@@ -18,7 +18,7 @@ Ext.define('Plates', {
     }
 });
 
-wendler.stores.plates.migrateWeightInLbsToWeightAndUnits = function (store) {
+biglifts.stores.plates.migrateWeightInLbsToWeightAndUnits = function (store) {
     store.each(function (record) {
         var weightInLbs = record.get('weightInLbs');
         if (!_.isUndefined(weightInLbs) && !_.isNull(weightInLbs)) {
@@ -34,7 +34,7 @@ Ext.define("PlateStore", {
     extend:'Ext.data.Store',
     getAllPlatePairs:function () {
         var platePairs = {};
-        wendler.stores.Plates.each(function (r) {
+        biglifts.stores.Plates.each(function (r) {
             var weight = r.get('weight');
             platePairs[weight] = parseInt(r.get('count') / 2);
         });
@@ -62,15 +62,15 @@ Ext.define("PlateStore", {
         listeners:{
             load:function (store) {
                 if (store.getCount() === 0) {
-                    store.add(wendler.stores.Plates.DEFAULT_PLATES_LBS);
+                    store.add(biglifts.stores.Plates.DEFAULT_PLATES_LBS);
                     store.sync();
                 }
                 else {
-                    wendler.stores.plates.migrateWeightInLbsToWeightAndUnits(this);
+                    biglifts.stores.plates.migrateWeightInLbsToWeightAndUnits(this);
                 }
             }
         }
     }
 });
-wendler.stores.Plates = Ext.create('PlateStore', {});
-wendler.stores.push(wendler.stores.Plates);
+biglifts.stores.Plates = Ext.create('PlateStore', {});
+biglifts.stores.push(biglifts.stores.Plates);

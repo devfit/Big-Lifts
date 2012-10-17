@@ -1,4 +1,4 @@
-Ext.ns('wendler.stores.assistance');
+Ext.ns('biglifts.stores.assistance');
 Ext.define('BoringButBigPercentage', {
     extend:'Ext.data.Model',
     config:{
@@ -14,7 +14,7 @@ Ext.define('BoringButBigPercentage', {
     }
 });
 
-wendler.stores.assistance.BoringButBigPercentage = Ext.create('Ext.data.Store', {
+biglifts.stores.assistance.BoringButBigPercentage = Ext.create('Ext.data.Store', {
     model:'BoringButBigPercentage',
     listeners:{
         load:function () {
@@ -26,4 +26,4 @@ wendler.stores.assistance.BoringButBigPercentage = Ext.create('Ext.data.Store', 
     }
 });
 
-wendler.stores.push(wendler.stores.assistance.BoringButBigPercentage);
+biglifts.stores.push(biglifts.stores.assistance.BoringButBigPercentage);

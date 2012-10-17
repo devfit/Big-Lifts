@@ -1,14 +1,14 @@
 "use strict";
-Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller', 'wendler.editLift');
+Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.controller', 'biglifts.editLift');
 
-wendler.maxes.currentEditingLiftProperty = null;
+biglifts.maxes.currentEditingLiftProperty = null;
 
-wendler.maxes.editLiftBackButtonPressed = function () {
+biglifts.maxes.editLiftBackButtonPressed = function () {
     var formValues = Ext.getCmp('edit-lift-form').getValues();
     formValues.name = formValues.name.trim();
-    formValues.propertyName = wendler.models.Lift.sanitizePropertyName(formValues.name);
+    formValues.propertyName = biglifts.models.Lift.sanitizePropertyName(formValues.name);
 
-    var currentModel = wendler.maxes.controller.getCurrentLiftModel();
+    var currentModel = biglifts.maxes.controller.getCurrentLiftModel();
     formValues.order = currentModel.get('order');
 
     var newLiftModel = Ext.create('Lift', formValues);
@@ -17,7 +17,7 @@ wendler.maxes.editLiftBackButtonPressed = function () {
     if (errors.isValid()) {
         newLiftModel.set('id', currentModel.data.id);
 
-        wendler.editLift.updateAssociatedLiftCompletion(currentModel.get('propertyName'), newLiftModel.get('propertyName'));
+        biglifts.editLift.updateAssociatedLiftCompletion(currentModel.get('propertyName'), newLiftModel.get('propertyName'));
 
         var somethingSaved = false;
         for (var key in newLiftModel.getData()) {
@@ -31,58 +31,58 @@ wendler.maxes.editLiftBackButtonPressed = function () {
         }
 
         if (somethingSaved) {
-            wendler.maxes.controller.rebuildMaxesList();
-            wendler.liftSchedule.liftSelector.refreshLiftSelectorLifts();
+            biglifts.maxes.controller.rebuildMaxesList();
+            biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts();
         }
 
-        wendler.maxes.controller.doneWithEditing();
+        biglifts.maxes.controller.doneWithEditing();
     }
     else {
-        wendler.maxes.controller.handleInvalidLift(errors);
+        biglifts.maxes.controller.handleInvalidLift(errors);
     }
 };
 
-wendler.editLift.updateAssociatedLiftCompletion = function (oldPropertyName, newPropertyName) {
+biglifts.editLift.updateAssociatedLiftCompletion = function (oldPropertyName, newPropertyName) {
     if (oldPropertyName !== newPropertyName) {
-        wendler.stores.lifts.LiftCompletion.each(function (record) {
+        biglifts.stores.lifts.LiftCompletion.each(function (record) {
             if (record.get('liftPropertyName') === oldPropertyName) {
                 record.set('liftPropertyName', newPropertyName);
                 record.save();
             }
         });
-        wendler.stores.lifts.LiftCompletion.sync();
+        biglifts.stores.lifts.LiftCompletion.sync();
     }
 };
 
-wendler.maxes.controller.getCurrentLiftModel = function () {
-    var liftIndex = wendler.stores.lifts.Lifts.find(
-        'propertyName', wendler.maxes.currentEditingLiftProperty,
+biglifts.maxes.controller.getCurrentLiftModel = function () {
+    var liftIndex = biglifts.stores.lifts.Lifts.find(
+        'propertyName', biglifts.maxes.currentEditingLiftProperty,
         false, true, true);
-    return wendler.stores.lifts.Lifts.getAt(liftIndex);
+    return biglifts.stores.lifts.Lifts.getAt(liftIndex);
 };
 
-wendler.maxes.controller.deleteLiftButtonPressed = function () {
+biglifts.maxes.controller.deleteLiftButtonPressed = function () {
     Ext.Msg.confirm("Confirm", "Delete Lift?", function (text) {
         if (text === "yes") {
-            var liftModel = wendler.maxes.controller.getCurrentLiftModel();
+            var liftModel = biglifts.maxes.controller.getCurrentLiftModel();
             var propertyName = liftModel.data.propertyName;
 
-            wendler.stores.lifts.Lifts.remove(liftModel);
-            wendler.stores.lifts.Lifts.sync();
-            wendler.maxes.controller.rebuildMaxesList();
+            biglifts.stores.lifts.Lifts.remove(liftModel);
+            biglifts.stores.lifts.Lifts.sync();
+            biglifts.maxes.controller.rebuildMaxesList();
 
-            if (wendler.liftSchedule.currentLiftProperty === propertyName) {
-                wendler.liftSchedule.currentLiftProperty = null;
+            if (biglifts.liftSchedule.currentLiftProperty === propertyName) {
+                biglifts.liftSchedule.currentLiftProperty = null;
             }
 
-            wendler.maxes.controller.doneWithEditing();
+            biglifts.maxes.controller.doneWithEditing();
         }
     });
 };
 
-wendler.maxes.controller.setupEditLift = function (propertyName) {
-    var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', propertyName);
-    wendler.maxes.currentEditingLiftProperty = propertyName;
+biglifts.maxes.controller.setupEditLift = function (propertyName) {
+    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', propertyName);
+    biglifts.maxes.currentEditingLiftProperty = propertyName;
 
     var formValues = _.clone(lift.data);
     formValues.customBarWeight = null;
@@ -90,13 +90,13 @@ wendler.maxes.controller.setupEditLift = function (propertyName) {
     Ext.getCmp('edit-lift-form').setValues(formValues);
 };
 
-wendler.maxes.cards.editLiftPanel = {
+biglifts.maxes.cards.editLiftPanel = {
     xtype:'panel',
     id:'maxes-edit-lift-panel',
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.maxes.editLiftBackButtonPressed);
+            biglifts.navigation.setBackFunction(biglifts.maxes.editLiftBackButtonPressed);
         }
     },
     items:[
@@ -107,7 +107,7 @@ wendler.maxes.cards.editLiftPanel = {
             items:[
                 {
                     text:'Back',
-                    handler:wendler.maxes.editLiftBackButtonPressed,
+                    handler:biglifts.maxes.editLiftBackButtonPressed,
                     ui:'back'
                 },
                 {xtype:'spacer'},
@@ -116,7 +116,7 @@ wendler.maxes.cards.editLiftPanel = {
                     ui:'decline',
                     iconMask:true,
                     iconCls:'trash',
-                    handler:wendler.maxes.controller.deleteLiftButtonPressed
+                    handler:biglifts.maxes.controller.deleteLiftButtonPressed
                 }
             ]
         },
@@ -151,7 +151,7 @@ wendler.maxes.cards.editLiftPanel = {
                                 }
                             ]);
 
-                            if (wendler.toggles.BarLoading) {
+                            if (biglifts.toggles.BarLoading) {
                                 this.add({
                                     xtype:'numberfield',
                                     name:'customBarWeight',

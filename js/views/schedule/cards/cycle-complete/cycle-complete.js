@@ -1,69 +1,69 @@
 "use strict";
-Ext.ns('wendler.liftSchedule.cycleComplete', 'wendler.views.liftSchedule');
+Ext.ns('biglifts.liftSchedule.cycleComplete', 'biglifts.views.liftSchedule');
 
-wendler.liftSchedule.cycleComplete.unmarkAllLifts = function () {
-    wendler.stores.lifts.LiftCompletion.each(function (r) {
+biglifts.liftSchedule.cycleComplete.unmarkAllLifts = function () {
+    biglifts.stores.lifts.LiftCompletion.each(function (r) {
         r.set('completed', false);
         r.save();
     });
 
-    wendler.liftSchedule.liftCompletionChange();
+    biglifts.liftSchedule.liftCompletionChange();
 };
 
-wendler.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen = function () {
-    var currentCycle = wendler.stores.CurrentCycle.first();
+biglifts.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen = function () {
+    var currentCycle = biglifts.stores.CurrentCycle.first();
 
     var newCycle = Ext.getCmp('cycle-complete').getValues()['new-cycle'];
     currentCycle.set('cycle', newCycle);
     currentCycle.save();
-    wendler.stores.CurrentCycle.sync();
+    biglifts.stores.CurrentCycle.sync();
 
-    wendler.liftSchedule.cycleComplete.unmarkAllLifts();
+    biglifts.liftSchedule.cycleComplete.unmarkAllLifts();
 
     if (Ext.getCmp('increase-maxes-toggle').getValue() === 1) {
-        wendler.liftSchedule.increaseMaxesByCycleIncrease();
+        biglifts.liftSchedule.increaseMaxesByCycleIncrease();
     }
 
-    wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen();
+    biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen();
 };
 
-wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(wendler.liftSchedule.lastActiveTab,
+biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(biglifts.liftSchedule.lastActiveTab,
         {type:'slide', direction:'up'});
 };
 
-wendler.liftSchedule.increaseMaxesByCycleIncrease = function () {
-    wendler.stores.lifts.Lifts.each(function (r) {
+biglifts.liftSchedule.increaseMaxesByCycleIncrease = function () {
+    biglifts.stores.lifts.Lifts.each(function (r) {
         var max = r.data.max;
         var cycleIncrease = r.data.cycleIncrease;
         r.set('max', max + cycleIncrease);
         r.save();
     });
 
-    wendler.stores.lifts.Lifts.sync();
+    biglifts.stores.lifts.Lifts.sync();
 };
 
-wendler.liftSchedule.cycleComplete.setNextCycleDefault = function () {
+biglifts.liftSchedule.cycleComplete.setNextCycleDefault = function () {
     var formValues = Ext.getCmp('cycle-complete').getValues();
-    var currentCycle = wendler.stores.CurrentCycle.first();
+    var currentCycle = biglifts.stores.CurrentCycle.first();
     formValues['new-cycle'] = currentCycle.data.cycle + 1;
     Ext.getCmp('cycle-complete').setValues(formValues);
 };
 
-wendler.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen = function () {
+biglifts.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('increase-maxes-help'),
         {type:'slide', direction:'right'});
 };
 
-wendler.views.liftSchedule.LiftsCompletedScreen = {
+biglifts.views.liftSchedule.LiftsCompletedScreen = {
     id:'cycle-complete',
     xtype:'formpanel',
     listeners:{
         show:function () {
             Ext.get('increase-maxes-help-image').addListener('tap',
-                wendler.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen);
-            wendler.liftSchedule.cycleComplete.setNextCycleDefault();
-            wendler.navigation.setBackFunction(wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen);
+                biglifts.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen);
+            biglifts.liftSchedule.cycleComplete.setNextCycleDefault();
+            biglifts.navigation.setBackFunction(biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen);
         }
     },
     items:[
@@ -77,7 +77,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     xtype:'button',
                     text:'Cancel',
                     ui:'back',
-                    handler:wendler.liftSchedule.cycleComplete.closeLiftCompletedScreen
+                    handler:biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen
                 }
             ]
         },
@@ -104,7 +104,7 @@ wendler.views.liftSchedule.LiftsCompletedScreen = {
                     id:'lifts-complete-done-button',
                     xtype:'button',
                     text:'Done',
-                    handler:wendler.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen
+                    handler:biglifts.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen
                 }
             ]
         }

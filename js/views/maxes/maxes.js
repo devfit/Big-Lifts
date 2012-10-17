@@ -1,7 +1,7 @@
 "use strict";
-Ext.ns('wendler.views', 'wendler.stores', 'wendler.maxes.controller');
+Ext.ns('biglifts.views', 'biglifts.stores', 'biglifts.maxes.controller');
 
-Ext.define('Wendler.views.Maxes', {
+Ext.define('biglifts.views.Maxes', {
     extend:'Ext.Panel',
     config:{
         id:'maxes-panel',
@@ -12,12 +12,12 @@ Ext.define('Wendler.views.Maxes', {
             fullscreen:true
         },
         items:[
-            wendler.maxes.cards.maxesForm,
-            wendler.maxes.cards.editMaxesList,
-            wendler.maxes.cards.editLiftPanel,
-            wendler.maxes.cards.addLiftPanel,
-            wendler.maxes.cards.ArrangeLifts,
-            wendler.maxes.barSetup.BarSetup
+            biglifts.maxes.cards.maxesForm,
+            biglifts.maxes.cards.editMaxesList,
+            biglifts.maxes.cards.editLiftPanel,
+            biglifts.maxes.cards.addLiftPanel,
+            biglifts.maxes.cards.ArrangeLifts,
+            biglifts.maxes.barSetup.BarSetup
         ]
     }
 });

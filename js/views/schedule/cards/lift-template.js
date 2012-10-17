@@ -1,10 +1,10 @@
 "use strict";
-Ext.ns('wendler.views.liftSchedule', 'wendler.liftSchedule.liftTemplate');
+Ext.ns('biglifts.views.liftSchedule', 'biglifts.liftSchedule.liftTemplate');
 
-wendler.liftSchedule.liftTemplate.showLiftTracking = function () {
-    var liftProgression = wendler.stores.lifts.LiftProgression.findRecord('set', 6).data;
+biglifts.liftSchedule.liftTemplate.showLiftTracking = function () {
+    var liftProgression = biglifts.stores.lifts.LiftProgression.findRecord('set', 6).data;
     var reps = liftProgression.reps;
-    var weight = wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax), liftProgression.percentage);
+    var weight = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), liftProgression.percentage);
     var formValues = {
         'reps':reps,
         'weight':weight,
@@ -17,25 +17,25 @@ wendler.liftSchedule.liftTemplate.showLiftTracking = function () {
 };
 
 
-wendler.liftSchedule.liftTemplate.formatLiftWeight = function (values) {
+biglifts.liftSchedule.liftTemplate.formatLiftWeight = function (values) {
     var max = null;
     if (values.goalLift) {
-        max = wendler.stores.lifts.MeetGoals.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty).get('weight');
+        max = biglifts.stores.lifts.MeetGoals.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty).get('weight');
     }
     else {
-        max = wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax);
+        max = biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax);
     }
-    return wendler.weight.format(max, values.percentage);
+    return biglifts.weight.format(max, values.percentage);
 };
 
-wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
-    var barWeight = wendler.stores.BarWeight.first().get('weight');
-    var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
+biglifts.liftSchedule.liftTemplate.getPlateList = function (weight) {
+    var barWeight = biglifts.stores.BarWeight.first().get('weight');
+    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
     if (liftRecord.get("customBarWeight")) {
         barWeight = liftRecord.get("customBarWeight");
     }
 
-    var allPlatePairs = wendler.stores.Plates.getAllPlatePairs();
+    var allPlatePairs = biglifts.stores.Plates.getAllPlatePairs();
 
     var plates = util.formulas.buildPlateListForWeight(weight, barWeight, allPlatePairs);
     var totalWeight = _.reduce(plates, function (sum, plate) {
@@ -51,16 +51,16 @@ wendler.liftSchedule.liftTemplate.getPlateList = function (weight) {
     return plateString;
 };
 
-wendler.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
+biglifts.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
     return (values.amrap ? 'amrap ' : '') + (values.warmup ? 'warmup ' : '');
 };
 
-wendler.liftSchedule.liftTemplate.updateLiftValues = function () {
-    if (!wendler.liftSchedule.currentLiftProperty) {
+biglifts.liftSchedule.liftTemplate.updateLiftValues = function () {
+    if (!biglifts.liftSchedule.currentLiftProperty) {
         return;
     }
 
-    var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
+    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
     if (liftRecord === null) {
         if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
             Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
@@ -68,35 +68,35 @@ wendler.liftSchedule.liftTemplate.updateLiftValues = function () {
         return;
     }
 
-    var settings = wendler.stores.Settings.first();
+    var settings = biglifts.stores.Settings.first();
     if (settings) {
         var showWarmupSets = settings.get('showWarmupSets');
-        wendler.liftSchedule.currentShowingMax = liftRecord.data.max;
-        wendler.stores.lifts.LiftProgression.clearFilter();
-        wendler.stores.lifts.LiftProgression.filter("week", wendler.liftSchedule.currentWeek);
+        biglifts.liftSchedule.currentShowingMax = liftRecord.data.max;
+        biglifts.stores.lifts.LiftProgression.clearFilter();
+        biglifts.stores.lifts.LiftProgression.filter("week", biglifts.liftSchedule.currentWeek);
 
         if (!showWarmupSets) {
-            wendler.stores.lifts.LiftProgression.filterBy(function (record) {
-                return !record.get('warmup') && record.data.week == wendler.liftSchedule.currentWeek;
+            biglifts.stores.lifts.LiftProgression.filterBy(function (record) {
+                return !record.get('warmup') && record.data.week == biglifts.liftSchedule.currentWeek;
             });
         }
 
-        wendler.liftSchedule.liftTemplate.setupBestOneRepMax();
+        biglifts.liftSchedule.liftTemplate.setupBestOneRepMax();
     }
 };
 
-wendler.stores.lifts.Lifts.addListener('beforesync', wendler.liftSchedule.liftTemplate.updateLiftValues);
-wendler.stores.lifts.MeetGoals.addListener('beforesync', wendler.liftSchedule.liftTemplate.updateLiftValues);
+biglifts.stores.lifts.Lifts.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
+biglifts.stores.lifts.MeetGoals.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
 
-wendler.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
-    if (wendler.liftSchedule.currentWeek === 4) {
+biglifts.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
+    if (biglifts.liftSchedule.currentWeek === 4) {
         Ext.getCmp('reps-to-beat-toolbar').hide();
         return;
     }
 
-    var liftRecord = wendler.stores.lifts.Lifts.findRecord('propertyName', wendler.liftSchedule.currentLiftProperty);
+    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
     var bestLogRecordOneRepEstimate = null;
-    wendler.stores.LiftLog.each(function (r) {
+    biglifts.stores.LiftLog.each(function (r) {
         if (r.get('liftName') === liftRecord.get('name')) {
             var weight = parseFloat(r.get('weight'));
             var reps = r.get('reps');
@@ -111,7 +111,7 @@ wendler.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
     });
 
     if (!_.isNull(bestLogRecordOneRepEstimate)) {
-        var lastSetMax = wendler.weight.format(wendler.weight.lowerMaxToTrainingMax(wendler.liftSchedule.currentShowingMax), wendler.stores.lifts.LiftProgression.last().get('percentage'));
+        var lastSetMax = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), biglifts.stores.lifts.LiftProgression.last().get('percentage'));
 
         Ext.get('last-one-rep-estimate').setHtml(bestLogRecordOneRepEstimate);
         Ext.get('reps-needed-to-beat-last-estimate').setHtml(util.formulas.calculateRepsToBeatWeight(bestLogRecordOneRepEstimate, lastSetMax));
@@ -122,24 +122,24 @@ wendler.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
     }
 };
 
-wendler.liftSchedule.liftTemplate.returnToLiftSelect = function () {
+biglifts.liftSchedule.liftTemplate.returnToLiftSelect = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
 };
 
-wendler.liftSchedule.liftTemplate.markLiftCompleted = function () {
-    wendler.liftSchedule.liftTemplate.showLiftTracking();
+biglifts.liftSchedule.liftTemplate.markLiftCompleted = function () {
+    biglifts.liftSchedule.liftTemplate.showLiftTracking();
 };
 
-wendler.liftSchedule.liftTemplate.showRestTimer = function () {
-    wendler.restTimer.backLocation = 'lift-template';
+biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
+    biglifts.restTimer.backLocation = 'lift-template';
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'), {type:'slide', direction:'right'});
 };
 
-wendler.liftSchedule.liftTemplate.formatPercentage = function (value) {
+biglifts.liftSchedule.liftTemplate.formatPercentage = function (value) {
     return value;
 };
 
-wendler.views.liftSchedule.liftTemplate = {
+biglifts.views.liftSchedule.liftTemplate = {
     xtype:'panel',
     id:'lift-template',
     layout:'fit',
@@ -152,7 +152,7 @@ wendler.views.liftSchedule.liftTemplate = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:wendler.liftSchedule.liftTemplate.returnToLiftSelect
+                    handler:biglifts.liftSchedule.liftTemplate.returnToLiftSelect
                 },
                 {xtype:'spacer'},
                 {
@@ -162,7 +162,7 @@ wendler.views.liftSchedule.liftTemplate = {
                     iconCls:'clock',
                     iconMask:true,
                     ui:'decline',
-                    handler:wendler.liftSchedule.liftTemplate.showRestTimer
+                    handler:biglifts.liftSchedule.liftTemplate.showRestTimer
                 },
                 {
                     style:'z-index: 11',
@@ -170,7 +170,7 @@ wendler.views.liftSchedule.liftTemplate = {
                     iconCls:'done',
                     iconMask:true,
                     ui:'action',
-                    handler:wendler.liftSchedule.liftTemplate.markLiftCompleted
+                    handler:biglifts.liftSchedule.liftTemplate.markLiftCompleted
                 }
             ]
         },
@@ -199,26 +199,26 @@ wendler.views.liftSchedule.liftTemplate = {
         {
             id:'lift-template-list',
             xtype:'list',
-            store:wendler.stores.lifts.LiftProgression,
+            store:biglifts.stores.lifts.LiftProgression,
             itemCls:'lift-row',
-            itemTpl:'<p class="{[wendler.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
-                '<span class="weight">{[wendler.liftSchedule.liftTemplate.formatLiftWeight(values)]}</span>' +
-                '<span class="percentage"><span class="warmup-indicator">[warm]</span> {[wendler.liftSchedule.liftTemplate.formatPercentage(values.percentage)]}%</span></p>' +
-                (wendler.toggles.BarLoading ?
-                    '<p class="bar-loader-breakdown">{[wendler.liftSchedule.liftTemplate.getPlateList(' +
-                        'wendler.liftSchedule.liftTemplate.formatLiftWeight(values)' +
+            itemTpl:'<p class="{[biglifts.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
+                '<span class="weight">{[biglifts.liftSchedule.liftTemplate.formatLiftWeight(values)]}</span>' +
+                '<span class="percentage"><span class="warmup-indicator">[warm]</span> {[biglifts.liftSchedule.liftTemplate.formatPercentage(values.percentage)]}%</span></p>' +
+                (biglifts.toggles.BarLoading ?
+                    '<p class="bar-loader-breakdown">{[biglifts.liftSchedule.liftTemplate.getPlateList(' +
+                        'biglifts.liftSchedule.liftTemplate.formatLiftWeight(values)' +
                         ')]}</p>' : '')
         }
     ],
     listeners:{
         painted:function () {
-            wendler.stores.lifts.LiftProgression.addListener('beforesync', function () {
+            biglifts.stores.lifts.LiftProgression.addListener('beforesync', function () {
                 Ext.getCmp('lift-template-list').refresh();
             });
         },
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftSchedule.liftTemplate.returnToLiftSelect);
-            wendler.liftSchedule.liftTemplate.updateLiftValues();
+            biglifts.navigation.setBackFunction(biglifts.liftSchedule.liftTemplate.returnToLiftSelect);
+            biglifts.liftSchedule.liftTemplate.updateLiftValues();
         }
     }
 };

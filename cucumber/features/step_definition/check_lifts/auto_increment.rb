@@ -11,9 +11,9 @@ end
 
 When /^I check off all lifts$/ do
   check_lifts_script = <<END
-  wendler.stores.lifts.LiftCompletion.each(function(r){
+  biglifts.stores.lifts.LiftCompletion.each(function(r){
   if(!(r.data.liftPropertyName === 'bench' && r.data.week === 4 )){
-    r.set('completed',true); r.save(); wendler.stores.lifts.LiftCompletion.sync();
+    r.set('completed',true); r.save(); biglifts.stores.lifts.LiftCompletion.sync();
   }
   });
 END

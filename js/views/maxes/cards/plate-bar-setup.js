@@ -1,57 +1,57 @@
-Ext.ns('wendler.maxes.barSetup', 'wendler.maxes.controller');
+Ext.ns('biglifts.maxes.barSetup', 'biglifts.maxes.controller');
 
-wendler.maxes.barSetup.backButtonPressed = function () {
+biglifts.maxes.barSetup.backButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
 };
 
-wendler.maxes.barSetup.platesValueChanged = function (field, newCount) {
+biglifts.maxes.barSetup.platesValueChanged = function (field, newCount) {
     var name = field.getName();
-    var plateWeight = parseFloat(name.substring(0, name.indexOf(wendler.maxes.barSetup.PLATE_SUFFIX)));
+    var plateWeight = parseFloat(name.substring(0, name.indexOf(biglifts.maxes.barSetup.PLATE_SUFFIX)));
 
-    var plateRecord = wendler.stores.Plates.findRecord('weight', plateWeight);
+    var plateRecord = biglifts.stores.Plates.findRecord('weight', plateWeight);
     plateRecord.set('count', newCount);
     plateRecord.save();
 };
 
-wendler.maxes.barSetup.barValueChanged = function () {
+biglifts.maxes.barSetup.barValueChanged = function () {
     var barPlateValues = Ext.getCmp('bar-setup-form').getValues();
-    var barWeight = wendler.stores.BarWeight.first();
+    var barWeight = biglifts.stores.BarWeight.first();
     barWeight.set(barPlateValues);
     barWeight.save();
 };
 
-wendler.maxes.barSetup.removeLastPlate = function () {
-    if (wendler.stores.Plates.getCount() > 0) {
-        var lastPlate = wendler.stores.Plates.last();
-        wendler.stores.Plates.remove(lastPlate);
-        wendler.stores.Plates.sync();
-        wendler.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
+biglifts.maxes.barSetup.removeLastPlate = function () {
+    if (biglifts.stores.Plates.getCount() > 0) {
+        var lastPlate = biglifts.stores.Plates.last();
+        biglifts.stores.Plates.remove(lastPlate);
+        biglifts.stores.Plates.sync();
+        biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
     }
 };
 
-wendler.maxes.barSetup.addNewPlate = function () {
+biglifts.maxes.barSetup.addNewPlate = function () {
     var plateValues = Ext.getCmp('bar-setup-form').getValues();
     var weight = plateValues.newPlateWeight;
 
-    var recordExists = wendler.stores.Plates.findBy(function (p) {
+    var recordExists = biglifts.stores.Plates.findBy(function (p) {
         return p.get('weight') == weight;
     }) !== -1;
 
     if (weight > 0 && !recordExists) {
-        wendler.stores.Plates.add({weight:weight, count:2});
-        wendler.stores.Plates.sync();
-        wendler.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
+        biglifts.stores.Plates.add({weight:weight, count:2});
+        biglifts.stores.Plates.sync();
+        biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
     }
 };
 
-wendler.maxes.barSetup.PLATE_SUFFIX = '-lbs';
+biglifts.maxes.barSetup.PLATE_SUFFIX = '-lbs';
 
-wendler.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
-    var settings = wendler.stores.Settings.first();
+biglifts.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
+    var settings = biglifts.stores.Settings.first();
     fieldSet.removeAll();
-    wendler.stores.Plates.each(function (r) {
+    biglifts.stores.Plates.each(function (r) {
         fieldSet.add({
-            name:r.get('weight') + wendler.maxes.barSetup.PLATE_SUFFIX,
+            name:r.get('weight') + biglifts.maxes.barSetup.PLATE_SUFFIX,
             xtype:'numberfield',
             label:r.get('weight') + settings.get('units'),
             value:r.get('count')
@@ -59,26 +59,26 @@ wendler.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
     });
 };
 
-wendler.maxes.barSetup.platesAreDefault = function (comparisonPlates) {
+biglifts.maxes.barSetup.platesAreDefault = function (comparisonPlates) {
     var actualPlateWeights = [];
-    wendler.stores.Plates.each(function (p) {
+    biglifts.stores.Plates.each(function (p) {
         actualPlateWeights.push({weight:p.get('weight'), count:p.get('count')});
     });
 
     return _.isEqual(actualPlateWeights, comparisonPlates);
 };
 
-wendler.maxes.barSetup.adjustPlatesForUnits = function (units) {
-    if (units == 'kg' && wendler.maxes.barSetup.platesAreDefault(wendler.stores.Plates.DEFAULT_PLATES_LBS)) {
-        wendler.stores.Plates.removeAll();
-        wendler.stores.Plates.add(wendler.stores.Plates.DEFAULT_PLATES_KG);
+biglifts.maxes.barSetup.adjustPlatesForUnits = function (units) {
+    if (units == 'kg' && biglifts.maxes.barSetup.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_LBS)) {
+        biglifts.stores.Plates.removeAll();
+        biglifts.stores.Plates.add(biglifts.stores.Plates.DEFAULT_PLATES_KG);
     }
-    else if (units == 'lbs' && wendler.maxes.barSetup.platesAreDefault(wendler.stores.Plates.DEFAULT_PLATES_KG)) {
-        wendler.stores.Plates.removeAll();
-        wendler.stores.Plates.add(wendler.stores.Plates.DEFAULT_PLATES_LBS);
+    else if (units == 'lbs' && biglifts.maxes.barSetup.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_KG)) {
+        biglifts.stores.Plates.removeAll();
+        biglifts.stores.Plates.add(biglifts.stores.Plates.DEFAULT_PLATES_LBS);
     }
 
-    var barWeight = wendler.stores.BarWeight.first();
+    var barWeight = biglifts.stores.BarWeight.first();
     if (units === 'kg' && barWeight.get('weight') === 45) {
         barWeight.set('weight', 20.4);
     }
@@ -86,17 +86,17 @@ wendler.maxes.barSetup.adjustPlatesForUnits = function (units) {
         barWeight.set('weight', 45);
     }
 
-    wendler.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
+    biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
 };
 
-wendler.maxes.barSetup.BarSetup = {
+biglifts.maxes.barSetup.BarSetup = {
     xtype:'panel',
     id:'bar-plate-setup-panel',
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.maxes.barSetup.backButtonPressed);
-            Ext.getCmp('bar-setup-form').setRecord(wendler.stores.BarWeight.first());
+            biglifts.navigation.setBackFunction(biglifts.maxes.barSetup.backButtonPressed);
+            Ext.getCmp('bar-setup-form').setRecord(biglifts.stores.BarWeight.first());
         }
     },
     items:[
@@ -108,7 +108,7 @@ wendler.maxes.barSetup.BarSetup = {
                 {
                     id:'bar-setup-back-button',
                     text:'Back',
-                    handler:wendler.maxes.barSetup.backButtonPressed,
+                    handler:biglifts.maxes.barSetup.backButtonPressed,
                     ui:'back'
                 }
             ]
@@ -127,7 +127,7 @@ wendler.maxes.barSetup.BarSetup = {
                         autoComplete:false,
                         labelWidth:'50%',
                         listeners:{
-                            change:wendler.maxes.barSetup.barValueChanged
+                            change:biglifts.maxes.barSetup.barValueChanged
                         }
                     },
                     items:[
@@ -154,12 +154,12 @@ wendler.maxes.barSetup.BarSetup = {
                                 autoComplete:false,
                                 labelWidth:'50%',
                                 listeners:{
-                                    change:wendler.maxes.barSetup.platesValueChanged
+                                    change:biglifts.maxes.barSetup.platesValueChanged
                                 }
                             },
                             listeners:{
                                 initialize:function () {
-                                    wendler.maxes.barSetup.setupCustomPlatesFieldSet(this);
+                                    biglifts.maxes.barSetup.setupCustomPlatesFieldSet(this);
                                 }
                             }
                         },
@@ -168,7 +168,7 @@ wendler.maxes.barSetup.BarSetup = {
                             xtype:'button',
                             text:'Remove',
                             ui:'decline',
-                            handler:wendler.maxes.barSetup.removeLastPlate
+                            handler:biglifts.maxes.barSetup.removeLastPlate
                         },
                         {
                             xtype:'fieldset',
@@ -189,7 +189,7 @@ wendler.maxes.barSetup.BarSetup = {
                             xtype:'button',
                             text:'Add',
                             ui:'confirm',
-                            handler:wendler.maxes.barSetup.addNewPlate
+                            handler:biglifts.maxes.barSetup.addNewPlate
                         }
                     ]
                 }

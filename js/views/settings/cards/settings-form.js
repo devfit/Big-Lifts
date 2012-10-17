@@ -1,16 +1,16 @@
-Ext.ns('wendler.settings.controller', 'wendler.views');
-wendler.settings.controller.resetToDefaults = function () {
-    wendler.stores.Settings.first().set(wendler.defaults.settings);
-    wendler.stores.Settings.sync();
-    Ext.getCmp('settings-form').setRecord(Ext.create('Settings', wendler.defaults.settings));
+Ext.ns('biglifts.settings.controller', 'biglifts.views');
+biglifts.settings.controller.resetToDefaults = function () {
+    biglifts.stores.Settings.first().set(biglifts.defaults.settings);
+    biglifts.stores.Settings.sync();
+    Ext.getCmp('settings-form').setRecord(Ext.create('Settings', biglifts.defaults.settings));
 };
 
-wendler.settings.controller.reloadForm = function () {
-    Ext.getCmp('settings-form').setRecord(wendler.stores.Settings.first());
+biglifts.settings.controller.reloadForm = function () {
+    Ext.getCmp('settings-form').setRecord(biglifts.stores.Settings.first());
     Ext.getCmp('settings-form').hasBeenLoaded = true;
 };
 
-wendler.settings.controller.updateSettings = function (field, newValue, oldValue) {
+biglifts.settings.controller.updateSettings = function (field, newValue, oldValue) {
     var settingsForm = Ext.getCmp('settings-form');
     if (!settingsForm.hasBeenLoaded) {
         return;
@@ -18,11 +18,11 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
 
     if (!_.isUndefined(oldValue) && !_.isUndefined(newValue) && _.has(oldValue, 'data') && _.has(newValue, 'data')) {
         if (oldValue.data.value === 'lbs' && newValue.data.value === 'kg') {
-            wendler.stores.lifts.adjustCycleIncreaseForKg();
+            biglifts.stores.lifts.adjustCycleIncreaseForKg();
         }
     }
 
-    var settingsRecord = wendler.stores.Settings.first();
+    var settingsRecord = biglifts.stores.Settings.first();
     var settingsFormValues = settingsForm.getValues();
     for (var property in settingsFormValues) {
         if (settingsRecord.get(property) !== settingsFormValues[property]) {
@@ -30,23 +30,23 @@ wendler.settings.controller.updateSettings = function (field, newValue, oldValue
         }
     }
     settingsRecord.save();
-    wendler.stores.Settings.sync();
+    biglifts.stores.Settings.sync();
 
     //TODO: Remove when beforesync fires properly for toggles
-    wendler.maxes.controller.showHideTrainingMaxes();
-    wendler.settings.lockPortrait(settingsRecord.get('lockPortrait'));
-    wendler.maxes.barSetup.adjustPlatesForUnits(settingsRecord.get('units'));
+    biglifts.maxes.controller.showHideTrainingMaxes();
+    biglifts.settings.lockPortrait(settingsRecord.get('lockPortrait'));
+    biglifts.maxes.barSetup.adjustPlatesForUnits(settingsRecord.get('units'));
 
     if (!_.isUndefined(field.getName) && field.getName() === 'dateFormat') {
-        wendler.logEntry.updateDateFormat();
+        biglifts.logEntry.updateDateFormat();
     }
 };
 
-wendler.views.SettingsForm = {
+biglifts.views.SettingsForm = {
     xtype:'formpanel',
     id:'settings-form',
     listeners:{
-        initialize:wendler.settings.controller.reloadForm
+        initialize:biglifts.settings.controller.reloadForm
     },
     scroll:'vertical',
     items:[
@@ -56,7 +56,7 @@ wendler.views.SettingsForm = {
             defaults:{
                 labelWidth:'50%',
                 listeners:{
-                    change:wendler.settings.controller.updateSettings
+                    change:biglifts.settings.controller.updateSettings
                 }
             },
             items:[
@@ -69,19 +69,19 @@ wendler.views.SettingsForm = {
                     xtype:'selectfield',
                     name:'units',
                     label:"Units",
-                    options:wendler.settings.options.units
+                    options:biglifts.settings.options.units
                 },
                 {
                     xtype:'selectfield',
                     name:'roundingValue',
                     label:'Round to',
-                    options:wendler.settings.options.roundingValues
+                    options:biglifts.settings.options.roundingValues
                 },
                 {
                     xtype:'selectfield',
                     name:'roundingType',
                     label:'Rounding',
-                    options:wendler.settings.options.roundingType
+                    options:biglifts.settings.options.roundingType
                 },
                 {
                     xtype:'togglefield',
@@ -104,7 +104,7 @@ wendler.views.SettingsForm = {
                     name:'dateFormat',
                     label:'Date Format',
                     labelWidth:'39%',
-                    options:wendler.settings.options.dateFormats
+                    options:biglifts.settings.options.dateFormats
                 }
             ]
         },
@@ -116,7 +116,7 @@ wendler.views.SettingsForm = {
             xtype:'button',
             ui:'decline',
             text:'Reset',
-            handler:wendler.settings.controller.resetToDefaults
+            handler:biglifts.settings.controller.resetToDefaults
         }
     ]
 };

@@ -1,18 +1,18 @@
-Ext.ns('wendler.maxes.cards', 'wendler.maxes.controller');
+Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.controller');
 
-wendler.maxes.controller.liftValuesChanged = function (el, newValue) {
-    var lift = wendler.stores.lifts.Lifts.findRecord('propertyName', el.getName());
+biglifts.maxes.controller.liftValuesChanged = function (el, newValue) {
+    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', el.getName());
     lift.set('max', newValue);
     lift.save();
-    wendler.stores.lifts.Lifts.sync();
+    biglifts.stores.lifts.Lifts.sync();
 };
 
-wendler.maxes.controller.buildMaxesFromStore = function () {
-    wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createMaxesInput, this);
-    wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createTrainingMaxesInput, this);
+biglifts.maxes.controller.buildMaxesFromStore = function () {
+    biglifts.stores.lifts.Lifts.each(biglifts.maxes.controller.createMaxesInput, this);
+    biglifts.stores.lifts.Lifts.each(biglifts.maxes.controller.createTrainingMaxesInput, this);
 };
 
-wendler.maxes.controller.createMaxesInput = function (record) {
+biglifts.maxes.controller.createMaxesInput = function (record) {
     var liftName = record.data.name;
     var liftProperty = record.data.propertyName;
 
@@ -33,8 +33,8 @@ wendler.maxes.controller.createMaxesInput = function (record) {
     });
 };
 
-wendler.maxes.controller.createTrainingMaxesInput = function (record) {
-    var trainingMaxPercentage = wendler.stores.Settings.first().data['trainingMaxPercentage'] / 100.0;
+biglifts.maxes.controller.createTrainingMaxesInput = function (record) {
+    var trainingMaxPercentage = biglifts.stores.Settings.first().data['trainingMaxPercentage'] / 100.0;
     var trainingMax = util.roundNumber(trainingMaxPercentage * record.data.max, '0.5', 'normal');
     var liftProperty = record.data.propertyName;
     Ext.getCmp('training-maxes').add({
@@ -46,8 +46,8 @@ wendler.maxes.controller.createTrainingMaxesInput = function (record) {
     });
 };
 
-wendler.maxes.controller.showHideTrainingMaxes = function () {
-    var settings = wendler.stores.Settings.first();
+biglifts.maxes.controller.showHideTrainingMaxes = function () {
+    var settings = biglifts.stores.Settings.first();
 
     var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
     if (settings.data['useTrainingMax']) {
@@ -64,58 +64,58 @@ wendler.maxes.controller.showHideTrainingMaxes = function () {
     }
 };
 
-wendler.maxes.controller.rebuildMaxesList = function () {
+biglifts.maxes.controller.rebuildMaxesList = function () {
     Ext.getCmp('maxes-form-items').removeAll();
     Ext.getCmp('training-maxes').removeAll();
-    wendler.maxes.controller.buildMaxesFromStore();
+    biglifts.maxes.controller.buildMaxesFromStore();
 };
 
-wendler.stores.Settings.addListener('beforesync', function () {
-    if (wendler.main.started) {
-        wendler.maxes.controller.showHideTrainingMaxes();
+biglifts.stores.Settings.addListener('beforesync', function () {
+    if (biglifts.main.started) {
+        biglifts.maxes.controller.showHideTrainingMaxes();
     }
 });
-wendler.stores.lifts.Lifts.addListener('beforesync', function () {
-    if (wendler.main.started) {
-        wendler.maxes.controller.rebuildMaxesList();
+biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
+    if (biglifts.main.started) {
+        biglifts.maxes.controller.rebuildMaxesList();
     }
 });
 
-wendler.maxes.controller.editLiftButtonPressed = function () {
+biglifts.maxes.controller.editLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lifts-panel'));
 };
 
-wendler.maxes.controller.updateTrainingPercentageDisplay = function () {
-    var trainingMaxPercentage = wendler.stores.Settings.first().data['trainingMaxPercentage'];
+biglifts.maxes.controller.updateTrainingPercentageDisplay = function () {
+    var trainingMaxPercentage = biglifts.stores.Settings.first().data['trainingMaxPercentage'];
     var trainingMaxPercentageIndicator = Ext.get('training-max-percentage-indicator');
     if (trainingMaxPercentageIndicator !== null) {
         trainingMaxPercentageIndicator.setHtml(trainingMaxPercentage);
     }
 
     Ext.getCmp('training-maxes').removeAll();
-    wendler.stores.lifts.Lifts.each(wendler.maxes.controller.createTrainingMaxesInput, this);
+    biglifts.stores.lifts.Lifts.each(biglifts.maxes.controller.createTrainingMaxesInput, this);
 };
 
-wendler.stores.Settings.addListener('update', wendler.maxes.controller.updateTrainingPercentageDisplay);
+biglifts.stores.Settings.addListener('update', biglifts.maxes.controller.updateTrainingPercentageDisplay);
 
-wendler.maxes.controller.addLiftButtonPressed = function () {
+biglifts.maxes.controller.addLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'), {type:'slide', direction:'left'});
 };
 
-wendler.maxes.controller.barPlateButtonPressed = function () {
+biglifts.maxes.controller.barPlateButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('bar-plate-setup-panel'), {type:'slide', direction:'left'});
 };
 
-wendler.maxes.meetGoalsChanged = function (el, newValue) {
-    var meetGoal = wendler.stores.lifts.MeetGoals.findRecord('propertyName', el.getName());
+biglifts.maxes.meetGoalsChanged = function (el, newValue) {
+    var meetGoal = biglifts.stores.lifts.MeetGoals.findRecord('propertyName', el.getName());
     meetGoal.set('weight', newValue);
     meetGoal.save();
-    wendler.stores.lifts.MeetGoals.sync();
+    biglifts.stores.lifts.MeetGoals.sync();
 };
 
-wendler.maxes.showHideMeetGoals = function () {
+biglifts.maxes.showHideMeetGoals = function () {
     if (Ext.getCmp('meet-goals')) {
-        var template = wendler.stores.Template.first();
+        var template = biglifts.stores.Template.first();
         if (template.get('hasMeetGoals')) {
             Ext.getCmp('meet-goals').show();
         }
@@ -125,9 +125,9 @@ wendler.maxes.showHideMeetGoals = function () {
     }
 };
 
-wendler.stores.Template.addListener('beforesync', wendler.maxes.showHideMeetGoals);
+biglifts.stores.Template.addListener('beforesync', biglifts.maxes.showHideMeetGoals);
 
-wendler.maxes.cards.maxesFormEditable = {
+biglifts.maxes.cards.maxesFormEditable = {
     xtype:'panel',
     flex:3,
     bodyPadding:0,
@@ -140,7 +140,7 @@ wendler.maxes.cards.maxesFormEditable = {
             title:'Maxes',
             defaults:{
                 listeners:{
-                    change:wendler.maxes.controller.liftValuesChanged
+                    change:biglifts.maxes.controller.liftValuesChanged
                 },
                 labelWidth:'45%',
                 useClearIcon:true
@@ -154,7 +154,7 @@ wendler.maxes.cards.maxesFormEditable = {
             title:'Meet Goals',
             defaults:{
                 listeners:{
-                    change:wendler.maxes.meetGoalsChanged
+                    change:biglifts.maxes.meetGoalsChanged
                 },
                 labelWidth:'45%',
                 useClearIcon:true
@@ -163,13 +163,13 @@ wendler.maxes.cards.maxesFormEditable = {
     ]
 };
 
-wendler.maxes.cards.trainingMaxes = {
+biglifts.maxes.cards.trainingMaxes = {
     xtype:'panel',
     id:'training-maxes-panel',
     flex:1,
     bodyPadding:0,
     listeners:{
-        painted:wendler.maxes.controller.updateTrainingPercentageDisplay
+        painted:biglifts.maxes.controller.updateTrainingPercentageDisplay
     },
     items:[
         {
@@ -181,17 +181,17 @@ wendler.maxes.cards.trainingMaxes = {
     ]
 };
 
-wendler.maxes.cards.maxesForm = {
+biglifts.maxes.cards.maxesForm = {
     xtype:'formpanel',
     id:'maxes-form',
     scroll:'vertical',
     listeners:{
         show:function () {
-            wendler.navigation.unbindBackEvent();
-            wendler.maxes.showHideMeetGoals();
+            biglifts.navigation.unbindBackEvent();
+            biglifts.maxes.showHideMeetGoals();
         },
         initialize:function () {
-            if (wendler.toggles.BarLoading) {
+            if (biglifts.toggles.BarLoading) {
                 this.add({
                     id:'lift-settings-toolbar',
                     xtype:'toolbar',
@@ -201,7 +201,7 @@ wendler.maxes.cards.maxesForm = {
                         {xtype:'spacer'},
                         {
                             id:'setup-plates-button',
-                            handler:wendler.maxes.controller.barPlateButtonPressed,
+                            handler:biglifts.maxes.controller.barPlateButtonPressed,
                             ui:'action',
                             text:'Bar/Plates'
                         }
@@ -210,7 +210,7 @@ wendler.maxes.cards.maxesForm = {
             }
         },
         painted:function () {
-            wendler.maxes.controller.buildMaxesFromStore();
+            biglifts.maxes.controller.buildMaxesFromStore();
         }
     },
     items:[
@@ -224,14 +224,14 @@ wendler.maxes.cards.maxesForm = {
                     id:'edit-lifts-button',
                     ui:'action',
                     text:'Edit',
-                    handler:wendler.maxes.controller.editLiftButtonPressed
+                    handler:biglifts.maxes.controller.editLiftButtonPressed
                 },
                 {xtype:'spacer'},
                 {
                     id:'add-lift-button',
                     iconCls:'add',
                     iconMask:true,
-                    handler:wendler.maxes.controller.addLiftButtonPressed,
+                    handler:biglifts.maxes.controller.addLiftButtonPressed,
                     ui:'action'
                 }
             ]
@@ -245,8 +245,8 @@ wendler.maxes.cards.maxesForm = {
             padding:0,
             bodyPadding:0,
             items:[
-                wendler.maxes.cards.maxesFormEditable,
-                wendler.maxes.cards.trainingMaxes
+                biglifts.maxes.cards.maxesFormEditable,
+                biglifts.maxes.cards.trainingMaxes
             ]
         }
     ]

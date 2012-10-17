@@ -1,11 +1,11 @@
-Ext.ns('wendler.views.log.cards', 'wendler.graph');
+Ext.ns('biglifts.views.log.cards', 'biglifts.graph');
 
-wendler.graph.back = function () {
+biglifts.graph.back = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
     Ext.getCmp('tab-navigation').show();
 };
 
-Ext.define('Wendler.LiftGraph', {
+Ext.define('biglifts.LiftGraph', {
     extend:'Ext.Panel',
     xtype:'liftgraph',
     _setupGraph:function () {
@@ -14,7 +14,7 @@ Ext.define('Wendler.LiftGraph', {
         }
 
         var series = [];
-        _.each(wendler.stores.lifts.Lifts.getUniqueLiftNames(), function (lift) {
+        _.each(biglifts.stores.lifts.Lifts.getUniqueLiftNames(), function (lift) {
             series.push({
                 type:'line',
                 xField:'date',
@@ -28,7 +28,7 @@ Ext.define('Wendler.LiftGraph', {
         Ext.getCmp('graph').add({
             id:'lift-chart',
             xtype:'chart',
-            store:wendler.util.graph.convertLogToGraphStore(),
+            store:biglifts.util.graph.convertLogToGraphStore(),
             animate:true,
             shadow:false,
             legend:{
@@ -41,7 +41,7 @@ Ext.define('Wendler.LiftGraph', {
                 {
                     type:'Numeric',
                     position:'left',
-                    fields:wendler.stores.lifts.Lifts.getUniqueLiftNames(),
+                    fields:biglifts.stores.lifts.Lifts.getUniqueLiftNames(),
                     label:{
                         renderer:function (v) {
                             return v.toFixed(1);
@@ -61,7 +61,7 @@ Ext.define('Wendler.LiftGraph', {
                     position:'bottom',
                     label:{
                         renderer:function (date) {
-                            var dateFormat = wendler.stores.Settings.first().get('dateFormat');
+                            var dateFormat = biglifts.stores.Settings.first().get('dateFormat');
                             var datePieces = dateFormat.split("/");
                             var format = datePieces[0] + "/" + datePieces[1];
                             return date.toString(format);
@@ -82,7 +82,7 @@ Ext.define('Wendler.LiftGraph', {
         listeners:{
             show:function () {
                 Ext.getCmp('tab-navigation').hide();
-                wendler.navigation.setBackFunction(wendler.graph.back);
+                biglifts.navigation.setBackFunction(biglifts.graph.back);
                 this._setupGraph();
             }
         },
@@ -96,7 +96,7 @@ Ext.define('Wendler.LiftGraph', {
                         xtype:'button',
                         ui:'back',
                         text:'Back',
-                        handler:wendler.graph.back
+                        handler:biglifts.graph.back
                     }
                 ]
             }
@@ -104,7 +104,7 @@ Ext.define('Wendler.LiftGraph', {
     }
 });
 
-wendler.views.log.cards.Graph = {
+biglifts.views.log.cards.Graph = {
     id:'graph',
     xtype:'liftgraph'
 };

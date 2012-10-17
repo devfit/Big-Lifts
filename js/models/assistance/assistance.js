@@ -1,4 +1,4 @@
-Ext.ns('wendler.stores.assistance');
+Ext.ns('biglifts.stores.assistance');
 Ext.define('AssistanceActivity', {
     extend:'Ext.data.Model',
     config:{
@@ -20,7 +20,7 @@ Ext.define('AssistanceActivity', {
     }
 });
 
-wendler.stores.assistance.ActivityLog = Ext.create('Ext.data.Store', {
+biglifts.stores.assistance.ActivityLog = Ext.create('Ext.data.Store', {
     model:'AssistanceActivity',
     filters:[
         {
@@ -30,4 +30,4 @@ wendler.stores.assistance.ActivityLog = Ext.create('Ext.data.Store', {
         }
     ]
 });
-wendler.stores.push(wendler.stores.assistance.ActivityLog);
+biglifts.stores.push(biglifts.stores.assistance.ActivityLog);

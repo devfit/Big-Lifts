@@ -12,7 +12,7 @@ describe("Lift Progressions", function () {
         store.add({week:1, set:6, percentage: 50, reps: 5});
         store.add({week:2, set:1, percentage: 50, reps: 5});
 
-        wendler.liftProgressions.setupAmrapForSixthSet(store);
+        biglifts.liftProgressions.setupAmrapForSixthSet(store);
         expect(store.getAt(0).get('amrap')).toEqual(false);
         expect(store.getAt(5).get('amrap')).toEqual(true);
         expect(store.getAt(6).get('amrap')).toEqual(false);
@@ -31,7 +31,7 @@ describe("Lift Progressions", function () {
         store.add({week:1, set:6, percentage: 50, reps: 5});
         store.add({week:2, set:1, percentage: 50, reps: 5});
 
-        wendler.liftProgressions.setupWarmupForFirstThreeSets(store);
+        biglifts.liftProgressions.setupWarmupForFirstThreeSets(store);
         expect(store.getAt(0).get('warmup')).toEqual(true);
         expect(store.getAt(2).get('warmup')).toEqual(true);
         expect(store.getAt(5).get('warmup')).toEqual(false);

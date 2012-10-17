@@ -1,22 +1,22 @@
-Ext.ns('wendler.util.graph');
+Ext.ns('biglifts.util.graph');
 
-wendler.util.graph.convertLogToGraphStore = function () {
+biglifts.util.graph.convertLogToGraphStore = function () {
     var data = [];
-    wendler.stores.LiftLog.sort('timestamp', 'ASC');
-    wendler.stores.LiftLog.each(function (r) {
-        wendler.util.graph.addLogRecordToData(data, r);
+    biglifts.stores.LiftLog.sort('timestamp', 'ASC');
+    biglifts.stores.LiftLog.each(function (r) {
+        biglifts.util.graph.addLogRecordToData(data, r);
     });
 
     return Ext.create('Ext.data.JsonStore', {
         fields:_.flatten([
             'date',
-            wendler.stores.lifts.Lifts.getUniqueLiftNames()
+            biglifts.stores.lifts.Lifts.getUniqueLiftNames()
         ]),
         data:data
     });
 };
 
-wendler.util.graph.addLogRecordToData = function (data, record) {
+biglifts.util.graph.addLogRecordToData = function (data, record) {
     var formattedDate = new Date(record.get('timestamp'));
     var graphRecord = {
         date:formattedDate

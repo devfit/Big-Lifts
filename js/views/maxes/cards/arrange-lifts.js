@@ -1,15 +1,15 @@
-Ext.ns('wendler.maxes.cards', 'wendler.maxes.arrangeLifts');
+Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.arrangeLifts');
 
-wendler.maxes.arrangeLifts.doneButtonPressed = function () {
-    wendler.maxes.controller.rebuildMaxesList();
+biglifts.maxes.arrangeLifts.doneButtonPressed = function () {
+    biglifts.maxes.controller.rebuildMaxesList();
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };
 
-wendler.maxes.arrangeLifts.moveUp = function () {
+biglifts.maxes.arrangeLifts.moveUp = function () {
     var selectedRecord = Ext.getCmp('arrange-lifts-list').getSelection()[0];
     var beforeRecord = null;
 
-    wendler.stores.lifts.Lifts.each(function (r) {
+    biglifts.stores.lifts.Lifts.each(function (r) {
         if (selectedRecord === r) {
             return;
         }
@@ -28,24 +28,24 @@ wendler.maxes.arrangeLifts.moveUp = function () {
     });
 
     if (beforeRecord !== null) {
-        wendler.maxes.arrangeLifts.swapLiftOrder(selectedRecord, beforeRecord);
-        wendler.maxes.arrangeLifts.refreshList();
+        biglifts.maxes.arrangeLifts.swapLiftOrder(selectedRecord, beforeRecord);
+        biglifts.maxes.arrangeLifts.refreshList();
     }
 };
 
-wendler.maxes.arrangeLifts.refreshList = function () {
-    wendler.stores.lifts.Lifts.sort('order', 'ASC');
+biglifts.maxes.arrangeLifts.refreshList = function () {
+    biglifts.stores.lifts.Lifts.sort('order', 'ASC');
     var list = Ext.getCmp('arrange-lifts-list');
     list.refresh();
     //TODO: Remove hack when fix is in sencha touch 2. This forces the list to repaint.
     list.element.dom.offsetHeight;
 };
 
-wendler.maxes.arrangeLifts.moveDown = function () {
+biglifts.maxes.arrangeLifts.moveDown = function () {
     var selectedRecord = Ext.getCmp('arrange-lifts-list').getSelection()[0];
     var afterRecord = null;
 
-    wendler.stores.lifts.Lifts.each(function (r) {
+    biglifts.stores.lifts.Lifts.each(function (r) {
         if (afterRecord == null) {
             if (r.data.order > selectedRecord.data.order) {
                 afterRecord = r;
@@ -61,12 +61,12 @@ wendler.maxes.arrangeLifts.moveDown = function () {
     });
 
     if (afterRecord !== null) {
-        wendler.maxes.arrangeLifts.swapLiftOrder(selectedRecord, afterRecord);
-        wendler.maxes.arrangeLifts.refreshList();
+        biglifts.maxes.arrangeLifts.swapLiftOrder(selectedRecord, afterRecord);
+        biglifts.maxes.arrangeLifts.refreshList();
     }
 };
 
-wendler.maxes.arrangeLifts.swapLiftOrder = function (lift1, lift2) {
+biglifts.maxes.arrangeLifts.swapLiftOrder = function (lift1, lift2) {
     var order1 = lift1.get('order');
     var order2 = lift2.get('order');
 
@@ -75,16 +75,16 @@ wendler.maxes.arrangeLifts.swapLiftOrder = function (lift1, lift2) {
 
     lift1.save();
     lift2.save();
-    wendler.stores.lifts.Lifts.sync();
+    biglifts.stores.lifts.Lifts.sync();
 };
 
-wendler.maxes.cards.ArrangeLifts = {
+biglifts.maxes.cards.ArrangeLifts = {
     id:'arrange-lifts',
     xtype:'panel',
     layout:'fit',
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.maxes.arrangeLifts.doneButtonPressed);
+            biglifts.navigation.setBackFunction(biglifts.maxes.arrangeLifts.doneButtonPressed);
         }
     },
     items:[
@@ -99,7 +99,7 @@ wendler.maxes.cards.ArrangeLifts = {
                     iconCls:'arrow_up',
                     iconMask:true,
                     ui:'confirm',
-                    handler:wendler.maxes.arrangeLifts.moveUp
+                    handler:biglifts.maxes.arrangeLifts.moveUp
                 },
                 {
                     id:'arrange-lifts-down-button',
@@ -107,13 +107,13 @@ wendler.maxes.cards.ArrangeLifts = {
                     iconCls:'arrow_down',
                     iconMask:true,
                     ui:'decline',
-                    handler:wendler.maxes.arrangeLifts.moveDown
+                    handler:biglifts.maxes.arrangeLifts.moveDown
                 },
                 {xtype:'spacer'},
                 {
                     id:'arrange-lifts-done-button',
                     text:'Done',
-                    handler:wendler.maxes.arrangeLifts.doneButtonPressed,
+                    handler:biglifts.maxes.arrangeLifts.doneButtonPressed,
                     ui:'action'
                 }
             ]
@@ -121,7 +121,7 @@ wendler.maxes.cards.ArrangeLifts = {
         {
             id:'arrange-lifts-list',
             xtype:'list',
-            store:wendler.stores.lifts.Lifts,
+            store:biglifts.stores.lifts.Lifts,
             itemCls:'lift-list-row',
             itemTpl:'<table width="100%"><tbody><tr>' +
                 '<td width="60%"><span class="lift-name">{name}</span></td>' +

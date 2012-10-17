@@ -1,2 +1,2 @@
-Ext.ns('wendler');
-wendler.loadingFromFile = localStorage.length === 0;
+Ext.ns('biglifts');
+biglifts.loadingFromFile = localStorage.length === 0;

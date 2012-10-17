@@ -1,4 +1,4 @@
-Ext.ns('wendler.defaults', 'wendler.stores');
+Ext.ns('biglifts.defaults', 'biglifts.stores');
 Ext.define('RestTime', {
     extend:'Ext.data.Model',
     config:{
@@ -14,7 +14,7 @@ Ext.define('RestTime', {
     }
 });
 
-wendler.stores.RestTime = Ext.create('Ext.data.Store', {
+biglifts.stores.RestTime = Ext.create('Ext.data.Store', {
     model:'RestTime',
     listeners:{
         load:function () {
@@ -25,4 +25,4 @@ wendler.stores.RestTime = Ext.create('Ext.data.Store', {
         }
     }
 });
-wendler.stores.push(wendler.stores.RestTime);
+biglifts.stores.push(biglifts.stores.RestTime);

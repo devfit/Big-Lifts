@@ -1,15 +1,15 @@
-Ext.ns('wendler.views.liftSchedule.assistance', 'wendler.liftSchedule.assistance.triumvirate');
+Ext.ns('biglifts.views.liftSchedule.assistance', 'biglifts.liftSchedule.assistance.triumvirate');
 
-wendler.liftSchedule.assistance.triumvirate.showEditTriumvirateMovement = function (movement) {
+biglifts.liftSchedule.assistance.triumvirate.showEditTriumvirateMovement = function (movement) {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('triumvirate-movement-editor'));
     Ext.getCmp('triumvirate-movement-editor').setRecord(movement);
 };
 
-wendler.liftSchedule.assistance.triumvirate.returnToTriumvirate = function () {
+biglifts.liftSchedule.assistance.triumvirate.returnToTriumvirate = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('triumvirate'));
 };
 
-wendler.liftSchedule.assistance.triumvirate.saveMovementChange = function () {
+biglifts.liftSchedule.assistance.triumvirate.saveMovementChange = function () {
     var movementEditor = Ext.getCmp('triumvirate-movement-editor');
     var newValues = movementEditor.getValues();
     var record = movementEditor.getRecord();
@@ -19,7 +19,7 @@ wendler.liftSchedule.assistance.triumvirate.saveMovementChange = function () {
     record.save();
 };
 
-wendler.views.liftSchedule.assistance.TriumvirateMovementEditor = {
+biglifts.views.liftSchedule.assistance.TriumvirateMovementEditor = {
     xtype:'formpanel',
     id:'triumvirate-movement-editor',
     items:[
@@ -32,7 +32,7 @@ wendler.views.liftSchedule.assistance.TriumvirateMovementEditor = {
                     xtype:'button',
                     ui:'back',
                     text:'Back',
-                    handler:wendler.liftSchedule.assistance.triumvirate.returnToTriumvirate
+                    handler:biglifts.liftSchedule.assistance.triumvirate.returnToTriumvirate
                 }
             ]
         },
@@ -41,7 +41,7 @@ wendler.views.liftSchedule.assistance.TriumvirateMovementEditor = {
             cls:'fieldset-title-no-margin',
             defaults:{
                 listeners:{
-                    change:wendler.liftSchedule.assistance.triumvirate.saveMovementChange
+                    change:biglifts.liftSchedule.assistance.triumvirate.saveMovementChange
                 }
             },
             items:[
@@ -70,7 +70,7 @@ wendler.views.liftSchedule.assistance.TriumvirateMovementEditor = {
     ],
     listeners:{
         show:function () {
-            wendler.navigation.setBackFunction(wendler.liftSchedule.assistance.triumvirate.returnToTriumvirate);
+            biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.triumvirate.returnToTriumvirate);
         }
     }
 };
