@@ -22,7 +22,7 @@ task :get_chromedriver do
   system "cd /tmp/bin && wget #{chrome_url} && unzip #{chrome_zip}"
 end
 
-task :travis do
+task :travis => [:get_chromedriver] do
   system "bundle exec rake jasmine:ci"
   system "export PATH=/tmp/bin:$PATH && export DISPLAY=:99.0 && bundle exec rake cucumber"
 end
