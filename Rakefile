@@ -9,6 +9,12 @@ end
 
 task :default => :travis
 
+task :cucumber do
+  Dir.chdir("cucumber")
+  system "cucumber"
+end
+
 task :travis do
-  system("bundle exec rake jasmine:ci")
+  system "bundle exec rake jasmine:ci"
+  system "export DISPLAY=:99.0 && bundle exec rake cucumber"
 end
