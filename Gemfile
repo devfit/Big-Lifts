@@ -6,3 +6,5 @@ gem 'rspec'
 gem 'json'
 gem 'headless'
 gem 'rake'
+
+gem 'jasmine'
