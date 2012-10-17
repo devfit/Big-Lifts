@@ -1,5 +1,4 @@
 require 'selenium-webdriver'
-require 'ruby-debug'
 
 $LOAD_PATH << File.expand_path('../../../lib', __FILE__)
 require 'navigation'
@@ -20,12 +19,6 @@ After('@premium') do
 end
 
 Before do
-  if ENV["HEADLESS"] == 'true'
-    require "headless"
-    @headless = Headless.new
-    @headless.start
-  end
-
   @ANIMATION_DELAY = 0.8
 
   @driver = Selenium::WebDriver.for :chrome, :switches => %w[--allow-file-access-from-files]
@@ -40,6 +33,5 @@ Before do
 end
 
 After do
-  @headless.destroy if defined?(@headless)
   @driver.quit
 end
