@@ -9,12 +9,12 @@ biglifts.more.moreInfoForListItem = function (c, index) {
 };
 
 biglifts.more.suggestFeature = function () {
-    location.href = util.email.buildEmailLink("biglifts531@stefankendall.com", "biglifts 5/3/1: Suggest a Feature, "
+    location.href = util.email.buildEmailLink("biglifts@stefankendall.com", "Big Lifts: Suggest a Feature, "
         + biglifts.more.getVersionOsInfo());
 };
 
 biglifts.more.reportProblem = function () {
-    location.href = util.email.buildEmailLink("biglifts531@stefankendall.com", "biglifts 5/3/1: Report a Problem, " +
+    location.href = util.email.buildEmailLink("biglifts@stefankendall.com", "Big Lifts: Report a Problem, " +
         biglifts.more.getVersionOsInfo());
 };
 
