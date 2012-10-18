@@ -11,7 +11,9 @@ task :default => :travis
 
 task :cucumber do
   Dir.chdir("cucumber")
-  system "cucumber"
+  Dir.glob('features/**/*.feature').each do |dir|
+    system "cucumber #{dir}"
+  end
 end
 
 task :get_chromedriver do
