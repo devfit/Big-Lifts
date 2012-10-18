@@ -11,13 +11,7 @@ task :default => :travis
 
 task :cucumber do
   Dir.chdir("cucumber")
-  feature_directories = Dir.entries('features').select do |dir|
-    not %w(. .. step_definition).include? dir
-  end
-
-  feature_directories.each do |dir|
-    system "cucumber features/#{dir}"
-  end
+  system "cucumber"
 end
 
 task :get_chromedriver do
