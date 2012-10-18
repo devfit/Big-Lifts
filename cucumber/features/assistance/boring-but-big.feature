@@ -6,7 +6,7 @@ Feature: Boring But Big - Assistance Work
     And I set the press max to 150
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select "Boring But Big" assistance work
     And I tap the first boring but big entry
     And I set the boring but big lift to "Press"
@@ -17,7 +17,7 @@ Feature: Boring But Big - Assistance Work
     When I set the squat max to 200
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select "Boring But Big" assistance work
     And I tap the first boring but big entry
     And I set the boring but big lift to "Press"
@@ -31,7 +31,7 @@ Feature: Boring But Big - Assistance Work
     When I set the squat max to 200
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select "Boring But Big" assistance work
     And I tap the "Save" button
     Then I am on the track tab
@@ -46,7 +46,7 @@ Feature: Boring But Big - Assistance Work
     When I set the squat max to 200
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select "Boring But Big" assistance work
     Then The first boring but big lift weight is 90
     And I set the BBB percentage to 60

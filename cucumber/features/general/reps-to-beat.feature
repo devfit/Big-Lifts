@@ -8,11 +8,11 @@ Feature: Reps to beat
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
     And I set the first log reps to 7
-    And I save the lift log
+    And I tap the "Save" button
     And I view the squat lift schedule for week 2
     And I mark the current lift completed
     And I set the first log reps to 4
-    And I save the lift log
+    And I tap the "Save" button
     And I view the squat lift schedule for week 3
     Then The best estimated one rep max is 191
     And The reps to beat is 4

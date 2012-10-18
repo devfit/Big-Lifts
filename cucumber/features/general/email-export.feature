@@ -6,7 +6,7 @@ Feature: Email export
   Scenario: One log entry export
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I tap the log export button
     And I set the email to test@test.com
     And I tap the send email button

@@ -9,11 +9,6 @@ end
 
 task :default => :travis
 
-task :cucumber do
-  Dir.chdir("cucumber")
-  system "cucumber"
-end
-
 task :get_chromedriver do
   puts "Grabbing chromedriver..."
   mkdir_p "/tmp/bin"
@@ -24,5 +19,8 @@ end
 
 task :travis => [:get_chromedriver] do
   system "bundle exec rake jasmine:ci"
-  system "export PATH=/tmp/bin:$PATH && export DISPLAY=:99.0 && bundle exec rake cucumber"
+
+  Dir.chdir("cucumber")
+  system "export PATH=/tmp/bin:$PATH && export DISPLAY=:99.0 && parallel_cucumber features/ -n 4"
+  raise "#{cmd} failed!" unless $?.exitstatus == 0
 end

@@ -6,19 +6,19 @@ Feature: Weeks checked when completed
   Scenario: Check off all the week one lifts
     When I view the squat lift schedule for week 1
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
 
     When I view the deadlift lift schedule for week 1
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
 
     When I view the press lift schedule for week 1
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
 
     When I view the bench lift schedule for week 1
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
 
     And I navigate to the lift schedule
     Then The week 1 tab is checked

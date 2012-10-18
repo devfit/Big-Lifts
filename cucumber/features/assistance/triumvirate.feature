@@ -5,7 +5,7 @@ Feature: Triumvirate - Assistance Work
     When I add a new lift named "Clean" with max 200
     And I view the clean lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select "Triumvirate" assistance work
     Then Triumvirate movement 1 is "? 5 sets 15x [?]lbs"
     Then Triumvirate movement 2 is "? 5 sets 15x [?]lbs"
@@ -24,7 +24,7 @@ Feature: Triumvirate - Assistance Work
   Scenario: Viewing Triumvirate lifts and viewing the log
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select "Triumvirate" assistance work
     Then Triumvirate movement 1 is "Leg Press 5 sets 15x [?]lbs"
     Then Triumvirate movement 2 is "Leg Curl 5 sets 15x [?]lbs"
@@ -37,7 +37,7 @@ Feature: Triumvirate - Assistance Work
   Scenario: Changing triumvirate lift movements
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select "Triumvirate" assistance work
     Then Triumvirate movement 1 is "Leg Press 5 sets 15x [?]lbs"
     And I tap triumvirate row 1
