@@ -400,10 +400,10 @@ task setupIosPhonegap() << {
 
 task setupIosIcons() << {
     List icons = [
-            'icon-144x144.png',
-            'icon-114x114.png',
-            'icon-72x72.png',
-            'icon-57x57.png'
+            'icon144.png',
+            'icon114.png',
+            'icon72.png',
+            'icon57.png'
     ]
     for (String icon : icons) {
         copy {
