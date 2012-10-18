@@ -21,5 +21,5 @@ task :travis => [:get_chromedriver] do
   system "bundle exec rake jasmine:ci"
 
   Dir.chdir("cucumber")
-  system "export PATH=/tmp/bin:$PATH && export DISPLAY=:99.0 && parallel_cucumber features/ -n 2"
+  system "export PATH=/tmp/bin:$PATH && export DISPLAY=:99.0 && parallel_cucumber features/ -n 4"
 end
