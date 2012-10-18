@@ -10,7 +10,7 @@ end
 
 Before do
   @premium_text = @premium_text || "?premium=false"
-  @ANIMATION_DELAY = 0.8
+  @ANIMATION_DELAY = 1
 
   @driver = Selenium::WebDriver.for :chrome, :switches => %w[--allow-file-access-from-files]
   @driver.navigate.to "file://" + File.absolute_path("../index.html#{@premium_text}")
