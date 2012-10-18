@@ -6,7 +6,7 @@ Feature: Lift tracking
   Scenario: Lift log can be editted
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select the log entry for Squat
     And I set the log expected reps to 6
     And I set the log reps to 2
@@ -20,7 +20,7 @@ Feature: Lift tracking
     And I mark the current lift completed
     And I tap edit first log notes
     And I set the first log notes to "Log notes"
-    And I save the lift log
+    And I tap the "Save" button
 
     And I view the press lift schedule for week 1
     And I mark the current lift completed
@@ -39,7 +39,7 @@ Feature: Lift tracking
     And I mark the current lift completed
     And I tap edit first log notes
     And I set the first log notes to "Log notes"
-    And I save the lift log
+    And I tap the "Save" button
     Then I do see a log entry containing Squat
     And I select the log entry for Squat
     Then the log notes are "Log notes"
@@ -48,7 +48,7 @@ Feature: Lift tracking
   Scenario: Editing notes and viewing date
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select the log entry for Squat
     Then The log date is today
     And I tap edit log notes
@@ -60,7 +60,7 @@ Feature: Lift tracking
   Scenario: Deleting a lift log entry
     When I view the press lift schedule for week 1
     And I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I select the log entry for Press
     And I tap delete for a log entry
     Then I do not see a log entry containing Press

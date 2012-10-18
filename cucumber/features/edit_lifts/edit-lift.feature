@@ -35,5 +35,5 @@ Feature: Editing lifts
     And I tap the "Back" button
     And I view the squat2 lift schedule for week 1
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     Then I am on the track tab

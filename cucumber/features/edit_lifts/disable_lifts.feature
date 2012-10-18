@@ -12,16 +12,16 @@ Feature: Disabling lifts
     And I navigate to the lift schedule
     When I view the bench lift schedule for week 1
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     When I view the bench lift schedule for week 2
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     When I view the bench lift schedule for week 3
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     When I view the bench lift schedule for week 4
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     Then I am prompted with the cycle complete dialog
     And I tap the increase maxes help button
     Then The help screen shows lifts "Bench"
@@ -47,7 +47,7 @@ Feature: Disabling lifts
     And I navigate to the lift schedule
     When I view the bench lift schedule for week 1
     When I mark the current lift completed
-    And I save the lift log
+    And I tap the "Save" button
     And I navigate to the lift schedule
     Then Week 1 of the lift selector is marked complete
 
