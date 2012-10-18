@@ -21,7 +21,6 @@ task :travis => [:get_chromedriver] do
   system "bundle exec rake jasmine:ci"
 
   Dir.chdir("cucumber")
-  system "export PATH=/tmp/bin:$PATH && export DISPLAY=:99.0 && parallel_cucumber features/ -n 8"
+  system "export PATH=/tmp/bin:$PATH && export DISPLAY=:99.0 && parallel_cucumber features/ -n 4"
   raise "#{cmd} failed!" unless $?.exitstatus == 0
 end
-#triggering travis build
