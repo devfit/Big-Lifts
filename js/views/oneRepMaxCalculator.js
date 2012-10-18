@@ -26,7 +26,7 @@ Ext.define('biglifts.views.OneRepMaxCalculator', {
     extend:'Ext.Panel',
     config:{
         id:'one-rep-max-calculator',
-        title:'1-Rep Calc',
+        title:'1-Rep',
         iconCls:'search',
         listeners:{
             show:function () {

@@ -14,7 +14,7 @@ Ext.define('biglifts.views.LiftSchedule', {
     extend:'Ext.Panel',
     config:{
         id:'lift-schedule',
-        title:'5/3/1',
+        title:'Lift!',
         iconCls:'icnBarbell',
         layout:'card',
         activeItem:0,
