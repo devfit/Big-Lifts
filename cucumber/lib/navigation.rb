@@ -1,9 +1,9 @@
 class MainNavigation
   TABS = {
-      :lift_schedule => {:tab_text => '5/3/1', :panel_id => 'lift-schedule'},
-      :lift_editor => {:tab_text => 'Lifts', :panel_id => 'maxes-form'},
+      :lift_schedule => {:tab_text => 'Lift!', :panel_id => 'lift-schedule'},
+      :lift_editor => {:tab_text => 'Edit', :panel_id => 'maxes-form'},
       :track => {:tab_text => 'Track', :panel_id => 'log'},
-      :one_rep_calculator => {:tab_text => '1-Rep Calc', :panel_id => 'one-rep-max-calculator'},
+      :one_rep_calculator => {:tab_text => '1-Rep', :panel_id => 'one-rep-max-calculator'},
       :more => {:tab_text => 'More', :panel_id => 'more'},
   }
 

@@ -5,7 +5,7 @@ Ext.define('biglifts.views.Maxes', {
     extend:'Ext.Panel',
     config:{
         id:'maxes-panel',
-        title:'Maxes',
+        title:'Edit',
         iconCls:'settings',
         layout:'card',
         defaults:{
