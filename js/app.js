@@ -18,37 +18,49 @@ biglifts.main.start = function () {
 
 biglifts.main.loadApplication = function () {
     if (biglifts.main.started && biglifts.main.deviceReady) {
-        var app = Ext.getCmp('main-tab-panel');
-        app.setHidden(true);
-        app.add(Ext.create('biglifts.views.LiftSchedule'));
-        app.add(Ext.create('biglifts.views.Maxes'));
-        app.add(Ext.create('biglifts.views.Log'));
-        app.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
-        app.add(Ext.create('biglifts.views.More'));
+        var firstTimeInApp = biglifts.stores.Meta.first().get('firstTimeInApp');
 
-        var startTab = biglifts.stores.Meta.first().data.firstTimeInApp ? 1 : 0;
+        Ext.getCmp('app').setActiveItem(firstTimeInApp ? Ext.getCmp('first-time-launch') : Ext.getCmp('main-tab-panel'));
+
+        var mainTabPanel = Ext.getCmp('main-tab-panel');
+        mainTabPanel.add(Ext.create('biglifts.views.LiftSchedule'));
+        mainTabPanel.add(Ext.create('biglifts.views.Maxes'));
+        mainTabPanel.add(Ext.create('biglifts.views.Log'));
+        mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
+        mainTabPanel.add(Ext.create('biglifts.views.More'));
+        mainTabPanel.setActiveItem(firstTimeInApp ? 1 : 0);
+
         biglifts.main.markFirstStartup();
-        app.setActiveItem(startTab);
-        app.setHidden(false);
     }
 };
 
 Ext.application({
     launch:function () {
-        Ext.create('Ext.tab.Panel', {
-                id:'main-tab-panel',
-                fullscreen:true,
-                sortable:false,
-                tabBar:{
-                    id:'tab-navigation',
-                    docked:'bottom',
-                    layout:{ pack:'center', align:'center' }
+        Ext.create('Ext.Panel', {
+            id:'app',
+            fullscreen:true,
+            layout:'card',
+            items:[
+                {
+                    xtype:'tabpanel',
+                    id:'main-tab-panel',
+                    fullscreen:true,
+                    sortable:false,
+                    tabBar:{
+                        id:'tab-navigation',
+                        docked:'bottom',
+                        layout:{ pack:'center', align:'center' }
+                    }
                 },
-                items:[
-                ]
-            }
-        );
+                {
+                    id:'first-time-launch',
+                    xtype:'first-time-launch'
+                }
+            ]
+        });
+
         biglifts.main.deviceReady = true;
         biglifts.main.loadApplication();
     }
-});
+})
+;
