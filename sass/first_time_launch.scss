@@ -8,4 +8,23 @@ h1.first-time-launch-header {
   border: solid 2px #a9a9a9;
   @include border-radius(10px);
   background-color: white;
+
+  .x-list-item.unavailable {
+    color: grey;
+
+    .x-list-disclosure {
+      display: none;
+    }
+
+    .coming-soon {
+      color: #444;
+      font-size: 90%;
+      font-weight: normal;
+      float: right;
+    }
+  }
+
+  .routine-entry {
+    font-weight: bolder;
+  }
 }

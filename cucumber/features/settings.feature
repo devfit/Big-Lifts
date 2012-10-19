@@ -1,5 +1,5 @@
+@531
 Feature: Settings
-
   Scenario: Untoggle the training max
     When I set the squat max to 300
     And I view the squat lift schedule for week 1

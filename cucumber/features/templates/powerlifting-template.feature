@@ -1,3 +1,4 @@
+@531
 Feature: Powerlifting template
 
   Scenario: Selecting the "Fresher" template hides the meet goals

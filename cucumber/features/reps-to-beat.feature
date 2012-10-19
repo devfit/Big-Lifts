@@ -1,3 +1,4 @@
+@531
 Feature: Reps to beat
   As a lifter
   I want to be able to see the reps to beat whne viewing the lift schedule

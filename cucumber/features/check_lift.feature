@@ -1,3 +1,4 @@
+@531
 Feature: Checking off individual lifts
   As a lifter
   I want to be able to check off an individual lift

@@ -1,3 +1,4 @@
+@531
 Feature: Auto-increment lift maxes
   As a lifter
   I want to be able to auto-increment my maxes at the end of a cycle

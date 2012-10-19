@@ -54,7 +54,7 @@ biglifts.logList.liftLogList = {
     selectedCls:'',
     store:biglifts.stores.LiftLog,
     itemCls:'lift-log-row',
-    emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the 5/3/1 view</div>',
+    emptyText:'<div id="lift-log-empty-text">To track a lift, use the checkmark in the lift view</div>',
     itemTpl:'<table><tbody><tr>' +
         '<td width="32%"><div class="lift-name">{liftName}</div><div class="cycle-and-week">C{cycle} W{week} ' +
         '<span class="deload-indicator">{[biglifts.logList.deloadMarker(values.week)]}</span>' +

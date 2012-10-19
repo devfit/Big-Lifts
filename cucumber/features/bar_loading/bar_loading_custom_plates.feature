@@ -1,3 +1,4 @@
+@531
 @premium
 Feature: bar loading - custom plates
   As a lifter

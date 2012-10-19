@@ -1,3 +1,4 @@
+@531
 Feature: Cycle increase is adjusted for kg
   As a lifter
   I want sensible default cycle increases

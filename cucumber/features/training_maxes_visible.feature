@@ -1,3 +1,4 @@
+@531
 Feature: Training maxes in the maxes editor
   As a lifter
   I want to see the training max being used in the maxes editor,

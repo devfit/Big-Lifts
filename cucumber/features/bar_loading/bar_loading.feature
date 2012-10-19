@@ -1,3 +1,4 @@
+@531
 @premium
 Feature: bar loading
   As a lifter

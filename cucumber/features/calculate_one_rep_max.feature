@@ -1,3 +1,4 @@
+@531
 Feature: One rep max calculator
 
   Scenario Outline: Use estimated max for actual max

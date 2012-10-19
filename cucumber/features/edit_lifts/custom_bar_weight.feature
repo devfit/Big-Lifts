@@ -1,3 +1,4 @@
+@531
 @premium
 Feature: Different bar weights per lift
   Scenario: Clearing the bar weight reverts to using the global bar weight

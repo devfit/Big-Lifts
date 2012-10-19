@@ -1,8 +1,5 @@
-Feature: lifter sets max
-  As a lifter
-  I want to set my lift maxes
-  So that I can view the lift schedule by week based on my max
-
+@531
+Feature: Viewing a lift schedule
   Scenario: Viewing two lifts in one session
     When I set the squat max to 300
     And I set the press max to 100

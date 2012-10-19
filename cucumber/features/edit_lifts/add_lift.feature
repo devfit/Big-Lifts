@@ -1,3 +1,4 @@
+@531
 Feature: adding lifts
   As a lifter
   I want to be able to add new lifts

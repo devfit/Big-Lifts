@@ -1,3 +1,4 @@
+@531
 Feature: Manual lift template
   Scenario: Marking a set warmup
     When I view the lift schedule
