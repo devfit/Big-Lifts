@@ -18,19 +18,18 @@ Ext.define('CustomMovement', {
     }
 });
 
-biglifts.stores.assistance.defaultCustom = [
-    {liftProperty:'squat', name:'Leg Press', sets:5, reps:15},
-    {liftProperty:'squat', name:'Leg Curl', sets:5, reps:15},
-    {liftProperty:'deadlift', name:'Good Morning', sets:5, reps:15},
-    {liftProperty:'deadlift', name:'Hanging Leg Raise', sets:5, reps:15},
-    {liftProperty:'press', name:'Dips', sets:5, reps:15},
-    {liftProperty:'press', name:'Chin-Ups', sets:5, reps:15},
-    {liftProperty:'bench', name:'Dumbbell Bench Press', sets:5, reps:15},
-    {liftProperty:'bench', name:'Dumbbell Row', sets:5, reps:15}
-];
-
 Ext.define("CustomMovementStore", {
     extend:"Ext.data.Store",
+    DEFAULT_CUSTOM_LIFTS:[
+        {liftProperty:'squat', name:'Leg Press', sets:5, reps:15},
+        {liftProperty:'squat', name:'Leg Curl', sets:5, reps:15},
+        {liftProperty:'deadlift', name:'Good Morning', sets:5, reps:15},
+        {liftProperty:'deadlift', name:'Hanging Leg Raise', sets:5, reps:15},
+        {liftProperty:'press', name:'Dips', sets:5, reps:15},
+        {liftProperty:'press', name:'Chin-Ups', sets:5, reps:15},
+        {liftProperty:'bench', name:'Dumbbell Bench Press', sets:5, reps:15},
+        {liftProperty:'bench', name:'Dumbbell Row', sets:5, reps:15}
+    ],
     addMissingCustomLiftAssociations:function () {
         var store = this;
         util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
@@ -55,7 +54,7 @@ Ext.define("CustomMovementStore", {
         listeners:{
             load:function () {
                 if (this.getCount() == 0) {
-                    this.add(biglifts.stores.assistance.defaultCustom);
+                    this.add(this.DEFAULT_CUSTOM_LIFTS);
                     this.sync();
                 }
                 this.addMissingCustomLiftAssociations();
