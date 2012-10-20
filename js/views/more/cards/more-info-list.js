@@ -8,14 +8,9 @@ biglifts.more.moreInfoForListItem = function (c, index) {
     }
 };
 
-biglifts.more.suggestFeature = function () {
-    location.href = util.email.buildEmailLink("biglifts@stefankendall.com", "Big Lifts: Suggest a Feature, "
+biglifts.more.feedback = function () {
+    location.href = util.email.buildEmailLink("biglifts@stefankendall.com", "Big Lifts: Feedback"
         + biglifts.more.getVersionOsInfo());
-};
-
-biglifts.more.reportProblem = function () {
-    location.href = util.email.buildEmailLink("biglifts@stefankendall.com", "Big Lifts: Report a Problem, " +
-        biglifts.more.getVersionOsInfo());
 };
 
 biglifts.more.getVersionOsInfo = function () {
@@ -40,10 +35,8 @@ biglifts.more.hardReset = function () {
 };
 
 biglifts.more.listItems = [
-    {model:{text:'<span class="text">Version</span><span class="version">' + biglifts.version + '</span>'}},
     {model:{text:'<span class="text">Settings</span><span class="disclosure"></span>'}, handler:biglifts.more.showSettings},
-    {model:{text:'<span class="text">Suggest a Feature</span><span class="disclosure"></span>'}, handler:biglifts.more.suggestFeature},
-    {model:{text:'<span class="text">Report a Problem</span><span class="disclosure"></span>'}, handler:biglifts.more.reportProblem},
+    {model:{text:'<span class="text">Feedback...</span><span class="disclosure"></span>'}, handler:biglifts.more.feedback},
     {model:{text:'<span class="text">Reset</span><span class="warning"></span>'}, handler:biglifts.more.hardReset}
 ];
 biglifts.more.listData = [];
