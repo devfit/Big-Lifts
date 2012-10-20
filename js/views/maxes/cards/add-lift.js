@@ -61,7 +61,7 @@ biglifts.maxes.controller.saveNewLift = function(newLiftModel){
     biglifts.stores.lifts.Lifts.add(newLiftModel);
     biglifts.stores.lifts.Lifts.sync();
     biglifts.stores.migrations.liftCompletionMigration();
-    biglifts.stores.migrations.customMovementsMigration(biglifts.stores.assistance.CustomMovement);
+    biglifts.stores.assistance.CustomMovement.addMissingCustomLiftAssociations();
     biglifts.maxes.controller.rebuildMaxesList();
 };
 

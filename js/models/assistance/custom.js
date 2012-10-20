@@ -29,37 +29,40 @@ biglifts.stores.assistance.defaultCustom = [
     {liftProperty:'bench', name:'Dumbbell Row', sets:5, reps:15}
 ];
 
-biglifts.stores.migrations.customMovementsMigration = function (store) {
-    util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
-
-        biglifts.stores.lifts.Lifts.each(function (lift) {
-            var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
-            if (!existingMovement) {
-                for (var i = 0; i < 2; i++) {
-                    store.add({
-                        liftProperty:lift.get('propertyName'),
-                        name:'?',
-                        sets:5,
-                        reps:15
-                    });
+Ext.define("CustomMovementStore", {
+    extend:"Ext.data.Store",
+    addMissingCustomLiftAssociations:function () {
+        var store = this;
+        util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
+            biglifts.stores.lifts.Lifts.each(function (lift) {
+                var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
+                if (!existingMovement) {
+                    for (var i = 0; i < 2; i++) {
+                        store.add({
+                            liftProperty:lift.get('propertyName'),
+                            name:'?',
+                            sets:5,
+                            reps:15
+                        });
+                    }
+                    store.sync();
                 }
-                store.sync();
-            }
+            });
         });
-    });
-};
-
-biglifts.stores.assistance.CustomMovement = Ext.create('Ext.data.Store', {
-    model:'CustomMovement',
-    listeners:{
-        load:function () {
-            if (this.getCount() == 0) {
-                this.add(biglifts.stores.assistance.defaultCustom);
-                this.sync();
+    },
+    config:{
+        model:'CustomMovement',
+        listeners:{
+            load:function () {
+                if (this.getCount() == 0) {
+                    this.add(biglifts.stores.assistance.defaultCustom);
+                    this.sync();
+                }
+                this.addMissingCustomLiftAssociations();
             }
-            biglifts.stores.migrations.customMovementsMigration(this);
         }
     }
 });
 
+biglifts.stores.assistance.CustomMovement = Ext.create('CustomMovementStore');
 biglifts.stores.push(biglifts.stores.assistance.CustomMovement);

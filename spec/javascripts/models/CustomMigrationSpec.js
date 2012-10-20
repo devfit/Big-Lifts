@@ -6,7 +6,7 @@ describe("Custom Assistance Migrations", function () {
         biglifts.stores.lifts.Lifts.add({name:'Clean', propertyName:'clean', max:300});
         biglifts.stores.lifts.Lifts.sync();
 
-        biglifts.stores.migrations.customMovementsMigration(biglifts.stores.assistance.CustomMovement);
+        biglifts.stores.assistance.CustomMovement.addMissingCustomLiftAssociations();
 
         var NUMBER_OF_LIFTS = 5;
         var MOVEMENTS_PER_LIFT = 2;
