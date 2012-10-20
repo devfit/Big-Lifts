@@ -130,6 +130,9 @@ biglifts.stores.lifts.EnabledLifts = Ext.create('Ext.data.Store', {
             this.filter({property:'enabled', value:true});
         }
     },
+    filters:[
+        {property:'enabled', value:true}
+    ],
     sorters:[
         {
             property:'order',
