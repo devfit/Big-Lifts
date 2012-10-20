@@ -2,7 +2,7 @@ Ext.ns('biglifts.defaults', 'biglifts.stores.migrations');
 Ext.define('LiftLog', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'liftName', type:'string'},
@@ -47,21 +47,37 @@ biglifts.stores.migrations.setupExpectedReps = function (r) {
     }
 };
 
-biglifts.stores.migrations.liftLogMigration = function () {
-    util.withNoFilters(biglifts.stores.LiftLog, function () {
-        biglifts.stores.LiftLog.each(function (r) {
-            biglifts.stores.migrations.migrateDatesToTimestamps(r);
-            biglifts.stores.migrations.setupExpectedReps(r);
-        });
-    });
-};
+Ext.define('LiftLogStore', {
+    sortLog:function (property, direction) {
+        this.sort(property, direction);
 
-biglifts.stores.LiftLog = Ext.create('Ext.data.Store', {
-    model:'LiftLog',
-    listeners:{
-        load:function () {
-            biglifts.stores.migrations.liftLogMigration();
+        if (property === 'liftName') {
+            this.data.addSorter(new Ext.util.Sorter({
+                property:'timestamp',
+                direction:'DESC'
+            }));
+
+            this.sort();
+        }
+    },
+    liftLogMigration:function () {
+        util.withNoFilters(biglifts.stores.LiftLog, function () {
+            biglifts.stores.LiftLog.each(function (r) {
+                biglifts.stores.migrations.migrateDatesToTimestamps(r);
+                biglifts.stores.migrations.setupExpectedReps(r);
+            });
+        });
+    },
+    extend:'Ext.data.Store',
+    config:{
+        model:'LiftLog',
+        listeners:{
+            load:function () {
+                this.liftLogMigration();
+            }
         }
     }
 });
+
+biglifts.stores.LiftLog = Ext.create('LiftLogStore');
 biglifts.stores.push(biglifts.stores.LiftLog);

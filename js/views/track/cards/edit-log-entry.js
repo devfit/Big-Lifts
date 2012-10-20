@@ -62,6 +62,7 @@ biglifts.logEntry.updateDateFormat = function () {
 biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {
     return [
         {
+            id:'edit-log-date',
             xtype:'datepickerfield',
             dateFormat:biglifts.logEntry.getExtDateFormat(),
             label:'Date',

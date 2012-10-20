@@ -10,7 +10,7 @@ biglifts.logList.sortAndRefreshList = function () {
 };
 
 biglifts.logList.sortLifts = function (sortProperty, sortDirection) {
-    biglifts.stores.LiftLog.sort(sortProperty, sortDirection);
+    biglifts.stores.LiftLog.sortLog(sortProperty, sortDirection);
     Ext.getCmp('lift-log-list').refresh();
 };
 

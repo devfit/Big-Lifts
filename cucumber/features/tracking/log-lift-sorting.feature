@@ -1,8 +1,40 @@
 @531
 Feature: Lift log sorting
-  As a lifter
-  I want to be able to sort the lifts in track by date and name
-  So that I can see data in a better way
+
+  Scenario: Sort A-Z has date sub-sorting
+    When I view the press lift schedule for week 1
+    And I mark the current lift completed
+    And I tap the "Save" button
+    When I view the press lift schedule for week 1
+    And I mark the current lift completed
+    And I tap the "Save" button
+    When I view the press lift schedule for week 1
+    And I mark the current lift completed
+    And I tap the "Save" button
+    When I view the press lift schedule for week 1
+    And I mark the current lift completed
+    And I tap the "Save" button
+
+    And I select the log entry 1
+    And I change the log date to "02/14/2012"
+    And I tap the "Back" button
+
+    And I select the log entry 3
+    And I change the log date to "10/14/2012"
+    And I tap the "Back" button
+
+    And I select the log entry 2
+    And I change the log date to "06/14/2012"
+    And I tap the "Back" button
+
+    And I select the log entry 4
+    And I change the log date to "09/14/2012"
+    And I tap the "Back" button
+
+    And I tap the sort lift log button
+    And I tap sort "A-Z"
+    Then The log list dates show "10/14/2012,09/14/2012,06/14/2012,02/14/2012"
+
 
   Scenario: Sort A-Z
     When I view the press lift schedule for week 1
