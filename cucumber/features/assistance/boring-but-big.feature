@@ -38,7 +38,7 @@ Feature: Boring But Big - Assistance Work
     Then I am on the track tab
     And I tap "Asst." to change the log type
     Then I see 1 assistance log entry for "10x90"
-    And I tap BBB log entry 1
+    And I tap "5x10" log entry 1
     And I set the assistance log reps to 15
     And I tap the "Back" button
     Then I see 1 assistance log entry for "15x90"
@@ -59,5 +59,5 @@ Feature: Boring But Big - Assistance Work
     Then I am on the track tab
     And I tap "Asst." to change the log type
     Then I see 1 assistance log entry for "10x110"
-    And I tap BBB log entry 1
+    And I tap "5x10" log entry 1
     Then The assistance details notes shows "Felt okay. A little slow on the last set"

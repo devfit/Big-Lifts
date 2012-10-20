@@ -11,7 +11,7 @@ Feature: Assistance log
     And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
-    And I tap BBB log entry 1
+    And I tap "5x10" log entry 1
     And I tap the assistance log notes
     And I set the assistance log notes to "Felt okay. Coulda been better"
     And I tap back
@@ -31,7 +31,7 @@ Feature: Assistance log
     And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
-    And I tap BBB log entry 1
+    And I tap "5x10" log entry 1
     And I tap the delete assistance log button
     Then I am on the assistance log list
     And There are 1 assistance log entries

@@ -45,7 +45,7 @@ Then /^I return from the boring but big notes$/ do
   sleep @ANIMATION_DELAY
 end
 
-When /^I tap (\w+) log entry (\d+)$/ do |assistance_type, row_entry|
+When /^I tap "([^"]+)" log entry (\d+)$/ do |assistance_type, row_entry|
   row = @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'x-list-item').select { |row|
     row.text().include? assistance_type
   }[row_entry.to_i - 1]
