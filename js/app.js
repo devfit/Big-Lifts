@@ -1,15 +1,6 @@
 "use strict";
 Ext.ns("biglifts.main");
 
-biglifts.main.markFirstStartup = function () {
-    var meta = biglifts.stores.Meta.first();
-    if (meta.data.firstTimeInApp) {
-        meta.set('firstTimeInApp', false);
-        meta.save();
-        biglifts.stores.Meta.sync();
-    }
-};
-
 biglifts.main.started = false;
 biglifts.main.start = function () {
     biglifts.main.started = true;
@@ -18,7 +9,7 @@ biglifts.main.start = function () {
 
 biglifts.main.loadApplication = function () {
     if (biglifts.main.started && biglifts.main.deviceReady) {
-        var firstTimeInApp = biglifts.stores.Meta.first().get('firstTimeInApp');
+        var firstTimeInApp = biglifts.stores.Routine.getCount() === 0;
 
         Ext.getCmp('app').setActiveItem(firstTimeInApp ? Ext.getCmp('first-time-launch') : Ext.getCmp('main-tab-panel'));
 
@@ -29,8 +20,6 @@ biglifts.main.loadApplication = function () {
         mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
         mainTabPanel.add(Ext.create('biglifts.views.More'));
         mainTabPanel.setActiveItem(firstTimeInApp ? 1 : 0);
-
-        biglifts.main.markFirstStartup();
     }
 };
 

@@ -15,7 +15,6 @@ end
 
 Before do
   @premium_text = @premium_text || "?premium=false"
-  @routine = @routine || '531'
 
   @ANIMATION_DELAY = 1
 
@@ -25,7 +24,7 @@ Before do
 
   @wait.until { @driver.find_element(:id => "first-time-launch") && @driver.find_element(:id => "first-time-launch").displayed? }
 
-  RoutineSelector.new(@driver, @wait).select @routine
+  RoutineSelector.new(@driver, @wait).select @routine if @routine
 
   @main_navigation = MainNavigation.new(@driver, @ANIMATION_DELAY)
   @lift_schedule_navigator = LiftScheduleNavigator.new(@driver, @ANIMATION_DELAY)

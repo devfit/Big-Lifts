@@ -13,6 +13,10 @@ biglifts.more.feedback = function () {
         + biglifts.more.getVersionOsInfo());
 };
 
+biglifts.more.selectRoutine = function () {
+    Ext.getCmp('app').setActiveItem(Ext.getCmp('first-time-launch'));
+};
+
 biglifts.more.getVersionOsInfo = function () {
     var appVersion = "v" + biglifts.version;
     var os = Ext.os.is.Android ? "Android" : "iOS";
@@ -35,6 +39,7 @@ biglifts.more.hardReset = function () {
 };
 
 biglifts.more.listItems = [
+    {model:{text:'<span class="text">Routine: <span id="routine-text"></span></span><span class="disclosure"></span>'}, handler:biglifts.more.selectRoutine},
     {model:{text:'<span class="text">Settings</span><span class="disclosure"></span>'}, handler:biglifts.more.showSettings},
     {model:{text:'<span class="text">Feedback...</span><span class="disclosure"></span>'}, handler:biglifts.more.feedback},
     {model:{text:'<span class="text">Reset</span><span class="warning"></span>'}, handler:biglifts.more.hardReset}
@@ -64,6 +69,12 @@ biglifts.views.MoreInfoList = {
     listeners:{
         show:function () {
             biglifts.navigation.unbindBackEvent();
+        },
+        painted:function () {
+            util.withLoadedStore(biglifts.stores.Routine, function () {
+                var routine = biglifts.stores.Routine.first().get("name");
+                Ext.get('routine-text').setHtml(routine);
+            });
         }
     },
     items:[
