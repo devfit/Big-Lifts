@@ -26,6 +26,7 @@ end
 When /^I change the log date to "([^"]+)"$/ do |date|
   @driver.execute_script('Ext.getCmp("edit-log-date").setValue(Date.parse("'+ date +'"));
 Ext.getCmp("edit-log-date").fireEvent("change");')
+  sleep 0.3
 end
 
 Then /^The log list dates show "(.*?)"$/ do |dates|

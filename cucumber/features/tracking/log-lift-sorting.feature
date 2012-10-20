@@ -16,24 +16,24 @@ Feature: Lift log sorting
     And I tap the "Save" button
 
     And I select the log entry 1
-    And I change the log date to "02/14/2012"
+    And I change the log date to "02/14/2011"
     And I tap the "Back" button
 
-    And I select the log entry 3
-    And I change the log date to "10/14/2012"
+    And I select the log entry 1
+    And I change the log date to "10/14/2011"
     And I tap the "Back" button
 
-    And I select the log entry 2
-    And I change the log date to "06/14/2012"
+    And I select the log entry 1
+    And I change the log date to "06/14/2011"
     And I tap the "Back" button
 
-    And I select the log entry 4
-    And I change the log date to "09/14/2012"
+    And I select the log entry 1
+    And I change the log date to "09/14/2011"
     And I tap the "Back" button
 
     And I tap the sort lift log button
     And I tap sort "A-Z"
-    Then The log list dates show "10/14/2012,09/14/2012,06/14/2012,02/14/2012"
+    Then The log list dates show "10/14/2011,09/14/2011,06/14/2011,02/14/2011"
 
 
   Scenario: Sort A-Z
