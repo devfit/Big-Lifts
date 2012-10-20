@@ -19,7 +19,7 @@ src_files:
     - js/models/plates/plates.js
     - js/models/plates/bar.js
     - js/models/assistance/assistance.js
-    - js/models/assistance/triumvirate.js
+    - js/models/assistance/custom.js
     - js/models/assistance/boring-but-big.js
     - js/models/assistance/boring-but-big-percentage.js
     - js/views/schedule/cards/lift-selector.js

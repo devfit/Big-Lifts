@@ -1,20 +1,20 @@
-Ext.ns('biglifts.views.liftSchedule.assistance', 'biglifts.liftSchedule.assistance.triumvirate');
+Ext.ns('biglifts.views.liftSchedule.assistance', 'biglifts.liftSchedule.assistance.custom');
 
-biglifts.liftSchedule.assistance.triumvirate.editTriumvirateMovement = function (dataview, index) {
-    var movement = biglifts.stores.assistance.TriumvirateMovement.getAt(index);
-    biglifts.liftSchedule.assistance.triumvirate.showEditTriumvirateMovement(movement);
+biglifts.liftSchedule.assistance.custom.editCustomMovement = function (dataview, index) {
+    var movement = biglifts.stores.assistance.CustomMovement.getAt(index);
+    biglifts.liftSchedule.assistance.custom.showEditCustomMovement(movement);
 };
 
-biglifts.liftSchedule.assistance.triumvirate.filterTriumvirateMovements = function () {
-    biglifts.stores.assistance.TriumvirateMovement.clearFilter();
-    biglifts.stores.assistance.TriumvirateMovement.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
+biglifts.liftSchedule.assistance.custom.filterCustomMovements = function () {
+    biglifts.stores.assistance.CustomMovement.clearFilter();
+    biglifts.stores.assistance.CustomMovement.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
 };
 
-biglifts.liftSchedule.assistance.triumvirate.logMovements = function () {
-    biglifts.stores.assistance.TriumvirateMovement.each(function (record) {
+biglifts.liftSchedule.assistance.custom.logMovements = function () {
+    biglifts.stores.assistance.CustomMovement.each(function (record) {
         var assistanceRecord = {
             movement:record.get('name'),
-            assistanceType:'Triumvirate',
+            assistanceType:'Custom',
             sets:record.get('sets'),
             reps:record.get('reps'),
             weight:record.get('weight'),
@@ -29,15 +29,15 @@ biglifts.liftSchedule.assistance.triumvirate.logMovements = function () {
     Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
 };
 
-biglifts.views.liftSchedule.assistance.Triumvirate = {
+biglifts.views.liftSchedule.assistance.Custom = {
     xtype:'panel',
-    id:'triumvirate',
+    id:'custom-assistance',
     layout:'vbox',
     items:[
         {
             xtype:'toolbar',
             docked:'top',
-            title:'Triumvirate',
+            title:'Custom',
             items:[
                 {
                     text:'Back',
@@ -50,14 +50,14 @@ biglifts.views.liftSchedule.assistance.Triumvirate = {
                 {
                     text:'Save',
                     ui:'confirm',
-                    handler:biglifts.liftSchedule.assistance.triumvirate.logMovements
+                    handler:biglifts.liftSchedule.assistance.custom.logMovements
                 }
             ]
         },
         {
             flex:2,
             xtype:'list',
-            store:biglifts.stores.assistance.TriumvirateMovement,
+            store:biglifts.stores.assistance.CustomMovement,
             itemTpl:"<table class='assistance-table'><tbody><tr>" +
                 "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x " +
                 "{[biglifts.logList.getWeightDisplay(values.weight)]}" +
@@ -65,7 +65,7 @@ biglifts.views.liftSchedule.assistance.Triumvirate = {
                 "</tr></tbody></table>",
             listeners:{
                 initialize:function (list) {
-                    list.addListener('itemtap', biglifts.liftSchedule.assistance.triumvirate.editTriumvirateMovement);
+                    list.addListener('itemtap', biglifts.liftSchedule.assistance.custom.editCustomMovement);
                 }
             }
         },
@@ -78,7 +78,7 @@ biglifts.views.liftSchedule.assistance.Triumvirate = {
     listeners:{
         show:function () {
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.returnToAssistanceSelect);
-            biglifts.liftSchedule.assistance.triumvirate.filterTriumvirateMovements();
+            biglifts.liftSchedule.assistance.custom.filterCustomMovements();
         }
     }
 };

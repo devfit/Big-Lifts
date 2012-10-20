@@ -8,7 +8,7 @@ Feature: Boring But Big - Assistance Work
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
     And I tap the "Save" button
-    And I select "Boring But Big" assistance work
+    And I select "5x10" assistance work
     And I tap the first boring but big entry
     And I set the boring but big lift to "Press"
     And I tap the "Back" button
@@ -19,7 +19,7 @@ Feature: Boring But Big - Assistance Work
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
     And I tap the "Save" button
-    And I select "Boring But Big" assistance work
+    And I select "5x10" assistance work
     And I tap the first boring but big entry
     And I set the boring but big lift to "Press"
     And I tap the "Back" button
@@ -33,7 +33,7 @@ Feature: Boring But Big - Assistance Work
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
     And I tap the "Save" button
-    And I select "Boring But Big" assistance work
+    And I select "5x10" assistance work
     And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
@@ -48,7 +48,7 @@ Feature: Boring But Big - Assistance Work
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
     And I tap the "Save" button
-    And I select "Boring But Big" assistance work
+    And I select "5x10" assistance work
     Then The first boring but big lift weight is 90
     And I set the BBB percentage to 60
     Then The first boring but big lift weight is 110

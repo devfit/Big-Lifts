@@ -24,14 +24,14 @@ biglifts.views.liftSchedule.assistance.showBoringButBig = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 
-biglifts.views.liftSchedule.assistance.showTriumvirate = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('triumvirate'));
+biglifts.views.liftSchedule.assistance.showCustom = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('custom-assistance'));
 };
 
 biglifts.views.liftSchedule.assistance.assistanceOptions = [
     {text:'None', assistanceType:'NONE', handler:biglifts.views.liftSchedule.assistance.continueToLog },
-    {text:'Boring But Big', assistanceType:'BBB', handler:biglifts.views.liftSchedule.assistance.showBoringButBig},
-    {text:'Triumvirate', assistanceType:'Triumvirate', handler:biglifts.views.liftSchedule.assistance.showTriumvirate}
+    {text:'5x10', assistanceType:'BBB', handler:biglifts.views.liftSchedule.assistance.showBoringButBig},
+    {text:'Custom', assistanceType:'Custom', handler:biglifts.views.liftSchedule.assistance.showCustom}
 ];
 
 biglifts.views.liftSchedule.assistance.nextButtonPressed = function () {
@@ -77,7 +77,7 @@ biglifts.views.liftSchedule.assistance.highlightLastChosenAssistance = function 
     Ext.getCmp('assistance-chooser-list').select(selectedIndex);
 };
 
-biglifts.liftSchedule.assistance.returnToAssistanceSelect = function(){
+biglifts.liftSchedule.assistance.returnToAssistanceSelect = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
 };
 

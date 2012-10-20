@@ -13,7 +13,7 @@ Feature: Assistance Work
     And I view the squat lift schedule for week 1
     And I mark the current lift completed
     And I tap the "Save" button
-    And I select "Boring But Big" assistance work
+    And I select "5x10" assistance work
     And I tap the "Save" button
     And I view the squat lift schedule for week 1
     And I mark the current lift completed

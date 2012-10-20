@@ -12,7 +12,10 @@ biglifts.logList.deleteAssistanceEntry = function (dataview, index, item, e) {
 };
 
 biglifts.logList.getAssistanceTypeDisplay = function (assistanceType) {
-    var displayMapping = {'Triumvirate':'Tri.'};
+    var displayMapping = {
+        'Custom':'Custom',
+        'BBB':'5x10'
+    };
     var displayType = assistanceType;
     if (displayMapping[assistanceType]) {
         displayType = displayMapping[assistanceType];

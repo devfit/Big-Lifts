@@ -1,5 +1,5 @@
 Ext.ns('biglifts.stores.assistance');
-Ext.define('TriumvirateMovement', {
+Ext.define('CustomMovement', {
     extend:'Ext.data.Model',
     config:{
         identifier:'uuid',
@@ -18,7 +18,7 @@ Ext.define('TriumvirateMovement', {
     }
 });
 
-biglifts.stores.assistance.defaultTriumvirate = [
+biglifts.stores.assistance.defaultCustom = [
     {liftProperty:'squat', name:'Leg Press', sets:5, reps:15},
     {liftProperty:'squat', name:'Leg Curl', sets:5, reps:15},
     {liftProperty:'deadlift', name:'Good Morning', sets:5, reps:15},
@@ -29,8 +29,8 @@ biglifts.stores.assistance.defaultTriumvirate = [
     {liftProperty:'bench', name:'Dumbbell Row', sets:5, reps:15}
 ];
 
-biglifts.stores.migrations.triumvirateMovementsMigration = function (store) {
-    util.withLoadedStore(biglifts.stores.lifts.Lifts, function(){
+biglifts.stores.migrations.customMovementsMigration = function (store) {
+    util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
 
         biglifts.stores.lifts.Lifts.each(function (lift) {
             var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
@@ -49,17 +49,17 @@ biglifts.stores.migrations.triumvirateMovementsMigration = function (store) {
     });
 };
 
-biglifts.stores.assistance.TriumvirateMovement = Ext.create('Ext.data.Store', {
-    model:'TriumvirateMovement',
+biglifts.stores.assistance.CustomMovement = Ext.create('Ext.data.Store', {
+    model:'CustomMovement',
     listeners:{
         load:function () {
             if (this.getCount() == 0) {
-                this.add(biglifts.stores.assistance.defaultTriumvirate);
+                this.add(biglifts.stores.assistance.defaultCustom);
                 this.sync();
             }
-            biglifts.stores.migrations.triumvirateMovementsMigration(this);
+            biglifts.stores.migrations.customMovementsMigration(this);
         }
     }
 });
 
-biglifts.stores.push(biglifts.stores.assistance.TriumvirateMovement);
+biglifts.stores.push(biglifts.stores.assistance.CustomMovement);

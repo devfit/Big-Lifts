@@ -31,8 +31,8 @@ Ext.define('biglifts.views.LiftSchedule', {
             biglifts.views.liftSchedule.assistance.AssistanceChooser,
             biglifts.views.liftSchedule.assistance.BoringButBig,
             biglifts.views.liftSchedule.assistance.BoringButBigMovementEditor,
-            biglifts.views.liftSchedule.assistance.Triumvirate,
-            biglifts.views.liftSchedule.assistance.TriumvirateMovementEditor,
+            biglifts.views.liftSchedule.assistance.Custom,
+            biglifts.views.liftSchedule.assistance.CustomMovementEditor,
             {
                 xtype:'firstlognoteseditor',
                 id:'first-log-notes-editor'
