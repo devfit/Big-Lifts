@@ -304,7 +304,7 @@ task setupAndroidAppIcons() << {
     for (String location : ANDROID_DRAWABLE_LOCATIONS) {
         copy {
             from 'distribution/icons'
-            include 'icon-114x114.png'
+            include 'icon114.png'
             into location
             rename { filename ->
                 'icon.png'
