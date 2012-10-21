@@ -38,7 +38,7 @@ class LiftScheduleNavigator
     lift_selector = @driver.find_element(:id => 'lift-selector')
     week_tab = lift_selector.find_elements(:tag_name => 'div', :class => 'x-tab').select { |i| i.text == "#{week}" }[0]
 
-    unless week_tab.displayed?
+    unless week_tab.attribute('class').include? 'x-tab-active'
       week_tab.click
       sleep @animation_delay
     end
