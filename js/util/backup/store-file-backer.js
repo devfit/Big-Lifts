@@ -2,7 +2,7 @@ Ext.ns('util.filebackup');
 
 util.filebackup.SYNC_MS = 200;
 
-util.filebackup.directory = 'biglifts531';
+util.filebackup.directory = 'wendler531';
 util.filebackup.saveStore = function (store, callback) {
     var data = util.filebackup.generateDataFromStore(store);
     setTimeout(function () {
