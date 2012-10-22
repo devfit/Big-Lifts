@@ -9,7 +9,9 @@ biglifts.more.moreInfoForListItem = function (c, index) {
 };
 
 biglifts.more.feedback = function () {
-    location.href = util.email.buildEmailLink("biglifts@stefankendall.com", "Big Lifts: Feedback"
+    var proText = biglifts.premium ? " Pro" : "";
+    var subject = "Big Lifts" + proText + ": Feedback";
+    location.href = util.email.buildEmailLink("biglifts@stefankendall.com", subject
         + biglifts.more.getVersionOsInfo());
 };
 
