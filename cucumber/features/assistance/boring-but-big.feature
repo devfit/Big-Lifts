@@ -2,6 +2,17 @@
 @premium
 Feature: Boring But Big - Assistance Work
 
+  Scenario: Removing BBB additional lifts
+    And I view the press lift schedule for week 1
+    And I mark the current lift completed
+    And I tap the "Save" button
+    And I select "5x10" assistance work
+    And I tap the "Add..." button
+    And I tap the trash button
+    Then There is 1 custom assistance row
+    And I tap the first boring but big entry
+    Then The trash icon is hidden
+
   Scenario: Adding BBB additional lifts
     And I view the press lift schedule for week 1
     And I mark the current lift completed

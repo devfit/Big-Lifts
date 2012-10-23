@@ -88,3 +88,7 @@ Then /^I set the "(.*?)" to "(.*?)"$/ do |name, value|
   input.clear
   input.send_keys value
 end
+
+Then /^The trash icon is hidden$/ do
+  @driver.find_elements(:class => 'trash').select { |button| button.displayed? }.length.should == 0
+end

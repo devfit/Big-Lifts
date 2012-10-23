@@ -14,11 +14,19 @@ biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement = function (mo
     }
 
     movementEditor.down("[name=lift]").setHidden(!isBigLift);
+
+    Ext.getCmp('bbb-delete-button').setHidden(isBigLift);
     movementEditor.down("[name=name]").setHidden(isBigLift);
     movementEditor.down("[name=weight]").setHidden(isBigLift);
 
     Ext.getCmp('bbb-movement-editor').setValues(formRecord);
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('bbb-movement-editor'));
+};
+
+biglifts.liftSchedule.assistance.boringButBig.deleteMovement = function () {
+    biglifts.stores.assistance.BoringButBig.remove(biglifts.liftSchedule.assistance.boringButBig.movementBeingEdited);
+    biglifts.stores.assistance.BoringButBig.sync();
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 
 biglifts.liftSchedule.assistance.boringButBig.returnToBbb = function () {
@@ -58,6 +66,15 @@ biglifts.views.liftSchedule.assistance.BoringButBigMovementEditor = {
                     ui:'back',
                     text:'Back',
                     handler:biglifts.liftSchedule.assistance.boringButBig.returnToBbb
+                },
+                {xtype:'spacer'},
+                {
+                    id:'bbb-delete-button',
+                    hidden:true,
+                    ui:'decline',
+                    iconMask:true,
+                    iconCls:'trash',
+                    handler:biglifts.liftSchedule.assistance.boringButBig.deleteMovement
                 }
             ]
         },

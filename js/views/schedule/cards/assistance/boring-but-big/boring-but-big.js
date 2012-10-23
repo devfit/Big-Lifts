@@ -71,7 +71,7 @@ biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
 
 biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown = function (values) {
     if (!values.movement_lift_id) {
-        return;
+        return "";
     }
 
     var max = biglifts.stores.lifts.Lifts.findRecord('id', values.movement_lift_id).get('max');
@@ -80,7 +80,7 @@ biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown = function (valu
     var plateList = biglifts.liftSchedule.liftTemplate.getPlateList(
         biglifts.weight.format(bbbWeight));
 
-    return "<table class='assistance-table'><tbody><tr>" +
+    return "<table class='assistance-plate-breakdown'><tbody><tr>" +
         "<td width='70%'></td>" +
         "<td style='text-align:right;' width='30%'>" +
         '<p class="bar-loader-breakdown">' + plateList + '</p>' +
