@@ -2,6 +2,21 @@
 @premium
 Feature: Custom - Assistance Work
 
+  Scenario: Adding custom lift movements
+    And I view the squat lift schedule for week 1
+    And I mark the current lift completed
+    And I tap the "Save" button
+    And I select "Custom" assistance work
+    And I tap the "Add..." button
+    And I change the custom movement name to "Good Morning"
+    And I change the custom movement weight to 65
+    And I tap the "Back" button
+    Then Custom movement 3 is "Good Morning 5 sets 15x 65lbs"
+    And I tap the "Save" button
+    Then I am on the track tab
+    And I tap "Asst." to change the log type
+    Then Assistance log entry 1 shows "Custom Good Morning Sets: 5 15x 65"
+
   Scenario: Custom lifts can be removed
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
@@ -21,10 +36,10 @@ Feature: Custom - Assistance Work
     Then Custom movement 2 is "? 5 sets 15x [?]lbs"
     And I tap custom row 1
     And I change the custom movement name to "Move1"
-    And I tap back
+    And I tap the "Back" button
     And I tap custom row 2
     And I change the custom movement name to "Move2"
-    And I tap back
+    And I tap the "Back" button
     And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
@@ -53,7 +68,7 @@ Feature: Custom - Assistance Work
     And I tap custom row 1
     And I change the custom movement name to "Good Morning"
     And I change the custom movement weight to 65
-    And I tap back
+    And I tap the "Back" button
     Then Custom movement 1 is "Good Morning 5 sets 15x 65lbs"
     And I tap the "Save" button
     Then I am on the track tab

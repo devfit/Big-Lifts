@@ -95,8 +95,3 @@ Then /^Set (\d+) is ([\w\s]*?)marked as (\w+)/ do |set_number, not_modifier, mar
     row_class.should include(marked_as_class)
   end
 end
-
-When /^I tap back$/ do
-  @driver.find_elements(:class => 'x-button-back').select { |button| button.text() == 'Back' && button.displayed? }[0].click
-  sleep @ANIMATION_DELAY
-end

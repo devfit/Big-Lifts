@@ -5,6 +5,12 @@ biglifts.liftSchedule.assistance.custom.editCustomMovement = function (dataview,
     biglifts.liftSchedule.assistance.custom.showEditCustomMovement(movement);
 };
 
+biglifts.liftSchedule.assistance.custom.addCustomMovement = function () {
+    biglifts.stores.assistance.CustomMovement.add({liftProperty:biglifts.liftSchedule.currentLiftProperty, name:"", sets:5, reps:15});
+    biglifts.stores.assistance.CustomMovement.sync();
+    biglifts.liftSchedule.assistance.custom.showEditCustomMovement(biglifts.stores.assistance.CustomMovement.last());
+};
+
 biglifts.liftSchedule.assistance.custom.filterCustomMovements = function () {
     biglifts.stores.assistance.CustomMovement.clearFilter();
     biglifts.stores.assistance.CustomMovement.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
@@ -32,7 +38,7 @@ biglifts.liftSchedule.assistance.custom.logMovements = function () {
 biglifts.views.liftSchedule.assistance.Custom = {
     xtype:'panel',
     id:'custom-assistance',
-    layout:'vbox',
+    layout:'fit',
     items:[
         {
             xtype:'toolbar',
@@ -55,7 +61,18 @@ biglifts.views.liftSchedule.assistance.Custom = {
             ]
         },
         {
-            flex:2,
+            xtype:'toolbar',
+            docked:'bottom',
+            cls:'custom-movement-toolbar',
+            items:[
+                {
+                    text:'Add...',
+                    ui:'confirm',
+                    handler:biglifts.liftSchedule.assistance.custom.addCustomMovement
+                }
+            ]
+        },
+        {
             xtype:'list',
             store:biglifts.stores.assistance.CustomMovement,
             itemTpl:"<table class='assistance-table'><tbody><tr>" +
@@ -68,11 +85,6 @@ biglifts.views.liftSchedule.assistance.Custom = {
                     list.addListener('itemtap', biglifts.liftSchedule.assistance.custom.editCustomMovement);
                 }
             }
-        },
-        {
-            flex:1,
-            cls:'tap-to-edit',
-            html:'Tap row to edit'
         }
     ],
     listeners:{

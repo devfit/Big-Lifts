@@ -13,7 +13,7 @@ Feature: Rest Timer
     Then The rest timer shows "0:09"
     And I tap the rest timer start button
     And I wait 2 seconds
-    And I tap back
+    And I tap the "Back" button
     And I tap the rest timer button
     Then The rest timer does not show "0:09"
     Then The rest timer does not show "0:08"
