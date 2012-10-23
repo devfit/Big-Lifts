@@ -24,3 +24,12 @@ Then /^I change the custom movement weight to (\d+)$/ do |weight|
   weight_input.clear
   weight_input.send_keys weight
 end
+
+When /^I tap the trash button$/ do
+  @driver.find_elements(:class => 'trash').select { |button| button.displayed? }[0].click
+  sleep @ANIMATION_DELAY
+end
+
+Then /^There is (\d+) custom assistance row[s]*$/ do |row_count|
+  @driver.find_elements(:class => 'assistance-table').select { |row| row.displayed? }.length.should == row_count.to_i
+end

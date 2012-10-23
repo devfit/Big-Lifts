@@ -19,6 +19,15 @@ biglifts.liftSchedule.assistance.custom.saveMovementChange = function () {
     record.save();
 };
 
+biglifts.liftSchedule.assistance.custom.deleteMovement = function () {
+    var movementEditor = Ext.getCmp('custom-movement-editor');
+    var record = movementEditor.getRecord();
+    biglifts.stores.assistance.CustomMovement.remove(record);
+    biglifts.stores.assistance.CustomMovement.sync();
+
+    biglifts.liftSchedule.assistance.custom.returnToCustom();
+};
+
 biglifts.views.liftSchedule.assistance.CustomMovementEditor = {
     xtype:'formpanel',
     id:'custom-movement-editor',
@@ -33,6 +42,13 @@ biglifts.views.liftSchedule.assistance.CustomMovementEditor = {
                     ui:'back',
                     text:'Back',
                     handler:biglifts.liftSchedule.assistance.custom.returnToCustom
+                },
+                {xtype:'spacer'},
+                {
+                    ui:'decline',
+                    iconMask:true,
+                    iconCls:'trash',
+                    handler:biglifts.liftSchedule.assistance.custom.deleteMovement
                 }
             ]
         },
@@ -61,7 +77,7 @@ biglifts.views.liftSchedule.assistance.CustomMovementEditor = {
                     name:'reps'
                 },
                 {
-                    xtype: 'numberfield',
+                    xtype:'numberfield',
                     label:'Weight',
                     name:'weight'
                 }
