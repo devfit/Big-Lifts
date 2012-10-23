@@ -2,6 +2,20 @@
 @premium
 Feature: Boring But Big - Assistance Work
 
+  Scenario: Adding BBB additional lifts
+    And I view the press lift schedule for week 1
+    And I mark the current lift completed
+    And I tap the "Save" button
+    And I select "5x10" assistance work
+    And I tap the "Add..." button
+    And I set the "name" to "Chins"
+    And I set the "reps" to "10"
+    And I set the "sets" to "5"
+    And I tap the "Back" button
+    And I tap the "Save" button
+    And I tap "Asst." to change the log type
+    Then I see an assistance log entry containing "Chins"
+
   Scenario: BBB primary movements show plate breakdowns
     When I set the squat max to 200
     And I set the press max to 150

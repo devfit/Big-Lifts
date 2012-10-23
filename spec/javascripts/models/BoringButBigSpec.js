@@ -35,6 +35,12 @@ describe("Boring But Big Model", function () {
         expect(weight).toEqual(25);
     });
 
+    it("should return 0 if no weight or associated record are set", function () {
+        biglifts.stores.assistance.BoringButBig.add({name:"Chins", sets:5});
+        var weight = biglifts.stores.assistance.BoringButBig.getWeightForRecord(biglifts.stores.assistance.BoringButBig.first().data);
+        expect(weight).toEqual(0);
+    });
+
     it("should return a percentage of the associated lift's weight of an associated lift exists", function () {
         biglifts.stores.assistance.BoringButBigPercentage.first().set('percentage', 50);
         biglifts.stores.assistance.BoringButBig.add({name:"Clean", movement_lift_id:biglifts.stores.lifts.Lifts.first().getId()});

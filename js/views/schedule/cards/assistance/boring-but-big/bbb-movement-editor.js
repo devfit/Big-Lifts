@@ -6,10 +6,16 @@ biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement = function (mo
     biglifts.liftSchedule.assistance.boringButBig.movementBeingEdited = movement;
 
     var formRecord = _.clone(movement.data);
-    if (formRecord.lift_id) {
+    var movementEditor = Ext.getCmp('bbb-movement-editor');
+    var isBigLift = !!formRecord.movement_lift_id;
+    if (isBigLift) {
         var lift = biglifts.stores.lifts.Lifts.findRecord('id', formRecord.movement_lift_id);
         formRecord.lift = lift.get('propertyName');
     }
+
+    movementEditor.down("[name=lift]").setHidden(!isBigLift);
+    movementEditor.down("[name=name]").setHidden(isBigLift);
+    movementEditor.down("[name=weight]").setHidden(isBigLift);
 
     Ext.getCmp('bbb-movement-editor').setValues(formRecord);
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('bbb-movement-editor'));
@@ -24,15 +30,17 @@ biglifts.liftSchedule.assistance.boringButBig.saveMovementChange = function () {
     var movementEditor = Ext.getCmp('bbb-movement-editor');
     var newValues = movementEditor.getValues();
 
-    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', newValues.lift);
-    var newRecordData = {
-        sets:newValues.sets,
-        reps:newValues.reps,
-        movement_lift_id:lift.get('id')
-    };
+    if (!movementEditor.down('[name=lift]').isHidden()) {
+        var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', newValues.lift);
+        newValues = {
+            sets:newValues.sets,
+            reps:newValues.reps,
+            movement_lift_id:lift.get('id')
+        };
+    }
 
     var record = biglifts.liftSchedule.assistance.boringButBig.movementBeingEdited;
-    record.set(Ext.merge(_.clone(record.data), newRecordData));
+    record.set(Ext.merge(_.clone(record.data), newValues));
     record.save();
 };
 

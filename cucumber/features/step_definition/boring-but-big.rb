@@ -82,3 +82,9 @@ end
 Then /^I see an assistance log entry containing "(.*?)"$/ do |text|
   @driver.find_element(:id => 'log-assistance-list').text().should include text
 end
+
+Then /^I set the "(.*?)" to "(.*?)"$/ do |name, value|
+  input = @driver.find_elements(:name => name).select { |input| input.displayed? }[0]
+  input.clear
+  input.send_keys value
+end

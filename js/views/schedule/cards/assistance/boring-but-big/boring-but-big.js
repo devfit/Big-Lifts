@@ -46,6 +46,22 @@ biglifts.liftSchedule.assistance.boringButBig.editBbbMovement = function (datavi
     biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement(movement);
 };
 
+biglifts.liftSchedule.assistance.boringButBig.addMovement = function () {
+    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
+    var bbbMovement = {
+        sets:5,
+        reps:10,
+        weight:null,
+        movement_lift_id:null,
+        lift_id:lift.get('id'),
+        name:''
+    };
+
+    biglifts.stores.assistance.BoringButBig.add(bbbMovement);
+    biglifts.stores.assistance.BoringButBig.sync();
+    biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement(biglifts.stores.assistance.BoringButBig.last());
+};
+
 biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
     var list = Ext.getCmp('boring-but-big-list');
     if (list) {
@@ -75,10 +91,7 @@ biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown = function (valu
 biglifts.views.liftSchedule.assistance.BoringButBig = {
     xtype:'panel',
     id:'boring-but-big',
-    layout:{
-        type:'vbox',
-        align:'stretch'
-    },
+    layout:'fit',
     items:[
         {
             xtype:'toolbar',
@@ -135,6 +148,19 @@ biglifts.views.liftSchedule.assistance.BoringButBig = {
             ]
         },
         {
+            xtype:'toolbar',
+            docked:'bottom',
+            cls:'custom-movement-toolbar',
+            items:[
+                {
+                    xtype:'button',
+                    ui:'confirm',
+                    text:'Add...',
+                    handler:biglifts.liftSchedule.assistance.boringButBig.addMovement
+                }
+            ]
+        },
+        {
             id:'boring-but-big-list',
             flex:2,
             xtype:'list',
@@ -151,11 +177,6 @@ biglifts.views.liftSchedule.assistance.BoringButBig = {
                     list.addListener('itemtap', biglifts.liftSchedule.assistance.boringButBig.editBbbMovement);
                 }
             }
-        },
-        {
-            flex:1,
-            cls:'tap-to-edit',
-            html:'Tap row to edit'
         }
     ],
     listeners:{

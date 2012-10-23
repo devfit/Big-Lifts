@@ -29,9 +29,13 @@ Ext.define('BoringButBigStore', {
             return data.weight;
         }
 
-        var associatedLift = biglifts.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
-        return biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(associatedLift.get('max')),
-            biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage'));
+        if (data.movement_lift_id) {
+            var associatedLift = biglifts.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
+            return biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(associatedLift.get('max')),
+                biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage'));
+        }
+
+        return 0;
     },
     getNameForRecord:function (data) {
         if (data.name) {
