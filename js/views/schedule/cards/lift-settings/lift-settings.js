@@ -13,10 +13,10 @@ biglifts.views.liftSchedule.LiftSettings = {
         scroll:'vertical'
     },
     items:[
+        biglifts.liftSettings.templates.rotating,
         biglifts.liftSettings.templates.fresher,
         biglifts.liftSettings.templates.heavier,
         biglifts.liftSettings.templates.powerlifting,
-        biglifts.liftSettings.templates.rotating,
         biglifts.liftSettings.templates.custom
     ]
 };

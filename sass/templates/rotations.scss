@@ -1,0 +1,23 @@
+#rotating-lift-list {
+  margin-top: 5px;
+
+  .x-list-item {
+    background-color: white;
+  }
+
+  table {
+    width: 100%;
+    td {
+      &.name {
+        width: 66%;
+        font-weight: bolder;
+      }
+
+      &.week {
+        width: 33%;
+        text-align: right;
+        color: #343434;
+      }
+    }
+  }
+}

@@ -59,7 +59,7 @@ biglifts.liftSettings.templates.getDisplayForWeek = function (week) {
 
 biglifts.liftSettings.templates.setupWeekRotation = function () {
     biglifts.liftSettings.templates.rotatingWeekStore.each(function (r) {
-        console.log( "Adding records" );
+        console.log("Adding records");
         biglifts.stores.WeekRotation.add({liftProperty:r.get('liftProperty'), startingWeek:r.get('week')});
     });
     biglifts.stores.WeekRotation.sync();
@@ -98,7 +98,7 @@ biglifts.liftSettings.templates.rotating = {
             ]
         },
         {
-            html:'<p>Like "fresher", but all lifts are staggered to stay fresh</p>'
+            html:'<p>Like "fresher", but lifts are staggered by week</p>'
         },
         {
             itemId:'lift-list-container',
@@ -110,7 +110,8 @@ biglifts.liftSettings.templates.rotating = {
                     padding:0,
                     xtype:'list',
                     store:biglifts.liftSettings.templates.rotatingWeekStore,
-                    itemTpl:'{name} {[biglifts.liftSettings.templates.getDisplayForWeek(values.week)]}'
+                    itemTpl:'<table><tr><td class="name">{name}</td>' +
+                        '<td class="week">{[biglifts.liftSettings.templates.getDisplayForWeek(values.week)]}</td></tr></table>'
                 }
             ]
         },
