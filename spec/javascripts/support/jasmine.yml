@@ -23,6 +23,9 @@ src_files:
     - js/models/assistance/boring-but-big.js
     - js/models/assistance/boring-but-big-percentage.js
     - js/views/schedule/cards/lift-selector.js
+    - js/views/schedule/cards/lift-settings/templates/common-behavior.js
+    - js/views/schedule/cards/lift-settings/templates/rotating.js
+    - js/views/schedule/cards/lift-settings/lift-settings.js
     - js/views/schedule/cards/tracking/lift-tracking.js
     - js/views/schedule/cards/rest-timer.js
     - js/views/maxes/cards/plate-bar-setup.js
