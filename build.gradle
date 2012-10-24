@@ -1,5 +1,4 @@
 import groovy.json.JsonSlurper
-import groovy.json.JsonOutput
 import groovyx.gpars.GParsPool
 
 buildscript {
@@ -8,7 +7,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'org.codehaus.gpars:gpars:1.0-beta-1'
+        classpath 'org.codehaus.gpars:gpars:1.0-beta-3'
     }
 }
 
@@ -53,19 +52,51 @@ def compress(String type, String baseDirectory) {
         }
     }
 
-    elementsToMinify.each { element ->
-        println "Minifying ${element.relativePath}"
-        def outputFileLocation = "build/$baseDirectory/${element.relativePath}"
-        new File(outputFileLocation).parentFile.mkdirs()
-        minify("$baseDirectory/${element.relativePath}", outputFileLocation)
+    if (type != 'js') {
+        elementsToMinify.each { element ->
+            def outputFileLocation = "build/$baseDirectory/${element.relativePath}"
+            new File(outputFileLocation).parentFile.mkdirs()
+            minify("$baseDirectory/${element.relativePath}", outputFileLocation)
+        }
+    }
+    else {
+        def ignoredFileNames = ['touch-charts.js', 'sencha-touch-all.js', 'date.js']
+
+        GParsPool.withPool(4) {
+            elementsToMinify.eachParallel { element ->
+                def outputFileLocation = "build/$baseDirectory/${element.relativePath}"
+                new File(outputFileLocation).parentFile.mkdirs()
+
+                def inputFile = "$baseDirectory/${element.relativePath}"
+
+                boolean shouldIgnoreFile = ignoredFileNames.any { element.relativePath.toString().contains(it) }
+                if (shouldIgnoreFile) {
+                    copy {
+                        from inputFile
+                        into new File(outputFileLocation).getParentFile().getAbsolutePath()
+                    }
+                }
+                else {
+                    minify(inputFile, outputFileLocation)
+                }
+            }
+        }
     }
 }
 
+def execute_process(command) {
+    def proc = command.execute(null, new File(System.properties['user.dir']))
+    proc.consumeProcessOutput(System.out, System.err)
+    proc.waitFor()
+}
+
 def minify(String input, String output) {
-    ant.java(jar: "lib/yuicompressor-2.4.7.jar", fork: true) {
-        arg(value: input)
-        arg(value: "-o")
-        arg(value: output)
+    println "Minifying ${input}"
+    if (input.endsWith('js')) {
+        execute_process "java -jar lib/compiler.jar --js ${input} --js_output_file ${output}"
+    }
+    else {
+        execute_process "java -jar lib/yuicompressor-2.4.7.jar ${input} -o ${output}"
     }
 }
 
@@ -97,8 +128,6 @@ task copyCss(type: Copy) {
     include 'js/**/*.css'
 }
 
-defaultTasks 'clean', 'build'
-
 task clean << {
     String gitBackupDirectory = 'build-backup-git'
     mkdir(gitBackupDirectory)
@@ -127,29 +156,6 @@ task copySoundFiles() << {
 }
 
 task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplashes, compressJs, copyCss, copySoundFiles]) << {}
-
-task test() << {
-    List<File> tests = []
-    new File('./cucumber').eachFileRecurse {
-        if (it.name.endsWith('.feature')) {
-            tests << it
-        }
-    }
-
-    exec {
-        commandLine = ['rake', 'jasmine:ci']
-        workingDir = new File('./spec')
-    }
-
-    GParsPool.withPool(4) {
-        tests.eachParallel { File test ->
-            exec {
-                commandLine = ['cucumber', test.getAbsolutePath(), '-f', 'progress']
-                workingDir = new File('./cucumber')
-            }
-        }
-    }
-}
 
 task incrementJsVersion << {
     File versionFile = new File('js/version.js')
@@ -208,25 +214,6 @@ task incrementIosVersion << {
 
 task version(dependsOn: [incrementJsVersion, incrementAndroidVersion, incrementIosVersion]) << {}
 
-task deploy(dependsOn: ['build']) << {
-    exec {
-        commandLine = ['git', 'add', '-u']
-        workingDir = new File('./build')
-    }
-    exec {
-        commandLine = ['git', 'add', '.']
-        workingDir = new File('./build')
-    }
-    exec {
-        commandLine = ['git', 'commit', '-m', '"Building"']
-        workingDir = new File('./build')
-    }
-    exec {
-        commandLine = ['git', 'push', 'build', 'master', '--force']
-        workingDir = new File('./build')
-    }
-}
-
 def execAndGetResult(def command) {
     def output = new ByteArrayOutputStream()
     println "Executing ${command}"
@@ -235,66 +222,6 @@ def execAndGetResult(def command) {
         standardOutput = output
     }
     return new JsonSlurper().parseText(output.toString())
-}
-
-final String PHONEGAP_BUILD_API_URL = "https://build.phonegap.com"
-String authToken = null
-
-task getAuthToken() << {
-    def authenticationResponse = execAndGetResult(['curl', '-u', 'stefankendall@gmail.com', '-X', 'POST', '-d', '""', "${PHONEGAP_BUILD_API_URL}/token"])
-    authToken = authenticationResponse.token
-}
-
-task binaries(dependsOn: [getAuthToken]) << {
-    delete('binaries')
-    def allAppsResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps?auth_token=${authToken}"])
-
-    String getIosDownloadUrlRequest = allAppsResult.apps[0].download.ios
-    String getAndroidDownloadUrlRequest = allAppsResult.apps[0].download.android
-
-    [getIosDownloadUrlRequest, getAndroidDownloadUrlRequest].each {
-        def downloadLocationResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}${it}?auth_token=${authToken}"])
-        exec {
-            commandLine = ['wget', downloadLocationResult.location, '-P', 'binaries']
-        }
-    }
-}
-
-def getIdForAppName(phoneGapUrl, authToken, appName) {
-    def allAppsResult = execAndGetResult(['curl', "${phoneGapUrl}/api/v1/apps?auth_token=${authToken}"])
-    return allAppsResult.apps.find { it.title == appName }?.get('id')
-}
-
-def getSigningKeyByName(phoneGapUrl, authToken, keyName) {
-    def keyInfo = execAndGetResult(['curl', "${phoneGapUrl}/api/v1/keys?auth_token=${authToken}"])
-    Map key = keyInfo.keys.ios.all.find { it.title == keyName }
-    return key?.get('id')
-}
-
-task useDevSigningKey(dependsOn: [getAuthToken]) << {
-    def id = getIdForAppName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 5/3/1")
-    def devKeyId = getSigningKeyByName(PHONEGAP_BUILD_API_URL, authToken, "Wendler Development")
-    String newKeyJson = "data={\"keys\":{\"ios\":${devKeyId}}}"
-    println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
-}
-
-task useReleaseSigningKey(dependsOn: [getAuthToken]) << {
-    def id = getIdForAppName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 5/3/1")
-    def devKeyId = getSigningKeyByName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 531")
-    String newKeyJson = "data={\"keys\":{\"ios\":${devKeyId}}}"
-    println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
-}
-
-task useProReleaseSigningKey(dependsOn: [getAuthToken]) << {
-    def id = getIdForAppName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 5/3/1")
-    def devKeyId = getSigningKeyByName(PHONEGAP_BUILD_API_URL, authToken, "Wendler 531 Pro")
-    String newKeyJson = "data={\"keys\":{\"ios\":${devKeyId}}}"
-    println execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps/${id}?auth_token=${authToken}", "-X", "PUT", "-d", newKeyJson])
-}
-
-task buildStatus(dependsOn: [getAuthToken]) << {
-    def allAppsResult = execAndGetResult(['curl', "${PHONEGAP_BUILD_API_URL}/api/v1/apps?auth_token=${authToken}"])
-    println JsonOutput.prettyPrint(JsonOutput.toJson(allAppsResult.apps[0].status))
 }
 
 final List ANDROID_DRAWABLE_LOCATIONS = ['native/android/res/drawable', 'native/android/res/drawable-hdpi', 'native/android/res/drawable-ldpi'
