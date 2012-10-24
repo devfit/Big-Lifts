@@ -55,6 +55,18 @@ biglifts.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
     return (values.amrap ? 'amrap ' : '') + (values.warmup ? 'warmup ' : '');
 };
 
+biglifts.liftSchedule.liftTemplate.getEffectiveWeek = function () {
+    if (biglifts.stores.WeekRotation.getCount() === 0) {
+        return biglifts.liftSchedule.currentWeek;
+    }
+    else {
+        var rotation = biglifts.stores.WeekRotation.findRecord('liftProperty', biglifts.liftSchedule.currentLiftProperty);
+        var startingWeek = rotation.get('startingWeek');
+
+        return biglifts.liftSchedule.currentWeek + ((startingWeek - 1) % 4);
+    }
+};
+
 biglifts.liftSchedule.liftTemplate.updateLiftValues = function () {
     if (!biglifts.liftSchedule.currentLiftProperty) {
         return;
@@ -73,11 +85,11 @@ biglifts.liftSchedule.liftTemplate.updateLiftValues = function () {
         var showWarmupSets = settings.get('showWarmupSets');
         biglifts.liftSchedule.currentShowingMax = liftRecord.data.max;
         biglifts.stores.lifts.LiftProgression.clearFilter();
-        biglifts.stores.lifts.LiftProgression.filter("week", biglifts.liftSchedule.currentWeek);
+        biglifts.stores.lifts.LiftProgression.filter("week", biglifts.liftSchedule.liftTemplate.getEffectiveWeek());
 
         if (!showWarmupSets) {
             biglifts.stores.lifts.LiftProgression.filterBy(function (record) {
-                return !record.get('warmup') && record.data.week == biglifts.liftSchedule.currentWeek;
+                return !record.get('warmup') && record.data.week === biglifts.liftSchedule.liftTemplate.getEffectiveWeek();
             });
         }
 
@@ -89,7 +101,7 @@ biglifts.stores.lifts.Lifts.addListener('beforesync', biglifts.liftSchedule.lift
 biglifts.stores.lifts.MeetGoals.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
 
 biglifts.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
-    if (biglifts.liftSchedule.currentWeek === 4) {
+    if (biglifts.liftSchedule.liftTemplate.getEffectiveWeek() === 4) {
         Ext.getCmp('reps-to-beat-toolbar').hide();
         return;
     }

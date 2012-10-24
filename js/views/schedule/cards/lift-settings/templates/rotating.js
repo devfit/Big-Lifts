@@ -7,6 +7,7 @@ Ext.define('RotatingWeekEntry', {
         fields:[
             {name:'id', type:'string'},
             {name:'name', type:'string'},
+            {name:'liftProperty', type:'string'},
             {name:'week', type:'integer'}
         ],
         proxy:{
@@ -34,7 +35,7 @@ Ext.define("RotatingWeekStore", {
                 if (this.getCount() === 0) {
                     var i = 0;
                     biglifts.stores.lifts.Lifts.each(function (r) {
-                        store.add({name:r.get('name'), week:store.WEEK_ORDER[i]});
+                        store.add({name:r.get('name'), week:store.WEEK_ORDER[i], liftProperty:r.get('propertyName')});
                         i = (i + 1) % store.WEEK_ORDER.length;
                     });
                 }
@@ -54,6 +55,14 @@ biglifts.liftSettings.templates.rotatingWeekStore.addListener('beforesync', func
 biglifts.liftSettings.templates.getDisplayForWeek = function (week) {
     var weekDisplayMapping = {1:'5/5/5', 2:'3/3/3', 3:'5/3/1', 4:'deload'};
     return weekDisplayMapping[week];
+};
+
+biglifts.liftSettings.templates.setupWeekRotation = function () {
+    biglifts.liftSettings.templates.rotatingWeekStore.each(function (r) {
+        console.log( "Adding records" );
+        biglifts.stores.WeekRotation.add({liftProperty:r.get('liftProperty'), startingWeek:r.get('week')});
+    });
+    biglifts.stores.WeekRotation.sync();
 };
 
 biglifts.liftSettings.templates.rotating = {
@@ -119,6 +128,7 @@ biglifts.liftSettings.templates.rotating = {
             text:'Use',
             handler:function () {
                 biglifts.liftSettings.setupLiftScheme("fresher");
+                biglifts.liftSettings.templates.setupWeekRotation();
             }
         }
     ]

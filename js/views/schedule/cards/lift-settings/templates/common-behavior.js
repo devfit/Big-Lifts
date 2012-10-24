@@ -15,9 +15,6 @@ biglifts.liftSettings.carouselForward = function () {
 };
 
 biglifts.liftSettings.setupLiftScheme = function (scheme) {
-    //TODO: Figure out weird saving behavior. On the very first load, and only on mobile safari, if the records
-    //being saved are the *same* as those that exist, on page reload, the count of the store will be 0.
-    //It's almost as if the records are marked to be deleted twice.
     var prebuiltVariation = biglifts.liftProgressions.options[scheme];
     biglifts.stores.lifts.LiftProgression.clearFilter();
     biglifts.stores.lifts.LiftProgression.removeAll();
@@ -28,6 +25,9 @@ biglifts.liftSettings.setupLiftScheme = function (scheme) {
     template.set('name', scheme);
     template.set('hasMeetGoals', scheme === "powerlifting");
     biglifts.stores.Template.sync();
+
+    biglifts.stores.WeekRotation.removeAll();
+    biglifts.stores.WeekRotation.sync();
 
     biglifts.stores.lifts.MeetGoals.removeAll();
     biglifts.stores.lifts.syncMeetGoalsToLifts();
