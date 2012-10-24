@@ -65,6 +65,11 @@ biglifts.liftSettings.templates.setupWeekRotation = function () {
     biglifts.stores.WeekRotation.sync();
 };
 
+biglifts.liftSettings.templates.useRotatingTemplate = function () {
+    biglifts.liftSettings.setupLiftScheme("fresher");
+    biglifts.liftSettings.templates.setupWeekRotation();
+};
+
 biglifts.liftSettings.templates.rotating = {
     id:'rotating-template',
     listeners:{
@@ -98,6 +103,20 @@ biglifts.liftSettings.templates.rotating = {
             ]
         },
         {
+            xtype:'toolbar',
+            docked:'top',
+            ui:'light',
+            items:[
+                {xtype:'spacer'},
+                {
+                    xtype:'button',
+                    ui:'confirm',
+                    text:'Use',
+                    handler:biglifts.liftSettings.templates.useRotatingTemplate
+                }
+            ]
+        },
+        {
             html:'<p>Like "fresher", but lifts are staggered by week</p>'
         },
         {
@@ -120,16 +139,6 @@ biglifts.liftSettings.templates.rotating = {
             text:'Rotate',
             handler:function () {
                 biglifts.liftSettings.templates.rotatingWeekStore.rotateWeeks();
-            }
-        },
-        {
-            id:'use-rotating-template-button',
-            xtype:'button',
-            ui:'confirm',
-            text:'Use',
-            handler:function () {
-                biglifts.liftSettings.setupLiftScheme("fresher");
-                biglifts.liftSettings.templates.setupWeekRotation();
             }
         }
     ]

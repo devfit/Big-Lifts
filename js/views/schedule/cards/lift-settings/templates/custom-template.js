@@ -19,15 +19,22 @@ biglifts.liftSettings.templates.custom = {
             ]
         },
         {
-            html:'Setup sets, reps, and percentages manually',
-            margin:"0 0 5 0"
+            xtype:'toolbar',
+            docked:'top',
+            ui:'light',
+            items:[
+                {xtype:'spacer'},
+                {
+                    xtype:'button',
+                    ui:'confirm',
+                    text:'Use',
+                    handler:biglifts.liftSettings.showEditLiftPercentages
+                }
+            ]
         },
         {
-            id:'manual-percentages-button',
-            xtype:'button',
-            text:'Use',
-            ui:'confirm',
-            handler:biglifts.liftSettings.showEditLiftPercentages
+            html:'Setup sets, reps, and percentages manually',
+            margin:"0 0 5 0"
         }
     ]
 };

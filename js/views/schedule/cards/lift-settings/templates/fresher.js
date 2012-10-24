@@ -23,6 +23,22 @@ biglifts.liftSettings.templates.fresher = {
             ]
         },
         {
+            xtype:'toolbar',
+            docked:'top',
+            ui:'light',
+            items:[
+                {xtype:'spacer'},
+                {
+                    xtype:'button',
+                    ui:'confirm',
+                    text:'Use',
+                    handler:function () {
+                        biglifts.liftSettings.setupLiftScheme("fresher");
+                    }
+                }
+            ]
+        },
+        {
             html:'<div class="example-percentages">' +
                 '<table>' +
                 '<thead><tr><th>Week</th><th>Scheme</th></tr></thead>' +
@@ -34,15 +50,6 @@ biglifts.liftSettings.templates.fresher = {
                 '</table>' +
                 '</div>',
             margin:"0 0 5 0"
-        },
-        {
-            id:'progression-option-1',
-            xtype:'button',
-            ui:'confirm',
-            text:'Use',
-            handler:function () {
-                biglifts.liftSettings.setupLiftScheme("fresher");
-            }
         }
     ]
 };

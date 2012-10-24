@@ -21,6 +21,22 @@ biglifts.liftSettings.templates.powerlifting = {
             ]
         },
         {
+            xtype:'toolbar',
+            docked:'top',
+            ui:'light',
+            items:[
+                {xtype:'spacer'},
+                {
+                    xtype:'button',
+                    ui:'confirm',
+                    text:'Use',
+                    handler:function () {
+                        biglifts.liftSettings.setupLiftScheme("powerlifting");
+                    }
+                }
+            ]
+        },
+        {
             html:'<div class="example-percentages"><span style="font-weight:bold">Pre-Meet (raw)</span>' +
                 '<table>' +
                 '<thead><tr><th>Week</th><th>Scheme</th></tr></thead>' +
@@ -32,15 +48,6 @@ biglifts.liftSettings.templates.powerlifting = {
                 '</table>' +
                 '</div>',
             margin:"0 0 5 0"
-        },
-        {
-            id:'use-powerlifting-template-button',
-            xtype:'button',
-            ui:'confirm',
-            text:'Use',
-            handler:function () {
-                biglifts.liftSettings.setupLiftScheme("powerlifting");
-            }
         }
     ]
 };

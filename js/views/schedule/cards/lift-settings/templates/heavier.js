@@ -21,6 +21,22 @@ biglifts.liftSettings.templates.heavier = {
             ]
         },
         {
+            xtype:'toolbar',
+            docked:'top',
+            ui:'light',
+            items:[
+                {xtype:'spacer'},
+                {
+                    xtype:'button',
+                    ui:'confirm',
+                    text:'Use',
+                    handler:function () {
+                        biglifts.liftSettings.setupLiftScheme("heavier");
+                    }
+                }
+            ]
+        },
+        {
             html:'<div class="example-percentages">' +
                 '<table>' +
                 '<thead><tr><th>Week</th><th>Scheme</th></tr></thead>' +
@@ -32,15 +48,6 @@ biglifts.liftSettings.templates.heavier = {
                 '</table>' +
                 '</div>',
             margin:"0 0 5 0"
-        },
-        {
-            id:'progression-option-2',
-            xtype:'button',
-            ui:'confirm',
-            text:'Use',
-            handler:function () {
-                biglifts.liftSettings.setupLiftScheme("heavier");
-            }
         }
     ]
 }
