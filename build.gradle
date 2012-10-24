@@ -66,7 +66,7 @@ def compress(String type, String baseDirectory) {
                 minifyWithYui(inputFile, outputFileLocation)
             }
             else {
-                minify(inputFile, outputFileLocation)
+                minifyWithClosure(inputFile, outputFileLocation)
             }
         }
     }
@@ -79,21 +79,13 @@ def execute_process(command) {
 }
 
 def minifyWithClosure(String input, String output) {
+    println "Minifying ${input}"
     execute_process "java -jar lib/compiler.jar --js ${input} --js_output_file ${output}"
 }
 
 def minifyWithYui(String input, String output) {
-    execute_process "java -jar lib/yuicompressor-2.4.7.jar ${input} -o ${output}"
-}
-
-def minify(String input, String output) {
     println "Minifying ${input}"
-    if (input.endsWith('js')) {
-        minifyWithClosure(input, output)
-    }
-    else {
-        minifyWithYui(input, output)
-    }
+    execute_process "java -jar lib/yuicompressor-2.4.7.jar ${input} -o ${output}"
 }
 
 task compressJs {
@@ -105,16 +97,40 @@ task compressJs {
     }
 }
 
-task compressCss {
-    inputs.dir new File('css')
-    inputs.dir new File('js')
-    outputs.dir new File('build/css')
-    outputs.dir new File('build/js')
+def getJsFilesFrom(File htmlFile) {
+    def htmlFileText = htmlFile.text
+    def m = htmlFileText =~ /(?m)src=['"](.*?)['"]/
+    return m.collect { new File('build', it[1]) }
+}
 
-    doLast {
-        compress('css', 'css')
-        compress('css', 'js')
+def rewriteSingleJsInclude(File htmlFile, String jsFileToAdd) {
+    println "Rewriting JS includes in ${htmlFile.path}"
+    def htmlFileText = htmlFile.text
+    String newHtml = htmlFileText.replaceAll(/(?m)(?s)<!--combine.*end combine-->/, '')
+    def jsInclude = "<script type='text/javascript' src='${jsFileToAdd}'></script>"
+    newHtml = newHtml.replaceAll('</head>', "${jsInclude}</head>")
+    htmlFile.write(newHtml)
+}
+
+task copyJs(dependsOn: [compressJs]) << {
+    StringBuilder combinedJs = new StringBuilder()
+    List<File> orderedJsFiles = getJsFilesFrom(new File('build/index.html'))
+    orderedJsFiles.each { File f ->
+        if (f.exists()) {
+            combinedJs.append(f.text)
+        }
+        else {
+            println "Warning: ${f.path} does not exist"
+        }
     }
+
+    println 'Combination complete. Deleting source files.'
+    orderedJsFiles.each { File f -> f.delete() }
+
+    println 'Creating app.js'
+    new File('build/app.js').append(combinedJs)
+
+    rewriteSingleJsInclude(new File('build/index.html'), 'app.js')
 }
 
 task copyCss(type: Copy) {
@@ -151,7 +167,7 @@ task copySoundFiles() << {
     }
 }
 
-task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplashes, compressJs, copyCss, copySoundFiles]) << {}
+task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplashes, copyJs, copyCss, copySoundFiles]) << {}
 
 task incrementJsVersion << {
     File versionFile = new File('js/version.js')
