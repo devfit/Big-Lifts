@@ -44,13 +44,7 @@ biglifts.restTimer.checkIfSoundMuted = function () {
 biglifts.restTimer.playTimerEndSound = function () {
     if (typeof(Media) !== 'undefined') {
         if (Ext.os.is.Android) {
-            var soundPath = util.phonegap.getResourcesPath() + "/sounds/1khz_1_5s.mp3";
-            var restSound = new Media(soundPath,
-                function () {
-                }, function (error) {
-                    console.log(error);
-                });
-            restSound.play();
+            window.Alert.playAlert();
         }
         else {
             new Ext.Audio({hidden:true, url:'sounds/1khz_1_5s.mp3'}).play();
