@@ -52,30 +52,21 @@ def compress(String type, String baseDirectory) {
         }
     }
 
-    if (type != 'js') {
-        elementsToMinify.each { element ->
+    def ignoredFileNames = ['touch-charts.js', 'sencha-touch-all.js', 'date.js']
+
+    GParsPool.withPool(4) {
+        elementsToMinify.eachParallel { element ->
             def outputFileLocation = "build/$baseDirectory/${element.relativePath}"
             new File(outputFileLocation).parentFile.mkdirs()
-            minify("$baseDirectory/${element.relativePath}", outputFileLocation)
-        }
-    }
-    else {
-        def ignoredFileNames = ['touch-charts.js', 'sencha-touch-all.js', 'date.js']
 
-        GParsPool.withPool(4) {
-            elementsToMinify.eachParallel { element ->
-                def outputFileLocation = "build/$baseDirectory/${element.relativePath}"
-                new File(outputFileLocation).parentFile.mkdirs()
+            def inputFile = "$baseDirectory/${element.relativePath}"
 
-                def inputFile = "$baseDirectory/${element.relativePath}"
-
-                boolean closureIssueFiles = ignoredFileNames.any { element.relativePath.toString().contains(it) }
-                if (closureIssueFiles) {
-                    minifyWithYui(inputFile, outputFileLocation)
-                }
-                else {
-                    minify(inputFile, outputFileLocation)
-                }
+            boolean closureIssueFiles = ignoredFileNames.any { element.relativePath.toString().contains(it) }
+            if (closureIssueFiles) {
+                minifyWithYui(inputFile, outputFileLocation)
+            }
+            else {
+                minify(inputFile, outputFileLocation)
             }
         }
     }
