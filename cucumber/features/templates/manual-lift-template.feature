@@ -3,7 +3,7 @@ Feature: Manual lift template
   Scenario: Marking a set warmup
     When I view the lift schedule
     And I open the lift settings configuration
-    And I switch to the custom percentages template
+    And I select the "Custom" lift template
     And I tap the use template button
     And I select week 1 for the manual percentages editor
     And I select set 4 on the manual percentages editor
@@ -18,7 +18,7 @@ Feature: Manual lift template
   Scenario: Reverting to fresher after adding a set
     When I view the lift schedule
     And I open the lift settings configuration
-    And I switch to the custom percentages template
+    And I select the "Custom" lift template
     And I tap the use template button
     And I tap the add set button
     And I set the manual percentage to 100
@@ -40,7 +40,7 @@ Feature: Manual lift template
   Scenario: Adding a set and marking it amrap
     When I view the lift schedule
     And I open the lift settings configuration
-    And I switch to the custom percentages template
+    And I select the "Custom" lift template
     And I tap the use template button
     And I select week 1 for the manual percentages editor
     And I select set 5 on the manual percentages editor
@@ -54,7 +54,7 @@ Feature: Manual lift template
   Scenario: Add a set
     When I view the lift schedule
     And I open the lift settings configuration
-    And I switch to the custom percentages template
+    And I select the "Custom" lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
     And I tap the add set button
@@ -69,7 +69,7 @@ Feature: Manual lift template
   Scenario: Edit single percentage
     When I view the lift schedule
     And I open the lift settings configuration
-    And I switch to the custom percentages template
+    And I select the "Custom" lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
     Then Lift progressions in the list are visible
@@ -84,7 +84,7 @@ Feature: Manual lift template
   Scenario: Edit single reps
     When I view the lift schedule
     And I open the lift settings configuration
-    And I switch to the custom percentages template
+    And I select the "Custom" lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
     And I select set 2 on the manual percentages editor

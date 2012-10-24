@@ -12,8 +12,11 @@ When /^I select the "(.*?)" lift template$/ do |assistance_template|
     displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Next" }[0].click
     sleep @ANIMATION_DELAY
   end
+end
 
-  displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Use" }[0].click
+When /^I tap the use template button$/ do
+  button = displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Use" }[0]
+  button.click
   sleep @ANIMATION_DELAY
 end
 

@@ -1,0 +1,17 @@
+@531
+Feature: Rotating lift template
+
+  Scenario: Default rotation
+    When I set the squat max to 200
+    And I set the deadlift max to 300
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I select the "Rotating" lift template
+    And I tap the use template button
+    And I confirm the progression change
+    And I navigate back to the lift selector from lift settings
+    And I view the squat lift schedule for week 1
+    Then The lift schedule shows "5 70 [warm] 40%","5 90 [warm] 50%","3 110 [warm] 60%","5 115 65%","5 135 75%","5 155 85%"
+    And I tap the "Back" button
+    And I view the deadlift lift schedule for week 1
+    Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","3 190 70%","3 215 80%","3 245 90%"

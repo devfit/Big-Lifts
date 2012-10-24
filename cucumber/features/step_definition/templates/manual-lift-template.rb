@@ -2,19 +2,6 @@ def displayed_lift_settings_page
   @driver.find_element(:id => @driver.execute_script("return Ext.getCmp('lift-settings').getActiveItem().id"))
 end
 
-When /^I switch to the custom percentages template$/ do
-  until displayed_lift_settings_page().find_element(:class => 'x-title').text() == "Custom" do
-    displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Next" }[0].click
-    sleep @ANIMATION_DELAY
-  end
-end
-
-When /^I tap the use template button$/ do
-  button = displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Use" }[0]
-  button.click
-  sleep @ANIMATION_DELAY
-end
-
 When /^I select week (\d+) for the manual percentages editor$/ do |week|
   edit_lift_percentages = @driver.find_element(:id => 'edit-lift-percentages')
   week_tab = edit_lift_percentages.find_elements(:class => 'x-tab').select { |tab|

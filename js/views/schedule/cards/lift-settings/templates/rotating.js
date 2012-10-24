@@ -57,6 +57,7 @@ biglifts.liftSettings.templates.getDisplayForWeek = function (week) {
 };
 
 biglifts.liftSettings.templates.rotating = {
+    id:'rotating-template',
     listeners:{
         painted:function (panel) {
             biglifts.liftSettings.templates.rotatingWeekStore.load({
