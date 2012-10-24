@@ -69,12 +69,9 @@ def compress(String type, String baseDirectory) {
 
                 def inputFile = "$baseDirectory/${element.relativePath}"
 
-                boolean shouldIgnoreFile = ignoredFileNames.any { element.relativePath.toString().contains(it) }
-                if (shouldIgnoreFile) {
-                    copy {
-                        from inputFile
-                        into new File(outputFileLocation).getParentFile().getAbsolutePath()
-                    }
+                boolean closureIssueFiles = ignoredFileNames.any { element.relativePath.toString().contains(it) }
+                if (closureIssueFiles) {
+                    minifyWithYui(inputFile, outputFileLocation)
                 }
                 else {
                     minify(inputFile, outputFileLocation)
@@ -90,13 +87,21 @@ def execute_process(command) {
     proc.waitFor()
 }
 
+def minifyWithClosure(String input, String output) {
+    execute_process "java -jar lib/compiler.jar --js ${input} --js_output_file ${output}"
+}
+
+def minifyWithYui(String input, String output) {
+    execute_process "java -jar lib/yuicompressor-2.4.7.jar ${input} -o ${output}"
+}
+
 def minify(String input, String output) {
     println "Minifying ${input}"
     if (input.endsWith('js')) {
-        execute_process "java -jar lib/compiler.jar --js ${input} --js_output_file ${output}"
+        minifyWithClosure(input, output)
     }
     else {
-        execute_process "java -jar lib/yuicompressor-2.4.7.jar ${input} -o ${output}"
+        minifyWithYui(input, output)
     }
 }
 
