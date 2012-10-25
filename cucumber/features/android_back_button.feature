@@ -23,7 +23,7 @@ Feature:
   Scenario: Android user presses back when viewing manual lift percentages
     When I navigate to the lift schedule
     And I open the lift settings configuration
-    And I switch to the custom percentages template
+    And I select the "Custom" lift template
     And I tap the use template button
     And I press the android back button
     Then I am on the lift settings
