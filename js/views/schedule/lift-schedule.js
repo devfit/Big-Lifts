@@ -17,7 +17,7 @@ Ext.define('biglifts.views.LiftSchedule', {
         title:'Lift!',
         iconCls:'icnBarbell',
         layout:'card',
-        activeItem:4,
+        activeItem:0,
         items:[
             biglifts.views.liftSchedule.liftSelector,
             biglifts.views.liftSchedule.liftTemplate,
