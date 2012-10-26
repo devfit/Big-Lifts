@@ -36,12 +36,6 @@ task copySplashes(type: Copy) {
     include 'splashes/**/*.png'
 }
 
-task copyPhonegapConfig(type: Copy) {
-    from '.'
-    into 'build'
-    include 'config.xml'
-}
-
 def compress(String type, String baseDirectory) {
     def elementsToMinify = []
     fileTree(baseDirectory) {
@@ -167,7 +161,7 @@ task copySoundFiles() << {
     }
 }
 
-task build(dependsOn: [copyHtmlFiles, copyPhonegapConfig, copyAppIcon, copySplashes, copyJs, copyCss, copySoundFiles]) << {}
+task build(dependsOn: [copyHtmlFiles, copyAppIcon, copySplashes, copyJs, copyCss, copySoundFiles]) << {}
 
 task incrementJsVersion << {
     File versionFile = new File('js/version.js')
