@@ -1,6 +1,23 @@
 @531
 Feature: Rotating lift template
 
+  Scenario: Switching away from the rotations template remove the week rotation
+    And I set the deadlift max to 300
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I select the "Rotating" lift template
+    And I tap the "Rotate" button
+    And I tap the use template button
+    And I confirm the progression change
+    And I navigate back to the lift selector from lift settings
+    And I open the lift settings configuration
+    And I select the "Fresher" lift template
+    And I tap the use template button
+    And I confirm the progression change
+    And I navigate back to the lift selector from lift settings
+    And I view the deadlift lift schedule for week 3
+    Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 205 75%","3 230 85%","1 255 95%"
+
   Scenario: Default rotation
     When I set the squat max to 200
     And I set the deadlift max to 300
@@ -28,16 +45,4 @@ Feature: Rotating lift template
     And I view the deadlift lift schedule for week 1
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 205 75%","3 230 85%","1 255 95%"
 
-  Scenario: Switching away from the rotations template remove the week rotation
-    And I set the deadlift max to 300
-    When I view the lift schedule
-    And I open the lift settings configuration
-    And I select the "Rotating" lift template
-    And I tap the "Rotate" button
-    And I tap the use template button
-    And I confirm the progression change
-    And I navigate back to the lift selector from lift settings
-    And I open the lift settings configuration
-    And I select the "Fresher" lift template
-    And I view the deadlift lift schedule for week 2
-    Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 205 75%","3 230 85%","1 255 95%"
+
