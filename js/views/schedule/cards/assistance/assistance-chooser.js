@@ -24,6 +24,10 @@ biglifts.views.liftSchedule.assistance.showBoringButBig = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 
+biglifts.views.liftSchedule.assistance.showBodyweight = function () {
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('bodyweight'));
+};
+
 biglifts.views.liftSchedule.assistance.showCustom = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('custom-assistance'));
 };
@@ -31,6 +35,7 @@ biglifts.views.liftSchedule.assistance.showCustom = function () {
 biglifts.views.liftSchedule.assistance.assistanceOptions = [
     {text:'None', assistanceType:'NONE', handler:biglifts.views.liftSchedule.assistance.continueToLog },
     {text:'5x10', assistanceType:'BBB', handler:biglifts.views.liftSchedule.assistance.showBoringButBig},
+    {text:'Bodyweight', assistanceType:'Bodyweight', handler:biglifts.views.liftSchedule.assistance.showBodyweight},
     {text:'Custom', assistanceType:'Custom', handler:biglifts.views.liftSchedule.assistance.showCustom}
 ];
 
