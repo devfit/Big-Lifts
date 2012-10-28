@@ -10,6 +10,7 @@ Feature: Powerlifting template
     And I navigate back to the lift selector from lift settings
     And I open the lift settings configuration
     And I select the "Fresher" lift template
+    And I tap the use template button
     And I confirm the progression change
     And I navigate back to the lift selector from lift settings
     And I navigate to the lift editor
