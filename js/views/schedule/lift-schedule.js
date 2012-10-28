@@ -5,10 +5,7 @@ biglifts.liftSchedule.currentShowingMax = -1;
 biglifts.liftSchedule.currentLiftProperty = null;
 biglifts.liftSchedule.currentWeek = 1;
 
-biglifts.liftSchedule.liftCompletionChange = function () {
-    biglifts.liftSchedule.liftSelector.setupListDoneIcons();
-};
-biglifts.stores.lifts.LiftCompletion.addListener('update', biglifts.liftSchedule.liftCompletionChange);
+biglifts.stores.lifts.LiftCompletion.addListener('update', biglifts.liftSchedule.liftSelector.setupListDoneIcons);
 
 Ext.define('biglifts.views.LiftSchedule', {
     extend:'Ext.Panel',
@@ -31,6 +28,8 @@ Ext.define('biglifts.views.LiftSchedule', {
             biglifts.views.liftSchedule.assistance.AssistanceChooser,
             biglifts.views.liftSchedule.assistance.BoringButBig,
             biglifts.views.liftSchedule.assistance.BoringButBigMovementEditor,
+            biglifts.views.liftSchedule.assistance.Bodyweight,
+            biglifts.views.liftSchedule.assistance.BodyweightMovementEditor,
             biglifts.views.liftSchedule.assistance.Custom,
             biglifts.views.liftSchedule.assistance.CustomMovementEditor,
             {

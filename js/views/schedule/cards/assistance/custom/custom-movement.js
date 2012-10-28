@@ -1,22 +1,21 @@
 Ext.define("Biglifts.views.Custom", {
     extend:"Ext.Panel",
-    customMovementStore: null,
-    xtype:'custommovementassistance',
+    movementEditor: null,
     filterCustomMovements:function () {
-        biglifts.stores.assistance.CustomMovement.clearFilter();
-        biglifts.stores.assistance.CustomMovement.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
+        this.customMovementStore.clearFilter();
+        this.customMovementStore.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
     },
     editCustomMovement:function (dataview, index) {
-        var movement = biglifts.stores.assistance.CustomMovement.getAt(index);
-        biglifts.liftSchedule.assistance.custom.showEditCustomMovement(movement);
+        var movement = this.customMovementStore.getAt(index);
+        Ext.getCmp(this.movementEditor).showEditCustomMovement(movement);
     },
     addCustomMovement:function () {
-        biglifts.stores.assistance.CustomMovement.add({liftProperty:biglifts.liftSchedule.currentLiftProperty, name:"", sets:5, reps:15});
-        biglifts.stores.assistance.CustomMovement.sync();
-        biglifts.liftSchedule.assistance.custom.showEditCustomMovement(biglifts.stores.assistance.CustomMovement.last());
+        this.customMovementStore.add({liftProperty:biglifts.liftSchedule.currentLiftProperty, name:"", sets:5, reps:15});
+        this.customMovementStore.sync();
+        Ext.getCmp(this.movementEditor).showEditCustomMovement(this.customMovementStore.last());
     },
     logMovements:function () {
-        biglifts.stores.assistance.CustomMovement.each(function (record) {
+        this.customMovementStore.each(function (record) {
             var assistanceRecord = {
                 movement:record.get('name'),
                 assistanceType:'Custom',
@@ -35,63 +34,64 @@ Ext.define("Biglifts.views.Custom", {
     },
     config:{
         layout:'fit',
-        items:[
-            {
-                xtype:'toolbar',
-                docked:'top',
-                title:'Custom',
-                items:[
-                    {
-                        text:'Back',
-                        ui:'back',
-                        handler:biglifts.liftSchedule.assistance.returnToAssistanceSelect
-                    },
-                    {
-                        xtype:'spacer'
-                    },
-                    {
-                        text:'Save',
-                        ui:'confirm',
-                        listeners:{
-                            initialize:function () {
-                                this.setHandler(this.logMovements);
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                xtype:'toolbar',
-                docked:'bottom',
-                cls:'custom-movement-toolbar',
-                items:[
-                    {
-                        text:'Add...',
-                        ui:'confirm',
-                        listeners:{
-                            initialize:function () {
-                                this.setHandler(this.addCustomMovement);
-                            }
-                        }
-                    }
-                ]
-            },
-            {
-                xtype:'list',
-                store:biglifts.stores.assistance.CustomMovement,
-                itemTpl:"<table class='assistance-table'><tbody><tr>" +
-                    "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x " +
-                    "{[biglifts.logList.getWeightDisplay(values.weight)]}" +
-                    "{[biglifts.stores.Settings.first().get('units')]}</td>" +
-                    "</tr></tbody></table>",
-                listeners:{
-                    initialize:function (list) {
-                        list.addListener('itemtap', this.editCustomMovement);
-                    }
-                }
-            }
-        ],
         listeners:{
+            initialize:function () {
+                var me = this;
+                me.add([
+                    {
+                        xtype:'toolbar',
+                        docked:'top',
+                        title:'Custom',
+                        items:[
+                            {
+                                text:'Back',
+                                ui:'back',
+                                handler:biglifts.liftSchedule.assistance.returnToAssistanceSelect
+                            },
+                            {
+                                xtype:'spacer'
+                            },
+                            {
+                                text:'Save',
+                                ui:'confirm',
+                                listeners:{
+                                    initialize:function () {
+                                        this.setHandler(me.logMovements);
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'toolbar',
+                        docked:'bottom',
+                        cls:'custom-movement-toolbar',
+                        items:[
+                            {
+                                text:'Add...',
+                                ui:'confirm',
+                                listeners:{
+                                    initialize:function () {
+                                        this.setHandler(me.addCustomMovement);
+                                    }
+                                }
+                            }
+                        ]
+                    }
+                ]);
+                this.add({
+                    xtype:'list',
+                    store:this.customMovementStore,
+                    itemTpl:"<table class='assistance-table'><tbody><tr>" +
+                        "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x " +
+                        "{[biglifts.logList.getWeightDisplay(values.weight)]}" +
+                        "{[biglifts.stores.Settings.first().get('units')]}</td>" +
+                        "</tr></tbody></table>",
+                    listeners:{
+                        itemtap:Ext.bind(this.editCustomMovement, this)
+                    }
+                });
+            },
             show:function () {
                 biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.returnToAssistanceSelect);
                 this.filterCustomMovements();

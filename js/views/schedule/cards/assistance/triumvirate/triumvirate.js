@@ -1,6 +1,13 @@
-Ext.ns('biglifts.views.liftSchedule.assistance', 'biglifts.liftSchedule.assistance.custom');
+Ext.ns('biglifts.views.liftSchedule.assistance');
+
+Ext.define("biglifts.views.Triumvirate", {
+    extend:'Biglifts.views.Custom',
+    xtype:'triumvirateassistance',
+    customMovementStore:biglifts.stores.assistance.CustomMovement,
+    movementEditor:'custom-movement-editor'
+});
 
 biglifts.views.liftSchedule.assistance.Custom = {
-    xtype:'custommovementassistance',
+    xtype:'triumvirateassistance',
     id:'custom-assistance'
 };
