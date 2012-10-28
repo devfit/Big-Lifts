@@ -2,20 +2,20 @@ Ext.define('biglifts.views.CustomMovementEditor', {
     extend:'Ext.form.Panel',
     xtype:'custommovementeditor',
     assistanceViewId:null,
+    customMovementStore:null,
     showEditCustomMovement:function (movement) {
         Ext.getCmp('lift-schedule').setActiveItem(this);
         this.setRecord(movement);
     },
     returnToCustom:function () {
-        console.log( this.assistanceViewId );
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp(this.assistanceViewId));
     },
     deleteMovement:function () {
         var record = this.getRecord();
-        biglifts.stores.assistance.TriumvirateMovement.remove(record);
-        biglifts.stores.assistance.TriumvirateMovement.sync();
+        this.customMovementStore.remove(record);
+        this.customMovementStore.sync();
 
-        this.returnToCustom();
+        this.returnToCustom.call(this);
     },
     saveMovementChange:function () {
         var newValues = this.getValues();
