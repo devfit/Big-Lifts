@@ -7,7 +7,7 @@ biglifts.liftSchedule.cycleComplete.unmarkAllLifts = function () {
         r.save();
     });
 
-    biglifts.liftSchedule.liftCompletionChange();
+    biglifts.stores.lifts.LiftCompletion.sync();
 };
 
 biglifts.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen = function () {

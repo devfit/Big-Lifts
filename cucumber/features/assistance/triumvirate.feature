@@ -11,7 +11,7 @@ Feature: Custom - Assistance Work
     And I change the custom movement name to "Good Morning"
     And I change the custom movement weight to 65
     And I tap the "Back" button
-    Then Custom movement 3 is "Good Morning 5 sets 15x 65lbs"
+    Then Assistance movement 3 is "Good Morning 5 sets 15x 65lbs"
     And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
@@ -32,8 +32,8 @@ Feature: Custom - Assistance Work
     And I mark the current lift completed
     And I tap the "Save" button
     And I select "Custom" assistance work
-    Then Custom movement 1 is "? 5 sets 15x [?]lbs"
-    Then Custom movement 2 is "? 5 sets 15x [?]lbs"
+    Then Assistance movement 1 is "? 5 sets 15x [?]lbs"
+    Then Assistance movement 2 is "? 5 sets 15x [?]lbs"
     And I tap assistance row 1
     And I change the custom movement name to "Move1"
     And I tap the "Back" button
@@ -51,8 +51,8 @@ Feature: Custom - Assistance Work
     And I mark the current lift completed
     And I tap the "Save" button
     And I select "Custom" assistance work
-    Then Custom movement 1 is "Leg Press 5 sets 15x [?]lbs"
-    Then Custom movement 2 is "Leg Curl 5 sets 15x [?]lbs"
+    Then Assistance movement 1 is "Leg Press 5 sets 15x [?]lbs"
+    Then Assistance movement 2 is "Leg Curl 5 sets 15x [?]lbs"
     And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
@@ -64,12 +64,12 @@ Feature: Custom - Assistance Work
     And I mark the current lift completed
     And I tap the "Save" button
     And I select "Custom" assistance work
-    Then Custom movement 1 is "Leg Press 5 sets 15x [?]lbs"
+    Then Assistance movement 1 is "Leg Press 5 sets 15x [?]lbs"
     And I tap assistance row 1
     And I change the custom movement name to "Good Morning"
     And I change the custom movement weight to 65
     And I tap the "Back" button
-    Then Custom movement 1 is "Good Morning 5 sets 15x 65lbs"
+    Then Assistance movement 1 is "Good Morning 5 sets 15x 65lbs"
     And I tap the "Save" button
     Then I am on the track tab
     And I tap "Asst." to change the log type
