@@ -1,6 +1,6 @@
 Ext.define("Biglifts.views.Custom", {
     extend:"Ext.Panel",
-    movementEditor: null,
+    movementEditor:null,
     filterCustomMovements:function () {
         this.customMovementStore.clearFilter();
         this.customMovementStore.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
@@ -56,7 +56,7 @@ Ext.define("Biglifts.views.Custom", {
                                 ui:'confirm',
                                 listeners:{
                                     initialize:function () {
-                                        this.setHandler(me.logMovements);
+                                        this.setHandler(Ext.bind(me.logMovements, me));
                                     }
                                 }
                             }
@@ -72,7 +72,7 @@ Ext.define("Biglifts.views.Custom", {
                                 ui:'confirm',
                                 listeners:{
                                     initialize:function () {
-                                        this.setHandler(me.addCustomMovement);
+                                        this.setHandler(Ext.bind(me.addCustomMovement, me));
                                     }
                                 }
                             }

@@ -7,12 +7,13 @@ Ext.define('biglifts.views.CustomMovementEditor', {
         this.setRecord(movement);
     },
     returnToCustom:function () {
+        console.log( this.assistanceViewId );
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp(this.assistanceViewId));
     },
     deleteMovement:function () {
         var record = this.getRecord();
-        biglifts.stores.assistance.CustomMovement.remove(record);
-        biglifts.stores.assistance.CustomMovement.sync();
+        biglifts.stores.assistance.TriumvirateMovement.remove(record);
+        biglifts.stores.assistance.TriumvirateMovement.sync();
 
         this.returnToCustom();
     },
@@ -40,7 +41,7 @@ Ext.define('biglifts.views.CustomMovementEditor', {
                                 text:'Back',
                                 listeners:{
                                     initialize:function () {
-                                        this.setHandler(me.returnToCustom);
+                                        this.setHandler(Ext.bind(me.returnToCustom, me));
                                     }
                                 }
                             },
@@ -51,7 +52,7 @@ Ext.define('biglifts.views.CustomMovementEditor', {
                                 iconCls:'trash',
                                 listeners:{
                                     initialize:function () {
-                                        this.setHandler(me.deleteMovement);
+                                        this.setHandler(Ext.bind(me.deleteMovement, me));
                                     }
                                 }
                             }
@@ -63,7 +64,7 @@ Ext.define('biglifts.views.CustomMovementEditor', {
                         defaults:{
                             listeners:{
                                 initialize:function () {
-                                    this.addListener('change', me.saveMovementChange);
+                                    this.addListener('change', Ext.bind(me.saveMovementChange, me));
                                 }
                             }
                         },
