@@ -22,7 +22,7 @@ Feature: Custom - Assistance Work
     And I mark the current lift completed
     And I tap the "Save" button
     And I select "Custom" assistance work
-    And I tap custom row 1
+    And I tap assistance row 1
     And I tap the trash button
     Then There is 1 custom assistance row
 
@@ -34,10 +34,10 @@ Feature: Custom - Assistance Work
     And I select "Custom" assistance work
     Then Custom movement 1 is "? 5 sets 15x [?]lbs"
     Then Custom movement 2 is "? 5 sets 15x [?]lbs"
-    And I tap custom row 1
+    And I tap assistance row 1
     And I change the custom movement name to "Move1"
     And I tap the "Back" button
-    And I tap custom row 2
+    And I tap assistance row 2
     And I change the custom movement name to "Move2"
     And I tap the "Back" button
     And I tap the "Save" button
@@ -65,7 +65,7 @@ Feature: Custom - Assistance Work
     And I tap the "Save" button
     And I select "Custom" assistance work
     Then Custom movement 1 is "Leg Press 5 sets 15x [?]lbs"
-    And I tap custom row 1
+    And I tap assistance row 1
     And I change the custom movement name to "Good Morning"
     And I change the custom movement weight to 65
     And I tap the "Back" button

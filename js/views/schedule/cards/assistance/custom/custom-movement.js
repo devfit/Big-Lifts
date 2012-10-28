@@ -1,6 +1,7 @@
 Ext.define("Biglifts.views.Custom", {
     extend:"Ext.Panel",
     movementEditor:null,
+    assistanceType:'',
     filterCustomMovements:function () {
         this.customMovementStore.clearFilter();
         this.customMovementStore.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
@@ -15,10 +16,11 @@ Ext.define("Biglifts.views.Custom", {
         Ext.getCmp(this.movementEditor).showEditCustomMovement(this.customMovementStore.last());
     },
     logMovements:function () {
+        var me = this;
         this.customMovementStore.each(function (record) {
             var assistanceRecord = {
                 movement:record.get('name'),
-                assistanceType:'Custom',
+                assistanceType:me.assistanceType,
                 sets:record.get('sets'),
                 reps:record.get('reps'),
                 weight:record.get('weight'),
@@ -33,6 +35,7 @@ Ext.define("Biglifts.views.Custom", {
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
     },
     config:{
+        cls:'assistance',
         layout:'fit',
         listeners:{
             initialize:function () {
