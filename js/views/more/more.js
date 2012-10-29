@@ -10,7 +10,18 @@ Ext.define('biglifts.views.More', {
         items:[
             biglifts.views.MoreInfoList,
             biglifts.views.Settings
-        ]
+        ],
+        listeners:{
+            initialize:function () {
+                this.add(
+                    Ext.create('biglifts.views.OneRepMaxCalculator', {
+                        backFunction:function () {
+                            Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'));
+                        }
+                    })
+                );
+            }
+        }
     }
 });
 

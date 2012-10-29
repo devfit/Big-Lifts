@@ -30,6 +30,10 @@ biglifts.more.showSettings = function () {
     Ext.getCmp('more').setActiveItem(Ext.getCmp('settings'), {type:'slide', direction:'left'});
 };
 
+biglifts.more.showOneRepCalculator = function () {
+    Ext.getCmp('more').setActiveItem(Ext.getCmp('one-rep-max-calculator'));
+};
+
 biglifts.more.hardReset = function () {
     Ext.Msg.confirm('WARNING', 'Reset ALL data and settings?', function (text) {
         if (text === 'yes') {
@@ -42,6 +46,7 @@ biglifts.more.hardReset = function () {
 
 biglifts.more.listItems = [
     {model:{text:'<span class="text">Routine: <span id="routine-text"></span></span><span class="disclosure"></span>'}, handler:biglifts.more.selectRoutine},
+    {model:{text:'<span class="text">1RM Calculator</span><span class="disclosure"></span>'}, handler:biglifts.more.showOneRepCalculator},
     {model:{text:'<span class="text">Settings</span><span class="disclosure"></span>'}, handler:biglifts.more.showSettings},
     {model:{text:'<span class="text">Feedback...</span><span class="disclosure"></span>'}, handler:biglifts.more.feedback},
     {model:{text:'<span class="text">Reset</span><span class="warning"></span>'}, handler:biglifts.more.hardReset}

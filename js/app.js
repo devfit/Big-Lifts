@@ -17,7 +17,13 @@ biglifts.main.loadApplication = function () {
         mainTabPanel.add(Ext.create('biglifts.views.LiftSchedule'));
         mainTabPanel.add(Ext.create('biglifts.views.Maxes'));
         mainTabPanel.add(Ext.create('biglifts.views.Log'));
-        mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
+
+        if( biglifts.toggles.Assistance ){
+
+        }
+        else {
+            mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
+        }
         mainTabPanel.add(Ext.create('biglifts.views.More'));
         mainTabPanel.setActiveItem(firstTimeInApp ? 1 : 0);
     }
