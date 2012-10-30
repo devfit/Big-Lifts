@@ -15,17 +15,20 @@ biglifts.main.loadApplication = function () {
 
         var mainTabPanel = Ext.getCmp('main-tab-panel');
         mainTabPanel.add(Ext.create('biglifts.views.LiftSchedule'));
+
+        if (biglifts.toggles.Assistance) {
+            mainTabPanel.add(Ext.create('biglifts.views.Assistance'));
+        }
+
         mainTabPanel.add(Ext.create('biglifts.views.Maxes'));
+
         mainTabPanel.add(Ext.create('biglifts.views.Log'));
 
-        if( biglifts.toggles.Assistance ){
-
-        }
-        else {
+        if (!biglifts.toggles.Assistance) {
             mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
         }
         mainTabPanel.add(Ext.create('biglifts.views.More'));
-        mainTabPanel.setActiveItem(firstTimeInApp ? 1 : 0);
+        mainTabPanel.setActiveItem(firstTimeInApp ? 2 : 1);
     }
 };
 

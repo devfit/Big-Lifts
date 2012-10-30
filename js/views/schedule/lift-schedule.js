@@ -25,20 +25,9 @@ Ext.define('biglifts.views.LiftSchedule', {
             biglifts.views.EditProgression,
             biglifts.views.liftSchedule.LiftTracking,
             biglifts.views.liftSchedule.RestTimer,
-            biglifts.views.liftSchedule.assistance.AssistanceChooser,
-            biglifts.views.liftSchedule.assistance.BoringButBig,
-            biglifts.views.liftSchedule.assistance.BoringButBigMovementEditor,
-            biglifts.views.liftSchedule.assistance.Bodyweight,
-            biglifts.views.liftSchedule.assistance.BodyweightMovementEditor,
-            biglifts.views.liftSchedule.assistance.Custom,
-            biglifts.views.liftSchedule.assistance.CustomMovementEditor,
             {
                 xtype:'firstlognoteseditor',
                 id:'first-log-notes-editor'
-            },
-            {
-                xtype:'boringbutbignotes',
-                id:'boring-but-big-notes'
             }
         ],
         listeners:{
