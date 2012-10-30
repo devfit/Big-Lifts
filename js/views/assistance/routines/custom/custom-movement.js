@@ -4,14 +4,14 @@ Ext.define("Biglifts.views.Custom", {
     assistanceType:'',
     filterCustomMovements:function () {
         this.customMovementStore.clearFilter();
-        this.customMovementStore.filter('liftProperty', biglifts.liftSchedule.currentLiftProperty);
+        this.customMovementStore.filter('liftProperty', biglifts.assistance.currentLiftProperty);
     },
     editCustomMovement:function (dataview, index) {
         var movement = this.customMovementStore.getAt(index);
         Ext.getCmp(this.movementEditor).showEditCustomMovement(movement);
     },
     addCustomMovement:function () {
-        this.customMovementStore.add({liftProperty:biglifts.liftSchedule.currentLiftProperty, name:"", sets:5, reps:15});
+        this.customMovementStore.add({liftProperty:biglifts.assistance.currentLiftProperty, name:"", sets:5, reps:15});
         this.customMovementStore.sync();
         Ext.getCmp(this.movementEditor).showEditCustomMovement(this.customMovementStore.last());
     },
@@ -31,7 +31,6 @@ Ext.define("Biglifts.views.Custom", {
             biglifts.stores.assistance.ActivityLog.sync();
         });
 
-        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
     },
     config:{
@@ -49,7 +48,9 @@ Ext.define("Biglifts.views.Custom", {
                             {
                                 text:'Back',
                                 ui:'back',
-                                handler:biglifts.liftSchedule.assistance.returnToAssistanceSelect
+                                handler:function () {
+                                    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
+                                }
                             },
                             {
                                 xtype:'spacer'
@@ -96,7 +97,9 @@ Ext.define("Biglifts.views.Custom", {
                 });
             },
             show:function () {
-                biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.returnToAssistanceSelect);
+                biglifts.navigation.setBackFunction(function () {
+                    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
+                });
                 this.filterCustomMovements();
             }
         }

@@ -4,11 +4,11 @@ Ext.define('biglifts.views.CustomMovementEditor', {
     assistanceViewId:null,
     customMovementStore:null,
     showEditCustomMovement:function (movement) {
-        Ext.getCmp('lift-schedule').setActiveItem(this);
+        Ext.getCmp('assistance').setActiveItem(this);
         this.setRecord(movement);
     },
     returnToCustom:function () {
-        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp(this.assistanceViewId));
+        Ext.getCmp('assistance').setActiveItem(Ext.getCmp(this.assistanceViewId));
     },
     deleteMovement:function () {
         var record = this.getRecord();

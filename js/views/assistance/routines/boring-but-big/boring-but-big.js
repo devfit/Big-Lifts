@@ -33,7 +33,7 @@ biglifts.liftSchedule.assistance.boringButBig.liftsComplete = function () {
 
 biglifts.liftSchedule.assistance.boringButBig.filterLifts = function () {
     biglifts.stores.assistance.BoringButBig.clearFilter(true);
-    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
+    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.assistance.currentLiftProperty);
     biglifts.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
 };
 
@@ -47,7 +47,7 @@ biglifts.liftSchedule.assistance.boringButBig.editBbbMovement = function (datavi
 };
 
 biglifts.liftSchedule.assistance.boringButBig.addMovement = function () {
-    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
+    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.assistance.currentLiftProperty);
     var bbbMovement = {
         sets:5,
         reps:10,
@@ -101,7 +101,9 @@ biglifts.views.liftSchedule.assistance.BoringButBig = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:biglifts.liftSchedule.assistance.returnToAssistanceSelect
+                    handler:function () {
+                        Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
+                    }
                 },
                 {xtype:'spacer'},
                 {
@@ -182,7 +184,9 @@ biglifts.views.liftSchedule.assistance.BoringButBig = {
     listeners:{
         show:function () {
             biglifts.liftSchedule.assistance.boringButBig.filterLifts();
-            biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.returnToAssistanceSelect);
+            biglifts.navigation.setBackFunction(function () {
+                Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
+            });
         }
     }
 };

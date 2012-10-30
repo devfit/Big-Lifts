@@ -1,10 +1,4 @@
 "use strict";
-Ext.ns("biglifts.liftSchedule.assistance");
-
-biglifts.liftSchedule.assistance.returnToAssistanceSelect = function () {
-    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
-};
-
 Ext.define('biglifts.views.AssistanceChooser', {
     extend:'Ext.Panel',
     xtype:'assistancechooser',
@@ -61,17 +55,21 @@ Ext.define('biglifts.views.AssistanceChooser', {
         biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
         biglifts.stores.assistance.ActivityLog.sync();
     },
+    showLiftChooserFor:function (assistanceId, title) {
+        Ext.getCmp('assistance-lift-chooser').showLiftChooser(assistanceId, title);
+    },
     _buildAssistanceOptions:function () {
+        var me = this;
         return [
-            {text:'None', assistanceType:'NONE', handler:this.continueToLog },
+            {text:'None', assistanceType:'NONE', handler:Ext.bind(me.continueToLog, me) },
             {text:'5x10', assistanceType:'BBB', handler:function () {
-                Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
+                me.showLiftChooserFor('boring-but-big', '5x10');
             }},
             {text:'Bodyweight', assistanceType:'Bodyweight', handler:function () {
-                Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('bodyweight'));
+                me.showLiftChooserFor('bodyweight', 'Bodyweight');
             }},
             {text:'Custom', assistanceType:'Custom', handler:function () {
-                Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('custom-assistance'));
+                me.showLiftChooserFor('custom-assistance', 'Custom');
             }}
         ];
     },
@@ -86,7 +84,7 @@ Ext.define('biglifts.views.AssistanceChooser', {
             },
             initialize:function () {
                 var me = this;
-                this.assistanceOptions = this._buildAssistanceOptions();
+                me.assistanceOptions = me._buildAssistanceOptions();
                 me.add([
                     {
                         docked:'top',
