@@ -71,12 +71,7 @@ biglifts.liftSchedule.liftTracking.logAndShowTracking = function () {
         biglifts.liftSchedule.liftSelector.showLiftsCompletedScreen();
     }
     else {
-        if (biglifts.toggles.Assistance) {
-            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('assistance-chooser'));
-        }
-        else {
-            Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
-        }
+        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
     }
 };
 
