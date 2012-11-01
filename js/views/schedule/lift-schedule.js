@@ -15,23 +15,23 @@ Ext.define('biglifts.views.LiftSchedule', {
         iconCls:'icnBarbell',
         layout:'card',
         activeItem:0,
-        items:[
-            biglifts.views.liftSchedule.liftSelector,
-            biglifts.views.liftSchedule.liftTemplate,
-            biglifts.views.liftSchedule.LiftsCompletedScreen,
-            biglifts.views.liftSchedule.IncreaseMaxesHelp,
-            biglifts.views.liftSchedule.LiftSettings,
-            biglifts.views.EditLiftPercentages,
-            biglifts.views.EditProgression,
-            biglifts.views.liftSchedule.LiftTracking,
-            biglifts.views.liftSchedule.RestTimer,
-            {
-                xtype:'firstlognoteseditor',
-                id:'first-log-notes-editor'
-            }
-        ],
         listeners:{
             show:biglifts.liftSchedule.liftSelector.setupLiftSelector,
+            painted:function () {
+                this.add([biglifts.views.liftSchedule.liftSelector,
+                    biglifts.views.liftSchedule.liftTemplate,
+                    biglifts.views.liftSchedule.LiftsCompletedScreen,
+                    biglifts.views.liftSchedule.IncreaseMaxesHelp,
+                    biglifts.views.liftSchedule.LiftSettings,
+                    biglifts.views.EditLiftPercentages,
+                    biglifts.views.EditProgression,
+                    biglifts.views.liftSchedule.LiftTracking,
+                    biglifts.views.liftSchedule.RestTimer,
+                    {
+                        xtype:'firstlognoteseditor',
+                        id:'first-log-notes-editor'
+                    }]);
+            },
             activeitemchange:biglifts.liftSchedule.liftSelector.setupLiftSelector
         }
     }
