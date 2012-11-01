@@ -61,7 +61,6 @@ Ext.define('biglifts.views.FirstTimeLaunch', {
 
                     }
                 ]);
-                alert((new Date().getTime() - startTime) / 1000.0);
             }
         }
     }
