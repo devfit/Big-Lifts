@@ -3,10 +3,9 @@
 Feature: Custom - Assistance Work
 
   Scenario: Viewing bodyweight lifts and viewing the log
-    And I view the squat lift schedule for week 1
-    And I mark the current lift completed
-    And I tap the "Save" button
+    When I tap the assistance tab
     And I select "Bodyweight" assistance work
+    And I tap the "Squat" list item
     Then Assistance movement 1 is "One leg squat 5 sets 15x [?]lbs"
     Then Assistance movement 2 is "Sit-ups 5 sets 15x [?]lbs"
     And I tap the "Save" button
@@ -16,10 +15,9 @@ Feature: Custom - Assistance Work
     Then Assistance log entry 2 shows "Bodyweight One leg squat Sets: 5 15x [?]"
 
   Scenario: Changing bodyweight lift movements
-    And I view the squat lift schedule for week 1
-    And I mark the current lift completed
-    And I tap the "Save" button
+    When I tap the assistance tab
     And I select "Bodyweight" assistance work
+    And I tap the "Squat" list item
     Then Assistance movement 1 is "One leg squat 5 sets 15x [?]lbs"
     And I tap assistance row 1
     And I change the custom movement name to "Good Morning"
