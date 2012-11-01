@@ -28,7 +28,9 @@ biglifts.main.loadApplication = function () {
             mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
         }
         mainTabPanel.add(Ext.create('biglifts.views.More'));
-        mainTabPanel.setActiveItem(firstTimeInApp ? 2 : 0);
+
+        var editTabIndex = biglifts.toggles.Assistance ? 2 : 1;
+        mainTabPanel.setActiveItem(firstTimeInApp ? editTabIndex : 0);
     }
 };
 
