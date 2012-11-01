@@ -27,7 +27,7 @@ Ext.define('biglifts.views.FirstTimeLaunch', {
     config:{
         layout:'vbox',
         listeners:{
-        show: function(){
+            show:function () {
                 biglifts.navigation.unbindBackEvent();
             },
             painted:function () {
