@@ -20,18 +20,18 @@ biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement = function (mo
     movementEditor.down("[name=weight]").setHidden(isBigLift);
 
     Ext.getCmp('bbb-movement-editor').setValues(formRecord);
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('bbb-movement-editor'));
+    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('bbb-movement-editor'));
 };
 
 biglifts.liftSchedule.assistance.boringButBig.deleteMovement = function () {
     biglifts.stores.assistance.BoringButBig.remove(biglifts.liftSchedule.assistance.boringButBig.movementBeingEdited);
     biglifts.stores.assistance.BoringButBig.sync();
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
+    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 
 biglifts.liftSchedule.assistance.boringButBig.returnToBbb = function () {
     biglifts.liftSchedule.assistance.boringButBig.saveMovementChange();
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
+    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big'));
 };
 
 biglifts.liftSchedule.assistance.boringButBig.saveMovementChange = function () {

@@ -28,9 +28,9 @@ biglifts.liftSchedule.liftTemplate.formatLiftWeight = function (values) {
     return biglifts.weight.format(max, values.percentage);
 };
 
-biglifts.liftSchedule.liftTemplate.getPlateList = function (weight) {
+biglifts.liftSchedule.liftTemplate.getPlateList = function (weight, currentLiftProperty) {
     var barWeight = biglifts.stores.BarWeight.first().get('weight');
-    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
+    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', currentLiftProperty);
     if (liftRecord.get("customBarWeight")) {
         barWeight = liftRecord.get("customBarWeight");
     }
@@ -218,7 +218,7 @@ biglifts.views.liftSchedule.liftTemplate = {
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {[biglifts.liftSchedule.liftTemplate.formatPercentage(values.percentage)]}%</span></p>' +
                 (biglifts.toggles.BarLoading ?
                     '<p class="bar-loader-breakdown">{[biglifts.liftSchedule.liftTemplate.getPlateList(' +
-                        'biglifts.liftSchedule.liftTemplate.formatLiftWeight(values)' +
+                        'biglifts.liftSchedule.liftTemplate.formatLiftWeight(values, biglifts.liftSchedule.currentLiftProperty)' +
                         ')]}</p>' : '')
         }
     ],

@@ -2,7 +2,7 @@ Ext.ns('biglifts.views.liftSchedule.assistance', 'biglifts.liftSchedule.assistan
 
 biglifts.liftSchedule.assistance.boringButBig.showRestTimer = function () {
     biglifts.restTimer.backLocation = 'boring-but-big';
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'));
+    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('rest-timer'));
 };
 
 biglifts.liftSchedule.assistance.boringButBig.percentageChange = function (event) {
@@ -77,8 +77,10 @@ biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown = function (valu
     var max = biglifts.stores.lifts.Lifts.findRecord('id', values.movement_lift_id).get('max');
     var trainingAdjustedMax = biglifts.weight.lowerMaxToTrainingMax(max);
     var bbbWeight = trainingAdjustedMax * biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage') / 100.0;
-    var plateList = biglifts.liftSchedule.liftTemplate.getPlateList(
-        biglifts.weight.format(bbbWeight));
+
+    var formattedWeight = biglifts.weight.format(bbbWeight);
+
+    var plateList = biglifts.liftSchedule.liftTemplate.getPlateList(formattedWeight, biglifts.assistance.currentLiftProperty);
 
     return "<table class='assistance-plate-breakdown'><tbody><tr>" +
         "<td width='70%'></td>" +

@@ -3,7 +3,7 @@ Ext.ns('biglifts.views.assistance', 'biglifts.liftSchedule.assistance.boringButB
 biglifts.liftSchedule.assistance.boringButBig.currentNotes = "";
 biglifts.liftSchedule.assistance.boringButBig.returnToBoringButBig = function (notes) {
     biglifts.liftSchedule.assistance.boringButBig.currentNotes = notes;
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
+    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big'));
     biglifts.components.notesEditor.displayNotes('bbb-log-notes', notes);
 };
 
