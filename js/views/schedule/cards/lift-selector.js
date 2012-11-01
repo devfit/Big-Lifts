@@ -42,7 +42,7 @@ biglifts.liftSchedule.liftSelector.getStartingWeek = function () {
         }
 
         var enabled = biglifts.stores.lifts.Lifts.findRecord('propertyName', record.get('liftPropertyName')).get('enabled');
-        if( enabled ){
+        if (enabled) {
             weeksCompleted[week] &= record.data.completed;
         }
     });

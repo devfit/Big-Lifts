@@ -26,38 +26,43 @@ Ext.define('biglifts.views.FirstTimeLaunch', {
     xtype:'first-time-launch',
     config:{
         layout:'vbox',
-        items:[
-            {
-                xtype:'toolbar',
-                docked:'top',
-                title:'Big Lifts'
-            },
-            {
-                html:'<h1 class="first-time-launch-header">What are you lifting?</h1>',
-                height:30
-            },
-            {
-                flex:1,
-                xtype:'list',
-                onItemDisclosure:true,
-                padding:0,
-                cls:'first-time-launch-list',
-                store:biglifts.routines.routineStore,
-                itemCls:'routine-entry',
-                itemTpl:'{name}{[values.available ? "" : "<span class=\'coming-soon\'>Coming Soon!</span>"]}',
-                listeners:{
-                    itemtap:biglifts.routines.routineSelected,
-                    initialize:function () {
-                        var listItems = this.element.query('.x-list-item');
-                        biglifts.routines.routineStore.each(function (routine, i) {
-                            if (!routine.get('available')) {
-                                Ext.get(listItems[i]).addCls('unavailable');
+        listeners:{
+            painted:function () {
+                this.add([
+                    {
+                        xtype:'toolbar',
+                        docked:'top',
+                        title:'Big Lifts'
+                    },
+                    {
+                        html:'<h1 class="first-time-launch-header">What are you lifting?</h1>',
+                        height:30
+                    },
+                    {
+                        flex:1,
+                        xtype:'list',
+                        onItemDisclosure:true,
+                        padding:0,
+                        cls:'first-time-launch-list',
+                        store:biglifts.routines.routineStore,
+                        itemCls:'routine-entry',
+                        itemTpl:'{name}{[values.available ? "" : "<span class=\'coming-soon\'>Coming Soon!</span>"]}',
+                        listeners:{
+                            itemtap:biglifts.routines.routineSelected,
+                            initialize:function () {
+                                var listItems = this.element.query('.x-list-item');
+                                biglifts.routines.routineStore.each(function (routine, i) {
+                                    if (!routine.get('available')) {
+                                        Ext.get(listItems[i]).addCls('unavailable');
+                                    }
+                                });
                             }
-                        });
-                    }
-                }
+                        }
 
+                    }
+                ]);
+                alert((new Date().getTime() - startTime) / 1000.0);
             }
-        ]
+        }
     }
 });

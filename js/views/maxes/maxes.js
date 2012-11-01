@@ -8,13 +8,17 @@ Ext.define('biglifts.views.Maxes', {
         title:'Edit',
         iconCls:'settings',
         layout:'card',
-        items:[
-            biglifts.maxes.cards.maxesForm,
-            biglifts.maxes.cards.editMaxesList,
-            biglifts.maxes.cards.editLiftPanel,
-            biglifts.maxes.cards.addLiftPanel,
-            biglifts.maxes.cards.ArrangeLifts,
-            biglifts.maxes.barSetup.BarSetup
-        ]
+        listeners:{
+            painted:function () {
+                this.add([
+                    biglifts.maxes.cards.maxesForm,
+                    biglifts.maxes.cards.editMaxesList,
+                    biglifts.maxes.cards.editLiftPanel,
+                    biglifts.maxes.cards.addLiftPanel,
+                    biglifts.maxes.cards.ArrangeLifts,
+                    biglifts.maxes.barSetup.BarSetup
+                ]);
+            }
+        }
     }
 });
