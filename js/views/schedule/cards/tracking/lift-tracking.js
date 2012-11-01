@@ -164,7 +164,10 @@ biglifts.views.liftSchedule.LiftTracking = {
                 '<div id="first-log-notes" class="log-notes"><div class="notes-empty-text">Tap to edit</div></div>',
             listeners:{
                 painted:function () {
-                    Ext.get('first-log-notes').addListener('tap', biglifts.liftSchedule.liftTracking.editNotes);
+                    if (!this._painted) {
+                        this._painted = true;
+                        Ext.get('first-log-notes').addListener('tap', biglifts.liftSchedule.liftTracking.editNotes);
+                    }
                 }
             }
         }

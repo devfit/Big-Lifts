@@ -74,12 +74,15 @@ biglifts.liftSettings.templates.rotating = {
     id:'rotating-template',
     listeners:{
         painted:function (panel) {
-            biglifts.liftSettings.templates.rotatingWeekStore.load({
-                callback:function () {
-                    var listHeight = (panel.element.down('.x-list-item').getHeight() + 1) * biglifts.liftSettings.templates.rotatingWeekStore.getCount();
-                    panel.getComponent('lift-list-container').setHeight(listHeight);
-                }
-            });
+            if (!this._painted) {
+                this._painted = true;
+                biglifts.liftSettings.templates.rotatingWeekStore.load({
+                    callback:function () {
+                        var listHeight = (panel.element.down('.x-list-item').getHeight() + 1) * biglifts.liftSettings.templates.rotatingWeekStore.getCount();
+                        panel.getComponent('lift-list-container').setHeight(listHeight);
+                    }
+                });
+            }
         }
     },
     padding:5,

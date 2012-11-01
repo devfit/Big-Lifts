@@ -38,7 +38,10 @@ biglifts.views.log.cards.EditAssistanceLogEntry = {
     _listenersBound:false,
     listeners:{
         painted:function () {
-            Ext.get('edit-assistance-log-notes').addListener('tap', biglifts.logEntry.editAssistanceNotes);
+            if (!this._painted) {
+                this._painted = true;
+                Ext.get('edit-assistance-log-notes').addListener('tap', biglifts.logEntry.editAssistanceNotes);
+            }
         },
         show:function () {
             biglifts.navigation.setBackFunction(biglifts.logEntry.backToLogList);

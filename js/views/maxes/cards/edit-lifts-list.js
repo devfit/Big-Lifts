@@ -113,9 +113,12 @@ biglifts.maxes.cards.editMaxesList = {
                     html:'<img id="active-lifts-help-image" src="images/question.png"/>',
                     listeners:{
                         painted:function () {
-                            Ext.get('active-lifts-help-image').addListener('tap', function () {
-                                Ext.Msg.alert("Inactive Lifts", "Inactive lifts will not appear in the lift list, and their maxes will not increase between cycles");
-                            });
+                            if (!this._painted) {
+                                this._painted = true;
+                                Ext.get('active-lifts-help-image').addListener('tap', function () {
+                                    Ext.Msg.alert("Inactive Lifts", "Inactive lifts will not appear in the lift list, and their maxes will not increase between cycles");
+                                });
+                            }
                         }
                     }
                 }

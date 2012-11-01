@@ -18,23 +18,27 @@ Ext.define('biglifts.views.Log', {
         title:'Track',
         listeners:{
             painted:function () {
-                this.add([
-                    biglifts.views.log.cards.LogList,
-                    biglifts.views.log.cards.EditLogEntry,
-                    biglifts.views.log.cards.EditAssistanceLogEntry,
-                    {
-                        xtype:'lognoteseditor',
-                        id:'log-notes-editor'
-                    },
-                    {
-                        xtype:'assistancelognoteseditor',
-                        id:'assistance-log-notes-editor'
-                    },
-                    biglifts.views.log.cards.Export,
-                    biglifts.views.log.cards.Graph
-                ]);
+                if (!this._painted) {
+                    this._painted = true;
 
-                this.setActiveItem(0);
+                    this.add([
+                        biglifts.views.log.cards.LogList,
+                        biglifts.views.log.cards.EditLogEntry,
+                        biglifts.views.log.cards.EditAssistanceLogEntry,
+                        {
+                            xtype:'lognoteseditor',
+                            id:'log-notes-editor'
+                        },
+                        {
+                            xtype:'assistancelognoteseditor',
+                            id:'assistance-log-notes-editor'
+                        },
+                        biglifts.views.log.cards.Export,
+                        biglifts.views.log.cards.Graph
+                    ]);
+
+                    this.setActiveItem(0);
+                }
             }
         }
     }

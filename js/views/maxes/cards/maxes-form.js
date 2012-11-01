@@ -170,7 +170,12 @@ biglifts.maxes.cards.trainingMaxes = {
     flex:1,
     bodyPadding:0,
     listeners:{
-        painted:biglifts.maxes.controller.updateTrainingPercentageDisplay
+        painted:function () {
+            if (!this._painted) {
+                this._painted = true;
+                biglifts.maxes.controller.updateTrainingPercentageDisplay();
+            }
+        }
     },
     items:[
         {

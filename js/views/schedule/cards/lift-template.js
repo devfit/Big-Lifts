@@ -200,9 +200,12 @@ biglifts.views.liftSchedule.liftTemplate = {
     ],
     listeners:{
         painted:function () {
-            biglifts.stores.lifts.LiftProgression.addListener('beforesync', function () {
-                Ext.getCmp('lift-template-list').refresh();
-            });
+            if (!this._painted) {
+                this._painted = true;
+                biglifts.stores.lifts.LiftProgression.addListener('beforesync', function () {
+                    Ext.getCmp('lift-template-list').refresh();
+                });
+            }
         },
         show:function () {
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.liftTemplate.returnToLiftSelect);

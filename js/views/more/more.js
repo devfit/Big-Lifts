@@ -8,19 +8,24 @@ Ext.define('biglifts.views.More', {
         layout:'card',
         listeners:{
             painted:function () {
-                this.add([
-                    biglifts.views.MoreInfoList,
-                    biglifts.views.Settings
-                ]);
-                this.setActiveItem(0);
-                if (biglifts.toggles.Assistance) {
-                    this.add(
-                        Ext.create('biglifts.views.OneRepMaxCalculator', {
-                            backFunction:function () {
-                                Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'));
-                            }
-                        })
-                    );
+                if (!this._painted) {
+                    this._painted = true;
+                    this.add([
+                        biglifts.views.MoreInfoList,
+                        biglifts.views.Settings
+                    ]);
+
+                    if (biglifts.toggles.Assistance) {
+                        this.add(
+                            Ext.create('biglifts.views.OneRepMaxCalculator', {
+                                backFunction:function () {
+                                    Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'));
+                                }
+                            })
+                        );
+                    }
+
+                    this.setActiveItem(0);
                 }
             }
         }
