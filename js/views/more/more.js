@@ -13,13 +13,15 @@ Ext.define('biglifts.views.More', {
         ],
         listeners:{
             initialize:function () {
-                this.add(
-                    Ext.create('biglifts.views.OneRepMaxCalculator', {
-                        backFunction:function () {
-                            Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'));
-                        }
-                    })
-                );
+                if (biglifts.toggles.Assistance) {
+                    this.add(
+                        Ext.create('biglifts.views.OneRepMaxCalculator', {
+                            backFunction:function () {
+                                Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'));
+                            }
+                        })
+                    );
+                }
             }
         }
     }

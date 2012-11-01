@@ -8,9 +8,6 @@ Ext.define('biglifts.views.Maxes', {
         title:'Edit',
         iconCls:'settings',
         layout:'card',
-        defaults:{
-            fullscreen:true
-        },
         items:[
             biglifts.maxes.cards.maxesForm,
             biglifts.maxes.cards.editMaxesList,

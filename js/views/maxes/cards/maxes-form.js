@@ -1,6 +1,6 @@
 Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.controller');
 
-biglifts.maxes.controller.liftValuesChanged = function (el, newValue) {
+biglifts.maxes.liftValuesChanged = function (el, newValue) {
     var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', el.getName());
     lift.set('max', newValue);
     lift.save();
@@ -75,6 +75,7 @@ biglifts.stores.Settings.addListener('beforesync', function () {
         biglifts.maxes.controller.showHideTrainingMaxes();
     }
 });
+
 biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
     if (biglifts.main.started) {
         biglifts.maxes.controller.rebuildMaxesList();
@@ -140,7 +141,7 @@ biglifts.maxes.cards.maxesFormEditable = {
             title:'Maxes',
             defaults:{
                 listeners:{
-                    change:biglifts.maxes.controller.liftValuesChanged
+                    change:biglifts.maxes.liftValuesChanged
                 },
                 labelWidth:'45%',
                 useClearIcon:true

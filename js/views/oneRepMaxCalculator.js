@@ -5,9 +5,10 @@ Ext.define('biglifts.views.OneRepMaxCalculator', {
         var lift = Ext.getCmp('use-lift-select').getValue();
         var estimate = Ext.getCmp('one-rep-estimate').getValue();
 
-        var maxesInput = Ext.getCmp('maxes-' + lift);
-        maxesInput.setValue(estimate);
-        maxesInput.fireEvent('change', maxesInput, estimate);
+        var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', lift);
+        liftRecord.set('max', estimate);
+        liftRecord.save();
+        biglifts.stores.lifts.Lifts.sync();
 
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('maxes-panel'), {
             type:'slide',
@@ -20,7 +21,6 @@ Ext.define('biglifts.views.OneRepMaxCalculator', {
         var estimate = util.formulas.estimateOneRepMax(weight, reps);
         Ext.getCmp('one-rep-estimate').setValue(estimate);
     },
-
     config:{
         backFunction:null,
         id:'one-rep-max-calculator',
@@ -134,7 +134,7 @@ Ext.define('biglifts.views.OneRepMaxCalculator', {
                     }
                 ]);
 
-                this.estimateOneRepMax();
+                me.estimateOneRepMax();
             }
         },
         layout:'fit'
