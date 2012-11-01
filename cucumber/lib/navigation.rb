@@ -5,6 +5,7 @@ class MainNavigation
       :track => {:tab_text => 'Track', :panel_id => 'log'},
       :one_rep_calculator => {:tab_text => '1-Rep', :panel_id => 'one-rep-max-calculator'},
       :more => {:tab_text => 'More', :panel_id => 'more'},
+      :assistance => {:tab_text => 'Asst.', :panel_id => 'assistance'},
   }
 
   def initialize(driver, animation_delay)

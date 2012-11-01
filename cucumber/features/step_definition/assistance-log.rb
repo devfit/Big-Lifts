@@ -3,6 +3,10 @@ Then /^I tap the assistance log notes$/ do
   sleep @ANIMATION_DELAY
 end
 
+When /^I tap the assistance tab$/ do
+  @main_navigation.navigate_to :assistance
+end
+
 Then /^I set the assistance log notes to "(.*?)"$/ do |notes|
   edit_assistance_log_notes = @driver.find_element(:id => 'assistance-log-notes-editor')
   edit_assistance_log_notes.find_element(:name => 'notes').send_keys(notes)

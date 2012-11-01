@@ -27,7 +27,7 @@ biglifts.liftSchedule.assistance.boringButBig.liftsComplete = function () {
         biglifts.stores.assistance.ActivityLog.sync();
     });
 
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+    Ext.getCmp('assistance').setActiveItem(0);
     Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
 };
 
