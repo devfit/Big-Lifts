@@ -195,8 +195,7 @@ biglifts.views.liftSchedule.liftTemplate = {
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {[biglifts.liftSchedule.liftTemplate.formatPercentage(values.percentage)]}%</span></p>' +
                 (biglifts.toggles.BarLoading ?
                     '<p class="bar-loader-breakdown">{[util.plates.getFormattedPlateList(' +
-                        'biglifts.liftSchedule.liftTemplate.formatLiftWeight(values, biglifts.liftSchedule.currentLiftProperty)' +
-                        ')]}</p>' : '')
+                        'biglifts.liftSchedule.liftTemplate.formatLiftWeight(values),biglifts.liftSchedule.currentLiftProperty)]}</p>' : '')
         }
     ],
     listeners:{
