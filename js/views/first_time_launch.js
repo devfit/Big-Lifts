@@ -26,6 +26,11 @@ Ext.define('biglifts.views.FirstTimeLaunch', {
     xtype:'first-time-launch',
     config:{
         layout:'vbox',
+        listeners:{
+            show: function(){
+                biglifts.navigation.unbindBackEvent();
+            }
+        },
         items:[
             {
                 xtype:'toolbar',
