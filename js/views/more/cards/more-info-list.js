@@ -45,12 +45,17 @@ biglifts.more.hardReset = function () {
 };
 
 biglifts.more.listItems = [
-    {model:{text:'<span class="text">Routine: <span id="routine-text"></span></span><span class="disclosure"></span>'}, handler:biglifts.more.selectRoutine},
-    {model:{text:'<span class="text">1RM Calculator</span><span class="disclosure"></span>'}, handler:biglifts.more.showOneRepCalculator},
-    {model:{text:'<span class="text">Settings</span><span class="disclosure"></span>'}, handler:biglifts.more.showSettings},
-    {model:{text:'<span class="text">Feedback...</span><span class="disclosure"></span>'}, handler:biglifts.more.feedback},
-    {model:{text:'<span class="text">Reset</span><span class="warning"></span>'}, handler:biglifts.more.hardReset}
+    {model:{text:'<span class="text">Routine: <span id="routine-text"></span></span><span class="disclosure"></span>'}, handler:biglifts.more.selectRoutine}
 ];
+
+if (biglifts.toggles.Assistance) {
+    biglifts.more.listItems.push({model:{text:'<span class="text">1RM Calculator</span><span class="disclosure"></span>'}, handler:biglifts.more.showOneRepCalculator});
+}
+
+biglifts.more.listItems.push({model:{text:'<span class="text">Settings</span><span class="disclosure"></span>'}, handler:biglifts.more.showSettings});
+biglifts.more.listItems.push({model:{text:'<span class="text">Feedback...</span><span class="disclosure"></span>'}, handler:biglifts.more.feedback});
+biglifts.more.listItems.push({model:{text:'<span class="text">Reset</span><span class="warning"></span>'}, handler:biglifts.more.hardReset});
+
 biglifts.more.listData = [];
 for (var i = 0; i < biglifts.more.listItems.length; i++) {
     biglifts.more.listData.push(biglifts.more.listItems[i].model);

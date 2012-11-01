@@ -18,6 +18,7 @@ Ext.define('biglifts.views.Maxes', {
                     biglifts.maxes.cards.ArrangeLifts,
                     biglifts.maxes.barSetup.BarSetup
                 ]);
+                this.setActiveItem(0);
             }
         }
     }

@@ -33,6 +33,8 @@ Ext.define('biglifts.views.Log', {
                     biglifts.views.log.cards.Export,
                     biglifts.views.log.cards.Graph
                 ]);
+
+                this.setActiveItem(0);
             }
         }
     }

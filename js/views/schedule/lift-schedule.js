@@ -14,7 +14,6 @@ Ext.define('biglifts.views.LiftSchedule', {
         title:'Lift!',
         iconCls:'icnBarbell',
         layout:'card',
-        activeItem:0,
         listeners:{
             show:biglifts.liftSchedule.liftSelector.setupLiftSelector,
             painted:function () {
@@ -31,6 +30,8 @@ Ext.define('biglifts.views.LiftSchedule', {
                         xtype:'firstlognoteseditor',
                         id:'first-log-notes-editor'
                     }]);
+
+                this.setActiveItem(0);
             },
             activeitemchange:biglifts.liftSchedule.liftSelector.setupLiftSelector
         }

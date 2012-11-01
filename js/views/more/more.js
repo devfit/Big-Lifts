@@ -6,13 +6,13 @@ Ext.define('biglifts.views.More', {
         title:'More',
         iconCls:'more',
         layout:'card',
-        activeItem:0,
-        items:[
-            biglifts.views.MoreInfoList,
-            biglifts.views.Settings
-        ],
         listeners:{
-            initialize:function () {
+            painted:function () {
+                this.add([
+                    biglifts.views.MoreInfoList,
+                    biglifts.views.Settings
+                ]);
+                this.setActiveItem(0);
                 if (biglifts.toggles.Assistance) {
                     this.add(
                         Ext.create('biglifts.views.OneRepMaxCalculator', {
