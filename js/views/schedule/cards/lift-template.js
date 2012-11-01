@@ -28,29 +28,6 @@ biglifts.liftSchedule.liftTemplate.formatLiftWeight = function (values) {
     return biglifts.weight.format(max, values.percentage);
 };
 
-biglifts.liftSchedule.liftTemplate.getPlateList = function (weight, currentLiftProperty) {
-    var barWeight = biglifts.stores.BarWeight.first().get('weight');
-    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', currentLiftProperty);
-    if (liftRecord.get("customBarWeight")) {
-        barWeight = liftRecord.get("customBarWeight");
-    }
-
-    var allPlatePairs = biglifts.stores.Plates.getAllPlatePairs();
-
-    var plates = util.formulas.buildPlateListForWeight(weight, barWeight, allPlatePairs);
-    var totalWeight = _.reduce(plates, function (sum, plate) {
-        return sum + plate * 2;
-    }, 0) + barWeight;
-
-    var plateString = plates.length === 0 ? "" : "[" + plates.join(',') + "]";
-
-    if (totalWeight !== weight) {
-        plateString = "<span class='invalid-plates'>" + plateString + " need plates" + "</span>";
-    }
-
-    return plateString;
-};
-
 biglifts.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
     return (values.amrap ? 'amrap ' : '') + (values.warmup ? 'warmup ' : '');
 };
@@ -217,7 +194,7 @@ biglifts.views.liftSchedule.liftTemplate = {
                 '<span class="weight">{[biglifts.liftSchedule.liftTemplate.formatLiftWeight(values)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {[biglifts.liftSchedule.liftTemplate.formatPercentage(values.percentage)]}%</span></p>' +
                 (biglifts.toggles.BarLoading ?
-                    '<p class="bar-loader-breakdown">{[biglifts.liftSchedule.liftTemplate.getPlateList(' +
+                    '<p class="bar-loader-breakdown">{[util.plates.getFormattedPlateList(' +
                         'biglifts.liftSchedule.liftTemplate.formatLiftWeight(values, biglifts.liftSchedule.currentLiftProperty)' +
                         ')]}</p>' : '')
         }

@@ -38,7 +38,7 @@ biglifts.liftSchedule.assistance.boringButBig.filterLifts = function () {
 };
 
 biglifts.liftSchedule.assistance.boringButBig.showNotesEditor = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big-notes'));
+    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big-notes'));
 };
 
 biglifts.liftSchedule.assistance.boringButBig.editBbbMovement = function (dataview, index) {
@@ -80,7 +80,7 @@ biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown = function (valu
 
     var formattedWeight = biglifts.weight.format(bbbWeight);
 
-    var plateList = biglifts.liftSchedule.liftTemplate.getPlateList(formattedWeight, biglifts.assistance.currentLiftProperty);
+    var plateList = util.plates.getFormattedPlateList(formattedWeight, biglifts.assistance.currentLiftProperty);
 
     return "<table class='assistance-plate-breakdown'><tbody><tr>" +
         "<td width='70%'></td>" +
