@@ -5,5 +5,5 @@ gem 'rspec'
 gem 'json'
 gem 'rake'
 gem 'parallel_tests'
-
+gem 'debugger'
 gem 'jasmine'

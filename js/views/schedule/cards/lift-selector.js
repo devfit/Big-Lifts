@@ -113,7 +113,7 @@ biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts = function () {
 };
 
 biglifts.stores.lifts.EnabledLifts.addListener('beforesync', function () {
-    if (biglifts.main.started) {
+    if (biglifts.main.started && Ext.getCmp('lift-selector')) {
         biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts();
     }
 });

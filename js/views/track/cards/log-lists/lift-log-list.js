@@ -11,7 +11,9 @@ biglifts.logList.sortAndRefreshList = function () {
 
 biglifts.logList.sortLifts = function (sortProperty, sortDirection) {
     biglifts.stores.LiftLog.sortLog(sortProperty, sortDirection);
-    Ext.getCmp('lift-log-list').refresh();
+    if (Ext.getCmp('lift-log-list')) {
+        Ext.getCmp('lift-log-list').refresh();
+    }
 };
 
 biglifts.logList.showLogEntry = function (dataview, index, item, e) {
@@ -36,7 +38,7 @@ biglifts.stores.LiftLog.addListener('beforesync', function () {
 });
 
 biglifts.stores.Settings.addListener('beforesync', function () {
-    if (biglifts.main.started) {
+    if (biglifts.main.started && Ext.getCmp('lift-log-list')) {
         Ext.getCmp('lift-log-list').refresh();
     }
 });

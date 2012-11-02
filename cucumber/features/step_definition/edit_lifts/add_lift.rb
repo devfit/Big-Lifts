@@ -10,7 +10,7 @@ When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
   max_input = @driver.find_element(:name => 'add-lift-new-max')
   max_input.send_keys max
 
-  @driver.find_element(:id => 'add-lift-done-button').click
+  @driver.find_elements(:class => 'x-button').select{|button| button.displayed? && button.text() == "Save"}[0].click
   sleep @ANIMATION_DELAY
 end
 
