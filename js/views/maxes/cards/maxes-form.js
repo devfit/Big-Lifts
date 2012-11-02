@@ -71,13 +71,13 @@ biglifts.maxes.controller.rebuildMaxesList = function () {
 };
 
 biglifts.stores.Settings.addListener('beforesync', function () {
-    if (biglifts.main.started) {
+    if (Ext.getCmp('training-maxes-panel')) {
         biglifts.maxes.controller.showHideTrainingMaxes();
     }
 });
 
 biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
-    if (biglifts.main.started) {
+    if (Ext.getCmp('maxes-form-items')) {
         biglifts.maxes.controller.rebuildMaxesList();
     }
 });
@@ -89,15 +89,17 @@ biglifts.maxes.controller.editLiftButtonPressed = function () {
 biglifts.maxes.controller.updateTrainingPercentageDisplay = function () {
     var trainingMaxPercentage = biglifts.stores.Settings.first().data['trainingMaxPercentage'];
     var trainingMaxPercentageIndicator = Ext.get('training-max-percentage-indicator');
-    if (trainingMaxPercentageIndicator !== null) {
+    if (trainingMaxPercentageIndicator) {
         trainingMaxPercentageIndicator.setHtml(trainingMaxPercentage);
     }
 
-    Ext.getCmp('training-maxes').removeAll();
-    biglifts.stores.lifts.Lifts.each(biglifts.maxes.controller.createTrainingMaxesInput, this);
+    if (Ext.getCmp('training-maxes')) {
+        Ext.getCmp('training-maxes').removeAll();
+        biglifts.stores.lifts.Lifts.each(biglifts.maxes.controller.createTrainingMaxesInput, this);
+    }
 };
 
-biglifts.stores.Settings.addListener('update', biglifts.maxes.controller.updateTrainingPercentageDisplay);
+biglifts.stores.Settings.addListener('beforesync', biglifts.maxes.controller.updateTrainingPercentageDisplay);
 
 biglifts.maxes.controller.addLiftButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'), {type:'slide', direction:'left'});

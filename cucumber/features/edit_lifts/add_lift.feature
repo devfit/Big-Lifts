@@ -1,8 +1,15 @@
 @531
 Feature: adding lifts
-  As a lifter
-  I want to be able to add new lifts
-  So that I can view lift schedules for more than the built in options
+
+  Scenario: newly added lift can be edited
+    When I add a new lift named "TestLift" with max 100
+    And I tap the "Edit" button
+    And I click edit "TestLift"
+    And I edit the name to be "TestLift2"
+    And I tap the "Back" button
+    Then "TestLift2" is added to the edit lifts screen
+    And "TestLift2" is added to the lift schedule
+
 
   Scenario: add a new lift
     When I add a new lift named "Clean and Jerk" with max 200
@@ -15,12 +22,3 @@ Feature: adding lifts
     Then I see an error with message "Invalid lift name"
     And I tap the "Cancel" button
     Then "222" is not added to the edit lifts screen
-
-  Scenario: newly added lift can be edited
-    When I add a new lift named "TestLift" with max 100
-    And I tap the "Edit" button
-    And I click edit "TestLift"
-    And I edit the name to be "TestLift2"
-    And I tap the "Back" button
-    Then "TestLift2" is added to the edit lifts screen
-    And "TestLift2" is added to the lift schedule

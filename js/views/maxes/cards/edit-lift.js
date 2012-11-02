@@ -30,11 +30,7 @@ biglifts.maxes.editLiftBackButtonPressed = function () {
             }
         }
 
-        if (somethingSaved) {
-            biglifts.maxes.controller.rebuildMaxesList();
-            biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts();
-        }
-
+        biglifts.stores.lifts.Lifts.sync();
         biglifts.maxes.controller.doneWithEditing();
     }
     else {

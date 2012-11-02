@@ -33,6 +33,8 @@ biglifts.liftSchedule.liftSelector.setupListDoneIcons = function () {
     }
 };
 
+biglifts.stores.lifts.LiftCompletion.addListener('beforesync', biglifts.liftSchedule.liftSelector.setupListDoneIcons);
+
 biglifts.liftSchedule.liftSelector.getStartingWeek = function () {
     var weeksCompleted = {};
     biglifts.stores.lifts.LiftCompletion.each(function (record) {
@@ -112,7 +114,7 @@ biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts = function () {
     });
 };
 
-biglifts.stores.lifts.EnabledLifts.addListener('beforesync', function () {
+biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
     if (biglifts.main.started && Ext.getCmp('lift-selector')) {
         biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts();
     }
