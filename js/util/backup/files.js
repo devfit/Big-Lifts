@@ -124,25 +124,26 @@ util.files.read = function (directory, filename, successCallback, errorCallback)
     util.files.requestFileSystem(fileSystemObtained, errorCallback);
 };
 
-util.files.deleteFile = function (directory, filename, successCallback) {
+util.files.deleteFile = function (directory, filename, successCallback, errorCallback) {
+    errorCallback = _.isUndefined(errorCallback) ? util.files.errorCallback : errorCallback;
     var deleteFile = function (fileEntry) {
-        fileEntry.remove(successCallback, util.files.errorCallback);
+        fileEntry.remove(successCallback, errorCallback);
     };
 
     var getFileFromDirectory = function (parentFile) {
-        parentFile.getFile(filename, {}, deleteFile, util.files.errorCallback);
+        parentFile.getFile(filename, {}, deleteFile, errorCallback);
     };
 
     var fileSystemObtained = function (fileSystem) {
         if (directory !== null) {
             fileSystem.root.getDirectory(directory, {create:true}, function (dirEntry) {
                 getFileFromDirectory(dirEntry);
-            }, util.files.errorCallback);
+            }, errorCallback);
         }
         else {
             getFileFromDirectory(fileSystem.root);
         }
     };
 
-    util.files.requestFileSystem(fileSystemObtained);
+    util.files.requestFileSystem(fileSystemObtained, errorCallback);
 };

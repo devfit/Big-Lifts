@@ -78,11 +78,17 @@ util.filebackup.storeHasChanged = function (currentStore) {
     util.filebackup.saveStore(currentStore, Ext.emptyFn);
 };
 
-util.filebackup.deleteAllStoreFiles = function () {
+util.filebackup.deleteAllStoreFiles = function (deleteCallback) {
+    var tasks = [];
     _.each(util.filebackup.watchedStores, function (store) {
         var fileName = util.filebackup.generateFileName(store);
-        util.files.deleteFile(util.filebackup.directory, fileName, function () {
-            console.log(fileName + " deleted");
+        tasks.push(function (callback) {
+            var asyncComplete = function () {
+                callback(null, null);
+            };
+            util.files.deleteFile(util.filebackup.directory, fileName, asyncComplete, asyncComplete);
         });
     });
+
+    async.parallel(tasks, deleteCallback);
 };

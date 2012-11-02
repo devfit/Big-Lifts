@@ -37,9 +37,10 @@ biglifts.more.showOneRepCalculator = function () {
 biglifts.more.hardReset = function () {
     Ext.Msg.confirm('WARNING', 'Reset ALL data and settings?', function (text) {
         if (text === 'yes') {
-            util.filebackup.deleteAllStoreFiles();
-            localStorage.clear();
-            location.href = "index.html";
+            util.filebackup.deleteAllStoreFiles(function () {
+                localStorage.clear();
+                location.href = "index.html";
+            });
         }
     });
 };
