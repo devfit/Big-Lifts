@@ -80,10 +80,7 @@ biglifts.maxes.controller.setupEditLift = function (propertyName) {
     var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', propertyName);
     biglifts.maxes.currentEditingLiftProperty = propertyName;
 
-    var formValues = _.clone(lift.data);
-    formValues.customBarWeight = null;
-
-    Ext.getCmp('edit-lift-form').setValues(formValues);
+    Ext.getCmp('edit-lift-form').setValues(_.clone(lift.data));
 };
 
 biglifts.maxes.cards.editLiftPanel = {

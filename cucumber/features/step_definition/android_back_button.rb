@@ -8,13 +8,11 @@ When /^I navigate to the lift schedule/ do
 end
 
 Then /^I am on the lift schedule$/ do
-   maxesFormDisplayed = @driver.find_element( :id => 'lift-selector' ).displayed?
-   maxesFormDisplayed.should == true
+   @driver.find_element( :id => 'lift-selector' ).displayed?.should be_true
 end
 
 Then /^I am on the lift settings$/ do
-   liftSettingsDisplayed = @driver.find_element( :id => 'lift-settings' ).displayed?
-   liftSettingsDisplayed.should == true
+   @driver.find_element( :id => 'lift-settings' ).displayed?.should be_true
 end
 
 
@@ -28,13 +26,5 @@ When /^I click add lift$/ do
 end
 
 Then /^I am on the lift editor$/ do
-  liftEditorDisplayed = @driver.find_element(:id => 'maxes-panel').displayed?
-  liftEditorDisplayed.should == true
-end
-
-When /^I click edit squat in the edit lifts lists$/ do
-  liftList = @driver.find_element(:id => 'maxes-edit-lifts-list').find_elements(:class => 'x-list-item')
-  editSquat = liftList.select{ |lift| lift.text == 'Squat' }[0]
-  editSquat.click()
-  sleep @ANIMATION_DELAY
+  @driver.find_element(:id => 'maxes-panel').displayed?.should be_true
 end

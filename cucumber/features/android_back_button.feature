@@ -43,7 +43,7 @@ Feature:
   Scenario: Android users presses back when editing a lift
     When I navigate to the lift editor
     And I tap the "Edit" button
-    And I click edit squat in the edit lifts lists
+    And I tap the "Squat" list item
     And I press the android back button
     Then I am on the lift editor
 
