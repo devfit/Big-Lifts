@@ -40,7 +40,7 @@ biglifts.liftSchedule.liftTemplate.getEffectiveWeek = function () {
         var rotation = biglifts.stores.WeekRotation.findRecord('liftProperty', biglifts.liftSchedule.currentLiftProperty);
         var startingWeek = rotation.get('startingWeek');
 
-        return biglifts.liftSchedule.currentWeek + ((startingWeek - 1) % 4);
+        return (biglifts.liftSchedule.currentWeek + (startingWeek - 1)) % 4;
     }
 };
 

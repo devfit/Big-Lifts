@@ -1,6 +1,18 @@
 @531
 Feature: Rotating lift template
 
+  Scenario: Week 4 lifts are not blank
+    And I set the deadlift max to 300
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I select the "Rotating" lift template
+    And I tap the "Rotate" button
+    And I tap the use template button
+    And I confirm the progression change
+    And I navigate back to the lift selector from lift settings
+    When I view the press lift schedule for week 4
+    Then The lift schedule shows "5 55 [warm] 40%","5 70 [warm] 50%","3 80 [warm] 60%","5 100 75%","3 115 85%","1 130 95%"
+
   Scenario: Switching away from the rotations template remove the week rotation
     And I set the deadlift max to 300
     When I view the lift schedule
