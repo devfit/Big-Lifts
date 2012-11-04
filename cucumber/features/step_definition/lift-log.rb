@@ -34,5 +34,14 @@ Then /^The full log notes shows "([^"]*)"$/ do |notes|
   @driver.find_element(:id => 'first-log-notes-editor').find_element(:name => 'notes').attribute('value').should == notes
 end
 
+Then /^There are (\d+) log entries$/ do |length|
+  @driver.find_elements(:class => 'x-list-item').select { |item| item.displayed? }.length.should == length.to_i
+end
+
+Then /^I set the log cycle filter to "(.*?)"$/ do |cycle|
+  cycle_select = @driver.find_elements(:name => 'cycle').select { |input| input.displayed? }[0]
+  @sencha_helper.select_combobox cycle_select, cycle
+end
+
 
 

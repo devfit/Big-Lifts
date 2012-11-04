@@ -120,6 +120,18 @@ Ext.define('biglifts.views.LogList', {
         });
         this.down('[name="cycle"]').setOptions(options);
     },
+    logCycleChanged:function (select, newValue, oldValue) {
+        if (oldValue) {
+            var cycle = newValue.get('value');
+            if (cycle === 'All') {
+                biglifts.stores.LiftLog.clearFilter();
+            }
+            else {
+                biglifts.stores.LiftLog.clearFilter(true);
+                biglifts.stores.LiftLog.filter('cycle', cycle);
+            }
+        }
+    },
     config:{
         layout:'fit',
         listeners:{
@@ -246,7 +258,10 @@ Ext.define('biglifts.views.LogList', {
                                 label:'Cycle',
                                 displayField:'value',
                                 valueField:'value',
-                                options:[]
+                                options:[],
+                                listeners:{
+                                    change:Ext.bind(me.logCycleChanged, me)
+                                }
                             }
                         ],
                         listeners:{
@@ -271,7 +286,8 @@ Ext.define('biglifts.views.LogList', {
             }
         }
     }
-});
+})
+;
 
 biglifts.stores.LiftLogSort.addListener('beforesync', function () {
     if (Ext.getCmp('log-list')) {

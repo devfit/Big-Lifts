@@ -1,10 +1,6 @@
 @531
 Feature: Lift tracking
-  As a lifter
-  I want to be able to track my lifts
-  To view my progress over time
-
-  Scenario: Lift log can be editted
+  Scenario: Lift log can be edited
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
     And I tap the "Save" button
@@ -15,7 +11,7 @@ Feature: Lift tracking
     And I select the log entry for Squat
     Then The log expected reps is 6
     Then The log reps is 2
-#
+
   Scenario: Notes aren't persisted between lifts
     When I view the squat lift schedule for week 1
     And I mark the current lift completed
