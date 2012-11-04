@@ -6,14 +6,19 @@ import android.media.SoundPool;
 
 public class Alert {
     private SoundPool soundPool;
+    private AudioManager audioManager;
     private int alertId;
 
     public Alert(Context context) {
         soundPool = new SoundPool(1, AudioManager.STREAM_ALARM, 100);
         alertId = soundPool.load(context, R.raw.alert, 1);
+        audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
     }
 
     public void playAlert() {
-        soundPool.play(alertId, 1f, 1f, 1, 0, 1f);
+        float volumeIndex = (float) audioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
+        float maxVolumeIndex = (float) audioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+        float volume = volumeIndex / maxVolumeIndex;
+        soundPool.play(alertId, volume, volume, 1, 0, 1f);
     }
 }
