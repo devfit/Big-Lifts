@@ -108,7 +108,7 @@ Ext.define('biglifts.views.LogList', {
         liftLogSort.save();
         biglifts.stores.LiftLogSort.sync();
     },
-    updateCycleOptions:function () {
+    getCycleOptions:function () {
         var liftCycles = _.map(biglifts.stores.LiftLog.getRange(), function (record) {
             return record.get('cycle');
         });
@@ -118,13 +118,21 @@ Ext.define('biglifts.views.LogList', {
         });
 
         var cycles = _.unique(_.union(liftCycles, assistanceCycles));
+        cycles = _.sortBy(cycles, function (cycle) {
+            return -cycle;
+        });
         cycles = _.union(['All'], cycles);
 
         var options = [];
         _.each(cycles, function (cycle) {
             options.push({value:cycle});
         });
-        this.down('[name="cycle"]').setOptions(options);
+
+        return options;
+    },
+    updateCycleOptions:function () {
+        var options = this.getCycleOptions();
+        Ext.getCmp('log-cycle-select').setOptions(options);
     },
     logCycleChanged:function (select, newValue, oldValue) {
         if (oldValue) {
@@ -262,6 +270,7 @@ Ext.define('biglifts.views.LogList', {
                         items:[
                             {xtype:'spacer'},
                             {
+                                id:'log-cycle-select',
                                 name:'cycle',
                                 xtype:'selectfield',
                                 label:'Cycle',
@@ -274,9 +283,7 @@ Ext.define('biglifts.views.LogList', {
                             }
                         ],
                         listeners:{
-                            initialize:function () {
-                                me.updateCycleOptions.call(this);
-                            }
+                            initialize:Ext.bind(me.updateCycleOptions, me)
                         }
                     },
                     {
@@ -295,8 +302,7 @@ Ext.define('biglifts.views.LogList', {
             }
         }
     }
-})
-;
+});
 
 biglifts.stores.LiftLogSort.addListener('beforesync', function () {
     if (Ext.getCmp('log-list')) {
@@ -317,6 +323,7 @@ biglifts.stores.assistance.ActivityLog.addListener('beforesync', function () {
     }
 });
 
+Ext.ns('biglifts.views.log.cards');
 biglifts.views.log.cards.LogList = {
     xtype:'loglist',
     id:'log-list'
