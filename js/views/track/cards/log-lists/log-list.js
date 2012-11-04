@@ -108,6 +108,18 @@ Ext.define('biglifts.views.LogList', {
         liftLogSort.save();
         biglifts.stores.LiftLogSort.sync();
     },
+    updateCycleOptions:function () {
+        var cycles = _.unique(_.map(biglifts.stores.LiftLog.getRange(), function (record) {
+            return record.get('cycle');
+        }));
+        cycles = _.union(['All'], cycles);
+
+        var options = [];
+        _.each(cycles, function (cycle) {
+            options.push({value:cycle});
+        });
+        this.down('[name="cycle"]').setOptions(options);
+    },
     config:{
         layout:'fit',
         listeners:{
@@ -224,6 +236,26 @@ Ext.define('biglifts.views.LogList', {
                         ]
                     },
                     {
+                        xtype:'toolbar',
+                        docked:'bottom',
+                        items:[
+                            {xtype:'spacer'},
+                            {
+                                name:'cycle',
+                                xtype:'selectfield',
+                                label:'Cycle',
+                                displayField:'value',
+                                valueField:'value',
+                                options:[]
+                            }
+                        ],
+                        listeners:{
+                            initialize:function () {
+                                me.updateCycleOptions.call(this);
+                            }
+                        }
+                    },
+                    {
                         id:'log-list-container',
                         xtype:'container',
                         layout:'card',
@@ -245,6 +277,12 @@ biglifts.stores.LiftLogSort.addListener('beforesync', function () {
     if (Ext.getCmp('log-list')) {
         Ext.getCmp('log-list').updateUiForSortButtons();
         biglifts.logList.sortAndRefreshList();
+    }
+});
+
+biglifts.stores.LiftLog.addListener('beforesync', function () {
+    if (Ext.getCmp('log-list')) {
+        Ext.getCmp('log-list').updateCycleOptions();
     }
 });
 

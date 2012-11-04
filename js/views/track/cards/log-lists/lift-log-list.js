@@ -1,11 +1,11 @@
 biglifts.stores.LiftLog.addListener('beforesync', function () {
-    if (biglifts.main.started && Ext.getCmp('lift-log-list')) {
-        biglifts.logList.sortAndRefreshList();
+    if (Ext.getCmp('lift-log-list')) {
+        Ext.getCmp('lift-log-list').sortAndRefreshList();
     }
 });
 
 biglifts.stores.Settings.addListener('beforesync', function () {
-    if (biglifts.main.started && Ext.getCmp('lift-log-list')) {
+    if (Ext.getCmp('lift-log-list')) {
         Ext.getCmp('lift-log-list').refresh();
     }
 });
