@@ -10,7 +10,7 @@ Feature: Custom - Assistance Work
     Then Assistance movement 2 is "Sit-ups 5 sets 15x [?]lbs"
     And I tap the "Save" button
     Then I am on the track tab
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then Assistance log entry 1 shows "Bodyweight Sit-ups Sets: 5 15x [?]"
     Then Assistance log entry 2 shows "Bodyweight One leg squat Sets: 5 15x [?]"
 
@@ -26,6 +26,6 @@ Feature: Custom - Assistance Work
     Then Assistance movement 1 is "Good Morning 5 sets 15x 65lbs"
     And I tap the "Save" button
     Then I am on the track tab
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then Assistance log entry 1 shows "Bodyweight Sit-ups Sets: 5 15x [?]"
     Then Assistance log entry 2 shows "Bodyweight Good Morning Sets: 5 15x 65"

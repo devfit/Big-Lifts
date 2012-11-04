@@ -4,7 +4,7 @@ Feature: Assistance Work
   Scenario: "None" assistance work isn't shown in the log
     When I tap the assistance tab
     And I select "None" assistance work
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then There are no assistance log entries
 
   Scenario: Remembering the last assistance selection between workouts

@@ -22,7 +22,7 @@ Feature: Boring But Big - Assistance Work
     And I set the "sets" to "5"
     And I tap the "Back" button
     And I tap the "Save" button
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then I see an assistance log entry containing "Chins"
 
   Scenario: BBB primary movements show plate breakdowns
@@ -43,7 +43,7 @@ Feature: Boring But Big - Assistance Work
     And I tap the "Back" button
     Then The BBB list item 1 contains "Press"
     And I tap the "Save" button
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then I see an assistance log entry containing "Press"
 
   Scenario: Changes in the assistance list should be reflected immediately after a BBB entry is edited
@@ -53,7 +53,7 @@ Feature: Boring But Big - Assistance Work
     And I tap the "Squat" list item
     And I tap the "Save" button
     Then I am on the track tab
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then I see 1 assistance log entry for "10x90"
     And I tap "5x10" log entry 1
     And I set the assistance log reps to 15
@@ -73,7 +73,7 @@ Feature: Boring But Big - Assistance Work
     And I return from the boring but big notes
     And I tap the "Save" button
     Then I am on the track tab
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then I see 1 assistance log entry for "10x110"
     And I tap "5x10" log entry 1
     Then The assistance details notes shows "Felt okay. A little slow on the last set"

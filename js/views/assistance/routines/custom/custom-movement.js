@@ -24,13 +24,15 @@ Ext.define("Biglifts.views.Custom", {
                 sets:record.get('sets'),
                 reps:record.get('reps'),
                 weight:record.get('weight'),
-                timestamp:new Date().getTime()
+                timestamp:new Date().getTime(),
+                cycle: biglifts.stores.CurrentCycle.getCurrentCycle()
             };
 
             biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
             biglifts.stores.assistance.ActivityLog.sync();
         });
 
+        Ext.getCmp('assistance').setActiveItem(0);
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
     },
     config:{

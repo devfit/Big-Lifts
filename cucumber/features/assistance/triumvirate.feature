@@ -13,7 +13,7 @@ Feature: Custom - Assistance Work
     Then Assistance movement 3 is "Good Morning 5 sets 15x 65lbs"
     And I tap the "Save" button
     Then I am on the track tab
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then Assistance log entry 1 shows "Custom Good Morning Sets: 5 15x 65"
 
   Scenario: Custom lifts can be removed
@@ -39,7 +39,7 @@ Feature: Custom - Assistance Work
     And I tap the "Back" button
     And I tap the "Save" button
     Then I am on the track tab
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then Assistance log entry 1 shows "Move2 Sets: 5 15x [?]"
     Then Assistance log entry 2 shows "Move1 Sets: 5 15x [?]"
 
@@ -51,7 +51,7 @@ Feature: Custom - Assistance Work
     Then Assistance movement 2 is "Leg Curl 5 sets 15x [?]lbs"
     And I tap the "Save" button
     Then I am on the track tab
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then Assistance log entry 1 shows "Custom Leg Curl Sets: 5 15x [?]"
     Then Assistance log entry 2 shows "Custom Leg Press Sets: 5 15x [?]"
 
@@ -67,6 +67,6 @@ Feature: Custom - Assistance Work
     Then Assistance movement 1 is "Good Morning 5 sets 15x 65lbs"
     And I tap the "Save" button
     Then I am on the track tab
-    And I tap "Asst." to change the log type
+    And I tap the "Asst." button
     Then Assistance log entry 1 shows "Custom Leg Curl Sets: 5 15x [?]"
     Then Assistance log entry 2 shows "Custom Good Morning Sets: 5 15x 65"

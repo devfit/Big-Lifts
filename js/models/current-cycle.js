@@ -3,7 +3,7 @@ Ext.ns('biglifts.stores.recovery');
 Ext.define('CurrentCycle', {
     extend:'Ext.data.Model',
     config:{
-        identifier: 'uuid',
+        identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
             {name:'cycle', type:'integer'}
@@ -15,21 +15,26 @@ Ext.define('CurrentCycle', {
     }
 });
 
-biglifts.stores.recovery.setupDefaultCurrentCycle = function () {
-    util.withNoFilters(biglifts.stores.CurrentCycle, function () {
-        if (biglifts.stores.CurrentCycle.getCount() == 0) {
-            biglifts.stores.CurrentCycle.add({cycle:1});
-            biglifts.stores.CurrentCycle.sync();
+Ext.define('CurrentCycleStore', {
+    extend:'Ext.data.Store',
+    setupDefaultCurrentCycle:function () {
+        if (this.getCount() == 0) {
+            this.add({cycle:1});
+            this.sync();
         }
-    });
-};
-
-biglifts.stores.CurrentCycle = Ext.create('Ext.data.Store', {
-    model:'CurrentCycle',
-    listeners:{
-        load:function(){
-            biglifts.stores.recovery.setupDefaultCurrentCycle();
+    },
+    getCurrentCycle:function () {
+        return this.first().get('cycle');
+    },
+    config:{
+        model:'CurrentCycle',
+        listeners:{
+            load:function () {
+                this.setupDefaultCurrentCycle();
+            }
         }
     }
 });
+
+biglifts.stores.CurrentCycle = Ext.create('CurrentCycleStore');
 biglifts.stores.push(biglifts.stores.CurrentCycle);

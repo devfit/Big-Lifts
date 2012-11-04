@@ -21,7 +21,8 @@ biglifts.liftSchedule.assistance.boringButBig.liftsComplete = function () {
             reps:movement.get('reps'),
             weight:biglifts.stores.assistance.BoringButBig.getWeightForRecord(movement.data),
             timestamp:new Date().getTime(),
-            notes:biglifts.liftSchedule.assistance.boringButBig.currentNotes
+            notes:biglifts.liftSchedule.assistance.boringButBig.currentNotes,
+            cycle: biglifts.stores.CurrentCycle.getCurrentCycle()
         };
         biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
         biglifts.stores.assistance.ActivityLog.sync();

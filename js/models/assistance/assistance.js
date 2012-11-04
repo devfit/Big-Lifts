@@ -11,7 +11,8 @@ Ext.define('AssistanceActivity', {
             {name:'sets', type:'int'},
             {name:'reps', type:'int'},
             {name:'timestamp', type:'int'},
-            {name:'notes', type:'string', defaultValue:''}
+            {name:'notes', type:'string', defaultValue:''},
+            {name:'cycle', type:'int', defaultValue:1}
         ],
         proxy:{
             type:'localstorage',

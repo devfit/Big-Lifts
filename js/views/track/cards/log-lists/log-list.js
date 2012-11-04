@@ -109,9 +109,15 @@ Ext.define('biglifts.views.LogList', {
         biglifts.stores.LiftLogSort.sync();
     },
     updateCycleOptions:function () {
-        var cycles = _.unique(_.map(biglifts.stores.LiftLog.getRange(), function (record) {
+        var liftCycles = _.map(biglifts.stores.LiftLog.getRange(), function (record) {
             return record.get('cycle');
-        }));
+        });
+
+        var assistanceCycles = _.map(biglifts.stores.assistance.ActivityLog.getRange(), function (record) {
+            return record.get('cycle');
+        });
+
+        var cycles = _.unique(_.union(liftCycles, assistanceCycles));
         cycles = _.union(['All'], cycles);
 
         var options = [];
@@ -125,10 +131,13 @@ Ext.define('biglifts.views.LogList', {
             var cycle = newValue.get('value');
             if (cycle === 'All') {
                 biglifts.stores.LiftLog.clearFilter();
+                biglifts.stores.assistance.ActivityLog.clearFilter();
             }
             else {
                 biglifts.stores.LiftLog.clearFilter(true);
+                biglifts.stores.assistance.ActivityLog.clearFilter(true);
                 biglifts.stores.LiftLog.filter('cycle', cycle);
+                biglifts.stores.assistance.ActivityLog.filter('cycle', cycle);
             }
         }
     },
@@ -297,6 +306,12 @@ biglifts.stores.LiftLogSort.addListener('beforesync', function () {
 });
 
 biglifts.stores.LiftLog.addListener('beforesync', function () {
+    if (Ext.getCmp('log-list')) {
+        Ext.getCmp('log-list').updateCycleOptions();
+    }
+});
+
+biglifts.stores.assistance.ActivityLog.addListener('beforesync', function () {
     if (Ext.getCmp('log-list')) {
         Ext.getCmp('log-list').updateCycleOptions();
     }
