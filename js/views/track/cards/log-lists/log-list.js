@@ -229,7 +229,9 @@ Ext.define('biglifts.views.LogList', {
                         layout:'card',
                         activeItem:0,
                         items:[
-                            biglifts.logList.liftLogList,
+                            {
+                                xtype:'liftloglist'
+                            },
                             biglifts.logList.assistanceList
                         ]
                     }
