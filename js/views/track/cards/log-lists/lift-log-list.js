@@ -4,6 +4,12 @@ biglifts.stores.LiftLog.addListener('beforesync', function () {
     }
 });
 
+biglifts.stores.LiftLogSort.addListener('beforesync', function () {
+    if (Ext.getCmp('lift-log-list')) {
+        Ext.getCmp('lift-log-list').sortAndRefreshList();
+    }
+});
+
 biglifts.stores.Settings.addListener('beforesync', function () {
     if (Ext.getCmp('lift-log-list')) {
         Ext.getCmp('lift-log-list').refresh();

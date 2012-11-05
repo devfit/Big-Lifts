@@ -305,21 +305,23 @@ Ext.define('biglifts.views.LogList', {
 });
 
 biglifts.stores.LiftLogSort.addListener('beforesync', function () {
-    if (Ext.getCmp('log-list')) {
-        Ext.getCmp('log-list').updateUiForSortButtons();
-        biglifts.logList.sortAndRefreshList();
+    var logList = Ext.getCmp('log-list');
+    if (logList) {
+        logList.updateUiForSortButtons();
     }
 });
 
 biglifts.stores.LiftLog.addListener('beforesync', function () {
-    if (Ext.getCmp('log-list')) {
-        Ext.getCmp('log-list').updateCycleOptions();
+    var logList = Ext.getCmp('log-list');
+    if (logList) {
+        logList.updateCycleOptions();
     }
 });
 
 biglifts.stores.assistance.ActivityLog.addListener('beforesync', function () {
-    if (Ext.getCmp('log-list')) {
-        Ext.getCmp('log-list').updateCycleOptions();
+    var logList = Ext.getCmp('log-list');
+    if (logList) {
+        logList.updateCycleOptions();
     }
 });
 
