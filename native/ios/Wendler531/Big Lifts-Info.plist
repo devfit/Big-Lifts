@@ -35,6 +35,8 @@
 		<string>Default-Portrait~ipad.png</string>
 		<string>Default-Landscape@2x~ipad.png</string>
 		<string>Default-Portrait@2x~ipad.png</string>
+		<string>icon57.png</string>
+		<string>icon114.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -65,6 +67,8 @@
 				<string>Default-Portrait~ipad.png</string>
 				<string>Default-Landscape@2x~ipad.png</string>
 				<string>Default-Portrait@2x~ipad.png</string>
+				<string>icon57.png</string>
+				<string>icon114.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
