@@ -17,6 +17,10 @@
 		029407D8164B2F15007739B6 /* icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407D7164B2F15007739B6 /* icon114.png */; };
 		029407D9164B2F39007739B6 /* icon57.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407D5164B2F07007739B6 /* icon57.png */; };
 		029407DA164B2F42007739B6 /* icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407D7164B2F15007739B6 /* icon114.png */; };
+		029407DC164B2FA5007739B6 /* icon72.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407DB164B2FA5007739B6 /* icon72.png */; };
+		029407DE164B2FAA007739B6 /* icon144.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407DD164B2FAA007739B6 /* icon144.png */; };
+		029407DF164B2FB7007739B6 /* icon72.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407DB164B2FA5007739B6 /* icon72.png */; };
+		029407E0164B2FBC007739B6 /* icon144.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407DD164B2FAA007739B6 /* icon144.png */; };
 		029CA33015E85CB1001021B8 /* www in Resources */ = {isa = PBXBuildFile; fileRef = 301BF56E109A69640062928A /* www */; };
 		029CA33115E85CB1001021B8 /* Cordova.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30E1352610E2C1420031B30D /* Cordova.plist */; };
 		029CA33215E85CB1001021B8 /* Capture.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 3072F99613A8081B00425683 /* Capture.bundle */; };
@@ -111,6 +115,8 @@
 		02611E2015CE1D1B00F6D395 /* Default-Landscape~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape~ipad.png"; sourceTree = "<group>"; };
 		029407D5164B2F07007739B6 /* icon57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon57.png; sourceTree = "<group>"; };
 		029407D7164B2F15007739B6 /* icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114.png; sourceTree = "<group>"; };
+		029407DB164B2FA5007739B6 /* icon72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon72.png; sourceTree = "<group>"; };
+		029407DD164B2FAA007739B6 /* icon144.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon144.png; sourceTree = "<group>"; };
 		029CA35915E85CB1001021B8 /* Wendler Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wendler Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		029CA35B15E85DB5001021B8 /* WendlerPro-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "WendlerPro-Info.plist"; path = "Wendler531/WendlerPro-Info.plist"; sourceTree = SOURCE_ROOT; };
 		02CCF4341616B340001BA90F /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
@@ -237,6 +243,8 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				029407DD164B2FAA007739B6 /* icon144.png */,
+				029407DB164B2FA5007739B6 /* icon72.png */,
 				029407D7164B2F15007739B6 /* icon114.png */,
 				029407D5164B2F07007739B6 /* icon57.png */,
 				02CCF4341616B340001BA90F /* Default-568h@2x.png */,
@@ -464,6 +472,8 @@
 				029CA34115E85CB1001021B8 /* Default-Portrait@2x~ipad.png in Resources */,
 				029407D9164B2F39007739B6 /* icon57.png in Resources */,
 				029407DA164B2F42007739B6 /* icon114.png in Resources */,
+				029407DF164B2FB7007739B6 /* icon72.png in Resources */,
+				029407E0164B2FBC007739B6 /* icon144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -488,6 +498,8 @@
 				02CCF4351616B340001BA90F /* Default-568h@2x.png in Resources */,
 				029407D6164B2F07007739B6 /* icon57.png in Resources */,
 				029407D8164B2F15007739B6 /* icon114.png in Resources */,
+				029407DC164B2FA5007739B6 /* icon72.png in Resources */,
+				029407DE164B2FAA007739B6 /* icon144.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,10 +622,10 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "$(SRCROOT)/Wendler531/WendlerPro-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "Wendler Pro";
 				PROVISIONING_PROFILE = "360BBB59-EAAF-438A-B346-3BFF49F059C8";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -629,10 +641,10 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "$(SRCROOT)/Wendler531/WendlerPro-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.2;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				PRODUCT_NAME = "Wendler Pro";
 				PROVISIONING_PROFILE = "360BBB59-EAAF-438A-B346-3BFF49F059C8";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};
@@ -656,7 +668,7 @@
 				PRODUCT_NAME = "Big Lifts";
 				PROVISIONING_PROFILE = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -678,7 +690,7 @@
 				PRODUCT_NAME = "Big Lifts";
 				PROVISIONING_PROFILE = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
-				TARGETED_DEVICE_FAMILY = 1;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

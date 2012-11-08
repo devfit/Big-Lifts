@@ -37,6 +37,8 @@
 		<string>Default-Portrait@2x~ipad.png</string>
 		<string>icon57.png</string>
 		<string>icon114.png</string>
+		<string>icon72.png</string>
+		<string>icon144.png</string>
 	</array>
 	<key>CFBundleIcons</key>
 	<dict>
@@ -69,6 +71,8 @@
 				<string>Default-Portrait@2x~ipad.png</string>
 				<string>icon57.png</string>
 				<string>icon114.png</string>
+				<string>icon72.png</string>
+				<string>icon144.png</string>
 			</array>
 			<key>UIPrerenderedIcon</key>
 			<true/>
