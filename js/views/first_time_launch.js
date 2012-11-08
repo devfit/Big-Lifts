@@ -55,7 +55,7 @@ Ext.define('biglifts.views.FirstTimeLaunch', {
                             itemTpl:'{name}{[values.available ? "" : "<span class=\'coming-soon\'>Coming Soon!</span>"]}',
                             listeners:{
                                 itemtap:biglifts.routines.routineSelected,
-                                initialize:function () {
+                                updatedata:function () {
                                     var listItems = this.element.query('.x-list-item-body');
                                     biglifts.routines.routineStore.each(function (routine, i) {
                                         if (!routine.get('available')) {
