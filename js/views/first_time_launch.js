@@ -56,7 +56,7 @@ Ext.define('biglifts.views.FirstTimeLaunch', {
                             listeners:{
                                 itemtap:biglifts.routines.routineSelected,
                                 initialize:function () {
-                                    var listItems = this.element.query('.x-list-item');
+                                    var listItems = this.element.query('.x-list-item-body');
                                     biglifts.routines.routineStore.each(function (routine, i) {
                                         if (!routine.get('available')) {
                                             Ext.get(listItems[i]).addCls('unavailable');
