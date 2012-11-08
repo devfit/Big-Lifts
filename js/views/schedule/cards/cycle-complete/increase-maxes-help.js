@@ -30,6 +30,7 @@ biglifts.views.liftSchedule.IncreaseMaxesHelp = {
     layout:'fit',
     listeners:{
         show:function () {
+            biglifts.stores.lifts.Lifts.filter('enabled', true);
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen);
         },
         initialize:function () {
@@ -53,7 +54,7 @@ biglifts.views.liftSchedule.IncreaseMaxesHelp = {
         {
             id:'increase-maxes-display-list',
             xtype:'list',
-            store:biglifts.stores.lifts.EnabledLifts,
+            store:biglifts.stores.lifts.Lifts,
             itemTpl:'<table style="width:100%"><tbody><tr>' +
                 '<td style="width:33%">{name}</td>' +
                 '<td style="width:33%"><input style="color:green; width:50px" data-lift="{propertyName}" type="number" value="{cycleIncrease}"/></td>' +

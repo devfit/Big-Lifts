@@ -104,13 +104,6 @@ Ext.define('Lifts', {
             load:function () {
                 biglifts.stores.recovery.setupDefaultLifts();
                 biglifts.stores.migrations.liftModelMigration();
-                biglifts.stores.lifts.EnabledLifts.load();
-            },
-            beforesync:function () {
-                biglifts.stores.lifts.EnabledLifts.fireEvent('beforesync');
-            },
-            write:function () {
-                biglifts.stores.lifts.EnabledLifts.load();
             }
         },
         sorters:[
@@ -123,23 +116,6 @@ Ext.define('Lifts', {
 });
 
 biglifts.stores.lifts.Lifts = Ext.create('Lifts');
-biglifts.stores.lifts.EnabledLifts = Ext.create('Ext.data.Store', {
-    model:'Lift',
-    listeners:{
-        beforesync:function () {
-            this.filter({property:'enabled', value:true});
-        }
-    },
-    filters:[
-        {property:'enabled', value:true}
-    ],
-    sorters:[
-        {
-            property:'order',
-            direction:'ASC'
-        }
-    ]
-});
 biglifts.stores.push(biglifts.stores.lifts.Lifts);
 
 biglifts.stores.lifts.adjustCycleIncreaseForKg = function () {

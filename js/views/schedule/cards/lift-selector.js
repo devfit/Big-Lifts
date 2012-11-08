@@ -59,7 +59,7 @@ biglifts.liftSchedule.liftSelector.getStartingWeek = function () {
 };
 
 biglifts.liftSchedule.liftSelector.viewLift = function (view, index) {
-    var record = biglifts.stores.lifts.EnabledLifts.getAt(index);
+    var record = biglifts.stores.lifts.Lifts.getAt(index);
 
     Ext.getCmp('lift-template-toolbar').setTitle(record.get('name'));
     biglifts.liftSchedule.currentLiftProperty = record.get('propertyName');
@@ -100,7 +100,7 @@ biglifts.liftSchedule.liftSelector.showLiftsCompletedScreen = function () {
 };
 
 biglifts.liftSchedule.liftSelector.liftHasBeenCompleted = function (week, liftIndex) {
-    var liftPropertyName = biglifts.stores.lifts.EnabledLifts.getAt(liftIndex).get('propertyName');
+    var liftPropertyName = biglifts.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
     var liftCompletion = biglifts.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
     if (liftCompletion) {
         return liftCompletion.get('completed');
@@ -144,6 +144,7 @@ biglifts.views.liftSchedule.liftSelector = {
     activeItem:biglifts.liftSchedule.liftSelector.getStartingWeek() - 1,
     listeners:{
         show:function () {
+            biglifts.stores.lifts.Lifts.filter('enabled',true);
             biglifts.liftSchedule.liftSelector.setupLiftSelector();
             biglifts.liftSchedule.setupCheckedTitleWeeks();
             biglifts.navigation.unbindBackEvent();
@@ -180,7 +181,7 @@ biglifts.views.liftSchedule.liftSelector = {
         {
             title:'1',
             xtype:'list',
-            store:biglifts.stores.lifts.EnabledLifts,
+            store:biglifts.stores.lifts.Lifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -190,7 +191,7 @@ biglifts.views.liftSchedule.liftSelector = {
         {
             title:'2',
             xtype:'list',
-            store:biglifts.stores.lifts.EnabledLifts,
+            store:biglifts.stores.lifts.Lifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -200,7 +201,7 @@ biglifts.views.liftSchedule.liftSelector = {
         {
             title:'3',
             xtype:'list',
-            store:biglifts.stores.lifts.EnabledLifts,
+            store:biglifts.stores.lifts.Lifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
@@ -210,7 +211,7 @@ biglifts.views.liftSchedule.liftSelector = {
         {
             title:'4',
             xtype:'list',
-            store:biglifts.stores.lifts.EnabledLifts,
+            store:biglifts.stores.lifts.Lifts,
             itemTpl:'<strong>{name}</strong>',
             onItemDisclosure:true,
             listeners:{
