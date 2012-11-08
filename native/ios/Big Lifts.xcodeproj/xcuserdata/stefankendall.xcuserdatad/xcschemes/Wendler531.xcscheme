@@ -16,8 +16,8 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
                BuildableName = "Wendler531.app"
-               BlueprintName = "Wendler 5/3/1"
-               ReferencedContainer = "container:Wendler531.xcodeproj">
+               BlueprintName = "Big Lifts"
+               ReferencedContainer = "container:Big Lifts.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -34,8 +34,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
             BuildableName = "Wendler531.app"
-            BlueprintName = "Wendler 5/3/1"
-            ReferencedContainer = "container:Wendler531.xcodeproj">
+            BlueprintName = "Big Lifts"
+            ReferencedContainer = "container:Big Lifts.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </TestAction>
@@ -53,8 +53,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
             BuildableName = "Wendler531.app"
-            BlueprintName = "Wendler 5/3/1"
-            ReferencedContainer = "container:Wendler531.xcodeproj">
+            BlueprintName = "Big Lifts"
+            ReferencedContainer = "container:Big Lifts.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
       <AdditionalOptions>
@@ -71,8 +71,8 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1D6058900D05DD3D006BFB54"
             BuildableName = "Wendler531.app"
-            BlueprintName = "Wendler 5/3/1"
-            ReferencedContainer = "container:Wendler531.xcodeproj">
+            BlueprintName = "Big Lifts"
+            ReferencedContainer = "container:Big Lifts.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
