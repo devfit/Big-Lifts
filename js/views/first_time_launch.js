@@ -47,24 +47,14 @@ Ext.define('biglifts.views.FirstTimeLaunch', {
                         {
                             flex:1,
                             xtype:'list',
-                            onItemDisclosure:true,
                             padding:0,
                             cls:'first-time-launch-list',
                             store:biglifts.routines.routineStore,
                             itemCls:'routine-entry',
-                            itemTpl:'{name}{[values.available ? "" : "<span class=\'coming-soon\'>Coming Soon!</span>"]}',
+                            itemTpl:'<span class="{[values.available ? \"\" : \"unavailable\"]}">{name}{[values.available ? "" : "<span class=\'coming-soon\'>Coming Soon!</span>"]}</span>',
                             listeners:{
-                                itemtap:biglifts.routines.routineSelected,
-                                updatedata:function () {
-                                    var listItems = this.element.query('.x-list-item-body');
-                                    biglifts.routines.routineStore.each(function (routine, i) {
-                                        if (!routine.get('available')) {
-                                            Ext.get(listItems[i]).addCls('unavailable');
-                                        }
-                                    });
-                                }
+                                itemtap:biglifts.routines.routineSelected
                             }
-
                         }
                     ]);
                 }
