@@ -1,205 +1,202 @@
-Ext.ns('biglifts.views.liftSchedule.assistance', 'biglifts.liftSchedule.assistance.boringButBig');
+Ext.ns('biglifts.views.liftSchedule.assistance');
 
-biglifts.liftSchedule.assistance.boringButBig.showRestTimer = function () {
-    biglifts.restTimer.backLocation = 'boring-but-big';
-    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('rest-timer'));
-};
-
-biglifts.liftSchedule.assistance.boringButBig.percentageChange = function (event) {
-    var newValue = event.target.value;
-    biglifts.stores.assistance.BoringButBigPercentage.first().set('percentage', newValue);
-    biglifts.stores.assistance.BoringButBigPercentage.sync();
-    Ext.getCmp('boring-but-big-list').refresh();
-};
-
-biglifts.liftSchedule.assistance.boringButBig.liftsComplete = function () {
-    biglifts.stores.assistance.BoringButBig.each(function (movement) {
-        var assistanceRecord = {
-            movement:biglifts.stores.assistance.BoringButBig.getNameForRecord(movement.data),
-            assistanceType:'BBB',
-            sets:movement.get('sets'),
-            reps:movement.get('reps'),
-            weight:biglifts.stores.assistance.BoringButBig.getWeightForRecord(movement.data),
-            timestamp:new Date().getTime(),
-            notes:biglifts.liftSchedule.assistance.boringButBig.currentNotes,
-            cycle:biglifts.stores.CurrentCycle.getCurrentCycle()
+Ext.define("biglifts.views.BoringButBig", {
+    xtype:'boringbutbig',
+    extend:"Ext.Panel",
+    addMovement:function () {
+        var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.assistance.currentLiftProperty);
+        var bbbMovement = {
+            sets:5,
+            reps:10,
+            weight:0,
+            movement_lift_id:null,
+            lift_id:lift.get('id'),
+            name:''
         };
-        biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
-        biglifts.stores.assistance.ActivityLog.sync();
-    });
 
-    Ext.getCmp('assistance').setActiveItem(0);
-    Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
-};
+        biglifts.stores.assistance.BoringButBig.add(bbbMovement);
+        biglifts.stores.assistance.BoringButBig.sync();
+        biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement(biglifts.stores.assistance.BoringButBig.last());
+    },
+    editBbbMovement:function (dataview, index) {
+        var movement = biglifts.stores.assistance.BoringButBig.getAt(index);
+        biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement(movement);
+    },
+    filterLifts:function () {
+        biglifts.stores.assistance.BoringButBig.clearFilter(true);
+        var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.assistance.currentLiftProperty);
+        biglifts.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
+    },
+    showRestTimer:function () {
+        biglifts.restTimer.backLocation = 'boring-but-big';
+        Ext.getCmp('assistance').setActiveItem(Ext.getCmp('rest-timer'));
+    },
+    showNotesEditor:function () {
+        Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big-notes'));
+    },
+    liftsComplete:function () {
+        biglifts.stores.assistance.BoringButBig.each(function (movement) {
+            var assistanceRecord = {
+                movement:biglifts.stores.assistance.BoringButBig.getNameForRecord(movement.data),
+                assistanceType:'BBB',
+                sets:movement.get('sets'),
+                reps:movement.get('reps'),
+                weight:biglifts.stores.assistance.BoringButBig.getWeightForRecord(movement.data),
+                timestamp:new Date().getTime(),
+                notes:biglifts.liftSchedule.assistance.boringButBig.currentNotes,
+                cycle:biglifts.stores.CurrentCycle.getCurrentCycle()
+            };
+            biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
+            biglifts.stores.assistance.ActivityLog.sync();
+        });
 
-biglifts.liftSchedule.assistance.boringButBig.filterLifts = function () {
-    biglifts.stores.assistance.BoringButBig.clearFilter(true);
-    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.assistance.currentLiftProperty);
-    biglifts.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
-};
+        Ext.getCmp('assistance').setActiveItem(0);
+        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+    },
+    getPlateBreakdown:function (values) {
+        if (!values.movement_lift_id) {
+            return "";
+        }
 
-biglifts.liftSchedule.assistance.boringButBig.showNotesEditor = function () {
-    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big-notes'));
-};
+        var max = biglifts.stores.lifts.Lifts.findRecord('id', values.movement_lift_id).get('max');
+        var trainingAdjustedMax = biglifts.weight.lowerMaxToTrainingMax(max);
+        var bbbWeight = trainingAdjustedMax * biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage') / 100.0;
 
-biglifts.liftSchedule.assistance.boringButBig.editBbbMovement = function (dataview, index) {
-    var movement = biglifts.stores.assistance.BoringButBig.getAt(index);
-    biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement(movement);
-};
+        var formattedWeight = biglifts.weight.format(bbbWeight);
 
-biglifts.liftSchedule.assistance.boringButBig.addMovement = function () {
-    var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.assistance.currentLiftProperty);
-    var bbbMovement = {
-        sets:5,
-        reps:10,
-        weight:0,
-        movement_lift_id:null,
-        lift_id:lift.get('id'),
-        name:''
-    };
+        var plateList = util.plates.getFormattedPlateList(formattedWeight, biglifts.assistance.currentLiftProperty);
 
-    biglifts.stores.assistance.BoringButBig.add(bbbMovement);
-    biglifts.stores.assistance.BoringButBig.sync();
-    biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement(biglifts.stores.assistance.BoringButBig.last());
-};
+        return "<table class='assistance-plate-breakdown'><tbody><tr>" +
+            "<td width='70%'></td>" +
+            "<td style='text-align:right;' width='30%'>" +
+            '<p class="bar-loader-breakdown">' + plateList + '</p>' +
+            "</td>" +
+            "</tr></tbody></table>";
+    },
+    formatUnits:function (values) {
+        var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));
+        return weight > 0 ? biglifts.stores.Settings.first().get('units') : '';
+    },
+    formatWeight:function (values) {
+        var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));
+        return weight > 0 ? weight : '';
+    },
 
-biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
-    var list = Ext.getCmp('boring-but-big-list');
-    if (list) {
-        list.refresh();
+    percentageChange:function (event) {
+        var newValue = event.target.value;
+        biglifts.stores.assistance.BoringButBigPercentage.first().set('percentage', newValue);
+        biglifts.stores.assistance.BoringButBigPercentage.sync();
+        Ext.getCmp('boring-but-big-list').refresh();
+    },
+
+    config:{
+        layout:'fit',
+        listeners:{
+            show:function () {
+                this.filterLifts();
+                biglifts.navigation.setBackFunction(function () {
+                    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
+                });
+            },
+            initialize:function () {
+                var me = this;
+                me.add([
+                    {
+                        xtype:'toolbar',
+                        docked:'top',
+                        title:"BBB",
+                        items:[
+                            {
+                                text:'Back',
+                                ui:'back',
+                                handler:function () {
+                                    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
+                                }
+                            },
+                            {xtype:'spacer'},
+                            {
+                                id:'boring-but-big-rest-timer-button',
+                                cls:'rest-timer-button',
+                                iconCls:'clock',
+                                iconMask:true,
+                                ui:'decline',
+                                handler:Ext.bind(me.showRestTimer, me)
+                            },
+                            {
+                                id:'boring-but-big-done-button',
+                                text:'Save',
+                                ui:'confirm',
+                                handler:Ext.bind(me.liftsComplete, me)
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'toolbar',
+                        ui:'light',
+                        docked:'top',
+                        items:[
+                            {
+                                xtype:'button',
+                                text:'Notes',
+                                handler:Ext.bind(me.showNotesEditor, me)
+                            },
+                            {
+                                xtype:'panel',
+                                width:'100%',
+                                id:'bbbTopBar',
+                                style:'text-align:right',
+                                html:'<label for="bbbPercentage">%</label><input type="number" name="bbbPercentage" value=""/>',
+                                listeners:{
+                                    initialize:function () {
+                                        var bbbPercentageInput = Ext.get(this.element.query('input[name="bbbPercentage"]')[0]);
+                                        bbbPercentageInput.dom.value = biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage');
+                                        bbbPercentageInput.addListener('keyup', me.percentageChange);
+                                    }
+                                }
+                            }
+                        ]
+                    },
+                    {
+                        xtype:'toolbar',
+                        docked:'bottom',
+                        cls:'custom-movement-toolbar',
+                        items:[
+                            {
+                                xtype:'button',
+                                ui:'confirm',
+                                text:'Add...',
+                                handler:Ext.bind(me.addMovement, me)
+                            }
+                        ]
+                    },
+                    {
+                        id:'boring-but-big-list',
+                        flex:2,
+                        xtype:'list',
+                        store:biglifts.stores.assistance.BoringButBig,
+                        itemTpl:"<table class='assistance-table'><tbody><tr>" +
+                            "<td width='50%'><span class='name'>{[biglifts.stores.assistance.BoringButBig.getNameForRecord(values)]}</b></td>" +
+                            "<td width='20%'>{sets} sets</td>" +
+                            "<td style='text-align:right;' width='30%'>{reps}x " +
+                            "<span class='weight'>{[Ext.getCmp('boring-but-big').formatWeight(values)]}</span>" +
+                            "{[Ext.getCmp('boring-but-big').formatUnits(values)]}</td>" +
+                            "</tr></tbody></table>{[Ext.getCmp('boring-but-big').getPlateBreakdown(values)]}",
+                        listeners:{
+                            initialize:function (list) {
+                                list.addListener('itemtap', Ext.bind(me.editBbbMovement, me));
+                            }
+                        }
+                    }
+                ]);
+                biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
+                    Ext.getCmp('boring-but-big-list').refresh();
+                });
+            }
+        }
     }
 });
 
-biglifts.liftSchedule.assistance.boringButBig.formatWeight = function (values) {
-    var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));
-    return weight > 0 ? weight : '';
-};
-
-biglifts.liftSchedule.assistance.boringButBig.formatUnits = function (values) {
-    var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));
-    return weight > 0 ? biglifts.stores.Settings.first().get('units') : '';
-};
-
-biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown = function (values) {
-    if (!values.movement_lift_id) {
-        return "";
-    }
-
-    var max = biglifts.stores.lifts.Lifts.findRecord('id', values.movement_lift_id).get('max');
-    var trainingAdjustedMax = biglifts.weight.lowerMaxToTrainingMax(max);
-    var bbbWeight = trainingAdjustedMax * biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage') / 100.0;
-
-    var formattedWeight = biglifts.weight.format(bbbWeight);
-
-    var plateList = util.plates.getFormattedPlateList(formattedWeight, biglifts.assistance.currentLiftProperty);
-
-    return "<table class='assistance-plate-breakdown'><tbody><tr>" +
-        "<td width='70%'></td>" +
-        "<td style='text-align:right;' width='30%'>" +
-        '<p class="bar-loader-breakdown">' + plateList + '</p>' +
-        "</td>" +
-        "</tr></tbody></table>";
-};
-
 biglifts.views.liftSchedule.assistance.BoringButBig = {
-    xtype:'panel',
     id:'boring-but-big',
-    layout:'fit',
-    items:[
-        {
-            xtype:'toolbar',
-            docked:'top',
-            title:"BBB",
-            items:[
-                {
-                    text:'Back',
-                    ui:'back',
-                    handler:function () {
-                        Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
-                    }
-                },
-                {xtype:'spacer'},
-                {
-                    id:'boring-but-big-rest-timer-button',
-                    cls:'rest-timer-button',
-                    iconCls:'clock',
-                    iconMask:true,
-                    ui:'decline',
-                    handler:biglifts.liftSchedule.assistance.boringButBig.showRestTimer
-                },
-                {
-                    id:'boring-but-big-done-button',
-                    text:'Save',
-                    ui:'confirm',
-                    handler:biglifts.liftSchedule.assistance.boringButBig.liftsComplete
-                }
-            ]
-        },
-        {
-            xtype:'toolbar',
-            ui:'light',
-            docked:'top',
-            items:[
-                {
-                    xtype:'button',
-                    text:'Notes',
-                    handler:biglifts.liftSchedule.assistance.boringButBig.showNotesEditor
-                },
-                {
-                    xtype:'panel',
-                    width:'100%',
-                    id:'bbbTopBar',
-                    style:'text-align:right',
-                    html:'<label for="bbbPercentage">%</label><input type="number" name="bbbPercentage" value=""/>',
-                    listeners:{
-                        initialize:function () {
-                            var bbbPercentageInput = Ext.get(this.element.query('input[name="bbbPercentage"]')[0]);
-                            bbbPercentageInput.dom.value = biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage');
-                            bbbPercentageInput.addListener('keyup',
-                                biglifts.liftSchedule.assistance.boringButBig.percentageChange);
-                        }
-                    }
-                }
-            ]
-        },
-        {
-            xtype:'toolbar',
-            docked:'bottom',
-            cls:'custom-movement-toolbar',
-            items:[
-                {
-                    xtype:'button',
-                    ui:'confirm',
-                    text:'Add...',
-                    handler:biglifts.liftSchedule.assistance.boringButBig.addMovement
-                }
-            ]
-        },
-        {
-            id:'boring-but-big-list',
-            flex:2,
-            xtype:'list',
-            store:biglifts.stores.assistance.BoringButBig,
-            itemTpl:"<table class='assistance-table'><tbody><tr>" +
-                "<td width='50%'><span class='name'>{[biglifts.stores.assistance.BoringButBig.getNameForRecord(values)]}</b></td>" +
-                "<td width='20%'>{sets} sets</td>" +
-                "<td style='text-align:right;' width='30%'>{reps}x " +
-                "<span class='weight'>{[biglifts.liftSchedule.assistance.boringButBig.formatWeight(values)]}</span>" +
-                "{[biglifts.liftSchedule.assistance.boringButBig.formatUnits(values)]}</td>" +
-                "</tr></tbody></table>{[biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown(values)]}",
-            listeners:{
-                initialize:function (list) {
-                    list.addListener('itemtap', biglifts.liftSchedule.assistance.boringButBig.editBbbMovement);
-                }
-            }
-        }
-    ],
-    listeners:{
-        show:function () {
-            biglifts.liftSchedule.assistance.boringButBig.filterLifts();
-            biglifts.navigation.setBackFunction(function () {
-                Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
-            });
-        }
-    }
+    xtype:'boringbutbig'
 };
