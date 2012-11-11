@@ -22,7 +22,7 @@ biglifts.liftSchedule.assistance.boringButBig.liftsComplete = function () {
             weight:biglifts.stores.assistance.BoringButBig.getWeightForRecord(movement.data),
             timestamp:new Date().getTime(),
             notes:biglifts.liftSchedule.assistance.boringButBig.currentNotes,
-            cycle: biglifts.stores.CurrentCycle.getCurrentCycle()
+            cycle:biglifts.stores.CurrentCycle.getCurrentCycle()
         };
         biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
         biglifts.stores.assistance.ActivityLog.sync();
@@ -52,7 +52,7 @@ biglifts.liftSchedule.assistance.boringButBig.addMovement = function () {
     var bbbMovement = {
         sets:5,
         reps:10,
-        weight:null,
+        weight:0,
         movement_lift_id:null,
         lift_id:lift.get('id'),
         name:''
@@ -69,6 +69,16 @@ biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
         list.refresh();
     }
 });
+
+biglifts.liftSchedule.assistance.boringButBig.formatWeight = function (values) {
+    var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));
+    return weight > 0 ? weight : '';
+};
+
+biglifts.liftSchedule.assistance.boringButBig.formatUnits = function (values) {
+    var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));
+    return weight > 0 ? biglifts.stores.Settings.first().get('units') : '';
+};
 
 biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown = function (values) {
     if (!values.movement_lift_id) {
@@ -174,8 +184,8 @@ biglifts.views.liftSchedule.assistance.BoringButBig = {
                 "<td width='50%'><span class='name'>{[biglifts.stores.assistance.BoringButBig.getNameForRecord(values)]}</b></td>" +
                 "<td width='20%'>{sets} sets</td>" +
                 "<td style='text-align:right;' width='30%'>{reps}x " +
-                "<span class='weight'>{[biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values))]}</span>" +
-                "{[biglifts.stores.Settings.first().get('units')]}</td>" +
+                "<span class='weight'>{[biglifts.liftSchedule.assistance.boringButBig.formatWeight(values)]}</span>" +
+                "{[biglifts.liftSchedule.assistance.boringButBig.formatUnits(values)]}</td>" +
                 "</tr></tbody></table>{[biglifts.liftSchedule.assistance.boringButBig.getPlateBreakdown(values)]}",
             listeners:{
                 initialize:function (list) {
