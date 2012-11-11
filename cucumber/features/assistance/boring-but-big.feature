@@ -1,6 +1,15 @@
 @531
 @premium
 Feature: Boring But Big - Assistance Work
+  Scenario: 0lbs does not render
+    When I tap the assistance tab
+    And I select "5x10" assistance work
+    And I tap the "Press" list item
+    And I tap the "Add..." button
+    And I set the "name" to "Chins"
+    And I tap the "Back" button
+    Then The BBB list item 1 contains "10x"
+    Then The BBB list item 2 does not contain "lbs"
 
   Scenario: Removing BBB additional lifts
     When I tap the assistance tab
