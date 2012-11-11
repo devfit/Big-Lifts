@@ -37,7 +37,6 @@ biglifts.maxes.controller.enableLiftChecked = function (checkbox, event) {
 
     biglifts.maxes.controller.rerenderAllCheckboxes(Ext.getCmp('maxes-edit-lifts-list'));
     event.stopEvent();
-
 };
 
 biglifts.maxes.controller.renderCheckboxForLift = function (lift, domElement) {
@@ -51,8 +50,9 @@ biglifts.maxes.controller.renderCheckboxForLift = function (lift, domElement) {
     });
 };
 
-biglifts.maxes.controller.rerenderAllCheckboxes = function (parent) {
-    _.each(parent.element.query('.enable-lift-checkbox'), function (domElement) {
+biglifts.maxes.controller.rerenderAllCheckboxes = function (list) {
+    var checkboxes = list.element.query('.enable-lift-checkbox');
+    _.each(checkboxes, function (domElement) {
         if (Ext.get(domElement).down('.x-field-checkbox') == null) {
             var liftProperty = Ext.get(domElement).up('table').getAttribute('data-lift-property');
             var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', liftProperty);
@@ -142,8 +142,10 @@ biglifts.maxes.cards.editMaxesList = {
                     biglifts.components.addSwipeToDelete(this, biglifts.maxes.controller.editLift, biglifts.maxes.controller.deleteLift,
                         biglifts.maxes.edit.togglePlaceHolder, '.x-list-disclosure');
                 },
-                painted:function () {
-                    biglifts.maxes.controller.rerenderAllCheckboxes(this);
+                resize:{
+                    fn:function () {
+                        biglifts.maxes.controller.rerenderAllCheckboxes(this);
+                    }, order:'after'
                 }
             }
         }
