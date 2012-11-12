@@ -19,12 +19,10 @@ biglifts.maxes.editLiftBackButtonPressed = function () {
 
         biglifts.editLift.updateAssociatedLiftCompletion(currentModel.get('propertyName'), newLiftModel.get('propertyName'));
 
-        var somethingSaved = false;
         for (var key in newLiftModel.getData()) {
             var currentValue = currentModel.get(key);
             var newValue = newLiftModel.get(key);
             if (currentValue !== newValue) {
-                somethingSaved = true;
                 currentModel.set(key, newLiftModel.get(key));
                 currentModel.save();
             }
