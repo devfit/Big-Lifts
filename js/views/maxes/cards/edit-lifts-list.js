@@ -15,10 +15,6 @@ biglifts.maxes.controller.deleteLift = function (dataview, index, item, e) {
     Ext.getCmp('maxes-edit-lifts-list').refresh();
 };
 
-biglifts.maxes.controller.doneWithEditing = function () {
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
-};
-
 biglifts.maxes.controller.editLiftsDoneButtonPressed = function () {
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };

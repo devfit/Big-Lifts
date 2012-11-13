@@ -9,29 +9,22 @@ biglifts.maxes.editLiftBackButtonPressed = function () {
     formValues.propertyName = biglifts.models.Lift.sanitizePropertyName(formValues.name);
 
     var currentModel = biglifts.maxes.controller.getCurrentLiftModel();
-    formValues.order = currentModel.get('order');
+    var oldPropertyName = currentModel.get('propertyName');
+    for (var key in formValues) {
+        currentModel.set(key, formValues[key]);
+    }
 
-    var newLiftModel = Ext.create('Lift', formValues);
-    var errors = newLiftModel.validate();
-
-    if (errors.isValid()) {
-        newLiftModel.set('id', currentModel.data.id);
-
-        biglifts.editLift.updateAssociatedLiftCompletion(currentModel.get('propertyName'), newLiftModel.get('propertyName'));
-
-        for (var key in newLiftModel.getData()) {
-            var currentValue = currentModel.get(key);
-            var newValue = newLiftModel.get(key);
-            if (currentValue !== newValue) {
-                currentModel.set(key, newLiftModel.get(key));
-                currentModel.save();
-            }
-        }
-
+    var errors = currentModel.validate();
+    var errorItems = errors.items;
+    if (errors.isValid() || errorItems.length === 1 && errorItems[0]._message === "nonunique") {
+        biglifts.editLift.updateAssociatedLiftCompletion(oldPropertyName, currentModel.get('propertyName'));
+        currentModel.save();
         biglifts.stores.lifts.Lifts.sync();
-        biglifts.maxes.controller.doneWithEditing();
+        biglifts.stores.lifts.Lifts.fireEvent('beforesync');
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
     }
     else {
+        currentModel.reject();
         biglifts.maxes.controller.handleInvalidLift(errors);
     }
 };
@@ -69,7 +62,7 @@ biglifts.maxes.controller.deleteLiftButtonPressed = function () {
                 biglifts.liftSchedule.currentLiftProperty = null;
             }
 
-            biglifts.maxes.controller.doneWithEditing();
+            Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
         }
     });
 };
