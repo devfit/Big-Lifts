@@ -23,7 +23,7 @@ Ext.define('biglifts.views.CustomMovementEditor', {
         var newData = Ext.merge(record.data, newValues);
 
         record.set(newData);
-        record.save();
+        this.customMovementStore.sync()
     },
     config:{
         listeners:{

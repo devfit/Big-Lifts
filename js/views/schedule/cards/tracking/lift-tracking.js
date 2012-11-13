@@ -57,7 +57,6 @@ biglifts.liftSchedule.liftTracking.persistLog = function () {
 biglifts.liftSchedule.liftTracking.persistLiftCompletion = function () {
     var liftCompletion = biglifts.stores.lifts.findLiftCompletionByPropertyAndWeek(biglifts.liftSchedule.currentLiftProperty, biglifts.liftSchedule.currentWeek);
     liftCompletion.set('completed', true);
-    liftCompletion.save();
     biglifts.stores.lifts.LiftCompletion.sync();
 };
 

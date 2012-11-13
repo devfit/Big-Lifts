@@ -28,12 +28,10 @@ biglifts.stores.migrations.migrateDatesToTimestamps = function (r) {
     if (timestamp === 0) {
         if (date === null) {
             r.set('timestamp', new Date().getTime());
-            r.save();
             biglifts.stores.LiftLog.sync();
         }
         else {
             r.set('timestamp', date.getTime());
-            r.save();
             biglifts.stores.LiftLog.sync();
         }
     }

@@ -4,7 +4,6 @@ Ext.ns('biglifts.liftSchedule.cycleComplete', 'biglifts.views.liftSchedule');
 biglifts.liftSchedule.cycleComplete.unmarkAllLifts = function () {
     biglifts.stores.lifts.LiftCompletion.each(function (r) {
         r.set('completed', false);
-        r.save();
     });
 
     biglifts.stores.lifts.LiftCompletion.sync();
@@ -15,7 +14,6 @@ biglifts.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen = function (
 
     var newCycle = Ext.getCmp('cycle-complete').getValues()['new-cycle'];
     currentCycle.set('cycle', newCycle);
-    currentCycle.save();
     biglifts.stores.CurrentCycle.sync();
 
     biglifts.liftSchedule.cycleComplete.unmarkAllLifts();
@@ -37,7 +35,6 @@ biglifts.liftSchedule.increaseMaxesByCycleIncrease = function () {
         var max = r.data.max;
         var cycleIncrease = r.data.cycleIncrease;
         r.set('max', max + cycleIncrease);
-        r.save();
     });
 
     biglifts.stores.lifts.Lifts.sync();

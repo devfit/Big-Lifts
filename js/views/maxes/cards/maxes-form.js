@@ -3,7 +3,6 @@ Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.controller');
 biglifts.maxes.liftValuesChanged = function (el, newValue) {
     var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', el.getName());
     lift.set('max', newValue);
-    lift.save();
     biglifts.stores.lifts.Lifts.sync();
 };
 
@@ -113,7 +112,6 @@ biglifts.maxes.controller.barPlateButtonPressed = function () {
 biglifts.maxes.meetGoalsChanged = function (el, newValue) {
     var meetGoal = biglifts.stores.lifts.MeetGoals.findRecord('propertyName', el.getName());
     meetGoal.set('weight', newValue);
-    meetGoal.save();
     biglifts.stores.lifts.MeetGoals.sync();
 };
 

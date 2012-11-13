@@ -20,7 +20,7 @@ biglifts.restTimer.addTime = function (seconds) {
 biglifts.restTimer.startTimer = function () {
     var restTime = biglifts.stores.RestTime.first();
     restTime.set('restTimeInSeconds', biglifts.restTimer.remainingSeconds);
-    restTime.save();
+    biglifts.stores.RestTime.sync();
 
     var ONE_SECOND = 1000;
     biglifts.restTimer.timerId = setInterval(biglifts.restTimer.timerTick, ONE_SECOND);

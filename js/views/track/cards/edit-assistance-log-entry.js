@@ -16,7 +16,6 @@ biglifts.logEntry.updateAssistanceLogEntry = function () {
     var values = Ext.getCmp('edit-assistance-log-entry').getValues();
 
     biglifts.logEntry.currentAssistanceRecord.set(values);
-    biglifts.logEntry.currentAssistanceRecord.save();
     biglifts.stores.assistance.ActivityLog.sync();
 };
 

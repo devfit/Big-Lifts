@@ -7,7 +7,6 @@ Ext.define('biglifts.views.OneRepMaxCalculator', {
 
         var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', lift);
         liftRecord.set('max', estimate);
-        liftRecord.save();
         biglifts.stores.lifts.Lifts.sync();
 
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('maxes-panel'), {

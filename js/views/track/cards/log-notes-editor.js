@@ -4,8 +4,6 @@ biglifts.logEntry.returnFromEditNotes = function (newNotes) {
 
     if (biglifts.logEntry.currentRecord) {
         biglifts.logEntry.currentRecord.set('notes', newNotes);
-
-        biglifts.logEntry.currentRecord.save();
         biglifts.stores.LiftLog.sync();
     }
 

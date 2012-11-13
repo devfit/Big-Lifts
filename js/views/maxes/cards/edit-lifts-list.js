@@ -28,7 +28,6 @@ biglifts.maxes.controller.enableLiftChecked = function (checkbox, event) {
     var checked = checkbox.isChecked();
     var record = biglifts.stores.lifts.Lifts.findRecord('propertyName', propertyName);
     record.set('enabled', checked);
-    record.save();
     biglifts.stores.lifts.Lifts.sync();
 
     biglifts.maxes.controller.rerenderAllCheckboxes(Ext.getCmp('maxes-edit-lifts-list'));
@@ -137,6 +136,10 @@ biglifts.maxes.cards.editMaxesList = {
                 initialize:function () {
                     biglifts.components.addSwipeToDelete(this, biglifts.maxes.controller.editLift, biglifts.maxes.controller.deleteLift,
                         biglifts.maxes.edit.togglePlaceHolder, '.x-list-disclosure');
+                },
+                painted: function(){
+                    biglifts.maxes.controller.rerenderAllCheckboxes(this);
+                    biglifts.stores.lifts.Lifts.clearFilter(true);
                 },
                 resize:{
                     fn:function () {

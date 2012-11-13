@@ -32,7 +32,6 @@ biglifts.editLift.updateAssociatedLiftCompletion = function (oldPropertyName, ne
         biglifts.stores.lifts.LiftCompletion.each(function (record) {
             if (record.get('liftPropertyName') === oldPropertyName) {
                 record.set('liftPropertyName', newPropertyName);
-                record.save();
             }
         });
         biglifts.stores.lifts.LiftCompletion.sync();

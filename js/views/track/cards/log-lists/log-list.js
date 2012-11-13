@@ -105,7 +105,6 @@ Ext.define('biglifts.views.LogList', {
             liftLogSort.set('property', selectedProperty);
             liftLogSort.set('ascending', defaultAscending[selectedProperty]);
         }
-        liftLogSort.save();
         biglifts.stores.LiftLogSort.sync();
     },
     getCycleOptions:function () {

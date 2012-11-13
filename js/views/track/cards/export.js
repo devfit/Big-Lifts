@@ -64,7 +64,7 @@ biglifts.log.emailExport.createCsvTransformer = function (nameMapper, valueMappe
 biglifts.log.emailExport.saveUsedEmail = function (email) {
     var settings = biglifts.stores.Settings.first();
     settings.set('exportEmail', email);
-    settings.save();
+    biglifts.stores.Settings.sync();
 };
 biglifts.log.emailExport.ajaxEmailRequest = function (email, data) {
     biglifts.log.emailExport.saveUsedEmail(email);

@@ -100,11 +100,15 @@ biglifts.liftSchedule.liftSelector.showLiftsCompletedScreen = function () {
 };
 
 biglifts.liftSchedule.liftSelector.liftHasBeenCompleted = function (week, liftIndex) {
-    var liftPropertyName = biglifts.stores.lifts.Lifts.getAt(liftIndex).get('propertyName');
-    var liftCompletion = biglifts.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
-    if (liftCompletion) {
-        return liftCompletion.get('completed');
+    var lift = biglifts.stores.lifts.Lifts.getAt(liftIndex);
+    if (lift) {
+        var liftPropertyName = lift.get('propertyName');
+        var liftCompletion = biglifts.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
+        if (liftCompletion) {
+            return liftCompletion.get('completed');
+        }
     }
+
     return false;
 };
 
@@ -144,7 +148,7 @@ biglifts.views.liftSchedule.liftSelector = {
     activeItem:biglifts.liftSchedule.liftSelector.getStartingWeek() - 1,
     listeners:{
         show:function () {
-            biglifts.stores.lifts.Lifts.filter('enabled',true);
+            biglifts.stores.lifts.Lifts.filter('enabled', true);
             biglifts.liftSchedule.liftSelector.setupLiftSelector();
             biglifts.liftSchedule.setupCheckedTitleWeeks();
             biglifts.navigation.unbindBackEvent();

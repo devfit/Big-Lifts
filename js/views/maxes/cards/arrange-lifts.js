@@ -7,6 +7,10 @@ biglifts.maxes.arrangeLifts.doneButtonPressed = function () {
 
 biglifts.maxes.arrangeLifts.moveUp = function () {
     var selectedRecord = Ext.getCmp('arrange-lifts-list').getSelection()[0];
+    if (_.isUndefined(selectedRecord)) {
+        return;
+    }
+
     var beforeRecord = null;
 
     biglifts.stores.lifts.Lifts.each(function (r) {
@@ -43,8 +47,11 @@ biglifts.maxes.arrangeLifts.refreshList = function () {
 
 biglifts.maxes.arrangeLifts.moveDown = function () {
     var selectedRecord = Ext.getCmp('arrange-lifts-list').getSelection()[0];
-    var afterRecord = null;
+    if (_.isUndefined(selectedRecord)) {
+        return;
+    }
 
+    var afterRecord = null;
     biglifts.stores.lifts.Lifts.each(function (r) {
         if (afterRecord == null) {
             if (r.data.order > selectedRecord.data.order) {
@@ -73,8 +80,6 @@ biglifts.maxes.arrangeLifts.swapLiftOrder = function (lift1, lift2) {
     lift1.set('order', order2);
     lift2.set('order', order1);
 
-    lift1.save();
-    lift2.save();
     biglifts.stores.lifts.Lifts.sync();
 };
 

@@ -29,7 +29,7 @@ biglifts.liftPercentages.returnToLiftSettings = function () {
     progression.set('reps', values.reps);
     progression.set('amrap', values.amrap);
     progression.set('warmup', values.warmup);
-    progression.save();
+    biglifts.stores.lifts.LiftProgression.sync();
 
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
 };

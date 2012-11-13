@@ -49,7 +49,6 @@ biglifts.stores.migrations.liftModelMigration = function () {
         if (!r.data.propertyName) {
             var propertyName = biglifts.models.Lift.sanitizePropertyName(r.data.name);
             r.set('propertyName', propertyName);
-            r.save();
         }
 
         if (r.data.cycleIncrease === 0) {
@@ -58,14 +57,14 @@ biglifts.stores.migrations.liftModelMigration = function () {
             });
             var cycleIncrease = defaultModel.data.cycleIncrease;
             r.set('cycleIncrease', cycleIncrease);
-            r.save();
         }
 
         if (liftOrdersBroken) {
             r.set('order', r.data.id);
-            r.save();
         }
     });
+
+    biglifts.stores.lifts.Lifts.sync();
 };
 
 biglifts.stores.migrations.liftOrdersAreBroken = function () {

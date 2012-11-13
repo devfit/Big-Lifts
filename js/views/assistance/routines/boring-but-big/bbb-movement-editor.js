@@ -49,7 +49,7 @@ biglifts.liftSchedule.assistance.boringButBig.saveMovementChange = function () {
 
     var record = biglifts.liftSchedule.assistance.boringButBig.movementBeingEdited;
     record.set(Ext.merge(_.clone(record.data), newValues));
-    record.save();
+    biglifts.stores.assistance.BoringButBig.sync();
 };
 
 biglifts.views.liftSchedule.assistance.BoringButBigMovementEditor = {

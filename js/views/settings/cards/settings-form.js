@@ -29,14 +29,10 @@ biglifts.settings.controller.updateSettings = function (field, newValue, oldValu
             settingsRecord.set(property, settingsFormValues[property]);
         }
     }
-    settingsRecord.save();
     biglifts.stores.Settings.sync();
+    biglifts.stores.Settings.fireEvent('beforesync');
 
-    //TODO: Remove when beforesync fires properly for toggles
-    biglifts.maxes.controller.showHideTrainingMaxes();
     biglifts.settings.lockPortrait(settingsRecord.get('lockPortrait'));
-    biglifts.maxes.barSetup.adjustPlatesForUnits(settingsRecord.get('units'));
-
     if (!_.isUndefined(field.getName) && field.getName() === 'dateFormat') {
         biglifts.logEntry.updateDateFormat();
     }

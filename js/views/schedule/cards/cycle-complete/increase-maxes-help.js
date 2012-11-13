@@ -17,7 +17,7 @@ biglifts.liftSchedule.increaseMaxes.updateCycleIncrease = function (changedInput
     var value = parseInt(changedInput.target.value);
     var liftRecord = biglifts.stores.lifts.Lifts.findRecord('name', name);
     liftRecord.set('cycleIncrease', value);
-    liftRecord.save();
+    biglifts.stores.lifts.Lifts.sync();
 
     Ext.getCmp('increase-maxes-display-list').refresh();
     biglifts.liftSchedule.increaseMaxes.bindInputElements();

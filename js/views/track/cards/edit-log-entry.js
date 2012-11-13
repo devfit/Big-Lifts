@@ -10,7 +10,6 @@ biglifts.logEntry.updateLogEntry = function () {
     values['timestamp'] = values['timestamp'].getTime();
 
     biglifts.logEntry.currentRecord.set(values);
-    biglifts.logEntry.currentRecord.save();
     biglifts.stores.LiftLog.sync();
 };
 

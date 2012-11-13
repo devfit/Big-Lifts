@@ -10,14 +10,14 @@ biglifts.maxes.barSetup.platesValueChanged = function (field, newCount) {
 
     var plateRecord = biglifts.stores.Plates.findRecord('weight', plateWeight);
     plateRecord.set('count', newCount);
-    plateRecord.save();
+    biglifts.stores.Plates.sync();
 };
 
 biglifts.maxes.barSetup.barValueChanged = function () {
     var barPlateValues = Ext.getCmp('bar-setup-form').getValues();
     var barWeight = biglifts.stores.BarWeight.first();
     barWeight.set(barPlateValues);
-    barWeight.save();
+    biglifts.stores.BarWeight.sync();
 };
 
 biglifts.maxes.barSetup.removeLastPlate = function () {

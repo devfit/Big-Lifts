@@ -24,7 +24,6 @@ biglifts.stores.plates.migrateWeightInLbsToWeightAndUnits = function (store) {
         if (!_.isUndefined(weightInLbs) && !_.isNull(weightInLbs)) {
             record.set('weight', weightInLbs);
             record.set('weightInLbs', null);
-            record.save();
         }
     });
     store.sync();
