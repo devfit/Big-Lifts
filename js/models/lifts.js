@@ -31,8 +31,6 @@ Ext.define('Lift', {
             {name:'customBarWeight', type:'int', defaultValue:null}
         ],
         validations:[
-            {field:'propertyName', type:'custom', message:'nonunique',
-                fn:biglifts.models.Lift.uniquePropertyNameValidation},
             {field:'propertyName', type:'presence'},
             {field:'max', type:'presence'},
             {field:'cycleIncrease', type:'presence'}

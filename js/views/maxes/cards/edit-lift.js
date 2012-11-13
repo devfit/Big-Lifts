@@ -18,9 +18,7 @@ biglifts.maxes.editLiftBackButtonPressed = function () {
     var errorItems = errors.items;
     if (errors.isValid() || errorItems.length === 1 && errorItems[0]._message === "nonunique") {
         biglifts.editLift.updateAssociatedLiftCompletion(oldPropertyName, currentModel.get('propertyName'));
-        currentModel.save();
         biglifts.stores.lifts.Lifts.sync();
-        biglifts.stores.lifts.Lifts.fireEvent('beforesync');
         Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
     }
     else {
