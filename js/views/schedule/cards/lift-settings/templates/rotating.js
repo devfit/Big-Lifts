@@ -29,22 +29,25 @@ Ext.define("RotatingWeekStore", {
         });
         store.sync();
     },
+    setupDefaultData:function () {
+        var i = 0;
+        var store = this;
+        util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
+            biglifts.stores.lifts.Lifts.each(function (r) {
+                store.add({name:r.get('name'), week:store.WEEK_ORDER[i], liftProperty:r.get('propertyName')});
+                i = (i + 1) % store.WEEK_ORDER.length;
+            });
+        });
+
+        store.sync();
+    },
     config:{
-        listeners:{
-            load:function (store) {
-                if (this.getCount() === 0) {
-                    var i = 0;
-                    biglifts.stores.lifts.Lifts.each(function (r) {
-                        store.add({name:r.get('name'), week:store.WEEK_ORDER[i], liftProperty:r.get('propertyName')});
-                        i = (i + 1) % store.WEEK_ORDER.length;
-                    });
-                }
-            }
-        },
         model:'RotatingWeekEntry'
     }
-});
+})
+;
 biglifts.liftSettings.templates.rotatingWeekStore = Ext.create('RotatingWeekStore');
+biglifts.liftSettings.templates.rotatingWeekStore.setupDefaultData();
 biglifts.liftSettings.templates.rotatingWeekStore.addListener('beforesync', function () {
     var rotatingList = Ext.getCmp('rotating-lift-list');
     if (rotatingList) {
@@ -72,19 +75,6 @@ biglifts.liftSettings.templates.useRotatingTemplate = function () {
 
 biglifts.liftSettings.templates.rotating = {
     id:'rotating-template',
-    listeners:{
-        painted:function (panel) {
-            if (!this._painted) {
-                this._painted = true;
-                biglifts.liftSettings.templates.rotatingWeekStore.load({
-                    callback:function () {
-                        var listHeight = (panel.element.down('.x-list-item').getHeight() + 1) * biglifts.liftSettings.templates.rotatingWeekStore.getCount();
-                        panel.getComponent('lift-list-container').setHeight(listHeight);
-                    }
-                });
-            }
-        }
-    },
     padding:5,
     items:[
         {
@@ -126,6 +116,12 @@ biglifts.liftSettings.templates.rotating = {
             itemId:'lift-list-container',
             xtype:'container',
             layout:'fit',
+            listeners:{
+                initialize:function(){
+                    var listHeight = 52 * biglifts.liftSettings.templates.rotatingWeekStore.getCount();
+                    this.setHeight(listHeight);
+                }
+            },
             items:[
                 {
                     id:'rotating-lift-list',
