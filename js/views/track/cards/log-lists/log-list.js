@@ -108,12 +108,17 @@ Ext.define('biglifts.views.LogList', {
         biglifts.stores.LiftLogSort.sync();
     },
     getCycleOptions:function () {
-        var liftCycles = _.map(biglifts.stores.LiftLog.getRange(), function (record) {
-            return record.get('cycle');
-        });
+        var liftCycles, assistanceCycles;
+        util.withNoFilters(biglifts.stores.LiftLog, function () {
+            util.withNoFilters(biglifts.stores.assistance.ActivityLog, function () {
+                liftCycles = _.map(biglifts.stores.LiftLog.getRange(), function (record) {
+                    return record.get('cycle');
+                });
 
-        var assistanceCycles = _.map(biglifts.stores.assistance.ActivityLog.getRange(), function (record) {
-            return record.get('cycle');
+                assistanceCycles = _.map(biglifts.stores.assistance.ActivityLog.getRange(), function (record) {
+                    return record.get('cycle');
+                });
+            });
         });
 
         var cycles = _.unique(_.union(liftCycles, assistanceCycles));
@@ -131,11 +136,12 @@ Ext.define('biglifts.views.LogList', {
     },
     updateCycleOptions:function () {
         var options = this.getCycleOptions();
+        console.log("SETTING OPTIONS");
+        console.log(options);
         Ext.getCmp('log-cycle-select').setOptions(options);
     },
-    logCycleChanged:function (select, newValue, oldValue) {
+    logCycleChanged:function (select, cycle, oldValue) {
         if (oldValue) {
-            var cycle = newValue.get('value');
             if (cycle === 'All') {
                 biglifts.stores.LiftLog.clearFilter();
                 biglifts.stores.assistance.ActivityLog.clearFilter();
@@ -311,6 +317,7 @@ biglifts.stores.LiftLogSort.addListener('beforesync', function () {
 });
 
 biglifts.stores.LiftLog.addListener('beforesync', function () {
+    console.log("UPDATING CYCLE OPTIONS");
     var logList = Ext.getCmp('log-list');
     if (logList) {
         logList.updateCycleOptions();

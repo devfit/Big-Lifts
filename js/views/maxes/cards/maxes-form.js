@@ -76,7 +76,6 @@ biglifts.stores.Settings.addListener('beforesync', function () {
 });
 
 biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
-    alert("SYNC");
     if (Ext.getCmp('maxes-form-items')) {
         biglifts.maxes.controller.rebuildMaxesList();
     }

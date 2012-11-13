@@ -6,7 +6,7 @@ biglifts.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen = function () {
         {type:'slide', direction:'left'});
 };
 
-biglifts.liftSchedule.increaseMaxes.bindInputElements = function(){
+biglifts.liftSchedule.increaseMaxes.bindInputElements = function () {
     _.each(Ext.getCmp('increase-maxes-help').element.query('input'), function (input) {
         Ext.get(input).addListener('blur', biglifts.liftSchedule.increaseMaxes.updateCycleIncrease);
     })
@@ -20,7 +20,6 @@ biglifts.liftSchedule.increaseMaxes.updateCycleIncrease = function (changedInput
     biglifts.stores.lifts.Lifts.sync();
 
     Ext.getCmp('increase-maxes-display-list').refresh();
-    biglifts.liftSchedule.increaseMaxes.bindInputElements();
 };
 
 
@@ -32,9 +31,6 @@ biglifts.views.liftSchedule.IncreaseMaxesHelp = {
         show:function () {
             biglifts.stores.lifts.Lifts.filter('enabled', true);
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen);
-        },
-        initialize:function () {
-            biglifts.liftSchedule.increaseMaxes.bindInputElements();
         }
     },
     items:[
@@ -59,7 +55,12 @@ biglifts.views.liftSchedule.IncreaseMaxesHelp = {
                 '<td style="width:33%">{name}</td>' +
                 '<td style="width:33%"><input style="color:green; width:50px" data-lift="{propertyName}" type="number" value="{cycleIncrease}"/></td>' +
                 '<td style="width:34%">{max} → {[values.max+values.cycleIncrease]}</td>' +
-                '</tr></tbody></table>'
+                '</tr></tbody></table>',
+            listeners:{
+                resize:{
+                    fn:biglifts.liftSchedule.increaseMaxes.bindInputElements, order:'after'
+                }
+            }
         }
     ]
 };
