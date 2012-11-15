@@ -3,16 +3,13 @@
 @implementation Alarm
 
 - (void)alarm:(CDVInvokedUrlCommand *)command {
-    NSError *setCategoryErr = nil;
-    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:&setCategoryErr];
-    
+
     NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"alert" ofType:@"wav"];
-    NSURL *url = [NSURL URLWithString:soundPath];
+    NSURL *url = [NSURL fileURLWithPath:soundPath];
     
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryAmbient error:nil];
     AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL: url error:nil];
-    [audioPlayer prepareToPlay];
-    
-    audioPlayer.currentTime = 0;
+    audioPlayer.numberOfLoops = 0;
     [audioPlayer play];
 }
 
