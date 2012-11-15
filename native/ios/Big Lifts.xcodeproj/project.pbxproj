@@ -669,8 +669,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Kendall";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefan Kendall";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -682,8 +682,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Big Lifts";
-				PROVISIONING_PROFILE = "B36CBA5B-1F0F-452C-997C-56C2D5FB005D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B36CBA5B-1F0F-452C-997C-56C2D5FB005D";
+				PROVISIONING_PROFILE = "5D259CA0-5D96-4CD2-819A-061FF02AF6DA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5D259CA0-5D96-4CD2-819A-061FF02AF6DA";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -693,8 +693,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Kendall";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefan Kendall";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Wendler531/Big Lifts-Prefix.pch";
@@ -704,8 +704,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Big Lifts";
-				PROVISIONING_PROFILE = "B36CBA5B-1F0F-452C-997C-56C2D5FB005D";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B36CBA5B-1F0F-452C-997C-56C2D5FB005D";
+				PROVISIONING_PROFILE = "5D259CA0-5D96-4CD2-819A-061FF02AF6DA";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "5D259CA0-5D96-4CD2-819A-061FF02AF6DA";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
