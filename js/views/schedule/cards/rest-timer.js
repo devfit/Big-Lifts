@@ -47,7 +47,7 @@ biglifts.restTimer.playTimerEndSound = function () {
             window.Alert.playAlert();
         }
         else {
-            new Ext.Audio({hidden:true, url:'sounds/1khz_1_5s.mp3'}).play();
+            cordova.exec(Ext.emptyFn, Ext.emptyFn, "Alarm", "alarm", []);
         }
     }
 };

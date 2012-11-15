@@ -55,6 +55,8 @@
 		029CA35315E85CB1001021B8 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 301BF5C4109A6A2B0062928A /* SystemConfiguration.framework */; };
 		029CA35415E85CB1001021B8 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */; };
 		029CA35515E85CB1001021B8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E5649113A7FCAF007403D8 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		02C7CADE16546DDA0099FBCA /* Alarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7CADD16546DDA0099FBCA /* Alarm.m */; };
+		02C7CADF16546DDA0099FBCA /* Alarm.m in Sources */ = {isa = PBXBuildFile; fileRef = 02C7CADD16546DDA0099FBCA /* Alarm.m */; };
 		1D3623260D0F684500981E51 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
@@ -121,6 +123,8 @@
 		029407ED164B372B007739B6 /* Default-Landscape@2x~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Landscape@2x~ipad.png"; sourceTree = "<group>"; };
 		029CA35915E85CB1001021B8 /* Wendler Pro.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Wendler Pro.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		029CA35B15E85DB5001021B8 /* WendlerPro-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "WendlerPro-Info.plist"; path = "Wendler531/WendlerPro-Info.plist"; sourceTree = SOURCE_ROOT; };
+		02C7CADC16546DDA0099FBCA /* Alarm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Alarm.h; sourceTree = "<group>"; };
+		02C7CADD16546DDA0099FBCA /* Alarm.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Alarm.m; sourceTree = "<group>"; };
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		1D3623240D0F684500981E51 /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		1D3623250D0F684500981E51 /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -206,6 +210,8 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				02C7CADC16546DDA0099FBCA /* Alarm.h */,
+				02C7CADD16546DDA0099FBCA /* Alarm.m */,
 				302D95EE14D2391D003F00A1 /* MainViewController.h */,
 				302D95EF14D2391D003F00A1 /* MainViewController.m */,
 				302D95F014D2391D003F00A1 /* MainViewController.xib */,
@@ -546,6 +552,7 @@
 				029CA34315E85CB1001021B8 /* main.m in Sources */,
 				029CA34415E85CB1001021B8 /* AppDelegate.m in Sources */,
 				029CA34515E85CB1001021B8 /* MainViewController.m in Sources */,
+				02C7CADF16546DDA0099FBCA /* Alarm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -556,6 +563,7 @@
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
+				02C7CADE16546DDA0099FBCA /* Alarm.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -655,8 +663,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Kendall";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefan Kendall";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -668,8 +676,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Big Lifts";
-				PROVISIONING_PROFILE = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
+				PROVISIONING_PROFILE = "B36CBA5B-1F0F-452C-997C-56C2D5FB005D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B36CBA5B-1F0F-452C-997C-56C2D5FB005D";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -679,8 +687,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Stefan Kendall";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Stefan Kendall";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Stefan Kendall (P8UD8Q34FF)";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Wendler531/Big Lifts-Prefix.pch";
@@ -690,8 +698,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Big Lifts";
-				PROVISIONING_PROFILE = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "FA34BF44-9E72-41BE-B665-19F8C7A7D074";
+				PROVISIONING_PROFILE = "B36CBA5B-1F0F-452C-997C-56C2D5FB005D";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B36CBA5B-1F0F-452C-997C-56C2D5FB005D";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
