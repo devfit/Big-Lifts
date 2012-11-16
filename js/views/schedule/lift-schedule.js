@@ -13,11 +13,15 @@ Ext.define('biglifts.views.LiftSchedule', {
         iconCls:'icnBarbell',
         layout:'card',
         listeners:{
+            initialize:function () {
+                this.add(biglifts.views.liftSchedule.liftSelector);
+                this.setActiveItem(0);
+            },
             painted:function () {
-                if( !this._painted ){
+                if (!this._painted) {
                     this._painted = true;
 
-                    this.add([biglifts.views.liftSchedule.liftSelector,
+                    this.add([
                         biglifts.views.liftSchedule.liftTemplate,
                         biglifts.views.liftSchedule.LiftsCompletedScreen,
                         biglifts.views.liftSchedule.IncreaseMaxesHelp,
@@ -29,9 +33,8 @@ Ext.define('biglifts.views.LiftSchedule', {
                         {
                             xtype:'firstlognoteseditor',
                             id:'first-log-notes-editor'
-                        }]);
-
-                    this.setActiveItem(0);
+                        }
+                    ]);
                 }
             }
         }

@@ -56,11 +56,13 @@ Ext.application({
                     id:'first-time-launch',
                     xtype:'first-time-launch'
                 }
-            ]
+            ],
+            listeners:{
+                initialize:function(){
+                    biglifts.main.deviceReady = true;
+                    biglifts.main.loadApplication();
+                }
+            }
         });
-
-        biglifts.main.deviceReady = true;
-        biglifts.main.loadApplication();
     }
-})
-;
+});
