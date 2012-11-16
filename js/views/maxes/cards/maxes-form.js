@@ -1,16 +1,22 @@
 Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.controller');
 
 biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
-    Ext.getCmp('maxes-form').rebuildMaxesList();
+    if (Ext.getCmp('maxes-form')) {
+        Ext.getCmp('maxes-form').rebuildMaxesList();
+    }
 });
 
 biglifts.stores.Settings.addListener('beforesync', function () {
-    Ext.getCmp('maxes-form').updateTrainingPercentageDisplay();
-    Ext.getCmp('maxes-form').showHideTrainingMaxes();
+    if (Ext.getCmp('maxes-form')) {
+        Ext.getCmp('maxes-form').updateTrainingPercentageDisplay();
+        Ext.getCmp('maxes-form').showHideTrainingMaxes();
+    }
 });
 
 biglifts.stores.Template.addListener('beforesync', function () {
-    Ext.getCmp('maxes-form').showHideMeetGoals();
+    if (Ext.getCmp('maxes-form')) {
+        Ext.getCmp('maxes-form').showHideMeetGoals();
+    }
 });
 
 Ext.define("Biglifts.views.MaxesForm", {
