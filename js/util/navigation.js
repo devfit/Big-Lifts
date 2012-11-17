@@ -5,7 +5,9 @@ biglifts.navigation.backEventBound = false;
 biglifts.navigation.backFunction = Ext.emptyFn;
 
 biglifts.navigation.back = function () {
-    biglifts.navigation.backFunction();
+    if( biglifts.navigation.backEventBound ){
+        biglifts.navigation.backFunction();
+    }
 };
 
 biglifts.navigation.bindBackEvent = function () {
