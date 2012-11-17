@@ -30,40 +30,45 @@ Ext.define('biglifts.views.FirstTimeLaunch', {
             show:function () {
                 biglifts.navigation.unbindBackEvent();
             },
-            initialize:function () {
-                this.add([
-                    {
-                        xtype:'toolbar',
-                        docked:'top',
-                        title:'Big Lifts'
-                    },
-                    {
-                        html:'<h1 class="first-time-launch-header">What are you lifting?</h1>',
-                        height:30
-                    },
-                    {
-                        flex:1,
-                        xtype:'list',
-                        onItemDisclosure:true,
-                        padding:0,
-                        cls:'first-time-launch-list',
-                        store:biglifts.routines.routineStore,
-                        itemCls:'routine-entry',
-                        itemTpl:'{name}{[values.available ? "" : "<span class=\'coming-soon\'>Coming Soon!</span>"]}',
-                        listeners:{
-                            itemtap:biglifts.routines.routineSelected,
-                            initialize:function () {
-                                var listItems = this.element.query('.x-list-item');
-                                biglifts.routines.routineStore.each(function (routine, i) {
-                                    if (!routine.get('available')) {
-                                        Ext.get(listItems[i]).addCls('unavailable');
-                                    }
-                                });
+            initialize:{
+                fn:function () {
+                    this.add([
+                        {
+                            xtype:'toolbar',
+                            docked:'top',
+                            title:'Big Lifts'
+                        },
+                        {
+                            html:'<h1 class="first-time-launch-header">What are you lifting?</h1>',
+                            height:30
+                        },
+                        {
+                            flex:1,
+                            xtype:'list',
+                            onItemDisclosure:true,
+                            padding:0,
+                            cls:'first-time-launch-list',
+                            store:biglifts.routines.routineStore,
+                            itemCls:'routine-entry',
+                            itemTpl:'{name}{[values.available ? "" : "<span class=\'coming-soon\'>Coming Soon!</span>"]}',
+                            listeners:{
+                                itemtap:biglifts.routines.routineSelected,
+                                resize:{
+                                    fn:function () {
+                                        var listItems = this.element.query('.x-list-item');
+                                        biglifts.routines.routineStore.each(function (routine, i) {
+                                            if (!routine.get('available')) {
+                                                Ext.get(listItems[i]).addCls('unavailable');
+                                            }
+                                        });
+                                    },
+                                    order:'after'
+                                }
                             }
-                        }
 
-                    }
-                ]);
+                        }
+                    ]);
+                }
             }
         }
     }

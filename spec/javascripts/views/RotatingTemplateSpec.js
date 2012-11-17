@@ -12,7 +12,8 @@ describe("Rotating Template", function () {
     it("should load the rotating week in memory store from the available lifts", function () {
         liftStore.add({name:"Lift1"});
         liftStore.add({name:"Lift2"});
-        rotatingStore.load();
+        liftStore.sync();
+        rotatingStore.setupDefaultData();
         expect(rotatingStore.getCount()).toEqual(2);
         expect(rotatingStore.first().get('week')).toEqual(1);
         expect(rotatingStore.last().get('week')).toEqual(2);
@@ -23,8 +24,7 @@ describe("Rotating Template", function () {
         liftStore.add({name:"Lift2"});
         liftStore.add({name:"Lift3"});
         liftStore.add({name:"Lift4"});
-        rotatingStore.load();
-
+        biglifts.liftSettings.templates.rotatingWeekStore.setupDefaultData();
         rotatingStore.rotateWeeks();
         expect(rotatingStore.getAt(0).get('week')).toEqual(2);
         expect(rotatingStore.getAt(1).get('week')).toEqual(3);

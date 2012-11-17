@@ -135,10 +135,7 @@ Ext.define('biglifts.views.LogList', {
         return options;
     },
     updateCycleOptions:function () {
-        var options = this.getCycleOptions();
-        console.log("SETTING OPTIONS");
-        console.log(options);
-        Ext.getCmp('log-cycle-select').setOptions(options);
+        Ext.getCmp('log-cycle-select').setOptions(this.getCycleOptions());
     },
     logCycleChanged:function (select, cycle, oldValue) {
         if (oldValue) {

@@ -44,8 +44,8 @@ Ext.define("RotatingWeekStore", {
     config:{
         model:'RotatingWeekEntry'
     }
-})
-;
+});
+
 biglifts.liftSettings.templates.rotatingWeekStore = Ext.create('RotatingWeekStore');
 biglifts.liftSettings.templates.rotatingWeekStore.setupDefaultData();
 biglifts.liftSettings.templates.rotatingWeekStore.addListener('beforesync', function () {
