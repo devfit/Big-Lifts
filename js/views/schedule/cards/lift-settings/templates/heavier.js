@@ -50,4 +50,4 @@ biglifts.liftSettings.templates.heavier = {
             margin:"0 0 5 0"
         }
     ]
-}
+};

@@ -62,7 +62,6 @@ biglifts.liftSettings.templates.getDisplayForWeek = function (week) {
 
 biglifts.liftSettings.templates.setupWeekRotation = function () {
     biglifts.liftSettings.templates.rotatingWeekStore.each(function (r) {
-        console.log("Adding records");
         biglifts.stores.WeekRotation.add({liftProperty:r.get('liftProperty'), startingWeek:r.get('week')});
     });
     biglifts.stores.WeekRotation.sync();

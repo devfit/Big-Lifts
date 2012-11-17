@@ -1,7 +1,6 @@
 Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.arrangeLifts');
 
 biglifts.maxes.arrangeLifts.doneButtonPressed = function () {
-    biglifts.maxes.controller.rebuildMaxesList();
     Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };
 

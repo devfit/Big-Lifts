@@ -9,19 +9,16 @@ Ext.define('biglifts.views.Maxes', {
         iconCls:'settings',
         layout:'card',
         listeners:{
-            painted:function () {
-                if (!this._painted) {
-                    this._painted = true;
-                    this.add([
-                        biglifts.maxes.cards.maxesForm,
-                        biglifts.maxes.cards.editMaxesList,
-                        biglifts.maxes.cards.editLiftPanel,
-                        biglifts.maxes.cards.addLiftPanel,
-                        biglifts.maxes.cards.ArrangeLifts,
-                        biglifts.maxes.barSetup.BarSetup
-                    ]);
-                    this.setActiveItem(0);
-                }
+            initialize:function () {
+                this.add([
+                    biglifts.maxes.cards.maxesForm,
+                    biglifts.maxes.cards.editMaxesList,
+                    biglifts.maxes.cards.editLiftPanel,
+                    biglifts.maxes.cards.addLiftPanel,
+                    biglifts.maxes.cards.ArrangeLifts,
+                    biglifts.maxes.barSetup.BarSetup
+                ]);
+                this.setActiveItem(0);
             }
         }
     }

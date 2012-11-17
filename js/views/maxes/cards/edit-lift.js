@@ -53,7 +53,6 @@ biglifts.maxes.controller.deleteLiftButtonPressed = function () {
 
             biglifts.stores.lifts.Lifts.remove(liftModel);
             biglifts.stores.lifts.Lifts.sync();
-            biglifts.maxes.controller.rebuildMaxesList();
 
             if (biglifts.liftSchedule.currentLiftProperty === propertyName) {
                 biglifts.liftSchedule.currentLiftProperty = null;

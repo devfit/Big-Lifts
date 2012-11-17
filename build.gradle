@@ -91,6 +91,12 @@ task compressJs {
     }
 }
 
+task copyWithoutCompress(type: Copy) {
+    from '.'
+    into 'build'
+    include 'js/**/*.js'
+}
+
 def getJsFilesFrom(File htmlFile) {
     def htmlFileText = htmlFile.text
     def m = htmlFileText =~ /(?m)src=['"](.*?)['"]/
@@ -106,7 +112,7 @@ def rewriteSingleJsInclude(File htmlFile, String jsFileToAdd) {
     htmlFile.write(newHtml)
 }
 
-task copyJs(dependsOn: [compressJs]) << {
+def copyAndCombineJs() {
     StringBuilder combinedJs = new StringBuilder()
     List<File> orderedJsFiles = getJsFilesFrom(new File('build/index.html'))
     orderedJsFiles.each { File f ->
@@ -125,6 +131,14 @@ task copyJs(dependsOn: [compressJs]) << {
     new File('build/app.js').append(combinedJs)
 
     rewriteSingleJsInclude(new File('build/index.html'), 'app.js')
+}
+
+task copyJs(dependsOn: [compressJs]) << {
+    copyAndCombineJs()
+}
+
+task copyJsDebug(dependsOn: [copyWithoutCompress]) << {
+    copyAndCombineJs()
 }
 
 task copyCss(type: Copy) {
@@ -162,6 +176,7 @@ task copySoundFiles() << {
 }
 
 task build(dependsOn: [copyHtmlFiles, copyAppIcon, copySplashes, copyJs, copyCss, copySoundFiles]) << {}
+task buildDebug(dependsOn: [copyHtmlFiles, copyAppIcon, copySplashes, copyJsDebug, copyCss, copySoundFiles]) << {}
 
 task incrementJsVersion << {
     File versionFile = new File('js/version.js')
@@ -288,23 +303,10 @@ task cleanAndroidAssets() << {
 task setupAndroidAssets(dependsOn: [setupAndroidAppIcons, setupAndroidSplashScreens, setupAndroidAppFiles, setupAndroidPhonegapFiles]) << {
 }
 
-task buildNativeAndroidDebug(dependsOn: [cleanAndroidAssets, setupAndroidAssets]) << {
-    exec {
-        commandLine = ['ant', 'clean', 'debug']
-        workingDir = new File('./native/android')
-    }
-}
-
 task buildNativeAndroidRelease(dependsOn: [cleanAndroidAssets, setupAndroidAssets]) << {
     exec {
         commandLine = ['ant', 'clean', 'release']
         workingDir = new File('./native/android')
-    }
-}
-
-task installNativeAndroidDebug(dependsOn: [buildNativeAndroidDebug]) << {
-    exec {
-        commandLine = ['adb', 'install', '-r', './native/android/bin/Wendler5_3_1-debug.apk']
     }
 }
 

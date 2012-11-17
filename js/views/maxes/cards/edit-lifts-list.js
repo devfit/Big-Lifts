@@ -11,8 +11,6 @@ biglifts.maxes.controller.editLift = function (dataview, index, item, e) {
 biglifts.maxes.controller.deleteLift = function (dataview, index, item, e) {
     biglifts.stores.lifts.Lifts.removeAt(index);
     biglifts.stores.lifts.Lifts.sync();
-    biglifts.maxes.controller.rebuildMaxesList();
-    Ext.getCmp('maxes-edit-lifts-list').refresh();
 };
 
 biglifts.maxes.controller.editLiftsDoneButtonPressed = function () {
