@@ -54,9 +54,11 @@ biglifts.logEntry.getExtDateFormat = function () {
 };
 
 biglifts.logEntry.updateDateFormat = function () {
-    Ext.getCmp('edit-log-fieldset').removeAll(true);
-    Ext.getCmp('edit-log-fieldset').add(biglifts.views.log.cards.generateEditLogEntryFieldsetItems());
-    Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
+    if (Ext.getCmp('edit-log-fieldset')) {
+        Ext.getCmp('edit-log-fieldset').removeAll(true);
+        Ext.getCmp('edit-log-fieldset').add(biglifts.views.log.cards.generateEditLogEntryFieldsetItems());
+        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
+    }
 };
 
 biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {

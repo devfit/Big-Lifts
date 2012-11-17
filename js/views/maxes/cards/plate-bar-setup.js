@@ -47,16 +47,18 @@ biglifts.maxes.barSetup.addNewPlate = function () {
 biglifts.maxes.barSetup.PLATE_SUFFIX = '-lbs';
 
 biglifts.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
-    var settings = biglifts.stores.Settings.first();
-    fieldSet.removeAll();
-    biglifts.stores.Plates.each(function (r) {
-        fieldSet.add({
-            name:r.get('weight') + biglifts.maxes.barSetup.PLATE_SUFFIX,
-            xtype:'numberfield',
-            label:r.get('weight') + settings.get('units'),
-            value:r.get('count')
+    if (fieldSet) {
+        var settings = biglifts.stores.Settings.first();
+        fieldSet.removeAll();
+        biglifts.stores.Plates.each(function (r) {
+            fieldSet.add({
+                name:r.get('weight') + biglifts.maxes.barSetup.PLATE_SUFFIX,
+                xtype:'numberfield',
+                label:r.get('weight') + settings.get('units'),
+                value:r.get('count')
+            });
         });
-    });
+    }
 };
 
 biglifts.maxes.barSetup.platesAreDefault = function (comparisonPlates) {

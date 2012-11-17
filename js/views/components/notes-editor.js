@@ -13,7 +13,9 @@ biglifts.components.notesEditor.displayNotes = function (contentId, notes) {
     else {
         displayableNotes = biglifts.components.notesEditor.sanitizeForDisplay(notes);
     }
-    Ext.get(contentId).setHtml(displayableNotes);
+    if (Ext.get(contentId)) {
+        Ext.get(contentId).setHtml(displayableNotes);
+    }
 };
 
 biglifts.components.notesEditor.sanitizeForDisplay = function (notes) {
