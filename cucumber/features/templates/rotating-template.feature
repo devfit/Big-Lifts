@@ -1,5 +1,15 @@
 @531
 Feature: Rotating lift template
+  Scenario: Deload lifts are not blank
+    And I set the bench max to 300
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I select the "Rotating" lift template
+    And I tap the use template button
+    And I confirm the progression change
+    And I navigate back to the lift selector from lift settings
+    When I view the bench lift schedule for week 1
+    Then The lift schedule shows "5 110 [warm] 40%","5 110 [warm] 40%","5 110 [warm] 40%","5 110 40%","5 135 50%","5 160 60%"
 
   Scenario: Week 4 lifts are not blank
     And I set the deadlift max to 300
