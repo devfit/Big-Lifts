@@ -1,27 +1,26 @@
 describe("Boring But Big Model", function () {
     beforeEach(function () {
-        biglifts.stores.lifts.Lifts.load();
         biglifts.stores.lifts.Lifts.removeAll();
+        biglifts.stores.lifts.Lifts.add({name:'Clean', propertyName:'clean', max:300});
         biglifts.stores.lifts.Lifts.sync();
+        expect(biglifts.stores.lifts.Lifts.getCount()).toEqual(1);
 
         biglifts.stores.assistance.BoringButBig.removeAll();
         biglifts.stores.assistance.BoringButBig.sync();
 
         biglifts.stores.assistance.BoringButBigPercentage.load();
         biglifts.stores.Settings.load();
-
-        biglifts.stores.lifts.Lifts.add({name:'Clean', propertyName:'clean', max:300});
     });
 
     it("should default to a copy of each of the current big lifts", function () {
+        biglifts.stores.lifts.Lifts.load();
         biglifts.stores.assistance.BoringButBig.load();
-        biglifts.stores.lifts.Lifts.fireEvent('load');
 
         expect(biglifts.stores.assistance.BoringButBig.getCount()).toEqual(biglifts.stores.lifts.Lifts.getCount());
     });
 
     it("should default to a null weight and non-null associated movement_lift_id", function () {
-        biglifts.stores.lifts.Lifts.fireEvent('load');
+        biglifts.stores.lifts.Lifts.load();
         biglifts.stores.assistance.BoringButBig.load();
 
         var firstBbbLift = biglifts.stores.assistance.BoringButBig.first();
@@ -49,7 +48,7 @@ describe("Boring But Big Model", function () {
     });
 
     it("should store the boring but big main lift when creating default records", function () {
-        biglifts.stores.lifts.Lifts.fireEvent('load');
+        biglifts.stores.lifts.Lifts.load();
         biglifts.stores.assistance.BoringButBig.load();
 
         var firstBbbLift = biglifts.stores.assistance.BoringButBig.first();
@@ -57,7 +56,6 @@ describe("Boring But Big Model", function () {
     });
 
     it("should return the name of the associated lift record for the movement", function () {
-        biglifts.stores.lifts.Lifts.fireEvent('load');
         biglifts.stores.assistance.BoringButBig.load();
 
         var firstBbbLift = biglifts.stores.assistance.BoringButBig.first();
@@ -65,7 +63,7 @@ describe("Boring But Big Model", function () {
     });
 
     it("should return the name of the movement if it is set", function () {
-        biglifts.stores.lifts.Lifts.fireEvent('load');
+        biglifts.stores.lifts.Lifts.load();
         biglifts.stores.assistance.BoringButBig.load();
 
         biglifts.stores.assistance.BoringButBig.add({name:"Chins"});

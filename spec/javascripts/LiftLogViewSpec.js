@@ -5,9 +5,6 @@ describe("Lift Log view", function () {
 
         biglifts.stores.LiftLog.sync();
         biglifts.stores.assistance.ActivityLog.sync();
-
-        biglifts.stores.LiftLogSort.removeAll();
-        biglifts.stores.LiftLogSort.sync();
         biglifts.stores.LiftLogSort.load();
     });
 
