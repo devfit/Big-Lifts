@@ -1,39 +1,48 @@
 describe("The lift selector", function () {
-    beforeEach(function(){
-        biglifts.stores.lifts.Lifts.removeAll();
+    var liftStore = biglifts.stores.lifts.Lifts;
+    var liftCompletionStore = biglifts.stores.lifts.LiftCompletion;
 
-        biglifts.stores.lifts.Lifts.add({propertyName:'squat', enabled: true});
-        biglifts.stores.lifts.Lifts.add({propertyName:'press', enabled: true});
+    beforeEach(function(){
+        liftStore.removeAll();
+
+        liftStore.add({propertyName:'squat', enabled: true});
+        liftStore.add({propertyName:'press', enabled: true});
+        liftStore.sync();
     });
 
     it("should determine the starting week correctly", function () {
-        biglifts.stores.lifts.LiftCompletion.removeAll();
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'squat', week:1, completed:true});
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'press', week:1, completed:true});
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'squat', week:2, completed:false});
+        liftCompletionStore.removeAll();
+        liftCompletionStore.add({liftPropertyName:'squat', week:1, completed:true});
+        liftCompletionStore.add({liftPropertyName:'press', week:1, completed:true});
+        liftCompletionStore.add({liftPropertyName:'squat', week:2, completed:false});
 
         expect(biglifts.liftSchedule.liftSelector.getStartingWeek()).toEqual(2);
     });
 
     it("should return the last week as the starting week if all lifts are completed", function () {
-        biglifts.stores.lifts.LiftCompletion.removeAll();
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'squat', week:1, completed:true});
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'press', week:1, completed:true});
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'squat', week:2, completed:true});
+        liftCompletionStore.removeAll();
+        liftCompletionStore.add({liftPropertyName:'squat', week:1, completed:true});
+        liftCompletionStore.add({liftPropertyName:'press', week:1, completed:true});
+        liftCompletionStore.add({liftPropertyName:'squat', week:2, completed:true});
 
         expect(biglifts.liftSchedule.liftSelector.getStartingWeek()).toEqual(2);
     });
 
     it("should ignored disabled lifts when determining the starting week", function () {
-        biglifts.stores.lifts.LiftCompletion.removeAll();
-        biglifts.stores.lifts.Lifts.removeAll();
+        liftStore.removeAll();
+        liftStore.sync();
+        liftCompletionStore.removeAll();
+        liftCompletionStore.sync();
 
-        biglifts.stores.lifts.Lifts.add({propertyName:'squat', enabled: true});
-        biglifts.stores.lifts.Lifts.add({propertyName:'press', enabled: false});
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'squat', week:1, completed:true});
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'press', week:1, completed:false});
-        biglifts.stores.lifts.LiftCompletion.add({liftPropertyName:'squat', week:2, completed:true});
+        liftStore.clearFilter(true);
+        liftStore.add({propertyName:'squat', enabled: true});
+        liftStore.add({propertyName:'press', enabled: false});
+        liftStore.sync();
 
+        liftCompletionStore.add({liftPropertyName:'squat', week:1, completed:true});
+        liftCompletionStore.add({liftPropertyName:'press', week:1, completed:false});
+        liftCompletionStore.add({liftPropertyName:'squat', week:2, completed:true});
+        liftCompletionStore.sync();
         expect(biglifts.liftSchedule.liftSelector.getStartingWeek()).toEqual(2);
     });
 });

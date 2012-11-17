@@ -22,7 +22,6 @@ src_files:
         - js/util/timing.js
         - js/util/phonegap-util.js
         - js/version.js
-        - js/util/custom-validation.js
         - js/util/email.js
         - js/util/backup/files.js
         - js/util/backup/store-file-backer.js
