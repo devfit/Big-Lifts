@@ -1,5 +1,5 @@
 Then /^Assistance movement (\d+) is "(.*?)"$/ do |index, movement_text|
-  movement_row = get_displayed_list_items().find_elements(:class => 'x-list-item')[index.to_i - 1]
+  movement_row = get_displayed_list_items()[index.to_i - 1]
   movement_row.text().should == movement_text
 end
 

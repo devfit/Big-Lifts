@@ -5,7 +5,7 @@ biglifts.logEntry.returnFromEditAssistanceNotes = function (newNotes) {
     biglifts.logEntry.currentAssistanceRecord.set('notes', newNotes);
     biglifts.stores.assistance.ActivityLog.sync();
 
-    biglifts.components.notesEditor.displayNotes(Ext.getCmp('edit-assistance-log-entry'), newNotes);
+    biglifts.components.notesEditor.displayNotes('edit-assistance-log-notes', newNotes);
 };
 
 Ext.define('biglifts.views.log.cards.AssistanceLogNotesEditor', {
