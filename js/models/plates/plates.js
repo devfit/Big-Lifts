@@ -18,17 +18,6 @@ Ext.define('Plates', {
     }
 });
 
-biglifts.stores.plates.migrateWeightInLbsToWeightAndUnits = function (store) {
-    store.each(function (record) {
-        var weightInLbs = record.get('weightInLbs');
-        if (!_.isUndefined(weightInLbs) && !_.isNull(weightInLbs)) {
-            record.set('weight', weightInLbs);
-            record.set('weightInLbs', null);
-        }
-    });
-    store.sync();
-};
-
 Ext.define("PlateStore", {
     extend:'Ext.data.Store',
     getAllPlatePairs:function () {
@@ -56,16 +45,34 @@ Ext.define("PlateStore", {
         {weight:2.5, count:6},
         {weight:1.25, count:6}
     ],
+    migrateWeightInLbsToWeightAndUnits:function () {
+        this.each(function (record) {
+            var weightInLbs = record.get('weightInLbs');
+            if (!_.isUndefined(weightInLbs) && !_.isNull(weightInLbs)) {
+                record.set('weight', weightInLbs);
+                record.set('weightInLbs', null);
+            }
+        });
+        this.sync();
+    },
+    platesAreDefault:function (comparisonPlates) {
+        var actualPlateWeights = [];
+        this.each(function (p) {
+            actualPlateWeights.push({weight:p.get('weight'), count:p.get('count')});
+        });
+
+        return _.isEqual(actualPlateWeights, comparisonPlates);
+    },
     config:{
         model:'Plates',
         listeners:{
             load:function (store) {
                 if (store.getCount() === 0) {
-                    store.add(biglifts.stores.Plates.DEFAULT_PLATES_LBS);
+                    store.add(this.DEFAULT_PLATES_LBS);
                     store.sync();
                 }
                 else {
-                    biglifts.stores.plates.migrateWeightInLbsToWeightAndUnits(this);
+                    this.migrateWeightInLbsToWeightAndUnits();
                 }
             }
         }

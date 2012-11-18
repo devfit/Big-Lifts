@@ -61,35 +61,32 @@ biglifts.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
     }
 };
 
-biglifts.maxes.barSetup.platesAreDefault = function (comparisonPlates) {
-    var actualPlateWeights = [];
-    biglifts.stores.Plates.each(function (p) {
-        actualPlateWeights.push({weight:p.get('weight'), count:p.get('count')});
-    });
-
-    return _.isEqual(actualPlateWeights, comparisonPlates);
-};
-
 biglifts.maxes.barSetup.adjustPlatesForUnits = function (units) {
-    if (units == 'kg' && biglifts.maxes.barSetup.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_LBS)) {
+    if (units == 'kg' && biglifts.stores.Plates.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_LBS)) {
         biglifts.stores.Plates.removeAll();
         biglifts.stores.Plates.add(biglifts.stores.Plates.DEFAULT_PLATES_KG);
     }
-    else if (units == 'lbs' && biglifts.maxes.barSetup.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_KG)) {
+    else if (units == 'lbs' && biglifts.stores.Plates.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_KG)) {
         biglifts.stores.Plates.removeAll();
         biglifts.stores.Plates.add(biglifts.stores.Plates.DEFAULT_PLATES_LBS);
     }
 
     var barWeight = biglifts.stores.BarWeight.first();
     if (units === 'kg' && barWeight.get('weight') === 45) {
-        barWeight.set('weight', 20.4);
+        barWeight.set('weight', biglifts.stores.BarWeight.DEFAULT_BAR_WEIGHT_KG);
     }
-    else if (units === 'kg' && barWeight.get('weight') === 20.4) {
+    else if (units === 'lb' && barWeight.get('weight') === biglifts.stores.BarWeight.DEFAULT_BAR_WEIGHT_KG) {
         barWeight.set('weight', 45);
     }
 
+    biglifts.stores.Plates.sync();
+    biglifts.stores.BarWeight.sync();
     biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
 };
+
+biglifts.stores.Settings.addListener('beforesync', function () {
+    biglifts.maxes.barSetup.adjustPlatesForUnits(this.first().get('units'));
+});
 
 biglifts.maxes.barSetup.BarSetup = {
     xtype:'panel',
@@ -99,6 +96,14 @@ biglifts.maxes.barSetup.BarSetup = {
         show:function () {
             biglifts.navigation.setBackFunction(biglifts.maxes.barSetup.backButtonPressed);
             Ext.getCmp('bar-setup-form').setRecord(biglifts.stores.BarWeight.first());
+        },
+        painted:function () {
+            if (!this._painted) {
+                this._painted = true;
+                biglifts.stores.BarWeight.addListener('beforesync', function () {
+                    Ext.getCmp('bar-weight-field').setValue(this.first().get('weight'));
+                });
+            }
         }
     },
     items:[
@@ -134,6 +139,7 @@ biglifts.maxes.barSetup.BarSetup = {
                     },
                     items:[
                         {
+                            id:'bar-weight-field',
                             xtype:'numberfield',
                             name:'weight',
                             label:'Bar Weight'

@@ -15,28 +15,34 @@ Ext.define('BarWeight', {
     }
 });
 
-biglifts.stores.defaults.loadDefaultBarWeight = function (store) {
-    var settings = biglifts.stores.Settings.first();
-    if (settings.get('units') === 'lbs') {
-        store.add({weight:45});
-    }
-    else {
-        store.add({weight:20.4});
-    }
-
-    store.sync();
-};
-
-biglifts.stores.BarWeight = Ext.create('Ext.data.Store', {
-    model:'BarWeight',
-    listeners:{
-        load:function (store) {
-            if (store.getCount() === 0) {
-                util.withLoadedStore(biglifts.stores.Settings, function () {
-                    biglifts.stores.defaults.loadDefaultBarWeight(store);
-                });
+Ext.define("BarWeightStore", {
+    extend:"Ext.data.Store",
+    DEFAULT_BAR_WEIGHT_LBS:45,
+    DEFAULT_BAR_WEIGHT_KG:20.4,
+    loadDefaultBarWeight:function () {
+        var me = this;
+        util.withLoadedStore(biglifts.stores.Settings, function () {
+            var settings = biglifts.stores.Settings.first();
+            if (settings.get('units') === 'lbs') {
+                me.add({weight:me.DEFAULT_BAR_WEIGHT_LBS});
+            }
+            else {
+                me.add({weight:me.DEFAULT_BAR_WEIGHT_KG});
+            }
+            me.sync();
+        });
+    },
+    config:{
+        model:'BarWeight',
+        listeners:{
+            load:function () {
+                if (this.getCount() === 0) {
+                    this.loadDefaultBarWeight();
+                }
             }
         }
     }
 });
+
+biglifts.stores.BarWeight = Ext.create('BarWeightStore');
 biglifts.stores.push(biglifts.stores.BarWeight);
