@@ -61,6 +61,8 @@ biglifts.logEntry.updateDateFormat = function () {
     }
 };
 
+biglifts.stores.Settings.addListener('beforesync', biglifts.logEntry.updateDateFormat);
+
 biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {
     return [
         {

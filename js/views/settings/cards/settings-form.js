@@ -31,9 +31,6 @@ biglifts.settings.controller.updateSettings = function (field, newValue, oldValu
     biglifts.stores.Settings.fireEvent("beforesync");
 
     biglifts.settings.lockPortrait(settingsRecord.get('lockPortrait'));
-    if (!_.isUndefined(field.getName) && field.getName() === 'dateFormat') {
-        biglifts.logEntry.updateDateFormat();
-    }
 };
 
 biglifts.views.SettingsForm = {
