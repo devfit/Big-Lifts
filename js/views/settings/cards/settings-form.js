@@ -16,10 +16,8 @@ biglifts.settings.controller.updateSettings = function (field, newValue, oldValu
         return;
     }
 
-    if (!_.isUndefined(oldValue) && !_.isUndefined(newValue) && _.has(oldValue, 'data') && _.has(newValue, 'data')) {
-        if (oldValue.data.value === 'lbs' && newValue.data.value === 'kg') {
-            biglifts.stores.lifts.adjustCycleIncreaseForKg();
-        }
+    if (oldValue === 'lbs' && newValue === 'kg') {
+        biglifts.stores.lifts.Lifts.adjustCycleIncreaseForKg();
     }
 
     var settingsRecord = biglifts.stores.Settings.first();

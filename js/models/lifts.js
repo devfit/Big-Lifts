@@ -89,6 +89,16 @@ Ext.define('Lifts', {
         });
         return _.keys(liftNameSet);
     },
+    adjustCycleIncreaseForKg:function () {
+        var lbToKg = {10:5, 5:2.5};
+        this.each(function (r) {
+            var newKgIncrease = lbToKg[r.data.cycleIncrease];
+            if (typeof(newKgIncrease) !== 'undefined') {
+                r.set('cycleIncrease', lbToKg[r.data.cycleIncrease]);
+            }
+        });
+        this.sync();
+    },
     DEFAULT_LIFTS:[
         Ext.create('Lift', {name:'Squat', max:200, propertyName:'squat', cycleIncrease:10, order:0}),
         Ext.create('Lift', {name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10, order:1}),
@@ -110,18 +120,8 @@ Ext.define('Lifts', {
             }
         ]
     }
-});
+})
+;
 
 biglifts.stores.lifts.Lifts = Ext.create('Lifts');
 biglifts.stores.push(biglifts.stores.lifts.Lifts);
-
-biglifts.stores.lifts.adjustCycleIncreaseForKg = function () {
-    var lbToKg = {10:5, 5:2.5};
-    biglifts.stores.lifts.Lifts.each(function (r) {
-        var newKgIncrease = lbToKg[r.data.cycleIncrease];
-        if (typeof(newKgIncrease) !== 'undefined') {
-            r.set('cycleIncrease', lbToKg[r.data.cycleIncrease]);
-            r.save();
-        }
-    });
-};
