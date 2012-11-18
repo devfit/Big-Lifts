@@ -5,7 +5,7 @@ biglifts.logEntry.currentAssistanceRecord = null;
 
 biglifts.logEntry.setupAssistanceLogEntry = function (assistanceRecord) {
     biglifts.logEntry.currentAssistanceRecord = assistanceRecord;
-    Ext.getCmp('log').setActiveItem('edit-assistance-log-entry', {type:'slide', direction:'left'});
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('edit-assistance-log-entry'), {type:'slide', direction:'left'});
     Ext.getCmp('edit-assistance-log-entry-toolbar').setTitle(assistanceRecord.get('movement'));
 
     Ext.getCmp('edit-assistance-log-entry').setValues(assistanceRecord.data);
