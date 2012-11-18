@@ -4,10 +4,11 @@ Ext.define('biglifts.views.CustomMovementEditor', {
     assistanceViewId:null,
     customMovementStore:null,
     showEditCustomMovement:function (movement) {
-        Ext.getCmp('assistance').setActiveItem(this);
         this.setRecord(movement);
+        Ext.getCmp('assistance').setActiveItem(this);
     },
     returnToCustom:function () {
+        this.saveMovementChange();
         Ext.getCmp('assistance').setActiveItem(Ext.getCmp(this.assistanceViewId));
     },
     deleteMovement:function () {
@@ -61,13 +62,6 @@ Ext.define('biglifts.views.CustomMovementEditor', {
                     {
                         xtype:'fieldset',
                         cls:'fieldset-title-no-margin',
-                        defaults:{
-                            listeners:{
-                                initialize:function () {
-                                    this.addListener('change', Ext.bind(me.saveMovementChange, me));
-                                }
-                            }
-                        },
                         items:[
                             {
                                 xtype:'textfield',
