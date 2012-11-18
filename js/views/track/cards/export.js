@@ -72,7 +72,6 @@ biglifts.log.emailExport.ajaxEmailRequest = function (email, data) {
         xtype:'loadmask',
         message:'Exporting...'
     });
-    console.log( data );
     Ext.Ajax.request({
         url:'http://wendler.herokuapp.com/email',
         method:'POST',

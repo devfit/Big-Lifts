@@ -2,7 +2,7 @@ Ext.ns('biglifts.logList');
 
 biglifts.logList.showAssistanceLogEntry = function (dataview, index, item, e) {
     var assistanceLogRecord = biglifts.stores.assistance.ActivityLog.getAt(index);
-    biglifts.logEntry.setupAssistanceLogEntry(assistanceLogRecord);
+    Ext.getCmp('edit-assistance-log-entry').setupAssistanceLogEntry(assistanceLogRecord);
 };
 
 biglifts.logList.deleteAssistanceEntry = function (dataview, index, item, e) {
