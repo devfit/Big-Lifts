@@ -46,6 +46,7 @@ Ext.define("biglifts.views.BoringButBig", {
                 notes:biglifts.liftSchedule.assistance.boringButBig.currentNotes,
                 cycle:biglifts.stores.CurrentCycle.getCurrentCycle()
             };
+            console.log(assistanceRecord);
             biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
             biglifts.stores.assistance.ActivityLog.sync();
         });

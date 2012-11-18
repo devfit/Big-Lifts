@@ -2,8 +2,12 @@
 Ext.ns('biglifts.views.log.cards', 'biglifts.logEntry');
 
 biglifts.logEntry.backToLogList = function () {
-    biglifts.logEntry.updateLogEntry();
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
+};
+
+biglifts.logEntry.returnFromEditLogEntry = function(){
+    biglifts.logEntry.updateLogEntry();
+    biglifts.logEntry.backToLogList();
 };
 
 biglifts.logEntry.updateLogEntry = function () {
@@ -146,7 +150,7 @@ biglifts.views.log.cards.EditLogEntry = {
             if (Ext.get('edit-log-notes')) {
                 Ext.get('edit-log-notes').removeCls('tapped');
             }
-            biglifts.navigation.setBackFunction(biglifts.logEntry.backToLogList);
+            biglifts.navigation.setBackFunction(biglifts.logEntry.returnFromEditLogEntry);
         }
     },
     items:[
@@ -160,7 +164,7 @@ biglifts.views.log.cards.EditLogEntry = {
                     id:'edit-log-back-button',
                     text:'Back',
                     ui:'back',
-                    handler:biglifts.logEntry.backToLogList
+                    handler:biglifts.logEntry.returnFromEditLogEntry
                 },
                 {xtype:'spacer'},
                 {

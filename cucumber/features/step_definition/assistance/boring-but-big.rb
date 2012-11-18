@@ -22,7 +22,7 @@ When /^I save the boring but big log$/ do
 end
 
 Then /^I see (\d+) assistance log entry for "([^"]*)"$/ do |numberOfEntries, entryText|
-  log_rows = @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'lift-log-row')
+  log_rows = get_displayed_list_items()
   log_rows.length.should == numberOfEntries.to_i
 
   log_row = log_rows[0]

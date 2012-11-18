@@ -8,7 +8,7 @@ biglifts.logEntry.setupAssistanceLogEntry = function (assistanceRecord) {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('edit-assistance-log-entry'), {type:'slide', direction:'left'});
     Ext.getCmp('edit-assistance-log-entry-toolbar').setTitle(assistanceRecord.get('movement'));
 
-    Ext.getCmp('edit-assistance-log-entry').setValues(assistanceRecord.data);
+    Ext.getCmp('edit-assistance-log-entry').setRecord(assistanceRecord);
     biglifts.components.notesEditor.displayNotes('edit-assistance-log-notes', assistanceRecord.data.notes);
 };
 
@@ -30,6 +30,11 @@ biglifts.logEntry.deleteAssistanceLogEntry = function () {
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
 };
 
+biglifts.logEntry.returnAndUpdate = function () {
+    biglifts.logEntry.updateAssistanceLogEntry();
+    biglifts.logEntry.backToLogList();
+};
+
 biglifts.views.log.cards.EditAssistanceLogEntry = {
     id:'edit-assistance-log-entry',
     xtype:'formpanel',
@@ -43,7 +48,7 @@ biglifts.views.log.cards.EditAssistanceLogEntry = {
             }
         },
         show:function () {
-            biglifts.navigation.setBackFunction(biglifts.logEntry.backToLogList);
+            biglifts.navigation.setBackFunction(biglifts.logEntry.returnAndUpdate);
         }
     },
     items:[
@@ -55,7 +60,7 @@ biglifts.views.log.cards.EditAssistanceLogEntry = {
                 {
                     text:'Back',
                     ui:'back',
-                    handler:biglifts.logEntry.backToLogList
+                    handler:biglifts.logEntry.returnAndUpdate
                 },
                 {xtype:'spacer'},
                 {
@@ -72,11 +77,6 @@ biglifts.views.log.cards.EditAssistanceLogEntry = {
             cls:'fieldset-title-no-margin',
             style:'margin-bottom: 7px;',
             xtype:'fieldset',
-            defaults:{
-                listeners:{
-                    change:biglifts.logEntry.updateAssistanceLogEntry
-                }
-            },
             items:[
                 {
                     label:'Sets',
