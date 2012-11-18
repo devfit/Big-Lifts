@@ -9,7 +9,6 @@ When /^I select week (\d+) for the manual percentages editor$/ do |week|
   }[0]
   week_tab.click()
   sleep @ANIMATION_DELAY
-  sleep 0.5
 end
 
 When /^I select set (\d+) on the manual percentages editor$/ do |set|
@@ -43,11 +42,9 @@ Then /^The set (\d+) reps shows (\d+)$/ do |set, reps|
 end
 
 Then /^Lift progressions in the list are visible$/ do
-  @driver.find_elements(:class => 'lift-percentage-row').select { |row|
-    row.displayed?
-  }.each do |row|
-    row_text_present = row.text == ''
-    row_text_present.should be_false
+  get_displayed_list_items().each do |row|
+    row_text_present = row.text != ''
+    row_text_present.should be_true
   end
 end
 
