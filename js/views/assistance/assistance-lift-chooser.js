@@ -22,7 +22,7 @@ Ext.define('biglifts.views.AssistanceLiftChooser', {
         id:'assistance-lift-chooser',
         layout:'fit',
         listeners:{
-            show: function(){
+            show:function () {
                 biglifts.stores.lifts.Lifts.filter('enabled', true);
             },
             initialize:function () {

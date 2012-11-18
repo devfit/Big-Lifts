@@ -91,7 +91,7 @@ biglifts.views.MoreInfoList = {
     id:'more-info-list-panel',
     layout:'fit',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.unbindBackEvent();
         }
     },

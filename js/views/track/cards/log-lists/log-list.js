@@ -154,7 +154,7 @@ Ext.define('biglifts.views.LogList', {
     config:{
         layout:'fit',
         listeners:{
-            show:function () {
+            painted:function () {
                 biglifts.navigation.unbindBackEvent();
             },
             initialize:function () {

@@ -78,7 +78,7 @@ Ext.define('biglifts.views.AssistanceChooser', {
         xtype:'panel',
         layout:'fit',
         listeners:{
-            show:function () {
+            painted:function () {
                 this.highlightLastChosenAssistance();
                 biglifts.navigation.unbindBackEvent();
             },

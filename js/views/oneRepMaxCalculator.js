@@ -26,7 +26,7 @@ Ext.define('biglifts.views.OneRepMaxCalculator', {
         title:'1-Rep',
         iconCls:'search',
         listeners:{
-            show:function () {
+            painted:function () {
                 if (this.getBackFunction()) {
                     biglifts.navigation.setBackFunction(this.getBackFunction());
                 } else {

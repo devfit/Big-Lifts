@@ -43,9 +43,12 @@ biglifts.liftSchedule.liftSelector.getStartingWeek = function () {
             weeksCompleted[week] = true;
         }
 
-        var enabled = biglifts.stores.lifts.Lifts.findRecord('propertyName', record.get('liftPropertyName')).get('enabled');
-        if (enabled) {
-            weeksCompleted[week] &= record.data.completed;
+        var associatedLift = biglifts.stores.lifts.Lifts.findRecord('propertyName', record.get('liftPropertyName'));
+        if (associatedLift) {
+            var enabled = associatedLift.get('enabled');
+            if (enabled) {
+                weeksCompleted[week] &= record.data.completed;
+            }
         }
     });
 
@@ -147,7 +150,7 @@ biglifts.views.liftSchedule.liftSelector = {
     id:'lift-selector',
     activeItem:biglifts.liftSchedule.liftSelector.getStartingWeek() - 1,
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.stores.lifts.Lifts.filter('enabled', true);
             biglifts.liftSchedule.liftSelector.setupLiftSelector();
             biglifts.liftSchedule.setupCheckedTitleWeeks();
@@ -183,6 +186,7 @@ biglifts.views.liftSchedule.liftSelector = {
             ]
         },
         {
+            id:'week1list',
             title:'1',
             xtype:'list',
             store:biglifts.stores.lifts.Lifts,

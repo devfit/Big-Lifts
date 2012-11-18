@@ -68,6 +68,11 @@ biglifts.maxes.cards.editMaxesList = {
     id:'maxes-edit-lifts-panel',
     xtype:'panel',
     layout:'fit',
+    listeners:{
+        show:function () {
+            biglifts.stores.lifts.Lifts.clearFilter();
+        }
+    },
     items:[
         {
             xtype:'toolbar',
@@ -135,9 +140,8 @@ biglifts.maxes.cards.editMaxesList = {
                     biglifts.components.addSwipeToDelete(this, biglifts.maxes.controller.editLift, biglifts.maxes.controller.deleteLift,
                         biglifts.maxes.edit.togglePlaceHolder, '.x-list-disclosure');
                 },
-                painted: function(){
+                painted:function () {
                     biglifts.maxes.controller.rerenderAllCheckboxes(this);
-                    biglifts.stores.lifts.Lifts.clearFilter(true);
                 },
                 resize:{
                     fn:function () {

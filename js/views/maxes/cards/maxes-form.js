@@ -133,9 +133,12 @@ Ext.define("Biglifts.views.MaxesForm", {
     config:{
         scroll:'vertical',
         listeners:{
-            show:function () {
-                biglifts.navigation.unbindBackEvent();
+            painted:function () {
+                biglifts.stores.lifts.Lifts.filter('enabled', true);
+                this.rebuildMaxesList();
                 this.showHideMeetGoals();
+
+                biglifts.navigation.unbindBackEvent();
             },
             initialize:function () {
                 var me = this;
