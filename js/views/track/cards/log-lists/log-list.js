@@ -155,7 +155,14 @@ Ext.define('biglifts.views.LogList', {
         layout:'fit',
         listeners:{
             painted:function () {
+                var me = this;
                 biglifts.navigation.unbindBackEvent();
+                if (!this._painted) {
+                    this._painted = true;
+                    biglifts.stores.LiftLog.addListener('beforesync', Ext.bind(me.updateCycleOptions, me));
+                    biglifts.stores.LiftLogSort.addListener('beforesync', Ext.bind(me.updateUiForSortButtons, me));
+                    biglifts.stores.assistance.ActivityLog.addListener('beforesync', Ext.bind(me.updateCycleOptions, me));
+                }
             },
             initialize:function () {
                 var me = this;
@@ -303,28 +310,6 @@ Ext.define('biglifts.views.LogList', {
                 ]);
             }
         }
-    }
-});
-
-biglifts.stores.LiftLogSort.addListener('beforesync', function () {
-    var logList = Ext.getCmp('log-list');
-    if (logList) {
-        logList.updateUiForSortButtons();
-    }
-});
-
-biglifts.stores.LiftLog.addListener('beforesync', function () {
-    console.log("UPDATING CYCLE OPTIONS");
-    var logList = Ext.getCmp('log-list');
-    if (logList) {
-        logList.updateCycleOptions();
-    }
-});
-
-biglifts.stores.assistance.ActivityLog.addListener('beforesync', function () {
-    var logList = Ext.getCmp('log-list');
-    if (logList) {
-        logList.updateCycleOptions();
     }
 });
 

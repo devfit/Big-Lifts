@@ -1,13 +1,8 @@
 Ext.ns('biglifts.logEntry');
 biglifts.logEntry.returnFromEditNotes = function (newNotes) {
-    Ext.getCmp('log').setActiveItem(Ext.getCmp('edit-log-entry'), {type:'slide', direction:'right'});
-
-    if (biglifts.logEntry.currentRecord) {
-        biglifts.logEntry.currentRecord.set('notes', newNotes);
-        biglifts.stores.LiftLog.sync();
-    }
-
-    biglifts.components.notesEditor.displayNotes('edit-log-notes', newNotes);
+    var editLogEntry = Ext.getCmp('edit-log-entry');
+    Ext.getCmp('log').setActiveItem(editLogEntry, {type:'slide', direction:'right'});
+    editLogEntry.updateNotes(newNotes);
 };
 
 Ext.define('biglifts.views.log.cards.LogNotesEditor', {

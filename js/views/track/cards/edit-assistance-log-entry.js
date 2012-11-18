@@ -32,7 +32,7 @@ biglifts.logEntry.deleteAssistanceLogEntry = function () {
 
 biglifts.logEntry.returnAndUpdate = function () {
     biglifts.logEntry.updateAssistanceLogEntry();
-    biglifts.logEntry.backToLogList();
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
 };
 
 biglifts.views.log.cards.EditAssistanceLogEntry = {

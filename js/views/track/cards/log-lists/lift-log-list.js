@@ -29,7 +29,7 @@ Ext.define('biglifts.views.LiftLogList', {
     },
     showLogEntry:function (dataview, index, item, e) {
         var logRecord = biglifts.stores.LiftLog.getAt(index);
-        biglifts.logEntry.setupLogEntry(logRecord);
+        Ext.getCmp('edit-log-entry').setupLogEntry(logRecord);
     },
     sortLifts:function (sortProperty, sortDirection) {
         biglifts.stores.LiftLog.sortLog(sortProperty, sortDirection);

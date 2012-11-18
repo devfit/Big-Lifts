@@ -49,15 +49,24 @@ biglifts.settings.lockPortrait = function (shouldLockPortrait) {
         window.ScreenLock.lockPortrait(shouldLockPortrait === 1);
     }
 };
-biglifts.stores.Settings = Ext.create('Ext.data.Store', {
-    model:'Settings',
-    listeners:{
-        load:function () {
-            biglifts.stores.recovery.setupDefaultSettings();
-            biglifts.settings.lockPortrait(this.first().get('lockPortrait'));
+
+Ext.define("SettingsStore", {
+    extend:"Ext.data.Store",
+    getExtDateFormat:function () {
+        var dateFormat = this.first().get('dateFormat');
+        return dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');
+    },
+    config:{
+        model:'Settings',
+        listeners:{
+            load:function () {
+                biglifts.stores.recovery.setupDefaultSettings();
+                biglifts.settings.lockPortrait(this.first().get('lockPortrait'));
+            }
         }
     }
 });
+biglifts.stores.Settings = Ext.create('SettingsStore');
 
 biglifts.stores.push(biglifts.stores.Settings);
 
