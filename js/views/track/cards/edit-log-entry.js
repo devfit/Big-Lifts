@@ -2,6 +2,7 @@
 Ext.ns('biglifts.views.log.cards', 'biglifts.logEntry');
 
 biglifts.logEntry.backToLogList = function () {
+    biglifts.logEntry.updateLogEntry();
     Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
 };
 
@@ -22,7 +23,7 @@ biglifts.logEntry.deleteLogEntry = function () {
 biglifts.logEntry.currentRecord = null;
 biglifts.logEntry.setupLogEntry = function (logRecord) {
     biglifts.logEntry.currentRecord = logRecord;
-    Ext.getCmp('log').setActiveItem('edit-log-entry', {type:'slide', direction:'left'});
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('edit-log-entry'), {type:'slide', direction:'left'});
     Ext.getCmp('edit-log-entry-toolbar').setTitle(logRecord.data.liftName);
 
     var formValues = _.clone(logRecord.data);
@@ -68,19 +69,13 @@ biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             dateFormat:biglifts.logEntry.getExtDateFormat(),
             label:'Date',
             name:'timestamp',
-            labelWidth:'45%',
-            listeners:{
-                change:biglifts.logEntry.updateLogEntry
-            }
+            labelWidth:'45%'
         },
         {
             xtype:'numberfield',
             label:'Cycle',
             name:'cycle',
-            labelWidth:'45%',
-            listeners:{
-                change:biglifts.logEntry.updateLogEntry
-            }
+            labelWidth:'45%'
         },
         {
             xtype:'numberfield',
@@ -90,7 +85,6 @@ biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             listeners:{
                 change:function () {
                     biglifts.logEntry.updateOneRepMax();
-                    biglifts.logEntry.updateLogEntry();
                 }
             }
         },
@@ -102,7 +96,6 @@ biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             listeners:{
                 change:function () {
                     biglifts.logEntry.updateOneRepMax();
-                    biglifts.logEntry.updateLogEntry();
                 }
             }
         },
@@ -110,12 +103,7 @@ biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             xtype:'numberfield',
             label:'Expected Reps',
             name:'expectedReps',
-            labelWidth:'50%',
-            listeners:{
-                change:function () {
-                    biglifts.logEntry.updateLogEntry();
-                }
-            }
+            labelWidth:'50%'
         },
         {
             xtype:'numberfield',
@@ -130,10 +118,7 @@ biglifts.views.log.cards.generateEditLogEntryFieldsetItems = function () {
             label:'Units',
             name:'units',
             options:biglifts.settings.options.units,
-            labelWidth:'45%',
-            listeners:{
-                change:biglifts.logEntry.updateLogEntry
-            }
+            labelWidth:'45%'
         }
     ];
 };

@@ -6,7 +6,7 @@ Feature: Training maxes in the maxes editor
 
   Scenario: Training max togging
     When I navigate to the more tab
-    And I tap the settings list item
+    And I tap the "Settings" list item
     And I toggle use training max
     And I navigate to the lift editor
     Then Training maxes are not visible

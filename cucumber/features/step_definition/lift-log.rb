@@ -33,7 +33,7 @@ Then /^The full log notes shows "([^"]*)"$/ do |notes|
 end
 
 Then /^There are (\d+) log entries$/ do |length|
-  @driver.find_elements(:class => 'x-list-item').select { |item| item.displayed? }.length.should == length.to_i
+  get_displayed_list_items().length.should == length.to_i
 end
 
 Then /^I set the log cycle filter to "(.*?)"$/ do |cycle|
