@@ -31,5 +31,5 @@ When /^I tap the trash button$/ do
 end
 
 Then /^There is (\d+) custom assistance row[s]*$/ do |row_count|
-  @driver.find_elements(:class => 'assistance-table').select { |row| row.displayed? }.length.should == row_count.to_i
+  get_displayed_list_items().length.should == row_count.to_i
 end
