@@ -19,7 +19,7 @@ Then /^The log list shows "([^"]*)"$/ do |lifts|
 end
 
 When /^I select the log entry (\d+)$/ do |log_number|
-  @driver.find_element(:id => 'lift-log-list').find_elements(:class => 'x-list-item')[log_number.to_i - 1].click
+  get_displayed_list_items()[log_number.to_i - 1].click
   sleep @ANIMATION_DELAY
 end
 

@@ -25,14 +25,13 @@ When /^I tap done while arranging lifts$/ do
   sleep @ANIMATION_DELAY
 end
 
-Then /^The lift schedule orders lifts as ([\w\s,]+)$/ do |liftsText|
+Then /^The lift schedule orders lifts as "([^"]+)"$/ do |liftsText|
   lifts = liftsText.split(',')
   lifts.map! { |lift| lift.strip }
-  rowTexts = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |row|
-    row.displayed?
-  }.collect { |row| row.text }
 
-  rowTexts.each_with_index do |rowText, index|
-    rowText.should == lifts[index]
+  row_texts = get_displayed_list_items().collect { |row| row.text }
+
+  row_texts.each_with_index do |row_text, index|
+    row_text.should == lifts[index]
   end
 end

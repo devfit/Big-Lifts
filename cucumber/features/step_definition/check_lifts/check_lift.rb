@@ -4,8 +4,8 @@ When /^I mark the current lift completed$/ do
 end
 
 Then /^the (\w+) lift is checked$/ do |lift|
-  lift_list_item = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item|
-    item.displayed? && item.text.include?(lift)
+  lift_list_item = get_displayed_list_items().select { |item|
+    item.text.include?(lift)
   }[0]
 
   lift_list_item.attribute('class').should include 'done'

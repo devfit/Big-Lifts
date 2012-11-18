@@ -1,27 +1,24 @@
 When /^I tap set (\d+) in the lift template$/ do |set|
-  setListItem = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item').select {
-      |listItem| listItem.displayed?
-  }[set.to_i-1]
-  setListItem.click
+  get_displayed_list_items()[set.to_i-1].click
   sleep 0.5
 end
 
 Then /^The plate breakdown for set (\d+) shows "(.*?)"$/ do |set, plates|
-    setListItem = @driver.find_elements(:class => 'lift-row').select {|row|
-        row.displayed? }[set.to_i-1]
+  set_list_item = @driver.find_elements(:class => 'lift-row').select { |row|
+    row.displayed? }[set.to_i-1]
 
-    setListItem.find_element(:class => 'bar-loader-breakdown').text.should == plates
+  set_list_item.find_element(:class => 'bar-loader-breakdown').text.should == plates
 end
 
 When /^I tap the bar\/plates button$/ do
-    @driver.find_element(:id => 'setup-plates-button').click()
-    sleep @ANIMATION_DELAY
+  @driver.find_element(:id => 'setup-plates-button').click()
+  sleep @ANIMATION_DELAY
 end
 
 When /^I set the bar weight to (\d+)$/ do |weight|
-    barWeightInput = @driver.find_element(:id => 'bar-plate-setup-panel').find_element(:name => 'weight')
-    barWeightInput.clear
-    barWeightInput.send_keys weight
+  bar_weight_input = @driver.find_element(:id => 'bar-plate-setup-panel').find_element(:name => 'weight')
+  bar_weight_input.clear
+  bar_weight_input.send_keys weight
 end
 
 When /^I set the number of (\d+)lbs plates to (\d+)$/ do |weight, plateNumber|

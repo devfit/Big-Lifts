@@ -27,3 +27,12 @@ class SenchaHelper
     end
   end
 end
+
+module ListSelector
+  def get_displayed_list_items
+    list_items = @driver.find_elements(:class => 'x-list-item').select { |list_item| list_item.displayed? }
+    list_items.select {|item|
+      not item.attribute('style').include? "-10000px"
+    }
+  end
+end

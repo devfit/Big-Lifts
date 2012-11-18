@@ -22,7 +22,6 @@ END
   @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-tab')[3].click()
   sleep @ANIMATION_DELAY
 
-  lift_list_items_length = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }.length
   lift_index = 4
   lift_list_item = @driver.find_element(:id => 'lift-selector').find_elements(:class => 'x-list-item').select { |item| item.displayed? }[lift_index-1]
   lift_list_item.click()

@@ -18,13 +18,13 @@ When /^I select Day\/Month\/Year for the date format$/ do
 end
 
 Then /^The log date is today formatted as dd\/MM\/yyyy$/ do
-    dateText = @driver.find_element(:id => 'edit-log-entry').find_element(:name => 'timestamp').attribute('value')
-    dateText.should == Time.now.strftime("%d/%m/%Y")
+    date_text = @driver.find_element(:id => 'edit-log-entry').find_element(:name => 'timestamp').attribute('value')
+    date_text.should == Time.now.strftime("%d/%m/%Y")
 end
 
 Then /^The date for the log entry for (\w+) is dd\/MM\/yyyy$/ do |liftName|
-    logListItems = @driver.find_element(:id => 'lift-log-list').find_elements(:class => 'x-list-item')
-    listItem = logListItems.select { |listItem| listItem.text.include?(liftName) }[0]
-    dateText = listItem.find_element(:class => 'date').text
-    dateText.should == Time.now.strftime("%d/%m/%Y")
+    log_list_items = get_displayed_list_items()
+    list_item = log_list_items.select { |listItem| listItem.text.include?(liftName) }[0]
+    date_text = list_item.find_element(:class => 'date').text
+    date_text.should == Time.now.strftime("%d/%m/%Y")
 end

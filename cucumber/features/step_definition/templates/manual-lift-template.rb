@@ -13,8 +13,7 @@ When /^I select week (\d+) for the manual percentages editor$/ do |week|
 end
 
 When /^I select set (\d+) on the manual percentages editor$/ do |set|
-  list_of_sets = @driver.find_element(:id => 'edit-lift-percentages').find_elements(:class => 'x-list-item').select { |item| item.displayed? }
-  list_of_sets[set.to_i-1].click()
+  get_displayed_list_items()[set.to_i-1].click()
   sleep @ANIMATION_DELAY
 end
 
@@ -30,10 +29,7 @@ When /^I navigate back to the lift settings from the manual percentages editor$/
 end
 
 Then /^The set (\d+) lift percentage shows (\d+)%$/ do |set, percentage|
-  set_list_item = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item').select {
-      |listItem| listItem.displayed?
-  }[set.to_i-1]
-  set_list_item.text.should include("#{percentage}%")
+  get_displayed_list_items()[set.to_i-1].text.should include("#{percentage}%")
 end
 
 When /^I set the manual reps to (\d+)$/ do |reps|
@@ -43,11 +39,7 @@ When /^I set the manual reps to (\d+)$/ do |reps|
 end
 
 Then /^The set (\d+) reps shows (\d+)$/ do |set, reps|
-  set_list_item = @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-list-item').select {
-      |listItem| listItem.displayed?
-  }[set.to_i-1]
-
-  set_list_item.text.should include("#{reps}")
+  get_displayed_list_items()[set.to_i-1].text.should include("#{reps}")
 end
 
 Then /^Lift progressions in the list are visible$/ do

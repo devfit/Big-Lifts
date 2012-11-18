@@ -3,7 +3,7 @@ Then /^There is a "(.*?)" navigation tab$/ do |tab|
 end
 
 Then /^I tap the "(.*?)" list item$/ do |text|
-  @driver.find_elements(:class => 'x-list-item').select { |item| item.displayed? && item.text().include?(text) }[0].click
+  get_displayed_list_items().select { |item| item.text().include?(text) }[0].click
   sleep @ANIMATION_DELAY
 end
 

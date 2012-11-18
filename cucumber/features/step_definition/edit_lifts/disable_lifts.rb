@@ -33,8 +33,7 @@ end
 
 Then /^The help screen shows lifts "([^"]*?)"$/ do |lifts|
   expected_lifts = lifts.split ','
-  actual_lift_rows = @driver.find_element(:id => 'increase-maxes-help').find_elements(:class => 'x-list-item')
-  actual_lifts = actual_lift_rows.collect { |row| row.find_element(:tag_name => 'td').text() }
+  actual_lifts = get_displayed_list_items().collect { |row| row.find_element(:tag_name => 'td').text() }
 
   actual_lifts.should == expected_lifts
 end

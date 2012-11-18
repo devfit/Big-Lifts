@@ -6,6 +6,8 @@ require 'navigation'
 require 'sencha_helper'
 require 'routine_selector'
 
+include ListSelector
+
 Before('@premium') do
   @premium_text = "?premium=true"
 end

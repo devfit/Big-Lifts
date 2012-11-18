@@ -27,5 +27,5 @@ Then /^I am on the assistance log list$/ do
 end
 
 Then /^There are (\d+) assistance log entries$/ do |entry_count|
-  @driver.find_element(:id => 'log-assistance-list').find_elements(:class => 'x-list-item').length.should == entry_count.to_i
+  get_displayed_list_items().length.should == entry_count.to_i
 end

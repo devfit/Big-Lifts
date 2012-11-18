@@ -3,21 +3,19 @@ When /^I navigate to the track tab$/ do
 end
 
 Then /^I do ([\w ]*)see a log entry containing (\w+)$/ do |notModifier, liftName|
-  logListItems = @driver.find_element(:id => 'lift-log-list').find_elements(:class => 'x-list-item')
+  log_list_items = get_displayed_list_items()
 
-  if (notModifier != "")
-    logListItems.length.should == 0
+  if notModifier != ""
+    log_list_items.length.should == 0
   else
-    logListItems.length.should == 1
-    liftNameInLog = logListItems[0].text.include?(liftName)
-    liftNameInLog.should == true
+    log_list_items.length.should == 1
+    log_list_items[0].text().should include liftName
   end
 end
 
 When /^I select the log entry for (\w+)$/ do |liftName|
-  logListItems = @driver.find_element(:id => 'lift-log-list').find_elements(:class => 'x-list-item')
-  listItem = logListItems.select { |listItem| listItem.text.include?(liftName) }[0]
-  listItem.click()
+  list_items = get_displayed_list_items().select { |listItem| listItem.text.include?(liftName) }[0]
+  list_items.click()
   sleep @ANIMATION_DELAY
 end
 

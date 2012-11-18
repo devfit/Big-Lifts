@@ -1,7 +1,6 @@
 Then /^I navigate to the settings page$/ do
   @main_navigation.navigate_to(:more)
-  more_info_list = @driver.find_element(:id => 'more-info-list').find_elements(:class => 'x-list-item')
-  settings_menu_item = more_info_list.select { |item| item.text == 'Settings' }[0]
+  settings_menu_item = get_displayed_list_items().select { |item| item.text == 'Settings' }[0]
   settings_menu_item.click()
   sleep @ANIMATION_DELAY
 end

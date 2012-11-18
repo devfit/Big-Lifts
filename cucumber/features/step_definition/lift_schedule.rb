@@ -17,8 +17,7 @@ When /^I view the (\w+) lift schedule for week (\d+)$/ do |liftProperty, week|
   @main_navigation.navigate_to(:lift_schedule)
   @lift_schedule_navigator.selectWeek(week)
 
-  lift_selector = @driver.find_element(:id => 'lift-selector')
-  lift_selector.find_elements(:class => 'x-list-item').select { |i| i.text.downcase == liftProperty }[0].click
+  get_displayed_list_items().select { |i| i.text.downcase == liftProperty }[0].click
   sleep @ANIMATION_DELAY
 end
 
@@ -44,7 +43,5 @@ Then /^The lift selector shows "([^"]+)"$/ do |expected_lifts|
 end
 
 def get_actual_lift_sets()
-  lift_template = @driver.find_element(:id => 'lift-template')
-  lift_template.find_elements(:class => 'lift-row').
-      select { |i| i.displayed? }.collect { |i| i.text.gsub(/\n+/, " ") }
+  get_displayed_list_items().collect { |i| i.text.gsub(/\n+/, " ") }
 end
