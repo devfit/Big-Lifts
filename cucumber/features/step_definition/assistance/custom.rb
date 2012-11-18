@@ -1,9 +1,5 @@
-def get_displayed_assistance
-  @driver.find_elements(:class => 'assistance').select { |assistance| assistance.displayed? }[0]
-end
-
 Then /^Assistance movement (\d+) is "(.*?)"$/ do |index, movement_text|
-  movement_row = get_displayed_assistance().find_elements(:class => 'x-list-item')[index.to_i - 1]
+  movement_row = get_displayed_list_items().find_elements(:class => 'x-list-item')[index.to_i - 1]
   movement_row.text().should == movement_text
 end
 
@@ -13,7 +9,7 @@ Then /^Assistance log entry (\d+) shows "(.*?)"$/ do |index, log_text|
 end
 
 Then /^I tap assistance row (\d+)$/ do |row|
-  get_displayed_assistance()[row.to_i - 1].click
+  get_displayed_list_items()[row.to_i - 1].click
   sleep @ANIMATION_DELAY
 end
 

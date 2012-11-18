@@ -39,47 +39,45 @@ Ext.define('biglifts.views.log.cards.NotesEditor', {
                 biglifts.navigation.setBackFunction(function () {
                     biglifts.components.notesEditor.returnFromNotesEditor(c);
                 });
-            }
-        },
-        fullscreen:true,
-        items:[
-            {
-                docked:'top',
-                xtype:'toolbar',
-                title:'Notes',
-                items:[
-                    {
-                        text:'Back',
-                        ui:'back',
-                        handler:function () {
-                            biglifts.components.notesEditor.returnFromNotesEditor(this.up('panel'));
+            },
+            initialize:function () {
+                var me = this;
+                me.add({
+                    docked:'top',
+                    xtype:'toolbar',
+                    title:'Notes',
+                    items:[
+                        {
+                            text:'Back',
+                            ui:'back',
+                            handler:function () {
+                                biglifts.components.notesEditor.returnFromNotesEditor(this.up('panel'));
+                            }
+                        }
+                    ]
+                });
+                me.formPanel = me.add({
+                    xtype:'formpanel',
+                    padding:0,
+                    bodyPadding:'5px'
+                });
+
+                var fieldSet = me.formPanel.add({
+                    xtype:'fieldset',
+                    cls:'notes-form'
+                });
+
+                me.textAreaField = fieldSet.add({
+                    xtype:'textareafield',
+                    name:'notes',
+                    listeners:{
+                        painted:function (c) {
+                            var parentHeight = me.formPanel.element.getHeight(true);
+                            me.textAreaField.setHeight(parentHeight - 7);
                         }
                     }
-                ]
-            },
-            {
-                xtype:'formpanel',
-                padding:0,
-                bodyPadding:'5px',
-                items:[
-                    {
-                        xtype:'fieldset',
-                        cls:'notes-form',
-                        items:[
-                            {
-                                xtype:'textareafield',
-                                name:'notes',
-                                listeners:{
-                                    painted:function (c) {
-                                        var parentHeight = c.up('formpanel').element.getHeight(true);
-                                        c.element.down('textarea').setHeight(parentHeight - 7);
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                ]
+                });
             }
-        ]
+        }
     }
 });
