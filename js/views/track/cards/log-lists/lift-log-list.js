@@ -39,7 +39,7 @@ Ext.define('biglifts.views.LiftLogList', {
                     biglifts.components.addSwipeToDelete(this, this.showLogEntry,
                         this.deleteLogEntry, Ext.emptyFn, '.date-week');
 
-                    biglifts.stores.LiftLog.addListener('beforesync', Ext.bind(this..sortAndRefreshList, this));
+                    biglifts.stores.LiftLog.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
                     biglifts.stores.LiftLogSort.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
                     biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.refresh, this));
                 }
