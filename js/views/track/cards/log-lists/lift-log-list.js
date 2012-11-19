@@ -1,21 +1,3 @@
-biglifts.stores.LiftLog.addListener('beforesync', function () {
-    if (Ext.getCmp('lift-log-list')) {
-        Ext.getCmp('lift-log-list').sortAndRefreshList();
-    }
-});
-
-biglifts.stores.LiftLogSort.addListener('beforesync', function () {
-    if (Ext.getCmp('lift-log-list')) {
-        Ext.getCmp('lift-log-list').sortAndRefreshList();
-    }
-});
-
-biglifts.stores.Settings.addListener('beforesync', function () {
-    if (Ext.getCmp('lift-log-list')) {
-        Ext.getCmp('lift-log-list').refresh();
-    }
-});
-
 Ext.define('biglifts.views.LiftLogList', {
     extend:'Ext.dataview.List',
     xtype:'liftloglist',
@@ -50,8 +32,17 @@ Ext.define('biglifts.views.LiftLogList', {
         listeners:{
             initialize:function () {
                 this.sortAndRefreshList();
-                biglifts.components.addSwipeToDelete(this, this.showLogEntry,
-                    this.deleteLogEntry, Ext.emptyFn, '.date-week');
+            },
+            painted:function () {
+                if (!this._painted) {
+                    this._painted = true;
+                    biglifts.components.addSwipeToDelete(this, this.showLogEntry,
+                        this.deleteLogEntry, Ext.emptyFn, '.date-week');
+
+                    biglifts.stores.LiftLog.addListener('beforesync', Ext.bind(this..sortAndRefreshList, this));
+                    biglifts.stores.LiftLogSort.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
+                    biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.refresh, this));
+                }
             }
         },
         selectedCls:'',
@@ -69,4 +60,5 @@ Ext.define('biglifts.views.LiftLogList', {
             '</td><td width="40%" class="delete-button-holder hidden"></td>' +
             '</tr></tbody></table>'
     }
-});
+})
+;

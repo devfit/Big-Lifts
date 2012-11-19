@@ -43,6 +43,9 @@ biglifts.stores.lifts.MeetGoals = Ext.create('Ext.data.Store', {
     listeners:{
         load:function () {
             biglifts.stores.lifts.syncMeetGoalsToLifts();
+            biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
+                biglifts.stores.lifts.syncMeetGoalsToLifts();
+            });
         }
     },
     sorters:[
@@ -51,9 +54,6 @@ biglifts.stores.lifts.MeetGoals = Ext.create('Ext.data.Store', {
             direction:'ASC'
         }
     ]
-});
-biglifts.stores.lifts.Lifts.addListener('beforesync', function(){
-    biglifts.stores.lifts.syncMeetGoalsToLifts();
 });
 
 biglifts.stores.push(biglifts.stores.lifts.MeetGoals);

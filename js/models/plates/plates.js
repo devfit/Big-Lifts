@@ -63,6 +63,20 @@ Ext.define("PlateStore", {
 
         return _.isEqual(actualPlateWeights, comparisonPlates);
     },
+    adjustPlatesForUnits:function (units) {
+        util.withLoadedStore(biglifts.stores.Plates, function () {
+            if (units == 'kg' && biglifts.stores.Plates.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_LBS)) {
+                biglifts.stores.Plates.removeAll();
+                biglifts.stores.Plates.add(biglifts.stores.Plates.DEFAULT_PLATES_KG);
+            }
+            else if (units == 'lbs' && biglifts.stores.Plates.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_KG)) {
+                biglifts.stores.Plates.removeAll();
+                biglifts.stores.Plates.add(biglifts.stores.Plates.DEFAULT_PLATES_LBS);
+            }
+
+            biglifts.stores.Plates.sync();
+        });
+    },
     config:{
         model:'Plates',
         listeners:{
@@ -78,5 +92,9 @@ Ext.define("PlateStore", {
         }
     }
 });
+
 biglifts.stores.Plates = Ext.create('PlateStore', {});
 biglifts.stores.push(biglifts.stores.Plates);
+biglifts.stores.Settings.addListener('beforesync', function () {
+    biglifts.stores.Plates.adjustPlatesForUnits(this.first().get('units'));
+});

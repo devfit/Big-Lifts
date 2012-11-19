@@ -56,9 +56,12 @@ biglifts.views.liftSchedule.LiftsCompletedScreen = {
     id:'cycle-complete',
     xtype:'formpanel',
     listeners:{
-        show:function () {
-            Ext.get('increase-maxes-help-image').addListener('tap',
-                biglifts.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen);
+        painted:function () {
+            if (!this._painted) {
+                this._painted = true;
+                Ext.get('increase-maxes-help-image').addListener('tap',
+                    biglifts.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen);
+            }
             biglifts.liftSchedule.cycleComplete.setNextCycleDefault();
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen);
         }

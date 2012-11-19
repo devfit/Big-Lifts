@@ -74,9 +74,6 @@ biglifts.liftSchedule.liftTemplate.updateLiftValues = function () {
     }
 };
 
-biglifts.stores.lifts.Lifts.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
-biglifts.stores.lifts.MeetGoals.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
-
 biglifts.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
     if (biglifts.liftSchedule.liftTemplate.getEffectiveWeek() === 4) {
         Ext.getCmp('reps-to-beat-toolbar').hide();
@@ -205,6 +202,9 @@ biglifts.views.liftSchedule.liftTemplate = {
                 biglifts.stores.lifts.LiftProgression.addListener('beforesync', function () {
                     Ext.getCmp('lift-template-list').refresh();
                 });
+
+                biglifts.stores.lifts.Lifts.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
+                biglifts.stores.lifts.MeetGoals.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
             }
         },
         show:function () {

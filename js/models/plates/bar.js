@@ -32,6 +32,19 @@ Ext.define("BarWeightStore", {
             me.sync();
         });
     },
+    adjustPlatesForUnits:function (units) {
+        util.withLoadedStore(biglifts.stores.BarWeight, function () {
+            var barWeight = biglifts.stores.BarWeight.first();
+            if (units === 'kg' && barWeight.get('weight') === 45) {
+                barWeight.set('weight', biglifts.stores.BarWeight.DEFAULT_BAR_WEIGHT_KG);
+            }
+            else if (units === 'lb' && barWeight.get('weight') === biglifts.stores.BarWeight.DEFAULT_BAR_WEIGHT_KG) {
+                barWeight.set('weight', 45);
+            }
+
+            biglifts.stores.BarWeight.sync();
+        });
+    },
     config:{
         model:'BarWeight',
         listeners:{
@@ -46,3 +59,6 @@ Ext.define("BarWeightStore", {
 
 biglifts.stores.BarWeight = Ext.create('BarWeightStore');
 biglifts.stores.push(biglifts.stores.BarWeight);
+biglifts.stores.Settings.addListener('beforesync', function () {
+    biglifts.stores.BarWeight.adjustPlatesForUnits(this.first().get('units'));
+});

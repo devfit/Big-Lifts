@@ -61,33 +61,6 @@ biglifts.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
     }
 };
 
-biglifts.maxes.barSetup.adjustPlatesForUnits = function (units) {
-    if (units == 'kg' && biglifts.stores.Plates.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_LBS)) {
-        biglifts.stores.Plates.removeAll();
-        biglifts.stores.Plates.add(biglifts.stores.Plates.DEFAULT_PLATES_KG);
-    }
-    else if (units == 'lbs' && biglifts.stores.Plates.platesAreDefault(biglifts.stores.Plates.DEFAULT_PLATES_KG)) {
-        biglifts.stores.Plates.removeAll();
-        biglifts.stores.Plates.add(biglifts.stores.Plates.DEFAULT_PLATES_LBS);
-    }
-
-    var barWeight = biglifts.stores.BarWeight.first();
-    if (units === 'kg' && barWeight.get('weight') === 45) {
-        barWeight.set('weight', biglifts.stores.BarWeight.DEFAULT_BAR_WEIGHT_KG);
-    }
-    else if (units === 'lb' && barWeight.get('weight') === biglifts.stores.BarWeight.DEFAULT_BAR_WEIGHT_KG) {
-        barWeight.set('weight', 45);
-    }
-
-    biglifts.stores.Plates.sync();
-    biglifts.stores.BarWeight.sync();
-    biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
-};
-
-biglifts.stores.Settings.addListener('beforesync', function () {
-    biglifts.maxes.barSetup.adjustPlatesForUnits(this.first().get('units'));
-});
-
 biglifts.maxes.barSetup.BarSetup = {
     xtype:'panel',
     id:'bar-plate-setup-panel',

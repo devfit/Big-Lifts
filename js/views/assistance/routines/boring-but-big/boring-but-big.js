@@ -147,10 +147,14 @@ Ext.define("biglifts.views.BoringButBig", {
                                 style:'text-align:right',
                                 html:'<label for="bbbPercentage">%</label><input type="number" name="bbbPercentage" value=""/>',
                                 listeners:{
-                                    initialize:function () {
+                                    painted:function () {
                                         var bbbPercentageInput = Ext.get(this.element.query('input[name="bbbPercentage"]')[0]);
                                         bbbPercentageInput.dom.value = biglifts.stores.assistance.BoringButBigPercentage.first().get('percentage');
-                                        bbbPercentageInput.addListener('keyup', me.percentageChange);
+
+                                        if (!this._painted) {
+                                            this._painted = true;
+                                            bbbPercentageInput.addListener('keyup', me.percentageChange);
+                                        }
                                     }
                                 }
                             }
@@ -188,9 +192,14 @@ Ext.define("biglifts.views.BoringButBig", {
                         }
                     }
                 ]);
-                biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
-                    Ext.getCmp('boring-but-big-list').refresh();
-                });
+            },
+            painted:function () {
+                if (!this._painted) {
+                    this._painted = true;
+                    biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
+                        Ext.getCmp('boring-but-big-list').refresh();
+                    });
+                }
             }
         }
     }

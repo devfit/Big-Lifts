@@ -33,8 +33,6 @@ biglifts.liftSchedule.liftSelector.setupListDoneIcons = function () {
     }
 };
 
-biglifts.stores.lifts.LiftCompletion.addListener('beforesync', biglifts.liftSchedule.liftSelector.setupListDoneIcons);
-
 biglifts.liftSchedule.liftSelector.getStartingWeek = function () {
     var weeksCompleted = {};
     biglifts.stores.lifts.LiftCompletion.each(function (record) {
@@ -155,6 +153,11 @@ biglifts.views.liftSchedule.liftSelector = {
             biglifts.liftSchedule.liftSelector.setupLiftSelector();
             biglifts.liftSchedule.setupCheckedTitleWeeks();
             biglifts.navigation.unbindBackEvent();
+
+            if( !this._painted ){
+                this._painted = true;
+                biglifts.stores.lifts.LiftCompletion.addListener('beforesync', biglifts.liftSchedule.liftSelector.setupListDoneIcons);
+            }
         },
         initialize:function () {
             biglifts.liftSchedule.liftSelector.changeWeek(biglifts.liftSchedule.liftSelector.getStartingWeek());

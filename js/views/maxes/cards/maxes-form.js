@@ -1,24 +1,5 @@
 Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.controller');
 
-biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
-    if (Ext.getCmp('maxes-form')) {
-        Ext.getCmp('maxes-form').rebuildMaxesList();
-    }
-});
-
-biglifts.stores.Settings.addListener('beforesync', function () {
-    if (Ext.getCmp('maxes-form')) {
-        Ext.getCmp('maxes-form').updateTrainingPercentageDisplay();
-        Ext.getCmp('maxes-form').showHideTrainingMaxes();
-    }
-});
-
-biglifts.stores.Template.addListener('beforesync', function () {
-    if (Ext.getCmp('maxes-form')) {
-        Ext.getCmp('maxes-form').showHideMeetGoals();
-    }
-});
-
 Ext.define("Biglifts.views.MaxesForm", {
     extend:'Ext.form.Panel',
     xtype:'maxesform',
@@ -139,6 +120,14 @@ Ext.define("Biglifts.views.MaxesForm", {
                 this.showHideMeetGoals();
 
                 biglifts.navigation.unbindBackEvent();
+
+                if (!this._painted) {
+                    this._painted = true;
+                    biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.rebuildMaxesList, this));
+                    biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.updateTrainingPercentageDisplay, this));
+                    biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.showHideTrainingMaxes, this));
+                    biglifts.stores.Template.addListener('beforesync', Ext.bind(this.showHideMeetGoals, this));
+                }
             },
             initialize:function () {
                 var me = this;

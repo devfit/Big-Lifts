@@ -48,12 +48,6 @@ Ext.define("RotatingWeekStore", {
 
 biglifts.liftSettings.templates.rotatingWeekStore = Ext.create('RotatingWeekStore');
 biglifts.liftSettings.templates.rotatingWeekStore.setupDefaultData();
-biglifts.liftSettings.templates.rotatingWeekStore.addListener('beforesync', function () {
-    var rotatingList = Ext.getCmp('rotating-lift-list');
-    if (rotatingList) {
-        Ext.getCmp('rotating-lift-list').refresh();
-    }
-});
 
 biglifts.liftSettings.templates.getDisplayForWeek = function (week) {
     var weekDisplayMapping = {1:'5/5/5', 2:'3/3/3', 3:'5/3/1', 4:'deload'};
@@ -75,6 +69,16 @@ biglifts.liftSettings.templates.useRotatingTemplate = function () {
 biglifts.liftSettings.templates.rotating = {
     id:'rotating-template',
     padding:5,
+    listeners:{
+        painted:function () {
+            if (!this._painted) {
+                this._painted = true;
+                biglifts.liftSettings.templates.rotatingWeekStore.addListener('beforesync', function () {
+                    Ext.getCmp('rotating-lift-list').refresh();
+                });
+            }
+        }
+    },
     items:[
         {
             xtype:'toolbar',
@@ -116,7 +120,7 @@ biglifts.liftSettings.templates.rotating = {
             xtype:'container',
             layout:'fit',
             listeners:{
-                initialize:function(){
+                initialize:function () {
                     var listHeight = 52 * biglifts.liftSettings.templates.rotatingWeekStore.getCount();
                     this.setHeight(listHeight);
                 }
