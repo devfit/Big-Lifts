@@ -42,20 +42,17 @@ biglifts.logList.sortAssistance = function (sortProperty, sortDirection) {
 biglifts.logList.assistanceList = {
     id:'log-assistance-list',
     listeners:{
-        resize:{
-            fn:function () {
-                biglifts.components.addSwipeToDelete(
-                    this,
-                    biglifts.logList.showAssistanceLogEntry,
-                    biglifts.logList.deleteAssistanceEntry,
-                    Ext.emptyFn,
-                    '.date-week');
+        painted:function () {
+            biglifts.components.addSwipeToDelete(
+                this,
+                biglifts.logList.showAssistanceLogEntry,
+                biglifts.logList.deleteAssistanceEntry,
+                Ext.emptyFn,
+                '.date-week');
 
-                biglifts.stores.assistance.ActivityLog.addListener('beforesync', function () {
-                    Ext.getCmp('log-assistance-list').refresh();
-                });
-            },
-            order:'after'
+            biglifts.stores.assistance.ActivityLog.addListener('beforesync', function () {
+                Ext.getCmp('log-assistance-list').refresh();
+            });
         }
     },
     xtype:'list',
@@ -74,4 +71,5 @@ biglifts.logList.assistanceList = {
         '</td><td width="40%" class="delete-button-holder hidden"></td>' +
         '</td><td width="40%" class="delete-button-holder hidden"></td>' +
         '</tr></tbody></table>'
-};
+}
+;

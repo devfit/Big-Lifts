@@ -142,11 +142,6 @@ biglifts.maxes.cards.editMaxesList = {
                 },
                 painted:function () {
                     biglifts.maxes.controller.rerenderAllCheckboxes(this);
-                },
-                resize:{
-                    fn:function () {
-                        biglifts.maxes.controller.rerenderAllCheckboxes(this);
-                    }, order:'after'
                 }
             }
         }

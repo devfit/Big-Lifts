@@ -57,9 +57,7 @@ biglifts.views.liftSchedule.IncreaseMaxesHelp = {
                 '<td style="width:34%">{max} → {[values.max+values.cycleIncrease]}</td>' +
                 '</tr></tbody></table>',
             listeners:{
-                resize:{
-                    fn:biglifts.liftSchedule.increaseMaxes.bindInputElements, order:'after'
-                }
+                painted:biglifts.liftSchedule.increaseMaxes.bindInputElements
             }
         }
     ]
