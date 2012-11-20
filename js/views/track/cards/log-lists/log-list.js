@@ -142,10 +142,13 @@ Ext.define('biglifts.views.LogList', {
             if (cycle === 'All') {
                 biglifts.stores.LiftLog.clearFilter();
                 biglifts.stores.assistance.ActivityLog.clearFilter();
+                biglifts.stores.assistance.ActivityLog.filterOutNoneEntries();
             }
             else {
                 biglifts.stores.LiftLog.clearFilter(true);
                 biglifts.stores.assistance.ActivityLog.clearFilter(true);
+                biglifts.stores.assistance.ActivityLog.filterOutNoneEntries();
+
                 biglifts.stores.LiftLog.filter('cycle', cycle);
                 biglifts.stores.assistance.ActivityLog.filter('cycle', cycle);
             }
