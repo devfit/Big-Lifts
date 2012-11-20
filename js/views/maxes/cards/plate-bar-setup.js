@@ -25,7 +25,6 @@ biglifts.maxes.barSetup.removeLastPlate = function () {
         var lastPlate = biglifts.stores.Plates.last();
         biglifts.stores.Plates.remove(lastPlate);
         biglifts.stores.Plates.sync();
-        biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
     }
 };
 
@@ -40,7 +39,6 @@ biglifts.maxes.barSetup.addNewPlate = function () {
     if (weight > 0 && !recordExists) {
         biglifts.stores.Plates.add({weight:weight, count:2});
         biglifts.stores.Plates.sync();
-        biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
     }
 };
 
@@ -139,8 +137,14 @@ biglifts.maxes.barSetup.BarSetup = {
                                 }
                             },
                             listeners:{
-                                initialize:function () {
-                                    biglifts.maxes.barSetup.setupCustomPlatesFieldSet(this);
+                                painted:function () {
+                                    if( !this._painted ){
+                                        this._painted = true;
+                                        biglifts.maxes.barSetup.setupCustomPlatesFieldSet(this);
+                                        biglifts.stores.Plates.addListener('beforesync', function () {
+                                            biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
+                                        });
+                                    }
                                 }
                             }
                         },
