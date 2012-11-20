@@ -43,16 +43,20 @@ biglifts.logList.assistanceList = {
     id:'log-assistance-list',
     listeners:{
         painted:function () {
-            biglifts.components.addSwipeToDelete(
-                this,
-                biglifts.logList.showAssistanceLogEntry,
-                biglifts.logList.deleteAssistanceEntry,
-                Ext.emptyFn,
-                '.date-week');
+            if( !this._painted ){
+                this._painted = true;
+                biglifts.components.addSwipeToDelete(
+                    this,
+                    biglifts.logList.showAssistanceLogEntry,
+                    biglifts.logList.deleteAssistanceEntry,
+                    Ext.emptyFn,
+                    '.date-week');
 
-            biglifts.stores.assistance.ActivityLog.addListener('beforesync', function () {
-                Ext.getCmp('log-assistance-list').refresh();
-            });
+
+                biglifts.stores.assistance.ActivityLog.addListener('beforesync', function () {
+                    Ext.getCmp('log-assistance-list').refresh();
+                });
+            }
         }
     },
     xtype:'list',

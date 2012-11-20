@@ -1,13 +1,13 @@
 "use strict";
 Ext.ns('util');
 util.withNoFilters = function (store, callback) {
-    var filters = store.getFilters();
-    if (filters.length > 0) {
+    if (!store.filters) {
+        callback.call();
+    }
+    else {
+        var filters = store.filters.clone();
         store.clearFilter(true);
         callback.call();
         store.filter(filters);
-    }
-    else {
-        callback.call();
     }
 };

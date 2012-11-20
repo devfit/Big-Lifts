@@ -32,7 +32,7 @@ Ext.define("ActivityLogStore", {
         model:'AssistanceActivity',
         listeners:{
             load:function () {
-
+                this.filterOutNoneEntries();
             }
         }
     }

@@ -141,7 +141,7 @@ Ext.define('biglifts.views.LogList', {
         if (oldValue) {
             if (cycle === 'All') {
                 biglifts.stores.LiftLog.clearFilter();
-                biglifts.stores.assistance.ActivityLog.clearFilter();
+                biglifts.stores.assistance.ActivityLog.clearFilter(true);
                 biglifts.stores.assistance.ActivityLog.filterOutNoneEntries();
             }
             else {
