@@ -93,6 +93,19 @@ biglifts.views.MoreInfoList = {
     listeners:{
         painted:function () {
             biglifts.navigation.unbindBackEvent();
+            if (!this._painted) {
+                this._painted = true;
+                this.add({
+                    id:'more-info-list',
+                    xtype:'list',
+                    itemTpl:'{[biglifts.more.getTextForValues(values)]}',
+                    itemCls:'more-info-row',
+                    store:biglifts.more.listStore,
+                    listeners:{
+                        itemtap:biglifts.more.moreInfoForListItem
+                    }
+                });
+            }
         }
     },
     items:[
@@ -100,16 +113,6 @@ biglifts.views.MoreInfoList = {
             docked:'top',
             xtype:'toolbar',
             title:'More'
-        },
-        {
-            id:'more-info-list',
-            xtype:'list',
-            itemTpl:'{[biglifts.more.getTextForValues(values)]}',
-            itemCls:'more-info-row',
-            store:biglifts.more.listStore,
-            listeners:{
-                itemtap:biglifts.more.moreInfoForListItem
-            }
         }
     ]
 };
