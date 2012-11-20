@@ -4,6 +4,7 @@ util.withNoFilters = function (store, callback) {
     var filters = store.getFilters();
     if (filters.length > 0) {
         store.clearFilter(true);
+        callback.call();
         store.filter(filters);
     }
     else {

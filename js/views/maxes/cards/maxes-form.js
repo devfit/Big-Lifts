@@ -22,7 +22,7 @@ Ext.define("Biglifts.views.MaxesForm", {
         }
 
         if (Ext.getCmp('training-maxes')) {
-            Ext.getCmp('training-maxes').removeAll();
+            Ext.getCmp('training-maxes').removeAll(true);
             biglifts.stores.lifts.Lifts.each(this.createTrainingMaxesInput, this);
         }
     },
@@ -84,9 +84,12 @@ Ext.define("Biglifts.views.MaxesForm", {
         }
     },
     rebuildMaxesList:function () {
+        biglifts.stores.lifts.Lifts.clearFilter(true);
+        biglifts.stores.lifts.Lifts.filter('enabled',true);
+
         if (Ext.getCmp('maxes-form-items')) {
-            Ext.getCmp('maxes-form-items').removeAll();
-            Ext.getCmp('training-maxes').removeAll();
+            Ext.getCmp('maxes-form-items').removeAll(true);
+            Ext.getCmp('training-maxes').removeAll(true);
             this.buildMaxesFromStore();
         }
     },
@@ -115,15 +118,16 @@ Ext.define("Biglifts.views.MaxesForm", {
         scroll:'vertical',
         listeners:{
             painted:function () {
+                biglifts.stores.lifts.Lifts.clearFilter(true);
                 biglifts.stores.lifts.Lifts.filter('enabled', true);
+                biglifts.navigation.unbindBackEvent();
+
                 this.rebuildMaxesList();
                 this.showHideMeetGoals();
 
-                biglifts.navigation.unbindBackEvent();
-
                 if (!this._painted) {
                     this._painted = true;
-                    biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.rebuildMaxesList, this));
+
                     biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.updateTrainingPercentageDisplay, this));
                     biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.showHideTrainingMaxes, this));
                     biglifts.stores.Template.addListener('beforesync', Ext.bind(this.showHideMeetGoals, this));

@@ -25,19 +25,21 @@ Ext.define("TriumvirateMovementStore", {
     addMissingCustomLiftAssociations:function () {
         var store = this;
         util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
-            biglifts.stores.lifts.Lifts.each(function (lift) {
-                var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
-                if (!existingMovement) {
-                    for (var i = 0; i < 2; i++) {
-                        store.add({
-                            liftProperty:lift.get('propertyName'),
-                            name:'?',
-                            sets:5,
-                            reps:15
-                        });
+            util.withNoFilters(biglifts.stores.lifts.Lifts, function () {
+                biglifts.stores.lifts.Lifts.each(function (lift) {
+                    var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
+                    if (!existingMovement) {
+                        for (var i = 0; i < 2; i++) {
+                            store.add({
+                                liftProperty:lift.get('propertyName'),
+                                name:'?',
+                                sets:5,
+                                reps:15
+                            });
+                        }
+                        store.sync();
                     }
-                    store.sync();
-                }
+                });
             });
         });
     },
@@ -50,6 +52,7 @@ Ext.define("TriumvirateMovementStore", {
                     this.sync();
                 }
                 this.addMissingCustomLiftAssociations();
+                biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.addMissingCustomLiftAssociations, this));
             }
         }
     }
