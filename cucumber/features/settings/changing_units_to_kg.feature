@@ -22,6 +22,8 @@ Feature: Adjusting the weights to kg
     When I navigate to the lift schedule
     And I click the increase cycle button
     And I tap the "Done" button
+
+    And I navigate to the lift editor
     Then The max for Squat is set to 305
     Then The max for Deadlift is set to 305
     Then The max for Press is set to 102.5
