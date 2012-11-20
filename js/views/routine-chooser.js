@@ -4,16 +4,46 @@ biglifts.routines.routineSelected = function (list, index) {
     var routine = biglifts.routines.routineStore.getAt(index);
     if (routine.get('available')) {
         biglifts.stores.Routine.removeAll();
-        biglifts.stores.Routine.add({'name':routine.get('name')});
+        var routineName = routine.get('name');
+        biglifts.stores.Routine.add({'name':routineName});
         biglifts.stores.Routine.sync();
 
-        Ext.getCmp('app').setActiveItem(Ext.getCmp('main-tab-panel'));
+        biglifts.routines.loadRoutine(routineName, true);
     }
 };
 
+biglifts.routines.setup531 = function (firstTimeInRoutine) {
+    var mainTabPanel = Ext.getCmp('main-tab-panel');
+    mainTabPanel.add(Ext.create('biglifts.views.LiftSchedule'));
+    if (biglifts.toggles.Assistance) {
+        mainTabPanel.add(Ext.create('biglifts.views.Assistance'));
+    }
+    mainTabPanel.add(Ext.create('biglifts.views.Maxes'));
+    mainTabPanel.add(Ext.create('biglifts.views.Log'));
+    if (!biglifts.toggles.Assistance) {
+        mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
+    }
+    mainTabPanel.add(Ext.create('biglifts.views.More'));
+    var editTabIndex = biglifts.toggles.Assistance ? 2 : 1;
+    mainTabPanel.setActiveItem(firstTimeInRoutine ? editTabIndex : 0);
+};
+
+biglifts.routines.loadRoutine = function (name, firstTimeInApp) {
+    biglifts.main.destroyOldTabPanel();
+    Ext.getCmp('app').add(biglifts.main.tabPanelConfig);
+
+    var setupMethods = {
+        "5/3/1":biglifts.routines.setup531
+    };
+
+    setupMethods[name](firstTimeInApp);
+    Ext.getCmp('app').setActiveItem(Ext.getCmp('main-tab-panel'));
+};
+
+
 biglifts.routines.routineStore = Ext.create('Ext.data.Store', {
     data:[
-        {name:'Starting Strength', available:false},
+        {name:'Starting Strength', available:true},
         {name:'5/3/1', available:true}
     ],
     proxy:{
@@ -21,13 +51,13 @@ biglifts.routines.routineStore = Ext.create('Ext.data.Store', {
     }
 });
 
-Ext.define('biglifts.views.FirstTimeLaunch', {
+Ext.define('biglifts.views.RoutineChooser', {
     extend:'Ext.form.Panel',
-    xtype:'first-time-launch',
+    xtype:'routine-chooser',
     config:{
         layout:'vbox',
         listeners:{
-            show:function () {
+            painted:function () {
                 biglifts.navigation.unbindBackEvent();
             },
             initialize:{

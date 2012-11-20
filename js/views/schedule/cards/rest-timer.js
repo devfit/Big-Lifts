@@ -89,7 +89,7 @@ biglifts.views.liftSchedule.RestTimer = {
     xtype:'panel',
     layout:'fit',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.restTimer.checkIfSoundMuted();
             if (biglifts.restTimer.remainingSeconds === 0) {
                 biglifts.restTimer.remainingSeconds = biglifts.stores.RestTime.first().get('restTimeInSeconds');

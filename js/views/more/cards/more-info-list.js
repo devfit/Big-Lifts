@@ -16,7 +16,7 @@ biglifts.more.feedback = function () {
 };
 
 biglifts.more.selectRoutine = function () {
-    Ext.getCmp('app').setActiveItem(Ext.getCmp('first-time-launch'));
+    Ext.getCmp('app').setActiveItem(Ext.getCmp('routine-chooser'));
 };
 
 biglifts.more.getVersionOsInfo = function () {

@@ -46,7 +46,7 @@ src_files:
         - js/models/assistance/custom.js
         - js/models/assistance/triumvirate.js
         - js/models/assistance/bodyweight.js
-        - js/views/first_time_launch.js
+        - js/views/routine-chooser.js
         - js/views/components/notes-editor.js
         - js/views/components/swipe-to-delete.js
         - js/views/maxes/cards/add-lift.js
