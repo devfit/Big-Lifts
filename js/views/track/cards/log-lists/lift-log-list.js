@@ -27,11 +27,9 @@ Ext.define('biglifts.views.LiftLogList', {
     config:{
         id:'lift-log-list',
         listeners:{
-            initialize:function () {
-                this.sortAndRefreshList();
-            },
             painted:function () {
                 if (!this._painted) {
+                    this.sortAndRefreshList();
                     this._painted = true;
                     biglifts.components.addSwipeToDelete(this, this.showLogEntry,
                         this.deleteLogEntry, Ext.emptyFn, '.date-week');

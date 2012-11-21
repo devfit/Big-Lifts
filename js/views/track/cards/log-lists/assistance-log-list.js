@@ -46,9 +46,9 @@ Ext.define('biflifts.views.LogAssistanceList', {
     config:{
         listeners:{
             painted:function () {
-                this.refresh();
                 if (!this._painted) {
                     this._painted = true;
+                    this.sortAndRefreshList();
                     biglifts.components.addSwipeToDelete(
                         this,
                         Ext.bind(this.showAssistanceLogEntry, this),
