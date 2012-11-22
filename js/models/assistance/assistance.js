@@ -21,14 +21,22 @@ Ext.define('AssistanceActivity', {
     }
 });
 
-biglifts.stores.assistance.ActivityLog = Ext.create('Ext.data.Store', {
-    model:'AssistanceActivity',
-    filters:[
-        {
-            filterFn:function (item) {
-                return item.get("assistanceType") !== "NONE";
+Ext.define("ActivityLogStore", {
+    extend:"Ext.data.Store",
+    filterOutNoneEntries:function () {
+        this.filterBy(function (item) {
+            return item.get("assistanceType") !== "NONE";
+        });
+    },
+    config:{
+        model:'AssistanceActivity',
+        listeners:{
+            load:function () {
+                this.filterOutNoneEntries();
             }
         }
-    ]
+    }
 });
+
+biglifts.stores.assistance.ActivityLog = Ext.create('ActivityLogStore');
 biglifts.stores.push(biglifts.stores.assistance.ActivityLog);

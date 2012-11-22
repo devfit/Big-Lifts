@@ -4,8 +4,12 @@ h1.first-time-launch-header {
   font-weight: bolder;
 }
 
-.first-time-launch-list {
-  .unavailable {
+.first-time-launch-list .x-list-container {
+  border: solid 2px #a9a9a9;
+  @include border-radius(10px);
+  background-color: white;
+
+  .x-list-item.unavailable {
     color: grey;
 
     .x-list-disclosure {
@@ -20,26 +24,7 @@ h1.first-time-launch-header {
     }
   }
 
-  $listBorder: solid 2px #a9a9a9;
-  .routine-entry.x-list-item {
-    border-left: $listBorder;
-    border-right: $listBorder;
-  }
-
-  .routine-entry.x-list-item-first {
-    border-top: $listBorder;
-    @include border-top-left-radius(10px);
-    @include border-top-right-radius(10px);
-  }
-
-  .routine-entry.x-list-item-last {
-    border-bottom: $listBorder;
-    @include border-bottom-left-radius(10px);
-    @include border-bottom-right-radius(10px);
-  }
-
   .routine-entry {
-    background-color: white;
     font-weight: bolder;
   }
 }

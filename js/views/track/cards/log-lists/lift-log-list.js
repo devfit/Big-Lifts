@@ -15,9 +15,7 @@ Ext.define('biglifts.views.LiftLogList', {
     },
     sortLifts:function (sortProperty, sortDirection) {
         biglifts.stores.LiftLog.sortLog(sortProperty, sortDirection);
-        if (Ext.getCmp('lift-log-list')) {
-            Ext.getCmp('lift-log-list').refresh();
-        }
+        this.refresh();
     },
     sortAndRefreshList:function () {
         var liftLogSort = biglifts.stores.LiftLogSort.first();
@@ -25,16 +23,13 @@ Ext.define('biglifts.views.LiftLogList', {
         var sortDirection = liftLogSort.data.ascending ? 'ASC' : 'DESC';
         var sortProperty = liftLogSort.data.property;
         this.sortLifts(sortProperty, sortDirection);
-        biglifts.logList.sortAssistance(sortProperty, sortDirection);
     },
     config:{
         id:'lift-log-list',
         listeners:{
-            initialize:function () {
-                this.sortAndRefreshList();
-            },
             painted:function () {
                 if (!this._painted) {
+                    this.sortAndRefreshList();
                     this._painted = true;
                     biglifts.components.addSwipeToDelete(this, this.showLogEntry,
                         this.deleteLogEntry, Ext.emptyFn, '.date-week');
@@ -60,5 +55,4 @@ Ext.define('biglifts.views.LiftLogList', {
             '</td><td width="40%" class="delete-button-holder hidden"></td>' +
             '</tr></tbody></table>'
     }
-})
-;
+});

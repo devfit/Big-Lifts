@@ -152,7 +152,8 @@ biglifts.views.liftSchedule.liftSelector = {
     activeItem:biglifts.liftSchedule.liftSelector.getStartingWeek() - 1,
     listeners:{
         painted:function () {
-            biglifts.stores.lifts.Lifts.filter('enabled', true);
+            biglifts.stores.lifts.Lifts.clearFilter(true);
+            biglifts.stores.lifts.Lifts.filter('enabled',true);
             biglifts.liftSchedule.liftSelector.setupLiftSelector();
             biglifts.liftSchedule.setupCheckedTitleWeeks();
             biglifts.navigation.unbindBackEvent();

@@ -83,16 +83,13 @@ Ext.define('biglifts.views.RoutineChooser', {
                             itemTpl:'{name}{[values.available ? "" : "<span class=\'coming-soon\'>Coming Soon!</span>"]}',
                             listeners:{
                                 itemtap:biglifts.routines.routineSelected,
-                                resize:{
-                                    fn:function () {
-                                        var listItems = this.element.query('.x-list-item');
-                                        biglifts.routines.routineStore.each(function (routine, i) {
-                                            if (!routine.get('available')) {
-                                                Ext.get(listItems[i]).addCls('unavailable');
-                                            }
-                                        });
-                                    },
-                                    order:'after'
+                                painted:function () {
+                                    var listItems = this.element.query('.x-list-item');
+                                    biglifts.routines.routineStore.each(function (routine, i) {
+                                        if (!routine.get('available')) {
+                                            Ext.get(listItems[i]).addCls('unavailable');
+                                        }
+                                    });
                                 }
                             }
 
