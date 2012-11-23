@@ -18,6 +18,9 @@ biglifts.routines.setup531 = function (firstTimeInRoutine) {
 
 biglifts.routines.setupStartingStrength = function (firstTimeInRoutine) {
     var mainTabPanel = Ext.getCmp('main-tab-panel');
+    mainTabPanel.add(Ext.create('biglifts.views.ss.Lift'));
+    mainTabPanel.add(Ext.create('biglifts.views.ss.Edit'));
+    mainTabPanel.add(Ext.create('biglifts.views.ss.Track'));
     mainTabPanel.add(Ext.create('biglifts.views.ss.More'));
 };
 

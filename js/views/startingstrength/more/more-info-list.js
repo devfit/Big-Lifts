@@ -9,7 +9,6 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
     extend:'biglifts.views.MoreInfoList',
     config:{
         id:'ss-more-info-list',
-        cls:'start-page',
         itemTpl:'{[biglifts.ss.more.getTextForValues(values)]}',
         listeners:{
             initialize:function () {
