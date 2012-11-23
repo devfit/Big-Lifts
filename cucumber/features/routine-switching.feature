@@ -1,6 +1,5 @@
 @531
 Feature: Switching routines
-
   Scenario: Switching out and back in to 5/3/1
     When I navigate to the more tab
     And I tap the "Routine" list item

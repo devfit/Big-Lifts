@@ -15,15 +15,9 @@ biglifts.main.loadApplication = function () {
             Ext.getCmp('app').setActiveItem(Ext.getCmp('routine-chooser'));
         }
         else {
-            biglifts.routines.loadRoutine(biglifts.stores.Routine.first().get('name'), firstTimeInApp);
+            Ext.getCmp('routine-chooser').loadRoutine(biglifts.stores.Routine.first().get('name'), firstTimeInApp);
         }
     }
-};
-
-biglifts.main.destroyOldTabPanel = function () {
-    var oldMainTabPanel = Ext.getCmp('main-tab-panel');
-    oldMainTabPanel.removeAll(true);
-    oldMainTabPanel.destroy();
 };
 
 biglifts.main.tabPanelConfig = {

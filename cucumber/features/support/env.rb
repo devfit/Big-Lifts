@@ -25,7 +25,7 @@ Before do
   @driver.navigate.to "file://" + File.absolute_path("../index.html#@premium_text")
   @wait = Selenium::WebDriver::Wait.new(:timeout => 10, :interval => 0.1)
 
-  @wait.until { @driver.find_element(:id => "first-time-launch") && @driver.find_element(:id => "first-time-launch").displayed? }
+  @wait.until { @driver.find_element(:id => "routine-chooser") && @driver.find_element(:id => "routine-chooser").displayed? }
 
   RoutineSelector.new(@driver, @wait).select @routine if @routine
 
