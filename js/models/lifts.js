@@ -1,6 +1,5 @@
 "use strict";
-Ext.ns('biglifts.stores.lifts', 'biglifts.defaults');
-Ext.ns('biglifts.stores.migrations', 'biglifts.models.Lift', 'biglifts.stores.recovery');
+Ext.ns('biglifts.stores.lifts');
 
 Ext.define('Lift', {
     extend:'Ext.data.Model',

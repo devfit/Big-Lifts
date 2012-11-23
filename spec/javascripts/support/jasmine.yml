@@ -46,6 +46,7 @@ src_files:
         - js/models/assistance/custom.js
         - js/models/assistance/triumvirate.js
         - js/models/assistance/bodyweight.js
+        - js/models/startingstrength/ss-lift.js
         - js/views/routine-chooser.js
         - js/views/components/notes-editor.js
         - js/views/components/swipe-to-delete.js
