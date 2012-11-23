@@ -1,16 +1,23 @@
 "use strict";
-Ext.ns("biglifts.ss.more");
-biglifts.ss.more.getTextForValues = function (values) {
-    var textFn = Ext.getCmp('ss-more-info-list').listItems[values.index].textFn;
+Ext.ns('biglifts.more');
+
+biglifts.more.getTextForValues = function (values) {
+    var textFn = Ext.getCmp('more-info-list').listItems[values.index].textFn;
     return values.text ? values.text : textFn();
 };
 
-Ext.define('biglifts.views.ss.MoreInfoList', {
-    extend:'biglifts.views.MoreInfoList',
+Ext.define('biglifts.views.531.MoreInfoList', {
+    extend:"biglifts.views.MoreInfoList",
+    showSettings:function () {
+        Ext.getCmp('more').setActiveItem(Ext.getCmp('settings'), {type:'slide', direction:'left'});
+    },
+    showOneRepCalculator:function () {
+        Ext.getCmp('more').setActiveItem(Ext.getCmp('one-rep-max-calculator'));
+    },
     config:{
-        id:'ss-more-info-list',
-        cls:'start-page',
-        itemTpl:'{[biglifts.ss.more.getTextForValues(values)]}',
+        id:'more-info-list',
+        itemTpl:'{[biglifts.more.getTextForValues(values)]}',
+        store:biglifts.more.listStore,
         listeners:{
             initialize:function () {
                 var listIndex = 0;
@@ -22,6 +29,13 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
                     }}
                 ];
 
+                if (biglifts.toggles.Assistance) {
+                    this.listItems.push({model:{index:listIndex++, text:'<span class="text">1RM Calculator</span><span class="disclosure"></span>'},
+                        handler:Ext.bind(this.showOneRepCalculator, this)});
+                }
+
+                this.listItems.push({model:{index:listIndex++, text:'<span class="text">Settings</span><span class="disclosure"></span>'},
+                    handler:Ext.bind(this.showSettings, this)});
                 this.listItems.push({model:{index:listIndex++, text:'<span class="text">Feedback...</span><span class="disclosure"></span>'},
                     handler:Ext.bind(this.feedback, this)});
                 this.listItems.push({model:{index:listIndex++, text:'<span class="text">Reset</span><span class="warning"></span>'},
@@ -32,7 +46,7 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
                     listData.push(this.listItems[i].model);
                 }
 
-                Ext.define('SsMoreList', {
+                Ext.define('MoreList', {
                     extend:'Ext.data.Model',
                     config:{
                         fields:[
@@ -42,7 +56,7 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
                     }
                 });
                 this.setStore(Ext.create('Ext.data.Store', {
-                    model:'SsMoreList',
+                    model:'MoreList',
                     data:listData
                 }));
 

@@ -12,5 +12,5 @@ Then /^I am on the one rep max screen$/ do
 end
 
 Then /^I am on the more tab$/ do
-  @driver.find_element(:id => 'more-info-list-panel').should be_displayed
+  @driver.find_element(:id => 'more-info-list').should be_displayed
 end

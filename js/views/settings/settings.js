@@ -2,7 +2,7 @@
 Ext.ns('biglifts.views', 'biglifts.controller.settings');
 
 biglifts.controller.settings.backToMore = function () {
-    Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'), {type:'slide', direction:'right'});
+    Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list'), {type:'slide', direction:'right'});
 };
 
 biglifts.views.Settings = {
