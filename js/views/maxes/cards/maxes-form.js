@@ -85,7 +85,7 @@ Ext.define("Biglifts.views.MaxesForm", {
     },
     rebuildMaxesList:function () {
         biglifts.stores.lifts.Lifts.clearFilter(true);
-        biglifts.stores.lifts.Lifts.filter('enabled',true);
+        biglifts.stores.lifts.Lifts.filter('enabled', true);
 
         if (Ext.getCmp('maxes-form-items')) {
             Ext.getCmp('maxes-form-items').removeAll(true);
@@ -116,6 +116,7 @@ Ext.define("Biglifts.views.MaxesForm", {
     },
     config:{
         scroll:'vertical',
+        cls:'start-page',
         listeners:{
             painted:function () {
                 biglifts.stores.lifts.Lifts.clearFilter(true);
@@ -243,6 +244,5 @@ Ext.define("Biglifts.views.MaxesForm", {
             }
         }
     }
-})
-;
+});
 biglifts.maxes.cards.maxesForm = {xtype:'maxesform', id:'maxes-form'};

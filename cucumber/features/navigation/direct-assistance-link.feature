@@ -5,7 +5,7 @@ Feature: Direct assistance tab for premium users
     Then There is a "Asst." navigation tab
 
   Scenario: 1RM calculator in more list
-    When I navigate to the more tab
+    When I navigate to the "More" tab
     Then "1RM Calculator" is in the more info list
     And I tap the "1RM Calculator" list item
     Then I am on the one rep max screen

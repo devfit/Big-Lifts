@@ -9,6 +9,6 @@ class RoutineSelector
 
   def select routine
     get_displayed_list_items().select { |item| item.text() == routine }[0].click
-    @wait.until { @driver.find_element(:id => 'maxes-form').displayed? }
+    @wait.until { @driver.find_element(:class => 'start-page').displayed? }
   end
 end

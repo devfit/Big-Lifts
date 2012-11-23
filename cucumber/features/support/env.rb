@@ -16,6 +16,10 @@ Before('@531') do
   @routine = '5/3/1'
 end
 
+Before('@StartingStrength') do
+  @routine = 'Starting Strength'
+end
+
 Before do
   @premium_text = @premium_text || "?premium=false"
 

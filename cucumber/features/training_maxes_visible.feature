@@ -5,12 +5,12 @@ Feature: Training maxes in the maxes editor
   So that I know if I'm using the training max or not
 
   Scenario: Training max togging
-    When I navigate to the more tab
+    When I navigate to the "More" tab
     And I tap the "Settings" list item
     And I toggle use training max
     And I navigate to the lift editor
     Then Training maxes are not visible
-    When I navigate to the more tab
+    When I navigate to the "More" tab
     And I toggle use training max
     And I navigate to the lift editor
     Then Training maxes are visible

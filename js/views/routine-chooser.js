@@ -16,6 +16,11 @@ biglifts.routines.setup531 = function (firstTimeInRoutine) {
     mainTabPanel.setActiveItem(firstTimeInRoutine ? editTabIndex : 0);
 };
 
+biglifts.routines.setupStartingStrength = function (firstTimeInRoutine) {
+    var mainTabPanel = Ext.getCmp('main-tab-panel');
+    mainTabPanel.add(Ext.create('biglifts.views.ss.More'));
+};
+
 biglifts.routines.routineStore = Ext.create('Ext.data.Store', {
     data:[
         {name:'Starting Strength', available:true},
@@ -45,7 +50,8 @@ Ext.define('biglifts.views.RoutineChooser', {
         Ext.getCmp('app').add(biglifts.main.tabPanelConfig);
 
         var setupMethods = {
-            "5/3/1":biglifts.routines.setup531
+            "5/3/1":biglifts.routines.setup531,
+            "Starting Strength":biglifts.routines.setupStartingStrength
         };
 
         setupMethods[name](firstTimeInApp);
