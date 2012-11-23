@@ -6,7 +6,7 @@ biglifts.maxes.currentEditingLiftProperty = null;
 biglifts.maxes.editLiftBackButtonPressed = function () {
     var formValues = Ext.getCmp('edit-lift-form').getValues();
     formValues.name = formValues.name.trim();
-    formValues.propertyName = biglifts.models.Lift.sanitizePropertyName(formValues.name);
+    formValues.propertyName = biglifts.stores.lifts.Lifts.sanitizePropertyName(formValues.name);
 
     var currentModel = biglifts.maxes.controller.getCurrentLiftModel();
     var oldPropertyName = currentModel.get('propertyName');
