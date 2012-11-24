@@ -6,7 +6,7 @@ Ext.define('biglifts.views.ss.Lift', {
         layout:'card',
         listeners:{
             initialize:function () {
-                this.add({html:'hello!'});
+                this.add(Ext.create('biglifts.views.ss.Workouts'));
                 this.setActiveItem(0);
             }
         }
