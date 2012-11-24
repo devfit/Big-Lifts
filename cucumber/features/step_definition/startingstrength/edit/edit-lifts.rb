@@ -1,4 +1,4 @@
-When /^I edit the "(.*?)" input to be "(.*?)"$/ do |name, weight|
+When /^I set the "(.*?)" input to "(.*?)"$/ do |name, weight|
   label = @driver.find_elements(:class => 'x-form-label').select { |label| label.text().include? name }[0]
   input = label.find_element(:xpath => '..').find_element(:tag_name => 'input')
   input.clear

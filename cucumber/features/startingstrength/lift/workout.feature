@@ -1,5 +1,14 @@
 @StartingStrength
 Feature: Workouts
+  Scenario: Lift weights are reflected in workouts
+    When I navigate to the "Edit" tab
+    When I set the "Bench" input to "225"
+    When I set the "Squat" input to "300"
+    When I set the "Deadlift" input to "400"
+    And I navigate to the "Lift" tab
+    Then There is a "Bench 3x5 225" list item
+    Then There is a "Squat 3x5 300" list item
+    Then There is a "Deadlift 1x5 400" list item
 
   Scenario: Workout A
     When I navigate to the "Lift" tab

@@ -142,7 +142,6 @@ biglifts.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
-                    style:'z-index: 11',
                     id:'rest-timer-button',
                     cls:'rest-timer-button',
                     iconCls:'clock',

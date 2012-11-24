@@ -10,7 +10,6 @@ Ext.define('biglifts.views.ss.EditLiftsForm', {
         var name = field.getName();
         var record = biglifts.stores.ss.Lifts.findRecord('id', name);
         record.set('weight', newVal);
-        record.save();
         biglifts.stores.ss.Lifts.sync();
     },
     createInput:function (record) {
