@@ -4,9 +4,10 @@ Ext.define('biglifts.views.ss.Edit', {
         title:'Edit',
         iconCls:'settings',
         layout:'card',
+        cls:'start-page',
         listeners:{
             initialize:function () {
-                this.add({html:'hello!'});
+                this.add(Ext.create('biglifts.views.ss.EditLiftsForm'));
                 this.setActiveItem(0);
             }
         }

@@ -12,3 +12,8 @@ Then /^I navigate to the "([^"]+)" tab/ do |tab_text|
   tab.click
   sleep @ANIMATION_DELAY
 end
+
+Then /^There is a "(.*?)" form label$/ do |name|
+  labels = @driver.find_elements(:class => 'x-form-label').select { |label| label.displayed? && label.text().include?(name) }
+  labels.length.should == 1
+end

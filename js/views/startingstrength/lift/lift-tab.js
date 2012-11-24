@@ -4,7 +4,6 @@ Ext.define('biglifts.views.ss.Lift', {
         title:'Lift!',
         iconCls:'icnBarbell',
         layout:'card',
-        cls:'start-page',
         listeners:{
             initialize:function () {
                 this.add({html:'hello!'});
