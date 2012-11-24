@@ -6,13 +6,22 @@ Ext.define('biglifts.views.ss.EditLiftsForm', {
             biglifts.stores.ss.Lifts.each(me.createInput, me);
         });
     },
+    inputChanged:function (field, newVal) {
+        var name = field.getName();
+        var record = biglifts.stores.ss.Lifts.findRecord('id', name);
+        record.set('weight', newVal);
+        record.save();
+        biglifts.stores.ss.Lifts.sync();
+    },
     createInput:function (record) {
-        var liftName = record.data.name;
-
         this.down('fieldset').add({
             xtype:'numberfield',
-            label:liftName,
-            value:record.data.weight
+            name:record.get('id'),
+            label:record.get('name'),
+            value:record.get('weight'),
+            listeners:{
+                change:Ext.bind(this.inputChanged, this)
+            }
         });
     },
     config:{
