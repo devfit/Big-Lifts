@@ -4,7 +4,7 @@ Ext.define('biglifts.models.startingstrength.Log', {
         identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
-            {name:'liftName', type:'string'},
+            {name:'name', type:'string'},
             {name:'weight', type:'float'},
             {name:'sets', type:'int'},
             {name:'reps', type:'int'},

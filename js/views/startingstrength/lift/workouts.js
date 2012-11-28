@@ -4,9 +4,18 @@ Ext.define('biglifts.views.ss.Workouts', {
 
     },
     markWorkoutCompleted:function () {
-        biglifts.stores.ss.WorkoutStore.each(function(w){
-
+        biglifts.stores.ss.WorkoutStore.each(function (w) {
+            var lift = biglifts.stores.ss.Lifts.findRecord('id', w.get('lift_id'));
+            biglifts.stores.ss.Log.add({
+                name:lift.get("name"),
+                weight:lift.get('weight'),
+                sets:w.get('sets'),
+                reps:w.get('reps'),
+                units:'lbs',
+                timestamp:new Date().getTime()
+            });
         });
+        biglifts.stores.ss.Log.sync();
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('ss-track-tab'));
     },
     config:{
