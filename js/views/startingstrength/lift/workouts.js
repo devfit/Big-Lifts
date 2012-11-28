@@ -4,7 +4,7 @@ Ext.define('biglifts.views.ss.Workouts', {
 
     },
     markWorkoutCompleted:function () {
-
+        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('ss-track-tab'));
     },
     config:{
         items:[

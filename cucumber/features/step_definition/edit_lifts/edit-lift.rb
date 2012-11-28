@@ -24,5 +24,6 @@ Then /^The sort ordering is sensible$/ do
 end
 
 Then /^I am on the track tab$/ do
-  @driver.find_element(:id => 'log').displayed?.should be_true
+  tab = @driver.find_elements(:css => '.x-button-icon.bookmarks').select { |tab| tab.displayed? }[0]
+  tab.find_element(:xpath => './..').attribute('class').should include 'x-tab-active'
 end
