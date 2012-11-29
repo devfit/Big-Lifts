@@ -19,7 +19,7 @@ Ext.define('biglifts.views.ss.Track', {
                     store:biglifts.stores.ss.Log,
                     itemTpl:new Ext.XTemplate("<table class='ss-workout'><tbody><tr>" +
                         "<td width='30%' class='name'>{name}</td>" +
-                        "<td width='23%'>{sets}x{reps}</td>" +
+                        "<td width='23%'><span class='sets'>{sets}x</span> {reps}</td>" +
                         "<td width='23%'>{weight}{units}</td>" +
                         "<td width='23%' class='timestamp last'>{[this.convertTimestamp(values.timestamp)]}</td>" +
                         "</tr></tbody></table>", {
