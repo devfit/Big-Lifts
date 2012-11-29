@@ -57,18 +57,22 @@ Ext.define('biglifts.views.ss.Workouts', {
                     title:'A',
                     xtype:'list',
                     store:biglifts.stores.ss.WorkoutStore,
-                    itemTpl:new Ext.XTemplate('{[this.getLiftName(values.lift_id)]} {sets}x{reps} ' +
-                        '{[this.getWeight(values.lift_id)]}{[this.getUnits()]}', {
-                        getLiftName:function (lift_id) {
-                            return biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('name');
-                        },
-                        getWeight:function (lift_id) {
-                            return biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('weight');
-                        },
-                        getUnits:function () {
-                            return "lbs";
-                        }
-                    })
+                    itemTpl:new Ext.XTemplate(
+                        '<table class="ss-workout"><tbody><tr>' +
+                            '<td class="name" width="33%">{[this.getLiftName(values.lift_id)]}</td>' +
+                            '<td width="33%">{sets}x{reps}</td>' +
+                            '<td class="last" width="33%">{[this.getWeight(values.lift_id)]}{[this.getUnits()]}</td>' +
+                            '</tr></tbody></table>', {
+                            getLiftName:function (lift_id) {
+                                return biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('name');
+                            },
+                            getWeight:function (lift_id) {
+                                return biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('weight');
+                            },
+                            getUnits:function () {
+                                return "lbs";
+                            }
+                        })
                 };
 
                 var listConfigB = _.clone(listConfigA);

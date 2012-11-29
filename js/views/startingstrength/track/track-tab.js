@@ -17,7 +17,12 @@ Ext.define('biglifts.views.ss.Track', {
                 this.add({
                     xtype:'list',
                     store:biglifts.stores.ss.Log,
-                    itemTpl:new Ext.XTemplate("{name} {sets}x{reps} {weight}{units} {[this.convertTimestamp(values.timestamp)]}", {
+                    itemTpl:new Ext.XTemplate("<table class='ss-workout'><tbody><tr>" +
+                        "<td width='30%' class='name'>{name}</td>" +
+                        "<td width='23%'>{sets}x{reps}</td>" +
+                        "<td width='23%'>{weight}{units}</td>" +
+                        "<td width='23%' class='timestamp last'>{[this.convertTimestamp(values.timestamp)]}</td>" +
+                        "</tr></tbody></table>", {
                         convertTimestamp:function (timestamp) {
                             return new Date(timestamp).toString(biglifts.stores.Settings.first().get('dateFormat'));
                         }
