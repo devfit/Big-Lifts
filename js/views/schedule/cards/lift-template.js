@@ -117,8 +117,9 @@ biglifts.liftSchedule.liftTemplate.markLiftCompleted = function () {
 };
 
 biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
-    biglifts.restTimer.backLocation = 'lift-template';
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'), {type:'slide', direction:'right'});
+    var restTimer = Ext.getCmp('rest-timer');
+    restTimer.setBackLocation('lift-template');
+    Ext.getCmp('lift-schedule').setActiveItem(restTimer, {type:'slide', direction:'right'});
 };
 
 biglifts.liftSchedule.liftTemplate.formatPercentage = function (value) {
