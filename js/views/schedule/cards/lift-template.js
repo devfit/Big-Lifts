@@ -118,7 +118,10 @@ biglifts.liftSchedule.liftTemplate.markLiftCompleted = function () {
 
 biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
     var restTimer = Ext.getCmp('rest-timer');
-    restTimer.setBackLocation('lift-template');
+    restTimer.setBack(function () {
+        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
+    });
+
     Ext.getCmp('lift-schedule').setActiveItem(restTimer, {type:'slide', direction:'right'});
 };
 
@@ -143,7 +146,6 @@ biglifts.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
-                    id:'rest-timer-button',
                     cls:'rest-timer-button',
                     iconCls:'clock',
                     iconMask:true,

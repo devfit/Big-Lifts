@@ -9,7 +9,9 @@ biglifts.routines.setup531 = function (firstTimeInRoutine) {
     mainTabPanel.add(Ext.create('biglifts.views.Maxes'));
     mainTabPanel.add(Ext.create('biglifts.views.Log'));
     if (!biglifts.toggles.Assistance) {
-        mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator'));
+        mainTabPanel.add(Ext.create('biglifts.views.OneRepMaxCalculator', {
+            id:'one-rep-max-calculator'
+        }));
     }
     mainTabPanel.add(Ext.create('biglifts.views.More'));
     var editTabIndex = biglifts.toggles.Assistance ? 2 : 1;

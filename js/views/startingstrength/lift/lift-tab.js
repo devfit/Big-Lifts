@@ -6,7 +6,14 @@ Ext.define('biglifts.views.ss.Lift', {
         layout:'card',
         listeners:{
             initialize:function () {
-                this.add(Ext.create('biglifts.views.ss.Workouts'));
+                var me = this;
+                me.workoutView = this.add(Ext.create('biglifts.views.ss.Workouts'));
+                me.restTimer = this.add(Ext.create('biglifts.views.RestTimer', {
+                    id:'ss-rest-timer',
+                    backFunction:function () {
+                        me.setActiveItem(me.workoutView);
+                    }
+                }));
                 this.setActiveItem(0);
             }
         }

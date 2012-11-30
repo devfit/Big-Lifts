@@ -1,18 +1,19 @@
 When /^I tap the rest timer button$/ do
-  @driver.find_element(:id => 'rest-timer-button').click()
+  button = @driver.find_elements(:class => 'rest-timer-button').select { |button| button.displayed? }[0]
+  button.click
   sleep @ANIMATION_DELAY
 end
 
 When /^I tap the increment rest timer button$/ do
-  @driver.find_element(:id => 'rest-timer-increment-button').click()
+  @driver.find_element(:class => 'rest-timer-increment-button').click()
 end
 
 Then /^The rest timer shows "(.*?)"$/ do |time|
-  @driver.find_element(:id => 'rest-timer-time').text().should == time
+  @driver.find_element(:class => 'rest-timer-time').text().should == time
 end
 
 Then /^The rest timer does not show "(.*?)"$/ do |time|
-  @driver.find_element(:id => 'rest-timer-time').text().should_not == time
+  @driver.find_element(:class => 'rest-timer-time').text().should_not == time
 end
 
 Then /^I tap the rest timer start button$/ do

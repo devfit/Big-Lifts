@@ -15,6 +15,7 @@ Ext.define('biglifts.views.More', {
                 if (biglifts.toggles.Assistance) {
                     this.add(
                         Ext.create('biglifts.views.OneRepMaxCalculator', {
+                            id:'one-rep-max-calculator',
                             backFunction:function () {
                                 me.setActiveItem(me.moreInfoList);
                             }

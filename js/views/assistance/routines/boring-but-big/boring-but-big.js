@@ -29,7 +29,9 @@ Ext.define("biglifts.views.BoringButBig", {
     },
     showRestTimer:function () {
         var restTimer = Ext.getCmp('rest-timer');
-        restTimer.setBackLocation('boring-but-big');
+        restTimer.setBack(function () {
+            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
+        });
         Ext.getCmp('assistance').setActiveItem(restTimer);
     },
     showNotesEditor:function () {
@@ -116,7 +118,6 @@ Ext.define("biglifts.views.BoringButBig", {
                             },
                             {xtype:'spacer'},
                             {
-                                id:'boring-but-big-rest-timer-button',
                                 cls:'rest-timer-button',
                                 iconCls:'clock',
                                 iconMask:true,
