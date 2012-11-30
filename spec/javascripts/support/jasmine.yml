@@ -48,6 +48,7 @@ src_files:
         - js/models/assistance/bodyweight.js
         - js/models/startingstrength/lift.js
         - js/models/startingstrength/workout.js
+        - js/models/startingstrength/log.js
         - js/views/routine-chooser.js
         - js/views/components/notes-editor.js
         - js/views/components/swipe-to-delete.js

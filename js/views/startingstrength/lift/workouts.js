@@ -5,6 +5,7 @@ Ext.define('biglifts.views.ss.Workouts', {
         parent.setActiveItem(parent.restTimer);
     },
     markWorkoutCompleted:function () {
+        var newWorkoutId = biglifts.stores.ss.Log.getNewWorkoutId();
         biglifts.stores.ss.WorkoutStore.each(function (w) {
             var lift = biglifts.stores.ss.Lifts.findRecord('id', w.get('lift_id'));
             biglifts.stores.ss.Log.add({
@@ -13,7 +14,8 @@ Ext.define('biglifts.views.ss.Workouts', {
                 sets:w.get('sets'),
                 reps:w.get('reps'),
                 units:'lbs',
-                timestamp:new Date().getTime()
+                timestamp:new Date().getTime(),
+                workout_id:newWorkoutId
             });
         });
         biglifts.stores.ss.Log.sync();

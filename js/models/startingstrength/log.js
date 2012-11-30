@@ -9,7 +9,8 @@ Ext.define('biglifts.models.startingstrength.Log', {
             {name:'sets', type:'int'},
             {name:'reps', type:'int'},
             {name:'units', type:'string'},
-            {name:'timestamp', type:'int'}
+            {name:'timestamp', type:'int'},
+            {name:'workout_id', type:'int'}
         ],
         proxy:{
             type:'localstorage',
@@ -20,6 +21,10 @@ Ext.define('biglifts.models.startingstrength.Log', {
 
 Ext.define('biglifts.models.startingstrength.LogStore', {
     extend:'Ext.data.Store',
+    getNewWorkoutId:function () {
+        var max = this.max('workout_id');
+        return _.isUndefined(max) ? 0 : max + 1;
+    },
     config:{
         model:'biglifts.models.startingstrength.Log'
     }
