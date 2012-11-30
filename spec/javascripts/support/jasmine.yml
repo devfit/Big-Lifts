@@ -46,6 +46,7 @@ src_files:
         - js/models/assistance/custom.js
         - js/models/assistance/triumvirate.js
         - js/models/assistance/bodyweight.js
+        - js/models/migration/migration.js
         - js/models/startingstrength/lift.js
         - js/models/startingstrength/workout.js
         - js/models/startingstrength/log.js
@@ -105,7 +106,6 @@ src_files:
         - js/views/531/more/more-info-list.js
         - js/views/531/more/more.js
         - js/debug.js
-        - js/util/backup/loading.js
         - js/util/orientationLock.js
 
 # stylesheets

@@ -1,6 +1,12 @@
 "use strict";
+Ext.ns('biglifts.debug');
+
+biglifts.debug.setup531WithoutNotification = function () {
+    biglifts.stores.Routine.add({'name':'5/3/1'});
+    biglifts.stores.Routine.sync();
+};
+
 if (Ext.os.is.Linux || Ext.os.is.MacOS) {
-    Ext.ns('biglifts.log.emailExport');
     window.device = {
         name:"Chrome",
         uuid:'1234',
@@ -15,11 +21,16 @@ if (Ext.os.is.Linux || Ext.os.is.MacOS) {
         TIME_INTERVAL:3
     });
 
+    Ext.ns('biglifts.log.emailExport');
     biglifts.log.emailExport.ajaxEmailRequest = function (email, data) {
         window.testEmail = email;
         window.testData = data;
         console.log(email + " " + data);
     };
+
+    if (location.href.indexOf('existing_routine=531NoNotification') !== -1) {
+        biglifts.debug.setup531WithoutNotification();
+    }
 
     biglifts.loadingFromFile = false;
 }
