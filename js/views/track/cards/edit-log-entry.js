@@ -113,6 +113,7 @@ Ext.define("biglifts.views.EditLogEntry", {
         bodyStyle:'padding-top:0px',
         listeners:{
             painted:function () {
+                this.rebuildEditLogFieldset();
                 if (!this._painted) {
                     biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.rebuildEditLogFieldset, this));
                     Ext.get('edit-log-notes').addListener('tap', Ext.bind(this.editNotes, this));
@@ -150,8 +151,6 @@ Ext.define("biglifts.views.EditLogEntry", {
                     cls:'fieldset-title-no-margin',
                     style:'margin-bottom: 7px;'
                 });
-
-                this.rebuildEditLogFieldset();
 
                 me.add({
                     xtype:'panel',
