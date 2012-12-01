@@ -18,6 +18,7 @@ Ext.define('Migration', {
 Ext.define('Migrations', {
     extend:'Ext.data.Store',
     MIGRATION_VALUES:[
+        {class:'biglifts.migrations.ssNotification', done:false}
     ],
     loadMissingMigrations:function () {
         var me = this;
@@ -32,15 +33,19 @@ Ext.define('Migrations', {
         model:'Migration',
         listeners:{
             load:function () {
-                if (this.getCount() !== this.MIGRATION_VALUES.length) {
-                    this.loadMissingMigrations();
+                var me = this;
+                if (me.getCount() !== me.MIGRATION_VALUES.length) {
+                    me.loadMissingMigrations();
                 }
-                this.each(function (migration) {
+                me.each(function (migration) {
                     var alreadyRun = migration.get('done');
                     if (!alreadyRun) {
                         var klass = migration.get('class');
                         var migrationRunner = Ext.create(klass);
                         migrationRunner.run();
+
+                        migration.set('done', true);
+                        me.sync();
                     }
                 });
             }

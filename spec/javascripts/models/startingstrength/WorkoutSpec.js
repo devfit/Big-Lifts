@@ -1,8 +1,7 @@
 describe("Starting Strength workout", function () {
     beforeEach(function () {
+        localStorage.clear();
         this.workoutStore = Ext.create('biglifts.models.startingstrength.WorkoutStore');
-        this.workoutStore.removeAll();
-        this.workoutStore.sync();
     });
 
     it("should load default workouts", function () {

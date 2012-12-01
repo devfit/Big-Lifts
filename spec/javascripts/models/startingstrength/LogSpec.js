@@ -1,8 +1,7 @@
 describe("Starting Strength log", function () {
     beforeEach(function () {
+        localStorage.clear();
         this.log = Ext.create('biglifts.models.startingstrength.LogStore');
-        this.log.removeAll();
-        this.log.sync();
     });
 
     describe("getNewWorkoutId", function () {

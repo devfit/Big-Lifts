@@ -1,20 +1,20 @@
 describe("Lift Completion Model and Store", function () {
-    var store = biglifts.stores.lifts.LiftCompletion;
     beforeEach(function(){
-        store.removeAll();
-        biglifts.stores.lifts.Lifts.removeAll();
+        localStorage.clear();
+        this.liftCompletion = biglifts.stores.lifts.LiftCompletion;
+        this.lifts = biglifts.stores.lifts.Lifts;
     });
 
     it("should remove lift completions that no longer have associated lifts", function () {
-        store.add({liftPropertyName:'squat'});
-        store.add({liftPropertyName:'squat2'});
-        biglifts.stores.lifts.Lifts.add({propertyName:'squat'});
+        this.liftCompletion.add({liftPropertyName:'squat'});
+        this.liftCompletion.add({liftPropertyName:'squat2'});
+        this.lifts.add({propertyName:'squat'});
 
-        expect(store.getCount()).toEqual(2);
+        expect(this.liftCompletion.getCount()).toEqual(2);
 
         biglifts.stores.migrations.removeDeadLiftCompletions();
-        biglifts.stores.lifts.Lifts.load();
+        this.lifts.load();
 
-        expect(store.getCount()).toEqual(1);
+        expect(this.liftCompletion.getCount()).toEqual(1);
     });
 });
