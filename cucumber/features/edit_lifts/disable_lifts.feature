@@ -58,7 +58,7 @@ Feature: Disabling lifts
     And I disable "Squat"
     And I tap the "Done" button
     And I navigate to the lift schedule
-    Then The lift selector shows "Deadlift,Press,Bench"
+    Then The lift selector shows "Press,Deadlift,Bench"
 
   Scenario: Checking a disable lift checkbox does not cause it to disappear
     When I navigate to the lift editor

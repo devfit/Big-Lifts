@@ -6,7 +6,7 @@ Feature: Arrange lifts
 
   Scenario: Default ordering
     When I navigate to the lift schedule
-    Then The lift schedule orders lifts as "Squat,Deadlift,Press,Bench"
+    Then The lift schedule orders lifts as "Press,Deadlift,Bench,Squat"
 
   Scenario: Arrange a newly added lift
     When I navigate to the lift editor
@@ -19,7 +19,7 @@ Feature: Arrange lifts
     And I tap the move down button
     And I tap done while arranging lifts
     And I navigate to the lift schedule
-    Then The lift schedule orders lifts as "Squat,Deadlift,Press,TestLift,Bench"
+    Then The lift schedule orders lifts as "Press,Deadlift,Bench,TestLift,Squat"
 
   Scenario: Moving the top item down 1
     When I navigate to the lift editor
@@ -29,7 +29,7 @@ Feature: Arrange lifts
     And I tap the move down button
     And I tap done while arranging lifts
     And I navigate to the lift schedule
-    Then The lift schedule orders lifts as "Deadlift,Squat,Press,Bench"
+    Then The lift schedule orders lifts as "Deadlift,Press,Bench,Squat"
 
   Scenario: Moving the bottom item up 1
     When I navigate to the lift editor
@@ -39,4 +39,4 @@ Feature: Arrange lifts
     And I tap the move up button
     And I tap done while arranging lifts
     And I navigate to the lift schedule
-    Then The lift schedule orders lifts as "Squat,Deadlift,Bench,Press"
+    Then The lift schedule orders lifts as "Press,Deadlift,Squat,Bench"
