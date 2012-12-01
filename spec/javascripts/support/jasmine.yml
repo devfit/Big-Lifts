@@ -46,7 +46,11 @@ src_files:
         - js/models/assistance/custom.js
         - js/models/assistance/triumvirate.js
         - js/models/assistance/bodyweight.js
-        - js/views/first_time_launch.js
+        - js/models/migration/migration.js
+        - js/models/startingstrength/lift.js
+        - js/models/startingstrength/workout.js
+        - js/models/startingstrength/log.js
+        - js/views/routine-chooser.js
         - js/views/components/notes-editor.js
         - js/views/components/swipe-to-delete.js
         - js/views/maxes/cards/add-lift.js
@@ -98,10 +102,10 @@ src_files:
         - js/views/track/cards/graph.js
         - js/views/track/track.js
         - js/views/oneRepMaxCalculator.js
-        - js/views/more/cards/more-info-list.js
-        - js/views/more/more.js
+        - js/views/more/more-info-list.js
+        - js/views/531/more/more-info-list.js
+        - js/views/531/more/more.js
         - js/debug.js
-        - js/util/backup/loading.js
         - js/util/orientationLock.js
 
 # stylesheets

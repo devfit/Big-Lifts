@@ -22,7 +22,6 @@ Ext.define('biglifts.views.OneRepMaxCalculator', {
     },
     config:{
         backFunction:null,
-        id:'one-rep-max-calculator',
         title:'1-Rep',
         iconCls:'search',
         listeners:{

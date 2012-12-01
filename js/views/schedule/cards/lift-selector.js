@@ -84,7 +84,10 @@ biglifts.liftSchedule.liftSelector.handleWeekChange = function (container, newVa
 };
 
 biglifts.liftSchedule.liftSelector.changeWeek = function (week) {
-    Ext.getCmp('lift-selector-toolbar').setTitle('Week ' + week);
+    var liftSelectorToolbar = Ext.getCmp('lift-selector-toolbar');
+    if (liftSelectorToolbar) {
+        liftSelectorToolbar.setTitle('Week ' + week);
+    }
     biglifts.liftSchedule.currentWeek = week;
 };
 
@@ -155,7 +158,7 @@ biglifts.views.liftSchedule.liftSelector = {
             biglifts.liftSchedule.setupCheckedTitleWeeks();
             biglifts.navigation.unbindBackEvent();
 
-            if( !this._painted ){
+            if (!this._painted) {
                 this._painted = true;
                 biglifts.stores.lifts.LiftCompletion.addListener('beforesync', biglifts.liftSchedule.liftSelector.setupListDoneIcons);
             }

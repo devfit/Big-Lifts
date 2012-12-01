@@ -8,16 +8,16 @@ Ext.define('biglifts.views.More', {
         layout:'card',
         listeners:{
             initialize:function () {
-                this.add([
-                    biglifts.views.MoreInfoList,
-                    biglifts.views.Settings
-                ]);
+                var me = this;
+                this.moreInfoList = this.add(Ext.create('biglifts.views.531.MoreInfoList'));
+                this.settingsPanel = this.add(biglifts.views.Settings);
 
                 if (biglifts.toggles.Assistance) {
                     this.add(
                         Ext.create('biglifts.views.OneRepMaxCalculator', {
+                            id:'one-rep-max-calculator',
                             backFunction:function () {
-                                Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list-panel'));
+                                me.setActiveItem(me.moreInfoList);
                             }
                         })
                     );

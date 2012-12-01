@@ -117,8 +117,12 @@ biglifts.liftSchedule.liftTemplate.markLiftCompleted = function () {
 };
 
 biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
-    biglifts.restTimer.backLocation = 'lift-template';
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('rest-timer'), {type:'slide', direction:'right'});
+    var restTimer = Ext.getCmp('rest-timer');
+    restTimer.setBack(function () {
+        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
+    });
+
+    Ext.getCmp('lift-schedule').setActiveItem(restTimer, {type:'slide', direction:'right'});
 };
 
 biglifts.liftSchedule.liftTemplate.formatPercentage = function (value) {
@@ -142,8 +146,6 @@ biglifts.views.liftSchedule.liftTemplate = {
                 },
                 {xtype:'spacer'},
                 {
-                    style:'z-index: 11',
-                    id:'rest-timer-button',
                     cls:'rest-timer-button',
                     iconCls:'clock',
                     iconMask:true,

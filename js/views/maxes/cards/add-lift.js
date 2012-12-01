@@ -40,7 +40,7 @@ biglifts.maxes.controller.findNextOrdering = function () {
 biglifts.maxes.controller.addLiftDoneButtonPressed = function () {
     var liftName = Ext.getCmp('add-lift-new-name').getValue();
     var liftMax = Ext.getCmp('add-lift-new-max').getValue();
-    var liftProperty = biglifts.models.Lift.sanitizePropertyName(liftName);
+    var liftProperty = biglifts.stores.lifts.Lifts.sanitizePropertyName(liftName);
     var cycleIncrease = Ext.getCmp('add-lift-cycle-increase').getValue();
 
     var newLiftModel = Ext.create('Lift',

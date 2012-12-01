@@ -38,7 +38,7 @@ biglifts.views.EditProgression = {
     xtype:'formpanel',
     id:'edit-progression',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.liftPercentages.returnToLiftSettings);
             biglifts.liftPercentages.setupEditLiftProgression();
         }

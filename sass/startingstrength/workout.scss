@@ -1,0 +1,19 @@
+.ss-workout {
+  width: 100%;
+  .name {
+    font-weight: bold;
+  }
+
+  .last {
+    text-align: right;
+  }
+
+  .sets {
+    color: #555;
+  }
+
+  .timestamp {
+    color: grey;
+    font-size: 90%;
+  }
+}

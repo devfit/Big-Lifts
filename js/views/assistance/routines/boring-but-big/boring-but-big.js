@@ -28,8 +28,11 @@ Ext.define("biglifts.views.BoringButBig", {
         biglifts.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
     },
     showRestTimer:function () {
-        biglifts.restTimer.backLocation = 'boring-but-big';
-        Ext.getCmp('assistance').setActiveItem(Ext.getCmp('rest-timer'));
+        var restTimer = Ext.getCmp('rest-timer');
+        restTimer.setBack(function () {
+            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('boring-but-big'));
+        });
+        Ext.getCmp('assistance').setActiveItem(restTimer);
     },
     showNotesEditor:function () {
         Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big-notes'));
@@ -115,7 +118,6 @@ Ext.define("biglifts.views.BoringButBig", {
                             },
                             {xtype:'spacer'},
                             {
-                                id:'boring-but-big-rest-timer-button',
                                 cls:'rest-timer-button',
                                 iconCls:'clock',
                                 iconMask:true,
