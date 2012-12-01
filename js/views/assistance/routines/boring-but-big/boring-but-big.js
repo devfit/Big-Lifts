@@ -4,7 +4,7 @@ Ext.define("biglifts.views.BoringButBig", {
     xtype:'boringbutbig',
     extend:"Ext.Panel",
     addMovement:function () {
-        var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.assistance.currentLiftProperty);
+        var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
         var bbbMovement = {
             sets:5,
             reps:10,
@@ -24,7 +24,7 @@ Ext.define("biglifts.views.BoringButBig", {
     },
     filterLifts:function () {
         biglifts.stores.assistance.BoringButBig.clearFilter(true);
-        var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.assistance.currentLiftProperty);
+        var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
         biglifts.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
     },
     showRestTimer:function () {
@@ -67,7 +67,7 @@ Ext.define("biglifts.views.BoringButBig", {
 
         var formattedWeight = biglifts.weight.format(bbbWeight);
 
-        var plateList = util.plates.getFormattedPlateList(formattedWeight, biglifts.assistance.currentLiftProperty);
+        var plateList = util.plates.getFormattedPlateList(formattedWeight, Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
 
         return "<table class='assistance-plate-breakdown'><tbody><tr>" +
             "<td width='70%'></td>" +

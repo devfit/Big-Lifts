@@ -4,14 +4,14 @@ Ext.define("Biglifts.views.Custom", {
     assistanceType:'',
     filterCustomMovements:function () {
         this.customMovementStore.clearFilter();
-        this.customMovementStore.filter('liftProperty', biglifts.assistance.currentLiftProperty);
+        this.customMovementStore.filter('liftProperty', Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
     },
     editCustomMovement:function (dataview, index) {
         var movement = this.customMovementStore.getAt(index);
         Ext.getCmp(this.movementEditor).showEditCustomMovement(movement);
     },
     addCustomMovement:function () {
-        this.customMovementStore.add({liftProperty:biglifts.assistance.currentLiftProperty, name:"", sets:5, reps:15});
+        this.customMovementStore.add({liftProperty:Ext.getCmp('assistance-lift-chooser').currentLiftProperty, name:"", sets:5, reps:15});
         this.customMovementStore.sync();
         Ext.getCmp(this.movementEditor).showEditCustomMovement(this.customMovementStore.last());
     },

@@ -7,14 +7,14 @@ Ext.define('biglifts.views.AssistanceLiftChooser', {
         this.assistanceId = assistanceId;
         this._toolbar.setTitle(title);
         Ext.getCmp('assistance').setActiveItem(this);
-        biglifts.assistance.currentLiftProperty = null;
+        this.currentLiftProperty = null;
     },
     back:function () {
         Ext.getCmp('assistance').setActiveItem('assistance-chooser');
     },
     liftSelected:function (list, index) {
         var lift = this._liftList.getStore().getAt(index);
-        biglifts.assistance.currentLiftProperty = lift.get('propertyName');
+        this.currentLiftProperty = lift.get('propertyName');
         Ext.getCmp('assistance').setActiveItem(Ext.getCmp(this.assistanceId));
     },
     config:{
