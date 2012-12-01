@@ -12,8 +12,8 @@ biglifts.liftSchedule.liftTemplate.showLiftTracking = function () {
         'notes':''
     };
 
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'));
     Ext.getCmp('lift-tracking').setValues(formValues);
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'), {type:'slide', direction:'left'});
 };
 
 
@@ -112,10 +112,6 @@ biglifts.liftSchedule.liftTemplate.returnToLiftSelect = function () {
     Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
 };
 
-biglifts.liftSchedule.liftTemplate.markLiftCompleted = function () {
-    biglifts.liftSchedule.liftTemplate.showLiftTracking();
-};
-
 biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
     var restTimer = Ext.getCmp('rest-timer');
     restTimer.setBack(function () {
@@ -158,7 +154,7 @@ biglifts.views.liftSchedule.liftTemplate = {
                     iconCls:'done',
                     iconMask:true,
                     ui:'action',
-                    handler:biglifts.liftSchedule.liftTemplate.markLiftCompleted
+                    handler:biglifts.liftSchedule.liftTemplate.showLiftTracking
                 }
             ]
         },

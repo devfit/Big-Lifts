@@ -6,14 +6,14 @@ biglifts.liftSchedule.currentLiftProperty = null;
 biglifts.liftSchedule.currentWeek = 1;
 
 Ext.define('biglifts.views.LiftSchedule', {
-    extend:'Ext.Panel',
-    config:{
-        id:'lift-schedule',
-        title:'Lift!',
-        iconCls:'icnBarbell',
-        layout:'card',
-        listeners:{
-            initialize:function () {
+    extend: 'Ext.Panel',
+    config: {
+        id: 'lift-schedule',
+        title: 'Lift!',
+        iconCls: 'icnBarbell',
+        layout: 'card',
+        listeners: {
+            initialize: function () {
                 this.add([
                     biglifts.views.liftSchedule.liftSelector,
                     biglifts.views.liftSchedule.liftTemplate,
@@ -22,11 +22,11 @@ Ext.define('biglifts.views.LiftSchedule', {
                     biglifts.views.liftSchedule.LiftSettings,
                     biglifts.views.EditLiftPercentages,
                     biglifts.views.EditProgression,
-                    biglifts.views.liftSchedule.LiftTracking,
+                    Ext.create('biglifts.views.LiftTracking'),
                     biglifts.views.liftSchedule.RestTimer,
                     {
-                        xtype:'firstlognoteseditor',
-                        id:'first-log-notes-editor'
+                        xtype: 'firstlognoteseditor',
+                        id: 'first-log-notes-editor'
                     }
                 ]);
                 this.setActiveItem(0);

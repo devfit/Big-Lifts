@@ -1,5 +1,4 @@
 "use strict";
-Ext.ns('biglifts.assistance');
 
 Ext.define('biglifts.views.AssistanceLiftChooser', {
     extend:'Ext.Panel',
