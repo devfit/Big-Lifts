@@ -1,30 +1,30 @@
 Ext.ns('biglifts.stores.assistance');
 
 Ext.define('BoringButBigLift', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
 
-            {name:'lift_id', type:'string'},
-            {name:'movement_lift_id', type:'string'},
-            {name:'name', type:'string'},
-            {name:'weight', type:'float'},
-            {name:'reps', type:'int'},
-            {name:'sets', type:'int'}
+            {name: 'lift_id', type: 'string'},
+            {name: 'movement_lift_id', type: 'string'},
+            {name: 'name', type: 'string'},
+            {name: 'weight', type: 'float'},
+            {name: 'reps', type: 'int'},
+            {name: 'sets', type: 'int'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'boring-but-big-proxy'
+        proxy: {
+            type: 'localstorage',
+            id: 'boring-but-big-proxy'
         }
     }
 });
 
 
 Ext.define('BoringButBigStore', {
-    extend:'Ext.data.Store',
-    getWeightForRecord:function (data) {
+    extend: 'Ext.data.Store',
+    getWeightForRecord: function (data) {
         if (data.weight) {
             return data.weight;
         }
@@ -37,7 +37,7 @@ Ext.define('BoringButBigStore', {
 
         return 0;
     },
-    getNameForRecord:function (data) {
+    getNameForRecord: function (data) {
         if (data.name) {
             return data.name;
         }
@@ -45,25 +45,30 @@ Ext.define('BoringButBigStore', {
         var associatedLift = biglifts.stores.lifts.Lifts.findRecord('id', data.movement_lift_id);
         return associatedLift.get('name');
     },
-    config:{
-        model:'BoringButBigLift',
-        listeners:{
-            load:function () {
-                if (this.getCount() === 0) {
-                    util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
-                        biglifts.stores.lifts.Lifts.each(function (r) {
-                            biglifts.stores.assistance.BoringButBig.add({
-                                name:null,
-                                lift_id:r.get('id'),
-                                movement_lift_id:r.get('id'),
-                                weight:null,
-                                reps:10,
-                                sets:5
-                            });
-                        });
-                        biglifts.stores.assistance.BoringButBig.sync();
+    syncAssistanceToLifts: function () {
+        util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
+            biglifts.stores.lifts.Lifts.each(function (r) {
+                var assistanceRecordExists = biglifts.stores.assistance.BoringButBig.find('lift_id', r.get('id')) !== -1;
+                if (!assistanceRecordExists) {
+                    biglifts.stores.assistance.BoringButBig.add({
+                        name: null,
+                        lift_id: r.get('id'),
+                        movement_lift_id: r.get('id'),
+                        weight: null,
+                        reps: 10,
+                        sets: 5
                     });
                 }
+            });
+            biglifts.stores.assistance.BoringButBig.sync();
+        });
+    },
+    config: {
+        model: 'BoringButBigLift',
+        listeners: {
+            load: function () {
+                this.syncAssistanceToLifts();
+                biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.syncAssistanceToLifts, this));
             }
         }
     }

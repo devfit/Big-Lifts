@@ -1,6 +1,14 @@
 @531
 @premium
 Feature: Boring But Big - Assistance Work
+
+  Scenario: BBB for non-default lifts
+    When I add a new lift named "Clean" with max 200
+    When I tap the assistance tab
+    And I select "5x10" assistance work
+    And I tap the "Clean" list item
+    Then There is a "Clean" list item
+
   Scenario: Changes in the assistance list should be reflected immediately after a BBB entry is edited
     When I set the squat max to 200
     When I tap the assistance tab
