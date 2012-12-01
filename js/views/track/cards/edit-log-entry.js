@@ -114,6 +114,9 @@ Ext.define("biglifts.views.EditLogEntry", {
         listeners:{
             painted:function () {
                 this.rebuildEditLogFieldset();
+                if (this.currentRecord) {
+                    this.setupLogEntry(this.currentRecord);
+                }
                 if (!this._painted) {
                     biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.rebuildEditLogFieldset, this));
                     Ext.get('edit-log-notes').addListener('tap', Ext.bind(this.editNotes, this));
