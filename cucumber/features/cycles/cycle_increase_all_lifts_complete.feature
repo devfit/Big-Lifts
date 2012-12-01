@@ -6,7 +6,10 @@ Feature: Increasing the cycle
 
   Scenario: Check all lifts to increase the cycle
     When I navigate to the lift schedule
-    When I check off all lifts
+    And I check off all lifts but bench week 4
+    And I view the bench lift schedule for week 4
+    And I tap the checkmark
+    And I tap the "Save" button
     And I tap the "Done" button
     Then the cycle is increased
 
