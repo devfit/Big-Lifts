@@ -9,6 +9,6 @@ Feature: Tracking Lifts
     And I navigate to the "Lift" tab
     And I tap the checkmark
     Then I am on the track tab
-    Then There is a "Bench 3x5 225lbs" list item
-    Then There is a "Squat 3x5 300lbs" list item
-    Then There is a "Deadlift 1x5 400lbs" list item
+    Then There is a "Bench 3x 5 225lbs" list item
+    Then There is a "Squat 3x 5 300lbs" list item
+    Then There is a "Deadlift 1x 5 400lbs" list item

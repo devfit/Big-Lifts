@@ -11,6 +11,6 @@ Feature: Editing lifts
 
   Scenario: Editing inputs changes associated lift values
     When I navigate to the "Edit" tab
-    When I edit the "Bench" input to be "300"
-    When I edit the "Squat" input to be "400"
+    When I set the "Bench" input to "300"
+    When I set the "Squat" input to "400"
     Then The Starting Strength "Bench" lift is "300"
