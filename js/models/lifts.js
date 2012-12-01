@@ -2,42 +2,42 @@
 Ext.ns('biglifts.stores.lifts');
 
 Ext.define('Lift', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'name', type:'string'},
-            {name:'propertyName', type:'string'},
-            {name:'max', type:'float'},
-            {name:'cycleIncrease', type:'float'},
-            {name:'order', type:'int', defaultValue:-1},
-            {name:'enabled', type:'boolean', defaultValue:true},
-            {name:'customBarWeight', type:'int', defaultValue:null}
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'name', type: 'string'},
+            {name: 'propertyName', type: 'string'},
+            {name: 'max', type: 'float'},
+            {name: 'cycleIncrease', type: 'float'},
+            {name: 'order', type: 'int', defaultValue: -1},
+            {name: 'enabled', type: 'boolean', defaultValue: true},
+            {name: 'customBarWeight', type: 'int', defaultValue: null}
         ],
-        validations:[
-            {field:'propertyName', type:'presence'},
-            {field:'max', type:'presence'},
-            {field:'cycleIncrease', type:'presence'}
+        validations: [
+            {field: 'propertyName', type: 'presence'},
+            {field: 'max', type: 'presence'},
+            {field: 'cycleIncrease', type: 'presence'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'lift-proxy'
+        proxy: {
+            type: 'localstorage',
+            id: 'lift-proxy'
         }
     }
 });
 
 Ext.define('Lifts', {
-    extend:'Ext.data.Store',
-    getUniqueLiftNames:function () {
+    extend: 'Ext.data.Store',
+    getUniqueLiftNames: function () {
         var liftNameSet = {};
         this.each(function (r) {
             liftNameSet[r.get('name')] = 1;
         });
         return _.keys(liftNameSet);
     },
-    adjustCycleIncreaseForKg:function () {
-        var lbToKg = {10:5, 5:2.5};
+    adjustCycleIncreaseForKg: function () {
+        var lbToKg = {10: 5, 5: 2.5};
         this.each(function (r) {
             var newKgIncrease = lbToKg[r.data.cycleIncrease];
             if (typeof(newKgIncrease) !== 'undefined') {
@@ -46,13 +46,13 @@ Ext.define('Lifts', {
         });
         this.sync();
     },
-    DEFAULT_LIFTS:[
-        Ext.create('Lift', {name:'Squat', max:200, propertyName:'squat', cycleIncrease:10, order:0}),
-        Ext.create('Lift', {name:'Deadlift', max:300, propertyName:'deadlift', cycleIncrease:10, order:1}),
-        Ext.create('Lift', {name:'Press', max:150, propertyName:'press', cycleIncrease:5, order:2}),
-        Ext.create('Lift', {name:'Bench', max:175, propertyName:'bench', cycleIncrease:5, order:3})
+    DEFAULT_LIFTS: [
+        Ext.create('Lift', {name: 'Press', max: 150, propertyName: 'press', cycleIncrease: 5, order: 0}),
+        Ext.create('Lift', {name: 'Deadlift', max: 300, propertyName: 'deadlift', cycleIncrease: 10, order: 1}),
+        Ext.create('Lift', {name: 'Bench', max: 175, propertyName: 'bench', cycleIncrease: 5, order: 2}),
+        Ext.create('Lift', {name: 'Squat', max: 200, propertyName: 'squat', cycleIncrease: 10, order: 3})
     ],
-    setupDefaultLifts:function () {
+    setupDefaultLifts: function () {
         var me = this;
         util.withNoFilters(me, function () {
             if (me.getCount() === 0) {
@@ -61,7 +61,7 @@ Ext.define('Lifts', {
             }
         });
     },
-    liftModelMigration:function () {
+    liftModelMigration: function () {
         var me = this;
         var liftOrdersBroken = this.liftOrdersAreBroken();
         me.each(function (r) {
@@ -85,28 +85,28 @@ Ext.define('Lifts', {
 
         me.sync();
     },
-    liftOrdersAreBroken:function () {
+    liftOrdersAreBroken: function () {
         var orders = _.uniq(_.map(this.getRange(), function (r) {
             return r.data.order;
         }));
 
         return orders.length !== this.getCount() || _.include(orders, -1);
     },
-    sanitizePropertyName:function (propertyName) {
+    sanitizePropertyName: function (propertyName) {
         return propertyName.toLowerCase().replace(/[^a-z\d]/g, '');
     },
-    config:{
-        model:'Lift',
-        listeners:{
-            load:function () {
+    config: {
+        model: 'Lift',
+        listeners: {
+            load: function () {
                 this.setupDefaultLifts();
                 this.liftModelMigration();
             }
         },
-        sorters:[
+        sorters: [
             {
-                property:'order',
-                direction:'ASC'
+                property: 'order',
+                direction: 'ASC'
             }
         ]
     }
