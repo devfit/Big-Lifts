@@ -95,12 +95,6 @@ Ext.define("biglifts.views.BoringButBig", {
     config:{
         layout:'fit',
         listeners:{
-            painted:function () {
-                this.filterLifts();
-                biglifts.navigation.setBackFunction(function () {
-                    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
-                });
-            },
             initialize:function () {
                 var me = this;
                 me.add([
@@ -196,6 +190,11 @@ Ext.define("biglifts.views.BoringButBig", {
                 ]);
             },
             painted:function () {
+                this.filterLifts();
+                biglifts.navigation.setBackFunction(function () {
+                    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
+                });
+
                 if (!this._painted) {
                     this._painted = true;
                     biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
