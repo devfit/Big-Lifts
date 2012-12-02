@@ -12,7 +12,7 @@ Ext.define('biglifts.views.assistance.BoringButBigNotes', {
     xtype:'boringbutbignotes',
     _returnCallback:biglifts.liftSchedule.assistance.boringButBig.returnToBoringButBig,
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.boringButBig.returnToBoringButBig);
             this._setNotes(biglifts.liftSchedule.assistance.boringButBig.currentNotes);
         }

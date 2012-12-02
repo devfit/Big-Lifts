@@ -64,7 +64,7 @@ biglifts.maxes.barSetup.BarSetup = {
     id:'bar-plate-setup-panel',
     layout:'fit',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.maxes.barSetup.backButtonPressed);
             Ext.getCmp('bar-setup-form').setRecord(biglifts.stores.BarWeight.first());
         },

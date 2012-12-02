@@ -13,7 +13,7 @@ biglifts.views.Settings = {
     scroll:'vertical',
     cardSwitchAnimation:'slide',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.controller.settings.backToMore);
         }
     },

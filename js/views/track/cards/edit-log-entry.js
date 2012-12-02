@@ -117,6 +117,12 @@ Ext.define("biglifts.views.EditLogEntry", {
                 if (this.currentRecord) {
                     this.setupLogEntry(this.currentRecord);
                 }
+
+                if (Ext.get('edit-log-notes')) {
+                    Ext.get('edit-log-notes').removeCls('tapped');
+                }
+
+                biglifts.navigation.setBackFunction(Ext.bind(this.returnFromEditLogEntry, this));
                 if (!this._painted) {
                     biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.rebuildEditLogFieldset, this));
                     Ext.get('edit-log-notes').addListener('tap', Ext.bind(this.editNotes, this));
@@ -162,12 +168,6 @@ Ext.define("biglifts.views.EditLogEntry", {
                     html:'<div class="x-form-fieldset-title fieldset-title-no-margin">Notes</div>' +
                         '<div id="edit-log-notes" class="log-notes"></div>'
                 });
-            },
-            show:function () {
-                if (Ext.get('edit-log-notes')) {
-                    Ext.get('edit-log-notes').removeCls('tapped');
-                }
-                biglifts.navigation.setBackFunction(Ext.bind(this.returnFromEditLogEntry, this));
             }
         }
     }

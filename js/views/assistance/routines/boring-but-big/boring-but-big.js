@@ -95,7 +95,7 @@ Ext.define("biglifts.views.BoringButBig", {
     config:{
         layout:'fit',
         listeners:{
-            show:function () {
+            painted:function () {
                 this.filterLifts();
                 biglifts.navigation.setBackFunction(function () {
                     Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));

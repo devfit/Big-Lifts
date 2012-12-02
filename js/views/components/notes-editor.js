@@ -35,7 +35,7 @@ Ext.define('biglifts.views.log.cards.NotesEditor', {
     config:{
         layout:'fit',
         listeners:{
-            show:function (c) {
+            painted:function (c) {
                 biglifts.navigation.setBackFunction(function () {
                     biglifts.components.notesEditor.returnFromNotesEditor(c);
                 });

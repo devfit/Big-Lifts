@@ -101,7 +101,7 @@ biglifts.views.log.cards.Export = {
     scroll:'vertical',
     style:'padding-top:0px',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.log.emailExport.loadPreviousExportEmail();
             biglifts.navigation.setBackFunction(biglifts.log.emailExport.returnToTrackingList);
         }

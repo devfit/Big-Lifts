@@ -162,7 +162,7 @@ Ext.define('biglifts.views.LiftTracking', {
                     }
                 ]);
             },
-            show: function () {
+            painted: function () {
                 biglifts.navigation.setBackFunction(Ext.bind(this.cancelLogTracking, this));
                 biglifts.components.notesEditor.displayNotes('first-log-notes', this.currentLiftNotes);
                 Ext.get('first-log-notes').removeCls('tapped');

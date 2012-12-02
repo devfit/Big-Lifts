@@ -206,8 +206,7 @@ biglifts.views.liftSchedule.liftTemplate = {
                 biglifts.stores.lifts.Lifts.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
                 biglifts.stores.lifts.MeetGoals.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
             }
-        },
-        show: function () {
+
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.liftTemplate.returnToLiftSelect);
             biglifts.liftSchedule.liftTemplate.updateLiftValues();
         }

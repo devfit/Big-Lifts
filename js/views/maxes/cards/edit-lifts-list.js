@@ -69,7 +69,7 @@ biglifts.maxes.cards.editMaxesList = {
     xtype:'panel',
     layout:'fit',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.stores.lifts.Lifts.clearFilter();
         }
     },

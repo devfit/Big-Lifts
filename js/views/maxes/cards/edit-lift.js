@@ -75,7 +75,7 @@ biglifts.maxes.cards.editLiftPanel = {
     id:'maxes-edit-lift-panel',
     layout:'fit',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.maxes.editLiftBackButtonPressed);
         }
     },

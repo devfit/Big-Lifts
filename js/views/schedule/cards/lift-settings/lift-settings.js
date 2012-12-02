@@ -4,7 +4,7 @@ biglifts.views.liftSchedule.LiftSettings = {
     id:'lift-settings',
     xtype:'carousel',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.liftSettings.returnToLiftSelectFromSettings);
         }
     },

@@ -80,7 +80,7 @@ Ext.define('biglifts.LiftGraph', {
     config:{
         layout:'fit',
         listeners:{
-            show:function () {
+            painted:function () {
                 Ext.getCmp('tab-navigation').hide();
                 biglifts.navigation.setBackFunction(biglifts.graph.back);
                 this._setupGraph();

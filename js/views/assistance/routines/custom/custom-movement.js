@@ -98,7 +98,7 @@ Ext.define("Biglifts.views.Custom", {
                     }
                 });
             },
-            show:function () {
+            painted:function () {
                 biglifts.navigation.setBackFunction(function () {
                     Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
                 });

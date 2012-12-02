@@ -38,13 +38,11 @@ Ext.define("biglifts.views.EditAssistanceLogEntry", {
         scroll:'vertical',
         listeners:{
             painted:function () {
+                biglifts.navigation.setBackFunction(this.returnAndUpdate);
                 if (!this._painted) {
                     this._painted = true;
                     Ext.get('edit-assistance-log-notes').addListener('tap', Ext.bind(this.editAssistanceNotes, this));
                 }
-            },
-            show:function () {
-                biglifts.navigation.setBackFunction(this.returnAndUpdate);
             },
             initialize:function () {
                 var me = this;

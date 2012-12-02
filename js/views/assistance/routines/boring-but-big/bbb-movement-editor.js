@@ -116,7 +116,7 @@ biglifts.views.liftSchedule.assistance.BoringButBigMovementEditor = {
         }
     ],
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.boringButBig.returnToBbb);
         }
     }

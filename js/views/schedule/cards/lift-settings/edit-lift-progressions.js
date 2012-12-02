@@ -101,7 +101,7 @@ biglifts.views.EditLiftPercentages = {
     title:'Edit',
     listeners:{
         activeitemchange:biglifts.settings.liftPercentages.switchLiftWeek,
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.settings.liftPercentages.returnToLiftSettings);
             biglifts.settings.liftPercentages.updateLiftPercentaqes();
         }

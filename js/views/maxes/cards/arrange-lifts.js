@@ -87,7 +87,7 @@ biglifts.maxes.cards.ArrangeLifts = {
     xtype:'panel',
     layout:'fit',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.maxes.arrangeLifts.doneButtonPressed);
         }
     },

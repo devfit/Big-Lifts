@@ -87,7 +87,7 @@ Ext.define('biglifts.views.CustomMovementEditor', {
                     }
                 ]);
             },
-            show:function () {
+            painted:function () {
                 biglifts.navigation.setBackFunction(this.returnToCustom);
             }
         }

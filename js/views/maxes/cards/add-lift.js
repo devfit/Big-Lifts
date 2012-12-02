@@ -73,7 +73,7 @@ biglifts.maxes.cards.addLiftPanel = {
     id:'maxes-add-lift-panel',
     layout:'fit',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.navigation.setBackFunction(biglifts.maxes.controller.addLiftCancelButtonPressed);
         }
     },

@@ -1,6 +1,12 @@
 @531
 @premium
 Feature: Assistance Work
+  Scenario: Navigating back from the lift chooser
+    When I tap the assistance tab
+    And I select "Bodyweight" assistance work
+    And I tap the "Back" button
+    Then I am on the assistance chooser
+
   Scenario: "None" assistance work isn't shown in the log
     When I tap the assistance tab
     And I select "None" assistance work

@@ -28,7 +28,7 @@ biglifts.views.liftSchedule.IncreaseMaxesHelp = {
     xtype:'panel',
     layout:'fit',
     listeners:{
-        show:function () {
+        painted:function () {
             biglifts.stores.lifts.Lifts.filter('enabled', true);
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen);
         }
