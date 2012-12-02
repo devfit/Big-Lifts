@@ -11,6 +11,10 @@ Ext.define('biglifts.views.LiftTracking', {
         Ext.getCmp('first-log-notes-editor')._setNotes(this.currentLiftNotes);
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('first-log-notes-editor'));
     },
+    setNotes: function (notes) {
+        this.currentLiftNotes = notes;
+        biglifts.components.notesEditor.displayNotes('first-log-notes', this.currentLiftNotes);
+    },
     allLiftsAreCompleted: function () {
         var enabledLifts = [];
         biglifts.stores.lifts.Lifts.each(function (lift) {
@@ -160,8 +164,8 @@ Ext.define('biglifts.views.LiftTracking', {
             },
             show: function () {
                 biglifts.navigation.setBackFunction(Ext.bind(this.cancelLogTracking, this));
-                this.currentLiftNotes = '';
-                biglifts.components.notesEditor.displayNotes('first-log-notes', '');
+                biglifts.components.notesEditor.displayNotes('first-log-notes', this.currentLiftNotes);
+                Ext.get('first-log-notes').removeCls('tapped');
             }
         }
     }

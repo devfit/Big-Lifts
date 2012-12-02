@@ -6,14 +6,16 @@ biglifts.liftSchedule.liftTemplate.showLiftTracking = function () {
     var reps = liftProgression.reps;
     var weight = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), liftProgression.percentage);
     var formValues = {
-        'reps':reps,
-        'weight':weight,
-        'estimated-one-rep-max':util.formulas.estimateOneRepMax(weight, reps),
-        'notes':''
+        'reps': reps,
+        'weight': weight,
+        'estimated-one-rep-max': util.formulas.estimateOneRepMax(weight, reps),
+        'notes': ''
     };
 
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'));
-    Ext.getCmp('lift-tracking').setValues(formValues);
+    var liftTracking = Ext.getCmp('lift-tracking');
+    liftTracking.setNotes('');
+    Ext.getCmp('lift-schedule').setActiveItem(liftTracking);
+    liftTracking.setValues(formValues);
 };
 
 
@@ -109,7 +111,7 @@ biglifts.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
 };
 
 biglifts.liftSchedule.liftTemplate.returnToLiftSelect = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type: 'slide', direction: 'right'});
 };
 
 biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
@@ -118,7 +120,7 @@ biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
     });
 
-    Ext.getCmp('lift-schedule').setActiveItem(restTimer, {type:'slide', direction:'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(restTimer, {type: 'slide', direction: 'right'});
 };
 
 biglifts.liftSchedule.liftTemplate.formatPercentage = function (value) {
@@ -126,50 +128,50 @@ biglifts.liftSchedule.liftTemplate.formatPercentage = function (value) {
 };
 
 biglifts.views.liftSchedule.liftTemplate = {
-    xtype:'panel',
-    id:'lift-template',
-    layout:'fit',
-    items:[
+    xtype: 'panel',
+    id: 'lift-template',
+    layout: 'fit',
+    items: [
         {
-            xtype:'toolbar',
-            id:'lift-template-toolbar',
-            docked:'top',
-            items:[
+            xtype: 'toolbar',
+            id: 'lift-template-toolbar',
+            docked: 'top',
+            items: [
                 {
-                    text:'Back',
-                    ui:'back',
-                    handler:biglifts.liftSchedule.liftTemplate.returnToLiftSelect
+                    text: 'Back',
+                    ui: 'back',
+                    handler: biglifts.liftSchedule.liftTemplate.returnToLiftSelect
                 },
-                {xtype:'spacer'},
+                {xtype: 'spacer'},
                 {
-                    cls:'rest-timer-button',
-                    iconCls:'clock',
-                    iconMask:true,
-                    ui:'decline',
-                    handler:biglifts.liftSchedule.liftTemplate.showRestTimer
+                    cls: 'rest-timer-button',
+                    iconCls: 'clock',
+                    iconMask: true,
+                    ui: 'decline',
+                    handler: biglifts.liftSchedule.liftTemplate.showRestTimer
                 },
                 {
-                    style:'z-index: 11',
-                    id:'mark-lift-completed-button',
-                    iconCls:'done',
-                    iconMask:true,
-                    ui:'action',
-                    handler:biglifts.liftSchedule.liftTemplate.showLiftTracking
+                    style: 'z-index: 11',
+                    id: 'mark-lift-completed-button',
+                    iconCls: 'done',
+                    iconMask: true,
+                    ui: 'action',
+                    handler: biglifts.liftSchedule.liftTemplate.showLiftTracking
                 }
             ]
         },
         {
-            xtype:'toolbar',
-            id:'reps-to-beat-toolbar',
-            ui:'light',
-            hidden:true,
-            docked:'top',
-            items:[
+            xtype: 'toolbar',
+            id: 'reps-to-beat-toolbar',
+            ui: 'light',
+            hidden: true,
+            docked: 'top',
+            items: [
                 {
-                    id:'reps-to-beat-panel',
-                    xtype:'panel',
-                    width:'100%',
-                    html:'<table class="reps-to-beat-text"><tr>' +
+                    id: 'reps-to-beat-panel',
+                    xtype: 'panel',
+                    width: '100%',
+                    html: '<table class="reps-to-beat-text"><tr>' +
                         '<td width="40%">' +
                         'Best: ~<span id="last-one-rep-estimate">000</span>' +
                         '</td>' +
@@ -181,11 +183,11 @@ biglifts.views.liftSchedule.liftTemplate = {
             ]
         },
         {
-            id:'lift-template-list',
-            xtype:'list',
-            store:biglifts.stores.lifts.LiftProgression,
-            itemCls:'lift-row',
-            itemTpl:'<p class="{[biglifts.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
+            id: 'lift-template-list',
+            xtype: 'list',
+            store: biglifts.stores.lifts.LiftProgression,
+            itemCls: 'lift-row',
+            itemTpl: '<p class="{[biglifts.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
                 '<span class="weight">{[biglifts.liftSchedule.liftTemplate.formatLiftWeight(values)]}</span>' +
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {[biglifts.liftSchedule.liftTemplate.formatPercentage(values.percentage)]}%</span></p>' +
                 (biglifts.toggles.BarLoading ?
@@ -193,8 +195,8 @@ biglifts.views.liftSchedule.liftTemplate = {
                         'biglifts.liftSchedule.liftTemplate.formatLiftWeight(values),biglifts.liftSchedule.currentLiftProperty)]}</p>' : '')
         }
     ],
-    listeners:{
-        painted:function () {
+    listeners: {
+        painted: function () {
             if (!this._painted) {
                 this._painted = true;
                 biglifts.stores.lifts.LiftProgression.addListener('beforesync', function () {
@@ -205,7 +207,7 @@ biglifts.views.liftSchedule.liftTemplate = {
                 biglifts.stores.lifts.MeetGoals.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
             }
         },
-        show:function () {
+        show: function () {
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.liftTemplate.returnToLiftSelect);
             biglifts.liftSchedule.liftTemplate.updateLiftValues();
         }

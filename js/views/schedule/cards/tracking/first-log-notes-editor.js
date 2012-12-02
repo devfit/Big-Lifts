@@ -1,10 +1,9 @@
 Ext.ns('biglifts.liftSchedule.liftTracking');
 
 biglifts.liftSchedule.liftTracking.returnFromEditNotes = function (notes) {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-tracking'), {type:'slide', direction:'right'});
-    Ext.get('first-log-notes').removeCls('tapped');
-    biglifts.liftTracking.currentLiftNotes = notes;
-    biglifts.components.notesEditor.displayNotes('first-log-notes', biglifts.liftTracking.currentLiftNotes);
+    var liftTracking = Ext.getCmp('lift-tracking');
+    Ext.getCmp('lift-schedule').setActiveItem(liftTracking);
+    liftTracking.setNotes(notes);
 };
 
 Ext.define('biglifts.views.log.cards.FirstLogNotesEditor', {
