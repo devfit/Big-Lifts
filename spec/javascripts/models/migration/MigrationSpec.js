@@ -12,10 +12,10 @@ describe("Migrations", function () {
         }});
 
         this.migrations.MIGRATION_VALUES = [
-            {class:'test.C1', done:false},
-            {class:'test.C2', done:false}
+            {klass:'test.C1', done:false},
+            {klass:'test.C2', done:false}
         ];
-        this.migrations.add({class:'test.C1', done:true});
+        this.migrations.add({klass:'test.C1', done:true});
         this.migrations.sync();
         this.migrations.loadMissingMigrations();
         expect(this.migrations.getCount()).toEqual(2);
@@ -23,14 +23,14 @@ describe("Migrations", function () {
 
     it("should run migrations on load", function () {
         var run = false;
-        Ext.define('test.Class10', {
+        Ext.define('test.klass10', {
             run:function () {
                 run = true;
             }
         });
 
         this.migrations.MIGRATION_VALUES = [
-            {class:'test.Class10', done:false}
+            {klass:'test.klass10', done:false}
         ];
 
         this.migrations.load();
@@ -44,29 +44,29 @@ describe("Migrations", function () {
 
     it("should not run previously-run migrations load", function () {
         var run = false;
-        Ext.define('test.Class3', {
+        Ext.define('test.klass3', {
             run:function () {
                 run = true;
             }
         });
 
         this.migrations.MIGRATION_VALUES = [
-            {class:'test.Class3', done:false}
+            {klass:'test.klass3', done:false}
         ];
 
-        this.migrations.add({class:'test.Class3', done:true});
+        this.migrations.add({klass:'test.klass3', done:true});
         this.migrations.sync();
         this.migrations.load();
         expect(run).toBe(false);
     });
 
     it("should mark migrations done when run", function () {
-        Ext.define('test.Class4', {
+        Ext.define('test.klass4', {
             run:function () {
             }
         });
 
-        this.migrations.add({class:'test.Class4', done:false});
+        this.migrations.add({klass:'test.klass4', done:false});
         this.migrations.sync();
         this.migrations.load();
         expect(this.migrations.first().get('done')).toBe(true);

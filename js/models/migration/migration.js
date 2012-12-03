@@ -5,7 +5,7 @@ Ext.define('Migration', {
         identifier:'uuid',
         fields:[
             {name:'id', type:'string'},
-            {name:'class', type:'string'},
+            {name:'klass', type:'string'},
             {name:'done', type:'boolean'}
         ],
         proxy:{
@@ -18,12 +18,12 @@ Ext.define('Migration', {
 Ext.define('Migrations', {
     extend:'Ext.data.Store',
     MIGRATION_VALUES:[
-        {class:'biglifts.migrations.ssNotification', done:false}
+        {klass:'biglifts.migrations.ssNotification', done:false}
     ],
     loadMissingMigrations:function () {
         var me = this;
         _.each(me.MIGRATION_VALUES, function (migration) {
-            if (me.find('class', migration.class) === -1) {
+            if (me.find('klass', migration.klass) === -1) {
                 me.add(migration);
             }
         });
@@ -40,7 +40,7 @@ Ext.define('Migrations', {
                 me.each(function (migration) {
                     var alreadyRun = migration.get('done');
                     if (!alreadyRun) {
-                        var klass = migration.get('class');
+                        var klass = migration.get('klass');
                         var migrationRunner = Ext.create(klass);
                         migrationRunner.run();
 
