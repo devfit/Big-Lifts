@@ -25,13 +25,15 @@ Ext.define('biglifts.views.ss.Workouts', {
         biglifts.stores.ss.Lifts.sync();
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('ss-track-tab'));
     },
+    setToolbarTitle: function () {
+        this.workoutToolbar.setTitle('Workout ' + this.getActiveItem()._workoutName);
+    },
     config: {
         cls: 'ss-workout',
         items: [
             {
                 xtype: 'toolbar',
                 docked: 'top',
-                title: 'Workout A',
                 items: [
                     {xtype: 'spacer'},
                     {
@@ -57,8 +59,11 @@ Ext.define('biglifts.views.ss.Workouts', {
                 biglifts.stores.ss.WorkoutStore.filter('name', tabText);
             },
             initialize: function () {
-                this.down('#rest-timer-button').setHandler(Ext.bind(this.showRestTimer, this));
-                this.down('#done-button').setHandler(Ext.bind(this.markWorkoutCompleted, this));
+                var me = this;
+                me.workoutToolbar = me.down('.toolbar');
+
+                me.down('#rest-timer-button').setHandler(Ext.bind(me.showRestTimer, me));
+                me.down('#done-button').setHandler(Ext.bind(me.markWorkoutCompleted, me));
 
                 biglifts.stores.ss.WorkoutStore.filter('name', 'A');
                 var listConfigA = {
@@ -86,12 +91,16 @@ Ext.define('biglifts.views.ss.Workouts', {
                 var listConfigB = _.clone(listConfigA);
                 listConfigB.title = 'B';
 
-                this.add(listConfigA);
-                this.add(listConfigB);
+                var workoutA = me.add(listConfigA);
+                workoutA._workoutName = 'A';
+                var workoutB = me.add(listConfigB);
+                workoutB._workoutName = 'B';
 
+                me.addListener('activeitemchange', Ext.bind(me.setToolbarTitle, me));
+                me.setToolbarTitle();
                 biglifts.stores.ss.Lifts.addListener('beforesync', function () {
                     this.getActiveItem().refresh();
-                }, this);
+                }, me);
             }
         }
     }

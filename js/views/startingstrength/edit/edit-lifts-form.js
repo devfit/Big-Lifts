@@ -27,6 +27,11 @@ Ext.define('biglifts.views.ss.EditLiftsForm', {
     config: {
         items: [
             {
+                xtype: 'toolbar',
+                docked: 'top',
+                title: 'Edit'
+            },
+            {
                 xtype: 'fieldset',
                 cls: 'fieldset-title-no-margin',
                 title: 'Lifts'

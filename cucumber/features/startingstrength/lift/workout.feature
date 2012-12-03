@@ -1,5 +1,11 @@
 @StartingStrength
 Feature: Workouts
+
+  Scenario: The title is updated when the workout is switched
+    When I navigate to the "Lift" tab
+    And I tap the "B" tab
+    Then The page title is "Workout B"
+
   Scenario: Lift weights are reflected in workouts
     When I navigate to the "Edit" tab
     When I set the "Bench" input to "225"
