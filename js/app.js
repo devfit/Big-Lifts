@@ -46,6 +46,9 @@ Ext.application({
                 }
             ],
             listeners: {
+                activeitemchange:function(){
+                    Ext.getCmp('routine-chooser').hideLoadingIndicator();
+                },
                 initialize: function () {
                     biglifts.main.deviceReady = true;
                     biglifts.main.loadApplication();
