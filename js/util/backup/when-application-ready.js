@@ -11,6 +11,7 @@ util.whenApplicationReady = function (callback) {
 };
 
 util.fireApplicationReady = function () {
+    util.applicationReady = true;
     _.each(util.applicationReadyCallbacks, function (callback) {
         callback();
     });
