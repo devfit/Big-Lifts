@@ -13,7 +13,7 @@ biglifts.logList.getAssistanceTypeDisplay = function (assistanceType) {
 };
 
 biglifts.logList.getWeightDisplay = function (weight) {
-    return (weight == 0 || weight == null) ? "[?]" : weight;
+    return (weight == 0 || weight == null) ? "" : weight;
 };
 
 Ext.define('biflifts.views.LogAssistanceList', {
