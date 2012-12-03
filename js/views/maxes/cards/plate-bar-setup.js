@@ -1,184 +1,176 @@
-Ext.ns('biglifts.maxes.barSetup', 'biglifts.maxes.controller');
+Ext.define('biglifts.views.BarSetup', {
+    extend: 'Ext.Panel',
+    PLATE_SUFFIX: '-lbs',
+    backButtonPressed: function () {
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
+    },
+    platesValueChanged: function (field, newCount) {
+        var name = field.getName();
+        var plateWeight = parseFloat(name.substring(0, name.indexOf(this.PLATE_SUFFIX)));
 
-biglifts.maxes.barSetup.backButtonPressed = function () {
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
-};
-
-biglifts.maxes.barSetup.platesValueChanged = function (field, newCount) {
-    var name = field.getName();
-    var plateWeight = parseFloat(name.substring(0, name.indexOf(biglifts.maxes.barSetup.PLATE_SUFFIX)));
-
-    var plateRecord = biglifts.stores.Plates.findRecord('weight', plateWeight);
-    plateRecord.set('count', newCount);
-    biglifts.stores.Plates.sync();
-};
-
-biglifts.maxes.barSetup.barValueChanged = function () {
-    var barPlateValues = Ext.getCmp('bar-setup-form').getValues();
-    var barWeight = biglifts.stores.BarWeight.first();
-    barWeight.set(barPlateValues);
-    biglifts.stores.BarWeight.sync();
-};
-
-biglifts.maxes.barSetup.removeLastPlate = function () {
-    if (biglifts.stores.Plates.getCount() > 0) {
-        var lastPlate = biglifts.stores.Plates.last();
-        biglifts.stores.Plates.remove(lastPlate);
+        var plateRecord = biglifts.stores.Plates.findRecord('weight', plateWeight);
+        plateRecord.set('count', newCount);
         biglifts.stores.Plates.sync();
-    }
-};
-
-biglifts.maxes.barSetup.addNewPlate = function () {
-    var plateValues = Ext.getCmp('bar-setup-form').getValues();
-    var weight = plateValues.newPlateWeight;
-
-    var recordExists = biglifts.stores.Plates.findBy(function (p) {
-        return p.get('weight') == weight;
-    }) !== -1;
-
-    if (weight > 0 && !recordExists) {
-        biglifts.stores.Plates.add({weight:weight, count:2});
-        biglifts.stores.Plates.sync();
-    }
-};
-
-biglifts.maxes.barSetup.PLATE_SUFFIX = '-lbs';
-
-biglifts.maxes.barSetup.setupCustomPlatesFieldSet = function (fieldSet) {
-    if (fieldSet) {
-        var settings = biglifts.stores.Settings.first();
-        fieldSet.removeAll();
-        biglifts.stores.Plates.each(function (r) {
-            fieldSet.add({
-                name:r.get('weight') + biglifts.maxes.barSetup.PLATE_SUFFIX,
-                xtype:'numberfield',
-                label:r.get('weight') + settings.get('units'),
-                value:r.get('count')
-            });
-        });
-    }
-};
-
-biglifts.maxes.barSetup.BarSetup = {
-    xtype:'panel',
-    id:'bar-plate-setup-panel',
-    layout:'fit',
-    listeners:{
-        painted:function () {
-            biglifts.navigation.setBackFunction(biglifts.maxes.barSetup.backButtonPressed);
-            Ext.getCmp('bar-setup-form').setRecord(biglifts.stores.BarWeight.first());
-        },
-        painted:function () {
-            if (!this._painted) {
-                this._painted = true;
-                biglifts.stores.BarWeight.addListener('beforesync', function () {
-                    Ext.getCmp('bar-weight-field').setValue(this.first().get('weight'));
+    },
+    barValueChanged: function () {
+        var barPlateValues = Ext.getCmp('bar-setup-form').getValues();
+        var barWeight = biglifts.stores.BarWeight.first();
+        barWeight.set(barPlateValues);
+        biglifts.stores.BarWeight.sync();
+    },
+    setupCustomPlatesFieldSet: function () {
+        var me = this;
+        var fieldSet = me.down('#plates-setup-fieldset');
+        if (fieldSet) {
+            var settings = biglifts.stores.Settings.first();
+            fieldSet.removeAll();
+            biglifts.stores.Plates.each(function (r) {
+                fieldSet.add({
+                    name: r.get('weight') + me.PLATE_SUFFIX,
+                    xtype: 'numberfield',
+                    label: r.get('weight') + settings.get('units'),
+                    value: r.get('count')
                 });
-            }
+            });
         }
     },
-    items:[
-        {
-            xtype:'toolbar',
-            docked:'top',
-            title:"Bar/Plates",
-            items:[
-                {
-                    id:'bar-setup-back-button',
-                    text:'Back',
-                    handler:biglifts.maxes.barSetup.backButtonPressed,
-                    ui:'back'
-                }
-            ]
-        },
-        {
-            xtype:'formpanel',
-            id:'bar-setup-form',
-            items:[
-                {
-                    id:'bar-setup-fieldset',
-                    xtype:'fieldset',
-                    style:'margin-top: 0; margin-bottom: 0.5em',
-                    defaults:{
-                        autoCapitalize:false,
-                        autoCorrect:false,
-                        autoComplete:false,
-                        labelWidth:'50%',
-                        listeners:{
-                            change:biglifts.maxes.barSetup.barValueChanged
-                        }
-                    },
-                    items:[
-                        {
-                            id:'bar-weight-field',
-                            xtype:'numberfield',
-                            name:'weight',
-                            label:'Bar Weight'
-                        }
-                    ]
-                },
-                {
-                    id:'custom-plates-container',
-                    xtype:'container',
-                    items:[
-                        {
-                            id:'plates-setup-fieldset',
-                            xtype:'fieldset',
-                            cls:'fieldset-title-no-margin',
-                            style:'margin-top: 0; margin-bottom: 0.5em',
-                            title:'Plates<span style="float:right">#</span>',
-                            defaults:{
-                                autoCapitalize:false,
-                                autoCorrect:false,
-                                autoComplete:false,
-                                labelWidth:'50%',
-                                listeners:{
-                                    change:biglifts.maxes.barSetup.platesValueChanged
-                                }
-                            },
-                            listeners:{
-                                painted:function () {
-                                    if( !this._painted ){
-                                        this._painted = true;
-                                        biglifts.maxes.barSetup.setupCustomPlatesFieldSet(this);
-                                        biglifts.stores.Plates.addListener('beforesync', function () {
-                                            biglifts.maxes.barSetup.setupCustomPlatesFieldSet(Ext.getCmp('plates-setup-fieldset'));
-                                        });
-                                    }
-                                }
-                            }
-                        },
-                        {
-                            id:'remove-custom-plate-button',
-                            xtype:'button',
-                            text:'Remove',
-                            ui:'decline',
-                            handler:biglifts.maxes.barSetup.removeLastPlate
-                        },
-                        {
-                            xtype:'fieldset',
-                            style:'margin-top:0.5em; margin-bottom: 0.5em',
-                            defaults:{
-                                labelWidth:'33%'
-                            },
-                            items:[
-                                {
-                                    name:'newPlateWeight',
-                                    xtype:'numberfield',
-                                    label:'Weight'
-                                }
-                            ]
-                        },
-                        {
-                            id:'add-new-custom-plate-button',
-                            xtype:'button',
-                            text:'Add',
-                            ui:'confirm',
-                            handler:biglifts.maxes.barSetup.addNewPlate
-                        }
-                    ]
-                }
-            ]
+    removeLastPlate: function () {
+        if (biglifts.stores.Plates.getCount() > 0) {
+            var lastPlate = biglifts.stores.Plates.last();
+            biglifts.stores.Plates.remove(lastPlate);
+            biglifts.stores.Plates.sync();
         }
-    ]
-};
+    },
+    addNewPlate: function () {
+        var plateValues = Ext.getCmp('bar-setup-form').getValues();
+        var weight = plateValues.newPlateWeight;
+
+        var recordExists = biglifts.stores.Plates.findBy(function (p) {
+            return p.get('weight') == weight;
+        }) !== -1;
+
+        if (weight > 0 && !recordExists) {
+            biglifts.stores.Plates.add({weight: weight, count: 2});
+            biglifts.stores.Plates.sync();
+        }
+    },
+    config: {
+        id: 'bar-plate-setup-panel',
+        layout: 'fit',
+        listeners: {
+            painted: function () {
+                biglifts.navigation.setBackFunction(Ext.bind(this.backButtonPressed, this));
+                Ext.getCmp('bar-setup-form').setRecord(biglifts.stores.BarWeight.first());
+
+                if (!this._painted) {
+                    this._painted = true;
+                    biglifts.stores.BarWeight.addListener('beforesync', function () {
+                        Ext.getCmp('bar-weight-field').setValue(this.first().get('weight'));
+                    });
+                }
+            },
+            initialize: function () {
+                var me = this;
+                me.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    title: "Bar/Plates",
+                    items: [
+                        {
+                            text: 'Back',
+                            handler: Ext.bind(me.backButtonPressed, me),
+                            ui: 'back'
+                        }
+                    ]
+                });
+                me.add([
+                    {
+                        xtype: 'formpanel',
+                        id: 'bar-setup-form',
+                        items: [
+                            {
+                                id: 'bar-setup-fieldset',
+                                xtype: 'fieldset',
+                                style: 'margin-top: 0; margin-bottom: 0.5em',
+                                defaults: {
+                                    autoCapitalize: false,
+                                    autoCorrect: false,
+                                    autoComplete: false,
+                                    labelWidth: '50%',
+                                    listeners: {
+                                        change: Ext.bind(me.barValueChanged, me)
+                                    }
+                                },
+                                items: [
+                                    {
+                                        id: 'bar-weight-field',
+                                        xtype: 'numberfield',
+                                        name: 'weight',
+                                        label: 'Bar Weight'
+                                    }
+                                ]
+                            },
+                            {
+                                xtype: 'container',
+                                items: [
+                                    {
+                                        itemId: 'plates-setup-fieldset',
+                                        xtype: 'fieldset',
+                                        cls: 'fieldset-title-no-margin',
+                                        style: 'margin-top: 0; margin-bottom: 0.5em',
+                                        title: 'Plates<span style="float:right">#</span>',
+                                        defaults: {
+                                            autoCapitalize: false,
+                                            autoCorrect: false,
+                                            autoComplete: false,
+                                            labelWidth: '50%',
+                                            listeners: {
+                                                change: Ext.bind(me.platesValueChanged, me)
+                                            }
+                                        },
+                                        listeners: {
+                                            painted: function () {
+                                                var fieldset = this;
+                                                if (!this._painted) {
+                                                    this._painted = true;
+                                                    me.setupCustomPlatesFieldSet();
+                                                    biglifts.stores.Plates.addListener('beforesync', Ext.bind(me.setupCustomPlatesFieldSet, me));
+                                                }
+                                            }
+                                        }
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        text: 'Remove',
+                                        ui: 'decline',
+                                        handler: Ext.bind(me.removeLastPlate, me)
+                                    },
+                                    {
+                                        xtype: 'fieldset',
+                                        style: 'margin-top:0.5em; margin-bottom: 0.5em',
+                                        defaults: {
+                                            labelWidth: '33%'
+                                        },
+                                        items: [
+                                            {
+                                                name: 'newPlateWeight',
+                                                xtype: 'numberfield',
+                                                label: 'Weight'
+                                            }
+                                        ]
+                                    },
+                                    {
+                                        xtype: 'button',
+                                        text: 'Add',
+                                        ui: 'confirm',
+                                        handler: Ext.bind(me.addNewPlate, me)
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]);
+            }
+        }
+    }
+});
