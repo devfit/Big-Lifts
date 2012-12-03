@@ -30,3 +30,7 @@ Then /^There is a "(.*?)" form label$/ do |name|
   labels = @driver.find_elements(:class => 'x-form-label').select { |label| label.displayed? && label.text().include?(name) }
   labels.length.should == 1
 end
+
+Then /^The page title is "([^"]+)"$/ do |title|
+  @driver.find_elements(:class => 'x-toolbar').select { |toolbar| toolbar.displayed? }[0].text().should include title
+end
