@@ -1,6 +1,6 @@
 Ext.ns('biglifts.logEntry');
 biglifts.logEntry.returnFromEditAssistanceNotes = function (newNotes) {
-    Ext.getCmp('log').setActiveItem(Ext.getCmp('edit-assistance-log-entry'), {type:'slide', direction:'right'});
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('edit-assistance-log-entry'));
     Ext.getCmp('edit-assistance-log-entry').updateNotes(newNotes);
 };
 

@@ -109,10 +109,10 @@ Ext.define("Biglifts.views.MaxesForm", {
         biglifts.stores.lifts.MeetGoals.sync();
     },
     barPlateButtonPressed:function () {
-        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('bar-plate-setup-panel'), {type:'slide', direction:'left'});
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('bar-plate-setup-panel'));
     },
     addLiftButtonPressed:function () {
-        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'), {type:'slide', direction:'left'});
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'));
     },
     config:{
         scroll:'vertical',

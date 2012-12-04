@@ -19,7 +19,7 @@ biglifts.liftPercentages.showEditLiftProgression = function (currentSet) {
         biglifts.settings.liftPercentages.currentSet = currentSet;
     }
 
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-progression'), {type:'slide', direction:'left'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-progression'));
 };
 
 biglifts.liftPercentages.returnToLiftSettings = function () {
@@ -31,7 +31,7 @@ biglifts.liftPercentages.returnToLiftSettings = function () {
     progression.set('warmup', values.warmup);
     biglifts.stores.lifts.LiftProgression.sync();
 
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'));
 };
 
 biglifts.views.EditProgression = {

@@ -1,6 +1,6 @@
 Ext.ns('biglifts.liftSettings.templates');
 biglifts.liftSettings.showEditLiftPercentages = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'), {type:'slide', direction:'left'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'));
 };
 
 biglifts.liftSettings.templates.custom = {

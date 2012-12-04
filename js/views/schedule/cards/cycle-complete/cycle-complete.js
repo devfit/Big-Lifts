@@ -26,8 +26,7 @@ biglifts.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen = function (
 };
 
 biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(biglifts.liftSchedule.lastActiveTab,
-        {type:'slide', direction:'up'});
+    Ext.getCmp('lift-schedule').setActiveItem(biglifts.liftSchedule.lastActiveTab);
 };
 
 biglifts.liftSchedule.increaseMaxesByCycleIncrease = function () {
@@ -48,8 +47,7 @@ biglifts.liftSchedule.cycleComplete.setNextCycleDefault = function () {
 };
 
 biglifts.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('increase-maxes-help'),
-        {type:'slide', direction:'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('increase-maxes-help'));
 };
 
 biglifts.views.liftSchedule.LiftsCompletedScreen = {

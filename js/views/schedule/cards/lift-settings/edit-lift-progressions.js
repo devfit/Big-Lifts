@@ -27,7 +27,7 @@ biglifts.settings.liftPercentages.getWeekLists = function () {
 };
 
 biglifts.settings.liftPercentages.returnToLiftSettings = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'), {type:'slide', direction:'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'));
 };
 
 biglifts.settings.liftPercentages.showEditLiftPercentage = function (view, index) {

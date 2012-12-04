@@ -1,7 +1,7 @@
 Ext.ns('biglifts.liftSettings');
 
 biglifts.liftSettings.returnToLiftSelectFromSettings = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type:'slide', direction:'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
 };
 
 biglifts.liftSettings.carouselBack = function () {

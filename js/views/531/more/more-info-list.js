@@ -9,7 +9,7 @@ biglifts.more.getTextForValues = function (values) {
 Ext.define('biglifts.views.531.MoreInfoList', {
     extend:"biglifts.views.MoreInfoList",
     showSettings:function () {
-        Ext.getCmp('more').setActiveItem(Ext.getCmp('settings'), {type:'slide', direction:'left'});
+        Ext.getCmp('more').setActiveItem(Ext.getCmp('settings'));
     },
     showOneRepCalculator:function () {
         Ext.getCmp('more').setActiveItem(Ext.getCmp('one-rep-max-calculator'));

@@ -10,7 +10,7 @@ Ext.define("biglifts.views.EditLogEntry", {
         biglifts.components.notesEditor.displayNotes('edit-log-notes', newNotes);
     },
     setupLogEntry:function (logRecord) {
-        Ext.getCmp('log').setActiveItem(Ext.getCmp('edit-log-entry'), {type:'slide', direction:'left'});
+        Ext.getCmp('log').setActiveItem(Ext.getCmp('edit-log-entry'));
         this.currentRecord = logRecord;
 
         Ext.getCmp('edit-log-entry-toolbar').setTitle(logRecord.data.liftName);
@@ -96,16 +96,16 @@ Ext.define("biglifts.views.EditLogEntry", {
     deleteLogEntry:function () {
         biglifts.stores.LiftLog.remove(this.currentRecord);
         biglifts.stores.LiftLog.sync();
-        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
+        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
     },
     editNotes:function () {
         Ext.get('edit-log-notes').addCls('tapped');
         Ext.getCmp('log-notes-editor')._setNotes(this.currentRecord.get('notes'));
-        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-notes-editor'), {type:'slide', direction:'left'});
+        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-notes-editor'));
     },
     returnFromEditLogEntry:function () {
         this.updateLogEntry();
-        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
+        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
     },
     config:{
         scroll:'vertical',

@@ -65,7 +65,7 @@ biglifts.liftSchedule.liftSelector.viewLift = function (view, index) {
     Ext.getCmp('lift-template-toolbar').setTitle(record.get('name'));
     biglifts.liftSchedule.currentLiftProperty = record.get('propertyName');
 
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'), {type:'slide', direction:'left'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
 };
 
 biglifts.liftSchedule.liftSelector.getWeekLists = function () {
@@ -92,15 +92,13 @@ biglifts.liftSchedule.liftSelector.changeWeek = function (week) {
 };
 
 biglifts.liftSchedule.liftSelector.showLiftScheduleSettings = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'),
-        {type:'slide', direction:'left'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'));
 };
 
 biglifts.liftSchedule.lastActiveTab = null;
 biglifts.liftSchedule.liftSelector.showLiftsCompletedScreen = function () {
     biglifts.liftSchedule.lastActiveTab = Ext.getCmp('lift-schedule').getActiveItem();
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'),
-        {type:'slide', direction:'down'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'));
 };
 
 biglifts.liftSchedule.liftSelector.liftHasBeenCompleted = function (week, liftIndex) {

@@ -6,7 +6,7 @@ Ext.define("biglifts.views.EditAssistanceLogEntry", {
     xtype:'editassistancelogentry',
     returnAndUpdate:function () {
         this.updateAssistanceLogEntry();
-        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
+        Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
     },
     deleteAssistanceLogEntry:function () {
         biglifts.stores.assistance.ActivityLog.remove(this.currentAssistanceRecord);
@@ -28,7 +28,7 @@ Ext.define("biglifts.views.EditAssistanceLogEntry", {
     },
     setupAssistanceLogEntry:function (assistanceRecord) {
         this.currentAssistanceRecord = assistanceRecord;
-        Ext.getCmp('log').setActiveItem(this, {type:'slide', direction:'left'});
+        Ext.getCmp('log').setActiveItem(this);
         Ext.getCmp('edit-assistance-log-entry-toolbar').setTitle(assistanceRecord.get('movement'));
 
         this.setRecord(assistanceRecord);

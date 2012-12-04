@@ -19,7 +19,7 @@ biglifts.maxes.editLiftBackButtonPressed = function () {
     if (errors.isValid() || errorItems.length === 1 && errorItems[0]._message === "nonunique") {
         biglifts.editLift.updateAssociatedLiftCompletion(oldPropertyName, currentModel.get('propertyName'));
         biglifts.stores.lifts.Lifts.sync();
-        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
     }
     else {
         currentModel.reject();
@@ -58,7 +58,7 @@ biglifts.maxes.controller.deleteLiftButtonPressed = function () {
                 biglifts.liftSchedule.currentLiftProperty = null;
             }
 
-            Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
+            Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
         }
     });
 };

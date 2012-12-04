@@ -36,7 +36,7 @@ Ext.define('biglifts.views.LogList', {
         this.updateUiForSortButtons();
     },
     showExportLog:function () {
-        Ext.getCmp('log').setActiveItem(Ext.getCmp('export-log'), {type:'slide', direction:'left'});
+        Ext.getCmp('log').setActiveItem(Ext.getCmp('export-log'));
     },
     updateUiForSortButtons:function () {
         var liftLogSort = biglifts.stores.LiftLogSort.first();

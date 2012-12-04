@@ -5,7 +5,7 @@ biglifts.maxes.controller.editLift = function (dataview, index, item, e) {
     var propertyName = liftModel.get('propertyName');
 
     biglifts.maxes.controller.setupEditLift(propertyName);
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-panel'), {type:'slide', direction:'left'});
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-edit-lift-panel'));
 };
 
 biglifts.maxes.controller.deleteLift = function (dataview, index, item, e) {

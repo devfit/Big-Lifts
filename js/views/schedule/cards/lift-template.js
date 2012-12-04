@@ -111,7 +111,7 @@ biglifts.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
 };
 
 biglifts.liftSchedule.liftTemplate.returnToLiftSelect = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'), {type: 'slide', direction: 'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
 };
 
 biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
@@ -120,7 +120,7 @@ biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
     });
 
-    Ext.getCmp('lift-schedule').setActiveItem(restTimer, {type: 'slide', direction: 'right'});
+    Ext.getCmp('lift-schedule').setActiveItem(restTimer);
 };
 
 biglifts.liftSchedule.liftTemplate.formatPercentage = function (value) {

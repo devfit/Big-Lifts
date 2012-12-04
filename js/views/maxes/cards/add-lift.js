@@ -53,7 +53,7 @@ biglifts.maxes.controller.addLiftDoneButtonPressed = function () {
     else {
         biglifts.maxes.controller.saveNewLift(newLiftModel);
         Ext.getCmp('maxes-add-lift-form').reset();
-        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
     }
 };
 
@@ -65,7 +65,7 @@ biglifts.maxes.controller.saveNewLift = function (newLiftModel) {
 
 biglifts.maxes.controller.addLiftCancelButtonPressed = function () {
     Ext.getCmp('maxes-add-lift-form').reset();
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'), {type:'slide', direction:'right'});
+    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
 };
 
 biglifts.maxes.cards.addLiftPanel = {

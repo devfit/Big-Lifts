@@ -2,8 +2,7 @@
 Ext.ns('biglifts.views.liftSchedule', 'biglifts.liftSchedule.increaseMaxes');
 
 biglifts.liftSchedule.increaseMaxes.closeIncreaseMaxesHelpScreen = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'),
-        {type:'slide', direction:'left'});
+    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'));
 };
 
 biglifts.liftSchedule.increaseMaxes.bindInputElements = function () {

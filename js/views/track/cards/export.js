@@ -1,7 +1,7 @@
 Ext.ns('biglifts.views.log.cards', 'biglifts.log.emailExport');
 
 biglifts.log.emailExport.returnToTrackingList = function () {
-    Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'), {type:'slide', direction:'right'});
+    Ext.getCmp('log').setActiveItem(Ext.getCmp('log-list'));
 };
 
 biglifts.log.emailExport.exportLog = function () {
