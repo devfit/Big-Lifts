@@ -1,13 +1,12 @@
 class SenchaHelper
-  def initialize(driver, animation_delay)
+  def initialize(driver)
     @driver = driver
-    @animation_delay = animation_delay
   end
 
   def select_combobox(combobox, value)
     lift_selector_parent = combobox.find_element(:xpath => '..')
     lift_selector_parent.find_element(:class => 'x-field-mask').click
-    sleep @animation_delay
+    sleep 0.3
 
     floating_selector = @driver.find_elements(:class => 'x-floating').select { |floatingItem|
       floatingItem.attribute('class').include? 'x-container'
@@ -20,7 +19,7 @@ class SenchaHelper
     }[0]
 
     lift_div.click
-    sleep @animation_delay
+    sleep 0.3
 
     if lift_div.displayed?
       lift_div.click
