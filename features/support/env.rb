@@ -40,8 +40,8 @@ Before do
 
   end
 
-  @main_navigation = MainNavigation.new(@driver, @ANIMATION_DELAY)
-  @lift_schedule_navigator = LiftScheduleNavigator.new(@driver, @ANIMATION_DELAY)
+  @main_navigation = MainNavigation.new(@driver)
+  @lift_schedule_navigator = LiftScheduleNavigator.new(@driver)
   @sencha_helper = SenchaHelper.new(@driver, @ANIMATION_DELAY)
 end
 

@@ -8,9 +8,8 @@ class MainNavigation
       :assistance => {:tab_text => 'Asst.', :panel_id => 'assistance'},
   }
 
-  def initialize(driver, animation_delay)
+  def initialize(driver)
     @driver = driver
-    @animation_delay = animation_delay
   end
 
   def navigate_to(location)
@@ -24,15 +23,14 @@ class MainNavigation
       main_nav_buttons = tab_navigation.find_elements(:class => 'x-tab')
 
       main_nav_buttons.select { |button| button.text == menu_text_pattern }[0].click
-      sleep @animation_delay
+      sleep 0.4
     end
   end
 end
 
 class LiftScheduleNavigator
-  def initialize(driver, animation_delay)
+  def initialize(driver)
     @driver = driver
-    @animation_delay = animation_delay
   end
 
   def selectWeek(week)
@@ -41,7 +39,7 @@ class LiftScheduleNavigator
 
     unless week_tab.attribute('class').include? 'x-tab-active'
       week_tab.click
-      sleep @animation_delay
+      sleep 0.1
     end
   end
 end
