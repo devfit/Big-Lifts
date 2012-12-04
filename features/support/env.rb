@@ -30,7 +30,7 @@ Before do
 
   @premium_text = @premium_text || "premium=false"
   @existing_routine = @existing_routine || ""
-  @driver.navigate.to "file://" + File.absolute_path("../index.html?#{[@premium_text, @existing_routine].join('&')}")
+  @driver.navigate.to "file://" + File.absolute_path("./index.html?#{[@premium_text, @existing_routine].join('&')}")
   @wait = Selenium::WebDriver::Wait.new(:timeout => 10, :interval => 0.1)
 
   if @routine
