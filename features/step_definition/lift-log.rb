@@ -16,12 +16,12 @@ end
 When /^I select the log entry for (\w+)$/ do |liftName|
   list_items = get_displayed_list_items().select { |listItem| listItem.text.include?(liftName) }[0]
   list_items.click()
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I tap delete for a log entry$/ do
   @driver.find_element(:id => 'delete-log-entry-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The current notes shows "([^"]*)"$/ do |notes|

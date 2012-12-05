@@ -25,7 +25,7 @@ Before('@Existing531WithoutNotification') do
 end
 
 Before do
-  @ANIMATION_DELAY = 0.1
+  @ANIMATION_DELAY = 0.0
   @driver = Selenium::WebDriver.for :chrome, :switches => %w[--allow-file-access-from-files]
 
   @premium_text = @premium_text || "premium=false"

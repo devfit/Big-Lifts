@@ -2,7 +2,7 @@ When /^I select Day\/Month\/Year for the date format$/ do
   settings_form = @driver.find_element(:id => 'settings-form')
   date_format_input = settings_form.find_element(:name => 'dateFormat')
   date_format_input.find_element(:xpath => '..').find_element(:class => 'x-field-mask').click()
-  sleep @ANIMATION_DELAY
+
 
   floating_selector = @driver.find_elements(:class => 'x-floating').select { |floatingItem|
     floatingItem.attribute('class').include? 'x-container'
@@ -13,8 +13,8 @@ When /^I select Day\/Month\/Year for the date format$/ do
   }[0]
 
   date_format_select.click()
-  sleep @ANIMATION_DELAY
-  sleep @ANIMATION_DELAY
+
+
 end
 
 Then /^The log date is today formatted as dd\/MM\/yyyy$/ do

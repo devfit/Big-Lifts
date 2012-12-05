@@ -28,7 +28,7 @@ end
 
 When /^I tap the increase maxes help button$/ do
   @driver.find_element(:id => 'increase-maxes-help-image').click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The help screen shows lifts "([^"]*?)"$/ do |lifts|

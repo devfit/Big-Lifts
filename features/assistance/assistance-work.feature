@@ -18,6 +18,7 @@ Feature: Assistance Work
     And I select "5x10" assistance work
     And I tap the "Squat" list item
     And I tap the "Save" button
+    And I wait for the navigation
     When I tap the assistance tab
     And I select "None" assistance work
     And I tap the assistance tab

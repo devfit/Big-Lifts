@@ -1,4 +1,6 @@
 class MainNavigation
+  DELAY = 0.7
+
   TABS = {
       :lift_schedule => {:tab_text => 'Lift!', :panel_id => 'lift-schedule'},
       :lift_editor => {:tab_text => 'Edit', :panel_id => 'maxes-form'},
@@ -23,7 +25,7 @@ class MainNavigation
       main_nav_buttons = tab_navigation.find_elements(:class => 'x-tab')
 
       main_nav_buttons.select { |button| button.text == menu_text_pattern }[0].click
-      sleep 0.7
+      sleep MainNavigation::DELAY
     end
   end
 end

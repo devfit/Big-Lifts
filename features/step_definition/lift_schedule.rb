@@ -18,14 +18,14 @@ When /^I view the (\w+) lift schedule for week (\d+)$/ do |liftProperty, week|
   @lift_schedule_navigator.selectWeek(week)
 
   get_displayed_list_items().select { |i| i.text.downcase == liftProperty }[0].click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I back out of viewing the lift$/ do
   @driver.find_element(:id => 'lift-template').find_elements(:class => 'x-button').select { |button|
     button.text() == "Back"
   }[0].click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The lift schedule shows "([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)","([^"]+)"$/ do |*liftSets|

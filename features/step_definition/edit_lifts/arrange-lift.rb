@@ -1,11 +1,11 @@
 When /^I tap the move down button$/ do
   @driver.find_element(:id => 'arrange-lifts-down-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I tap the move up button$/ do
   @driver.find_element(:id => 'arrange-lifts-up-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The lift schedule orders lifts as "([^"]+)"$/ do |liftsText|

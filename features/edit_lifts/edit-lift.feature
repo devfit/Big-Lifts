@@ -35,6 +35,6 @@ Feature: Editing lifts
     And I edit the name to be "Squat2"
     And I tap the "Back" button
     And I view the squat2 lift schedule for week 1
-    When I mark the current lift completed
+    When I tap the checkmark
     And I tap the "Save" button
     Then I am on the track tab

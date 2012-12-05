@@ -35,6 +35,7 @@ Feature: Boring But Big - Assistance Work
     And I set the boring but big notes to "Felt okay. A little slow on the last set"
     And I return from the boring but big notes
     And I tap the "Save" button
+    And I wait for the navigation
     Then I am on the track tab
     And I tap the "Asst." button
     Then I see 1 assistance log entry for "10x110"
@@ -71,6 +72,7 @@ Feature: Boring But Big - Assistance Work
     And I set the "sets" to "5"
     And I tap the "Back" button
     And I tap the "Save" button
+    And I wait for the navigation
     And I tap the "Asst." button
     Then I see an assistance log entry containing "Chins"
 
@@ -92,5 +94,6 @@ Feature: Boring But Big - Assistance Work
     And I tap the "Back" button
     Then The BBB list item 1 contains "Press"
     And I tap the "Save" button
+    And I wait for the navigation
     And I tap the "Asst." button
     Then I see an assistance log entry containing "Press"

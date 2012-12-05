@@ -15,20 +15,24 @@ Feature: Increasing the cycle
 
   Scenario: Week checkmarks are removed when a cycle is completed
     When I view the squat lift schedule for week 1
-    When I mark the current lift completed
+    And I tap the checkmark
     And I tap the "Save" button
+    And I wait for the navigation
 
     When I view the deadlift lift schedule for week 1
-    When I mark the current lift completed
+    And I tap the checkmark
     And I tap the "Save" button
+    And I wait for the navigation
 
     When I view the press lift schedule for week 1
-    When I mark the current lift completed
+    And I tap the checkmark
     And I tap the "Save" button
+    And I wait for the navigation
 
     When I view the bench lift schedule for week 1
-    When I mark the current lift completed
+    And I tap the checkmark
     And I tap the "Save" button
+    And I wait for the navigation
 
     When I navigate to the lift schedule
     And I click the increase cycle button

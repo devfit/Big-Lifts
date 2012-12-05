@@ -20,7 +20,7 @@ end
 
 When /^I tap edit first log notes$/ do
   @driver.find_element(:id => 'first-log-notes').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I set the first log notes to "([^"]*)"$/ do |log_notes|
@@ -28,7 +28,7 @@ When /^I set the first log notes to "([^"]*)"$/ do |log_notes|
   first_lift_tracking.find_element(:name => 'notes').send_keys(log_notes)
 
   first_lift_tracking.find_element(:class => 'x-button-back').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^the log notes are "([^"]*)"$/ do |expected_log_notes|
@@ -43,17 +43,17 @@ end
 
 Then /^I tap edit log notes$/ do
   @driver.find_element(:id => 'edit-log-notes').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I return from editing the log notes$/ do
   @driver.find_element(:id => 'log-notes-editor').find_element(:class => 'x-button-back').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I return from viewing a log$/ do
   @driver.find_element(:id => 'edit-log-entry').find_element(:class => 'x-button-back').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The squat long entry date in the log list is today$/ do

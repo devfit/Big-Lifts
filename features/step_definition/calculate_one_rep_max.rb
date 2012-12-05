@@ -25,7 +25,7 @@ Then /^I select use for (\w+)$/ do |lift|
   @sencha_helper.select_combobox lift_selector, lift
 
   @driver.find_element(:id => 'use-max-button').click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I am taken to the maxes page$/ do

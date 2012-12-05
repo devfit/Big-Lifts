@@ -8,12 +8,12 @@ When /^I select week (\d+) for the manual percentages editor$/ do |week|
     tab.text.include?(week)
   }[0]
   week_tab.click()
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I select set (\d+) on the manual percentages editor$/ do |set|
   get_displayed_list_items()[set.to_i-1].click()
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I set the manual percentage to (\d+)$/ do |percentage|
@@ -24,7 +24,7 @@ end
 
 When /^I navigate back to the lift settings from the manual percentages editor$/ do
   @driver.find_element(:id => 'edit-lift-percentages').find_element(:class => 'x-button-back').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The set (\d+) lift percentage shows (\d+)%$/ do |set, percentage|
@@ -53,7 +53,7 @@ When /^I tap the add set button$/ do
     button.displayed? && button.text() == 'Add set'
   }[0].click
 
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I check the (\w+) custom set checkbox$/ do |custom_set_field|

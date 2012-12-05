@@ -1,7 +1,7 @@
 When /^I tap the rest timer button$/ do
   button = @driver.find_elements(:class => 'rest-timer-button').select { |button| button.displayed? }[0]
   button.click
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I tap the increment rest timer button$/ do

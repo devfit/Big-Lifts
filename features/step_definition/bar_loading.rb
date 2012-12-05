@@ -12,7 +12,7 @@ end
 
 When /^I tap the bar\/plates button$/ do
   @driver.find_element(:id => 'setup-plates-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I set the bar weight to (\d+)$/ do |weight|

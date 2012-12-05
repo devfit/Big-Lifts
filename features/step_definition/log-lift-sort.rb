@@ -1,6 +1,6 @@
 When /^I tap the sort lift log button$/ do
   @driver.find_element(:id => 'track-sort-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I tap sort "([^"]+)"$/ do |sortText|
@@ -8,7 +8,7 @@ When /^I tap sort "([^"]+)"$/ do |sortText|
   sort_toolbar.find_elements(:class => 'x-button').select { |button|
     button.text == sortText
   }[0].click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The log list shows "([^"]*)"$/ do |lifts|
@@ -20,7 +20,7 @@ end
 
 When /^I select the log entry (\d+)$/ do |log_number|
   get_displayed_list_items()[log_number.to_i - 1].click
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I change the log date to "([^"]+)"$/ do |date|

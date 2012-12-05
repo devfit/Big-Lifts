@@ -2,7 +2,7 @@ require 'json'
 
 When /^I tap the log export button$/ do
   @driver.find_element(:id => 'export-log-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I set the email to ([^"]*)$/ do |email|
@@ -11,7 +11,7 @@ end
 
 When /^I tap the send email button$/ do
   @driver.find_element(:id => 'send-email-export-log-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The email is currently set to ([^"]*)$/ do |expectedEmail|

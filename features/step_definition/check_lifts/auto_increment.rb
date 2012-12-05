@@ -1,7 +1,7 @@
 When /^I hit done on the lift completion screen$/ do
-  sleep @ANIMATION_DELAY
+
   @driver.find_element(:id => 'lifts-complete-done-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^(\w+) max is set to ([\d\.]+)$/ do |lift, newmax|

@@ -2,7 +2,7 @@
 Feature: Lift tracking
   Scenario: Editing notes and viewing date
     When I view the squat lift schedule for week 1
-    And I mark the current lift completed
+    And I tap the checkmark
     And I tap the "Save" button
     And I select the log entry for Squat
     Then The log date is today
@@ -14,7 +14,7 @@ Feature: Lift tracking
 
   Scenario: Lift log can be edited
     When I view the squat lift schedule for week 1
-    And I mark the current lift completed
+    And I tap the checkmark
     And I tap the "Save" button
     And I select the log entry for Squat
     And I set the log expected reps to 6
@@ -26,26 +26,26 @@ Feature: Lift tracking
 
   Scenario: Notes aren't persisted between lifts
     When I view the squat lift schedule for week 1
-    And I mark the current lift completed
+    And I tap the checkmark
     And I tap edit first log notes
     And I set the first log notes to "Log notes"
     And I tap the "Save" button
 
     And I view the press lift schedule for week 1
-    And I mark the current lift completed
+    And I tap the checkmark
     Then The current notes shows "Tap to edit"
     And I tap edit first log notes
     Then The full log notes shows ""
 
   Scenario: Backing out of the lift log
     When I view the squat lift schedule for week 1
-    And I mark the current lift completed
+    And I tap the checkmark
     And I tap the "Back" button
     Then I am returned to the lift schedule and no log is saved
 
   Scenario: Lift logging
     When I view the squat lift schedule for week 1
-    And I mark the current lift completed
+    And I tap the checkmark
     And I tap edit first log notes
     And I set the first log notes to "Log notes"
     And I tap the "Save" button
@@ -56,7 +56,7 @@ Feature: Lift tracking
 
   Scenario: Deleting a lift log entry
     When I view the press lift schedule for week 1
-    And I mark the current lift completed
+    And I tap the checkmark
     And I tap the "Save" button
     And I select the log entry for Press
     And I tap delete for a log entry

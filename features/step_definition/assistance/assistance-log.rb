@@ -1,10 +1,8 @@
 Then /^I tap the assistance log notes$/ do
   @driver.find_element(:id => 'edit-assistance-log-notes').click
-  sleep @ANIMATION_DELAY
 end
 
 When /^I tap the assistance tab$/ do
-  sleep 0.7
   @main_navigation.navigate_to :assistance
 end
 
@@ -20,7 +18,7 @@ end
 
 Then /^I tap the delete assistance log button$/ do
   @driver.find_element(:id => 'assistance-log-delete-button').click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I am on the assistance log list$/ do

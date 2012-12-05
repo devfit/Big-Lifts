@@ -3,7 +3,7 @@ When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
 
   add_lift_button = @driver.find_element(:id => 'add-lift-button')
   add_lift_button.click
-  sleep @ANIMATION_DELAY
+
 
   name_input = @driver.find_element(:name => 'add-lift-new-name')
   name_input.send_keys lift
@@ -11,7 +11,7 @@ When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
   max_input.send_keys max
 
   @driver.find_elements(:class => 'x-button').select{|button| button.displayed? && button.text() == "Save"}[0].click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^"([^"]*)" is ([\w ]+)?added to the edit lifts screen$/ do |lift, invertCheck|
@@ -36,10 +36,10 @@ Then /^"([^"]*)" is ([\w ]+)?added to the lift schedule$/ do |lift, invertCheck|
 end
 
 Then /^I see an error with message "([^"]*)"$/ do |message|
-  sleep @ANIMATION_DELAY
+
   @driver.find_element(:class => 'x-msgbox').find_element(:class => 'x-msgbox-text').text.should == message
   @driver.find_element(:class => 'x-msgbox').find_element(:class => 'x-button').click
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I edit the name to be "([^"]*)"$/ do |new_lift_name|

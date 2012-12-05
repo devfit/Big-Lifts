@@ -3,7 +3,7 @@ When /^I select "([^"]*)" assistance work$/ do |assistanceName|
   assistance_list_item.click()
 
   @driver.find_element(:id => 'assistance-chooser-next-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The first boring but big lift weight is (\d+)$/ do |weight|
@@ -18,7 +18,7 @@ end
 
 When /^I save the boring but big log$/ do
   @driver.find_element(:id => 'boring-but-big-save-log-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I see (\d+) assistance log entry for "([^"]*)"$/ do |numberOfEntries, entryText|
@@ -40,7 +40,7 @@ Then /^I return from the boring but big notes$/ do
     button.text() == 'Back'
   }[0].click
 
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I tap "([^"]+)" log entry (\d+)$/ do |assistance_type, row_entry|
@@ -49,7 +49,7 @@ When /^I tap "([^"]+)" log entry (\d+)$/ do |assistance_type, row_entry|
   }[row_entry.to_i - 1]
 
   row.click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^The assistance details notes shows "([^"]*?)"$/ do |notes|
@@ -65,7 +65,7 @@ end
 
 When /^I tap the first boring but big entry$/ do
   get_displayed_list_items()[0].click
-  sleep @ANIMATION_DELAY
+
 end
 
 When /^I set the boring but big lift to "(.*?)"$/ do |lift_name|

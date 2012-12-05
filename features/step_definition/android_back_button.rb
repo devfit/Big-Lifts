@@ -1,6 +1,6 @@
 When /^I press the android back button$/ do
     @driver.execute_script('biglifts.navigation.back()')
-    sleep @ANIMATION_DELAY
+
 end
 
 When /^I navigate to the lift schedule/ do
@@ -22,7 +22,7 @@ end
 
 When /^I click add lift$/ do
   @driver.find_element(:id => 'add-lift-button').click()
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I am on the lift editor$/ do

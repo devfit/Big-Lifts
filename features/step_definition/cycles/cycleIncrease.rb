@@ -6,5 +6,5 @@ end
 
 Then /^I click the increase cycle button$/ do
   @driver.find_element(:id => 'cycle-change-button').click()
-  sleep @ANIMATION_DELAY
+
 end

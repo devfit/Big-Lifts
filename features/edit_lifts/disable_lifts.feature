@@ -10,18 +10,20 @@ Feature: Disabling lifts
     And I disable "Deadlift"
     And I disable "Press"
     And I tap the "Done" button
-    And I navigate to the lift schedule
     When I view the bench lift schedule for week 1
-    When I mark the current lift completed
+    When I tap the checkmark
     And I tap the "Save" button
+    And I wait for the navigation
     When I view the bench lift schedule for week 2
-    When I mark the current lift completed
+    When I tap the checkmark
     And I tap the "Save" button
+    And I wait for the navigation
     When I view the bench lift schedule for week 3
-    When I mark the current lift completed
+    When I tap the checkmark
     And I tap the "Save" button
+    And I wait for the navigation
     When I view the bench lift schedule for week 4
-    When I mark the current lift completed
+    When I tap the checkmark
     And I tap the "Save" button
     Then I am prompted with the cycle complete dialog
     And I tap the increase maxes help button
@@ -47,8 +49,9 @@ Feature: Disabling lifts
     And I tap the "Done" button
     And I navigate to the lift schedule
     When I view the bench lift schedule for week 1
-    When I mark the current lift completed
+    When I tap the checkmark
     And I tap the "Save" button
+    And I wait for the navigation
     And I navigate to the lift schedule
     Then Week 1 of the lift selector is marked complete
 

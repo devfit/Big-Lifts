@@ -4,7 +4,7 @@ end
 
 Then /^I tap the "(.*?)" list item$/ do |text|
   get_displayed_list_items().select { |item| item.text().include?(text) }[0].click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I am on the one rep max screen$/ do

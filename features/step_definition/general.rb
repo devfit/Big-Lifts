@@ -4,7 +4,6 @@ end
 
 When /^I tap the "(.*?)" button$/ do |button_text|
   @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == button_text }[0].click
-  sleep @ANIMATION_DELAY
 end
 
 Then /^There is a "(.*?)" list item$/ do |text|
@@ -17,13 +16,13 @@ end
 
 When /^I tap the checkmark$/ do
   @driver.find_elements(:css => '.x-button-icon.done').select { |button| button.displayed? }[0].click
-  sleep @ANIMATION_DELAY
+
 end
 
 Then /^I navigate to the "([^"]+)" tab/ do |tab_text|
   tab = @driver.find_elements(:class => 'x-tab').select { |tab| tab.displayed? && tab.text().include?(tab_text) }[0]
   tab.click
-  sleep @ANIMATION_DELAY
+  sleep MainNavigation::DELAY
 end
 
 Then /^There is a "(.*?)" form label$/ do |name|
@@ -33,4 +32,8 @@ end
 
 Then /^The page title is "([^"]+)"$/ do |title|
   @driver.find_elements(:class => 'x-toolbar').select { |toolbar| toolbar.displayed? }[0].text().should include title
+end
+
+When /^I wait for the navigation$/ do
+  sleep MainNavigation::DELAY
 end
