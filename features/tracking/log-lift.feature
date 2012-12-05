@@ -30,6 +30,7 @@ Feature: Lift tracking
     And I tap edit first log notes
     And I set the first log notes to "Log notes"
     And I tap the "Save" button
+    And I wait for the animation
 
     And I view the press lift schedule for week 1
     And I tap the checkmark
