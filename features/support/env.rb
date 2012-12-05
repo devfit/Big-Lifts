@@ -42,7 +42,7 @@ Before do
 
   @main_navigation = MainNavigation.new(@driver)
   @lift_schedule_navigator = LiftScheduleNavigator.new(@driver)
-  @sencha_helper = SenchaHelper.new(@driver, @ANIMATION_DELAY)
+  @sencha_helper = SenchaHelper.new(@driver)
 end
 
 After do
