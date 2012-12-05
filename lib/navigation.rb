@@ -23,7 +23,7 @@ class MainNavigation
       main_nav_buttons = tab_navigation.find_elements(:class => 'x-tab')
 
       main_nav_buttons.select { |button| button.text == menu_text_pattern }[0].click
-      sleep 0.5
+      sleep 0.7
     end
   end
 end
@@ -35,7 +35,7 @@ class LiftScheduleNavigator
 
   def selectWeek(week)
     lift_selector = @driver.find_element(:id => 'lift-selector')
-    week_tab = lift_selector.find_elements(:tag_name => 'div', :class => 'x-tab').select { |i| i.text == "#{week}" }[0]
+    week_tab = lift_selector.find_elements(:tag_name => 'div', :class => 'x-tab').select { |i| i.text() == "#{week}" }[0]
 
     unless week_tab.attribute('class').include? 'x-tab-active'
       week_tab.click
