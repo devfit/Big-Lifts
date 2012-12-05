@@ -4,7 +4,7 @@ Then /^I tap the assistance log notes$/ do
 end
 
 When /^I tap the assistance tab$/ do
-  sleep 0.5
+  sleep 0.7
   @main_navigation.navigate_to :assistance
 end
 
