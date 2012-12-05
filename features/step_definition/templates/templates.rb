@@ -10,7 +10,6 @@ end
 When /^I select the "(.*?)" lift template$/ do |assistance_template|
   until displayed_lift_settings_page().find_element(:class => 'x-title').text() == assistance_template do
     displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Next" }[0].click
-
   end
 end
 
@@ -26,15 +25,13 @@ When /^I confirm the progression change$/ do
   ok_button = msg_box.find_element(:class => 'x-button')
 
   ok_button.click()
-
+  sleep MainNavigation::DELAY
 end
 
 When /^I navigate back to the lift selector from lift settings$/ do
   until displayed_lift_settings_page().find_element(:class => 'x-title').text() == "Fresher" do
     displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Back" }[0].click
-
   end
 
   displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Back" }[0].click
-
 end

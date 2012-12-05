@@ -1,6 +1,7 @@
 When /^I tap the sort lift log button$/ do
   @driver.find_element(:id => 'track-sort-button').click()
 
+  sleep MainNavigation::DELAY
 end
 
 When /^I tap sort "([^"]+)"$/ do |sortText|
