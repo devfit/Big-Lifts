@@ -7,6 +7,11 @@ biglifts.debug.setup531WithoutNotification = function () {
 };
 
 if (Ext.os.is.Linux || Ext.os.is.MacOS) {
+    window.onerror = function (em, url, ln) {
+        alert(em + ", " + url + ", " + ln);
+        return false;
+    };
+
     window.device = {
         name:"Chrome",
         uuid:'1234',
