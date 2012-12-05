@@ -3,7 +3,6 @@ When /^I select "([^"]*)" assistance work$/ do |assistanceName|
   assistance_list_item.click()
 
   @driver.find_element(:id => 'assistance-chooser-next-button').click()
-
 end
 
 Then /^The first boring but big lift weight is (\d+)$/ do |weight|
@@ -18,7 +17,6 @@ end
 
 When /^I save the boring but big log$/ do
   @driver.find_element(:id => 'boring-but-big-save-log-button').click()
-
 end
 
 Then /^I see (\d+) assistance log entry for "([^"]*)"$/ do |numberOfEntries, entryText|
@@ -49,7 +47,6 @@ When /^I tap "([^"]+)" log entry (\d+)$/ do |assistance_type, row_entry|
   }[row_entry.to_i - 1]
 
   row.click
-
 end
 
 Then /^The assistance details notes shows "([^"]*?)"$/ do |notes|
@@ -69,7 +66,7 @@ When /^I tap the first boring but big entry$/ do
 end
 
 When /^I set the boring but big lift to "(.*?)"$/ do |lift_name|
-  @sencha_helper.select_combobox @driver.find_element(:id => 'bbb-movement-editor').find_element(:name => 'lift'), lift_name
+  select_combobox @driver.find_element(:id => 'bbb-movement-editor').find_element(:name => 'lift'), lift_name
 end
 
 Then /^The BBB list item (\d+) contains "(.*?)"$/ do |list_item_number, text|

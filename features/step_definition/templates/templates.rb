@@ -1,5 +1,5 @@
 When /^I view the lift schedule$/ do
-  @main_navigation.navigate_to(:lift_schedule)
+  navigate_to(:lift_schedule)
 end
 
 When /^I open the lift settings configuration$/ do

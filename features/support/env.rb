@@ -5,8 +5,12 @@ $LOAD_PATH << File.expand_path('../../../lib', __FILE__)
 require 'navigation'
 require 'sencha_helper'
 require 'routine_selector'
+require 'lift_schedule_navigator'
 
 include ListSelector
+include MainNavigation
+include LiftScheduleNavigator
+include SenchaHelper
 
 Before('@premium') do
   @premium_text = "premium=true"
@@ -31,7 +35,7 @@ Before do
   @premium_text = @premium_text || "premium=false"
   @existing_routine = @existing_routine || ""
   @driver.navigate.to "file://" + File.absolute_path("./index.html?#{[@premium_text, @existing_routine].join('&')}")
-  @wait = Selenium::WebDriver::Wait.new(:timeout => 10, :interval => 0.1)
+  @wait = Selenium::WebDriver::Wait.new(:timeout => 1, :interval => 0.05)
 
   if @routine
     @wait.until { @driver.find_element(:id => "routine-chooser") && @driver.find_element(:id => "routine-chooser").displayed? }
@@ -39,10 +43,6 @@ Before do
   else
 
   end
-
-  @main_navigation = MainNavigation.new(@driver)
-  @lift_schedule_navigator = LiftScheduleNavigator.new(@driver)
-  @sencha_helper = SenchaHelper.new(@driver)
 end
 
 After do

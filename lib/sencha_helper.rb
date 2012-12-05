@@ -1,8 +1,4 @@
-class SenchaHelper
-  def initialize(driver)
-    @driver = driver
-  end
-
+module SenchaHelper
   def select_combobox(combobox, value)
     lift_selector_parent = combobox.find_element(:xpath => '..')
     lift_selector_parent.find_element(:class => 'x-field-mask').click

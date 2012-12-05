@@ -1,5 +1,5 @@
 When /^I navigate to the track tab$/ do
-  @main_navigation.navigate_to(:track)
+  navigate_to(:track)
 end
 
 Then /^I do ([\w ]*)see a log entry containing (\w+)$/ do |notModifier, liftName|
@@ -38,7 +38,7 @@ end
 
 Then /^I set the log cycle filter to "(.*?)"$/ do |cycle|
   cycle_select = @driver.find_elements(:name => 'cycle').select { |input| input.displayed? }[0]
-  @sencha_helper.select_combobox cycle_select, cycle
+  select_combobox cycle_select, cycle
 end
 
 

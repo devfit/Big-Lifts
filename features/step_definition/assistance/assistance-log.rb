@@ -3,7 +3,7 @@ Then /^I tap the assistance log notes$/ do
 end
 
 When /^I tap the assistance tab$/ do
-  @main_navigation.navigate_to :assistance
+  navigate_to :assistance
 end
 
 Then /^I set the assistance log notes to "(.*?)"$/ do |notes|

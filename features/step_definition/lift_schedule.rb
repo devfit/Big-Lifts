@@ -3,19 +3,19 @@ def maxes_form_item_of_name(name)
 end
 
 When /^I set the (\w+) max to (\d+)$/ do |liftProperty, max|
-  @main_navigation.navigate_to(:lift_editor)
+  navigate_to(:lift_editor)
   maxes_form_item_of_name(liftProperty).clear
   maxes_form_item_of_name(liftProperty).clear
   maxes_form_item_of_name(liftProperty).send_keys max
 end
 
 When /^I select week (\d+)$/ do |week|
-  @lift_schedule_navigator.selectWeek(week)
+  select_week(week)
 end
 
 When /^I view the (\w+) lift schedule for week (\d+)$/ do |liftProperty, week|
-  @main_navigation.navigate_to(:lift_schedule)
-  @lift_schedule_navigator.selectWeek(week)
+  navigate_to(:lift_schedule)
+  select_week(week)
 
   get_displayed_list_items().select { |i| i.text.downcase == liftProperty }[0].click
 

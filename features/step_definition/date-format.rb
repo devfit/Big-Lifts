@@ -1,6 +1,6 @@
 When /^I select Day\/Month\/Year for the date format$/ do
   settings_form = @driver.find_element(:id => 'settings-form')
-  @sencha_helper.select_combobox settings_form.find_element(:name => 'dateFormat'), "Day/Month/Year"
+  select_combobox settings_form.find_element(:name => 'dateFormat'), "Day/Month/Year"
 end
 
 Then /^The log date is today formatted as dd\/MM\/yyyy$/ do

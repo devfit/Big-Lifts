@@ -1,5 +1,5 @@
 Then /^I navigate to the settings page$/ do
-  @main_navigation.navigate_to(:more)
+  navigate_to(:more)
   settings_menu_item = get_displayed_list_items().select { |item| item.text == 'Settings' }[0]
   settings_menu_item.click()
 
@@ -19,7 +19,7 @@ end
 
 When /^I set units to kg$/ do
   settings_form = @driver.find_element(:id => 'settings-form')
-  @sencha_helper.select_combobox settings_form.find_element(:name => 'units'), 'kg'
+  select_combobox settings_form.find_element(:name => 'units'), 'kg'
 end
 
 Then /^The training percentage shows (\d+)$/ do |percentage|

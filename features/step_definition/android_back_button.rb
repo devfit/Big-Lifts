@@ -4,7 +4,7 @@ When /^I press the android back button$/ do
 end
 
 When /^I navigate to the lift schedule/ do
-    @main_navigation.navigate_to(:lift_schedule)
+    navigate_to(:lift_schedule)
 end
 
 Then /^I am on the lift schedule$/ do
@@ -17,7 +17,7 @@ end
 
 
 When /^I navigate to the lift editor$/ do
-  @main_navigation.navigate_to(:lift_editor)
+  navigate_to(:lift_editor)
 end
 
 When /^I click add lift$/ do

@@ -1,5 +1,5 @@
 When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
-  @main_navigation.navigate_to(:lift_editor)
+  navigate_to(:lift_editor)
 
   add_lift_button = @driver.find_element(:id => 'add-lift-button')
   add_lift_button.click
@@ -17,7 +17,7 @@ end
 Then /^"([^"]*)" is ([\w ]+)?added to the edit lifts screen$/ do |lift, invertCheck|
   lift_should_be_added = invertCheck == nil
 
-  @main_navigation.navigate_to(:lift_editor)
+  navigate_to(:lift_editor)
 
   lift_list = @driver.find_element(:id => 'maxes-form-items')
   lift_is_shown = lift_list.text.include? lift
@@ -27,7 +27,7 @@ end
 
 Then /^"([^"]*)" is ([\w ]+)?added to the lift schedule$/ do |lift, invertCheck|
   lift_should_be_added = invertCheck == nil
-  @main_navigation.navigate_to(:lift_schedule)
+  navigate_to(:lift_schedule)
 
   lift_selector = @driver.find_element(:id => 'lift-selector')
   lift_is_shown = lift_selector.text.include? lift

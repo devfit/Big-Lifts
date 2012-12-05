@@ -1,5 +1,5 @@
 When /^I open the 1-rep calculator$/ do
-  @main_navigation.navigate_to :one_rep_calculator
+  navigate_to :one_rep_calculator
 end
 
 When /^I set weight to (\d+) and reps to (\d+)$/ do |weight, reps|
@@ -22,7 +22,7 @@ end
 
 Then /^I select use for (\w+)$/ do |lift|
   lift_selector = @driver.find_element(:name => 'use-for-lift-select')
-  @sencha_helper.select_combobox lift_selector, lift
+  select_combobox lift_selector, lift
 
   @driver.find_element(:id => 'use-max-button').click
 
