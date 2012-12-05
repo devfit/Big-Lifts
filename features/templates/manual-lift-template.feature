@@ -17,7 +17,9 @@ Feature: Manual lift template
     And I open the lift settings configuration
     And I select the "Fresher" lift template
     And I tap the use template button
+    And I wait for the animation
     And I confirm the progression change
+    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I view the squat lift schedule for week 1
     Then The lift schedule shows "5 70 [warm] 40%,5 90 [warm] 50%,3 110 [warm] 60%,5 115 65%,5 135 75%,5 155 85%"

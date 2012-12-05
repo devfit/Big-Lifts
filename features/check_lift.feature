@@ -4,6 +4,6 @@ Feature: Checking off individual lifts
     When I view the squat lift schedule for week 1
     When I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
     And I navigate to the lift schedule
     Then the Squat lift is checked

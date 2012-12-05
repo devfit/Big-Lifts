@@ -49,7 +49,7 @@ Feature: Lift tracking
     And I tap edit first log notes
     And I set the first log notes to "Log notes"
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     Then I do see a log entry containing Squat
     And I select the log entry for Squat
@@ -60,7 +60,7 @@ Feature: Lift tracking
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     And I select the log entry for Press
     And I tap delete for a log entry

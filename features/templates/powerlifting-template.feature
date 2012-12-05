@@ -7,11 +7,14 @@ Feature: Powerlifting template
     And I select the "Powerlifting" lift template
     And I tap the use template button
     And I confirm the progression change
+    And I wait for the animation
+
     And I navigate back to the lift selector from lift settings
     And I open the lift settings configuration
     And I select the "Fresher" lift template
     And I tap the use template button
     And I confirm the progression change
+    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I navigate to the lift editor
     Then Meet goals are not visible
@@ -22,6 +25,7 @@ Feature: Powerlifting template
     And I select the "Powerlifting" lift template
     And I tap the use template button
     And I confirm the progression change
+    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I set the squat max to 300
     And I set the squat meet goal to 350
@@ -35,6 +39,7 @@ Feature: Powerlifting template
     And I select the "Powerlifting" lift template
     And I tap the use template button
     And I confirm the progression change
+    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I set the squat max to 300
     And I set the squat meet goal to 300

@@ -13,15 +13,15 @@ Feature: Disabling lifts
     When I view the bench lift schedule for week 1
     When I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
     When I view the bench lift schedule for week 2
     When I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
     When I view the bench lift schedule for week 3
     When I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
     When I view the bench lift schedule for week 4
     When I tap the checkmark
     And I tap the "Save" button
@@ -51,7 +51,7 @@ Feature: Disabling lifts
     When I view the bench lift schedule for week 1
     When I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
     And I navigate to the lift schedule
     Then Week 1 of the lift selector is marked complete
 

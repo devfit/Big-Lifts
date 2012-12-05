@@ -4,17 +4,17 @@ Feature: Lift log sorting
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the squat lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the press lift schedule for week 2
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     And I tap the sort lift log button
     And I tap sort "A-Z"
@@ -24,22 +24,22 @@ Feature: Lift log sorting
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     And I select the log entry 1
     And I change the log date to "02/14/2011"
@@ -65,17 +65,17 @@ Feature: Lift log sorting
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the squat lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the press lift schedule for week 2
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     And I tap the sort lift log button
     And I tap sort "A-Z"
@@ -86,17 +86,17 @@ Feature: Lift log sorting
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the squat lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the bench lift schedule for week 2
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     Then The log list shows "Bench,Squat,Press"
 
@@ -104,17 +104,17 @@ Feature: Lift log sorting
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the squat lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the bench lift schedule for week 2
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     And I tap the sort lift log button
     And I tap sort "Newest"

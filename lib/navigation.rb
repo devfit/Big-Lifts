@@ -1,5 +1,5 @@
 class MainNavigation
-  DELAY = 0.7
+  DELAY = 0.6
 
   TABS = {
       :lift_schedule => {:tab_text => 'Lift!', :panel_id => 'lift-schedule'},
@@ -41,7 +41,7 @@ class LiftScheduleNavigator
 
     unless week_tab.attribute('class').include? 'x-tab-active'
       week_tab.click
-      sleep 0.1
+      sleep MainNavigation::DELAY
     end
   end
 end

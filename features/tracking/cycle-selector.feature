@@ -26,7 +26,7 @@ Feature: Filtering log by cycle
     When I view the squat lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I navigate to the lift schedule
     And I click the increase cycle button
@@ -34,7 +34,7 @@ Feature: Filtering log by cycle
     When I view the squat lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     Then There are 2 log entries
     And I set the log cycle filter to "1"

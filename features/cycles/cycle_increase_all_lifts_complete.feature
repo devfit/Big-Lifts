@@ -17,22 +17,22 @@ Feature: Increasing the cycle
     When I view the squat lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the deadlift lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the press lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I view the bench lift schedule for week 1
     And I tap the checkmark
     And I tap the "Save" button
-    And I wait for the navigation
+    And I wait for the animation
 
     When I navigate to the lift schedule
     And I click the increase cycle button

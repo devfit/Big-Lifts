@@ -34,6 +34,6 @@ Then /^The page title is "([^"]+)"$/ do |title|
   @driver.find_elements(:class => 'x-toolbar').select { |toolbar| toolbar.displayed? }[0].text().should include title
 end
 
-When /^I wait for the navigation$/ do
+When /^I wait for the animation$/ do
   sleep MainNavigation::DELAY
 end
