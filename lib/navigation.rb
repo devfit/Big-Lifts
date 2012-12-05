@@ -23,7 +23,7 @@ class MainNavigation
       main_nav_buttons = tab_navigation.find_elements(:class => 'x-tab')
 
       main_nav_buttons.select { |button| button.text == menu_text_pattern }[0].click
-      sleep 1
+      sleep 0.5
     end
   end
 end
