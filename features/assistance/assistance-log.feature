@@ -7,10 +7,14 @@ Feature: Assistance log
     And I select "5x10" assistance work
     And I tap the "Squat" list item
     And I tap the "Save" button
+    And I wait for the navigation
+
     And I tap the assistance tab
     And I select "5x10" assistance work
     And I tap the "Squat" list item
     And I tap the "Save" button
+    And I wait for the navigation
+
     Then I am on the track tab
     And I tap the "Asst." button
     And I tap "5x10" log entry 1
@@ -24,6 +28,8 @@ Feature: Assistance log
     And I select "5x10" assistance work
     And I tap the "Squat" list item
     And I tap the "Save" button
+    And I wait for the navigation
+
     Then I am on the track tab
     And I tap the "Asst." button
     And I tap "5x10" log entry 1
