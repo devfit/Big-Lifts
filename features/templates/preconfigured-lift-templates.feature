@@ -7,7 +7,6 @@ Feature: Lift templates
     And I select the "Heavier" lift template
     And I tap the use template button
     And I confirm the progression change
-    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I set the squat max to 300
     And I view the squat lift schedule for week 1
@@ -20,7 +19,6 @@ Feature: Lift templates
     And I select the "Fresher" lift template
     And I tap the use template button
     And I confirm the progression change
-    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I set the squat max to 300
     And I view the squat lift schedule for week 1

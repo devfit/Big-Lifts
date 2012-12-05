@@ -6,8 +6,8 @@ Feature: Rotating lift template
     And I open the lift settings configuration
     And I select the "Rotating" lift template
     And I tap the use template button
-    And I confirm the progression change
     And I wait for the animation
+    And I confirm the progression change
     And I navigate back to the lift selector from lift settings
     When I view the squat lift schedule for week 1
     Then The lift schedule shows "5 110 [warm] 40%","5 110 [warm] 40%","5 110 [warm] 40%","5 110 40%","5 135 50%","5 160 60%"
@@ -19,8 +19,8 @@ Feature: Rotating lift template
     And I select the "Rotating" lift template
     And I tap the "Rotate" button
     And I tap the use template button
-    And I confirm the progression change
     And I wait for the animation
+    And I confirm the progression change
     And I navigate back to the lift selector from lift settings
     When I view the bench lift schedule for week 4
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 205 75%","3 230 85%","1 255 95%"
@@ -33,13 +33,11 @@ Feature: Rotating lift template
     And I tap the "Rotate" button
     And I tap the use template button
     And I confirm the progression change
-    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I open the lift settings configuration
     And I select the "Fresher" lift template
     And I tap the use template button
     And I confirm the progression change
-    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I view the deadlift lift schedule for week 3
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 205 75%","3 230 85%","1 255 95%"
@@ -52,7 +50,6 @@ Feature: Rotating lift template
     And I select the "Rotating" lift template
     And I tap the use template button
     And I confirm the progression change
-    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I view the press lift schedule for week 1
     Then The lift schedule shows "5 70 [warm] 40%","5 90 [warm] 50%","3 110 [warm] 60%","5 115 65%","5 135 75%","5 155 85%"
@@ -68,7 +65,6 @@ Feature: Rotating lift template
     And I tap the "Rotate" button
     And I tap the use template button
     And I confirm the progression change
-    And I wait for the animation
     And I navigate back to the lift selector from lift settings
     And I view the deadlift lift schedule for week 1
     Then The lift schedule shows "5 110 [warm] 40%","5 135 [warm] 50%","3 160 [warm] 60%","5 205 75%","3 230 85%","1 255 95%"

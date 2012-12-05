@@ -18,6 +18,7 @@ When /^I tap the use template button$/ do
   button = displayed_lift_settings_page().find_elements(:class => 'x-button').select { |button| button.text() == "Use" }[0]
   button.click
 
+  sleep MainNavigation::DELAY
 end
 
 When /^I confirm the progression change$/ do
