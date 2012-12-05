@@ -19,7 +19,7 @@ class SenchaHelper
     }[0]
 
     lift_div.click
-    sleep 0.3
+    sleep 0.7
 
     if lift_div.displayed?
       lift_div.click
