@@ -1,12 +1,12 @@
 Ext.ns('biglifts.settings.controller', 'biglifts.views');
 biglifts.settings.controller.resetToDefaults = function () {
-    biglifts.stores.Settings.first().set(biglifts.defaults.settings);
-    biglifts.stores.Settings.sync();
+    biglifts.stores.w.Settings.first().set(biglifts.defaults.settings);
+    biglifts.stores.w.Settings.sync();
     Ext.getCmp('settings-form').setRecord(Ext.create('Settings', biglifts.defaults.settings));
 };
 
 biglifts.settings.controller.reloadForm = function () {
-    Ext.getCmp('settings-form').setRecord(biglifts.stores.Settings.first());
+    Ext.getCmp('settings-form').setRecord(biglifts.stores.w.Settings.first());
     Ext.getCmp('settings-form').hasBeenLoaded = true;
 };
 
@@ -20,15 +20,15 @@ biglifts.settings.controller.updateSettings = function (field, newValue, oldValu
         biglifts.stores.lifts.Lifts.adjustCycleIncreaseForKg();
     }
 
-    var settingsRecord = biglifts.stores.Settings.first();
+    var settingsRecord = biglifts.stores.w.Settings.first();
     var settingsFormValues = settingsForm.getValues();
     for (var property in settingsFormValues) {
         if (settingsRecord.get(property) !== settingsFormValues[property]) {
             settingsRecord.set(property, settingsFormValues[property]);
         }
     }
-    biglifts.stores.Settings.sync();
-    biglifts.stores.Settings.fireEvent("beforesync");
+    biglifts.stores.w.Settings.sync();
+    biglifts.stores.w.Settings.fireEvent("beforesync");
 
     biglifts.settings.lockPortrait(settingsRecord.get('lockPortrait'));
 };

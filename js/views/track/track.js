@@ -2,7 +2,7 @@
 Ext.ns('biglifts.views', 'biglifts.log');
 
 biglifts.log.formatDate = function (timestamp) {
-    return new Date(timestamp).toString(biglifts.stores.Settings.first().get('dateFormat'));
+    return new Date(timestamp).toString(biglifts.stores.w.Settings.first().get('dateFormat'));
 };
 
 Ext.define('biglifts.views.Log', {

@@ -48,7 +48,7 @@ Ext.define('biglifts.views.LiftTracking', {
                 cycle: data.cycle,
                 date: null,
                 timestamp: new Date().getTime(),
-                units: biglifts.stores.Settings.first().data.units
+                units: biglifts.stores.w.Settings.first().data.units
             });
 
         biglifts.stores.LiftLog.sync();
@@ -70,7 +70,7 @@ Ext.define('biglifts.views.LiftTracking', {
         var week = biglifts.liftSchedule.liftTemplate.getEffectiveWeek();
         var weight = formValues['weight'];
         var cycle = biglifts.stores.CurrentCycle.first().data.cycle;
-        var units = biglifts.stores.Settings.first().data.units;
+        var units = biglifts.stores.w.Settings.first().data.units;
 
         this.logLift({liftName: liftName, reps: reps, notes: notes, week: week, weight: weight, cycle: cycle, units: units, expectedReps: expectedReps});
     },

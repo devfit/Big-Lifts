@@ -64,7 +64,7 @@ Ext.define("PlateStore", {
         return _.isEqual(actualPlateWeights, comparisonPlates);
     },
     adjustPlatesForUnits:function () {
-        var units = biglifts.stores.Settings.first().get('units');
+        var units = biglifts.stores.w.Settings.first().get('units');
         if (units == 'kg' && this.platesAreDefault(this.DEFAULT_PLATES_LBS)) {
             this.removeAll();
             this.add(this.DEFAULT_PLATES_KG);
@@ -80,7 +80,7 @@ Ext.define("PlateStore", {
         model:'Plates',
         listeners:{
             load:function (store) {
-                biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.adjustPlatesForUnits, this));
+                biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.adjustPlatesForUnits, this));
 
                 if (store.getCount() === 0) {
                     store.add(this.DEFAULT_PLATES_LBS);

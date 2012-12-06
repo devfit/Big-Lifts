@@ -21,8 +21,8 @@ Ext.define("BarWeightStore", {
     DEFAULT_BAR_WEIGHT_KG:20.4,
     loadDefaultBarWeight:function () {
         var me = this;
-        util.withLoadedStore(biglifts.stores.Settings, function () {
-            var settings = biglifts.stores.Settings.first();
+        util.withLoadedStore(biglifts.stores.w.Settings, function () {
+            var settings = biglifts.stores.w.Settings.first();
             if (settings.get('units') === 'lbs') {
                 me.add({weight:me.DEFAULT_BAR_WEIGHT_LBS});
             }
@@ -59,6 +59,6 @@ Ext.define("BarWeightStore", {
 
 biglifts.stores.BarWeight = Ext.create('BarWeightStore');
 biglifts.stores.push(biglifts.stores.BarWeight);
-biglifts.stores.Settings.addListener('beforesync', function () {
+biglifts.stores.w.Settings.addListener('beforesync', function () {
     biglifts.stores.BarWeight.adjustPlatesForUnits(this.first().get('units'));
 });

@@ -10,6 +10,7 @@ src_files:
         - js/feature-toggles.js
         - js/util/graph/graph-util.js
         - js/util/backup/setup_file_or_local_loading.js
+        - js/util/backup/when-application-ready.js
         - js/util/weight-formatter.js
         - js/util/stores.js
         - js/util/components.js
@@ -33,7 +34,7 @@ src_files:
         - js/models/templates/template.js
         - js/models/templates/week_rotation.js
         - js/models/lift-completion.js
-        - js/models/settings.js
+        - js/models/531/settings.js
         - js/models/lift-log.js
         - js/models/lift-log-sort.js
         - js/models/rest-time.js

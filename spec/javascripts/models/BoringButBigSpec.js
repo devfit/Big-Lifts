@@ -10,7 +10,7 @@ describe("Boring But Big Model", function () {
 
         this.bbbPercentage = biglifts.stores.assistance.BoringButBigPercentage;
         this.bbbPercentage.load();
-        biglifts.stores.Settings.load();
+        biglifts.stores.w.Settings.load();
     });
 
     it("should default to a copy of each of the current big lifts", function () {

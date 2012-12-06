@@ -62,9 +62,9 @@ biglifts.log.emailExport.createCsvTransformer = function (nameMapper, valueMappe
 };
 
 biglifts.log.emailExport.saveUsedEmail = function (email) {
-    var settings = biglifts.stores.Settings.first();
+    var settings = biglifts.stores.w.Settings.first();
     settings.set('exportEmail', email);
-    biglifts.stores.Settings.sync();
+    biglifts.stores.w.Settings.sync();
 };
 biglifts.log.emailExport.ajaxEmailRequest = function (email, data) {
     biglifts.log.emailExport.saveUsedEmail(email);
@@ -91,7 +91,7 @@ biglifts.log.emailExport.ajaxEmailRequest = function (email, data) {
 };
 
 biglifts.log.emailExport.loadPreviousExportEmail = function () {
-    var settings = biglifts.stores.Settings.first();
+    var settings = biglifts.stores.w.Settings.first();
     Ext.getCmp('export-log').down('[name=email]').setValue(settings.get('exportEmail'));
 };
 

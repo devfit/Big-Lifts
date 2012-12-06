@@ -99,7 +99,7 @@ Ext.define("Biglifts.views.Custom", {
                             },
                             getUnits: function (values) {
                                 var weight = values.weight;
-                                return weight == 0 || weight == null ? "" : biglifts.stores.Settings.first().get('units');
+                                return weight == 0 || weight == null ? "" : biglifts.stores.w.Settings.first().get('units');
                             }
                         }),
                     listeners: {

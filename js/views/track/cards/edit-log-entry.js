@@ -34,13 +34,13 @@ Ext.define("biglifts.views.EditLogEntry", {
     },
     rebuildEditLogFieldset:function () {
         var me = this;
-        util.withLoadedStore(biglifts.stores.Settings, function () {
+        util.withLoadedStore(biglifts.stores.w.Settings, function () {
             me.editLogFieldset.removeAll(true);
             me.editLogFieldset.add([
                 {
                     id:'edit-log-date',
                     xtype:'datepickerfield',
-                    dateFormat:biglifts.stores.Settings.getExtDateFormat(),
+                    dateFormat:biglifts.stores.w.Settings.getExtDateFormat(),
                     label:'Date',
                     name:'timestamp',
                     labelWidth:'45%'
@@ -124,7 +124,7 @@ Ext.define("biglifts.views.EditLogEntry", {
 
                 biglifts.navigation.setBackFunction(Ext.bind(this.returnFromEditLogEntry, this));
                 if (!this._painted) {
-                    biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.rebuildEditLogFieldset, this));
+                    biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.rebuildEditLogFieldset, this));
                     Ext.get('edit-log-notes').addListener('tap', Ext.bind(this.editNotes, this));
                     this._painted = true;
                 }

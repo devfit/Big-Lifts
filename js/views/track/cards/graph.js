@@ -61,7 +61,7 @@ Ext.define('biglifts.LiftGraph', {
                     position:'bottom',
                     label:{
                         renderer:function (date) {
-                            var dateFormat = biglifts.stores.Settings.first().get('dateFormat');
+                            var dateFormat = biglifts.stores.w.Settings.first().get('dateFormat');
                             var datePieces = dateFormat.split("/");
                             var format = datePieces[0] + "/" + datePieces[1];
                             return date.toString(format);

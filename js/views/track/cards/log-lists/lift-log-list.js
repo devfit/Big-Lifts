@@ -36,7 +36,7 @@ Ext.define('biglifts.views.LiftLogList', {
 
                     biglifts.stores.LiftLog.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
                     biglifts.stores.LiftLogSort.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
-                    biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.refresh, this));
+                    biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.refresh, this));
                 }
             }
         },

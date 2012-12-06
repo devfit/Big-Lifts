@@ -59,7 +59,7 @@ biglifts.liftSchedule.liftTemplate.updateLiftValues = function () {
         return;
     }
 
-    var settings = biglifts.stores.Settings.first();
+    var settings = biglifts.stores.w.Settings.first();
     if (settings) {
         var showWarmupSets = settings.get('showWarmupSets');
         biglifts.liftSchedule.currentShowingMax = liftRecord.data.max;

@@ -1,6 +1,6 @@
 "use strict";
 function shouldRotateToOrientation(rotation) {
-    var settings = biglifts.stores.Settings.first();
+    var settings = biglifts.stores.w.Settings.first();
     if (typeof(settings) === "undefined") {
         return true;
     }

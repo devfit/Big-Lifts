@@ -22,7 +22,7 @@ Ext.define('biglifts.views.BarSetup', {
         var me = this;
         var fieldSet = me.down('#plates-setup-fieldset');
         if (fieldSet) {
-            var settings = biglifts.stores.Settings.first();
+            var settings = biglifts.stores.w.Settings.first();
             fieldSet.removeAll();
             biglifts.stores.Plates.each(function (r) {
                 fieldSet.add({

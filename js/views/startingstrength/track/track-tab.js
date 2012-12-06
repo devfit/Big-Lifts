@@ -24,7 +24,7 @@ Ext.define('biglifts.views.ss.Track', {
                         "<td width='23%' class='timestamp last'>{[this.convertTimestamp(values.timestamp)]}</td>" +
                         "</tr></tbody></table>", {
                         convertTimestamp:function (timestamp) {
-                            return new Date(timestamp).toString(biglifts.stores.Settings.first().get('dateFormat'));
+                            return new Date(timestamp).toString(biglifts.stores.w.Settings.first().get('dateFormat'));
                         }
                     })
                 });

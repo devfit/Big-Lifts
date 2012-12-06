@@ -15,7 +15,7 @@ Ext.define("Biglifts.views.MaxesForm", {
         }
     },
     updateTrainingPercentageDisplay:function () {
-        var trainingMaxPercentage = biglifts.stores.Settings.first().data['trainingMaxPercentage'];
+        var trainingMaxPercentage = biglifts.stores.w.Settings.first().data['trainingMaxPercentage'];
         var trainingMaxPercentageIndicator = Ext.get('training-max-percentage-indicator');
         if (trainingMaxPercentageIndicator) {
             trainingMaxPercentageIndicator.setHtml(trainingMaxPercentage);
@@ -51,7 +51,7 @@ Ext.define("Biglifts.views.MaxesForm", {
         });
     },
     createTrainingMaxesInput:function (record) {
-        var trainingMaxPercentage = biglifts.stores.Settings.first().data['trainingMaxPercentage'] / 100.0;
+        var trainingMaxPercentage = biglifts.stores.w.Settings.first().data['trainingMaxPercentage'] / 100.0;
         var trainingMax = util.roundNumber(trainingMaxPercentage * record.data.max, '0.5', 'normal');
         var liftProperty = record.data.propertyName;
         Ext.getCmp('training-maxes').add({
@@ -67,7 +67,7 @@ Ext.define("Biglifts.views.MaxesForm", {
             return;
         }
 
-        var settings = biglifts.stores.Settings.first();
+        var settings = biglifts.stores.w.Settings.first();
 
         var trainingMaxesPanel = Ext.getCmp('training-maxes-panel');
         if (settings.data['useTrainingMax']) {
@@ -129,8 +129,8 @@ Ext.define("Biglifts.views.MaxesForm", {
                 if (!this._painted) {
                     this._painted = true;
 
-                    biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.updateTrainingPercentageDisplay, this));
-                    biglifts.stores.Settings.addListener('beforesync', Ext.bind(this.showHideTrainingMaxes, this));
+                    biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.updateTrainingPercentageDisplay, this));
+                    biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.showHideTrainingMaxes, this));
                     biglifts.stores.Template.addListener('beforesync', Ext.bind(this.showHideMeetGoals, this));
                 }
             },
