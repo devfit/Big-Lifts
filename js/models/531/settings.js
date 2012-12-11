@@ -36,8 +36,9 @@ Ext.define("biglifts.models.w.SettingsStore", {
             this.sync();
         }
     },
-    lockPortrait: function (shouldLockPortrait) {
+    lockPortrait: function () {
         if (window.ScreenLock) {
+            var shouldLockPortrait = this.first().get('lockPortrait');
             window.ScreenLock.lockPortrait(shouldLockPortrait === 1);
         }
     },
@@ -56,7 +57,10 @@ Ext.define("biglifts.models.w.SettingsStore", {
         listeners: {
             load: function () {
                 this.setupDefaultSettings();
-                this.lockPortrait(this.first().get('lockPortrait'));
+                this.lockPortrait();
+            },
+            beforesync: function () {
+                this.lockPortrait();
             }
         }
     }

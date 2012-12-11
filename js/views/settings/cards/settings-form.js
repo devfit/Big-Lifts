@@ -29,8 +29,6 @@ biglifts.settings.controller.updateSettings = function (field, newValue, oldValu
     }
     biglifts.stores.w.Settings.sync();
     biglifts.stores.w.Settings.fireEvent("beforesync");
-
-    biglifts.settings.lockPortrait(settingsRecord.get('lockPortrait'));
 };
 
 biglifts.views.SettingsForm = {
