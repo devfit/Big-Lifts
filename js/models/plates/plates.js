@@ -64,7 +64,7 @@ Ext.define("PlateStore", {
         return _.isEqual(actualPlateWeights, comparisonPlates);
     },
     adjustPlatesForUnits:function () {
-        var units = biglifts.stores.w.Settings.first().get('units');
+        var units = biglifts.stores.GlobalSettings.getUnits();
         if (units == 'kg' && this.platesAreDefault(this.DEFAULT_PLATES_LBS)) {
             this.removeAll();
             this.add(this.DEFAULT_PLATES_KG);

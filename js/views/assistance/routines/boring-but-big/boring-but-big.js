@@ -78,7 +78,7 @@ Ext.define("biglifts.views.BoringButBig", {
     },
     formatUnits:function (values) {
         var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));
-        return weight > 0 ? biglifts.stores.w.Settings.first().get('units') : '';
+        return weight > 0 ? biglifts.stores.GlobalSettings.getUnits() : '';
     },
     formatWeight:function (values) {
         var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));

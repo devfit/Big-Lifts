@@ -22,13 +22,12 @@ Ext.define('biglifts.views.BarSetup', {
         var me = this;
         var fieldSet = me.down('#plates-setup-fieldset');
         if (fieldSet) {
-            var settings = biglifts.stores.w.Settings.first();
             fieldSet.removeAll();
             biglifts.stores.Plates.each(function (r) {
                 fieldSet.add({
                     name: r.get('weight') + me.PLATE_SUFFIX,
                     xtype: 'numberfield',
-                    label: r.get('weight') + settings.get('units'),
+                    label: r.get('weight') + biglifts.stores.GlobalSettings.getUnits(),
                     value: r.get('count')
                 });
             });
