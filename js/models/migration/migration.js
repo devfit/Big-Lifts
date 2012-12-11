@@ -1,27 +1,27 @@
 "use strict";
 Ext.define('Migration', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'klass', type:'string'},
-            {name:'done', type:'boolean'}
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'klass', type: 'string'},
+            {name: 'done', type: 'boolean'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'migration'
+        proxy: {
+            type: 'localstorage',
+            id: 'migration'
         }
     }
 });
 
 Ext.define('Migrations', {
-    extend:'Ext.data.Store',
-    MIGRATION_VALUES:[
-        {klass:'biglifts.migrations.ssNotification', done:false},
-        {klass:'biglifts.migrations.globalSettingsDefaults', done:false}
+    extend: 'Ext.data.Store',
+    MIGRATION_VALUES: [
+        {klass: 'biglifts.migrations.ssNotification', done: false},
+        {klass: 'biglifts.migrations.globalSettingsDefaults', done: false}
     ],
-    loadMissingMigrations:function () {
+    loadMissingMigrations: function () {
         var me = this;
         _.each(me.MIGRATION_VALUES, function (migration) {
             if (me.find('klass', migration.klass) === -1) {
@@ -30,10 +30,10 @@ Ext.define('Migrations', {
         });
         me.sync();
     },
-    config:{
-        model:'Migration',
-        listeners:{
-            load:function () {
+    config: {
+        model: 'Migration',
+        listeners: {
+            load: function () {
                 var me = this;
                 if (me.getCount() !== me.MIGRATION_VALUES.length) {
                     me.loadMissingMigrations();
