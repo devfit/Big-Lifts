@@ -7,9 +7,16 @@ Ext.define('biglifts.migrations.globalSettingsDefaults', {
             }
             else {
                 util.withLoadedStore(biglifts.stores.w.Settings, function () {
-                    var units = biglifts.stores.w.Settings.first().get('units');
-                    biglifts.stores.GlobalSettings.add({units: units});
-                    biglifts.stores.GlobalSettings.sync();
+                    var settings = biglifts.stores.w.Settings.first();
+                    if (settings) {
+                        var units = settings.get('units');
+                        biglifts.stores.GlobalSettings.add({units: units});
+                        biglifts.stores.GlobalSettings.sync();
+                    }
+                    else {
+                        biglifts.stores.GlobalSettings.add({units: 'lbs'});
+                        biglifts.stores.GlobalSettings.sync();
+                    }
                 });
             }
         });
