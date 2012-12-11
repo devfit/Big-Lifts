@@ -17,8 +17,18 @@ Ext.define('biglifts.models.GlobalSettings', {
 
 Ext.define("biglifts.models.GlobalSettingsStore", {
     extend: "Ext.data.Store",
-    getUnits: function(){
+    getUnits: function () {
         return this.first().get('units');
+    },
+    setupDefaultSettings: function () {
+        var DEFAULT_SETTINGS = {units: 'lbs'};
+        if( this.getCount() === 0 ){
+            this.add(DEFAULT_SETTINGS);
+        }
+        else {
+            this.first().set(DEFAULT_SETTINGS) ;
+        }
+        this.sync();
     },
     config: {
         model: 'biglifts.models.GlobalSettings'

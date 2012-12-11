@@ -2,13 +2,13 @@
 Ext.define('biglifts.views.SettingsForm', {
     extend: 'Ext.form.Panel',
     reloadForm: function () {
-        this.setValues(biglifts.stores.w.Settings.first().data);
+        this.setValues(biglifts.stores.w.Settings.getCombinedSettings());
         this.hasBeenLoaded = true;
     },
     resetToDefaults: function () {
-        biglifts.stores.w.Settings.first().set(biglifts.stores.w.Settings.DEFAULT_SETTINGS);
-        biglifts.stores.w.Settings.sync();
-        this.setValues(biglifts.stores.w.Settings.DEFAULT_SETTINGS);
+        biglifts.stores.w.Settings.setupDefaultSettings();
+        biglifts.stores.GlobalSettings.setupDefaultSettings();
+        this.setValues(biglifts.stores.w.Settings.getCombinedSettings());
     },
     updateSettings: function (field, newValue, oldValue) {
         var settingsForm = Ext.getCmp('settings-form');

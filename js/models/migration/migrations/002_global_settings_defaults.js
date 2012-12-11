@@ -2,8 +2,7 @@ Ext.define('biglifts.migrations.globalSettingsDefaults', {
     run: function () {
         util.withLoadedStore(biglifts.stores.Routine, function () {
             if (biglifts.stores.Routine.getCount() === 0) {
-                biglifts.stores.GlobalSettings.add({units: 'lbs'});
-                biglifts.stores.GlobalSettings.sync();
+                biglifts.stores.GlobalSettings.setupDefaultSettings();
             }
             else {
                 util.withLoadedStore(biglifts.stores.w.Settings, function () {
@@ -14,8 +13,7 @@ Ext.define('biglifts.migrations.globalSettingsDefaults', {
                         biglifts.stores.GlobalSettings.sync();
                     }
                     else {
-                        biglifts.stores.GlobalSettings.add({units: 'lbs'});
-                        biglifts.stores.GlobalSettings.sync();
+                        biglifts.stores.GlobalSettings.setupDefaultSettings();
                     }
                 });
             }

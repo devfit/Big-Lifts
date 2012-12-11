@@ -26,15 +26,23 @@ Ext.define('biglifts.models.w.Settings', {
 
 Ext.define("biglifts.models.w.SettingsStore", {
     extend: "Ext.data.Store",
+    getCombinedSettings: function () {
+        var myData = _.clone(this.first().data);
+        var globalData = _.clone(biglifts.stores.GlobalSettings.first().data);
+        return _.extend(myData, globalData);
+    },
     getExtDateFormat: function () {
         var dateFormat = this.first().get('dateFormat');
         return dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');
     },
     setupDefaultSettings: function () {
-        if (this.getCount() == 0) {
+        if( this.getCount() === 0 ){
             this.add(this.DEFAULT_SETTINGS);
-            this.sync();
         }
+        else {
+            this.first().set(this.DEFAULT_SETTINGS) ;
+        }
+        this.sync();
     },
     lockPortrait: function () {
         if (window.ScreenLock) {
@@ -55,7 +63,9 @@ Ext.define("biglifts.models.w.SettingsStore", {
         model: 'biglifts.models.w.Settings',
         listeners: {
             load: function () {
-                this.setupDefaultSettings();
+                if (this.getCount() === 0) {
+                    this.setupDefaultSettings();
+                }
                 this.lockPortrait();
             },
             beforesync: function () {
