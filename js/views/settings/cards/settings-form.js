@@ -21,14 +21,22 @@ Ext.define('biglifts.views.SettingsForm', {
         }
 
         var settingsRecord = biglifts.stores.w.Settings.first();
+        var globalSettings = biglifts.stores.GlobalSettings.first();
         var settingsFormValues = settingsForm.getValues();
         for (var property in settingsFormValues) {
-            if (settingsRecord.get(property) !== settingsFormValues[property]) {
+            if (biglifts.stores.GlobalSettings.hasField(property)) {
+                globalSettings.set(property, settingsFormValues[property]);
+            }
+            if (biglifts.stores.w.Settings.hasField(property)) {
                 settingsRecord.set(property, settingsFormValues[property]);
             }
         }
+
         biglifts.stores.w.Settings.sync();
+        biglifts.stores.GlobalSettings.sync();
+
         biglifts.stores.w.Settings.fireEvent("beforesync");
+        biglifts.stores.GlobalSettings.fireEvent('beforesync');
     },
     config: {
         id: 'settings-form',
@@ -106,7 +114,9 @@ Ext.define('biglifts.views.SettingsForm', {
                         handler: Ext.bind(me.resetToDefaults, me)
                     }
                 ]);
-                me.reloadForm();
+            },
+            painted: function () {
+                this.reloadForm();
             }
         }
     }

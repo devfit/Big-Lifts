@@ -34,6 +34,7 @@ src_files:
         - js/models/templates/template.js
         - js/models/templates/week_rotation.js
         - js/models/lift-completion.js
+        - js/models/abstract-settings-store.js
         - js/models/531/settings.js
         - js/models/global-settings.js
         - js/models/lift-log.js

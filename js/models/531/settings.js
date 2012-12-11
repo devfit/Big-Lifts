@@ -25,7 +25,7 @@ Ext.define('biglifts.models.w.Settings', {
 });
 
 Ext.define("biglifts.models.w.SettingsStore", {
-    extend: "Ext.data.Store",
+    extend: "biglifts.stores.AbstractSettingsStore",
     getCombinedSettings: function () {
         var myData = _.clone(this.first().data);
         var globalData = _.clone(biglifts.stores.GlobalSettings.first().data);
