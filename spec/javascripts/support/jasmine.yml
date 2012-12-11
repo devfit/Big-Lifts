@@ -35,6 +35,7 @@ src_files:
         - js/models/templates/week_rotation.js
         - js/models/lift-completion.js
         - js/models/531/settings.js
+        - js/models/global-settings.js
         - js/models/lift-log.js
         - js/models/lift-log-sort.js
         - js/models/rest-time.js
@@ -48,6 +49,7 @@ src_files:
         - js/models/assistance/triumvirate.js
         - js/models/assistance/bodyweight.js
         - js/models/migration/migration.js
+        - js/models/migration/migrations/002_global_settings_defaults.js
         - js/models/startingstrength/lift.js
         - js/models/startingstrength/workout.js
         - js/models/startingstrength/log.js

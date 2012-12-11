@@ -1,7 +1,7 @@
 "use strict";
-Ext.ns('biglifts.defaults', 'biglifts.stores.recovery', 'biglifts.settings.options', 'biglifts.stores.w');
+Ext.ns('biglifts.settings.options', 'biglifts.stores.w');
 
-Ext.define('Settings', {
+Ext.define('biglifts.models.w.Settings', {
     extend: 'Ext.data.Model',
     config: {
         identifier: 'uuid',
@@ -24,49 +24,44 @@ Ext.define('Settings', {
     }
 });
 
-biglifts.defaults.settings = {
-    'showWarmupSets': 1,
-    units: 'lbs',
-    'roundingValue': '5',
-    'roundingType': 'normal',
-    'useTrainingMax': 1,
-    'trainingMaxPercentage': 90,
-    'exportEmail': '',
-    'lockPortrait': false
-};
-
-biglifts.stores.recovery.setupDefaultSettings = function () {
-    util.withNoFilters(biglifts.stores.w.Settings, function () {
-        if (biglifts.stores.w.Settings.getCount() == 0) {
-            biglifts.stores.w.Settings.add(biglifts.defaults.settings);
-            biglifts.stores.w.Settings.sync();
-        }
-    });
-};
-
-biglifts.settings.lockPortrait = function (shouldLockPortrait) {
-    if (window.ScreenLock) {
-        window.ScreenLock.lockPortrait(shouldLockPortrait === 1);
-    }
-};
-
-Ext.define("SettingsStore", {
+Ext.define("biglifts.models.w.SettingsStore", {
     extend: "Ext.data.Store",
     getExtDateFormat: function () {
         var dateFormat = this.first().get('dateFormat');
         return dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');
     },
+    setupDefaultSettings: function () {
+        if (this.getCount() == 0) {
+            this.add(this.DEFAULT_SETTINGS);
+            this.sync();
+        }
+    },
+    lockPortrait: function (shouldLockPortrait) {
+        if (window.ScreenLock) {
+            window.ScreenLock.lockPortrait(shouldLockPortrait === 1);
+        }
+    },
+    DEFAULT_SETTINGS: {
+        'showWarmupSets': 1,
+        units: 'lbs',
+        'roundingValue': '5',
+        'roundingType': 'normal',
+        'useTrainingMax': 1,
+        'trainingMaxPercentage': 90,
+        'exportEmail': '',
+        'lockPortrait': false
+    },
     config: {
-        model: 'Settings',
+        model: 'biglifts.models.w.Settings',
         listeners: {
             load: function () {
-                biglifts.stores.recovery.setupDefaultSettings();
-                biglifts.settings.lockPortrait(this.first().get('lockPortrait'));
+                this.setupDefaultSettings();
+                this.lockPortrait(this.first().get('lockPortrait'));
             }
         }
     }
 });
-biglifts.stores.w.Settings = Ext.create('SettingsStore');
+biglifts.stores.w.Settings = Ext.create('biglifts.models.w.SettingsStore');
 biglifts.stores.push(biglifts.stores.w.Settings);
 
 biglifts.settings.options.units = [

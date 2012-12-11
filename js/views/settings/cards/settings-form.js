@@ -1,8 +1,8 @@
 Ext.ns('biglifts.settings.controller', 'biglifts.views');
 biglifts.settings.controller.resetToDefaults = function () {
-    biglifts.stores.w.Settings.first().set(biglifts.defaults.settings);
+    biglifts.stores.w.Settings.first().set(biglifts.stores.w.Settings.DEFAULT_SETTINGS);
     biglifts.stores.w.Settings.sync();
-    Ext.getCmp('settings-form').setRecord(Ext.create('Settings', biglifts.defaults.settings));
+    Ext.getCmp('settings-form').setRecord(Ext.create('biglifts.models.w.Settings', biglifts.stores.w.Settings.DEFAULT_SETTINGS));
 };
 
 biglifts.settings.controller.reloadForm = function () {
@@ -34,80 +34,80 @@ biglifts.settings.controller.updateSettings = function (field, newValue, oldValu
 };
 
 biglifts.views.SettingsForm = {
-    xtype:'formpanel',
-    id:'settings-form',
-    listeners:{
-        initialize:biglifts.settings.controller.reloadForm
+    xtype: 'formpanel',
+    id: 'settings-form',
+    listeners: {
+        initialize: biglifts.settings.controller.reloadForm
     },
-    scroll:'vertical',
-    items:[
+    scroll: 'vertical',
+    items: [
         {
-            xtype:'fieldset',
-            style:'margin-top: 0; margin-bottom: 0',
-            defaults:{
-                labelWidth:'50%',
-                listeners:{
-                    change:biglifts.settings.controller.updateSettings
+            xtype: 'fieldset',
+            style: 'margin-top: 0; margin-bottom: 0',
+            defaults: {
+                labelWidth: '50%',
+                listeners: {
+                    change: biglifts.settings.controller.updateSettings
                 }
             },
-            items:[
+            items: [
                 {
-                    xtype:'togglefield',
-                    name:'showWarmupSets',
-                    label:"Show warmup"
+                    xtype: 'togglefield',
+                    name: 'showWarmupSets',
+                    label: "Show warmup"
                 },
                 {
-                    xtype:'selectfield',
-                    name:'units',
-                    label:"Units",
-                    options:biglifts.settings.options.units
+                    xtype: 'selectfield',
+                    name: 'units',
+                    label: "Units",
+                    options: biglifts.settings.options.units
                 },
                 {
-                    xtype:'selectfield',
-                    name:'roundingValue',
-                    label:'Round to',
-                    options:biglifts.settings.options.roundingValues
+                    xtype: 'selectfield',
+                    name: 'roundingValue',
+                    label: 'Round to',
+                    options: biglifts.settings.options.roundingValues
                 },
                 {
-                    xtype:'selectfield',
-                    name:'roundingType',
-                    label:'Rounding',
-                    options:biglifts.settings.options.roundingType
+                    xtype: 'selectfield',
+                    name: 'roundingType',
+                    label: 'Rounding',
+                    options: biglifts.settings.options.roundingType
                 },
                 {
-                    xtype:'togglefield',
-                    name:'useTrainingMax',
-                    label:'Use training max',
-                    id:'use-training-max-toggle'
+                    xtype: 'togglefield',
+                    name: 'useTrainingMax',
+                    label: 'Use training max',
+                    id: 'use-training-max-toggle'
                 },
                 {
-                    xtype:'numberfield',
-                    name:'trainingMaxPercentage',
-                    label:'Training %'
+                    xtype: 'numberfield',
+                    name: 'trainingMaxPercentage',
+                    label: 'Training %'
                 },
                 {
-                    xtype:'togglefield',
-                    name:'lockPortrait',
-                    label:'Lock portrait'
+                    xtype: 'togglefield',
+                    name: 'lockPortrait',
+                    label: 'Lock portrait'
                 },
                 {
-                    xtype:'selectfield',
-                    name:'dateFormat',
-                    label:'Date Format',
-                    labelWidth:'39%',
-                    options:biglifts.settings.options.dateFormats
+                    xtype: 'selectfield',
+                    name: 'dateFormat',
+                    label: 'Date Format',
+                    labelWidth: '39%',
+                    options: biglifts.settings.options.dateFormats
                 }
             ]
         },
         {
-            xtype:'spacer',
-            height:5
+            xtype: 'spacer',
+            height: 5
         },
         {
-            xtype:'button',
-            ui:'decline',
-            text:'Reset',
-            handler:biglifts.settings.controller.resetToDefaults
+            xtype: 'button',
+            ui: 'decline',
+            text: 'Reset',
+            handler: biglifts.settings.controller.resetToDefaults
         }
     ]
 };
