@@ -8,7 +8,7 @@ biglifts.ss.more.getTextForValues = function (values) {
 Ext.define('biglifts.views.ss.MoreInfoList', {
     extend: 'biglifts.views.MoreInfoList',
     showSettings: function () {
-        Ext.getCmp('ss-more').setActiveItem(Ext.getCmp('ss-settings'));
+        Ext.getCmp('ss-more').setActiveItem(Ext.getCmp('ss-settings-form'));
     },
     config: {
         id: 'ss-more-info-list',
@@ -25,7 +25,7 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
                 ];
 
                 this.listItems.push({model: {index: listIndex++, text: '<span class="text">Settings</span><span class="disclosure"></span>'},
-                    handler: Ext.bind(this.showSettings(), this)});
+                    handler: Ext.bind(this.showSettings, this)});
 
                 this.listItems.push({model: {index: listIndex++, text: '<span class="text">Feedback...</span><span class="disclosure"></span>'},
                     handler: Ext.bind(this.feedback, this)});

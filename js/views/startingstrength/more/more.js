@@ -9,6 +9,7 @@ Ext.define('biglifts.views.ss.More', {
         listeners: {
             initialize: function () {
                 this.add(Ext.create('biglifts.views.ss.MoreInfoList'));
+                this.add(Ext.create('biglifts.views.ss.SettingsForm'));
                 this.setActiveItem(0);
             }
         }
