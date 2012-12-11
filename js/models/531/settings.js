@@ -44,7 +44,6 @@ Ext.define("biglifts.models.w.SettingsStore", {
     },
     DEFAULT_SETTINGS: {
         'showWarmupSets': 1,
-        units: 'lbs',
         'roundingValue': '5',
         'roundingType': 'normal',
         'useTrainingMax': 1,

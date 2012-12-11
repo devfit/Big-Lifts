@@ -1,35 +1,37 @@
 "use strict";
-Ext.ns('biglifts.views', 'biglifts.controller.settings');
-
-biglifts.controller.settings.backToMore = function () {
-    Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list'));
-};
-
-biglifts.views.Settings = {
-    xtype:'panel',
-    id:'settings',
-    iconCls:'settings',
-    layout:'card',
-    scroll:'vertical',
-    listeners:{
-        painted:function () {
-            biglifts.navigation.setBackFunction(biglifts.controller.settings.backToMore);
-        }
+Ext.define('biglifts.views.Settings', {
+    extend: "Ext.Panel",
+    backToMore: function () {
+        Ext.getCmp('more').setActiveItem(Ext.getCmp('more-info-list'));
     },
-    items:[
-        {
-            xtype:'toolbar',
-            docked:'top',
-            title:'Settings',
-            items:[
-                {
-                    xtype:'button',
-                    text:'Back',
-                    ui:'back',
-                    handler:biglifts.controller.settings.backToMore
-                }
-            ]
-        },
-        biglifts.views.SettingsForm
-    ]
-};
+    config: {
+        id: 'settings',
+        iconCls: 'settings',
+        layout: 'card',
+        scroll: 'vertical',
+        listeners: {
+            initialize: function () {
+                var me = this;
+                me.add([
+                    {
+                        xtype: 'toolbar',
+                        docked: 'top',
+                        title: 'Settings',
+                        items: [
+                            {
+                                xtype: 'button',
+                                text: 'Back',
+                                ui: 'back',
+                                handler: Ext.bind(me.backToMore, me)
+                            }
+                        ]
+                    },
+                    Ext.create('biglifts.views.SettingsForm')
+                ]);
+            },
+            painted: function () {
+                biglifts.navigation.setBackFunction(Ext.bind(this.backToMore, this));
+            }
+        }
+    }
+});
