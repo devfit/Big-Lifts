@@ -31,8 +31,9 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
         if (window.DateFormatFinder) {
             callback(DateFormatFinder.getDateFormat());
         }
-
-        callback('MM/dd/yyyy');
+        else {
+            callback('MM/dd/yyyy');
+        }
     },
     setupDefaultSettings: function () {
         var me = this;
@@ -47,16 +48,6 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
             me.first().set(DEFAULT_SETTINGS);
         }
         me.sync();
-
-        util.whenApplicationReady(function () {
-            me.getSystemDateFormat(function (format) {
-                if (!biglifts.DEBUG) {
-                    alert(format);
-                }
-                me.first().set('dateFormat', format);
-                me.sync();
-            });
-        });
     },
     config: {
         model: 'biglifts.models.GlobalSettings',
@@ -65,6 +56,15 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
                 if (this.getCount() === 0) {
                     this.setupDefaultSettings();
                 }
+
+                var me = this;
+                util.whenApplicationReady(function () {
+                    alert("Application ready");
+                    me.getSystemDateFormat(function (format) {
+                        me.first().set('dateFormat', format);
+                        me.sync();
+                    });
+                });
             }
         }
     }

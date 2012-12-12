@@ -26,15 +26,4 @@ describe("Global Settings Defaults Migration", function () {
 
         expect(this.settings.getUnits()).toEqual('test');
     });
-
-    it("should default to lbs if there is a routine and no existing 531 settings", function () {
-        this.routines.add({name: "5/3/1"});
-        this.routines.sync();
-
-        this.migration.run();
-        this.routines.fireEvent('load');
-        this.settings531.fireEvent('load');
-
-        expect(this.settings.getUnits()).toEqual('lbs');
-    });
 });

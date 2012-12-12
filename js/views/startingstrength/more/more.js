@@ -7,6 +7,9 @@ Ext.define('biglifts.views.ss.More', {
         iconCls: 'more',
         layout: 'card',
         listeners: {
+            painted: function () {
+                biglifts.navigation.unbindBackEvent();
+            },
             initialize: function () {
                 this.add(Ext.create('biglifts.views.ss.MoreInfoList'));
                 this.add(Ext.create('biglifts.views.ss.SettingsForm'));

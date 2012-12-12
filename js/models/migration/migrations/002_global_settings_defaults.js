@@ -12,9 +12,6 @@ Ext.define('biglifts.migrations.globalSettingsDefaults', {
                     biglifts.stores.GlobalSettings.add({units: units});
                     biglifts.stores.GlobalSettings.sync();
                 }
-                else {
-                    biglifts.stores.GlobalSettings.setupDefaultSettings();
-                }
             });
         });
     }
