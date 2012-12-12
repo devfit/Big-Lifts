@@ -37,3 +37,7 @@ end
 When /^I wait for the animation$/ do
   sleep MainNavigation::DELAY
 end
+
+When /^I set select "([^"]+)" to "([^"]+)"/ do |name, value|
+  select_combobox @driver.find_elements(:name => 'units').select { |input| input.displayed? }[0], value
+end

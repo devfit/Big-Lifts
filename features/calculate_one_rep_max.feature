@@ -6,7 +6,7 @@ Feature: One rep max calculator
     And I set weight to <weight> and reps to <reps>
     And I select use for <lift>
     Then I am taken to the maxes page
-    And The max for <lift> is set to <estimate>
+    And The "<lift>" input is "<estimate>"
 
   Scenarios: use one-rep calculations
     | weight | reps | lift     | estimate |

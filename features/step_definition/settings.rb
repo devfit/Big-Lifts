@@ -17,11 +17,6 @@ When /^I set the training percentage to (\d+)$/ do |percentage|
 
 end
 
-When /^I set units to kg$/ do
-  settings_form = @driver.find_element(:id => 'settings-form')
-  select_combobox settings_form.find_element(:name => 'units'), 'kg'
-end
-
 Then /^The training percentage shows (\d+)$/ do |percentage|
   training_percentage_text = @driver.find_element(:id => 'training-max-percentage-indicator').text
   training_percentage_text.include?(percentage).should be_true

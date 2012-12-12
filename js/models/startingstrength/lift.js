@@ -74,13 +74,20 @@ Ext.define('biglifts.models.startingstrength.LiftStore', {
             increase: 2
         }
     ],
-    changeUnitsTo: function (units) {
+    adjustUnits: function () {
         var me = this;
-        var newLifts = units === "lbs" ? this.DEFAULT_LIFTS_LB : this.DEFAULT_LIFTS_KG;
-        _.each(newLifts, function (lift) {
-            me.findRecord('name', lift.name).set('increase', lift.increase);
+
+        util.withLoadedStore(biglifts.stores.GlobalSettings, function () {
+            var units = biglifts.stores.GlobalSettings.getUnits();
+            var newLifts = units === "lbs" ? me.DEFAULT_LIFTS_LB : me.DEFAULT_LIFTS_KG;
+            _.each(newLifts, function (lift) {
+                var record = me.findRecord('name', lift.name);
+                if (record) {
+                    record.set('increase', lift.increase);
+                }
+            });
+            me.sync();
         });
-        me.sync();
     },
     config: {
         model: 'biglifts.models.startingstrength.Lift',
@@ -88,7 +95,7 @@ Ext.define('biglifts.models.startingstrength.LiftStore', {
             load: function () {
                 var me = this;
                 if (me.getCount() === 0) {
-                    util.withLoadedStoreAndMigrations(biglifts.stores.GlobalSettings, function () {
+                    util.withLoadedStore(biglifts.stores.GlobalSettings, function () {
                         if (biglifts.stores.GlobalSettings.getUnits() === 'lbs') {
                             me.add(me.DEFAULT_LIFTS_LB);
                             me.sync();
@@ -112,3 +119,7 @@ Ext.define('biglifts.models.startingstrength.LiftStore', {
 
 biglifts.stores.ss.Lifts = Ext.create('biglifts.models.startingstrength.LiftStore');
 biglifts.stores.push(biglifts.stores.ss.Lifts);
+
+util.whenApplicationReady(function () {
+    biglifts.stores.GlobalSettings.addListener('beforesync', biglifts.stores.ss.Lifts.adjustUnits, biglifts.stores.ss.Lifts);
+});

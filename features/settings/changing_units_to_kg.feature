@@ -24,7 +24,7 @@ Feature: Adjusting the weights to kg
     And I tap the "Done" button
 
     And I navigate to the lift editor
-    Then The max for Squat is set to 305
-    Then The max for Deadlift is set to 305
-    Then The max for Press is set to 102.5
-    Then The max for Bench is set to 102.5
+    Then The "Squat" input is "305"
+    Then The "Deadlift" input is "305"
+    Then The "Press" input is "102.5"
+    Then The "Bench" input is "102.5"

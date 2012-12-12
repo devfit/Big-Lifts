@@ -31,13 +31,3 @@ end
 Then /^I am taken to the maxes page$/ do
   @driver.find_element(:id => 'maxes-form').displayed?.should be_true
 end
-
-Then /^The max for (\w+) is set to ([\d\.]+)$/ do |lift, max|
-  actual_value = @driver.find_elements(:name => lift.downcase, :tag_name => 'input').select {
-      |input| input.displayed?
-  }[0].attribute('value')
-  actual_value.should == max
-end
-
-
-
