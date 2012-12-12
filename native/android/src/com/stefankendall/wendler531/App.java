@@ -16,6 +16,7 @@ public class App extends DroidGap {
         appView.addJavascriptInterface(new ScreenLockingInterface(this), "ScreenLock");
         appView.addJavascriptInterface(new AudioInfo(this), "AudioInfo");
         appView.addJavascriptInterface(new Alert(this.getContext()), "Alert");
+        appView.addJavascriptInterface(new DateFormatFinder(this.getContext()), "DateFormatFinder");
 
         super.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         super.loadUrl("file:///android_asset/www/index.html");

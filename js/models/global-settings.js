@@ -6,7 +6,8 @@ Ext.define('biglifts.models.GlobalSettings', {
         identifier: 'uuid',
         fields: [
             {name: 'id', type: 'string'},
-            {name: 'units', type: 'string'}
+            {name: 'units', type: 'string'},
+            {name: 'dateFormat', type: 'string'}
         ],
         proxy: {
             type: 'localstorage',
@@ -20,15 +21,42 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
     getUnits: function () {
         return this.first().get('units');
     },
+    getExtDateFormat: function () {
+        return this.getDateFormat().toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');
+    },
+    getDateFormat: function () {
+        return this.first().get('dateFormat');
+    },
+    getSystemDateFormat: function (callback) {
+        if (window.DateFormatFinder) {
+            callback(DateFormatFinder.getDateFormat());
+        }
+
+        callback('MM/dd/yyyy');
+    },
     setupDefaultSettings: function () {
-        var DEFAULT_SETTINGS = {units: 'lbs'};
-        if (this.getCount() === 0) {
-            this.add(DEFAULT_SETTINGS);
+        var me = this;
+        var DEFAULT_SETTINGS = {
+            units: 'lbs'
+        };
+
+        if (me.getCount() === 0) {
+            me.add(DEFAULT_SETTINGS);
         }
         else {
-            this.first().set(DEFAULT_SETTINGS);
+            me.first().set(DEFAULT_SETTINGS);
         }
-        this.sync();
+        me.sync();
+
+        util.whenApplicationReady(function () {
+            me.getSystemDateFormat(function (format) {
+                if (!biglifts.DEBUG) {
+                    alert(format);
+                }
+                me.first().set('dateFormat', format);
+                me.sync();
+            });
+        });
     },
     config: {
         model: 'biglifts.models.GlobalSettings',

@@ -40,7 +40,7 @@ Ext.define("biglifts.views.EditLogEntry", {
                 {
                     id:'edit-log-date',
                     xtype:'datepickerfield',
-                    dateFormat:biglifts.stores.w.Settings.getExtDateFormat(),
+                    dateFormat:biglifts.stores.GlobalSettings.getExtDateFormat(),
                     label:'Date',
                     name:'timestamp',
                     labelWidth:'45%'

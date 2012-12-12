@@ -14,12 +14,6 @@ describe("Global Settings Defaults Migration", function () {
         this.migration = Ext.create('biglifts.migrations.globalSettingsDefaults');
     });
 
-    it("should default to units lbs if no routines have been loaded", function () {
-        this.migration.run();
-        this.routines.fireEvent('load');
-        expect(this.settings.getUnits()).toEqual('lbs');
-    });
-
     it("should copy 5/3/1 settings if they exist and a routine is loaded", function () {
         this.settings531.add({units: 'test'});
         this.settings531.sync();

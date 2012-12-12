@@ -19,7 +19,8 @@ Ext.define('Migrations', {
     extend: 'Ext.data.Store',
     MIGRATION_VALUES: [
         {klass: 'biglifts.migrations.ssNotification', done: false},
-        {klass: 'biglifts.migrations.globalSettingsDefaults', done: false}
+        {klass: 'biglifts.migrations.globalSettingsDefaults', done: false},
+        {klass: 'biglifts.migrations.dateFormatFinder', done: false}
     ],
     loadMissingMigrations: function () {
         var me = this;

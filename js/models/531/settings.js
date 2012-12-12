@@ -31,10 +31,6 @@ Ext.define("biglifts.models.w.SettingsStore", {
         var globalData = _.clone(biglifts.stores.GlobalSettings.first().data);
         return _.extend(myData, globalData);
     },
-    getExtDateFormat: function () {
-        var dateFormat = this.first().get('dateFormat');
-        return dateFormat.toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');
-    },
     setupDefaultSettings: function () {
         if( this.getCount() === 0 ){
             this.add(this.DEFAULT_SETTINGS);

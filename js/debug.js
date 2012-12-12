@@ -38,4 +38,5 @@ if (Ext.os.is.Linux || Ext.os.is.MacOS) {
     }
 
     biglifts.loadingFromFile = false;
+    biglifts.DEBUG = true;
 }
