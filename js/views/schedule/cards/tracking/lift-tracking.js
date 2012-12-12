@@ -48,7 +48,7 @@ Ext.define('biglifts.views.LiftTracking', {
                 cycle: data.cycle,
                 date: null,
                 timestamp: new Date().getTime(),
-                units: biglifts.stores.w.Settings.first().data.units
+                units: biglifts.stores.GlobalSettings.getUnits()
             });
 
         biglifts.stores.LiftLog.sync();

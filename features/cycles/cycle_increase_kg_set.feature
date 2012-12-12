@@ -11,7 +11,7 @@ Feature: Cycle increase is adjusted for kg
     When I set the bench max to 100
 
     When I navigate to the settings page
-    And I set units to kg
+    And I set select "units" to "kg"
 
     When I navigate to the lift schedule
     And I click the increase cycle button
