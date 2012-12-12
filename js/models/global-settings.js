@@ -31,7 +31,14 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
         this.sync();
     },
     config: {
-        model: 'biglifts.models.GlobalSettings'
+        model: 'biglifts.models.GlobalSettings',
+        listeners: {
+            load: function () {
+                if (this.getCount() === 0) {
+                    this.setupDefaultSettings();
+                }
+            }
+        }
     }
 });
 

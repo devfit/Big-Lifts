@@ -50,6 +50,7 @@ src_files:
         - js/models/assistance/triumvirate.js
         - js/models/assistance/bodyweight.js
         - js/models/migration/migration.js
+        - js/models/migration/migrations/001_starting_strength_notification.js
         - js/models/migration/migrations/002_global_settings_defaults.js
         - js/models/startingstrength/lift.js
         - js/models/startingstrength/workout.js

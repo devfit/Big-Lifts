@@ -10,7 +10,7 @@ describe("Starting Strength workout", function () {
         expect(this.workoutStore.getCount()).toEqual(6);
         this.workoutStore.filter('name', 'A');
         expect(this.workoutStore.getCount()).toEqual(3);
-        this.workoutStore.filter('name','B');
+        this.workoutStore.filter('name', 'B');
         expect(this.workoutStore.getCount()).toEqual(3);
     });
 });
