@@ -3,7 +3,6 @@
 @implementation Alarm
 
 - (void)alarm:(CDVInvokedUrlCommand *)command {
-
     NSString *soundPath = [[NSBundle mainBundle] pathForResource:@"alert" ofType:@"wav"];
     NSURL *url = [NSURL fileURLWithPath:soundPath];
     

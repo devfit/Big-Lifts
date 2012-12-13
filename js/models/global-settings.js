@@ -28,11 +28,16 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
         return this.first().get('dateFormat');
     },
     getSystemDateFormat: function (callback) {
-        if (window.DateFormatFinder) {
+        if (biglifts.DEBUG) {
+            callback('MM/dd/yyyy');
+        }
+        else if (window.DateFormatFinder) {
             callback(DateFormatFinder.getDateFormat());
         }
         else {
-            callback('MM/dd/yyyy');
+            cordova.exec(callback, function () {
+                callback('MM/dd/yyyy');
+            }, "DateFormatFinder", "getDateFormat", []);
         }
     },
     setupDefaultSettings: function () {
@@ -59,7 +64,6 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
 
                 var me = this;
                 util.whenApplicationReady(function () {
-                    alert("Application ready");
                     me.getSystemDateFormat(function (format) {
                         me.first().set('dateFormat', format);
                         me.sync();

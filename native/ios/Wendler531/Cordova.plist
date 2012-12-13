@@ -30,6 +30,8 @@
 	<dict>
 		<key>Alarm</key>
 		<string>Alarm</string>
+        <key>DateFormatFinder</key>
+        <string>DateFormatFinder</string>
 		<key>Device</key>
 		<string>CDVDevice</string>
 		<key>Logger</key>

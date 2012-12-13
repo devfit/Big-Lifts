@@ -18,10 +18,6 @@ Ext.define('biglifts.views.ss.SettingsForm', {
             return;
         }
 
-        if (oldValue === 'lbs' && newValue === 'kg') {
-            //TODO
-        }
-
         var globalSettings = biglifts.stores.GlobalSettings.first();
         var settingsFormValues = settingsForm.getValues();
         for (var property in settingsFormValues) {

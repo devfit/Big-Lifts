@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		020F8593167935DA00730E63 /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 020F8592167935DA00730E63 /* SenTestingKit.framework */; };
+		020F8594167935DA00730E63 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
+		020F8595167935DA00730E63 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
+		020F859B167935DA00730E63 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 020F8599167935DA00730E63 /* InfoPlist.strings */; };
+		020F85A51679362E00730E63 /* DateFormatFinderTestCase.m in Sources */ = {isa = PBXBuildFile; fileRef = 020F85A41679362E00730E63 /* DateFormatFinderTestCase.m */; };
 		029407D6164B2F07007739B6 /* icon57.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407D5164B2F07007739B6 /* icon57.png */; };
 		029407D8164B2F15007739B6 /* icon114.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407D7164B2F15007739B6 /* icon114.png */; };
 		029407D9164B2F39007739B6 /* icon57.png in Resources */ = {isa = PBXBuildFile; fileRef = 029407D5164B2F07007739B6 /* icon57.png */; };
@@ -85,6 +90,7 @@
 		30A0434914DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434614DC770100060A13 /* Localizable.strings */; };
 		30E1352710E2C1420031B30D /* Cordova.plist in Resources */ = {isa = PBXBuildFile; fileRef = 30E1352610E2C1420031B30D /* Cordova.plist */; };
 		30E5649213A7FCAF007403D8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E5649113A7FCAF007403D8 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
+		545905F6F247CD9688BD3463 /* DateFormatFinder.m in Sources */ = {isa = PBXBuildFile; fileRef = 545908E0922A26D7B01656B7 /* DateFormatFinder.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -94,6 +100,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = D2AAC07D0554694100DB518D;
 			remoteInfo = CordovaLib;
+		};
+		02CCA97A1679398C00388700 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 29B97313FDCFA39411CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 1D6058900D05DD3D006BFB54;
+			remoteInfo = "Big Lifts";
 		};
 		301BF534109A57CC0062928A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -112,6 +125,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		020F8591167935DA00730E63 /* UnitTests.octest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UnitTests.octest; sourceTree = BUILT_PRODUCTS_DIR; };
+		020F8592167935DA00730E63 /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
+		020F8598167935DA00730E63 /* UnitTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UnitTests-Info.plist"; sourceTree = "<group>"; };
+		020F859A167935DA00730E63 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		020F859F167935DA00730E63 /* UnitTests-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UnitTests-Prefix.pch"; sourceTree = "<group>"; };
+		020F85A31679362E00730E63 /* DateFormatFinderTestCase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateFormatFinderTestCase.h; sourceTree = "<group>"; };
+		020F85A41679362E00730E63 /* DateFormatFinderTestCase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateFormatFinderTestCase.m; sourceTree = "<group>"; };
 		029407D5164B2F07007739B6 /* icon57.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon57.png; sourceTree = "<group>"; };
 		029407D7164B2F15007739B6 /* icon114.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon114.png; sourceTree = "<group>"; };
 		029407DB164B2FA5007739B6 /* icon72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon72.png; sourceTree = "<group>"; };
@@ -159,10 +179,22 @@
 		30E1352610E2C1420031B30D /* Cordova.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Cordova.plist; path = ../Cordova.plist; sourceTree = "<group>"; };
 		30E5649113A7FCAF007403D8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* Big Lifts-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Big Lifts-Prefix.pch"; sourceTree = "<group>"; };
+		5459064E636A852B8313DD4A /* DateFormatFinder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DateFormatFinder.h; sourceTree = "<group>"; };
+		545908E0922A26D7B01656B7 /* DateFormatFinder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DateFormatFinder.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* Big Lifts-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Big Lifts-Info.plist"; path = "../Big Lifts-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		020F858D167935DA00730E63 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				020F8593167935DA00730E63 /* SenTestingKit.framework in Frameworks */,
+				020F8594167935DA00730E63 /* UIKit.framework in Frameworks */,
+				020F8595167935DA00730E63 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		029CA34615E85CB1001021B8 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -210,6 +242,26 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		020F8596167935DA00730E63 /* UnitTests */ = {
+			isa = PBXGroup;
+			children = (
+				020F85A31679362E00730E63 /* DateFormatFinderTestCase.h */,
+				020F85A41679362E00730E63 /* DateFormatFinderTestCase.m */,
+				020F8597167935DA00730E63 /* Supporting Files */,
+			);
+			path = UnitTests;
+			sourceTree = "<group>";
+		};
+		020F8597167935DA00730E63 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				020F8598167935DA00730E63 /* UnitTests-Info.plist */,
+				020F8599167935DA00730E63 /* InfoPlist.strings */,
+				020F859F167935DA00730E63 /* UnitTests-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
@@ -220,6 +272,8 @@
 				302D95F014D2391D003F00A1 /* MainViewController.xib */,
 				1D3623240D0F684500981E51 /* AppDelegate.h */,
 				1D3623250D0F684500981E51 /* AppDelegate.m */,
+				545908E0922A26D7B01656B7 /* DateFormatFinder.m */,
+				5459064E636A852B8313DD4A /* DateFormatFinder.h */,
 			);
 			name = Classes;
 			path = Wendler531/Classes;
@@ -230,6 +284,7 @@
 			children = (
 				1D6058910D05DD3D006BFB54 /* Big Lifts.app */,
 				029CA35915E85CB1001021B8 /* Wendler Pro.app */,
+				020F8591167935DA00730E63 /* UnitTests.octest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -270,6 +325,7 @@
 				307C750510C5A3420062BCA9 /* Plugins */,
 				29B97315FDCFA39411CA2CEA /* Other Sources */,
 				29B97317FDCFA39411CA2CEA /* Resources */,
+				020F8596167935DA00730E63 /* UnitTests */,
 				29B97323FDCFA39411CA2CEA /* Frameworks */,
 				19C28FACFE9D520D11CA2CBB /* Products */,
 			);
@@ -323,6 +379,7 @@
 				301BF5C4109A6A2B0062928A /* SystemConfiguration.framework */,
 				305D5FD0115AB8F900A74A75 /* MobileCoreServices.framework */,
 				30E5649113A7FCAF007403D8 /* CoreMedia.framework */,
+				020F8592167935DA00730E63 /* SenTestingKit.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -376,6 +433,25 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		020F8590167935DA00730E63 /* UnitTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 020F85A0167935DA00730E63 /* Build configuration list for PBXNativeTarget "UnitTests" */;
+			buildPhases = (
+				020F858C167935DA00730E63 /* Sources */,
+				020F858D167935DA00730E63 /* Frameworks */,
+				020F858E167935DA00730E63 /* Resources */,
+				020F858F167935DA00730E63 /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				02CCA97B1679398C00388700 /* PBXTargetDependency */,
+			);
+			name = UnitTests;
+			productName = UnitTests;
+			productReference = 020F8591167935DA00730E63 /* UnitTests.octest */;
+			productType = "com.apple.product-type.bundle";
+		};
 		029CA32B15E85CB1001021B8 /* Big Lifts Pro */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 029CA35615E85CB1001021B8 /* Build configuration list for PBXNativeTarget "Big Lifts Pro" */;
@@ -448,6 +524,7 @@
 			targets = (
 				1D6058900D05DD3D006BFB54 /* Big Lifts */,
 				029CA32B15E85CB1001021B8 /* Big Lifts Pro */,
+				020F8590167935DA00730E63 /* UnitTests */,
 			);
 		};
 /* End PBXProject section */
@@ -463,6 +540,14 @@
 /* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
+		020F858E167935DA00730E63 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				020F859B167935DA00730E63 /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		029CA32F15E85CB1001021B8 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -520,6 +605,19 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
+		020F858F167935DA00730E63 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Run the unit tests in this test bundle.\n\"${SYSTEM_DEVELOPER_DIR}/Tools/RunUnitTests\"\n";
+		};
 		029CA32E15E85CB1001021B8 /* Touch www folder */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -551,6 +649,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		020F858C167935DA00730E63 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				020F85A51679362E00730E63 /* DateFormatFinderTestCase.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		029CA34215E85CB1001021B8 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -570,6 +676,7 @@
 				1D3623260D0F684500981E51 /* AppDelegate.m in Sources */,
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				02C7CADE16546DDA0099FBCA /* Alarm.m in Sources */,
+				545905F6F247CD9688BD3463 /* DateFormatFinder.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -581,6 +688,11 @@
 			name = CordovaLib;
 			targetProxy = 029CA32D15E85CB1001021B8 /* PBXContainerItemProxy */;
 		};
+		02CCA97B1679398C00388700 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 1D6058900D05DD3D006BFB54 /* Big Lifts */;
+			targetProxy = 02CCA97A1679398C00388700 /* PBXContainerItemProxy */;
+		};
 		301BF551109A68C00062928A /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = CordovaLib;
@@ -589,6 +701,14 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
+		020F8599167935DA00730E63 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				020F859A167935DA00730E63 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
 		1F766FDC13BBADB100FB74C0 /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -624,6 +744,69 @@
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
+		020F85A1167935DA00730E63 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Big Lifts.app/Big Lifts";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Debug;
+		};
+		020F85A2167935DA00730E63 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/Big Lifts.app/Big Lifts";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"$(SDKROOT)/Developer/Library/Frameworks\"",
+					"\"$(DEVELOPER_LIBRARY_DIR)/Frameworks\"",
+				);
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UnitTests/UnitTests-Prefix.pch";
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				INFOPLIST_FILE = "UnitTests/UnitTests-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				VALIDATE_PRODUCT = YES;
+				WRAPPER_EXTENSION = octest;
+			};
+			name = Release;
+		};
 		029CA35715E85CB1001021B8 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -676,6 +859,7 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Wendler531/Big Lifts-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Wendler531/Big Lifts-Info.plist";
@@ -698,6 +882,7 @@
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Wendler531/Big Lifts-Prefix.pch";
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "Wendler531/Big Lifts-Info.plist";
@@ -791,6 +976,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		020F85A0167935DA00730E63 /* Build configuration list for PBXNativeTarget "UnitTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				020F85A1167935DA00730E63 /* Debug */,
+				020F85A2167935DA00730E63 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		029CA35615E85CB1001021B8 /* Build configuration list for PBXNativeTarget "Big Lifts Pro" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
