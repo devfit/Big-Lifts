@@ -2,28 +2,29 @@
 Ext.ns('biglifts.debug');
 
 biglifts.debug.setup531WithoutNotification = function () {
-    biglifts.stores.Routine.add({'name':'5/3/1'});
+    biglifts.stores.Routine.add({'name': '5/3/1'});
     biglifts.stores.Routine.sync();
 };
 
-if (Ext.os.is.Linux || Ext.os.is.MacOS) {
+biglifts.DEBUG = Ext.os.is.Linux || Ext.os.is.MacOS || location.href.indexOf('debug=true') !== -1;
+if (biglifts.DEBUG) {
     window.onerror = function (em, url, ln) {
         alert(em + ", " + url + ", " + ln);
         return false;
     };
 
     window.device = {
-        name:"Chrome",
-        uuid:'1234',
-        version:'1.0',
-        exitApp:function () {
+        name: "Chrome",
+        uuid: '1234',
+        version: '1.0',
+        exitApp: function () {
             window.location.reload();
         }
     };
 
     Ext.define('biglifts.overrides.RestTimer', {
-        override:'biglifts.views.RestTimer',
-        TIME_INTERVAL:3
+        override: 'biglifts.views.RestTimer',
+        TIME_INTERVAL: 3
     });
 
     Ext.ns('biglifts.log.emailExport');
@@ -38,5 +39,4 @@ if (Ext.os.is.Linux || Ext.os.is.MacOS) {
     }
 
     biglifts.loadingFromFile = false;
-    biglifts.DEBUG = true;
 }
