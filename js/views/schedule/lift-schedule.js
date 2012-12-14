@@ -21,7 +21,7 @@ Ext.define('biglifts.views.LiftSchedule', {
                     biglifts.views.liftSchedule.IncreaseMaxesHelp,
                     biglifts.views.liftSchedule.LiftSettings,
                     Ext.create('biglifts.views.templates.CustomWeekEditor'),
-                    biglifts.views.EditProgression,
+                    Ext.create('biglifts.views.EditProgression'),
                     Ext.create('biglifts.views.LiftTracking'),
                     biglifts.views.liftSchedule.RestTimer,
                     {

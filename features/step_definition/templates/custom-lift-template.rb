@@ -8,7 +8,6 @@ When /^I select week (\d+) for the manual percentages editor$/ do |week|
     tab.text.include?(week)
   }[0]
   week_tab.click()
-
 end
 
 When /^I select set (\d+) on the manual percentages editor$/ do |set|
@@ -48,14 +47,6 @@ Then /^Lift progressions in the list are visible$/ do
   end
 end
 
-When /^I tap the add set button$/ do
-  @driver.find_elements(:class => 'x-button').select { |button|
-    button.displayed? && button.text() == 'Add set'
-  }[0].click
-
-
-end
-
 When /^I check the (\w+) custom set checkbox$/ do |custom_set_field|
   @driver.find_element(:id => 'edit-progression').find_element(:name => custom_set_field).find_element(:xpath => './..').click
 end
@@ -70,4 +61,8 @@ Then /^Set (\d+) is ([\w\s]*?)marked as (\w+)/ do |set_number, not_modifier, mar
   else
     row_class.should include(marked_as_class)
   end
+end
+
+When /^I tap list item (\d+)$/ do |list_index|
+  get_displayed_list_items()[list_index.to_i - 1].click
 end

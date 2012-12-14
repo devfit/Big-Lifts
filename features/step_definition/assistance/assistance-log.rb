@@ -16,11 +16,6 @@ Then /^The assistance log notes shows "(.*?)"$/ do |notes|
   log_notes.should == notes
 end
 
-Then /^I tap the delete assistance log button$/ do
-  @driver.find_element(:id => 'assistance-log-delete-button').click
-
-end
-
 Then /^I am on the assistance log list$/ do
   @driver.find_element(:id => 'log-assistance-list').should be_displayed
 end

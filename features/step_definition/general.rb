@@ -41,3 +41,7 @@ end
 When /^I set select "([^"]+)" to "([^"]+)"/ do |name, value|
   select_combobox @driver.find_elements(:name => 'units').select { |input| input.displayed? }[0], value
 end
+
+Then /^I tap the delete button$/ do
+  @driver.find_elements(:class => 'x-button-decline').select { |button| button.displayed? }[0].click
+end

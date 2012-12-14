@@ -1,11 +1,25 @@
 @531
-Feature: Manual lift template
+Feature: Custom lift template
+
+  Scenario: Removing all sets and adding one
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I select the "Custom" lift template
+    And I tap the use template button
+    And I tap list item 1
+    And I tap the delete button
+    And I tap the "Add" button
+    And I set the "reps" input to "5"
+    And I set the "percentage" input to "90"
+    And I tap the "Back" button
+    Then There is a "90%" list item
+
   Scenario: Reverting to fresher after adding a set
     When I view the lift schedule
     And I open the lift settings configuration
     And I select the "Custom" lift template
     And I tap the use template button
-    And I tap the add set button
+    And I tap the "Add" button
     And I set the manual percentage to 100
     And I set the manual reps to 1
     And I tap the "Back" button
@@ -57,7 +71,7 @@ Feature: Manual lift template
     And I select the "Custom" lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
-    And I tap the add set button
+    And I tap the "Add" button
     And I set the manual percentage to 100
     And I set the manual reps to 1
     And I tap the "Back" button

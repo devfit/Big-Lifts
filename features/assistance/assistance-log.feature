@@ -18,7 +18,7 @@ Feature: Assistance log
     Then I am on the track tab
     And I tap the "Asst." button
     And I tap "5x10" log entry 1
-    And I tap the delete assistance log button
+    And I tap the delete button
     Then I am on the assistance log list
     And There are 1 assistance log entries
 

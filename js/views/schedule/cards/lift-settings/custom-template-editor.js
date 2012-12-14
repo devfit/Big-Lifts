@@ -26,7 +26,7 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
                         '</tr></tbody></table>',
                     listeners: {
                         initialize: function () {
-                            biglifts.components.addSwipeToDelete(this, Ext.bind(me.showEditLiftPercentage, me),
+                            biglifts.components.addSwipeToDelete(this, Ext.bind(me.showProgression, me),
                                 Ext.bind(me.deleteLiftProgression, me), Ext.emptyFn, '.no-delete-button');
                         }
                     }
@@ -65,7 +65,7 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
             warmup: false
         });
         biglifts.stores.lifts.LiftProgression.sync();
-        biglifts.liftPercentages.showEditLiftProgression(newSet);
+        Ext.getCmp('edit-progression').showEditLiftProgression(biglifts.stores.lifts.LiftProgression.last());
     },
     deleteLiftProgression: function (view, index) {
         var set = index + 1;
@@ -74,8 +74,8 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
         biglifts.stores.lifts.LiftProgression.remove(liftProgression);
         biglifts.stores.lifts.LiftProgression.sync();
     },
-    showEditLiftPercentage: function (view, index) {
-        biglifts.liftPercentages.showEditLiftProgression(index + 1);
+    showProgression: function (view, index) {
+        Ext.getCmp('edit-progression').showEditLiftProgression(biglifts.stores.lifts.LiftProgression.findRecord('set', index + 1));
     },
     getWeekLists: function () {
         var listFilter = new Ext.util.Filter({
