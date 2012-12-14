@@ -39,7 +39,7 @@ biglifts.stores.migrations.migrateDatesToTimestamps = function (r) {
 
 biglifts.stores.migrations.setupExpectedReps = function (r) {
     if (r.get('expectedReps') <= 0) {
-        r.set('expectedReps', biglifts.stores.lifts.findExpectedRepsForWeek(r.get('week')));
+        r.set('expectedReps', biglifts.stores.lifts.LiftProgression.findExpectedRepsForWeek(r.get('week')));
         r.save();
         biglifts.stores.LiftLog.sync();
     }

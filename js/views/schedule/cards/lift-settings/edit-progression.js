@@ -12,6 +12,11 @@ Ext.define("biglifts.views.EditProgression", {
         this.setRecord(this.currentProgression);
         Ext.getCmp('lift-schedule').setActiveItem(this);
     },
+    deleteProgression: function () {
+        biglifts.stores.lifts.LiftProgression.removeProgression(this.currentProgression);
+        biglifts.stores.lifts.LiftProgression.sync();
+        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('edit-lift-percentages'));
+    },
     config: {
         id: 'edit-progression',
         listeners: {
@@ -32,6 +37,14 @@ Ext.define("biglifts.views.EditProgression", {
                                 ui: 'back',
                                 text: 'Back',
                                 handler: Ext.bind(me.returnToLiftSettings, me)
+                            },
+                            {xtype: 'spacer'},
+                            {
+                                xtype: 'button',
+                                ui: 'decline',
+                                iconMask: true,
+                                iconCls: 'trash',
+                                handler: Ext.bind(me.deleteProgression, me)
                             }
                         ]
                     },

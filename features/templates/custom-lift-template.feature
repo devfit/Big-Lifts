@@ -6,11 +6,28 @@ Feature: Custom lift template
     And I open the lift settings configuration
     And I select the "Custom" lift template
     And I tap the use template button
+
+    And I tap list item 6
+    And I tap the delete button
+
+    And I tap list item 5
+    And I tap the delete button
+
+    And I tap list item 4
+    And I tap the delete button
+
+    And I tap list item 3
+    And I tap the delete button
+
+    And I tap list item 2
+    And I tap the delete button
+
     And I tap list item 1
     And I tap the delete button
+
     And I tap the "Add" button
-    And I set the "reps" input to "5"
-    And I set the "percentage" input to "90"
+    And I set the "Reps" input to "5"
+    And I set the "Percentage" input to "90"
     And I tap the "Back" button
     Then There is a "90%" list item
 

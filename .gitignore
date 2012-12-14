@@ -12,3 +12,5 @@ chromedriver.log
 Gemfile.lock
 node_modules/
 .tddium*
+native/android/lib
+native/android/out

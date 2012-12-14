@@ -36,7 +36,7 @@ Ext.define('biglifts.views.LiftTracking', {
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
     },
     logLift: function (data) {
-        var expectedRepsByWeek = biglifts.stores.lifts.findExpectedRepsForWeek(data.week);
+        var expectedRepsByWeek = biglifts.stores.lifts.LiftProgression.findExpectedRepsForWeek(data.week);
         biglifts.stores.LiftLog.add(
             {
                 liftName: data.liftName,

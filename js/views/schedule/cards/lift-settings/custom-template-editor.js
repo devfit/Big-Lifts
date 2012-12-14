@@ -37,7 +37,7 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
                     items: [
                         {
                             xtype: 'button',
-                            text: 'Add set',
+                            text: 'Add',
                             handler: Ext.bind(me.addSet, me)
                         }
                     ]
@@ -71,7 +71,7 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
         var set = index + 1;
         var liftProgression = biglifts.stores.lifts.LiftProgression.findRecord('set', set);
 
-        biglifts.stores.lifts.LiftProgression.remove(liftProgression);
+        biglifts.stores.lifts.LiftProgression.removeProgression(liftProgression);
         biglifts.stores.lifts.LiftProgression.sync();
     },
     showProgression: function (view, index) {
