@@ -52,6 +52,8 @@ src_files:
         - js/models/migration/migration.js
         - js/models/migration/migrations/001_starting_strength_notification.js
         - js/models/migration/migrations/002_global_settings_defaults.js
+        - js/models/migration/migrations/003_date_format_finder.js
+        - js/models/migration/migrations/004_stitch_broken_progression_sets.js
         - js/models/startingstrength/lift.js
         - js/models/startingstrength/workout.js
         - js/models/startingstrength/log.js

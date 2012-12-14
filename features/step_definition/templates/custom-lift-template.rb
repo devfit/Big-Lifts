@@ -10,30 +10,12 @@ When /^I select week (\d+) for the manual percentages editor$/ do |week|
   week_tab.click()
 end
 
-When /^I select set (\d+) on the manual percentages editor$/ do |set|
-  get_displayed_list_items()[set.to_i-1].click()
-
-end
-
-When /^I set the manual percentage to (\d+)$/ do |percentage|
-  percentage_input = @driver.find_element(:id => 'percentage-edit-input').find_element(:tag_name => 'input')
-  percentage_input.clear
-  percentage_input.send_keys percentage
-end
-
 When /^I navigate back to the lift settings from the manual percentages editor$/ do
   @driver.find_element(:id => 'edit-lift-percentages').find_element(:class => 'x-button-back').click()
-
 end
 
 Then /^The set (\d+) lift percentage shows (\d+)%$/ do |set, percentage|
   get_displayed_list_items()[set.to_i-1].text.should include("#{percentage}%")
-end
-
-When /^I set the manual reps to (\d+)$/ do |reps|
-  reps_input = @driver.find_element(:id => 'reps-edit-input').find_element(:tag_name => 'input')
-  reps_input.clear
-  reps_input.send_keys reps
 end
 
 Then /^The set (\d+) reps shows (\d+)$/ do |set, reps|

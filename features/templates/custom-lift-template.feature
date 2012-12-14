@@ -37,8 +37,8 @@ Feature: Custom lift template
     And I select the "Custom" lift template
     And I tap the use template button
     And I tap the "Add" button
-    And I set the manual percentage to 100
-    And I set the manual reps to 1
+    And I set the "Percentage" input to "100"
+    And I set the "Reps" input to "1"
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
     And I navigate back to the lift selector from lift settings
@@ -60,7 +60,7 @@ Feature: Custom lift template
     And I select the "Custom" lift template
     And I tap the use template button
     And I select week 1 for the manual percentages editor
-    And I select set 4 on the manual percentages editor
+    And I tap list item 4
     And I check the warmup custom set checkbox
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
@@ -74,7 +74,7 @@ Feature: Custom lift template
     And I select the "Custom" lift template
     And I tap the use template button
     And I select week 1 for the manual percentages editor
-    And I select set 5 on the manual percentages editor
+    And I tap list item 5
     And I check the amrap custom set checkbox
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
@@ -89,8 +89,8 @@ Feature: Custom lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
     And I tap the "Add" button
-    And I set the manual percentage to 100
-    And I set the manual reps to 1
+    And I set the "Percentage" input to "100"
+    And I set the "Reps" input to "1"
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
     And I navigate back to the lift selector from lift settings
@@ -104,8 +104,8 @@ Feature: Custom lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
     Then Lift progressions in the list are visible
-    And I select set 2 on the manual percentages editor
-    And I set the manual percentage to 55
+    And I tap list item 2
+    And I set the "Percentage" input to "55"
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
     And I navigate back to the lift selector from lift settings
@@ -118,8 +118,8 @@ Feature: Custom lift template
     And I select the "Custom" lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
-    And I select set 2 on the manual percentages editor
-    And I set the manual reps to 7
+    And I tap list item 2
+    And I set the "Reps" input to "7"
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
     And I navigate back to the lift selector from lift settings
