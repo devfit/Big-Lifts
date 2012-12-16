@@ -93,7 +93,7 @@ src_files:
         - js/views/schedule/cards/lift-settings/templates/rotating.js
         - js/views/schedule/cards/lift-settings/templates/powerlifting.js
         - js/views/schedule/cards/lift-settings/lift-settings.js
-        - js/views/schedule/cards/lift-settings/edit-lift-progressions.js
+        - js/views/schedule/cards/lift-settings/custom-template-editor.js
         - js/views/schedule/cards/lift-settings/edit-progression.js
         - js/views/schedule/cards/rest-timer.js
         - js/views/schedule/lift-schedule.js

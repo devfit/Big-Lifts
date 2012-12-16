@@ -1,5 +1,30 @@
 @531
 Feature: Rotating lift template
+  Scenario: Adding new lifts after rotation has been set
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I select the "Rotating" lift template
+    And I tap the use template button
+    And I wait for the animation
+    And I confirm the progression change
+    And I navigate back to the lift selector from lift settings
+    When I add a new lift named "Clean" with max 100
+    And I view the lift schedule
+    And I tap the "Clean" list item
+    Then There are 6 list items
+
+  Scenario: Adding new lifts and then setting a rotation
+    When I add a new lift named "Clean" with max 100
+    When I view the lift schedule
+    And I open the lift settings configuration
+    And I select the "Rotating" lift template
+    And I tap the use template button
+    And I wait for the animation
+    And I confirm the progression change
+    And I navigate back to the lift selector from lift settings
+    And I tap the "Clean" list item
+    Then There are 6 list items
+
   Scenario: Deload lifts are not blank
     And I set the squat max to 300
     When I view the lift schedule
