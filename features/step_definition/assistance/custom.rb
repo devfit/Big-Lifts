@@ -27,9 +27,4 @@ end
 
 When /^I tap the trash button$/ do
   @driver.find_elements(:class => 'trash').select { |button| button.displayed? }[0].click
-
-end
-
-Then /^There is (\d+) custom assistance row[s]*$/ do |row_count|
-  get_displayed_list_items().length.should == row_count.to_i
 end

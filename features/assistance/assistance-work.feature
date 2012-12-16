@@ -11,7 +11,7 @@ Feature: Assistance Work
     When I tap the assistance tab
     And I select "None" assistance work
     And I tap the "Asst." button
-    Then There are no assistance log entries
+    Then There are 0 list entries
 
   Scenario: Remembering the last assistance selection between workouts
     When I tap the assistance tab

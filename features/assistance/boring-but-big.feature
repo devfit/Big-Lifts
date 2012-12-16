@@ -1,6 +1,12 @@
 @531
 @premium
 Feature: Boring But Big - Assistance Work
+  Scenario: Deleting big lift
+    When I tap the assistance tab
+    And I select "5x10" assistance work
+    And I tap the "Deadlift" list item
+    And I tap the delete button
+    Then There are 0 list items
 
   Scenario: BBB for non-default lifts
     When I add a new lift named "Clean" with max 200
@@ -58,9 +64,8 @@ Feature: Boring But Big - Assistance Work
     And I tap the "Press" list item
     And I tap the "Add..." button
     And I tap the trash button
-    Then There is 1 custom assistance row
+    Then There are 1 list items
     And I tap the first boring but big entry
-    Then The trash icon is hidden
 
   Scenario: Adding BBB additional lifts
     When I tap the assistance tab

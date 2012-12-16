@@ -16,11 +16,10 @@ Ext.define("biglifts.views.BoringButBig", {
 
         biglifts.stores.assistance.BoringButBig.add(bbbMovement);
         biglifts.stores.assistance.BoringButBig.sync();
-        biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement(biglifts.stores.assistance.BoringButBig.last());
+        Ext.getCmp('bbb-movement-editor').showEditBbbMovement(biglifts.stores.assistance.BoringButBig.last());
     },
     editBbbMovement:function (dataview, index) {
-        var movement = biglifts.stores.assistance.BoringButBig.getAt(index);
-        biglifts.liftSchedule.assistance.boringButBig.showEditBbbMovement(movement);
+        Ext.getCmp('bbb-movement-editor').showEditBbbMovement(biglifts.stores.assistance.BoringButBig.getAt(index));
     },
     filterLifts:function () {
         biglifts.stores.assistance.BoringButBig.clearFilter(true);

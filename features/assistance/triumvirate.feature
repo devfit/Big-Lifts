@@ -41,7 +41,7 @@ Feature: Custom - Assistance Work
     And I tap the "Squat" list item
     And I tap assistance row 1
     And I tap the trash button
-    Then There is 1 custom assistance row
+    Then There are 1 list items
 
   Scenario: Viewing Custom lifts and viewing the log
     When I tap the assistance tab

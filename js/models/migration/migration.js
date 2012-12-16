@@ -21,7 +21,8 @@ Ext.define('Migrations', {
         {klass: 'biglifts.migrations.ssNotification', done: false},
         {klass: 'biglifts.migrations.globalSettingsDefaults', done: false},
         {klass: 'biglifts.migrations.dateFormatFinder', done: false},
-        {klass: 'biglifts.migrations.stitchBrokenLiftTemplates', done: false}
+        {klass: 'biglifts.migrations.stitchBrokenLiftTemplates', done: false},
+        {klass: 'biglifts.migrations.fixBbbDoubling', done: false}
     ],
     loadMissingMigrations: function () {
         var me = this;

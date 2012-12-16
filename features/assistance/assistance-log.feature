@@ -20,7 +20,7 @@ Feature: Assistance log
     And I tap "5x10" log entry 1
     And I tap the delete button
     Then I am on the assistance log list
-    And There are 1 assistance log entries
+    And There are 1 list items
 
   Scenario: Viewing BBB lifts, Changing the percentage, and viewing the log
     When I set the squat max to 200

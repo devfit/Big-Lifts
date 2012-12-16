@@ -46,6 +46,7 @@ Ext.define('BoringButBigStore', {
         return associatedLift.get('name');
     },
     syncAssistanceToLifts: function () {
+        var me = this;
         util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
             biglifts.stores.lifts.Lifts.each(function (r) {
                 var assistanceRecordExists = biglifts.stores.assistance.BoringButBig.find('lift_id', r.get('id')) !== -1;
@@ -61,6 +62,7 @@ Ext.define('BoringButBigStore', {
                 }
             });
             biglifts.stores.assistance.BoringButBig.sync();
+            biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(me.syncAssistanceToLifts, me));
         });
     },
     config: {
@@ -68,7 +70,6 @@ Ext.define('BoringButBigStore', {
         listeners: {
             load: function () {
                 this.syncAssistanceToLifts();
-                biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.syncAssistanceToLifts, this));
             }
         }
     }
