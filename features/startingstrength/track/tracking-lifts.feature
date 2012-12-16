@@ -1,5 +1,12 @@
 @StartingStrength
 Feature: Tracking Lifts
+  Scenario: The track tab uses the combined log
+    When I navigate to the "Edit" tab
+    And I navigate to the "Lift" tab
+    And I tap the checkmark
+    Then I am on the track tab
+    Then There are 1 list items
+
   Scenario: Weights increase between sessions
     When I navigate to the "Edit" tab
     When I set the "Bench" input to "225"
