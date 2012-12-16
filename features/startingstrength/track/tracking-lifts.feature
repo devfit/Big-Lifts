@@ -4,6 +4,7 @@ Feature: Tracking Lifts
     When I navigate to the "Edit" tab
     And I navigate to the "Lift" tab
     And I tap the checkmark
+    And I wait for the animation
     Then I am on the track tab
     Then There are 1 list items
 
@@ -33,6 +34,7 @@ Feature: Tracking Lifts
     When I set the "Deadlift" input to "400"
     And I navigate to the "Lift" tab
     And I tap the checkmark
+    And I wait for the animation
     Then I am on the track tab
     Then There is a "Bench 3x 5 225lbs" list item
     Then There is a "Squat 3x 5 300lbs" list item
