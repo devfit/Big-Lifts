@@ -15,26 +15,26 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
         itemTpl: '{[biglifts.ss.more.getTextForValues(values)]}',
         listeners: {
             initialize: function () {
+                var me = this;
                 var listIndex = 0;
-                this.listItems = [
-                    {model: {index: listIndex++, text: null}, handler: Ext.bind(this.selectRoutine, this), textFn: function () {
+                me.listItems = [
+                    {model: {index: listIndex++, text: null}, handler: Ext.bind(me.selectRoutine, me), textFn: function () {
                         return '<span class="text">Routine: <span id="routine-text">' +
                             biglifts.stores.Routine.first().get("name") +
                             '</span></span><span class="disclosure"></span>';
                     }}
                 ];
 
-                this.listItems.push({model: {index: listIndex++, text: '<span class="text">Settings</span><span class="disclosure"></span>'},
-                    handler: Ext.bind(this.showSettings, this)});
-
-                this.listItems.push({model: {index: listIndex++, text: '<span class="text">Feedback...</span><span class="disclosure"></span>'},
-                    handler: Ext.bind(this.feedback, this)});
-                this.listItems.push({model: {index: listIndex++, text: '<span class="text">Reset</span><span class="warning"></span>'},
-                    handler: Ext.bind(this.hardReset, this)});
+                me.listItems.push({model: {index: listIndex++, text: '<span class="text">Settings</span><span class="disclosure"></span>'},
+                    handler: Ext.bind(me.showSettings, me)});
+                me.listItems.push({model: {index: listIndex++, text: '<span class="text">Feedback...</span><span class="disclosure"></span>'},
+                    handler: Ext.bind(me.feedback, me)});
+                me.listItems.push({model: {index: listIndex++, text: '<span class="text">Reset</span><span class="warning"></span>'},
+                    handler: Ext.bind(me.showReset, me)});
 
                 var listData = [];
-                for (var i = 0; i < this.listItems.length; i++) {
-                    listData.push(this.listItems[i].model);
+                for (var i = 0; i < me.listItems.length; i++) {
+                    listData.push(me.listItems[i].model);
                 }
 
                 Ext.define('SsMoreList', {
@@ -46,12 +46,12 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
                         ]
                     }
                 });
-                this.setStore(Ext.create('Ext.data.Store', {
+                me.setStore(Ext.create('Ext.data.Store', {
                     model: 'SsMoreList',
                     data: listData
                 }));
 
-                this.addListener('itemtap', Ext.bind(this.listItemTapped, this));
+                me.addListener('itemtap', Ext.bind(me.listItemTapped, me));
             }
         }
     }

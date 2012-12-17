@@ -38,8 +38,8 @@ Ext.define('biglifts.views.531.MoreInfoList', {
                     handler:Ext.bind(this.showSettings, this)});
                 this.listItems.push({model:{index:listIndex++, text:'<span class="text">Feedback...</span><span class="disclosure"></span>'},
                     handler:Ext.bind(this.feedback, this)});
-                this.listItems.push({model:{index:listIndex++, text:'<span class="text">Reset</span><span class="warning"></span>'},
-                    handler:Ext.bind(this.hardReset, this)});
+                this.listItems.push({model:{index:listIndex++, text:'<span class="text">Reset</span><span class="disclosure"></span>'},
+                    handler:Ext.bind(this.showReset, this)});
 
                 var listData = [];
                 for (var i = 0; i < this.listItems.length; i++) {

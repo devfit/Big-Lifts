@@ -45,3 +45,7 @@ end
 Then /^I tap the delete button$/ do
   @driver.find_elements(:class => 'x-button-decline').select { |button| button.displayed? }[0].click
 end
+
+Then /^There is a "(.*?)" button$/ do |text|
+  @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == text }.should_not be_empty
+end

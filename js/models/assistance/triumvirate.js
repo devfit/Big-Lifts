@@ -1,28 +1,28 @@
 Ext.ns('biglifts.stores.assistance');
 
 Ext.define('TriumvirateMovement', {
-    extend:'CustomMovement',
-    config:{
-        proxy:{
-            type:'localstorage',
-            id:'triumvirate-movement-proxy'
+    extend: 'CustomMovement',
+    config: {
+        proxy: {
+            type: 'localstorage',
+            id: 'triumvirate-movement-proxy'
         }
     }
 });
 
 Ext.define("TriumvirateMovementStore", {
-    extend:"Ext.data.Store",
-    DEFAULT_CUSTOM_LIFTS:[
-        {liftProperty:'squat', name:'Leg Press', sets:5, reps:15},
-        {liftProperty:'squat', name:'Leg Curl', sets:5, reps:15},
-        {liftProperty:'deadlift', name:'Good Morning', sets:5, reps:15},
-        {liftProperty:'deadlift', name:'Hanging Leg Raise', sets:5, reps:15},
-        {liftProperty:'press', name:'Dips', sets:5, reps:15},
-        {liftProperty:'press', name:'Chin-Ups', sets:5, reps:15},
-        {liftProperty:'bench', name:'Dumbbell Bench Press', sets:5, reps:15},
-        {liftProperty:'bench', name:'Dumbbell Row', sets:5, reps:15}
+    extend: "Ext.data.Store",
+    DEFAULT_CUSTOM_LIFTS: [
+        {liftProperty: 'squat', name: 'Leg Press', sets: 5, reps: 15},
+        {liftProperty: 'squat', name: 'Leg Curl', sets: 5, reps: 15},
+        {liftProperty: 'deadlift', name: 'Good Morning', sets: 5, reps: 15},
+        {liftProperty: 'deadlift', name: 'Hanging Leg Raise', sets: 5, reps: 15},
+        {liftProperty: 'press', name: 'Dips', sets: 5, reps: 15},
+        {liftProperty: 'press', name: 'Chin-Ups', sets: 5, reps: 15},
+        {liftProperty: 'bench', name: 'Dumbbell Bench Press', sets: 5, reps: 15},
+        {liftProperty: 'bench', name: 'Dumbbell Row', sets: 5, reps: 15}
     ],
-    addMissingCustomLiftAssociations:function () {
+    addMissingCustomLiftAssociations: function () {
         var store = this;
         util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
             util.withNoFilters(biglifts.stores.lifts.Lifts, function () {
@@ -31,10 +31,10 @@ Ext.define("TriumvirateMovementStore", {
                     if (!existingMovement) {
                         for (var i = 0; i < 2; i++) {
                             store.add({
-                                liftProperty:lift.get('propertyName'),
-                                name:'?',
-                                sets:5,
-                                reps:15
+                                liftProperty: lift.get('propertyName'),
+                                name: '?',
+                                sets: 5,
+                                reps: 15
                             });
                         }
                         store.sync();
@@ -43,10 +43,11 @@ Ext.define("TriumvirateMovementStore", {
             });
         });
     },
-    config:{
-        model:'TriumvirateMovement',
-        listeners:{
-            load:function () {
+    config: {
+        model: 'TriumvirateMovement',
+        storeId: 'triumvirate',
+        listeners: {
+            load: function () {
                 if (this.getCount() == 0) {
                     this.add(this.DEFAULT_CUSTOM_LIFTS);
                     this.sync();

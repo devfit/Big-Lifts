@@ -1,6 +1,9 @@
 "use strict";
 Ext.define('biglifts.views.More', {
     extend: 'Ext.Panel',
+    showReset: function () {
+        this.setActiveItem(this.resetPanel);
+    },
     config: {
         id: 'more',
         title: 'More',
@@ -9,8 +12,13 @@ Ext.define('biglifts.views.More', {
         listeners: {
             initialize: function () {
                 var me = this;
-                this.moreInfoList = this.add(Ext.create('biglifts.views.531.MoreInfoList'));
-                this.settingsPanel = this.add(Ext.create('biglifts.views.Settings'));
+                me.moreInfoList = this.add(Ext.create('biglifts.views.531.MoreInfoList'));
+                me.settingsPanel = this.add(Ext.create('biglifts.views.Settings'));
+                me.resetPanel = this.add(Ext.create('biglifts.views.Reset', {
+                    backFunction: function () {
+                        me.setActiveItem(me.moreInfoList);
+                    }
+                }));
 
                 if (biglifts.toggles.Assistance) {
                     this.add(

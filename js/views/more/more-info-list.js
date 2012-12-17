@@ -22,15 +22,8 @@ Ext.define('biglifts.views.MoreInfoList', {
             handler.call();
         }
     },
-    hardReset:function () {
-        Ext.Msg.confirm('WARNING', 'Reset ALL data and settings?', function (text) {
-            if (text === 'yes') {
-                util.filebackup.deleteAllStoreFiles(function () {
-                    localStorage.clear();
-                    location.href = "index.html";
-                });
-            }
-        });
+    showReset: function(){
+        this.getParent().showReset();
     },
     config:{
         itemCls:'more-info-row',

@@ -78,9 +78,9 @@ util.filebackup.storeHasChanged = function (currentStore) {
     util.filebackup.saveStore(currentStore, Ext.emptyFn);
 };
 
-util.filebackup.deleteAllStoreFiles = function (deleteCallback) {
+util.filebackup.deleteStoreFiles = function (stores, deleteCallback) {
     var tasks = [];
-    _.each(util.filebackup.watchedStores, function (store) {
+    _.each(stores, function (store) {
         var fileName = util.filebackup.generateFileName(store);
         tasks.push(function (callback) {
             var asyncComplete = function () {

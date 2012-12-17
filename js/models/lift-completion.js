@@ -29,7 +29,7 @@ biglifts.stores.migrations.addMissingLiftCompletions = function () {
             if (existingLiftCompletion === -1) {
                 for (var week = 1; week <= 4; week++) {
                     biglifts.stores.lifts.LiftCompletion.add(
-                        {liftPropertyName:liftPropertyName, week:week, completed:false});
+                        {liftPropertyName: liftPropertyName, week: week, completed: false});
                 }
             }
         }
@@ -53,25 +53,26 @@ biglifts.stores.migrations.removeDeadLiftCompletions = function () {
 };
 
 Ext.define('LiftCompletion', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'liftPropertyName', type:'string'},
-            {name:'week', type:'integer'},
-            {name:'completed', type:'boolean'}
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'liftPropertyName', type: 'string'},
+            {name: 'week', type: 'integer'},
+            {name: 'completed', type: 'boolean'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'lift-completion-proxy'
+        proxy: {
+            type: 'localstorage',
+            id: 'lift-completion-proxy'
         }
     }
 });
 biglifts.stores.lifts.LiftCompletion = Ext.create('Ext.data.Store', {
-    model:'LiftCompletion',
-    listeners:{
-        load:function () {
+    model: 'LiftCompletion',
+    storeId: 'liftCompletions',
+    listeners: {
+        load: function () {
             biglifts.stores.migrations.liftCompletionMigration();
         }
     }
