@@ -25,11 +25,14 @@ public class DateFormatFinder {
     }
 
     protected String getStringFormatFromDateFormat(java.text.DateFormat format) throws ParseException {
-        Date testDate = new SimpleDateFormat("MM/dd/yyyy").parse("01/02/1999");
+        Date testDate = new SimpleDateFormat("MM/dd/yyyy").parse("03/02/1999");
         String formattedDate = format.format(testDate);
-        formattedDate = formattedDate.replace("02", "dd");
-        formattedDate = formattedDate.replace("01", "MM");
-        formattedDate = formattedDate.replace("1999", "yyyy");
+        formattedDate = formattedDate.replaceAll("02", "dd");
+        formattedDate = formattedDate.replaceAll("2", "dd");
+        formattedDate = formattedDate.replaceAll("03", "MM");
+        formattedDate = formattedDate.replaceAll("3", "MM");
+        formattedDate = formattedDate.replaceAll("1999", "yyyy");
+        formattedDate = formattedDate.replaceAll("99", "yyyy");
         return formattedDate;
     }
 

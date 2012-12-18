@@ -14,20 +14,27 @@ public class DateFormatFinderTest {
     public void testGetDateFormat() throws Exception {
         Context context = mock(Context.class);
         DateFormatFinder dateFormatFinder = spy(new DateFormatFinder(context));
-        doReturn(new SimpleDateFormat("MM/DD/yyyy")).when(dateFormatFinder).getFormatFromContext();
+        doReturn(new SimpleDateFormat("MM/dd/yyyy")).when(dateFormatFinder).getFormatFromContext();
         Assert.assertEquals("MM/dd/yyyy", dateFormatFinder.getDateFormat());
     }
 
     @Test
     public void testGetStringFormatFromDateFormatMonthFirst() throws Exception {
-        DateFormat format = new SimpleDateFormat("MM/DD/yyyy");
+        DateFormat format = new SimpleDateFormat("MM/dd/yyyy");
         DateFormatFinder dateFormatFinder = new DateFormatFinder(null);
         Assert.assertEquals("MM/dd/yyyy", dateFormatFinder.getStringFormatFromDateFormat(format));
     }
 
     @Test
     public void testGetStringFormatFromDateFormatDayFirst() throws Exception {
-        DateFormat format = new SimpleDateFormat("DD/MM/yyyy");
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy");
+        DateFormatFinder dateFormatFinder = new DateFormatFinder(null);
+        Assert.assertEquals("dd/MM/yyyy", dateFormatFinder.getStringFormatFromDateFormat(format));
+    }
+
+    @Test
+    public void testShortFormat() throws Exception {
+        DateFormat format = new SimpleDateFormat("d/M/yy");
         DateFormatFinder dateFormatFinder = new DateFormatFinder(null);
         Assert.assertEquals("dd/MM/yyyy", dateFormatFinder.getStringFormatFromDateFormat(format));
     }
