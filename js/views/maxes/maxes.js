@@ -11,7 +11,7 @@ Ext.define('biglifts.views.Maxes', {
         listeners: {
             initialize: function () {
                 this.add([
-                    biglifts.maxes.cards.maxesForm,
+                    Ext.create("Biglifts.views.MaxesForm"),
                     biglifts.maxes.cards.editMaxesList,
                     biglifts.maxes.cards.editLiftPanel,
                     biglifts.maxes.cards.addLiftPanel,

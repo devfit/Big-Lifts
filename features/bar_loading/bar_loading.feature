@@ -7,7 +7,7 @@ Feature: bar loading
 
   Scenario: Custom plates - no 10s
     When I navigate to the lift editor
-    And I tap the bar/plates button
+    And I tap the "Bar/Plates" button
     And I set the number of 10lbs plates to 0
     And I tap the "Back" button
     And I view the squat lift schedule for week 1
@@ -15,7 +15,7 @@ Feature: bar loading
 
   Scenario: 35lb bar
     When I navigate to the lift editor
-    And I tap the bar/plates button
+    And I tap the "Bar/Plates" button
     And I set the bar weight to 35
     And I tap the "Back" button
     And I view the squat lift schedule for week 1

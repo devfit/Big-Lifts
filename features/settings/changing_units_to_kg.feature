@@ -6,7 +6,7 @@ Feature: Adjusting the weights to kg
     When I navigate to the settings page
     And I set select "units" to "kg"
     And I navigate to the lift editor
-    And I tap the bar/plates button
+    And I tap the "Bar/Plates" button
     Then The plates list shows "25kg,20kg,10kg,5kg,2.5kg,1.25kg"
     Then The bar weight is 20.4
 

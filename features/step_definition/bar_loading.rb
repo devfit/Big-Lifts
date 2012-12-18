@@ -10,11 +10,6 @@ Then /^The plate breakdown for set (\d+) shows "(.*?)"$/ do |set, plates|
   set_list_item.find_element(:class => 'bar-loader-breakdown').text.should == plates
 end
 
-When /^I tap the bar\/plates button$/ do
-  @driver.find_element(:id => 'setup-plates-button').click()
-
-end
-
 When /^I set the bar weight to (\d+)$/ do |weight|
   bar_weight_input = @driver.find_element(:id => 'bar-plate-setup-panel').find_element(:name => 'weight')
   bar_weight_input.clear
