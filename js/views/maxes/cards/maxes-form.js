@@ -99,6 +99,7 @@ Ext.define("Biglifts.views.MaxesForm", {
         Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'));
     },
     config: {
+        id: 'maxes-form',
         scroll: 'vertical',
         cls: 'start-page',
         listeners: {
@@ -185,20 +186,6 @@ Ext.define("Biglifts.views.MaxesForm", {
                     }
                 });
 
-                this.meetGoals = maxesPanel.add({
-                    hidden: true,
-                    xtype: 'fieldset',
-                    cls: 'fieldset-title-no-margin',
-                    title: 'Meet Goals',
-                    defaults: {
-                        listeners: {
-                            change: Ext.bind(me.meetGoalsChanged, me)
-                        },
-                        labelWidth: '45%',
-                        useClearIcon: true
-                    }
-                });
-
                 this.trainingMaxesPanel = maxesHbox.add({
                     xtype: 'panel',
                     flex: 1,
@@ -208,6 +195,29 @@ Ext.define("Biglifts.views.MaxesForm", {
                 this.trainingMaxes = this.trainingMaxesPanel.add({
                     xtype: 'fieldset',
                     cls: 'fieldset-title-no-margin'
+                });
+
+                this.powerliftingTotal = me.add({
+                    tpl: '<b>Powerlifting Total:</b> {total}',
+                    cls: 'powerlifting-total',
+                    data: {
+                        total: 0
+                    }
+                });
+
+                this.meetGoals = me.add({
+                    hidden: true,
+                    xtype: 'fieldset',
+                    cls: 'fieldset-title-no-margin',
+                    style: 'margin-top:5px',
+                    title: 'Meet Goals',
+                    defaults: {
+                        listeners: {
+                            change: Ext.bind(me.meetGoalsChanged, me)
+                        },
+                        labelWidth: '45%',
+                        useClearIcon: true
+                    }
                 });
 
                 this.updateTrainingPercentageDisplay();

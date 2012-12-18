@@ -1,8 +1,5 @@
 @531
 Feature: Arrange lifts
-  As a lifter
-  I want to be able to arrange lifts
-  So that the lift schedule exactly matches my own preferred programming
 
   Scenario: Default ordering
     When I navigate to the lift schedule
