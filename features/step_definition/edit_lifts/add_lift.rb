@@ -1,17 +1,14 @@
 When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
   navigate_to(:lift_editor)
 
-  add_lift_button = @driver.find_element(:id => 'add-lift-button')
-  add_lift_button.click
-
+  @driver.find_element(:css => '.x-button-icon.add').click()
 
   name_input = @driver.find_element(:name => 'add-lift-new-name')
   name_input.send_keys lift
   max_input = @driver.find_element(:name => 'add-lift-new-max')
   max_input.send_keys max
 
-  @driver.find_elements(:class => 'x-button').select{|button| button.displayed? && button.text() == "Save"}[0].click
-
+  @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == "Save" }[0].click
 end
 
 Then /^"([^"]*)" is ([\w ]+)?added to the edit lifts screen$/ do |lift, invertCheck|
@@ -19,8 +16,8 @@ Then /^"([^"]*)" is ([\w ]+)?added to the edit lifts screen$/ do |lift, invertCh
 
   navigate_to(:lift_editor)
 
-  lift_list = @driver.find_element(:id => 'maxes-form-items')
-  lift_is_shown = lift_list.text.include? lift
+  lift_list_text = @driver.find_elements(:class => 'x-form-label').collect { |l| l.text() }.join
+  lift_is_shown = lift_list_text.include? lift
 
   lift_is_shown.should == lift_should_be_added
 end

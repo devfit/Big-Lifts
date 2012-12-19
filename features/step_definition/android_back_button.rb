@@ -15,14 +15,12 @@ Then /^I am on the lift settings$/ do
    @driver.find_element( :id => 'lift-settings' ).displayed?.should be_true
 end
 
-
 When /^I navigate to the lift editor$/ do
   navigate_to(:lift_editor)
 end
 
 When /^I click add lift$/ do
-  @driver.find_element(:id => 'add-lift-button').click()
-
+  @driver.find_element(:css => '.x-button-icon.add').click()
 end
 
 Then /^I am on the lift editor$/ do

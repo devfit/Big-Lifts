@@ -1,5 +1,5 @@
 def maxes_form_item_of_name(name)
-  @driver.find_element(:id => 'maxes-form-items').find_element(:name => name)
+  @driver.find_elements(:name => name).select { |item| item.displayed? }[0]
 end
 
 When /^I set the (\w+) max to (\d+)$/ do |liftProperty, max|
