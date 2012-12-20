@@ -14,6 +14,7 @@ src_files:
         - js/util/weight-formatter.js
         - js/util/stores.js
         - js/util/components.js
+        - js/util/powerlifting-total.js
         - js/util/proxy.js
         - js/util/navigation.js
         - js/util/filters.js

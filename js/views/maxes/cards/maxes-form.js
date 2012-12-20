@@ -98,6 +98,16 @@ Ext.define("Biglifts.views.MaxesForm", {
     addLiftButtonPressed: function () {
         Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'));
     },
+    bindPowerliftingUpdateTriggers: function () {
+        biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.updatePowerliftingTotal, this));
+        biglifts.stores.LiftLog.addListener('beforesync', Ext.bind(this.updatePowerliftingTotal, this));
+    },
+    updatePowerliftingTotal: function () {
+        var me = this;
+        util.powerliftingTotal.getTotal(function (total) {
+            me.powerliftingTotal.setData({total: total});
+        });
+    },
     config: {
         id: 'maxes-form',
         scroll: 'vertical',
@@ -113,6 +123,7 @@ Ext.define("Biglifts.views.MaxesForm", {
 
                 if (!this._painted) {
                     this._painted = true;
+                    this.bindPowerliftingUpdateTriggers();
 
                     biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.updateTrainingPercentageDisplay, this));
                     biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.showHideTrainingMaxes, this));
@@ -204,6 +215,7 @@ Ext.define("Biglifts.views.MaxesForm", {
                         total: 0
                     }
                 });
+                this.updatePowerliftingTotal();
 
                 this.meetGoals = me.add({
                     hidden: true,
