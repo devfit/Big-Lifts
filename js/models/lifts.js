@@ -108,6 +108,12 @@ Ext.define('Lifts', {
                 property: 'order',
                 direction: 'ASC'
             }
+        ],
+        filters: [
+            {
+                property: 'enabled',
+                value: true
+            }
         ]
     }
 });

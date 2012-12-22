@@ -21,6 +21,26 @@ describe("Powerlifting Total", function () {
                 expect(total).toEqual(600);
             });
         });
+
+        it("should return -1 if bench, squat, or deadlift are missing", function () {
+            this.lifts.add({name: "Bench", max: 100});
+            this.lifts.add({name: "Deadlift", max: 300});
+            this.lifts.sync();
+            util.powerliftingTotal.getTotal(function (total) {
+                expect(total).toEqual(-1);
+            });
+        });
+
+        it("should return -1 if bench, squat, or deadlift are disabled", function () {
+            this.lifts.add({name: "Bench", max: 100, enabled: false});
+            this.lifts.add({name: "Squat", max: 200, enabled: true});
+            this.lifts.add({name: "Deadlift", max: 300, enabled: false});
+            this.lifts.sync();
+            this.lifts.filter('enabled', true);
+            util.powerliftingTotal.getTotal(function (total) {
+                expect(total).toEqual(-1);
+            });
+        });
     });
 
     describe("overrideMaxes", function () {

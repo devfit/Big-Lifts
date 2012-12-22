@@ -80,7 +80,6 @@ Ext.define("Biglifts.views.MaxesForm", {
     liftValuesChanged: function (el, newValue) {
         var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', el.getName());
         lift.set('max', newValue);
-        lift.save();
         biglifts.stores.lifts.Lifts.sync();
     },
     editLiftButtonPressed: function () {
@@ -105,7 +104,13 @@ Ext.define("Biglifts.views.MaxesForm", {
     updatePowerliftingTotal: function () {
         var me = this;
         util.powerliftingTotal.getTotal(function (total) {
-            me.powerliftingTotal.setData({total: total});
+            if (total === -1) {
+                me.powerliftingTotal.hide();
+            }
+            else {
+                me.powerliftingTotal.show();
+                me.powerliftingTotal.setData({total: total});
+            }
         });
     },
     config: {

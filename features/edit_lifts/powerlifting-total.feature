@@ -7,6 +7,6 @@ Feature: Powerlifting Total
     When I set the "Squat" input to "320"
     When I set the "Deadlift" input to "400"
     When I set the "Press" input to "100"
-    Then The powerlifting total is "821"
+    Then The powerlifting total is "921"
 
 

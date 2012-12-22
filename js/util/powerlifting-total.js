@@ -5,31 +5,29 @@ Ext.ns("util.powerliftingTotal");
             util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
                 util.withLoadedStore(biglifts.stores.LiftLog, function () {
                     var lifts = biglifts.stores.lifts.Lifts;
-                    util.withNoFilters(lifts, function () {
-                        var benchRecord = lifts.findRecord('name', 'Bench');
-                        var squatRecord = lifts.findRecord('name', 'Squat');
-                        var deadliftRecord = lifts.findRecord('name', 'Deadlift');
+                    var benchRecord = lifts.findRecord('name', 'Bench');
+                    var squatRecord = lifts.findRecord('name', 'Squat');
+                    var deadliftRecord = lifts.findRecord('name', 'Deadlift');
 
-                        if (!benchRecord || !squatRecord || !deadliftRecord) {
-                            callback(-1);
-                            return;
-                        }
+                    if (!benchRecord || !squatRecord || !deadliftRecord) {
+                        callback(-1);
+                        return;
+                    }
 
-                        var knownMaxes = {
-                            'Bench': benchRecord.get('max'),
-                            'Squat': squatRecord.get('max'),
-                            'Deadlift': deadliftRecord.get('max')
-                        };
+                    var knownMaxes = {
+                        'Bench': benchRecord.get('max'),
+                        'Squat': squatRecord.get('max'),
+                        'Deadlift': deadliftRecord.get('max')
+                    };
 
-                        var logMaxes = util.powerliftingTotal.getMaxesFromLog();
-                        var maxes = util.powerliftingTotal.findMaxes(knownMaxes, logMaxes);
-                        var total = 0;
-                        _.each(maxes, function (w) {
-                            total += w;
-                        });
-
-                        callback(total);
+                    var logMaxes = util.powerliftingTotal.getMaxesFromLog();
+                    var maxes = util.powerliftingTotal.findMaxes(knownMaxes, logMaxes);
+                    var total = 0;
+                    _.each(maxes, function (w) {
+                        total += w;
                     });
+
+                    callback(total);
                 });
             });
         },
