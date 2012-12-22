@@ -7,6 +7,9 @@ biglifts.liftSchedule.currentWeek = 1;
 
 Ext.define('biglifts.views.LiftSchedule', {
     extend: 'Ext.Panel',
+    getRestTimer: function () {
+        return this.restTimer;
+    },
     config: {
         id: 'lift-schedule',
         title: 'Lift!',
@@ -22,13 +25,14 @@ Ext.define('biglifts.views.LiftSchedule', {
                     biglifts.views.liftSchedule.LiftSettings,
                     Ext.create('biglifts.views.templates.CustomWeekEditor'),
                     Ext.create('biglifts.views.EditProgression'),
-                    Ext.create('biglifts.views.LiftTracking'),
-                    biglifts.views.liftSchedule.RestTimer,
-                    {
-                        xtype: 'firstlognoteseditor',
-                        id: 'first-log-notes-editor'
-                    }
-                ]);
+                    Ext.create('biglifts.views.LiftTracking')]);
+
+                this.restTimer = this.add(Ext.create('biglifts.views.RestTimer'));
+
+                this.add({
+                    xtype: 'firstlognoteseditor',
+                    id: 'first-log-notes-editor'
+                });
                 this.setActiveItem(0);
             }
         }

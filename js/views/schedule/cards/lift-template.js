@@ -115,7 +115,7 @@ biglifts.liftSchedule.liftTemplate.returnToLiftSelect = function () {
 };
 
 biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
-    var restTimer = Ext.getCmp('rest-timer');
+    var restTimer = Ext.getCmp('lift-schedule').getRestTimer();
     restTimer.setBack(function () {
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
     });

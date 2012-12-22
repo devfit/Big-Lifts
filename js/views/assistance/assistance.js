@@ -1,6 +1,9 @@
 "use strict";
 Ext.define('biglifts.views.Assistance', {
     extend: 'Ext.Panel',
+    getRestTimer: function () {
+        return this.restTimer;
+    },
     config: {
         id: 'assistance',
         title: 'Asst.',
@@ -22,6 +25,8 @@ Ext.define('biglifts.views.Assistance', {
                         id: 'boring-but-big-notes'
                     }
                 ]);
+
+                this.restTimer = this.add(Ext.create('biglifts.views.RestTimer'));
 
                 this.setActiveItem(0);
             }
