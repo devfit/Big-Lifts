@@ -83,7 +83,7 @@ Ext.define('biglifts.views.ss.Workouts', {
                                 return biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('weight');
                             },
                             getUnits: function () {
-                                return "lbs";
+                                return biglifts.stores.GlobalSettings.getUnits();
                             }
                         })
                 };
@@ -99,6 +99,9 @@ Ext.define('biglifts.views.ss.Workouts', {
                 me.addListener('activeitemchange', Ext.bind(me.setToolbarTitle, me));
                 me.setToolbarTitle();
                 biglifts.stores.ss.Lifts.addListener('beforesync', function () {
+                    this.getActiveItem().refresh();
+                }, me);
+                biglifts.stores.GlobalSettings.addListener('beforesync', function () {
                     this.getActiveItem().refresh();
                 }, me);
             }
