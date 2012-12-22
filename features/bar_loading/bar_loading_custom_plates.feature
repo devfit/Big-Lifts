@@ -1,9 +1,16 @@
 @531
 @premium
 Feature: bar loading - custom plates
-  As a lifter
-  I want to be able to use custom plate configurations
-  So that I can exactly describe what weights I have for the bar loading assistance
+
+  Scenario: Editing 2kg and avoid ExtJS store bugs
+    When I navigate to the lift editor
+    And I tap the "Bar/Plates" button
+    And I set the new plate weight to 2
+    And I tap the "Add" button
+    And I set the "2lbs" input to "8"
+    And I tap the "Back" button
+    And I tap the "Bar/Plates" button
+    Then The "2lbs" input is "8"
 
   Scenario: Not having enough plates to make a weight
     When I navigate to the lift editor

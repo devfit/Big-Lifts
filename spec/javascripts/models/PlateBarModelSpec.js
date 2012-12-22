@@ -1,8 +1,17 @@
 describe("Plate Bar Model", function () {
+    it("should be able to find 1kg units if 10kg units exist", function () {
+        var store = Ext.create('PlateStore');
+        store.add({weight: 10, count: 2});
+        var oneLbRecord = store.add({weight: 1, count: 2})[0];
+        store.sync();
+
+        expect(store.findRecordByWeight(1).get('id')).toEqual(oneLbRecord.get('id'));
+    });
+
     it("should migrate weightInLbs to weight and units", function () {
         var store = Ext.create('PlateStore');
-        store.add({weightInLbs:45, count:2});
-        store.add({weightInLbs:35, count:2});
+        store.add({weightInLbs: 45, count: 2});
+        store.add({weightInLbs: 35, count: 2});
         store.sync();
         store.migrateWeightInLbsToWeightAndUnits();
 

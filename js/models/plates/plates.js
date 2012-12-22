@@ -1,26 +1,26 @@
 Ext.ns('biglifts.stores.plates');
 
 Ext.define('Plates', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'weight', type:'float'},
-            {name:'weightInLbs', type:'float'},
-            {name:'units', type:'string'},
-            {name:'count', type:'integer'}
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'weight', type: 'float'},
+            {name: 'weightInLbs', type: 'float'},
+            {name: 'units', type: 'string'},
+            {name: 'count', type: 'integer'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'plates-proxy'
+        proxy: {
+            type: 'localstorage',
+            id: 'plates-proxy'
         }
     }
 });
 
 Ext.define("PlateStore", {
-    extend:'Ext.data.Store',
-    getAllPlatePairs:function () {
+    extend: 'Ext.data.Store',
+    getAllPlatePairs: function () {
         var platePairs = {};
         biglifts.stores.Plates.each(function (r) {
             var weight = r.get('weight');
@@ -29,23 +29,30 @@ Ext.define("PlateStore", {
 
         return platePairs;
     },
-    DEFAULT_PLATES_LBS:[
-        {weight:45, count:6},
-        {weight:35, count:6},
-        {weight:25, count:6},
-        {weight:10, count:6},
-        {weight:5, count:6},
-        {weight:2.5, count:6}
+    findRecordByWeight: function (weight) {
+        var index = this.findBy(function (r) {
+            return weight === r.get('weight');
+        });
+
+        return this.getAt(index);
+    },
+    DEFAULT_PLATES_LBS: [
+        {weight: 45, count: 6},
+        {weight: 35, count: 6},
+        {weight: 25, count: 6},
+        {weight: 10, count: 6},
+        {weight: 5, count: 6},
+        {weight: 2.5, count: 6}
     ],
-    DEFAULT_PLATES_KG:[
-        {weight:25, count:6},
-        {weight:20, count:6},
-        {weight:10, count:6},
-        {weight:5, count:6},
-        {weight:2.5, count:6},
-        {weight:1.25, count:6}
+    DEFAULT_PLATES_KG: [
+        {weight: 25, count: 6},
+        {weight: 20, count: 6},
+        {weight: 10, count: 6},
+        {weight: 5, count: 6},
+        {weight: 2.5, count: 6},
+        {weight: 1.25, count: 6}
     ],
-    migrateWeightInLbsToWeightAndUnits:function () {
+    migrateWeightInLbsToWeightAndUnits: function () {
         this.each(function (record) {
             var weightInLbs = record.get('weightInLbs');
             if (!_.isUndefined(weightInLbs) && !_.isNull(weightInLbs)) {
@@ -55,15 +62,15 @@ Ext.define("PlateStore", {
         });
         this.sync();
     },
-    platesAreDefault:function (comparisonPlates) {
+    platesAreDefault: function (comparisonPlates) {
         var actualPlateWeights = [];
         this.each(function (p) {
-            actualPlateWeights.push({weight:p.get('weight'), count:p.get('count')});
+            actualPlateWeights.push({weight: p.get('weight'), count: p.get('count')});
         });
 
         return _.isEqual(actualPlateWeights, comparisonPlates);
     },
-    adjustPlatesForUnits:function () {
+    adjustPlatesForUnits: function () {
         var units = biglifts.stores.GlobalSettings.getUnits();
         if (units == 'kg' && this.platesAreDefault(this.DEFAULT_PLATES_LBS)) {
             this.removeAll();
@@ -76,10 +83,10 @@ Ext.define("PlateStore", {
 
         this.sync();
     },
-    config:{
-        model:'Plates',
-        listeners:{
-            load:function (store) {
+    config: {
+        model: 'Plates',
+        listeners: {
+            load: function (store) {
                 biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.adjustPlatesForUnits, this));
 
                 if (store.getCount() === 0) {

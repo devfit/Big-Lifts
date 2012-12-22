@@ -7,15 +7,13 @@ Ext.define('biglifts.views.BarSetup', {
     platesValueChanged: function (field, newCount) {
         var name = field.getName();
         var plateWeight = parseFloat(name.substring(0, name.indexOf(this.PLATE_SUFFIX)));
-
-        var plateRecord = biglifts.stores.Plates.findRecord('weight', plateWeight);
+        var plateRecord = biglifts.stores.Plates.findRecordByWeight(plateWeight);
         plateRecord.set('count', newCount);
         biglifts.stores.Plates.sync();
     },
     barValueChanged: function () {
-        var barPlateValues = Ext.getCmp('bar-setup-form').getValues();
         var barWeight = biglifts.stores.BarWeight.first();
-        barWeight.set(barPlateValues);
+        barWeight.set(this.barSetupForm.getValues());
         biglifts.stores.BarWeight.sync();
     },
     setupCustomPlatesFieldSet: function () {
@@ -41,13 +39,8 @@ Ext.define('biglifts.views.BarSetup', {
         }
     },
     addNewPlate: function () {
-        var plateValues = Ext.getCmp('bar-setup-form').getValues();
-        var weight = plateValues.newPlateWeight;
-
-        var recordExists = biglifts.stores.Plates.findBy(function (p) {
-            return p.get('weight') == weight;
-        }) !== -1;
-
+        var weight = this.barSetupForm.getValues().newPlateWeight;
+        var recordExists = biglifts.stores.Plates.findRecordByWeight(weight) !== null;
         if (weight > 0 && !recordExists) {
             biglifts.stores.Plates.add({weight: weight, count: 2});
             biglifts.stores.Plates.sync();
@@ -59,7 +52,7 @@ Ext.define('biglifts.views.BarSetup', {
         listeners: {
             painted: function () {
                 biglifts.navigation.setBackFunction(Ext.bind(this.backButtonPressed, this));
-                Ext.getCmp('bar-setup-form').setRecord(biglifts.stores.BarWeight.first());
+                this.barSetupForm.setRecord(biglifts.stores.BarWeight.first());
 
                 if (!this._painted) {
                     this._painted = true;
@@ -82,10 +75,9 @@ Ext.define('biglifts.views.BarSetup', {
                         }
                     ]
                 });
-                me.add([
+                this.barSetupForm = me.add([
                     {
                         xtype: 'formpanel',
-                        id: 'bar-setup-form',
                         items: [
                             {
                                 id: 'bar-setup-fieldset',

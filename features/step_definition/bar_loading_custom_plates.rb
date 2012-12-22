@@ -3,7 +3,7 @@ def get_plates_fieldset
 end
 
 When /^I set the new plate weight to (\d+)$/ do |weight|
-  @driver.find_element(:id => 'bar-setup-form').find_element(:name => 'newPlateWeight').send_keys weight
+  @driver.find_element(:name => 'newPlateWeight').send_keys weight
 end
 
 Then /^There are (\d+) custom plate entries$/ do |expected_entries|

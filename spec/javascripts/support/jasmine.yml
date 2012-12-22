@@ -63,6 +63,7 @@ src_files:
         - js/views/routine-chooser.js
         - js/views/components/notes-editor.js
         - js/views/components/swipe-to-delete.js
+        - js/views/components/rest-timer.js
         - js/views/maxes/cards/add-lift.js
         - js/views/maxes/cards/edit-lift.js
         - js/views/maxes/cards/edit-lifts-list.js
@@ -97,7 +98,6 @@ src_files:
         - js/views/schedule/cards/lift-settings/lift-settings.js
         - js/views/schedule/cards/lift-settings/custom-template-editor.js
         - js/views/schedule/cards/lift-settings/edit-progression.js
-        - js/views/schedule/cards/rest-timer.js
         - js/views/schedule/lift-schedule.js
         - js/views/settings/cards/settings-form.js
         - js/views/settings/settings.js
