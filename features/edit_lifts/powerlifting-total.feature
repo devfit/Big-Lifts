@@ -1,6 +1,13 @@
 @531
 Feature: Powerlifting Total
 
+  Scenario: Disabling lifts hides the powerlifting total
+    When I navigate to the lift editor
+    And I tap the "Edit" button
+    And I disable "Squat"
+    And I tap the "Done" button
+    Then The powerlifting total is hidden
+
   Scenario: No log entries
     When I navigate to the lift editor
     When I set the "Bench" input to "201"

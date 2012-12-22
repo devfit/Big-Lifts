@@ -34,12 +34,13 @@ biglifts.maxes.controller.enableLiftChecked = function (checkbox, event) {
 
 biglifts.maxes.controller.renderCheckboxForLift = function (lift, domElement) {
     Ext.field.Checkbox.create({
-        renderTo:domElement,
-        listeners:{
-            check:biglifts.maxes.controller.enableLiftChecked,
-            uncheck:biglifts.maxes.controller.enableLiftChecked
+        renderTo: domElement,
+        hidden: false,
+        listeners: {
+            check: biglifts.maxes.controller.enableLiftChecked,
+            uncheck: biglifts.maxes.controller.enableLiftChecked
         },
-        checked:lift.get('enabled')
+        checked: lift.get('enabled')
     });
 };
 
@@ -65,52 +66,47 @@ biglifts.maxes.edit.togglePlaceHolder = function (dataview, index, target, recor
 };
 
 biglifts.maxes.cards.editMaxesList = {
-    id:'maxes-edit-lifts-panel',
-    xtype:'panel',
-    layout:'fit',
-    listeners:{
-        painted:function () {
-            biglifts.stores.lifts.Lifts.clearFilter();
-        }
-    },
-    items:[
+    id: 'maxes-edit-lifts-panel',
+    xtype: 'panel',
+    layout: 'fit',
+    items: [
         {
-            xtype:'toolbar',
-            docked:'top',
-            title:"Edit Lifts",
-            items:[
+            xtype: 'toolbar',
+            docked: 'top',
+            title: "Edit Lifts",
+            items: [
                 {
-                    id:'arrange-lifts-button',
-                    xtype:'button',
-                    text:'Arrange',
-                    handler:biglifts.maxes.controller.showArrangeLifts,
-                    ui:'action'
+                    id: 'arrange-lifts-button',
+                    xtype: 'button',
+                    text: 'Arrange',
+                    handler: biglifts.maxes.controller.showArrangeLifts,
+                    ui: 'action'
                 },
-                {xtype:'spacer'},
+                {xtype: 'spacer'},
                 {
-                    id:'edit-lifts-done-button',
-                    text:'Done',
-                    handler:biglifts.maxes.controller.editLiftsDoneButtonPressed,
-                    ui:'action'
+                    id: 'edit-lifts-done-button',
+                    text: 'Done',
+                    handler: biglifts.maxes.controller.editLiftsDoneButtonPressed,
+                    ui: 'action'
                 }
             ]
         },
         {
-            xtype:'toolbar',
-            docked:'top',
-            ui:'light',
-            items:[
+            xtype: 'toolbar',
+            docked: 'top',
+            ui: 'light',
+            items: [
                 {
-                    id:'edit-lifts-label',
-                    xtype:'panel',
-                    html:'Active?'
+                    id: 'edit-lifts-label',
+                    xtype: 'panel',
+                    html: 'Active?'
                 },
-                {xtype:'spacer'},
+                {xtype: 'spacer'},
                 {
-                    xtype:'panel',
-                    html:'<img id="active-lifts-help-image" src="images/question.png"/>',
-                    listeners:{
-                        painted:function () {
+                    xtype: 'panel',
+                    html: '<img id="active-lifts-help-image" src="images/question.png"/>',
+                    listeners: {
+                        painted: function () {
                             if (!this._painted) {
                                 this._painted = true;
                                 Ext.get('active-lifts-help-image').addListener('tap', function () {
@@ -123,24 +119,25 @@ biglifts.maxes.cards.editMaxesList = {
             ]
         },
         {
-            id:'maxes-edit-lifts-list',
-            xtype:'list',
-            selectedItemCls:'',
-            store:biglifts.stores.lifts.Lifts,
-            itemCls:'lift-list-row',
-            itemTpl:'<table data-lift-property="{propertyName}" width="100%"><tbody><tr>' +
+            id: 'maxes-edit-lifts-list',
+            xtype: 'list',
+            selectedItemCls: '',
+            store: biglifts.stores.lifts.Lifts,
+            itemCls: 'lift-list-row',
+            itemTpl: '<table data-lift-property="{propertyName}" width="100%"><tbody><tr>' +
                 '<td width="20%" class="enable-lift-checkbox"></td>' +
                 '<td width="40%"><span class="lift-name">{name}</span></td>' +
                 '<td width="40%" class="placeholder"></td>' +
                 '<td width="40%" class="delete-button-holder hidden"></td>' +
                 '</tr></tbody></table>',
-            onItemDisclosure:true,
-            listeners:{
-                initialize:function () {
+            onItemDisclosure: true,
+            listeners: {
+                initialize: function () {
                     biglifts.components.addSwipeToDelete(this, biglifts.maxes.controller.editLift, biglifts.maxes.controller.deleteLift,
                         biglifts.maxes.edit.togglePlaceHolder, '.x-list-disclosure');
                 },
-                painted:function () {
+                painted: function () {
+                    biglifts.stores.lifts.Lifts.clearFilter();
                     biglifts.maxes.controller.rerenderAllCheckboxes(this);
                 }
             }
