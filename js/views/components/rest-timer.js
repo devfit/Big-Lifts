@@ -20,6 +20,8 @@ Ext.define('biglifts.views.RestTimer', {
 
         var ONE_SECOND = 1000;
         this.timerId = setInterval(Ext.bind(this.timerTick, this), ONE_SECOND);
+
+        this.lastTickDate = new Date();
         this.down('#start-timer-button').hide();
         this.down('#stop-timer-button').show();
     },
@@ -50,7 +52,17 @@ Ext.define('biglifts.views.RestTimer', {
         this.updateTimeDisplay();
     },
     timerTick: function () {
-        this.remainingSeconds--;
+        var now = new Date();
+        var timeElapsedSinceTickMs = now - this.lastTickDate;
+
+        if (timeElapsedSinceTickMs < 2000) {
+            this.remainingSeconds--;
+        }
+        else {
+            this.remainingSeconds -= parseInt(Math.ceil(timeElapsedSinceTickMs / 1000));
+        }
+
+        this.lastTickDate = new Date();
         if (this.remainingSeconds <= 0) {
             this.timerHasEnded();
         }
