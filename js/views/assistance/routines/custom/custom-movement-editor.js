@@ -1,58 +1,54 @@
 Ext.define('biglifts.views.CustomMovementEditor', {
-    extend:'Ext.form.Panel',
-    xtype:'custommovementeditor',
-    assistanceViewId:null,
-    customMovementStore:null,
-    showEditCustomMovement:function (movement) {
+    extend: 'Ext.form.Panel',
+    xtype: 'custommovementeditor',
+    assistanceViewId: null,
+    customMovementStore: null,
+    showEditCustomMovement: function (movement) {
         this.setRecord(movement);
         Ext.getCmp('assistance').setActiveItem(this);
     },
-    returnToCustom:function () {
+    returnToCustom: function () {
         this.saveMovementChange();
         Ext.getCmp('assistance').setActiveItem(Ext.getCmp(this.assistanceViewId));
     },
-    deleteMovement:function () {
+    deleteMovement: function () {
         var record = this.getRecord();
         this.customMovementStore.remove(record);
         this.customMovementStore.sync();
 
         this.returnToCustom.call(this);
     },
-    saveMovementChange:function () {
-        var newValues = this.getValues();
-        var record = this.getRecord();
-        var newData = Ext.merge(record.data, newValues);
-
-        record.set(newData);
+    saveMovementChange: function () {
+        this.getRecord().set(this.getValues());
         this.customMovementStore.sync()
     },
-    config:{
-        listeners:{
-            initialize:function () {
+    config: {
+        listeners: {
+            initialize: function () {
                 var me = this;
                 me.add([
                     {
-                        xtype:'toolbar',
-                        docked:'top',
-                        title:'Edit',
-                        items:[
+                        xtype: 'toolbar',
+                        docked: 'top',
+                        title: 'Edit',
+                        items: [
                             {
-                                xtype:'button',
-                                ui:'back',
-                                text:'Back',
-                                listeners:{
-                                    initialize:function () {
+                                xtype: 'button',
+                                ui: 'back',
+                                text: 'Back',
+                                listeners: {
+                                    initialize: function () {
                                         this.setHandler(Ext.bind(me.returnToCustom, me));
                                     }
                                 }
                             },
-                            {xtype:'spacer'},
+                            {xtype: 'spacer'},
                             {
-                                ui:'decline',
-                                iconMask:true,
-                                iconCls:'trash',
-                                listeners:{
-                                    initialize:function () {
+                                ui: 'decline',
+                                iconMask: true,
+                                iconCls: 'trash',
+                                listeners: {
+                                    initialize: function () {
                                         this.setHandler(Ext.bind(me.deleteMovement, me));
                                     }
                                 }
@@ -60,34 +56,34 @@ Ext.define('biglifts.views.CustomMovementEditor', {
                         ]
                     },
                     {
-                        xtype:'fieldset',
-                        cls:'fieldset-title-no-margin',
-                        items:[
+                        xtype: 'fieldset',
+                        cls: 'fieldset-title-no-margin',
+                        items: [
                             {
-                                xtype:'textfield',
-                                label:'Name',
-                                name:'name'
+                                xtype: 'textfield',
+                                label: 'Name',
+                                name: 'name'
                             },
                             {
-                                xtype:'numberfield',
-                                label:'Sets',
-                                name:'sets'
+                                xtype: 'numberfield',
+                                label: 'Sets',
+                                name: 'sets'
                             },
                             {
-                                xtype:'numberfield',
-                                label:'Reps',
-                                name:'reps'
+                                xtype: 'numberfield',
+                                label: 'Reps',
+                                name: 'reps'
                             },
                             {
-                                xtype:'numberfield',
-                                label:'Weight',
-                                name:'weight'
+                                xtype: 'numberfield',
+                                label: 'Weight',
+                                name: 'weight'
                             }
                         ]
                     }
                 ]);
             },
-            painted:function () {
+            painted: function () {
                 biglifts.navigation.setBackFunction(this.returnToCustom);
             }
         }
