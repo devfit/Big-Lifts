@@ -104,6 +104,17 @@ Ext.define('biglifts.views.ss.Workouts', {
                 biglifts.stores.GlobalSettings.addListener('beforesync', function () {
                     this.getActiveItem().refresh();
                 }, me);
+
+                var toolbar = me.add({
+                    xtype: 'toolbar',
+                    docked: 'bottom',
+                    cls: 'unstyled-toolbar',
+                    items: [
+                        {xtype: 'spacer'}
+                    ]
+                });
+
+                toolbar.add(Ext.create('biglifts.components.SetCounter'));
             }
         }
     }

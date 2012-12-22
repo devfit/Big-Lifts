@@ -159,7 +159,7 @@ Ext.define("biglifts.views.BoringButBig", {
                     {
                         xtype: 'toolbar',
                         docked: 'bottom',
-                        cls: 'custom-movement-toolbar',
+                        cls: 'unstyled-toolbar',
                         items: [
                             {
                                 xtype: 'button',

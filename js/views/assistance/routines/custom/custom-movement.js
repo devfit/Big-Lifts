@@ -71,7 +71,7 @@ Ext.define("Biglifts.views.Custom", {
                     {
                         xtype: 'toolbar',
                         docked: 'bottom',
-                        cls: 'custom-movement-toolbar',
+                        cls: 'unstyled-toolbar',
                         items: [
                             {
                                 text: 'Add...',
