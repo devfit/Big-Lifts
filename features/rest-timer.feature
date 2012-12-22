@@ -11,7 +11,7 @@ Feature: Rest Timer
     And I tap the increment rest timer button
     And I tap the increment rest timer button
     Then The rest timer shows "0:09"
-    And I tap the rest timer start button
+    And I tap the "Start" button
     And I wait 2 seconds
     And I tap the "Back" button
     And I tap the rest timer button
@@ -25,7 +25,7 @@ Feature: Rest Timer
     Then The rest timer shows "0:03"
     And I tap the increment rest timer button
     Then The rest timer shows "0:06"
-    And I tap the rest timer start button
+    And I tap the "Start" button
     And I wait 7 seconds
     Then I am on the lift template
     And I tap the rest timer button
@@ -36,6 +36,6 @@ Feature: Rest Timer
     And I tap the rest timer button
     And I tap the increment rest timer button
     Then The rest timer shows "0:03"
-    And I tap the rest timer start button
+    And I tap the "Start" button
     And I wait 4 seconds
     Then I am on the lift template
