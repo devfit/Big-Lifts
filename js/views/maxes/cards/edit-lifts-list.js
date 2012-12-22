@@ -35,7 +35,6 @@ biglifts.maxes.controller.enableLiftChecked = function (checkbox, event) {
 biglifts.maxes.controller.renderCheckboxForLift = function (lift, domElement) {
     Ext.field.Checkbox.create({
         renderTo: domElement,
-        hidden: false,
         listeners: {
             check: biglifts.maxes.controller.enableLiftChecked,
             uncheck: biglifts.maxes.controller.enableLiftChecked
