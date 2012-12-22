@@ -1,42 +1,42 @@
 Ext.define('biglifts.views.MoreInfoList', {
-    extend:"Ext.dataview.List",
-    selectRoutine:function () {
+    extend: "Ext.dataview.List",
+    selectRoutine: function () {
         Ext.getCmp('app').setActiveItem(Ext.getCmp('routine-chooser'));
     },
-    getVersionOsInfo:function () {
+    getVersionOsInfo: function () {
         var appVersion = "v" + biglifts.version;
         var os = Ext.os.is.Android ? "Android" : "iOS";
         var phoneVersion = window.device.version;
-        return appVersion + "-" + os + " " + phoneVersion;
+        var routine = biglifts.stores.Routine.first().get('name');
+        return appVersion + "-" + os + " " + routine + " " + phoneVersion;
     },
-    feedback:function () {
+    feedback: function () {
         var proText = biglifts.premium ? " Pro" : "";
         var subject = "Big Lifts" + proText + ": Feedback";
-        location.href = util.email.buildEmailLink("biglifts@stefankendall.com", subject
-            + this.getVersionOsInfo());
+        location.href = util.email.buildEmailLink("biglifts@stefankendall.com", subject + " " + this.getVersionOsInfo());
     },
-    listItemTapped:function (c, index) {
+    listItemTapped: function (c, index) {
         this.deselect(index);
         var handler = this.listItems[index].handler;
         if (typeof(handler) !== 'undefined') {
             handler.call();
         }
     },
-    showReset: function(){
+    showReset: function () {
         this.getParent().showReset();
     },
-    config:{
-        itemCls:'more-info-row',
-        listeners:{
-            painted:function () {
+    config: {
+        itemCls: 'more-info-row',
+        listeners: {
+            painted: function () {
                 biglifts.navigation.unbindBackEvent();
             }
         },
-        items:[
+        items: [
             {
-                docked:'top',
-                xtype:'toolbar',
-                title:'More'
+                docked: 'top',
+                xtype: 'toolbar',
+                title: 'More'
             }
         ]
     }
