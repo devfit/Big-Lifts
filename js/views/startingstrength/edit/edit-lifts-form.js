@@ -19,6 +19,7 @@ Ext.define('biglifts.views.ss.EditLiftsForm', {
             name: record.get('id'),
             label: record.get('name'),
             value: record.get('weight'),
+            labelWidth: "50%",
             listeners: {
                 change: Ext.bind(this.inputChanged, this)
             }
