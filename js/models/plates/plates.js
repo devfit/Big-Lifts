@@ -34,6 +34,10 @@ Ext.define("PlateStore", {
             return weight === r.get('weight');
         });
 
+        if( index === -1 ){
+            return null;
+        }
+
         return this.getAt(index);
     },
     DEFAULT_PLATES_LBS: [
