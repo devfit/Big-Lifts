@@ -1,2 +1,2 @@
 Ext.ns('biglifts');
-biglifts.version=88;
+biglifts.version=89;
