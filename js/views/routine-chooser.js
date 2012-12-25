@@ -24,7 +24,8 @@ biglifts.routines.setupStartingStrength = function (firstTimeInRoutine) {
     mainTabPanel.add(Ext.create('biglifts.views.ss.Edit'));
     mainTabPanel.add(Ext.create('biglifts.views.ss.Track'));
     mainTabPanel.add(Ext.create('biglifts.views.ss.More'));
-    mainTabPanel.setActiveItem(firstTimeInRoutine ? 1 : 0);
+//    mainTabPanel.setActiveItem(firstTimeInRoutine ? 1 : 0);
+    mainTabPanel.setActiveItem(1);
 };
 
 biglifts.routines.routineStore = Ext.create('Ext.data.Store', {
