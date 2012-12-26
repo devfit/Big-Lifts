@@ -28,21 +28,12 @@ Ext.define('biglifts.views.ss.EditLiftsForm', {
         });
     },
     createConfig: function (record) {
-        this.down('#configuration').add({
-            xtype: 'label',
-            cls: 'x-field config-field',
-            html: "<div class='config-gear'></div>",
-            listeners: {
-                painted: function () {
-                    if (!this._painted) {
-                        this._painted = true;
-                        this.element.on('tap', function(){
-                           console.log( this );
-                        });
-                    }
-                }
+        this.down('#configuration').add(Ext.create('biglifts.components.ConfigGear', {
+            record: record,
+            tapAction: function () {
+                console.log(this.getRecord());
             }
-        });
+        }));
     },
     config: {
         items: [
