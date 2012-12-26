@@ -1,7 +1,13 @@
 .config-field {
   margin-bottom: 1px;
+  border: none !important;
 }
 
 .config-fieldset {
   margin-top: 1px;
+
+  .x-form-fieldset-inner {
+    border: none !important;
+    background: none !important;
+  }
 }
