@@ -11,3 +11,11 @@
     background: none !important;
   }
 }
+
+.config-gear {
+  width: 32px;
+  height: 32px;
+  background-image: image-url('settings.png', false, false);
+  position: relative;
+  top: 6px;
+}

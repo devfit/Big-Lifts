@@ -31,7 +31,17 @@ Ext.define('biglifts.views.ss.EditLiftsForm', {
         this.down('#configuration').add({
             xtype: 'label',
             cls: 'x-field config-field',
-            html: 'C'
+            html: "<div class='config-gear'></div>",
+            listeners: {
+                painted: function () {
+                    if (!this._painted) {
+                        this._painted = true;
+                        this.element.on('tap', function(){
+                           console.log( this );
+                        });
+                    }
+                }
+            }
         });
     },
     config: {
@@ -52,7 +62,7 @@ Ext.define('biglifts.views.ss.EditLiftsForm', {
                         xtype: 'fieldset'
                     },
                     {
-                        flex: 4,
+                        flex: 6,
                         itemId: 'lifts',
                         xtype: 'fieldset',
                         cls: 'fieldset-title-no-margin',
