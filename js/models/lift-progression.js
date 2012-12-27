@@ -107,22 +107,6 @@ biglifts.liftProgressions.options = {
 
 Ext.define('biglifts.stores.LiftProgressions', {
     extend: "Ext.data.Store",
-    setupAmrapForSixthSet: function () {
-        this.each(function (record) {
-            if (record.get('amrap') === null) {
-                record.set('amrap', record.get('set') === 6 && record.get('week') !== 4);
-            }
-        });
-        this.sync();
-    },
-    setupWarmupForFirstThreeSets: function () {
-        this.each(function (record) {
-            if (record.get('warmup') === null) {
-                record.set('warmup', record.get('set') <= 3);
-            }
-        });
-        this.sync();
-    },
     setupDefaultLiftProgressions: function () {
         var store = this;
         util.withNoFilters(store, function () {
@@ -155,8 +139,6 @@ Ext.define('biglifts.stores.LiftProgressions', {
         listeners: {
             load: function () {
                 this.setupDefaultLiftProgressions();
-                this.setupAmrapForSixthSet();
-                this.setupWarmupForFirstThreeSets();
             }
         }
     }
