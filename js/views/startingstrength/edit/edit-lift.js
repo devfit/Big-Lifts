@@ -29,6 +29,12 @@ Ext.define('biglifts.views.ss.EditLift', {
                             xtype: 'textfield',
                             name: 'name',
                             label: 'Name'
+                        },
+                        {
+                            labelWidth: '66%',
+                            xtype: 'numberfield',
+                            name: 'increase',
+                            label: 'Increase'
                         }
                     ]
                 })
