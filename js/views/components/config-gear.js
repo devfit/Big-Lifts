@@ -9,6 +9,7 @@ Ext.define('biglifts.components.ConfigGear', {
                 var html = "<div class='config-gear'";
                 var name = this.getRecord().get('name');
                 if (name) {
+                    name = name.replace(/\s/g, '');
                     html += " data-name='" + name + "'";
                 }
                 html += "></div>";

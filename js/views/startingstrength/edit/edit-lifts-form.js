@@ -31,7 +31,7 @@ Ext.define('biglifts.views.ss.EditLiftsForm', {
         this.down('#configuration').add(Ext.create('biglifts.components.ConfigGear', {
             record: record,
             tapAction: function () {
-                console.log(this.getRecord());
+                Ext.getCmp('ss-edit-lift').showEditLift(record);
             }
         }));
     },
