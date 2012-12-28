@@ -6,6 +6,22 @@ Ext.define("Biglifts.views.Custom", {
         this.customMovementStore.clearFilter();
         this.customMovementStore.filter('liftProperty', Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
     },
+    arrangeAssistance: function () {
+        this.movementList.hide();
+        this.movementArrangeList.show();
+
+        this.topToolbar.hide();
+        this.topArrangeToolbar.show();
+        this.bottomToolbar.hide();
+    },
+    doneArranging: function () {
+        this.movementList.show();
+        this.movementArrangeList.hide();
+
+        this.topToolbar.show();
+        this.topArrangeToolbar.hide();
+        this.bottomToolbar.show();
+    },
     editCustomMovement: function (dataview, index) {
         var movement = this.customMovementStore.getAt(index);
         Ext.getCmp(this.movementEditor).showEditCustomMovement(movement);
@@ -41,71 +57,83 @@ Ext.define("Biglifts.views.Custom", {
         listeners: {
             initialize: function () {
                 var me = this;
-                me.add([
-                    {
-                        xtype: 'toolbar',
-                        docked: 'top',
-                        title: me.assistanceType,
-                        items: [
-                            {
-                                text: 'Back',
-                                ui: 'back',
-                                handler: function () {
-                                    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
-                                }
-                            },
-                            {
-                                xtype: 'spacer'
-                            },
-                            {
-                                text: 'Save',
-                                ui: 'confirm',
-                                listeners: {
-                                    initialize: function () {
-                                        this.setHandler(Ext.bind(me.logMovements, me));
-                                    }
-                                }
-                            }
-                        ]
-                    },
-                    {
-                        xtype: 'toolbar',
-                        docked: 'bottom',
-                        cls: 'unstyled-toolbar',
-                        items: [
-                            {
-                                text: 'Add...',
-                                ui: 'confirm',
-                                listeners: {
-                                    initialize: function () {
-                                        this.setHandler(Ext.bind(me.addCustomMovement, me));
-                                    }
-                                }
-                            }
-                        ]
-                    }
-                ]);
-                this.add({
-                    xtype: 'list',
-                    store: this.customMovementStore,
-                    itemTpl: new Ext.XTemplate("<table class='assistance-table'><tbody><tr>" +
-                        "<td width='50%'><span class='name'>{name}</b></td><td width='20%'>{sets} sets</td><td style='text-align:right;' width='30%'>{reps}x " +
-                        "{[this.getWeightDisplay(values.weight)]}" +
-                        "{[this.getUnits(values)]}</td>" +
-                        "</tr></tbody></table>",
+
+                me.topToolbar = me.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    title: me.assistanceType
+                });
+
+                me.topArrangeToolbar = me.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    title: me.assistanceType,
+                    hidden: true,
+                    items: [
+                        {xtype: 'spacer'},
                         {
-                            getWeightDisplay: function (weight) {
-                                return (weight == 0 || weight == null) ? "" : weight;
-                            },
-                            getUnits: function (values) {
-                                var weight = values.weight;
-                                return weight == 0 || weight == null ? "" : biglifts.stores.GlobalSettings.getUnits();
-                            }
-                        }),
-                    listeners: {
-                        itemtap: Ext.bind(this.editCustomMovement, this)
+                            xtype: 'button',
+                            text: 'Done',
+                            handler: Ext.bind(me.doneArranging, me)
+                        }
+                    ]
+                });
+
+                this.backButton = this.topToolbar.add({
+                    text: 'Back',
+                    ui: 'back',
+                    handler: function () {
+                        Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
                     }
                 });
+
+                this.topToolbar.add({
+                    xtype: 'spacer'
+                });
+
+                this.saveButton = this.topToolbar.add({
+                    text: 'Save',
+                    ui: 'confirm',
+                    listeners: {
+                        initialize: function () {
+                            this.setHandler(Ext.bind(me.logMovements, me));
+                        }
+                    }
+                });
+
+                me.bottomToolbar = me.add({
+                    xtype: 'toolbar',
+                    docked: 'bottom',
+                    cls: 'unstyled-toolbar',
+                    items: [
+                        {
+                            text: 'Add...',
+                            ui: 'confirm',
+                            listeners: {
+                                initialize: function () {
+                                    this.setHandler(Ext.bind(me.addCustomMovement, me));
+                                }
+                            }
+                        }
+                    ]
+                });
+
+                me.bottomToolbar.add({xtype: 'spacer'});
+                me.arrangeButton = me.bottomToolbar.add({
+                    xtype: 'button',
+                    text: 'Arrange',
+                    handler: Ext.bind(me.arrangeAssistance, me)
+                });
+
+                me.movementList = me.add(Ext.create('biglifts.views.CustomMovementList', {
+                    store: this.customMovementStore,
+                    tapAction: Ext.bind(this.editCustomMovement, this)
+                }));
+
+                me.movementArrangeList = me.add(Ext.create('biglifts.views.CustomMovementArrangeList', {
+                    store: this.customMovementStore,
+                    hidden: true
+                }));
             },
             painted: function () {
                 biglifts.navigation.setBackFunction(function () {
