@@ -55,11 +55,12 @@ Ext.ns("util.powerliftingTotal");
             util.withNoFilters(biglifts.stores.LiftLog, function () {
                 _.each(lifts, function (lift) {
                     maxes[lift] = 0;
-                    biglifts.stores.LiftLog.filter('liftName', lift);
-                    biglifts.stores.LiftLog.each(function (log) {
-                        maxes[lift] = _.max([util.formulas.estimateOneRepMax(log.get('weight'), log.get('reps')), maxes[lift]]);
-                    });
-                    biglifts.stores.LiftLog.clearFilter();
+                });
+
+                biglifts.stores.LiftLog.each(function (log) {
+                    var liftName = log.get('liftName');
+                    var logEstimate = util.formulas.estimateOneRepMax(log.get('weight'), log.get('reps'));
+                    maxes[liftName] = Math.max(logEstimate, maxes[liftName]);
                 });
             });
 
@@ -68,7 +69,7 @@ Ext.ns("util.powerliftingTotal");
         findMaxes: function (knownMaxes, logMaxes) {
             var combinedMaxes = {};
             _.each(knownMaxes, function (v, k) {
-                combinedMaxes[k] = logMaxes[k] ? _.max([logMaxes[k], v]) : v;
+                combinedMaxes[k] = logMaxes[k] ? Math.max(logMaxes[k], v) : v;
             });
 
             return combinedMaxes;

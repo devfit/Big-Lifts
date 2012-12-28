@@ -5,10 +5,7 @@ describe("Powerlifting Total", function () {
         this.lifts.removeAll();
         this.lifts.sync();
 
-        this.logEntry = biglifts.stores.LiftLog;
-        this.logEntry.load();
-        this.logEntry.removeAll();
-        this.logEntry.sync();
+        reloadStore(biglifts.stores.LiftLog);
     });
 
     describe("getTotal", function () {

@@ -11,7 +11,7 @@ Ext.define('TriumvirateMovement', {
 });
 
 Ext.define("TriumvirateMovementStore", {
-    extend: "Ext.data.Store",
+    extend: "CustomMovementStore",
     DEFAULT_CUSTOM_LIFTS: [
         {liftProperty: 'squat', name: 'Leg Press', sets: 5, reps: 15, order: 0},
         {liftProperty: 'squat', name: 'Leg Curl', sets: 5, reps: 15, order: 1},
@@ -22,28 +22,6 @@ Ext.define("TriumvirateMovementStore", {
         {liftProperty: 'bench', name: 'Dumbbell Bench Press', sets: 5, reps: 15, order: 0},
         {liftProperty: 'bench', name: 'Dumbbell Row', sets: 5, reps: 15, order: 1}
     ],
-    addMissingCustomLiftAssociations: function () {
-        var store = this;
-        util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
-            util.withNoFilters(biglifts.stores.lifts.Lifts, function () {
-                biglifts.stores.lifts.Lifts.each(function (lift) {
-                    var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
-                    if (!existingMovement) {
-                        for (var i = 0; i < 2; i++) {
-                            store.add({
-                                liftProperty: lift.get('propertyName'),
-                                name: '?',
-                                sets: 5,
-                                reps: 15,
-                                order: i
-                            });
-                        }
-                        store.sync();
-                    }
-                });
-            });
-        });
-    },
     config: {
         model: 'TriumvirateMovement',
         storeId: 'triumvirate',
@@ -54,15 +32,8 @@ Ext.define("TriumvirateMovementStore", {
                     this.sync();
                 }
                 this.addMissingCustomLiftAssociations();
-                biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.addMissingCustomLiftAssociations, this));
             }
-        },
-        sorters: [
-            {
-                property: 'order',
-                direction: 'ASC'
-            }
-        ]
+        }
     }
 });
 

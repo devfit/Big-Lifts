@@ -12,7 +12,7 @@ Ext.define("biglifts.views.CustomPanel", {
         Ext.getCmp(this.getMovementEditor()).showEditCustomMovement(movement);
     },
     addCustomMovement: function () {
-        this.getCustomMovementStore().add({liftProperty: Ext.getCmp('assistance-lift-chooser').currentLiftProperty, name: "", sets: 5, reps: 15});
+        this.getCustomMovementStore().addWithOrder({liftProperty: Ext.getCmp('assistance-lift-chooser').currentLiftProperty, name: "", sets: 5, reps: 15});
         this.getCustomMovementStore().sync();
         Ext.getCmp(this.getMovementEditor()).showEditCustomMovement(this.getCustomMovementStore().last());
     },

@@ -22,29 +22,6 @@ Ext.define('LiftLog', {
     }
 });
 
-biglifts.stores.migrations.migrateDatesToTimestamps = function (r) {
-    var date = r.get('date');
-    var timestamp = r.get('timestamp');
-    if (timestamp === 0) {
-        if (date === null) {
-            r.set('timestamp', new Date().getTime());
-            biglifts.stores.LiftLog.sync();
-        }
-        else {
-            r.set('timestamp', date.getTime());
-            biglifts.stores.LiftLog.sync();
-        }
-    }
-};
-
-biglifts.stores.migrations.setupExpectedReps = function (r) {
-    if (r.get('expectedReps') <= 0) {
-        r.set('expectedReps', biglifts.stores.lifts.LiftProgression.findExpectedRepsForWeek(r.get('week')));
-        r.save();
-        biglifts.stores.LiftLog.sync();
-    }
-};
-
 Ext.define('LiftLogStore', {
     sortLog:function (property, direction) {
         this.sort(property, direction);
@@ -58,22 +35,9 @@ Ext.define('LiftLogStore', {
             this.sort();
         }
     },
-    liftLogMigration:function () {
-        util.withNoFilters(biglifts.stores.LiftLog, function () {
-            biglifts.stores.LiftLog.each(function (r) {
-                biglifts.stores.migrations.migrateDatesToTimestamps(r);
-                biglifts.stores.migrations.setupExpectedReps(r);
-            });
-        });
-    },
     extend:'Ext.data.Store',
     config:{
-        model:'LiftLog',
-        listeners:{
-            load:function () {
-                this.liftLogMigration();
-            }
-        }
+        model:'LiftLog'
     }
 });
 

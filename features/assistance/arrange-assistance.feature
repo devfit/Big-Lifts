@@ -2,7 +2,14 @@
 @premium
 Feature: Custom - Arrange assistance
 
-  Scenario: Viewing Custom lifts for non-default lifts
+  Scenario: Adding a new lift with ordering in effect
+    When I tap the assistance tab
+    And I select "Custom" assistance work
+    And I tap the "Squat" list item
+    And I tap the "Add..." button
+    Then The "Name" input is ""
+
+  Scenario: Arranging assistance
     When I tap the assistance tab
     And I select "Custom" assistance work
     And I tap the "Squat" list item

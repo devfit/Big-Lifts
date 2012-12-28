@@ -10,7 +10,7 @@ Ext.define('BodyweightMovement', {
 });
 
 Ext.define("BodyweightMovementStore", {
-    extend: "Ext.data.Store",
+    extend: "CustomMovementStore",
     DEFAULT_BODYWEIGHT_LIFTS: [
         {liftProperty: 'squat', name: 'One leg squat', sets: 5, reps: 15, order: 0},
         {liftProperty: 'squat', name: 'Sit-ups', sets: 5, reps: 15, order: 1},
@@ -21,26 +21,6 @@ Ext.define("BodyweightMovementStore", {
         {liftProperty: 'bench', name: 'Chins', sets: 5, reps: 15, order: 0},
         {liftProperty: 'bench', name: 'Pushups', sets: 5, reps: 15, order: 1}
     ],
-    addMissingCustomLiftAssociations: function () {
-        var store = this;
-        util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
-            biglifts.stores.lifts.Lifts.each(function (lift) {
-                var existingMovement = store.findRecord('liftProperty', lift.get('propertyName'));
-                if (!existingMovement) {
-                    for (var i = 0; i < 2; i++) {
-                        store.add({
-                            liftProperty: lift.get('propertyName'),
-                            name: '?',
-                            sets: 5,
-                            reps: 15,
-                            order: i
-                        });
-                    }
-                    store.sync();
-                }
-            });
-        });
-    },
     config: {
         model: 'BodyweightMovement',
         listeners: {
@@ -51,13 +31,7 @@ Ext.define("BodyweightMovementStore", {
                 }
                 this.addMissingCustomLiftAssociations();
             }
-        },
-        sorters: [
-            {
-                property: 'order',
-                direction: 'ASC'
-            }
-        ]
+        }
     }
 });
 
