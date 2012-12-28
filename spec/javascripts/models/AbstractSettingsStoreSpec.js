@@ -1,7 +1,5 @@
 describe("Abstract Settings Stores", function () {
     beforeEach(function () {
-        localStorage.clear();
-
         Ext.define('TestModel', {
             extend: "Ext.data.Model",
             config: {

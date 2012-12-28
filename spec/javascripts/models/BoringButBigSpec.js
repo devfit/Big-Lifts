@@ -1,6 +1,5 @@
 describe("Boring But Big Model", function () {
     beforeEach(function () {
-        localStorage.clear();
         this.lifts = biglifts.stores.lifts.Lifts;
         this.bbb = biglifts.stores.assistance.BoringButBig;
         this.lifts.removeAll();
@@ -9,8 +8,8 @@ describe("Boring But Big Model", function () {
         this.bbb.sync();
 
         this.bbbPercentage = biglifts.stores.assistance.BoringButBigPercentage;
-        this.bbbPercentage.load();
-        biglifts.stores.w.Settings.load();
+        reloadStore(this.bbbPercentage);
+        reloadStore(biglifts.stores.w.Settings);
     });
 
     it("should default to a copy of each of the current big lifts", function () {

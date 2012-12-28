@@ -1,6 +1,5 @@
 describe("The lift log store", function () {
     beforeEach(function () {
-        localStorage.clear();
         this.liftLog = biglifts.stores.LiftLog;
     });
 

@@ -1,6 +1,5 @@
 describe("Lift Completion Model and Store", function () {
     beforeEach(function(){
-        localStorage.clear();
         this.liftCompletion = biglifts.stores.lifts.LiftCompletion;
         this.lifts = biglifts.stores.lifts.Lifts;
     });
