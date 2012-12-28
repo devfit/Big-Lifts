@@ -45,6 +45,6 @@ Then /^Set (\d+) is ([\w\s]*?)marked as (\w+)/ do |set_number, not_modifier, mar
   end
 end
 
-When /^I tap list item (\d+)$/ do |list_index|
+When /^I tap  (\d+)$/ do |list_index|
   get_displayed_list_items()[list_index.to_i - 1].click
 end

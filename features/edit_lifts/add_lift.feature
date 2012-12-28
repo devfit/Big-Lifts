@@ -4,7 +4,7 @@ Feature: adding lifts
   Scenario: newly added lift can be edited
     When I add a new lift named "TestLift" with max 100
     And I tap the "Edit" button
-    And I tap the "TestLift" list item
+    And I tap the "TestLift"
     And I edit the name to be "TestLift2"
     And I tap the "Back" button
     Then "TestLift2" is added to the edit lifts screen

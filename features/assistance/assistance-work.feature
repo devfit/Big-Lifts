@@ -16,7 +16,7 @@ Feature: Assistance Work
   Scenario: Remembering the last assistance selection between workouts
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Squat" list item
+    And I tap the "Squat"
     And I tap the "Save" button
     And I wait for the animation
     When I tap the assistance tab

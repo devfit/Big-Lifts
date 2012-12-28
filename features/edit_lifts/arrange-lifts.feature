@@ -10,7 +10,7 @@ Feature: Arrange lifts
     When I add a new lift named "TestLift" with max 100
     And I tap the "Edit" button
     And I tap the "Arrange" button
-    And I tap the "TestLift" list item
+    And I tap the "TestLift"
     And I tap the move up button
     And I tap the move up button
     And I tap the move down button
@@ -22,7 +22,7 @@ Feature: Arrange lifts
     When I navigate to the lift editor
     And I tap the "Edit" button
     And I tap the "Arrange" button
-    And I tap the "Press" list item
+    And I tap the "Press"
     And I tap the move down button
     And I tap the "Done" button
     And I navigate to the lift schedule
@@ -32,7 +32,7 @@ Feature: Arrange lifts
     When I navigate to the lift editor
     And I tap the "Edit" button
     And I tap the "Arrange" button
-    And I tap the "Squat" list item
+    And I tap the "Squat"
     And I tap the move up button
     And I tap the "Done" button
     And I navigate to the lift schedule

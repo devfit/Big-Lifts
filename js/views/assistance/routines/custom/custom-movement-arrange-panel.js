@@ -75,7 +75,7 @@ Ext.define('biglifts.views.CustomMovementArrangePanel', {
                 var me = this;
                 var topToolbar = me.add({
                     xtype: 'toolbar',
-                    title: 'Custom',
+                    title: 'Arrange',
                     docked: 'top'
                 });
 

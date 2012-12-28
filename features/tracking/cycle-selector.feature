@@ -5,7 +5,7 @@ Feature: Filtering log by cycle
   Scenario: Filtering assistance entries
     When I tap the assistance tab
     And I select "Bodyweight" assistance work
-    And I tap the "Squat" list item
+    And I tap the "Squat"
     And I tap the "Save" button
 
     When I navigate to the lift schedule
@@ -14,7 +14,7 @@ Feature: Filtering log by cycle
 
     And I tap the assistance tab
     And I select "Bodyweight" assistance work
-    And I tap the "Squat" list item
+    And I tap the "Squat"
     And I tap the "Save" button
 
     And I tap the "Asst." button
