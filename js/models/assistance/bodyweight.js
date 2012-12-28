@@ -32,7 +32,8 @@ Ext.define("BodyweightMovementStore", {
                             liftProperty: lift.get('propertyName'),
                             name: '?',
                             sets: 5,
-                            reps: 15
+                            reps: 15,
+                            order: i
                         });
                     }
                     store.sync();

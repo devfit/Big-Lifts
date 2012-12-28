@@ -58,7 +58,8 @@ Ext.define('BoringButBigStore', {
                         movement_lift_id: r.get('id'),
                         weight: null,
                         reps: 10,
-                        sets: 5
+                        sets: 5,
+                        order: 0
                     });
                 }
             });

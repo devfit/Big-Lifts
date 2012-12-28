@@ -21,7 +21,7 @@ Ext.define("biglifts.views.CustomPanel", {
         this.getCustomMovementStore().each(function (record) {
             var assistanceRecord = {
                 movement: record.get('name'),
-                assistanceType: me.assistanceType,
+                assistanceType: me.getAssistanceType(),
                 sets: record.get('sets'),
                 reps: record.get('reps'),
                 weight: record.get('weight'),
