@@ -1,7 +1,4 @@
-Ext.ns('biglifts.views.liftSchedule.assistance');
-
 Ext.define("biglifts.views.BoringButBig", {
-    xtype: 'boringbutbig',
     extend: "Ext.Panel",
     addMovement: function () {
         var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
@@ -14,7 +11,7 @@ Ext.define("biglifts.views.BoringButBig", {
             name: ''
         };
 
-        biglifts.stores.assistance.BoringButBig.add(bbbMovement);
+        biglifts.stores.assistance.BoringButBig.addWithOrder(bbbMovement);
         biglifts.stores.assistance.BoringButBig.sync();
         Ext.getCmp('bbb-movement-editor').showEditBbbMovement(biglifts.stores.assistance.BoringButBig.last());
     },
@@ -38,6 +35,7 @@ Ext.define("biglifts.views.BoringButBig", {
         Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big-notes'));
     },
     liftsComplete: function () {
+        var me = this;
         biglifts.stores.assistance.BoringButBig.each(function (movement) {
             var assistanceRecord = {
                 movement: biglifts.stores.assistance.BoringButBig.getNameForRecord(movement.data),
@@ -46,7 +44,7 @@ Ext.define("biglifts.views.BoringButBig", {
                 reps: movement.get('reps'),
                 weight: biglifts.stores.assistance.BoringButBig.getWeightForRecord(movement.data),
                 timestamp: new Date().getTime(),
-                notes: biglifts.liftSchedule.assistance.boringButBig.currentNotes,
+                notes: me.currentNotes,
                 cycle: biglifts.stores.CurrentCycle.getCurrentCycle()
             };
             biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
@@ -89,10 +87,10 @@ Ext.define("biglifts.views.BoringButBig", {
         var newValue = event.target.value;
         biglifts.stores.assistance.BoringButBigPercentage.first().set('percentage', newValue);
         biglifts.stores.assistance.BoringButBigPercentage.sync();
-        Ext.getCmp('boring-but-big-list').refresh();
+        this.bbbList.refresh();
     },
-
     config: {
+        id: 'boring-but-big',
         layout: 'fit',
         listeners: {
             initialize: function () {
@@ -168,45 +166,41 @@ Ext.define("biglifts.views.BoringButBig", {
                                 handler: Ext.bind(me.addMovement, me)
                             }
                         ]
-                    },
-                    {
-                        id: 'boring-but-big-list',
-                        flex: 2,
-                        xtype: 'list',
-                        store: biglifts.stores.assistance.BoringButBig,
-                        itemTpl: "<table class='assistance-table'><tbody><tr>" +
-                            "<td width='50%'><span class='name'>{[biglifts.stores.assistance.BoringButBig.getNameForRecord(values)]}</b></td>" +
-                            "<td width='20%'>{sets} sets</td>" +
-                            "<td style='text-align:right;' width='30%'>{reps}x " +
-                            "<span class='weight'>{[Ext.getCmp('boring-but-big').formatWeight(values)]}</span>" +
-                            "{[Ext.getCmp('boring-but-big').formatUnits(values)]}</td>" +
-                            "</tr></tbody></table>{[Ext.getCmp('boring-but-big').getPlateBreakdown(values)]}",
-                        listeners: {
-                            initialize: function (list) {
-                                list.addListener('itemtap', Ext.bind(me.editBbbMovement, me));
-                            }
-                        }
                     }
                 ]);
+                me.bbbList = me.add({
+                    id: 'boring-but-big-list',
+                    flex: 2,
+                    xtype: 'list',
+                    store: biglifts.stores.assistance.BoringButBig,
+                    itemTpl: "<table class='assistance-table'><tbody><tr>" +
+                        "<td width='50%'><span class='name'>{[biglifts.stores.assistance.BoringButBig.getNameForRecord(values)]}</b></td>" +
+                        "<td width='20%'>{sets} sets</td>" +
+                        "<td style='text-align:right;' width='30%'>{reps}x " +
+                        "<span class='weight'>{[Ext.getCmp('boring-but-big').formatWeight(values)]}</span>" +
+                        "{[Ext.getCmp('boring-but-big').formatUnits(values)]}</td>" +
+                        "</tr></tbody></table>{[Ext.getCmp('boring-but-big').getPlateBreakdown(values)]}",
+                    listeners: {
+                        initialize: function (list) {
+                            list.addListener('itemtap', Ext.bind(me.editBbbMovement, me));
+                        }
+                    }
+                });
             },
             painted: function () {
-                this.filterLifts();
+                var me = this;
+                me.filterLifts();
                 biglifts.navigation.setBackFunction(function () {
                     Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
                 });
 
-                if (!this._painted) {
-                    this._painted = true;
+                if (!me._painted) {
+                    me._painted = true;
                     biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
-                        Ext.getCmp('boring-but-big-list').refresh();
+                        me.bbbList.refresh();
                     });
                 }
             }
         }
     }
 });
-
-biglifts.views.liftSchedule.assistance.BoringButBig = {
-    id: 'boring-but-big',
-    xtype: 'boringbutbig'
-};

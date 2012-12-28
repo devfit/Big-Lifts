@@ -22,9 +22,12 @@ Ext.define('BoringButBigLift', {
     }
 });
 
-
 Ext.define('BoringButBigStore', {
     extend: 'Ext.data.Store',
+    addWithOrder: function (recordConfig) {
+        recordConfig.order = this.max('order') + 1;
+        this.add(recordConfig);
+    },
     getWeightForRecord: function (data) {
         if (data.weight) {
             return data.weight;

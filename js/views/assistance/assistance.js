@@ -14,7 +14,7 @@ Ext.define('biglifts.views.Assistance', {
                 this.add([
                     {xtype: 'assistancechooser'},
                     {xtype: 'assistanceliftchooser'},
-                    biglifts.views.liftSchedule.assistance.BoringButBig,
+                    Ext.create('biglifts.views.BoringButBig'),
                     Ext.create('biglifts.views.BoringButBigMovementEditor'),
                     biglifts.views.liftSchedule.assistance.Bodyweight,
                     biglifts.views.liftSchedule.assistance.BodyweightMovementEditor,

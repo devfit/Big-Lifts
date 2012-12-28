@@ -32,6 +32,9 @@ Ext.define('biglifts.views.log.cards.NotesEditor', {
     _setNotes:function (notes) {
         this.down('[name=notes]').setValue(notes);
     },
+    getNotes: function(){
+        return this.down('[name=notes]').getValue();
+    },
     config:{
         layout:'fit',
         listeners:{

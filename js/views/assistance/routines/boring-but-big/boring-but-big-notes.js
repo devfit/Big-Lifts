@@ -1,20 +1,19 @@
-Ext.ns('biglifts.views.assistance', 'biglifts.liftSchedule.assistance.boringButBig');
-
-biglifts.liftSchedule.assistance.boringButBig.currentNotes = "";
-biglifts.liftSchedule.assistance.boringButBig.returnToBoringButBig = function (notes) {
-    biglifts.liftSchedule.assistance.boringButBig.currentNotes = notes;
-    Ext.getCmp('assistance').setActiveItem(Ext.getCmp('boring-but-big'));
-    biglifts.components.notesEditor.displayNotes('bbb-log-notes', notes);
-};
-
 Ext.define('biglifts.views.assistance.BoringButBigNotes', {
-    extend:'biglifts.views.log.cards.NotesEditor',
-    xtype:'boringbutbignotes',
-    _returnCallback:biglifts.liftSchedule.assistance.boringButBig.returnToBoringButBig,
-    listeners:{
-        painted:function () {
-            biglifts.navigation.setBackFunction(biglifts.liftSchedule.assistance.boringButBig.returnToBoringButBig);
-            this._setNotes(biglifts.liftSchedule.assistance.boringButBig.currentNotes);
+    extend: 'biglifts.views.log.cards.NotesEditor',
+    xtype: 'boringbutbignotes',
+    _returnCallback: function (notes) {
+        var boringButBig = Ext.getCmp('boring-but-big');
+        boringButBig.currentNotes = notes;
+        Ext.getCmp('assistance').setActiveItem(boringButBig);
+        biglifts.components.notesEditor.displayNotes('bbb-log-notes', notes);
+    },
+    listeners: {
+        painted: function () {
+            var me = this;
+            biglifts.navigation.setBackFunction(function () {
+                me._returnCallback(me.getNotes());
+            });
+            this._setNotes(Ext.getCmp('boring-but-big').currentNotes);
         }
     }
 });
