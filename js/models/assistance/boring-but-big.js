@@ -12,7 +12,8 @@ Ext.define('BoringButBigLift', {
             {name: 'name', type: 'string'},
             {name: 'weight', type: 'float'},
             {name: 'reps', type: 'int'},
-            {name: 'sets', type: 'int'}
+            {name: 'sets', type: 'int'},
+            {name: 'order', type: 'int'}
         ],
         proxy: {
             type: 'localstorage',
@@ -71,7 +72,13 @@ Ext.define('BoringButBigStore', {
             load: function () {
                 this.syncAssistanceToLifts();
             }
-        }
+        },
+        sorters: [
+            {
+                property: 'order',
+                direction: 'ASC'
+            }
+        ]
     }
 });
 

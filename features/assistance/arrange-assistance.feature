@@ -1,6 +1,7 @@
 @531
 @premium
 Feature: Custom - Arrange assistance
+
   Scenario: Viewing Custom lifts for non-default lifts
     When I tap the assistance tab
     And I select "Custom" assistance work
@@ -14,3 +15,7 @@ Feature: Custom - Arrange assistance
     Then Assistance movement 1 is "Move1 5 sets 15x"
     Then Assistance movement 2 is "Move2 5 sets 15x"
     And I tap the "Arrange" button
+    And I tap the "Move1" list item
+    And I tap the move down button
+    And I tap the "Done" button
+    Then Assistance movement 1 is "Move2 5 sets 15x"

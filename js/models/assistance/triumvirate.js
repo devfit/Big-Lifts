@@ -13,14 +13,14 @@ Ext.define('TriumvirateMovement', {
 Ext.define("TriumvirateMovementStore", {
     extend: "Ext.data.Store",
     DEFAULT_CUSTOM_LIFTS: [
-        {liftProperty: 'squat', name: 'Leg Press', sets: 5, reps: 15},
-        {liftProperty: 'squat', name: 'Leg Curl', sets: 5, reps: 15},
-        {liftProperty: 'deadlift', name: 'Good Morning', sets: 5, reps: 15},
-        {liftProperty: 'deadlift', name: 'Hanging Leg Raise', sets: 5, reps: 15},
-        {liftProperty: 'press', name: 'Dips', sets: 5, reps: 15},
-        {liftProperty: 'press', name: 'Chin-Ups', sets: 5, reps: 15},
-        {liftProperty: 'bench', name: 'Dumbbell Bench Press', sets: 5, reps: 15},
-        {liftProperty: 'bench', name: 'Dumbbell Row', sets: 5, reps: 15}
+        {liftProperty: 'squat', name: 'Leg Press', sets: 5, reps: 15, order: 0},
+        {liftProperty: 'squat', name: 'Leg Curl', sets: 5, reps: 15, order: 1},
+        {liftProperty: 'deadlift', name: 'Good Morning', sets: 5, reps: 15, order: 0},
+        {liftProperty: 'deadlift', name: 'Hanging Leg Raise', sets: 5, reps: 15, order: 1},
+        {liftProperty: 'press', name: 'Dips', sets: 5, reps: 15, order: 0},
+        {liftProperty: 'press', name: 'Chin-Ups', sets: 5, reps: 15, order: 1},
+        {liftProperty: 'bench', name: 'Dumbbell Bench Press', sets: 5, reps: 15, order: 0},
+        {liftProperty: 'bench', name: 'Dumbbell Row', sets: 5, reps: 15, order: 1}
     ],
     addMissingCustomLiftAssociations: function () {
         var store = this;
@@ -55,7 +55,13 @@ Ext.define("TriumvirateMovementStore", {
                 this.addMissingCustomLiftAssociations();
                 biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.addMissingCustomLiftAssociations, this));
             }
-        }
+        },
+        sorters: [
+            {
+                property: 'order',
+                direction: 'ASC'
+            }
+        ]
     }
 });
 

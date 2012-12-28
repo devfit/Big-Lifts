@@ -1,11 +1,9 @@
 When /^I tap the move down button$/ do
-  @driver.find_element(:id => 'arrange-lifts-down-button').click()
-
+  @driver.find_elements(:class => 'arrow_down').select { |a| a.displayed? }[0].click
 end
 
 When /^I tap the move up button$/ do
-  @driver.find_element(:id => 'arrange-lifts-up-button').click()
-
+  @driver.find_elements(:class => 'arrow_up').select { |a| a.displayed? }[0].click
 end
 
 Then /^The lift schedule orders lifts as "([^"]+)"$/ do |liftsText|
