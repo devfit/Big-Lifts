@@ -1,6 +1,5 @@
 Ext.define('biglifts.views.LiftLogList', {
     extend:'Ext.dataview.List',
-    xtype:'liftloglist',
     deloadMarker:function (week) {
         return week === 4 ? "[D]" : "";
     },

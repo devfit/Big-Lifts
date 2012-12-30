@@ -15,7 +15,7 @@ Ext.define('biglifts.views.Log', {
         listeners: {
             initialize: function () {
                 this.add([
-                    biglifts.views.log.cards.LogList,
+                    Ext.create('biglifts.views.LogList'),
                     biglifts.views.log.cards.EditLogEntry,
                     biglifts.views.log.cards.EditAssistanceLogEntry,
                     {
