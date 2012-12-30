@@ -1,20 +1,42 @@
 Ext.define('biglifts.views.ss.Track', {
     extend: 'Ext.Panel',
+    showSortMenu: function () {
+        util.components.toggleVisibility(this.sortToolbar);
+    },
+    sortLifts: function (sortProperty, sortDirection) {
+        biglifts.stores.LiftLog.sort(sortProperty, sortDirection);
+        this.logList.refresh();
+    },
+    sortAndRefreshList: function () {
+        var liftLogSort = biglifts.stores.LogSort.first();
+        var sortDirection = liftLogSort.get('ascending') ? 'ASC' : 'DESC';
+        var sortProperty = liftLogSort.get('property');
+        this.sortLifts(sortProperty, sortDirection);
+    },
     config: {
         id: 'ss-track-tab',
         iconCls: 'bookmarks',
         layout: 'card',
         title: 'Track',
-        items: [
-            {
-                xtype: 'toolbar',
-                docked: 'top',
-                title: 'Track'
-            }
-        ],
         listeners: {
             initialize: function () {
-                this.add({
+                this.topToolbar = this.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    title: 'Track',
+                    items: [
+                        {
+                            xtype: 'button',
+                            ui: 'action',
+                            text: 'Sort',
+                            handler: Ext.bind(this.showSortMenu, this)
+                        }
+                    ]
+                });
+
+                this.sortToolbar = this.add(Ext.create('biglifts.components.SortToolbar', {alphaEnabled: false}));
+
+                this.logList = this.add({
                     xtype: 'list',
                     store: biglifts.stores.ss.CombinedLog,
                     itemTpl: new Ext.XTemplate("<table class='ss-workout'><tbody>" +
@@ -51,6 +73,17 @@ Ext.define('biglifts.views.ss.Track', {
             },
             painted: function () {
                 biglifts.navigation.unbindBackEvent();
+
+                if (!this._painted) {
+                    this._painted = true;
+                    this.sortAndRefreshList();
+
+                    biglifts.stores.ss.Log.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
+                    biglifts.stores.LogSort.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
+                    biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(function () {
+                        this.logList.refresh();
+                    }), this);
+                }
             }
         }
     }

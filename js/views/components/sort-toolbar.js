@@ -15,7 +15,7 @@ Ext.define('biglifts.components.SortToolbar', {
         }
     },
     sortBy: function (selectedProperty) {
-        var sortStore = this.getSortStore().first();
+        var sortStore = biglifts.stores.LogSort.first();
         var property = sortStore.get('property');
         if (property === selectedProperty) {
             sortStore.set('ascending', !sortStore.get('ascending'));
@@ -29,21 +29,25 @@ Ext.define('biglifts.components.SortToolbar', {
             sortStore.set('property', selectedProperty);
             sortStore.set('ascending', defaultAscending[selectedProperty]);
         }
-        this.getSortStore().sync();
+        biglifts.stores.LogSort.sync();
     },
     updateUiForSortButtons: function () {
-        var sortStore = this.getSortStore().first();
+        var sortStore = biglifts.stores.LogSort.first();
 
         if (sortStore.get('property') === "liftName") {
-            this.sortNameButton.hide();
-            this.sortNameActiveButton.show();
+            if (this.getAlphaEnabled()) {
+                this.sortNameButton.hide();
+                this.sortNameActiveButton.show();
+            }
 
             this.sortDateActiveButton.hide();
             this.sortDateButton.show();
         }
         else if (sortStore.get('property') === "timestamp") {
-            this.sortNameActiveButton.hide();
-            this.sortNameButton.show();
+            if (this.getAlphaEnabled()) {
+                this.sortNameActiveButton.hide();
+                this.sortNameButton.show();
+            }
 
             this.sortDateButton.hide();
             this.sortDateActiveButton.show();
@@ -52,13 +56,15 @@ Ext.define('biglifts.components.SortToolbar', {
         this.updateAscendingText();
     },
     updateAscendingText: function () {
-        var sortStore = this.getSortStore().first();
+        var sortStore = biglifts.stores.LogSort.first();
 
         var sortProperty = sortStore.data.property;
         var sortDirectionText = sortStore.data.ascending ? "ASC" : "DESC";
         if (sortProperty === "liftName") {
-            this.sortNameButton.setText(this.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
-            this.sortNameActiveButton.setText(this.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
+            if( this.getAlphaEnabled() ){
+                this.sortNameButton.setText(this.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
+                this.sortNameActiveButton.setText(this.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
+            }
 
             var dateText = this.PROPERTY_TO_ASCENDING_TEXT['timestamp'][this.DEFAULT_PROPERTY_ASCENDING['timestamp']];
             this.sortDateButton.setText(dateText);
@@ -69,12 +75,16 @@ Ext.define('biglifts.components.SortToolbar', {
             this.sortDateActiveButton.setText(this.PROPERTY_TO_ASCENDING_TEXT['timestamp'][sortDirectionText]);
 
             var liftNameText = this.PROPERTY_TO_ASCENDING_TEXT['liftName'][this.DEFAULT_PROPERTY_ASCENDING['liftName']];
-            this.sortNameButton.setText(liftNameText);
-            this.sortNameActiveButton.setText(liftNameText);
+
+            if( this.getAlphaEnabled() ){
+                this.sortNameButton.setText(liftNameText);
+                this.sortNameActiveButton.setText(liftNameText);
+            }
         }
     },
     config: {
-        sortStore: null,
+        alphaEnabled: true,
+        dateEnabled: true,
         docked: 'top',
         xtype: 'toolbar',
         ui: 'light',
@@ -88,48 +98,53 @@ Ext.define('biglifts.components.SortToolbar', {
                 this.updateUiForSortButtons();
                 if (!this._painted) {
                     this._painted = true;
-                    this.getSortStore().addListener('beforesync', Ext.bind(this.updateUiForSortButtons, this));
+                    biglifts.stores.LogSort.addListener('beforesync', Ext.bind(this.updateUiForSortButtons, this));
                 }
             },
             initialize: function () {
                 var me = this;
-                me.sortNameButton = me.add({
-                    ui: 'action',
-                    xtype: 'button',
-                    text: "A-Z",
-                    handler: function () {
-                        me.sortBy('liftName');
-                    }
-                });
+                if (this.getAlphaEnabled()) {
+                    console.log(this.getAlphaEnabled());
+                    me.sortNameButton = me.add({
+                        ui: 'action',
+                        xtype: 'button',
+                        text: "A-Z",
+                        handler: function () {
+                            me.sortBy('liftName');
+                        }
+                    });
 
-                me.sortNameActiveButton = me.add({
-                    hidden: true,
-                    ui: 'confirm',
-                    xtype: 'button',
-                    text: "A-Z",
-                    handler: function () {
-                        me.sortBy('liftName');
-                    }
-                });
+                    me.sortNameActiveButton = me.add({
+                        hidden: true,
+                        ui: 'confirm',
+                        xtype: 'button',
+                        text: "A-Z",
+                        handler: function () {
+                            me.sortBy('liftName');
+                        }
+                    });
+                }
 
-                me.sortDateButton = me.add({
-                    ui: 'action',
-                    xtype: 'button',
-                    text: "Newest",
-                    handler: function () {
-                        me.sortBy('timestamp');
-                    }
-                });
+                if (this.getDateEnabled()) {
+                    me.sortDateButton = me.add({
+                        ui: 'action',
+                        xtype: 'button',
+                        text: "Newest",
+                        handler: function () {
+                            me.sortBy('timestamp');
+                        }
+                    });
 
-                me.sortDateActiveButton = me.add({
-                    hidden: true,
-                    ui: 'confirm',
-                    xtype: 'button',
-                    text: "Newest",
-                    handler: function () {
-                        me.sortBy('timestamp');
-                    }
-                });
+                    me.sortDateActiveButton = me.add({
+                        hidden: true,
+                        ui: 'confirm',
+                        xtype: 'button',
+                        text: "Newest",
+                        handler: function () {
+                            me.sortBy('timestamp');
+                        }
+                    });
+                }
             }
         }
     }

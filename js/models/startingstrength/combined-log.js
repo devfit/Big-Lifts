@@ -34,11 +34,18 @@ Ext.define('biglifts.models.startingstrength.CombinedLogStore', {
             biglifts.stores.ss.Log.addListener('beforesync', Ext.bind(me.rebuildCombinedStore, me));
         });
     },
+    sortBySaved: function(){
+        var me = this;
+        util.withLoadedStore(biglifts.stores.LogSort,function(){
+
+        });
+    },
     config: {
         model: 'biglifts.models.startingstrength.CombinedLog',
         listeners: {
             load: function () {
                 this.rebuildCombinedStore();
+                this.sortBySaved();
             }
         }
     }
