@@ -53,16 +53,21 @@ Ext.define('LiftCompletionStore', {
         });
     },
     findLiftCompletionByPropertyAndWeek: function (liftPropertyName, week) {
-        var completionIndex = biglifts.stores.lifts.LiftCompletion.findBy(function (r) {
+        var completionIndex = this.findBy(function (r) {
             return r.get('liftPropertyName') === liftPropertyName && r.get('week') === week;
         });
-        return biglifts.stores.lifts.LiftCompletion.getAt(completionIndex);
+
+        return this.getAt(completionIndex);
     },
     config: {
         model: 'LiftCompletion',
         storeId: 'liftCompletions',
         listeners: {
             load: function () {
+                if (this.getCount() === 0) {
+                    this.addMissingLiftCompletions();
+                }
+
                 biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.addMissingLiftCompletions, this));
                 biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.removeDeadLiftCompletions, this));
             }
