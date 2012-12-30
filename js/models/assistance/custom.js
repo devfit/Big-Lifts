@@ -33,7 +33,6 @@ Ext.define('CustomMovementStore', {
                             });
                         }
                         store.sync();
-                        biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(store.addMissingCustomLiftAssociations, store));
                     }
                 });
             });

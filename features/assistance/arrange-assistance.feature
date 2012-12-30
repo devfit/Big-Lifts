@@ -34,10 +34,10 @@ Feature: Custom - Arrange assistance
     And I tap assistance row 2
     And I set the "Name" input to "Move2"
     And I tap the "Back" button
-    Then Assistance movement 1 is "Move1 5 sets 15x"
-    Then Assistance movement 2 is "Move2 5 sets 15x"
+    Then List item 1 contains "Move1 5 sets 15x"
+    Then List item 2 contains "Move2 5 sets 15x"
     And I tap the "Arrange" button
     And I tap the "Move1" list item
     And I tap the move down button
     And I tap the "Done" button
-    Then Assistance movement 1 is "Move2 5 sets 15x"
+    Then List item 1 contains "Move2 5 sets 15x"

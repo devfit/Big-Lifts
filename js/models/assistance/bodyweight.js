@@ -30,6 +30,7 @@ Ext.define("BodyweightMovementStore", {
                     this.sync();
                 }
                 this.addMissingCustomLiftAssociations();
+                biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.addMissingCustomLiftAssociations, this));
             }
         }
     }

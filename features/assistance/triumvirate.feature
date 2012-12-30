@@ -7,8 +7,8 @@ Feature: Custom - Assistance Work
     When I tap the assistance tab
     And I select "Custom" assistance work
     And I tap the "Clean" list item
-    Then Assistance movement 1 is "? 5 sets 15x"
-    Then Assistance movement 2 is "? 5 sets 15x"
+    Then List item 1 contains "? 5 sets 15x"
+    Then List item 2 contains "? 5 sets 15x"
     And I tap assistance row 1
     And I change the custom movement name to "Move1"
     And I tap the "Back" button
@@ -29,7 +29,7 @@ Feature: Custom - Assistance Work
     And I change the custom movement name to "Good Morning"
     And I change the custom movement weight to 65
     And I tap the "Back" button
-    Then Assistance movement 3 is "Good Morning 5 sets 15x 65lbs"
+    Then List item 3 contains "Good Morning 5 sets 15x 65lbs"
     And I tap the "Save" button
     Then I am on the track tab
     And I tap the "Asst." button
@@ -47,8 +47,8 @@ Feature: Custom - Assistance Work
     When I tap the assistance tab
     And I select "Custom" assistance work
     And I tap the "Squat" list item
-    Then Assistance movement 1 is "Leg Press 5 sets 15x"
-    Then Assistance movement 2 is "Leg Curl 5 sets 15x"
+    Then List item 1 contains "Leg Press 5 sets 15x"
+    Then List item 2 contains "Leg Curl 5 sets 15x"
     And I tap the "Save" button
     Then I am on the track tab
     And I tap the "Asst." button
@@ -59,12 +59,12 @@ Feature: Custom - Assistance Work
     When I tap the assistance tab
     And I select "Custom" assistance work
     And I tap the "Squat" list item
-    Then Assistance movement 1 is "Leg Press 5 sets 15x"
+    Then List item 1 contains "Leg Press 5 sets 15x"
     And I tap assistance row 1
     And I change the custom movement name to "Good Morning"
     And I change the custom movement weight to 65
     And I tap the "Back" button
-    Then Assistance movement 1 is "Good Morning 5 sets 15x 65lbs"
+    Then List item 1 contains "Good Morning 5 sets 15x 65lbs"
     And I tap the "Save" button
     Then I am on the track tab
     And I tap the "Asst." button

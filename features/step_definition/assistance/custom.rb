@@ -1,8 +1,3 @@
-Then /^Assistance movement (\d+) is "(.*?)"$/ do |index, movement_text|
-  movement_row = get_displayed_list_items()[index.to_i - 1]
-  movement_row.text().should == movement_text
-end
-
 Then /^Assistance log entry (\d+) shows "(.*?)"$/ do |index, log_text|
   log_row = get_displayed_list_items()[index.to_i - 1]
   log_row.text().gsub(/\n/, " ").should include log_text
