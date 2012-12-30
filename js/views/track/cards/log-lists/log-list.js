@@ -138,7 +138,7 @@ Ext.define('biglifts.views.LogList', {
                 ]);
 
                 me.sortToolbar = me.add(Ext.create('biglifts.components.SortToolbar', {
-                    sortStore: biglifts.stores.LiftLogSort
+                    sortStore: biglifts.stores.LogSort
                 }));
 
                 me.add([

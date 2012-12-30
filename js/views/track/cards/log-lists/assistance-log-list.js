@@ -9,7 +9,7 @@ Ext.define('biglifts.views.LogAssistanceList', {
         this.refresh();
     },
     sortAndRefreshList: function () {
-        var liftLogSort = biglifts.stores.LiftLogSort.first();
+        var liftLogSort = biglifts.stores.LogSort.first();
 
         var sortDirection = liftLogSort.data.ascending ? 'ASC' : 'DESC';
         var sortProperty = liftLogSort.data.property;
@@ -40,7 +40,7 @@ Ext.define('biglifts.views.LogAssistanceList', {
 
 
                     biglifts.stores.assistance.ActivityLog.addListener('beforesync', Ext.bind(this.refresh, this));
-                    biglifts.stores.LiftLogSort.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
+                    biglifts.stores.LogSort.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
                 }
             }
         },

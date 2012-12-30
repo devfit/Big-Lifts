@@ -29,19 +29,19 @@ src_files:
         - js/util/backup/store-file-backer.js
         - js/models/stores.js
         - js/models/routines.js
-        - js/models/lift-progression.js
-        - js/models/lifts.js
+        - js/models/531/lift-progression.js
+        - js/models/531/lifts.js
         - js/models/templates/meet_goal.js
         - js/models/templates/template.js
         - js/models/templates/week_rotation.js
-        - js/models/lift-completion.js
+        - js/models/531/lift-completion.js
         - js/models/abstract-settings-store.js
         - js/models/531/settings.js
         - js/models/global-settings.js
-        - js/models/lift-log.js
-        - js/models/lift-log-sort.js
+        - js/models/531/lift-log.js
+        - js/models/log-sort.js
         - js/models/rest-time.js
-        - js/models/current-cycle.js
+        - js/models/531/current-cycle.js
         - js/models/plates/bar.js
         - js/models/plates/plates.js
         - js/models/assistance/assistance.js
@@ -66,6 +66,7 @@ src_files:
         - js/views/components/notes-editor.js
         - js/views/components/swipe-to-delete.js
         - js/views/components/rest-timer.js
+        - js/views/components/sort-toolbar.js
         - js/views/maxes/cards/add-lift.js
         - js/views/maxes/cards/edit-lift.js
         - js/views/maxes/cards/edit-lifts-list.js

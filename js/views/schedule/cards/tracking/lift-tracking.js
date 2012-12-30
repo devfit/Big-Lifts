@@ -54,7 +54,7 @@ Ext.define('biglifts.views.LiftTracking', {
         biglifts.stores.LiftLog.sync();
     },
     persistLiftCompletion: function () {
-        var liftCompletion = biglifts.stores.lifts.findLiftCompletionByPropertyAndWeek(
+        var liftCompletion = biglifts.stores.lifts.LiftCompletion.findLiftCompletionByPropertyAndWeek(
             biglifts.liftSchedule.currentLiftProperty, biglifts.liftSchedule.currentWeek);
         liftCompletion.set('completed', true);
         biglifts.stores.lifts.LiftCompletion.sync();

@@ -105,7 +105,7 @@ biglifts.liftSchedule.liftSelector.liftHasBeenCompleted = function (week, liftIn
     var lift = biglifts.stores.lifts.Lifts.getAt(liftIndex);
     if (lift) {
         var liftPropertyName = lift.get('propertyName');
-        var liftCompletion = biglifts.stores.lifts.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
+        var liftCompletion = biglifts.stores.lifts.LiftCompletion.findLiftCompletionByPropertyAndWeek(liftPropertyName, week);
         if (liftCompletion) {
             return liftCompletion.get('completed');
         }

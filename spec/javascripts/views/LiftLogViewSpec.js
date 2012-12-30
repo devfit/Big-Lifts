@@ -5,7 +5,7 @@ describe("Lift Log view", function () {
 
         biglifts.stores.LiftLog.sync();
         biglifts.stores.assistance.ActivityLog.sync();
-        biglifts.stores.LiftLogSort.load();
+        biglifts.stores.LogSort.load();
     });
 
     it("should return 'All' with no cycles available", function () {

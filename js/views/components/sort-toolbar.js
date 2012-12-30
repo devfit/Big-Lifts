@@ -15,10 +15,10 @@ Ext.define('biglifts.components.SortToolbar', {
         }
     },
     sortBy: function (selectedProperty) {
-        var liftLogSort = this.getSortStore().first();
-        var property = liftLogSort.get('property');
+        var sortStore = this.getSortStore().first();
+        var property = sortStore.get('property');
         if (property === selectedProperty) {
-            liftLogSort.set('ascending', !liftLogSort.get('ascending'));
+            sortStore.set('ascending', !sortStore.get('ascending'));
         }
         else {
             var defaultAscending = {
@@ -26,22 +26,22 @@ Ext.define('biglifts.components.SortToolbar', {
                 'liftName': true
             };
 
-            liftLogSort.set('property', selectedProperty);
-            liftLogSort.set('ascending', defaultAscending[selectedProperty]);
+            sortStore.set('property', selectedProperty);
+            sortStore.set('ascending', defaultAscending[selectedProperty]);
         }
         this.getSortStore().sync();
     },
     updateUiForSortButtons: function () {
-        var liftLogSort = this.getSortStore().first();
+        var sortStore = this.getSortStore().first();
 
-        if (liftLogSort.get('property') === "liftName") {
+        if (sortStore.get('property') === "liftName") {
             this.sortNameButton.hide();
             this.sortNameActiveButton.show();
 
             this.sortDateActiveButton.hide();
             this.sortDateButton.show();
         }
-        else if (liftLogSort.get('property') === "timestamp") {
+        else if (sortStore.get('property') === "timestamp") {
             this.sortNameActiveButton.hide();
             this.sortNameButton.show();
 
@@ -52,10 +52,10 @@ Ext.define('biglifts.components.SortToolbar', {
         this.updateAscendingText();
     },
     updateAscendingText: function () {
-        var liftLogSort = this.getSortStore().first();
+        var sortStore = this.getSortStore().first();
 
-        var sortProperty = liftLogSort.data.property;
-        var sortDirectionText = liftLogSort.data.ascending ? "ASC" : "DESC";
+        var sortProperty = sortStore.data.property;
+        var sortDirectionText = sortStore.data.ascending ? "ASC" : "DESC";
         if (sortProperty === "liftName") {
             this.sortNameButton.setText(this.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
             this.sortNameActiveButton.setText(this.PROPERTY_TO_ASCENDING_TEXT['liftName'][sortDirectionText]);
