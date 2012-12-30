@@ -15,7 +15,7 @@ Ext.define('biglifts.components.SortToolbar', {
         }
     },
     sortBy: function (selectedProperty) {
-        var liftLogSort = biglifts.stores.LiftLogSort.first();
+        var liftLogSort = this.getSortStore().first();
         var property = liftLogSort.get('property');
         if (property === selectedProperty) {
             liftLogSort.set('ascending', !liftLogSort.get('ascending'));
@@ -29,10 +29,10 @@ Ext.define('biglifts.components.SortToolbar', {
             liftLogSort.set('property', selectedProperty);
             liftLogSort.set('ascending', defaultAscending[selectedProperty]);
         }
-        biglifts.stores.LiftLogSort.sync();
+        this.getSortStore().sync();
     },
     updateUiForSortButtons: function () {
-        var liftLogSort = biglifts.stores.LiftLogSort.first();
+        var liftLogSort = this.getSortStore().first();
 
         if (liftLogSort.get('property') === "liftName") {
             this.sortNameButton.hide();
@@ -52,7 +52,7 @@ Ext.define('biglifts.components.SortToolbar', {
         this.updateAscendingText();
     },
     updateAscendingText: function () {
-        var liftLogSort = biglifts.stores.LiftLogSort.first();
+        var liftLogSort = this.getSortStore().first();
 
         var sortProperty = liftLogSort.data.property;
         var sortDirectionText = liftLogSort.data.ascending ? "ASC" : "DESC";
@@ -74,6 +74,7 @@ Ext.define('biglifts.components.SortToolbar', {
         }
     },
     config: {
+        sortStore: null,
         docked: 'top',
         xtype: 'toolbar',
         ui: 'light',
@@ -87,7 +88,7 @@ Ext.define('biglifts.components.SortToolbar', {
                 this.updateUiForSortButtons();
                 if (!this._painted) {
                     this._painted = true;
-                    biglifts.stores.LiftLogSort.addListener('beforesync', Ext.bind(this.updateUiForSortButtons, this));
+                    this.getSortStore().addListener('beforesync', Ext.bind(this.updateUiForSortButtons, this));
                 }
             },
             initialize: function () {

@@ -1,6 +1,5 @@
 Ext.define('biglifts.views.LogList', {
     extend: 'Ext.Panel',
-    xtype: 'loglist',
     changeMovementTypeToLifts: function () {
         this.changeMovementTypeCalled();
         Ext.getCmp('log-list-container').setActiveItem(Ext.getCmp('lift-log-list'));
@@ -138,7 +137,9 @@ Ext.define('biglifts.views.LogList', {
                     }
                 ]);
 
-                me.sortToolbar = me.add(Ext.create('biglifts.components.SortToolbar'));
+                me.sortToolbar = me.add(Ext.create('biglifts.components.SortToolbar', {
+                    sortStore: biglifts.stores.LiftLogSort
+                }));
 
                 me.add([
                     {
@@ -170,7 +171,7 @@ Ext.define('biglifts.views.LogList', {
                         activeItem: 0,
                         items: [
                             Ext.create('biglifts.views.LiftLogList'),
-                            biglifts.logList.assistanceList
+                            Ext.create('biglifts.views.LogAssistanceList')
                         ]
                     }
                 ]);
