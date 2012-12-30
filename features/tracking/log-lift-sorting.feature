@@ -1,5 +1,6 @@
 @531
 Feature: Lift log sorting
+
   Scenario: Sort A-Z
     When I view the press lift schedule for week 1
     And I tap the checkmark
@@ -16,8 +17,9 @@ Feature: Lift log sorting
     And I tap the "Save" button
     And I wait for the animation
 
-    And I tap the sort lift log button
-    And I tap sort "A-Z"
+    And I tap the "Sort" button
+    And I wait for the animation
+    And I tap the "A-Z" button
     Then The log list shows "Press,Press,Squat"
 
   Scenario: Sort A-Z has date sub-sorting
@@ -57,8 +59,9 @@ Feature: Lift log sorting
     And I change the log date to "09/14/2011"
     And I tap the "Back" button
 
-    And I tap the sort lift log button
-    And I tap sort "A-Z"
+    And I tap the "Sort" button
+    And I wait for the animation
+    And I tap the "A-Z" button
     Then The log list dates show "10/14/2011,09/14/2011,06/14/2011,02/14/2011"
 
   Scenario: Sort Z-A
@@ -77,9 +80,10 @@ Feature: Lift log sorting
     And I tap the "Save" button
     And I wait for the animation
 
-    And I tap the sort lift log button
-    And I tap sort "A-Z"
-    And I tap sort "A-Z"
+    And I tap the "Sort" button
+    And I wait for the animation
+    And I tap the "A-Z" button
+    And I tap the "A-Z" button
     Then The log list shows "Squat,Press,Press"
 
   Scenario: Default sort by newest
@@ -116,6 +120,7 @@ Feature: Lift log sorting
     And I tap the "Save" button
     And I wait for the animation
 
-    And I tap the sort lift log button
-    And I tap sort "Newest"
+    And I tap the "Sort" button
+    And I wait for the animation
+    And I tap the "Newest" button
     Then The log list shows "Press,Squat,Bench"

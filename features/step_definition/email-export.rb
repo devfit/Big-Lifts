@@ -1,8 +1,7 @@
 require 'json'
 
 When /^I tap the log export button$/ do
-  @driver.find_element(:id => 'export-log-button').click()
-
+  @driver.find_element(:class => 'send-button').click()
 end
 
 When /^I set the email to ([^"]*)$/ do |email|

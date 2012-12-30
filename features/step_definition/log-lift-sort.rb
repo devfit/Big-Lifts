@@ -1,17 +1,3 @@
-When /^I tap the sort lift log button$/ do
-  @driver.find_element(:id => 'track-sort-button').click()
-
-  sleep MainNavigation::DELAY
-end
-
-When /^I tap sort "([^"]+)"$/ do |sortText|
-  sort_toolbar = @driver.find_element(:id => 'track-sort-toolbar')
-  sort_toolbar.find_elements(:class => 'x-button').select { |button|
-    button.text == sortText
-  }[0].click()
-
-end
-
 Then /^The log list shows "([^"]*)"$/ do |lifts|
   log_rows = @driver.find_element(:id => 'lift-log-list').find_elements(:class => 'lift-name')
 

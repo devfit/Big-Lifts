@@ -126,6 +126,7 @@ Ext.define('biglifts.views.LogList', {
                                     });
                                 }
                                 this.add({
+                                    cls: 'send-button',
                                     xtype: 'button',
                                     iconMask: true,
                                     iconCls: 'action',
