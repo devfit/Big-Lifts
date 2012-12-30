@@ -1,8 +1,5 @@
 @531
 Feature: Auto-increment lift maxes
-  As a lifter
-  I want to be able to auto-increment my maxes at the end of a cycle
-  So that I don't have to up my maxes manually
 
   Scenario: Check lifts by week
     When I set the squat max to 200
@@ -19,7 +16,7 @@ Feature: Auto-increment lift maxes
   Scenario: Fractional lift increase
     When I set the squat max to 200
     And I tap the "Edit" button
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I edit the cycle increase to be 2.5
     And I tap the "Back" button
     And I navigate to the lift schedule

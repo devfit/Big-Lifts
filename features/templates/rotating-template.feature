@@ -10,7 +10,7 @@ Feature: Rotating lift template
     And I navigate back to the lift selector from lift settings
     When I add a new lift named "Clean" with max 100
     And I view the lift schedule
-    And I tap the "Clean"
+    And I tap the "Clean" list item
     Then There are 6 list items
 
   Scenario: Adding new lifts and then setting a rotation
@@ -22,7 +22,7 @@ Feature: Rotating lift template
     And I wait for the animation
     And I confirm the progression change
     And I navigate back to the lift selector from lift settings
-    And I tap the "Clean"
+    And I tap the "Clean" list item
     Then There are 6 list items
 
   Scenario: Deload lifts are not blank

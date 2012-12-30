@@ -7,29 +7,29 @@ Feature: Custom lift template
     And I select the "Custom" lift template
     And I tap the use template button
 
-    And I tap  6
+    And I tap list item 6
     And I tap the delete button
 
-    And I tap  5
+    And I tap list item 5
     And I tap the delete button
 
-    And I tap  4
+    And I tap list item 4
     And I tap the delete button
 
-    And I tap  3
+    And I tap list item 3
     And I tap the delete button
 
-    And I tap  2
+    And I tap list item 2
     And I tap the delete button
 
-    And I tap  1
+    And I tap list item 1
     And I tap the delete button
 
     And I tap the "Add" button
     And I set the "Reps" input to "5"
     And I set the "Percentage" input to "90"
     And I tap the "Back" button
-    Then There is a "90%"
+    Then There is a "90%" list item
 
   Scenario: Reverting to fresher after adding a set
     When I view the lift schedule
@@ -60,7 +60,7 @@ Feature: Custom lift template
     And I select the "Custom" lift template
     And I tap the use template button
     And I select week 1 for the manual percentages editor
-    And I tap  4
+    And I tap list item 4
     And I check the warmup custom set checkbox
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
@@ -74,7 +74,7 @@ Feature: Custom lift template
     And I select the "Custom" lift template
     And I tap the use template button
     And I select week 1 for the manual percentages editor
-    And I tap  5
+    And I tap list item 5
     And I check the amrap custom set checkbox
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
@@ -104,7 +104,7 @@ Feature: Custom lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
     Then Lift progressions in the list are visible
-    And I tap  2
+    And I tap list item 2
     And I set the "Percentage" input to "55"
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
@@ -118,7 +118,7 @@ Feature: Custom lift template
     And I select the "Custom" lift template
     And I tap the use template button
     And I select week 2 for the manual percentages editor
-    And I tap  2
+    And I tap list item 2
     And I set the "Reps" input to "7"
     And I tap the "Back" button
     And I navigate back to the lift settings from the manual percentages editor
