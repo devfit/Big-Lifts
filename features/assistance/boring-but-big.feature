@@ -4,7 +4,7 @@ Feature: Boring But Big - Assistance Work
   Scenario: Deleting big lift
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Deadlift"
+    And I tap the "Deadlift" list item
     And I tap the delete button
     Then There are 0 list items
 
@@ -12,14 +12,14 @@ Feature: Boring But Big - Assistance Work
     When I add a new lift named "Clean" with max 200
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Clean"
-    Then There is a "Clean"
+    And I tap the "Clean" list item
+    Then There is a "Clean" list item
 
   Scenario: Changes in the assistance list should be reflected immediately after a BBB entry is edited
     When I set the squat max to 200
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I tap the "Save" button
     Then I am on the track tab
     And I tap the "Asst." button
@@ -33,7 +33,7 @@ Feature: Boring But Big - Assistance Work
     When I set the squat max to 200
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     Then The first boring but big lift weight is 90
     And I set the BBB percentage to 60
     Then The first boring but big lift weight is 110
@@ -51,7 +51,7 @@ Feature: Boring But Big - Assistance Work
   Scenario: 0lbs does not render
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Press"
+    And I tap the "Press" list item
     And I tap the "Add..." button
     And I set the "name" to "Chins"
     And I tap the "Back" button
@@ -61,7 +61,7 @@ Feature: Boring But Big - Assistance Work
   Scenario: Removing BBB additional lifts
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Press"
+    And I tap the "Press" list item
     And I tap the "Add..." button
     And I tap the trash button
     Then There are 1 list items
@@ -70,7 +70,7 @@ Feature: Boring But Big - Assistance Work
   Scenario: Adding BBB additional lifts
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Press"
+    And I tap the "Press" list item
     And I tap the "Add..." button
     And I set the "name" to "Chins"
     And I set the "reps" to "10"
@@ -84,7 +84,7 @@ Feature: Boring But Big - Assistance Work
   Scenario: BBB primary movements show plate breakdowns
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I tap the first boring but big entry
     And I set the boring but big lift to "Press"
     And I tap the "Back" button
@@ -93,7 +93,7 @@ Feature: Boring But Big - Assistance Work
   Scenario: Boring But Big associated lift can be changed
     When I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I tap the first boring but big entry
     And I set the boring but big lift to "Press"
     And I tap the "Back" button

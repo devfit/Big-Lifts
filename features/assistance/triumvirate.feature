@@ -6,7 +6,7 @@ Feature: Custom - Assistance Work
     When I add a new lift named "Clean" with max 200
     When I tap the assistance tab
     And I select "Custom" assistance work
-    And I tap the "Clean"
+    And I tap the "Clean" list item
     Then Assistance movement 1 is "? 5 sets 15x"
     Then Assistance movement 2 is "? 5 sets 15x"
     And I tap assistance row 1
@@ -24,7 +24,7 @@ Feature: Custom - Assistance Work
   Scenario: Adding custom lift movements
     When I tap the assistance tab
     And I select "Custom" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I tap the "Add..." button
     And I change the custom movement name to "Good Morning"
     And I change the custom movement weight to 65
@@ -38,7 +38,7 @@ Feature: Custom - Assistance Work
   Scenario: Custom lifts can be removed
     When I tap the assistance tab
     And I select "Custom" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I tap assistance row 1
     And I tap the trash button
     Then There are 1 list items
@@ -46,7 +46,7 @@ Feature: Custom - Assistance Work
   Scenario: Viewing Custom lifts and viewing the log
     When I tap the assistance tab
     And I select "Custom" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     Then Assistance movement 1 is "Leg Press 5 sets 15x"
     Then Assistance movement 2 is "Leg Curl 5 sets 15x"
     And I tap the "Save" button
@@ -58,7 +58,7 @@ Feature: Custom - Assistance Work
   Scenario: Changing custom lift movements
     When I tap the assistance tab
     And I select "Custom" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     Then Assistance movement 1 is "Leg Press 5 sets 15x"
     And I tap assistance row 1
     And I change the custom movement name to "Good Morning"
