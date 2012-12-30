@@ -2,6 +2,25 @@
 @premium
 Feature: Boring But Big - Assistance Work
 
+  Scenario: Viewing BBB lifts, Changing the percentage, and viewing the log
+    When I set the squat max to 200
+    When I tap the assistance tab
+    And I select "5x10" assistance work
+    And I tap the "Squat" list item
+    Then The first boring but big lift weight is 90
+    And I set the BBB percentage to 60
+    Then The first boring but big lift weight is 110
+    And I tap the "Notes" button
+    And I set the boring but big notes to "Felt okay. A little slow on the last set"
+    And I return from the boring but big notes
+    And I tap the "Save" button
+    And I wait for the animation
+    Then I am on the track tab
+    And I tap the "Asst." button
+    Then I see 1 assistance log entry for "10x110"
+    And I tap "5x10" log entry 1
+    Then The assistance details notes shows "Felt okay. A little slow on the last set"
+
   Scenario: BBB primary movements show plate breakdowns
     When I tap the assistance tab
     And I select "5x10" assistance work
@@ -38,25 +57,6 @@ Feature: Boring But Big - Assistance Work
     And I set the assistance log reps to 15
     And I tap the "Back" button
     Then I see 1 assistance log entry for "15x90"
-
-  Scenario: Viewing BBB lifts, Changing the percentage, and viewing the log
-    When I set the squat max to 200
-    When I tap the assistance tab
-    And I select "5x10" assistance work
-    And I tap the "Squat" list item
-    Then The first boring but big lift weight is 90
-    And I set the BBB percentage to 60
-    Then The first boring but big lift weight is 110
-    And I tap the "Notes" button
-    And I set the boring but big notes to "Felt okay. A little slow on the last set"
-    And I return from the boring but big notes
-    And I tap the "Save" button
-    And I wait for the animation
-    Then I am on the track tab
-    And I tap the "Asst." button
-    Then I see 1 assistance log entry for "10x110"
-    And I tap "5x10" log entry 1
-    Then The assistance details notes shows "Felt okay. A little slow on the last set"
 
   Scenario: 0lbs does not render
     When I tap the assistance tab
