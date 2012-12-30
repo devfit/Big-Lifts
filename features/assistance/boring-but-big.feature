@@ -1,6 +1,16 @@
 @531
 @premium
 Feature: Boring But Big - Assistance Work
+
+  Scenario: BBB primary movements show plate breakdowns
+    When I tap the assistance tab
+    And I select "5x10" assistance work
+    And I tap the "Squat" list item
+    And I tap the first boring but big entry
+    And I set the boring but big lift to "Press"
+    And I tap the "Back" button
+    Then List item 1 contains "[10,2.5]"
+
   Scenario: Deleting big lift
     When I tap the assistance tab
     And I select "5x10" assistance work
@@ -80,15 +90,6 @@ Feature: Boring But Big - Assistance Work
     And I wait for the animation
     And I tap the "Asst." button
     Then I see an assistance log entry containing "Chins"
-
-  Scenario: BBB primary movements show plate breakdowns
-    When I tap the assistance tab
-    And I select "5x10" assistance work
-    And I tap the "Squat" list item
-    And I tap the first boring but big entry
-    And I set the boring but big lift to "Press"
-    And I tap the "Back" button
-    Then List item 1 contains "[10,2.5]"
 
   Scenario: Boring But Big associated lift can be changed
     When I tap the assistance tab

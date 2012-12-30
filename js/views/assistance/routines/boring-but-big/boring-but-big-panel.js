@@ -15,8 +15,8 @@ Ext.define("biglifts.views.BoringButBigPanel", {
         biglifts.stores.assistance.BoringButBig.sync();
         Ext.getCmp('bbb-movement-editor').showEditBbbMovement(biglifts.stores.assistance.BoringButBig.last());
     },
-    arrange: function(){
-      this.getParent().showArrange();
+    arrange: function () {
+        this.getParent().showArrange();
     },
     editBbbMovement: function (dataview, index) {
         Ext.getCmp('bbb-movement-editor').showEditBbbMovement(biglifts.stores.assistance.BoringButBig.getAt(index));
@@ -85,9 +85,8 @@ Ext.define("biglifts.views.BoringButBigPanel", {
         var weight = biglifts.weight.format(biglifts.stores.assistance.BoringButBig.getWeightForRecord(values));
         return weight > 0 ? weight : '';
     },
-
-    percentageChange: function (event) {
-        var newValue = event.target.value;
+    percentageChange: function () {
+        var newValue = parseInt(this.element.query('input[name="bbbPercentage"]')[0].value);
         biglifts.stores.assistance.BoringButBigPercentage.first().set('percentage', newValue);
         biglifts.stores.assistance.BoringButBigPercentage.sync();
         this.bbbList.refresh();
@@ -149,7 +148,7 @@ Ext.define("biglifts.views.BoringButBigPanel", {
 
                                     if (!this._painted) {
                                         this._painted = true;
-                                        bbbPercentageInput.addListener('keyup', me.percentageChange);
+                                        bbbPercentageInput.addListener('keyup', Ext.bind(me.percentageChange, me));
                                     }
                                 }
                             }
@@ -189,9 +188,9 @@ Ext.define("biglifts.views.BoringButBigPanel", {
                         "<td width='50%'><span class='name'>{[biglifts.stores.assistance.BoringButBig.getNameForRecord(values)]}</b></td>" +
                         "<td width='20%'>{sets} sets</td>" +
                         "<td style='text-align:right;' width='30%'>{reps}x " +
-                        "<span class='weight'>{[Ext.getCmp('boring-but-big').formatWeight(values)]}</span>" +
-                        "{[Ext.getCmp('boring-but-big').formatUnits(values)]}</td>" +
-                        "</tr></tbody></table>{[Ext.getCmp('boring-but-big').getPlateBreakdown(values)]}",
+                        "<span class='weight'>{[Ext.getCmp('boring-but-big-panel').formatWeight(values)]}</span>" +
+                        "{[Ext.getCmp('boring-but-big-panel').formatUnits(values)]}</td>" +
+                        "</tr></tbody></table>{[Ext.getCmp('boring-but-big-panel').getPlateBreakdown(values)]}",
                     listeners: {
                         initialize: function (list) {
                             list.addListener('itemtap', Ext.bind(me.editBbbMovement, me));
