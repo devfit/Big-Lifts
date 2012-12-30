@@ -6,7 +6,7 @@ Feature: StartingStrength Settings
     And I set the "Bench" input to "100"
 
     When I navigate to the "More" tab
-    And I tap the "Settings"
+    And I tap the "Settings" list item
     Then There is a "Units" form label
     And I set select "units" to "kg"
     And I tap the "Back" button

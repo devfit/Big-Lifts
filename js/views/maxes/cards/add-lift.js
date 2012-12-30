@@ -60,7 +60,6 @@ biglifts.maxes.controller.addLiftDoneButtonPressed = function () {
 biglifts.maxes.controller.saveNewLift = function (newLiftModel) {
     biglifts.stores.lifts.Lifts.add(newLiftModel);
     biglifts.stores.lifts.Lifts.sync();
-    biglifts.stores.migrations.liftCompletionMigration();
 };
 
 biglifts.maxes.controller.addLiftCancelButtonPressed = function () {
