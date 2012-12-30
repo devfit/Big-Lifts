@@ -5,13 +5,13 @@ Feature: Assistance log
     When I set the squat max to 200
     And I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I tap the "Save" button
     And I wait for the animation
 
     And I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I tap the "Save" button
     And I wait for the animation
 
@@ -26,7 +26,7 @@ Feature: Assistance log
     When I set the squat max to 200
     And I tap the assistance tab
     And I select "5x10" assistance work
-    And I tap the "Squat"
+    And I tap the "Squat" list item
     And I tap the "Save" button
     And I wait for the animation
 
