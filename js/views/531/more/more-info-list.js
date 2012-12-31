@@ -15,7 +15,6 @@ Ext.define('biglifts.views.531.MoreInfoList', {
                 return values.text ? values.text : textFn();
             }
         }),
-        store: biglifts.more.listStore,
         listeners: {
             initialize: function () {
                 var listIndex = 0;
