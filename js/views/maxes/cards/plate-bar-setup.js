@@ -47,7 +47,7 @@ Ext.define('biglifts.views.BarSetup', {
         }
     },
     setBarWeightInput: function () {
-        this.barWeightInput.setValue(this.first().get('weight'));
+        this.barWeightInput.setValue(biglifts.stores.BarWeight.first().get('weight'));
     },
     bindListeners: function () {
         biglifts.stores.BarWeight.addListener('beforesync', this.setBarWeightInput, this);

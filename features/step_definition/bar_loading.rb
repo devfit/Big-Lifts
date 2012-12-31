@@ -11,7 +11,7 @@ Then /^The plate breakdown for set (\d+) shows "(.*?)"$/ do |set, plates|
 end
 
 When /^I set the bar weight to (\d+)$/ do |weight|
-  bar_weight_input = @driver.find_element(:id => 'bar-plate-setup-panel').find_element(:name => 'weight')
+  bar_weight_input = @driver.find_elements(:name => 'weight').select { |b| b.displayed? }[0]
   bar_weight_input.clear
   bar_weight_input.send_keys weight
 end
