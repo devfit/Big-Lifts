@@ -90,7 +90,7 @@ Ext.define('biglifts.views.AddLiftPanel', {
                     xtype: 'formpanel'
                 });
 
-                this.addLiftFieldset = this.add({
+                this.addLiftFieldset = this.addLiftForm.add({
                     xtype: 'fieldset',
                     style: 'margin-top: 0',
                     defaults: {
@@ -116,7 +116,8 @@ Ext.define('biglifts.views.AddLiftPanel', {
                 this.addLiftCycleIncrease = this.addLiftFieldset.add({
                     xtype: 'textfield',
                     name: 'cycleIncrease',
-                    label: 'Cycle increase'
+                    label: 'Cycle increase',
+                    value: 10
                 });
             },
             painted: function () {

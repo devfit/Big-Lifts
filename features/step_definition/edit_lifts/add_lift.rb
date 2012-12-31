@@ -1,11 +1,11 @@
 When /^I add a new lift named "([^"]*)" with max (\d+)$/ do |lift, max|
   navigate_to(:lift_editor)
-
   @driver.find_element(:css => '.x-button-icon.add').click()
 
-  name_input = @driver.find_element(:name => 'add-lift-new-name')
+  name_input = @driver.find_elements(:name => 'name').select { |n| n.displayed? }[0]
   name_input.send_keys lift
-  max_input = @driver.find_element(:name => 'add-lift-new-max')
+
+  max_input = @driver.find_elements(:name => 'max').select { |m| m.displayed? }[0]
   max_input.send_keys max
 
   @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == "Save" }[0].click
