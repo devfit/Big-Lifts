@@ -104,7 +104,6 @@ Ext.define('biglifts.components.SortToolbar', {
             initialize: function () {
                 var me = this;
                 if (this.getAlphaEnabled()) {
-                    console.log(this.getAlphaEnabled());
                     me.sortNameButton = me.add({
                         ui: 'action',
                         xtype: 'button',
