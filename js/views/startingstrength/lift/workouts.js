@@ -121,12 +121,7 @@ Ext.define('biglifts.views.ss.Workouts', {
                 });
 
                 toolbar.add(Ext.create('biglifts.components.SetCounter'));
-            },
-            painted: function(){
-                if( !this._painted ){
-                    this._painted = true;
-                    this.bindListeners();
-                }
+                this.bindListeners();
             },
             destroy: function(){
                 this.destroyListeners();

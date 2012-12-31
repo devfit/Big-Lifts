@@ -9,5 +9,5 @@ Then /^The plates list shows "([^"]*?)"$/ do |plates|
 end
 
 Then /^The bar weight is ([\d\.]+)$/ do |bar_weight|
-  @driver.find_element(:id => 'bar-setup-fieldset').find_element(:name => 'weight').attribute('value').should == bar_weight
+  @driver.find_elements(:name => 'weight').select { |w| w.displayed? }[0].attribute('value').should == bar_weight
 end
