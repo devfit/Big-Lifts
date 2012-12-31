@@ -1,138 +1,127 @@
-Ext.ns('biglifts.maxes.cards', 'biglifts.maxes.controller');
-
-biglifts.maxes.controller.handleInvalidLift = function (errors) {
-    var nameErrors = errors.getByField('propertyName');
-    var maxErrors = errors.getByField('max');
-    var cycleIncreaseErrors = errors.getByField('cycleIncrease');
-    var messages = [];
-
-    if (nameErrors.length > 0) {
-        for (var i in nameErrors) {
-            var nameError = nameErrors[i];
-            if (nameError.getMessage() === "must be present") {
-                messages.push("Invalid lift name");
-            }
-            else if (nameError.getMessage() === "nonunique") {
-                messages.push("Name must be unique");
-            }
-        }
-    }
-    if (maxErrors.length > 0) {
-        messages.push("Max must be > 0");
-    }
-    if (cycleIncreaseErrors.length > 0) {
-        messages.push("Cycle Increase must be > 0");
-    }
-
-    Ext.Msg.alert('Error', messages.join('<br/>'));
-};
-
-biglifts.maxes.controller.findNextOrdering = function () {
-    var orders = [];
-    util.withNoFilters(biglifts.stores.lifts.Lifts, function () {
-        orders = _.map(biglifts.stores.lifts.Lifts.getRange(), function (record) {
-            return record.data.order;
-        });
-    });
-    return _.max(orders) + 1;
-};
-
-biglifts.maxes.controller.addLiftDoneButtonPressed = function () {
-    var liftName = Ext.getCmp('add-lift-new-name').getValue();
-    var liftMax = Ext.getCmp('add-lift-new-max').getValue();
-    var liftProperty = biglifts.stores.lifts.Lifts.sanitizePropertyName(liftName);
-    var cycleIncrease = Ext.getCmp('add-lift-cycle-increase').getValue();
-
-    var newLiftModel = Ext.create('Lift',
-        {name:liftName, propertyName:liftProperty, max:liftMax, cycleIncrease:cycleIncrease, order:biglifts.maxes.controller.findNextOrdering() });
-    var errors = newLiftModel.validate();
-
-    if (!errors.isValid()) {
-        biglifts.maxes.controller.handleInvalidLift(errors);
-    }
-    else {
-        biglifts.maxes.controller.saveNewLift(newLiftModel);
-        Ext.getCmp('maxes-add-lift-form').reset();
+Ext.define('biglifts.views.AddLiftPanel', {
+    extend: "Ext.Panel",
+    addLiftCancelButtonPressed: function () {
+        this.addLiftForm.reset();
         Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
-    }
-};
+    },
+    saveNewLift: function (newLiftModel) {
+        biglifts.stores.lifts.Lifts.add(newLiftModel);
+        biglifts.stores.lifts.Lifts.sync();
+    },
+    addLiftDoneButtonPressed: function () {
+        var liftName = this.addLiftName.getValue();
+        var liftMax = this.addLiftMax.getValue();
+        var liftProperty = biglifts.stores.lifts.Lifts.sanitizePropertyName(liftName);
+        var cycleIncrease = this.addLiftCycleIncrease.getValue();
 
-biglifts.maxes.controller.saveNewLift = function (newLiftModel) {
-    biglifts.stores.lifts.Lifts.add(newLiftModel);
-    biglifts.stores.lifts.Lifts.sync();
-};
+        var newLiftModel = Ext.create('Lift',
+            {name: liftName, propertyName: liftProperty, max: liftMax, cycleIncrease: cycleIncrease, order: this.findNextOrdering() });
+        var errors = newLiftModel.validate();
 
-biglifts.maxes.controller.addLiftCancelButtonPressed = function () {
-    Ext.getCmp('maxes-add-lift-form').reset();
-    Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
-};
-
-biglifts.maxes.cards.addLiftPanel = {
-    xtype:'panel',
-    id:'maxes-add-lift-panel',
-    layout:'fit',
-    listeners:{
-        painted:function () {
-            biglifts.navigation.setBackFunction(biglifts.maxes.controller.addLiftCancelButtonPressed);
+        if (!errors.isValid()) {
+            this.handleInvalidLift(errors);
+        }
+        else {
+            this.saveNewLift(newLiftModel);
+            this.addLiftForm.reset();
+            Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
         }
     },
-    items:[
-        {
-            xtype:'toolbar',
-            docked:'top',
-            title:"New Lift",
-            items:[
-                {
-                    id:'add-lift-cancel-button',
-                    text:'Cancel',
-                    handler:biglifts.maxes.controller.addLiftCancelButtonPressed,
-                    ui:'action'
-                },
-                {xtype:'spacer'},
-                {
-                    id:'add-lift-done-button',
-                    text:'Save',
-                    handler:biglifts.maxes.controller.addLiftDoneButtonPressed,
-                    ui:'confirm'
+    findNextOrdering: function () {
+        var orders = [];
+        util.withNoFilters(biglifts.stores.lifts.Lifts, function () {
+            orders = _.map(biglifts.stores.lifts.Lifts.getRange(), function (record) {
+                return record.data.order;
+            });
+        });
+        return _.max(orders) + 1;
+    },
+    handleInvalidLift: function (errors) {
+        var nameErrors = errors.getByField('propertyName');
+        var maxErrors = errors.getByField('max');
+        var cycleIncreaseErrors = errors.getByField('cycleIncrease');
+        var messages = [];
+
+        if (nameErrors.length > 0) {
+            for (var i in nameErrors) {
+                var nameError = nameErrors[i];
+                if (nameError.getMessage() === "must be present") {
+                    messages.push("Invalid lift name");
                 }
-            ]
-        },
-        {
-            xtype:'formpanel',
-            id:'maxes-add-lift-form',
-            items:[
-                {
-                    xtype:'fieldset',
-                    style:'margin-top: 0',
-                    defaults:{
-                        autoCapitalize:false,
-                        autoCorrect:false,
-                        autoComplete:false,
-                        labelWidth:'40%'
-                    },
-                    items:[
+                else if (nameError.getMessage() === "nonunique") {
+                    messages.push("Name must be unique");
+                }
+            }
+        }
+        if (maxErrors.length > 0) {
+            messages.push("Max must be > 0");
+        }
+        if (cycleIncreaseErrors.length > 0) {
+            messages.push("Cycle Increase must be > 0");
+        }
+
+        Ext.Msg.alert('Error', messages.join('<br/>'));
+    },
+    config: {
+        id: 'maxes-add-lift-panel',
+        layout: 'fit',
+        listeners: {
+            initialize: function () {
+                this.add({
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    title: "New Lift",
+                    items: [
                         {
-                            xtype:'textfield',
-                            name:'add-lift-new-name',
-                            id:'add-lift-new-name',
-                            label:'Name'
+                            text: 'Cancel',
+                            handler: Ext.bind(this.addLiftCancelButtonPressed, this),
+                            ui: 'action'
                         },
+                        {xtype: 'spacer'},
                         {
-                            xtype:'textfield',
-                            name:'add-lift-new-max',
-                            id:'add-lift-new-max',
-                            label:'Max'
-                        },
-                        {
-                            xtype:'textfield',
-                            name:'add-lift-cycle-increase',
-                            id:'add-lift-cycle-increase',
-                            label:'Increase at end of cycle',
-                            value:10
+                            text: 'Save',
+                            handler: Ext.bind(this.addLiftDoneButtonPressed, this),
+                            ui: 'confirm'
                         }
                     ]
-                }
-            ]
+                });
+
+                this.addLiftForm = this.add({
+                    xtype: 'formpanel'
+                });
+
+                this.addLiftFieldset = this.add({
+                    xtype: 'fieldset',
+                    style: 'margin-top: 0',
+                    defaults: {
+                        autoCapitalize: false,
+                        autoCorrect: false,
+                        autoComplete: false,
+                        labelWidth: '40%'
+                    }
+                });
+
+                this.addLiftName = this.addLiftFieldset.add({
+                    xtype: 'textfield',
+                    name: 'name',
+                    label: 'Name'
+                });
+
+                this.addLiftMax = this.addLiftFieldset.add({
+                    xtype: 'textfield',
+                    name: 'max',
+                    label: 'Max'
+                });
+
+                this.addLiftCycleIncrease = this.addLiftFieldset.add({
+                    xtype: 'textfield',
+                    name: 'cycleIncrease',
+                    label: 'Cycle increase'
+                });
+            },
+            painted: function () {
+                biglifts.navigation.setBackFunction(Ext.bind(this.addLiftCancelButtonPressed, this));
+            }
         }
-    ]
-};
+    }
+});

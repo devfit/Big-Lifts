@@ -14,7 +14,7 @@ Ext.define('biglifts.views.Maxes', {
                     Ext.create("Biglifts.views.MaxesForm"),
                     biglifts.maxes.cards.editMaxesList,
                     biglifts.maxes.cards.editLiftPanel,
-                    biglifts.maxes.cards.addLiftPanel,
+                    Ext.create('biglifts.views.AddLiftPanel'),
                     Ext.create('biglifts.views.ArrangeLifts'),
                     Ext.create('biglifts.views.BarSetup')]);
                 this.setActiveItem(0);
