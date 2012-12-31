@@ -70,7 +70,7 @@ biglifts.liftSchedule.liftSelector.viewLift = function (view, index) {
 
 biglifts.liftSchedule.liftSelector.getWeekLists = function () {
     var listFilter = new Ext.util.Filter({
-        filterFn:function (item) {
+        filterFn: function (item) {
             return item.getBaseCls() === "x-list";
         }
     });
@@ -120,12 +120,6 @@ biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts = function () {
     });
 };
 
-biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
-    if (biglifts.main.started && Ext.getCmp('lift-selector')) {
-        biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts();
-    }
-});
-
 biglifts.liftSchedule.setupCheckedTitleWeeks = function () {
     var startingWeekIndex = biglifts.liftSchedule.liftSelector.getStartingWeek() - 1;
     var tabs = Ext.getCmp('lift-selector').down('.tabbar').query('.tab');
@@ -144,92 +138,105 @@ biglifts.liftSchedule.setupCheckedTitleWeeks = function () {
 
 };
 
-biglifts.views.liftSchedule.liftSelector = {
-    xtype:'tabpanel',
-    id:'lift-selector',
-    activeItem:biglifts.liftSchedule.liftSelector.getStartingWeek() - 1,
-    listeners:{
-        painted:function () {
-            biglifts.stores.lifts.Lifts.clearFilter(true);
-            biglifts.stores.lifts.Lifts.filter('enabled',true);
-            biglifts.liftSchedule.liftSelector.setupLiftSelector();
-            biglifts.liftSchedule.setupCheckedTitleWeeks();
-            biglifts.navigation.unbindBackEvent();
-
-            if (!this._painted) {
-                this._painted = true;
-                biglifts.stores.lifts.LiftCompletion.addListener('beforesync', biglifts.liftSchedule.liftSelector.setupListDoneIcons);
-            }
-        },
-        initialize:function () {
-            biglifts.liftSchedule.liftSelector.changeWeek(biglifts.liftSchedule.liftSelector.getStartingWeek());
-        },
-        activeitemchange:biglifts.liftSchedule.liftSelector.handleWeekChange
+Ext.define('biglifts.views.LiftSelector', {
+    extend: 'Ext.tab.Panel',
+    bindListeners: function () {
+        biglifts.stores.lifts.LiftCompletion.addListener('beforesync', biglifts.liftSchedule.liftSelector.setupListDoneIcons);
+        biglifts.stores.lifts.Lifts.addListener('beforesync', biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts);
     },
-    items:[
-        {
-            xtype:'toolbar',
-            id:'lift-selector-toolbar',
-            docked:'top',
-            title:'Week 1',
-            items:[
-                {
-                    id:'lift-schedule-settings-button',
-                    iconCls:'settings',
-                    iconMask:true,
-                    ui:'action',
-                    handler:biglifts.liftSchedule.liftSelector.showLiftScheduleSettings
-                },
-                {xtype:'spacer'},
-                {
-                    id:'cycle-change-button',
-                    xtype:'button',
-                    ui:'action',
-                    text:'Cycle 1',
-                    handler:biglifts.liftSchedule.liftSelector.showLiftsCompletedScreen
+    destroyListeners: function () {
+        biglifts.stores.lifts.LiftCompletion.removeListener('beforesync', biglifts.liftSchedule.liftSelector.setupListDoneIcons);
+        biglifts.stores.lifts.Lifts.removeListener('beforesync', biglifts.liftSchedule.liftSelector.refreshLiftSelectorLifts);
+    },
+    config: {
+        id: 'lift-selector',
+        activeItem: biglifts.liftSchedule.liftSelector.getStartingWeek() - 1,
+        listeners: {
+            painted: function () {
+                biglifts.stores.lifts.Lifts.clearFilter(true);
+                biglifts.stores.lifts.Lifts.filter('enabled', true);
+                biglifts.liftSchedule.liftSelector.setupLiftSelector();
+                biglifts.liftSchedule.setupCheckedTitleWeeks();
+                biglifts.navigation.unbindBackEvent();
+
+                if (!this._painted) {
+                    this._painted = true;
+                    this.bindListeners();
                 }
-            ]
+            },
+            destroy: function () {
+                this.destroyListeners();
+            },
+            initialize: function () {
+                biglifts.liftSchedule.liftSelector.changeWeek(biglifts.liftSchedule.liftSelector.getStartingWeek());
+            },
+            activeitemchange: biglifts.liftSchedule.liftSelector.handleWeekChange
         },
-        {
-            id:'week1list',
-            title:'1',
-            xtype:'list',
-            store:biglifts.stores.lifts.Lifts,
-            itemTpl:'<strong>{name}</strong>',
-            onItemDisclosure:true,
-            listeners:{
-                itemtap:biglifts.liftSchedule.liftSelector.viewLift
+        items: [
+            {
+                xtype: 'toolbar',
+                id: 'lift-selector-toolbar',
+                docked: 'top',
+                title: 'Week 1',
+                items: [
+                    {
+                        id: 'lift-schedule-settings-button',
+                        iconCls: 'settings',
+                        iconMask: true,
+                        ui: 'action',
+                        handler: biglifts.liftSchedule.liftSelector.showLiftScheduleSettings
+                    },
+                    {xtype: 'spacer'},
+                    {
+                        id: 'cycle-change-button',
+                        xtype: 'button',
+                        ui: 'action',
+                        text: 'Cycle 1',
+                        handler: biglifts.liftSchedule.liftSelector.showLiftsCompletedScreen
+                    }
+                ]
+            },
+            {
+                id: 'week1list',
+                title: '1',
+                xtype: 'list',
+                store: biglifts.stores.lifts.Lifts,
+                itemTpl: '<strong>{name}</strong>',
+                onItemDisclosure: true,
+                listeners: {
+                    itemtap: biglifts.liftSchedule.liftSelector.viewLift
+                }
+            },
+            {
+                title: '2',
+                xtype: 'list',
+                store: biglifts.stores.lifts.Lifts,
+                itemTpl: '<strong>{name}</strong>',
+                onItemDisclosure: true,
+                listeners: {
+                    itemtap: biglifts.liftSchedule.liftSelector.viewLift
+                }
+            },
+            {
+                title: '3',
+                xtype: 'list',
+                store: biglifts.stores.lifts.Lifts,
+                itemTpl: '<strong>{name}</strong>',
+                onItemDisclosure: true,
+                listeners: {
+                    itemtap: biglifts.liftSchedule.liftSelector.viewLift
+                }
+            },
+            {
+                title: '4',
+                xtype: 'list',
+                store: biglifts.stores.lifts.Lifts,
+                itemTpl: '<strong>{name}</strong>',
+                onItemDisclosure: true,
+                listeners: {
+                    itemtap: biglifts.liftSchedule.liftSelector.viewLift
+                }
             }
-        },
-        {
-            title:'2',
-            xtype:'list',
-            store:biglifts.stores.lifts.Lifts,
-            itemTpl:'<strong>{name}</strong>',
-            onItemDisclosure:true,
-            listeners:{
-                itemtap:biglifts.liftSchedule.liftSelector.viewLift
-            }
-        },
-        {
-            title:'3',
-            xtype:'list',
-            store:biglifts.stores.lifts.Lifts,
-            itemTpl:'<strong>{name}</strong>',
-            onItemDisclosure:true,
-            listeners:{
-                itemtap:biglifts.liftSchedule.liftSelector.viewLift
-            }
-        },
-        {
-            title:'4',
-            xtype:'list',
-            store:biglifts.stores.lifts.Lifts,
-            itemTpl:'<strong>{name}</strong>',
-            onItemDisclosure:true,
-            listeners:{
-                itemtap:biglifts.liftSchedule.liftSelector.viewLift
-            }
-        }
-    ]
-};
+        ]
+    }
+});

@@ -97,9 +97,21 @@ Ext.define("Biglifts.views.MaxesForm", {
     addLiftButtonPressed: function () {
         Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'));
     },
-    bindPowerliftingUpdateTriggers: function () {
-        biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.updatePowerliftingTotal, this));
-        biglifts.stores.LiftLog.addListener('beforesync', Ext.bind(this.updatePowerliftingTotal, this));
+    bindListeners: function () {
+        biglifts.stores.lifts.Lifts.addListener('beforesync', this.updatePowerliftingTotal, this);
+        biglifts.stores.LiftLog.addListener('beforesync', this.updatePowerliftingTotal, this);
+
+        biglifts.stores.w.Settings.addListener('beforesync', this.updateTrainingPercentageDisplay, this);
+        biglifts.stores.w.Settings.addListener('beforesync', this.showHideTrainingMaxes, this);
+        biglifts.stores.Template.addListener('beforesync', this.showHideMeetGoals, this);
+    },
+    destroyListeners: function () {
+        biglifts.stores.lifts.Lifts.removeListener('beforesync', this.updatePowerliftingTotal, this);
+        biglifts.stores.LiftLog.removeListener('beforesync', this.updatePowerliftingTotal, this);
+
+        biglifts.stores.w.Settings.removeListener('beforesync', this.updateTrainingPercentageDisplay, this);
+        biglifts.stores.w.Settings.removeListener('beforesync', this.showHideTrainingMaxes, this);
+        biglifts.stores.Template.removeListener('beforesync', this.showHideMeetGoals, this);
     },
     updatePowerliftingTotal: function () {
         var me = this;
@@ -128,12 +140,11 @@ Ext.define("Biglifts.views.MaxesForm", {
 
                 if (!this._painted) {
                     this._painted = true;
-                    this.bindPowerliftingUpdateTriggers();
-
-                    biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.updateTrainingPercentageDisplay, this));
-                    biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(this.showHideTrainingMaxes, this));
-                    biglifts.stores.Template.addListener('beforesync', Ext.bind(this.showHideMeetGoals, this));
+                    this.bindListeners();
                 }
+            },
+            destroy: function () {
+                this.destroyListeners();
             },
             initialize: function () {
                 var me = this;

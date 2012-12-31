@@ -89,7 +89,17 @@ Ext.define("biglifts.views.BoringButBigPanel", {
         var newValue = parseInt(this.element.query('input[name="bbbPercentage"]')[0].value);
         biglifts.stores.assistance.BoringButBigPercentage.first().set('percentage', newValue);
         biglifts.stores.assistance.BoringButBigPercentage.sync();
+    },
+    refreshBbbList: function () {
         this.bbbList.refresh();
+    },
+    bindListeners: function () {
+        biglifts.stores.assistance.BoringButBig.addListener('beforesync', this.refreshBbbList, this);
+        biglifts.stores.assistance.BoringButBigPercentage.addListener('beforesync', this.refreshBbbList, this);
+    },
+    destroyListeners: function () {
+        biglifts.stores.assistance.BoringButBig.removeListener('beforesync', this.refreshBbbList, this);
+        biglifts.stores.assistance.BoringButBigPercentage.removeListener('beforesync', this.refreshBbbList, this);
     },
     config: {
         id: 'boring-but-big-panel',
@@ -199,18 +209,18 @@ Ext.define("biglifts.views.BoringButBigPanel", {
                 });
             },
             painted: function () {
-                var me = this;
-                me.filterLifts();
+                this.filterLifts();
                 biglifts.navigation.setBackFunction(function () {
                     Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
                 });
 
-                if (!me._painted) {
-                    me._painted = true;
-                    biglifts.stores.assistance.BoringButBig.addListener('beforesync', function () {
-                        me.bbbList.refresh();
-                    });
+                if (!this._painted) {
+                    this._painted = true;
+                    this.bindListeners();
                 }
+            },
+            destroy: function () {
+                this.destroyListeners();
             }
         }
     }

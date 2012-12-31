@@ -67,6 +67,16 @@ Ext.define('biglifts.views.CustomMovementArrangePanel', {
 
         this.swapLiftOrder(selectedRecord, afterRecord);
     },
+    bindListeners: function () {
+        this.getCustomMovementStore().addListener('beforesync', this.refreshArrangeList, this);
+    },
+    destroyListeners: function () {
+        this.getCustomMovementStore().removeListener('beforesync', this.refreshArrangeList, this);
+    },
+    refreshArrangeList: function () {
+        this.customArrangeList.refresh();
+        this.customArrangeList.element.dom.offsetHeight;
+    },
     config: {
         layout: 'fit',
         customMovementStore: null,
@@ -106,10 +116,10 @@ Ext.define('biglifts.views.CustomMovementArrangePanel', {
                     store: me.getCustomMovementStore()
                 }));
 
-                me.getCustomMovementStore().addListener('beforesync', function () {
-                    me.customArrangeList.refresh();
-                    me.customArrangeList.element.dom.offsetHeight;
-                });
+                this.bindListeners();
+            },
+            destroy: function () {
+                this.destroyListeners();
             }
         }
     }
