@@ -69,6 +69,14 @@ Ext.define('biglifts.views.LogList', {
             }
         }
     },
+    bindListeners: function () {
+        biglifts.stores.LiftLog.addListener('beforesync', this.updateCycleOptions, this);
+        biglifts.stores.assistance.ActivityLog.addListener('beforesync', this.updateCycleOptions, this);
+    },
+    destroyListeners: function () {
+        biglifts.stores.LiftLog.removeListener('beforesync', this.updateCycleOptions, this);
+        biglifts.stores.assistance.ActivityLog.removeListener('beforesync', this.updateCycleOptions, this);
+    },
     config: {
         id: 'log-list',
         layout: 'fit',
@@ -78,9 +86,11 @@ Ext.define('biglifts.views.LogList', {
                 biglifts.navigation.unbindBackEvent();
                 if (!this._painted) {
                     this._painted = true;
-                    biglifts.stores.LiftLog.addListener('beforesync', Ext.bind(me.updateCycleOptions, me));
-                    biglifts.stores.assistance.ActivityLog.addListener('beforesync', Ext.bind(me.updateCycleOptions, me));
+                    this.bindListeners();
                 }
+            },
+            destroy: function () {
+                this.destroyListeners();
             },
             initialize: function () {
                 var me = this;

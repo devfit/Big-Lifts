@@ -24,6 +24,14 @@ Ext.define('biglifts.views.LogAssistanceList', {
         var assistanceLogRecord = biglifts.stores.assistance.ActivityLog.getAt(index);
         Ext.getCmp('edit-assistance-log-entry').setupAssistanceLogEntry(assistanceLogRecord);
     },
+    bindListeners: function () {
+        biglifts.stores.assistance.ActivityLog.addListener('beforesync', this.refresh, this);
+        biglifts.stores.LogSort.addListener('beforesync', this.sortAndRefreshList, this);
+    },
+    destroyListeners: function () {
+        biglifts.stores.assistance.ActivityLog.removeListener('beforesync', this.refresh, this);
+        biglifts.stores.LogSort.removeListener('beforesync', this.sortAndRefreshList, this);
+    },
     config: {
         id: 'log-assistance-list',
         listeners: {
@@ -38,10 +46,11 @@ Ext.define('biglifts.views.LogAssistanceList', {
                         Ext.emptyFn,
                         '.date-week');
 
-
-                    biglifts.stores.assistance.ActivityLog.addListener('beforesync', Ext.bind(this.refresh, this));
-                    biglifts.stores.LogSort.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
+                    this.bindListeners();
                 }
+            },
+            destroy: function () {
+                this.destroyListeners();
             }
         },
         selectedCls: '',

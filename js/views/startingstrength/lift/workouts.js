@@ -28,6 +28,19 @@ Ext.define('biglifts.views.ss.Workouts', {
     setToolbarTitle: function () {
         this.workoutToolbar.setTitle('Workout ' + this.getActiveItem()._workoutName);
     },
+    refreshActiveItem: function () {
+        this.getActiveItem().refresh();
+    },
+    bindListeners: function () {
+        this.addListener('activeitemchange', this.setToolbarTitle, this);
+        biglifts.stores.ss.Lifts.addListener('beforesync', this.refreshActiveItem, this);
+        biglifts.stores.GlobalSettings.addListener('beforesync', this.refreshActiveItem, this);
+    },
+    destroyListeners: function () {
+        this.removeListener('activeitemchange', this.setToolbarTitle, this);
+        biglifts.stores.ss.Lifts.removeListener('beforesync', this.refreshActiveItem, this);
+        biglifts.stores.GlobalSettings.removeListener('beforesync', this.refreshActiveItem, this);
+    },
     config: {
         cls: 'ss-workout',
         items: [
@@ -96,14 +109,7 @@ Ext.define('biglifts.views.ss.Workouts', {
                 var workoutB = me.add(listConfigB);
                 workoutB._workoutName = 'B';
 
-                me.addListener('activeitemchange', Ext.bind(me.setToolbarTitle, me));
                 me.setToolbarTitle();
-                biglifts.stores.ss.Lifts.addListener('beforesync', function () {
-                    this.getActiveItem().refresh();
-                }, me);
-                biglifts.stores.GlobalSettings.addListener('beforesync', function () {
-                    this.getActiveItem().refresh();
-                }, me);
 
                 var toolbar = me.add({
                     xtype: 'toolbar',
@@ -115,6 +121,15 @@ Ext.define('biglifts.views.ss.Workouts', {
                 });
 
                 toolbar.add(Ext.create('biglifts.components.SetCounter'));
+            },
+            painted: function(){
+                if( !this._painted ){
+                    this._painted = true;
+                    this.bindListeners();
+                }
+            },
+            destroy: function(){
+                this.destroyListeners();
             }
         }
     }

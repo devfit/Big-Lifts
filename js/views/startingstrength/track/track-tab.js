@@ -13,6 +13,19 @@ Ext.define('biglifts.views.ss.Track', {
         var sortProperty = liftLogSort.get('property');
         this.sortLifts(sortProperty, sortDirection);
     },
+    refreshLoglist: function () {
+        this.logList.refresh();
+    },
+    bindListeners: function () {
+        biglifts.stores.ss.Log.addListener('beforesync', this.sortAndRefreshList, this);
+        biglifts.stores.LogSort.addListener('beforesync', this.sortAndRefreshList, this);
+        biglifts.stores.w.Settings.addListener('beforesync', this.refreshLoglist, this);
+    },
+    destroyListeners: function () {
+        biglifts.stores.ss.Log.removeListener('beforesync', this.sortAndRefreshList, this);
+        biglifts.stores.LogSort.removeListener('beforesync', this.sortAndRefreshList, this);
+        biglifts.stores.w.Settings.removeListener('beforesync', this.refreshLoglist, this);
+    },
     config: {
         id: 'ss-track-tab',
         iconCls: 'bookmarks',
@@ -77,13 +90,11 @@ Ext.define('biglifts.views.ss.Track', {
                 if (!this._painted) {
                     this._painted = true;
                     this.sortAndRefreshList();
-
-                    biglifts.stores.ss.Log.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
-                    biglifts.stores.LogSort.addListener('beforesync', Ext.bind(this.sortAndRefreshList, this));
-                    biglifts.stores.w.Settings.addListener('beforesync', Ext.bind(function () {
-                        this.logList.refresh();
-                    }), this);
+                    this.bindListeners();
                 }
+            },
+            destroy: function () {
+                this.destroyListeners();
             }
         }
     }
