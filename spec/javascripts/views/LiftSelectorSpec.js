@@ -8,6 +8,8 @@ describe("The lift selector", function () {
         liftStore.add({propertyName:'squat', enabled: true});
         liftStore.add({propertyName:'press', enabled: true});
         liftStore.sync();
+
+        this.liftSelector = Ext.create('biglifts.views.LiftSelector');
     });
 
     it("should determine the starting week correctly", function () {
@@ -16,7 +18,7 @@ describe("The lift selector", function () {
         liftCompletionStore.add({liftPropertyName:'press', week:1, completed:true});
         liftCompletionStore.add({liftPropertyName:'squat', week:2, completed:false});
 
-        expect(biglifts.liftSchedule.liftSelector.getStartingWeek()).toEqual(2);
+        expect(this.liftSelector.getStartingWeek()).toEqual(2);
     });
 
     it("should return the last week as the starting week if all lifts are completed", function () {
@@ -25,7 +27,7 @@ describe("The lift selector", function () {
         liftCompletionStore.add({liftPropertyName:'press', week:1, completed:true});
         liftCompletionStore.add({liftPropertyName:'squat', week:2, completed:true});
 
-        expect(biglifts.liftSchedule.liftSelector.getStartingWeek()).toEqual(2);
+        expect(this.liftSelector.getStartingWeek()).toEqual(2);
     });
 
     it("should ignored disabled lifts when determining the starting week", function () {
@@ -43,6 +45,6 @@ describe("The lift selector", function () {
         liftCompletionStore.add({liftPropertyName:'press', week:1, completed:false});
         liftCompletionStore.add({liftPropertyName:'squat', week:2, completed:true});
         liftCompletionStore.sync();
-        expect(biglifts.liftSchedule.liftSelector.getStartingWeek()).toEqual(2);
+        expect(this.liftSelector.getStartingWeek()).toEqual(2);
     });
 });

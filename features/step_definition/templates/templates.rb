@@ -3,8 +3,7 @@ When /^I view the lift schedule$/ do
 end
 
 When /^I open the lift settings configuration$/ do
-  @driver.find_element(:id => 'lift-schedule-settings-button').click()
-
+  @driver.find_elements(:css => '.x-button-icon.settings').select { |i| i.displayed? }[0].click
 end
 
 When /^I select the "(.*?)" lift template$/ do |assistance_template|
