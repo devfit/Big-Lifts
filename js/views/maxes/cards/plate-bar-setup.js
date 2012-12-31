@@ -46,6 +46,15 @@ Ext.define('biglifts.views.BarSetup', {
             biglifts.stores.Plates.sync();
         }
     },
+    setBarWeightInput: function () {
+        this.barWeightInput.setValue(this.first().get('weight'));
+    },
+    bindListeners: function () {
+        biglifts.stores.BarWeight.addListener('beforesync', this.setBarWeightInput, this);
+    },
+    destroyListeners: function () {
+        biglifts.stores.BarWeight.removeListener('beforesync', this.setBarWeightInput, this);
+    },
     config: {
         id: 'bar-plate-setup-panel',
         layout: 'fit',
@@ -56,10 +65,11 @@ Ext.define('biglifts.views.BarSetup', {
 
                 if (!this._painted) {
                     this._painted = true;
-                    biglifts.stores.BarWeight.addListener('beforesync', function () {
-                        Ext.getCmp('bar-weight-field').setValue(this.first().get('weight'));
-                    });
+                    this.bindListeners();
                 }
+            },
+            destroy: function () {
+                this.destroyListeners();
             },
             initialize: function () {
                 var me = this;
@@ -75,88 +85,85 @@ Ext.define('biglifts.views.BarSetup', {
                         }
                     ]
                 });
-                this.barSetupForm = me.add([
+                this.barSetupForm = me.add({
+                    xtype: 'formpanel'
+                });
+
+                this.barSetupFieldset = this.barSetupForm.add({
+                    xtype: 'fieldset',
+                    style: 'margin-top: 0; margin-bottom: 0.5em',
+                    defaults: {
+                        autoCapitalize: false,
+                        autoCorrect: false,
+                        autoComplete: false,
+                        labelWidth: '50%',
+                        listeners: {
+                            change: Ext.bind(me.barValueChanged, me)
+                        }
+                    }
+                });
+
+                this.barWeightInput = this.barSetupFieldset.add({
+                    xtype: 'numberfield',
+                    name: 'weight',
+                    label: 'Bar Weight'
+                });
+
+                this.barSetupForm.add([
                     {
-                        xtype: 'formpanel',
+                        xtype: 'container',
                         items: [
                             {
-                                id: 'bar-setup-fieldset',
+                                itemId: 'plates-setup-fieldset',
                                 xtype: 'fieldset',
+                                cls: 'fieldset-title-no-margin',
                                 style: 'margin-top: 0; margin-bottom: 0.5em',
+                                title: 'Plates<span style="float:right">#</span>',
                                 defaults: {
                                     autoCapitalize: false,
                                     autoCorrect: false,
                                     autoComplete: false,
                                     labelWidth: '50%',
                                     listeners: {
-                                        change: Ext.bind(me.barValueChanged, me)
+                                        change: Ext.bind(me.platesValueChanged, me)
                                     }
+                                },
+                                listeners: {
+                                    painted: function () {
+                                        var fieldset = this;
+                                        if (!this._painted) {
+                                            this._painted = true;
+                                            me.setupCustomPlatesFieldSet();
+                                            biglifts.stores.Plates.addListener('beforesync', Ext.bind(me.setupCustomPlatesFieldSet, me));
+                                        }
+                                    }
+                                }
+                            },
+                            {
+                                xtype: 'button',
+                                text: 'Remove',
+                                ui: 'decline',
+                                handler: Ext.bind(me.removeLastPlate, me)
+                            },
+                            {
+                                xtype: 'fieldset',
+                                style: 'margin-top:0.5em; margin-bottom: 0.5em',
+                                defaults: {
+                                    labelWidth: '33%'
                                 },
                                 items: [
                                     {
-                                        id: 'bar-weight-field',
+                                        name: 'newPlateWeight',
                                         xtype: 'numberfield',
-                                        name: 'weight',
-                                        label: 'Bar Weight'
+                                        label: 'Weight'
                                     }
                                 ]
                             },
                             {
-                                xtype: 'container',
-                                items: [
-                                    {
-                                        itemId: 'plates-setup-fieldset',
-                                        xtype: 'fieldset',
-                                        cls: 'fieldset-title-no-margin',
-                                        style: 'margin-top: 0; margin-bottom: 0.5em',
-                                        title: 'Plates<span style="float:right">#</span>',
-                                        defaults: {
-                                            autoCapitalize: false,
-                                            autoCorrect: false,
-                                            autoComplete: false,
-                                            labelWidth: '50%',
-                                            listeners: {
-                                                change: Ext.bind(me.platesValueChanged, me)
-                                            }
-                                        },
-                                        listeners: {
-                                            painted: function () {
-                                                var fieldset = this;
-                                                if (!this._painted) {
-                                                    this._painted = true;
-                                                    me.setupCustomPlatesFieldSet();
-                                                    biglifts.stores.Plates.addListener('beforesync', Ext.bind(me.setupCustomPlatesFieldSet, me));
-                                                }
-                                            }
-                                        }
-                                    },
-                                    {
-                                        xtype: 'button',
-                                        text: 'Remove',
-                                        ui: 'decline',
-                                        handler: Ext.bind(me.removeLastPlate, me)
-                                    },
-                                    {
-                                        xtype: 'fieldset',
-                                        style: 'margin-top:0.5em; margin-bottom: 0.5em',
-                                        defaults: {
-                                            labelWidth: '33%'
-                                        },
-                                        items: [
-                                            {
-                                                name: 'newPlateWeight',
-                                                xtype: 'numberfield',
-                                                label: 'Weight'
-                                            }
-                                        ]
-                                    },
-                                    {
-                                        xtype: 'button',
-                                        text: 'Add',
-                                        ui: 'confirm',
-                                        handler: Ext.bind(me.addNewPlate, me)
-                                    }
-                                ]
+                                xtype: 'button',
+                                text: 'Add',
+                                ui: 'confirm',
+                                handler: Ext.bind(me.addNewPlate, me)
                             }
                         ]
                     }

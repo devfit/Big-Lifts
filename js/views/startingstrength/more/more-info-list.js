@@ -10,6 +10,12 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
     showSettings: function () {
         Ext.getCmp('ss-more').setActiveItem(Ext.getCmp('ss-settings-form'));
     },
+    bindListeners: function () {
+        this.addListener('itemtap', this.listItemTapped, this);
+    },
+    destroyListeners: function () {
+        this.removeListener('itemtap', this.listItemTapped, this);
+    },
     config: {
         id: 'ss-more-info-list',
         itemTpl: '{[biglifts.ss.more.getTextForValues(values)]}',
@@ -50,8 +56,15 @@ Ext.define('biglifts.views.ss.MoreInfoList', {
                     model: 'SsMoreList',
                     data: listData
                 }));
-
-                me.addListener('itemtap', Ext.bind(me.listItemTapped, me));
+            },
+            painted: function () {
+                if (!this._painted) {
+                    this._painted = true;
+                    this.bindListeners();
+                }
+            },
+            destroy: function () {
+                this.destroyListeners();
             }
         }
     }

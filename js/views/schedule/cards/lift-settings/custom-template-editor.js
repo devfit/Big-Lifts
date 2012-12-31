@@ -85,6 +85,12 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
         });
         return this.getItems().filter(listFilter);
     },
+    bindListeners: function () {
+        this.addListener('activeitemchange', this.switchLiftWeek, this);
+    },
+    destroyListeners: function () {
+        this.removeListener('activeitemchange', this.switchLiftWeek, this);
+    },
     config: {
         id: 'edit-lift-percentages',
         title: 'Edit',
@@ -111,6 +117,13 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
             painted: function () {
                 biglifts.navigation.setBackFunction(this.returnToLiftSettings);
                 this.updateLiftPercentaqes();
+                if (!this._painted) {
+                    this._painted = true;
+                    this.bindListeners();
+                }
+            },
+            destroy: function () {
+                this.destroyListeners();
             },
             initialize: function () {
                 this.currentWeek = 1;
@@ -122,7 +135,6 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
                     me.createTab(3),
                     me.createTab(4)
                 ]);
-                this.addListener('activeitemchange', Ext.bind(this.switchLiftWeek, this));
             }
         }
     }
