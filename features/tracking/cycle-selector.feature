@@ -9,7 +9,7 @@ Feature: Filtering log by cycle
     And I tap the "Save" button
 
     When I navigate to the lift schedule
-    And I click the increase cycle button
+    And I tap the "Cycle 1" button
     And I tap the "Done" button
 
     And I tap the assistance tab
@@ -29,7 +29,7 @@ Feature: Filtering log by cycle
     And I wait for the animation
 
     When I navigate to the lift schedule
-    And I click the increase cycle button
+    And I tap the "Cycle 1" button
     And I tap the "Done" button
     When I view the squat lift schedule for week 1
     And I tap the checkmark

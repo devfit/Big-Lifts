@@ -14,7 +14,7 @@ Feature: Cycle increase is adjusted for kg
     And I set select "units" to "kg"
 
     When I navigate to the lift schedule
-    And I click the increase cycle button
+    And I tap the "Cycle 1" button
     And I tap the "Done" button
     And I navigate to the lift editor
     Then The "Squat" input is "305"

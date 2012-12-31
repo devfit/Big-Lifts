@@ -152,6 +152,7 @@ Ext.define('biglifts.views.LiftSelector', {
                     xtype: 'button',
                     ui: 'action',
                     text: 'Cycle 1',
+                    cls: 'cycle-change-button',
                     handler: Ext.bind(this.showLiftsCompletedScreen, this)
                 });
 

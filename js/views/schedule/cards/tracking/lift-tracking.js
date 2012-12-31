@@ -81,7 +81,8 @@ Ext.define('biglifts.views.LiftTracking', {
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
 
         if (this.allLiftsAreCompleted()) {
-            biglifts.liftSchedule.liftSelector.showLiftsCompletedScreen();
+            biglifts.liftSchedule.lastActiveTab = Ext.getCmp('lift-schedule').getActiveItem();
+            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'));
         }
         else {
             Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));

@@ -6,20 +6,21 @@ Feature: Increasing the cycle
 
   Scenario: Click increase cycle button
     When I navigate to the lift schedule
-    And I click the increase cycle button
+    And I tap the "Cycle 1" button
     And I tap the "Done" button
-    Then the cycle is increased
+    Then The cycle is "2"
 
   Scenario: Cancel on after clicking increase cycle button
     When I navigate to the lift schedule
-    And I click the increase cycle button
-    And I hit cancel on the increase cycle screen
-    Then the cycle is not increased
+    And I tap the "Cycle 1" button
+    And I tap the "Cancel" button
+    Then The cycle is "1"
 
   Scenario: Going down a cycle
     When I navigate to the lift schedule
-    And I click the increase cycle button
+    And I tap the "Cycle 1" button
     And I tap the "Done" button
-    And I click the increase cycle button
+    And I tap the "Cycle 2" button
     And I set the next cycle to 1
-    Then the cycle is not increased
+    And I tap the "Done" button
+    Then The cycle is "1"
