@@ -74,29 +74,10 @@ Ext.define("biglifts.views.CustomPanel", {
                     }
                 });
 
-                me.bottomToolbar = me.add({
-                    xtype: 'toolbar',
-                    docked: 'bottom',
-                    cls: 'unstyled-toolbar',
-                    items: [
-                        {
-                            text: 'Add...',
-                            ui: 'confirm',
-                            listeners: {
-                                initialize: function () {
-                                    this.setHandler(Ext.bind(me.addCustomMovement, me));
-                                }
-                            }
-                        }
-                    ]
-                });
-
-                me.bottomToolbar.add({xtype: 'spacer'});
-                me.arrangeButton = me.bottomToolbar.add({
-                    xtype: 'button',
-                    text: 'Arrange',
-                    handler: Ext.bind(me.arrangeAssistance, me)
-                });
+                me.bottomToolbar = this.add(Ext.create('biglifts.components.AssistanceToolbar', {
+                    addAction: Ext.bind(me.addCustomMovement, me),
+                    arrangeAction: Ext.bind(me.arrangeAssistance, me)
+                }));
 
                 me.movementList = me.add(Ext.create('biglifts.views.CustomMovementList', {
                     store: this.getCustomMovementStore(),

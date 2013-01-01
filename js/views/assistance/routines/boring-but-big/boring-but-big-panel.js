@@ -166,28 +166,10 @@ Ext.define("biglifts.views.BoringButBigPanel", {
                     ]
                 });
 
-                me.bottomToolbar = me.add({
-                        xtype: 'toolbar',
-                        docked: 'bottom',
-                        cls: 'unstyled-toolbar',
-                        items: [
-                            {
-                                xtype: 'button',
-                                ui: 'confirm',
-                                text: 'Add...',
-                                handler: Ext.bind(me.addMovement, me)
-                            },
-                            {
-                                xtype: 'spacer'
-                            },
-                            {
-                                xtype: 'button',
-                                text: 'Arrange',
-                                handler: Ext.bind(me.arrange, me)
-                            }
-                        ]
-                    }
-                );
+                me.bottomToolbar = this.add(Ext.create('biglifts.components.AssistanceToolbar', {
+                    addAction: Ext.bind(me.addMovement, me),
+                    arrangeAction: Ext.bind(me.arrange, me)
+                }));
 
                 me.bbbList = me.add({
                     id: 'boring-but-big-list',
