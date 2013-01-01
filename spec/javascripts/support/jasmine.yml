@@ -58,6 +58,7 @@ src_files:
         - js/models/migration/migrations/005_bbb_doubling_fix.js
         - js/models/migration/migrations/006_rotating_week_store_lift_matching.js
         - js/models/migration/migrations/007_add_order_to_assistance.js
+        - js/models/migration/migrations/008_update_ss_workout_defaults.js
         - js/models/startingstrength/lift.js
         - js/models/startingstrength/workout.js
         - js/models/startingstrength/log.js

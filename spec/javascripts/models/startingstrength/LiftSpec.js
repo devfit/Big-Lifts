@@ -1,13 +1,10 @@
 describe("Starting Strength lift", function () {
-    var liftStore = biglifts.stores.ss.Lifts;
-
     beforeEach(function () {
-        reloadStore(liftStore);
+        this.liftStore = reloadStore(biglifts.stores.ss.Lifts);
     });
 
     it("should load default lifts", function () {
-        biglifts.stores.GlobalSettings.load();
-        expect(liftStore.getCount()).toEqual(5);
+        expect(this.liftStore.getCount()).toEqual(5);
     });
 
     it("should adjust lift increases when the units are changed to kg", function () {
@@ -15,8 +12,8 @@ describe("Starting Strength lift", function () {
 
         biglifts.stores.GlobalSettings.first().set('units', 'kg');
         biglifts.stores.GlobalSettings.sync();
-        liftStore.adjustUnits();
-        expect(liftStore.findRecord('name', 'Squat').get('increase')).toEqual(5);
+        this.liftStore.adjustUnits();
+        expect(this.liftStore.findRecord('name', 'Squat').get('increase')).toEqual(5);
     });
 
     it("should adjust lift increases when the units are changed to lbs", function () {
@@ -24,12 +21,12 @@ describe("Starting Strength lift", function () {
 
         biglifts.stores.GlobalSettings.first().set('units', 'kg');
         biglifts.stores.GlobalSettings.sync();
-        liftStore.adjustUnits();
+        this.liftStore.adjustUnits();
 
         biglifts.stores.GlobalSettings.first().set('units', 'lbs');
         biglifts.stores.GlobalSettings.sync();
-        liftStore.adjustUnits();
+        this.liftStore.adjustUnits();
 
-        expect(liftStore.findRecord('name', 'Squat').get('increase')).toEqual(10);
+        expect(this.liftStore.findRecord('name', 'Squat').get('increase')).toEqual(10);
     });
 });

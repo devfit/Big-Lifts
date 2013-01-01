@@ -1,16 +1,22 @@
 describe("Starting Strength workout", function () {
     beforeEach(function () {
-        localStorage.clear();
-        this.workoutStore = Ext.create('biglifts.models.startingstrength.WorkoutStore');
+        this.lifts = reloadStore(biglifts.stores.ss.Lifts);
+        biglifts.stores.GlobalSettings.removeAll();
+        biglifts.stores.GlobalSettings.setupDefaultSettings();
+        expect(this.lifts.getCount()).toEqual(5);
+
+        this.workouts = reloadStore(biglifts.stores.ss.WorkoutStore);
+        this.workouts.removeAll();
+        this.workouts.sync();
     });
 
     it("should load default workouts", function () {
-        expect(this.workoutStore.getCount()).toEqual(0);
-        this.workoutStore.load();
-        expect(this.workoutStore.getCount()).toEqual(6);
-        this.workoutStore.filter('name', 'A');
-        expect(this.workoutStore.getCount()).toEqual(3);
-        this.workoutStore.filter('name', 'B');
-        expect(this.workoutStore.getCount()).toEqual(3);
+        expect(this.workouts.getCount()).toEqual(0);
+        this.workouts.load();
+        expect(this.workouts.getCount()).toEqual(6);
+        this.workouts.filter('name', 'A');
+        expect(this.workouts.getCount()).toEqual(3);
+        this.workouts.filter('name', 'B');
+        expect(this.workouts.getCount()).toEqual(3);
     });
 });

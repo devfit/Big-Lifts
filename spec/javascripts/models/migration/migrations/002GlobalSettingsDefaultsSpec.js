@@ -1,28 +1,18 @@
 describe("Global Settings Defaults Migration", function () {
     beforeEach(function () {
-        this.settings = biglifts.stores.GlobalSettings;
-        this.settings531 = biglifts.stores.w.Settings;
-        this.routines = biglifts.stores.Routine;
-
-        this.settings.removeAll();
-        this.settings531.removeAll();
-        this.routines.removeAll();
-        this.settings.sync();
-        this.settings531.sync();
-        this.routines.sync();
-
-        this.migration = Ext.create('biglifts.migrations.globalSettingsDefaults');
+        this.settings = reloadStore(biglifts.stores.GlobalSettings);
+        this.settings531 = reloadStore(biglifts.stores.w.Settings);
+        this.routines = reloadStore(biglifts.stores.Routine);
     });
 
     it("should copy 5/3/1 settings if they exist and a routine is loaded", function () {
-        this.settings531.add({units: 'test'});
+        this.settings531.first().set({units: 'test'});
         this.settings531.sync();
+
         this.routines.add({name: "5/3/1"});
         this.routines.sync();
 
-        this.migration.run();
-        this.routines.fireEvent('load');
-        this.settings531.fireEvent('load');
+        Ext.create('biglifts.migrations.globalSettingsDefaults').run();
 
         expect(this.settings.getUnits()).toEqual('test');
     });

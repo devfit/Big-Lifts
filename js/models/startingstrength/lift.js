@@ -94,8 +94,8 @@ Ext.define('biglifts.models.startingstrength.LiftStore', {
         listeners: {
             load: function () {
                 var me = this;
-                if (me.getCount() === 0) {
-                    util.withLoadedStore(biglifts.stores.GlobalSettings, function () {
+                util.withLoadedStore(biglifts.stores.GlobalSettings, function () {
+                    if (me.getCount() === 0) {
                         if (biglifts.stores.GlobalSettings.getUnits() === 'lbs') {
                             me.add(me.DEFAULT_LIFTS_LB);
                             me.sync();
@@ -104,8 +104,8 @@ Ext.define('biglifts.models.startingstrength.LiftStore', {
                             me.add(me.DEFAULT_LIFTS_KG);
                             me.sync();
                         }
-                    });
-                }
+                    }
+                });
             }
         },
         sorters: [

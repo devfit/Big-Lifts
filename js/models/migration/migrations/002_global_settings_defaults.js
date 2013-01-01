@@ -6,12 +6,14 @@ Ext.define('biglifts.migrations.globalSettingsDefaults', {
             }
 
             util.withLoadedStore(biglifts.stores.w.Settings, function () {
-                var settings = biglifts.stores.w.Settings.first();
-                if (settings) {
-                    var units = settings.get('units');
-                    biglifts.stores.GlobalSettings.add({units: units});
-                    biglifts.stores.GlobalSettings.sync();
-                }
+                util.withLoadedStore(biglifts.stores.GlobalSettings, function () {
+                    var settings = biglifts.stores.w.Settings.first();
+                    if (settings) {
+                        var units = settings.get('units');
+                        biglifts.stores.GlobalSettings.first().set({units: units});
+                        biglifts.stores.GlobalSettings.sync();
+                    }
+                });
             });
         });
     }

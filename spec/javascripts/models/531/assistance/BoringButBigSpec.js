@@ -7,8 +7,7 @@ describe("Boring But Big Model", function () {
         this.lifts.sync();
         this.bbb.sync();
 
-        this.bbbPercentage = biglifts.stores.assistance.BoringButBigPercentage;
-        reloadStore(this.bbbPercentage);
+        this.bbbPercentage = reloadStore(biglifts.stores.assistance.BoringButBigPercentage);
         reloadStore(biglifts.stores.w.Settings);
     });
 
