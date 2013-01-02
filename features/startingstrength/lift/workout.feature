@@ -18,6 +18,7 @@ Feature: Workouts
 
   Scenario: Workout A
     When I navigate to the "Lift" tab
+    And I tap the "Warmup" button
     Then There are 3 list items
     Then There is a "Squat" list item
     Then There is a "Bench" list item
@@ -26,6 +27,7 @@ Feature: Workouts
   Scenario: Workout B
     When I navigate to the "Lift" tab
     And I tap the "B" tab
+    And I tap the "Warmup" button
     Then There are 3 list items
     Then There is a "Squat" list item
     Then There is a "Press" list item
