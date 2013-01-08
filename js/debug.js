@@ -27,6 +27,14 @@ if (biglifts.DEBUG) {
         TIME_INTERVAL: 3
     });
 
+    Ext.define('biglifts.overrides.UserStore', {
+        override: 'biglifts.stores.UserStore',
+        createUserRemotely: function () {
+            this.add({username: 'bob', password: 'password'});
+            this.sync();
+        }
+    });
+
     Ext.ns('biglifts.log.emailExport');
     biglifts.log.emailExport.ajaxEmailRequest = function (email, data) {
         window.testEmail = email;
