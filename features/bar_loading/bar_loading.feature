@@ -1,9 +1,14 @@
 @531
 @premium
-Feature: bar loading
-  As a lifter
-  I want to be able to see the plates that should be on the bar
-  So that I don't have to calculate this manually
+Feature: Bar loading
+
+  Scenario: Custom plates can be persisted
+    When I navigate to the lift editor
+    And I tap the "Bar/Plates" button
+    And I set the number of 10lbs plates to 0
+    And I tap the "Back" button
+    And I tap the "Bar/Plates" button
+    And I tap the "Back" button
 
   Scenario: Custom plates - no 10s
     When I navigate to the lift editor

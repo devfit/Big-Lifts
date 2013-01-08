@@ -55,13 +55,17 @@ Ext.define('biglifts.views.BarSetup', {
     destroyListeners: function () {
         biglifts.stores.BarWeight.removeListener('beforesync', this.setBarWeightInput, this);
     },
+    reloadData: function () {
+        this.setupCustomPlatesFieldSet();
+        this.setBarWeightInput();
+    },
     config: {
         id: 'bar-plate-setup-panel',
         layout: 'fit',
         listeners: {
             painted: function () {
                 biglifts.navigation.setBackFunction(Ext.bind(this.backButtonPressed, this));
-                this.barSetupForm.setRecord(biglifts.stores.BarWeight.first());
+                this.reloadData();
 
                 if (!this._painted) {
                     this._painted = true;
