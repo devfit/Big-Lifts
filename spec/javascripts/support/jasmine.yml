@@ -47,9 +47,10 @@ src_files:
         - js/models/assistance/assistance.js
         - js/models/assistance/boring-but-big-percentage.js
         - js/models/assistance/boring-but-big.js
-        - js/models/assistance/custom.js
-        - js/models/assistance/triumvirate.js
-        - js/models/assistance/bodyweight.js
+        - js/models/assistance/custom/custom.js
+        - js/models/assistance/custom/triumvirate.js
+        - js/models/assistance/custom/bodyweight.js
+        - js/models/assistance/sst/sst.js
         - js/models/migration/migration.js
         - js/models/migration/migrations/001_starting_strength_notification.js
         - js/models/migration/migrations/002_global_settings_defaults.js
