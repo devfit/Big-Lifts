@@ -9,7 +9,8 @@ Ext.define('CustomMovement', {
             {name: 'sets', type: 'integer'},
             {name: 'reps', type: 'integer'},
             {name: 'weight', type: 'integer', defaultValue: 0},
-            {name: 'order', type: 'integer'}
+            {name: 'order', type: 'integer'},
+            {name: 'max', type: 'integer'}
         ]
     }
 });
@@ -41,6 +42,14 @@ Ext.define('CustomMovementStore', {
     addWithOrder: function (recordConfig) {
         recordConfig.order = this.max('order') + 1;
         this.add(recordConfig);
+    },
+    onLoad: function () {
+        if (this.getCount() == 0) {
+            this.add(this.DEFAULT_LIFTS);
+            this.sync();
+        }
+        this.addMissingCustomLiftAssociations();
+        biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.addMissingCustomLiftAssociations, this));
     },
     config: {
         sorters: [

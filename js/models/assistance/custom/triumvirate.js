@@ -12,7 +12,7 @@ Ext.define('TriumvirateMovement', {
 
 Ext.define("TriumvirateMovementStore", {
     extend: "CustomMovementStore",
-    DEFAULT_CUSTOM_LIFTS: [
+    DEFAULT_LIFTS: [
         {liftProperty: 'squat', name: 'Leg Press', sets: 5, reps: 15, order: 0},
         {liftProperty: 'squat', name: 'Leg Curl', sets: 5, reps: 15, order: 1},
         {liftProperty: 'deadlift', name: 'Good Morning', sets: 5, reps: 15, order: 0},
@@ -27,12 +27,7 @@ Ext.define("TriumvirateMovementStore", {
         storeId: 'triumvirate',
         listeners: {
             load: function () {
-                if (this.getCount() == 0) {
-                    this.add(this.DEFAULT_CUSTOM_LIFTS);
-                    this.sync();
-                }
-                this.addMissingCustomLiftAssociations();
-                biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.addMissingCustomLiftAssociations, this));
+                this.onLoad();
             }
         }
     }
