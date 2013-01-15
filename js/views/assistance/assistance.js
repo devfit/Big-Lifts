@@ -26,6 +26,8 @@ Ext.define('biglifts.views.Assistance', {
                     }
                 ]);
 
+                this.add(Ext.create('biglifts.views.SimplestStrengthTemplate'));
+
                 this.restTimer = this.add(Ext.create('biglifts.views.RestTimer'));
 
                 this.setActiveItem(0);
