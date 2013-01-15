@@ -34,7 +34,7 @@ Ext.define("SstSets", {
         this.sync();
     },
     config: {
-        model: 'SstMovement',
+        model: 'SstSets',
         listeners: {
             load: function () {
                 if (this.getCount() === 0) {

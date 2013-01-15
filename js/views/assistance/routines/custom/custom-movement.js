@@ -1,8 +1,5 @@
 Ext.define("Biglifts.views.Custom", {
     extend: "Ext.Panel",
-    movementEditor: null,
-    assistanceType: '',
-    customMovementStore: null,
     showArrange: function () {
         this.setActiveItem(1);
     },
@@ -18,7 +15,9 @@ Ext.define("Biglifts.views.Custom", {
                 var config = {
                     customMovementStore: me.customMovementStore,
                     movementEditor: me.movementEditor,
-                    assistanceType: me.assistanceType
+                    assistanceType: me.assistanceType,
+                    listConfig: me.listConfig,
+                    filterCustomMovements: me.filterCustomMovements
                 };
                 me.add(Ext.create('biglifts.views.CustomPanel', config));
                 me.add(Ext.create('biglifts.views.CustomMovementArrangePanel', config));
