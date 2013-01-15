@@ -1,6 +1,6 @@
 machine:
   environment:
-    PATH: /home/ubuntu/bin:$PATH
+    PATH: /home/ubuntu/Big-Lifts:$PATH
   pre:
     - wget http://chromedriver.googlecode.com/files/chromedriver_linux32_21.0.1180.4.zip
-    - unzip -j chromedriver_linux32_21.0.1180.4.zip -d /home/ubuntu/bin
+    - unzip -j chromedriver_linux32_21.0.1180.4.zip -d /home/ubuntu/Big-Lifts
