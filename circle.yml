@@ -4,4 +4,4 @@ machine:
   pre:
     - wget http://chromedriver.googlecode.com/files/chromedriver_linux32_21.0.1180.4.zip
     - unzip chromedriver_linux32_21.0.1180.4.zip
-    - cp ./chromedriver ~/bin
+    - cp ./chromedriver /home/ubuntu/bin/chromedriver
