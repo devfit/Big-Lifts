@@ -1,6 +1,6 @@
 machine:
   environment:
-    PATH: ~/bin:$PATH
+    PATH: /home/ubuntu/bin:$PATH
   pre:
     - wget http://chromedriver.googlecode.com/files/chromedriver_linux64_21.0.1180.4.zip
     - unzip chromedriver_linux64_21.0.1180.4.zip
