@@ -51,6 +51,7 @@ src_files:
         - js/models/assistance/custom/triumvirate.js
         - js/models/assistance/custom/bodyweight.js
         - js/models/assistance/sst/sst.js
+        - js/models/assistance/sst/sst-sets.js
         - js/models/migration/migration.js
         - js/models/migration/migrations/001_starting_strength_notification.js
         - js/models/migration/migrations/002_global_settings_defaults.js
