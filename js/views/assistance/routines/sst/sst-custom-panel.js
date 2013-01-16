@@ -1,43 +1,14 @@
-Ext.define("biglifts.views.CustomPanel", {
-    extend:"Ext.Panel",
-    arrangeAssistance:function () {
-        this.getParent().showArrange();
-    },
+Ext.define("biglifts.views.SstCustomPanel", {
+    extend:"biglifts.views.CustomPanel",
     editCustomMovement:function (dataview, index) {
-        var movement = this.getCustomMovementStore().getAt(index);
-        Ext.getCmp(this.getMovementEditor()).showEditCustomMovement(movement);
     },
     addCustomMovement:function () {
-        this.getCustomMovementStore().addWithOrder({liftProperty:Ext.getCmp('assistance-lift-chooser').currentLiftProperty, name:"", sets:5, reps:15});
-        this.getCustomMovementStore().sync();
-        Ext.getCmp(this.getMovementEditor()).showEditCustomMovement(this.getCustomMovementStore().last());
-    },
-    logMovements:function () {
-        var me = this;
-        this.getCustomMovementStore().each(function (record) {
-            var assistanceRecord = {
-                movement:record.get('name'),
-                assistanceType:me.getAssistanceType(),
-                sets:record.get('sets'),
-                reps:record.get('reps'),
-                weight:record.get('weight'),
-                timestamp:new Date().getTime(),
-                cycle:biglifts.stores.CurrentCycle.getCurrentCycle()
-            };
-
-            biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
-            biglifts.stores.assistance.ActivityLog.sync();
-        });
-
-        Ext.getCmp('assistance').setActiveItem(0);
-        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
     },
     filterCustomMovements:function () {
-        this.getCustomMovementStore().clearFilter();
-        this.getCustomMovementStore().filter('liftProperty', Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
+        biglifts.stores.assistance.SSTSets.filter('week', 1);
     },
-    supportsAdd:true,
-    supportsArrange:true,
+    supportsAdd:false,
+    supportsArrange:false,
     config:{
         cls:'assistance',
         layout:'fit',
@@ -48,6 +19,11 @@ Ext.define("biglifts.views.CustomPanel", {
         listeners:{
             initialize:function () {
                 var me = this;
+
+                me.filterCustomMovements = me.getFilterCustomMovements() || function () {
+                    me.getCustomMovementStore().clearFilter();
+                    me.getCustomMovementStore().filter('liftProperty', Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
+                };
 
                 me.topToolbar = me.add({
                     xtype:'toolbar',
@@ -78,14 +54,14 @@ Ext.define("biglifts.views.CustomPanel", {
                 });
 
                 me.bottomToolbar = this.add(Ext.create('biglifts.components.AssistanceToolbar', {
-                    addAction:this.supportsAdd ? Ext.bind(me.addCustomMovement, me) : null,
-                    arrangeAction:this.supportsArrange ? Ext.bind(me.arrangeAssistance, me) : null
+                    addAction:this.getSupportsAdd() ? Ext.bind(me.addCustomMovement, me) : null,
+                    arrangeAction:this.getSupportsArrange() ? Ext.bind(me.arrangeAssistance, me) : null
                 }));
 
                 var listConfig = this.getListConfig() || {};
                 Ext.merge(listConfig, {
                     store:this.getCustomMovementStore(),
-                    tapAction:Ext.bind(this.editCustomMovement, this)
+                    tapAction:this.getMovementEditor() ? Ext.bind(this.editCustomMovement, this) : Ext.emptyFn
                 });
 
                 me.movementList = me.add(Ext.create('biglifts.views.CustomMovementList', listConfig));

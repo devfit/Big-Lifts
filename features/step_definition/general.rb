@@ -16,7 +16,6 @@ end
 
 When /^I tap the checkmark$/ do
   @driver.find_elements(:css => '.x-button-icon.done').select { |button| button.displayed? }[0].click
-
 end
 
 Then /^I navigate to the "([^"]+)" tab/ do |tab_text|
