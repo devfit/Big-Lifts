@@ -71,6 +71,9 @@ Ext.define('biglifts.views.AssistanceChooser', {
             {text: 'Bodyweight', assistanceType: 'Bodyweight', handler: function () {
                 me.showLiftChooserFor('bodyweight', 'Bodyweight');
             }},
+            {text: 'Simplest Strength Template', assistanceType: 'SST', handler: function () {
+                me.showLiftChooserFor('sst', 'SST');
+            }},
             {text: 'Custom', assistanceType: 'Custom', handler: function () {
                 me.showLiftChooserFor('custom-assistance', 'Custom');
             }}

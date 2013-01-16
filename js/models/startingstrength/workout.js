@@ -96,12 +96,12 @@ Ext.define('biglifts.models.startingstrength.WorkoutStore', {
             var press = liftStore.findRecord('name', 'Press');
             var powerClean = liftStore.findRecord('name', 'Power Clean');
 
-            me.add({lift_id: squat.get('id'), name: 'A', sets: 3, reps: 5, percentage: 100, warmup: false, order: 4});
-            me.add({lift_id: squat.get('id'), name: 'B', sets: 3, reps: 5, percentage: 100, warmup: false, order: 4});
-            me.add({lift_id: bench.get('id'), name: 'A', sets: 3, reps: 5, percentage: 100, warmup: false, order: 4});
-            me.add({lift_id: deadlift.get('id'), name: 'A', sets: 1, reps: 5, percentage: 100, warmup: false, order: 3});
-            me.add({lift_id: press.get('id'), name: 'B', sets: 3, reps: 5, percentage: 100, warmup: false, order: 4});
-            me.add({lift_id: powerClean.get('id'), name: 'B', sets: 5, reps: 3, percentage: 100, warmup: false, order: 4});
+            me.add({lift_id: squat.get('id'), name: 'A', sets: 3, reps: 5, percentage: 100, warmup: false, order: 0});
+            me.add({lift_id: squat.get('id'), name: 'B', sets: 3, reps: 5, percentage: 100, warmup: false, order: 0});
+            me.add({lift_id: bench.get('id'), name: 'A', sets: 3, reps: 5, percentage: 100, warmup: false, order: 1});
+            me.add({lift_id: deadlift.get('id'), name: 'A', sets: 1, reps: 5, percentage: 100, warmup: false, order: 2});
+            me.add({lift_id: press.get('id'), name: 'B', sets: 3, reps: 5, percentage: 100, warmup: false, order: 1});
+            me.add({lift_id: powerClean.get('id'), name: 'B', sets: 5, reps: 3, percentage: 100, warmup: false, order: 2});
 
             me.sync();
         });

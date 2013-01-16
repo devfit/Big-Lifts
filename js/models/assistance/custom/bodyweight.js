@@ -11,7 +11,7 @@ Ext.define('BodyweightMovement', {
 
 Ext.define("BodyweightMovementStore", {
     extend: "CustomMovementStore",
-    DEFAULT_BODYWEIGHT_LIFTS: [
+    DEFAULT_LIFTS: [
         {liftProperty: 'squat', name: 'One leg squat', sets: 5, reps: 15, order: 0},
         {liftProperty: 'squat', name: 'Sit-ups', sets: 5, reps: 15, order: 1},
         {liftProperty: 'deadlift', name: 'GHR', sets: 5, reps: 15, order: 0},
@@ -25,12 +25,7 @@ Ext.define("BodyweightMovementStore", {
         model: 'BodyweightMovement',
         listeners: {
             load: function () {
-                if (this.getCount() == 0) {
-                    this.add(this.DEFAULT_BODYWEIGHT_LIFTS);
-                    this.sync();
-                }
-                this.addMissingCustomLiftAssociations();
-                biglifts.stores.lifts.Lifts.addListener('beforesync', Ext.bind(this.addMissingCustomLiftAssociations, this));
+               this.onLoad();
             }
         }
     }
