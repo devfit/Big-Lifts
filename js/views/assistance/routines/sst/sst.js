@@ -19,7 +19,7 @@ Ext.define('biglifts.views.SimplestStrengthTemplate', {
                 getWeight:function (values) {
                     var max = biglifts.stores.assistance.SST.findRecord('lift_id', this.getCurrentLiftId()).get('max');
                     var percentage = values.percentage;
-                    return biglifts.weight.format(max, percentage);
+                    return max ? biglifts.weight.format(max, percentage) : "";
                 },
                 getUnits:function (values) {
                     var weight = this.getWeight(values);

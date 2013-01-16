@@ -1,7 +1,24 @@
 Ext.define("biglifts.views.SstCustomPanel", {
     extend:"biglifts.views.CustomPanel",
     filterCustomMovements:function () {
-        biglifts.stores.assistance.SSTSets.filter('week', 1);
+        var startingWeek = this.findLastCompletedWeek(Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
+        this.weekSelector.setValue(startingWeek);
+        biglifts.stores.assistance.SSTSets.filter('week', startingWeek);
+    },
+    findLastCompletedWeek:function (liftProperty) {
+        var highestCompleted = 1;
+
+        util.withNoFilters(biglifts.stores.lifts.LiftCompletion, function () {
+            biglifts.stores.lifts.LiftCompletion.filter('liftPropertyName', liftProperty);
+            biglifts.stores.lifts.LiftCompletion.each(function (l) {
+                if (l.get('completed') && l.get('week') > highestCompleted) {
+                    highestCompleted = l.get('week');
+                }
+            });
+            biglifts.stores.lifts.LiftCompletion.clearFilter();
+        });
+
+        return highestCompleted;
     },
     weekChanged:function () {
         var week = this.weekSelector.getValue();

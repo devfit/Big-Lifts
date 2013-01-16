@@ -1,6 +1,19 @@
 @531
 @premium
 Feature: Simplest Strength Template
+  Scenario: Starting week is inferred
+    When I view the squat lift schedule for week 1
+    When I tap the checkmark
+    And I tap the "Save" button
+    And I wait for the animation
+    When I view the squat lift schedule for week 2
+    When I tap the checkmark
+    And I tap the "Save" button
+    And I wait for the animation
+    When I tap the assistance tab
+    And I select "Simplest Strength Template" assistance work
+    And I tap the "Squat" list item
+    Then The "week" select is set to "2"
 
   Scenario: Setting maxes
     When I tap the assistance tab

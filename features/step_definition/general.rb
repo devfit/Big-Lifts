@@ -52,3 +52,7 @@ end
 When /^I select "(.*?)" from the "(.*?)" selector$/ do |value, name|
   select_combobox @driver.find_elements(:name => name).select { |s| s.displayed? }[0], value
 end
+
+Then /^The "(.+?)" select is set to "(.+?)"$/ do |name, value|
+  @driver.find_elements(:name => name).select { |s| s.displayed? }[0].attribute('value').should == value
+end
