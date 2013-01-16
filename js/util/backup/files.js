@@ -55,9 +55,11 @@ util.files.write = function (directory, filename, data, successCallback) {
             fileWriter.onwriteend = successCallback;
 
             if (Ext.os.is.Linux || Ext.os.is.MacOS) {
-                var bb = new window.WebKitBlobBuilder();
-                bb.append(data);
-                fileWriter.write(bb.getBlob('text/plain'));
+                if( window.WebKitBlobBuilder ){
+                    var bb = new window.WebKitBlobBuilder();
+                    bb.append(data);
+                    fileWriter.write(bb.getBlob('text/plain'));
+                }
             }
             else {
                 fileWriter.write(data);
