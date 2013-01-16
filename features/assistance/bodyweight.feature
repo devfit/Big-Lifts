@@ -12,8 +12,8 @@ Feature: Custom - Assistance Work
     And I tap the "Save" button
     Then I am on the track tab
     And I tap the "Asst." button
-    Then Assistance log entry 1 shows "Bodyweight Sit-ups Sets: 5 15x"
-    Then Assistance log entry 2 shows "Bodyweight One leg squat Sets: 5 15x"
+    Then List item 1 contains "Bodyweight Sit-ups Sets: 5 15x"
+    Then List item 2 contains "Bodyweight One leg squat Sets: 5 15x"
 
   Scenario: Changing bodyweight lift movements
     When I tap the assistance tab
@@ -28,5 +28,5 @@ Feature: Custom - Assistance Work
     And I tap the "Save" button
     Then I am on the track tab
     And I tap the "Asst." button
-    Then Assistance log entry 1 shows "Bodyweight Sit-ups Sets: 5 15x"
-    Then Assistance log entry 2 shows "Bodyweight Good Morning Sets: 5 15x 65"
+    Then List item 1 contains "Bodyweight Sit-ups Sets: 5 15x"
+    Then List item 2 contains "Bodyweight Good Morning Sets: 5 15x 65"

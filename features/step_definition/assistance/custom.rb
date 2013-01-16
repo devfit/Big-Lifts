@@ -1,8 +1,3 @@
-Then /^Assistance log entry (\d+) shows "(.*?)"$/ do |index, log_text|
-  log_row = get_displayed_list_items()[index.to_i - 1]
-  log_row.text().gsub(/\n/, " ").should include log_text
-end
-
 Then /^I tap assistance row (\d+)$/ do |row|
   get_displayed_list_items()[row.to_i - 1].click
 
