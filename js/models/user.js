@@ -19,7 +19,7 @@ Ext.define('biglifts.models.User', {
 
 Ext.define("biglifts.stores.UserStore", {
     extend: "Ext.data.Store",
-    CREATE_USER_URL: 'http://biglifts.herokuapp.com:3000/users',
+    CREATE_USER_URL: 'http://biglifts.herokuapp.com/users',
     createUserRemotely: function () {
         Ext.Ajax.request({
             url: this.CREATE_USER_URL,
