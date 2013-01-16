@@ -48,3 +48,7 @@ end
 Then /^There is a "(.*?)" button$/ do |text|
   @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == text }.should_not be_empty
 end
+
+When /^I select "(.*?)" from the "(.*?)" selector$/ do |value, name|
+  select_combobox @driver.find_elements(:name => name).select { |s| s.displayed? }[0], value
+end

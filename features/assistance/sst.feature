@@ -8,4 +8,5 @@ Feature: Simplest Strength Template
     And I tap the "Deadlift" list item
     Then There are 3 list items
     Then List item 1 contains "Front Squat 10x"
-    And I tap list item 1
+    When I select "2" from the "week" selector
+    Then List item 1 contains "Front Squat 8x"

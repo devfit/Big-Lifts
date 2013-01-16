@@ -38,6 +38,50 @@ Ext.define("biglifts.views.CustomPanel", {
     },
     supportsAdd:true,
     supportsArrange:true,
+    initialize:function () {
+        var me = this;
+
+        me.topToolbar = me.add({
+            xtype:'toolbar',
+            docked:'top',
+            title:me.getAssistanceType()
+        });
+
+        this.backButton = this.topToolbar.add({
+            text:'Back',
+            ui:'back',
+            handler:function () {
+                Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
+            }
+        });
+
+        this.topToolbar.add({
+            xtype:'spacer'
+        });
+
+        this.saveButton = this.topToolbar.add({
+            text:'Save',
+            ui:'confirm',
+            listeners:{
+                initialize:function () {
+                    this.setHandler(Ext.bind(me.logMovements, me));
+                }
+            }
+        });
+
+        me.bottomToolbar = this.add(Ext.create('biglifts.components.AssistanceToolbar', {
+            addAction:this.supportsAdd ? Ext.bind(me.addCustomMovement, me) : null,
+            arrangeAction:this.supportsArrange ? Ext.bind(me.arrangeAssistance, me) : null
+        }));
+
+        var listConfig = this.getListConfig() || {};
+        Ext.merge(listConfig, {
+            store:this.getCustomMovementStore(),
+            tapAction:Ext.bind(this.editCustomMovement, this)
+        });
+
+        me.movementList = me.add(Ext.create('biglifts.views.CustomMovementList', listConfig));
+    },
     config:{
         cls:'assistance',
         layout:'fit',
@@ -46,50 +90,6 @@ Ext.define("biglifts.views.CustomPanel", {
         customMovementStore:null,
         movementEditor:null,
         listeners:{
-            initialize:function () {
-                var me = this;
-
-                me.topToolbar = me.add({
-                    xtype:'toolbar',
-                    docked:'top',
-                    title:me.getAssistanceType()
-                });
-
-                this.backButton = this.topToolbar.add({
-                    text:'Back',
-                    ui:'back',
-                    handler:function () {
-                        Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
-                    }
-                });
-
-                this.topToolbar.add({
-                    xtype:'spacer'
-                });
-
-                this.saveButton = this.topToolbar.add({
-                    text:'Save',
-                    ui:'confirm',
-                    listeners:{
-                        initialize:function () {
-                            this.setHandler(Ext.bind(me.logMovements, me));
-                        }
-                    }
-                });
-
-                me.bottomToolbar = this.add(Ext.create('biglifts.components.AssistanceToolbar', {
-                    addAction:this.supportsAdd ? Ext.bind(me.addCustomMovement, me) : null,
-                    arrangeAction:this.supportsArrange ? Ext.bind(me.arrangeAssistance, me) : null
-                }));
-
-                var listConfig = this.getListConfig() || {};
-                Ext.merge(listConfig, {
-                    store:this.getCustomMovementStore(),
-                    tapAction:Ext.bind(this.editCustomMovement, this)
-                });
-
-                me.movementList = me.add(Ext.create('biglifts.views.CustomMovementList', listConfig));
-            },
             painted:function () {
                 biglifts.navigation.setBackFunction(function () {
                     Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));

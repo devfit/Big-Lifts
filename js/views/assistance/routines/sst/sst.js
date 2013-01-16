@@ -25,6 +25,7 @@ Ext.define('biglifts.views.SimplestStrengthTemplate', {
             })
     },
     config:{
+        customPanelClass:'biglifts.views.SstCustomPanel',
         id:'sst'
     }
 });

@@ -9,6 +9,7 @@ Ext.define("Biglifts.views.Custom", {
     config:{
         cls:'assistance',
         layout:'card',
+        customPanelClass:'biglifts.views.CustomPanel',
         listeners:{
             initialize:function () {
                 var me = this;
@@ -21,7 +22,7 @@ Ext.define("Biglifts.views.Custom", {
                     supportsAdd:me.supportsAdd,
                     supportsArrange:me.supportsArrange
                 };
-                me.add(Ext.create('biglifts.views.CustomPanel', config));
+                me.add(Ext.create(me.getCustomPanelClass(), config));
                 me.add(Ext.create('biglifts.views.CustomMovementArrangePanel', config));
                 me.setActiveItem(0);
             }
