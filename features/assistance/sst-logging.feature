@@ -12,4 +12,4 @@ Feature: Simplest Strength Template Logging
     And I wait for the animation
     And I tap the "Asst." button
     Then There are 3 list items
-    Then List item 1 contains "Front Squat Sets: 1 10x 125lbs"
+    Then List item 3 contains "SST Front Squat Sets: 1 10x 125"

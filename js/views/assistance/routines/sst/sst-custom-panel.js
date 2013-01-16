@@ -27,6 +27,33 @@ Ext.define("biglifts.views.SstCustomPanel", {
     showSstMaxes:function () {
         Ext.getCmp('assistance').setActiveItem(Ext.getCmp('sst-maxes'));
     },
+    logMovements:function () {
+        var me = this;
+
+        var liftPropertyName = Ext.getCmp('assistance-lift-chooser').currentLiftProperty;
+        var lift_id = biglifts.stores.lifts.Lifts.findRecord('propertyName', liftPropertyName).get('id');
+        var ssLift = biglifts.stores.assistance.SST.findRecord('lift_id', lift_id);
+
+        this.getCustomMovementStore().each(function (record) {
+            var percentage = record.get('percentage');
+            var weight = biglifts.weight.format(ssLift.get('max'), percentage);
+            var assistanceRecord = {
+                movement:ssLift.get('name'),
+                assistanceType:me.getAssistanceType(),
+                sets:1,
+                reps:record.get('reps'),
+                weight:weight,
+                timestamp:new Date().getTime(),
+                cycle:biglifts.stores.CurrentCycle.getCurrentCycle()
+            };
+
+            biglifts.stores.assistance.ActivityLog.add(assistanceRecord);
+        });
+
+        biglifts.stores.assistance.ActivityLog.sync();
+        Ext.getCmp('assistance').setActiveItem(0);
+        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+    },
     supportsAdd:false,
     supportsArrange:false,
     initialize:function () {

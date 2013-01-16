@@ -70,7 +70,7 @@ When /^I set the boring but big lift to "(.*?)"$/ do |lift_name|
 end
 
 Then /^List item (\d+) contains "(.*?)"$/ do |list_item_number, text|
-  get_displayed_list_items()[list_item_number.to_i - 1].text().should include text
+  get_displayed_list_items()[list_item_number.to_i - 1].text().gsub(/\n/,' ').should include text
 end
 
 Then /^List item (\d+) does not contain "(.*?)"$/ do |list_item_number, text|
