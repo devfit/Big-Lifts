@@ -9,16 +9,20 @@ Ext.define('biglifts.views.SimplestStrengthTemplate', {
             "{[this.getUnits(values)]}</td>" +
             "</tr></tbody></table>",
             {
-                getName:function () {
+                getCurrentLiftId:function () {
                     var currentLiftProperty = Ext.getCmp('assistance-lift-chooser').currentLiftProperty;
-                    var liftId = biglifts.stores.lifts.Lifts.findRecord('propertyName', currentLiftProperty).get('id');
-                    return biglifts.stores.assistance.SST.findRecord('lift_id', liftId).get('name');
+                    return biglifts.stores.lifts.Lifts.findRecord('propertyName', currentLiftProperty).get('id');
+                },
+                getName:function () {
+                    return biglifts.stores.assistance.SST.findRecord('lift_id', this.getCurrentLiftId()).get('name');
                 },
                 getWeight:function (values) {
-                    return "";
+                    var max = biglifts.stores.assistance.SST.findRecord('lift_id', this.getCurrentLiftId()).get('max');
+                    var percentage = values.percentage;
+                    return biglifts.weight.format(max, percentage);
                 },
                 getUnits:function (values) {
-                    var weight = values.weight;
+                    var weight = this.getWeight(values);
                     return weight == 0 || weight == null ? "" : biglifts.stores.GlobalSettings.getUnits();
                 }
             }),

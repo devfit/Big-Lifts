@@ -41,10 +41,10 @@ Ext.define("biglifts.views.SstCustomPanel", {
     },
     listeners:{
         painted:function () {
-            biglifts.stores.assistance.SST.addListener('beforesync', this.movementList.refesh, this.movementList);
+            biglifts.stores.assistance.SST.addListener('beforesync', this.movementList.refresh, this.movementList);
         },
         destroy:function () {
-            biglifts.stores.assistance.SST.removeListener('beforesync', this.movementList.refesh, this.movementList);
+            biglifts.stores.assistance.SST.removeListener('beforesync', this.movementList.refresh, this.movementList);
         }
     }
 });
