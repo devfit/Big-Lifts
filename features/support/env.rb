@@ -29,16 +29,15 @@ Before('@Existing531WithoutNotification') do
 end
 
 Before do
-  @ANIMATION_DELAY = 0.0
-  @driver = Selenium::WebDriver.for :chrome, :switches => %w[--allow-file-access-from-files]
+  @driver = Selenium::WebDriver.for :chrome
 
   @premium_text = @premium_text || "premium=false"
   @existing_routine = @existing_routine || ""
   @driver.navigate.to "file://" + File.absolute_path("./index.html?#{[@premium_text, @existing_routine].join('&')}")
   @wait = Selenium::WebDriver::Wait.new(:timeout => 1, :interval => 0.05)
 
-  @wait.until { @driver.find_element(:id => "routine-chooser") && @driver.find_element(:id => "routine-chooser").displayed? }
   if @routine
+    @wait.until { @driver.find_element(:id => "routine-chooser") && @driver.find_element(:id => "routine-chooser").displayed? }
     RoutineSelector.new(@driver, @wait).select @routine
   end
 end
