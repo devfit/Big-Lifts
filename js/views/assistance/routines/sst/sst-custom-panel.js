@@ -7,19 +7,22 @@ Ext.define("biglifts.views.SstCustomPanel", {
         var week = this.weekSelector.getValue();
         biglifts.stores.assistance.SSTSets.filter('week', week);
     },
+    showSstMaxes:function () {
+        Ext.getCmp('assistance').setActiveItem(Ext.getCmp('sst-maxes'));
+    },
     supportsAdd:false,
     supportsArrange:false,
     initialize:function () {
         this.callParent(arguments);
-        this.weekSelectorToolbar = this.add({
+        this.sstToolbar = this.add({
+            ui:'light',
             xtype:'toolbar',
-            docked:'top',
-            items:[
-                {xtype:'spacer'}
-            ]
+            docked:'top'
         });
 
-        this.weekSelector = this.weekSelectorToolbar.add({
+        this.sstToolbar.add({xtype:'button', text:'Maxes', handler:this.showSstMaxes});
+        this.sstToolbar.add({xtype:'spacer'});
+        this.weekSelector = this.sstToolbar.add({
             name:'week',
             xtype:'selectfield',
             label:'Week',
@@ -35,5 +38,13 @@ Ext.define("biglifts.views.SstCustomPanel", {
                 change:Ext.bind(this.weekChanged, this)
             }
         });
+    },
+    listeners:{
+        painted:function () {
+            biglifts.stores.assistance.SST.addListener('beforesync', this.movementList.refesh, this.movementList);
+        },
+        destroy:function () {
+            biglifts.stores.assistance.SST.removeListener('beforesync', this.movementList.refesh, this.movementList);
+        }
     }
 });

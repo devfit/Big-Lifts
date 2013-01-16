@@ -22,7 +22,9 @@ Ext.define('biglifts.views.CustomMovementList', {
         tapAction:null,
         listeners:{
             initialize:function () {
-                this.addListener('itemtap', Ext.bind(this.getTapAction(), this));
+                if( this.getTapAction() ){
+                    this.addListener('itemtap', Ext.bind(this.getTapAction(), this));
+                }
             }
         }
     }

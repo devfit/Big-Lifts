@@ -1,7 +1,6 @@
 Ext.define('biglifts.views.SimplestStrengthTemplate', {
     extend:'Biglifts.views.Custom',
     customMovementStore:biglifts.stores.assistance.SSTSets,
-    movementEditor:null,
     assistanceType:'SST',
     listConfig:{
         itemTpl:new Ext.XTemplate("<table class='assistance-table'><tbody><tr>" +
@@ -22,7 +21,8 @@ Ext.define('biglifts.views.SimplestStrengthTemplate', {
                     var weight = values.weight;
                     return weight == 0 || weight == null ? "" : biglifts.stores.GlobalSettings.getUnits();
                 }
-            })
+            }),
+        tapAction:null
     },
     config:{
         customPanelClass:'biglifts.views.SstCustomPanel',

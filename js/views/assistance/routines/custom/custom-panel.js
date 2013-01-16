@@ -75,10 +75,11 @@ Ext.define("biglifts.views.CustomPanel", {
         }));
 
         var listConfig = this.getListConfig() || {};
-        Ext.merge(listConfig, {
+        var defaultConfig = {
             store:this.getCustomMovementStore(),
             tapAction:Ext.bind(this.editCustomMovement, this)
-        });
+        };
+        listConfig = Ext.merge(defaultConfig, listConfig);
 
         me.movementList = me.add(Ext.create('biglifts.views.CustomMovementList', listConfig));
     },
