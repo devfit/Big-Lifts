@@ -1,10 +1,7 @@
 machine:
   environment:
-    PATH: /home/ubuntu/Big-Lifts:$PATH
-
-test:
-  override:
-    - wget http://chromedriver.googlecode.com/files/chromedriver_linux32_21.0.1180.4.zip
-    - unzip -j chromedriver_linux32_21.0.1180.4.zip -d /home/ubuntu/Big-Lifts
-    - ls -l /home/ubuntu/Big-Lifts
-    - bundle exec cucumber
+    PATH: /home/ubuntu/bin:$PATH
+  pre:
+    - wget http://chromedriver.googlecode.com/files/chromedriver_linux64_21.0.1180.4.zip
+    - unzip -j chromedriver_linux64_21.0.1180.4.zip
+    - cp ./chromedriver /home/ubuntu/bin/chromedriver
