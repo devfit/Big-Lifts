@@ -37,6 +37,7 @@ Ext.define('LiftLogStore', {
     },
     extend:'Ext.data.Store',
     config:{
+        storeId:'log531',
         model:'LiftLog'
     }
 });

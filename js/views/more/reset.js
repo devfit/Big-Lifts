@@ -1,6 +1,6 @@
 Ext.define('biglifts.views.Reset', {
-    extend: 'Ext.form.Panel',
-    hardReset: function () {
+    extend:'Ext.form.Panel',
+    hardReset:function () {
         Ext.Msg.confirm('WARNING', 'Reset ALL data and settings?', function (text) {
             if (text === 'yes') {
                 util.filebackup.deleteStoreFiles(util.filebackup.watchedStores, function () {
@@ -10,7 +10,7 @@ Ext.define('biglifts.views.Reset', {
             }
         });
     },
-    resetCheckedStores: function () {
+    resetCheckedStores:function () {
         var stores = [];
         _.each(this.getValues(), function (value, storeId) {
             if (value) {
@@ -28,72 +28,84 @@ Ext.define('biglifts.views.Reset', {
             location.href = "index.html";
         });
     },
-    config: {
-        backFunction: null,
-        padding: 0,
-        listeners: {
-            initialize: function () {
+    config:{
+        backFunction:null,
+        padding:0,
+        listeners:{
+            initialize:function () {
                 var me = this;
                 me.add({
-                    xtype: 'toolbar',
-                    title: 'Reset',
-                    items: [
+                    xtype:'toolbar',
+                    title:'Reset',
+                    items:[
                         {
-                            xtype: 'button',
-                            ui: 'back',
-                            text: 'Back',
-                            handler: me.getBackFunction()
+                            xtype:'button',
+                            ui:'back',
+                            text:'Back',
+                            handler:me.getBackFunction()
                         }
                     ]
                 });
 
                 me.add({
-                    xtype: 'container',
-                    padding: 5,
-                    items: [
+                    xtype:'container',
+                    padding:5,
+                    items:[
                         {
-                            xtype: 'button',
-                            text: 'Reset All',
-                            ui: 'decline',
-                            handler: me.hardReset
+                            xtype:'button',
+                            text:'Reset All',
+                            ui:'decline',
+                            handler:me.hardReset
                         }
                     ]
                 });
 
                 var fieldset = me.add({
-                    xtype: 'fieldset',
-                    cls: 'fieldset-title-no-margin',
-                    style: 'margin-bottom: 0',
-                    title: "Data",
-                    defaults: {
-                        labelWidth: '70%',
-                        value: false
+                    xtype:'fieldset',
+                    cls:'fieldset-title-no-margin',
+                    style:'margin-bottom: 0',
+                    title:"Data",
+                    defaults:{
+                        labelWidth:'70%',
+                        value:false
                     }
                 });
 
                 fieldset.add({
-                    xtype: 'checkboxfield',
-                    label: 'Lift Checkmarks',
-                    name: 'liftCompletions'
+                    xtype:'checkboxfield',
+                    label:'Lift Checkmarks',
+                    name:'liftCompletions'
+                });
+
+                fieldset.add({
+                    xtype:'checkboxfield',
+                    label:'5/3/1 Log',
+                    name:'log531'
                 });
 
                 if (biglifts.toggles.Assistance) {
                     fieldset.add({
-                        xtype: 'checkboxfield',
-                        label: 'Custom Asst.',
-                        name: 'triumvirate'
+                        xtype:'checkboxfield',
+                        label:'Custom Asst.',
+                        name:'triumvirate'
                     });
+
+                    fieldset.add({
+                        xtype:'checkboxfield',
+                        label:'Asst. Log',
+                        name:'assistanceLog'
+                    })
                 }
 
                 me.add({
-                    xtype: 'container',
-                    padding: 5,
-                    items: [
+                    xtype:'container',
+                    padding:5,
+                    items:[
                         {
-                            xtype: 'button',
-                            text: 'Reset',
-                            ui: 'decline',
-                            handler: Ext.bind(me.resetCheckedStores, me)
+                            xtype:'button',
+                            text:'Reset',
+                            ui:'decline',
+                            handler:Ext.bind(me.resetCheckedStores, me)
                         }
                     ]
                 });
