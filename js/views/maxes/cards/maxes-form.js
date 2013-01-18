@@ -98,32 +98,14 @@ Ext.define("Biglifts.views.MaxesForm", {
         Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'));
     },
     bindListeners: function () {
-        biglifts.stores.lifts.Lifts.addListener('beforesync', this.updatePowerliftingTotal, this);
-        biglifts.stores.LiftLog.addListener('beforesync', this.updatePowerliftingTotal, this);
-
         biglifts.stores.w.Settings.addListener('beforesync', this.updateTrainingPercentageDisplay, this);
         biglifts.stores.w.Settings.addListener('beforesync', this.showHideTrainingMaxes, this);
         biglifts.stores.Template.addListener('beforesync', this.showHideMeetGoals, this);
     },
     destroyListeners: function () {
-        biglifts.stores.lifts.Lifts.removeListener('beforesync', this.updatePowerliftingTotal, this);
-        biglifts.stores.LiftLog.removeListener('beforesync', this.updatePowerliftingTotal, this);
-
         biglifts.stores.w.Settings.removeListener('beforesync', this.updateTrainingPercentageDisplay, this);
         biglifts.stores.w.Settings.removeListener('beforesync', this.showHideTrainingMaxes, this);
         biglifts.stores.Template.removeListener('beforesync', this.showHideMeetGoals, this);
-    },
-    updatePowerliftingTotal: function () {
-        var me = this;
-        util.powerliftingTotal.getTotal(function (total) {
-            if (total === -1) {
-                me.powerliftingTotal.hide();
-            }
-            else {
-                me.powerliftingTotal.show();
-                me.powerliftingTotal.setData({total: total});
-            }
-        });
     },
     config: {
         id: 'maxes-form',
@@ -224,14 +206,7 @@ Ext.define("Biglifts.views.MaxesForm", {
                     cls: 'fieldset-title-no-margin'
                 });
 
-                this.powerliftingTotal = me.add({
-                    tpl: '<b>Powerlifting Total:</b> {total}',
-                    cls: 'powerlifting-total',
-                    data: {
-                        total: 0
-                    }
-                });
-                this.updatePowerliftingTotal();
+                this.powerliftingTotal = me.add(Ext.create("biglifts.components.PowerliftingTotal"));
 
                 this.meetGoals = me.add({
                     hidden: true,

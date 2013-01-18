@@ -1,6 +1,4 @@
 "use strict";
-Ext.ns('biglifts.views', 'biglifts.stores', 'biglifts.maxes.controller');
-
 Ext.define('biglifts.views.Maxes', {
     extend: 'Ext.Panel',
     config: {
@@ -16,7 +14,9 @@ Ext.define('biglifts.views.Maxes', {
                     biglifts.maxes.cards.editLiftPanel,
                     Ext.create('biglifts.views.AddLiftPanel'),
                     Ext.create('biglifts.views.ArrangeLifts'),
-                    Ext.create('biglifts.views.BarSetup')]);
+                    Ext.create('biglifts.views.BarSetup'),
+                    Ext.create('biglifts.views.PowerliftingTotalEditor', {id: 'powerliftingtotaleditor'})
+                ]);
                 this.setActiveItem(0);
             }
         }
