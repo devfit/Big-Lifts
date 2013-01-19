@@ -25,7 +25,8 @@ Ext.define('Migrations', {
         {klass: 'biglifts.migrations.fixBbbDoubling', done: false},
         {klass: 'biglifts.migrations.rotatingWeekStoreMatching', done: false},
         {klass: 'biglifts.migrations.AddOrderToAssistance', done: false},
-        {klass: 'biglifts.migrations.UpdateSsDefaults', done: false}
+        {klass: 'biglifts.migrations.UpdateSsDefaults', done: false},
+        {klass: 'biglifts.migrations.RateApp', done: false}
     ],
     loadMissingMigrations: function () {
         var me = this;
