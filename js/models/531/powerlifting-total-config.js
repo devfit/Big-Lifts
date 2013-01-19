@@ -18,15 +18,20 @@ Ext.define('PowerliftingTotalConfigStore', {
     extend:'Ext.data.Store',
     setupDefaults:function () {
         var me = this;
-        util.withNoFilters(biglifts.stores.lifts.Lifts, function () {
-            var defaults = ['Squat', 'Deadlift', 'Bench'];
-            _.each(defaults, function (name) {
-                var lift = biglifts.stores.lifts.Lifts.findRecord('name', name);
-                if (lift) {
-                    me.add({lift_id:lift.get('id'), included:true});
-                }
+        util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
+            util.withNoFilters(biglifts.stores.lifts.Lifts, function () {
+                var defaults = ['Squat', 'Deadlift', 'Bench'];
+                biglifts.stores.lifts.Lifts.each(function (lift) {
+                    if (_.indexOf(defaults, lift.get('name')) !== -1) {
+                        me.add({lift_id:lift.get('id'), included:true});
+                    }
+                    else {
+                        me.add({lift_id:lift.get('id'), included:false});
+                    }
+                });
             });
         });
+        me.sync();
     },
     config:{
         model:'PowerliftingTotalConfig',

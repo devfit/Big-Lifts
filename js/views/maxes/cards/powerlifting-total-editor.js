@@ -1,5 +1,15 @@
 Ext.define("biglifts.views.PowerliftingTotalEditor", {
     extend:"Ext.form.Panel",
+    liftChecked:function (c) {
+        this.includeLift(c.getName(), true);
+    },
+    liftUnchecked:function (c) {
+        this.includeLift(c.getName(), false);
+    },
+    includeLift:function (lift_id, include) {
+        biglifts.stores.PowerliftingTotalConfig.findRecord("lift_id", lift_id).set('included', include);
+        biglifts.stores.PowerliftingTotalConfig.sync();
+    },
     rebuildLiftsFieldset:function () {
         var me = this;
         me.liftsFieldset.removeAll(true);
@@ -10,7 +20,11 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
                     name:l.get('id'),
                     label:l.get('name'),
                     labelWidth:'66%',
-                    checked: true
+                    checked:true,
+                    listeners:{
+                        check:Ext.bind(me.liftChecked, me),
+                        uncheck:Ext.bind(me.liftUnchecked, me)
+                    }
                 });
             });
         })
@@ -36,7 +50,7 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
             cls:'fieldset-title-no-margin'
         });
     },
-    config: {
+    config:{
         listeners:{
             painted:function () {
                 this.rebuildLiftsFieldset();

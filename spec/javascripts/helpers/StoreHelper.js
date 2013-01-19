@@ -6,3 +6,10 @@ var reloadStore = function(store){
 
     return store;
 };
+
+var emptyStore = function(store){
+    store.clearFilter();
+    store.removeAll();
+    store.sync();
+    return store;
+};
