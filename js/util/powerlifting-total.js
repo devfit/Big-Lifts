@@ -4,7 +4,7 @@ Ext.ns("util.powerliftingTotal");
         getTotal:function (callback) {
             util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
                 util.withLoadedStore(biglifts.stores.LiftLog, function () {
-                    util.withLoadedStore(biglifts.stores.PowerliftingTotalConfig, function () {
+                    util.withLoadedStore(biglifts.stores.PowerliftingTotalLifts, function () {
                         var knownMaxes = util.powerliftingTotal.getKnownMaxes();
                         var logMaxes = util.powerliftingTotal.getMaxesFromLog();
                         var maxes = util.powerliftingTotal.findMaxes(knownMaxes, logMaxes);
@@ -20,7 +20,7 @@ Ext.ns("util.powerliftingTotal");
         },
         getKnownMaxes:function () {
             var maxes = {};
-            biglifts.stores.PowerliftingTotalConfig.each(function (r) {
+            biglifts.stores.PowerliftingTotalLifts.each(function (r) {
                 var lift_id = r.get('lift_id');
                 if (r.get('included')) {
                     var lift = biglifts.stores.lifts.Lifts.findRecord('id', lift_id);
@@ -35,7 +35,7 @@ Ext.ns("util.powerliftingTotal");
         getMaxesFromLog:function () {
             var maxes = {};
             util.withNoFilters(biglifts.stores.LiftLog, function () {
-                biglifts.stores.PowerliftingTotalConfig.each(function (r) {
+                biglifts.stores.PowerliftingTotalLifts.each(function (r) {
                     if (r.get('included')) {
                         maxes[r.get('lift_id')] = 0;
                     }

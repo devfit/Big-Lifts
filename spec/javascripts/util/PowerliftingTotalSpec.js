@@ -54,8 +54,8 @@ describe("Powerlifting Total", function () {
             this.lifts.add({name:"Squat", max:200});
             this.lifts.sync();
 
-            emptyStore(biglifts.stores.PowerliftingTotalConfig);
-            biglifts.stores.PowerliftingTotalConfig.setupDefaults();
+            emptyStore(biglifts.stores.PowerliftingTotalLifts);
+            biglifts.stores.PowerliftingTotalLifts.setupDefaults();
 
             biglifts.stores.LiftLog.add({liftName:'Squat', weight:100, reps:5});
             biglifts.stores.LiftLog.add({liftName:'Squat', weight:125, reps:4});

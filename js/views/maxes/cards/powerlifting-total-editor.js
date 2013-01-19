@@ -7,8 +7,8 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
         this.includeLift(c.getName(), false);
     },
     includeLift:function (lift_id, include) {
-        biglifts.stores.PowerliftingTotalConfig.findRecord("lift_id", lift_id).set('included', include);
-        biglifts.stores.PowerliftingTotalConfig.sync();
+        biglifts.stores.PowerliftingTotalLifts.findRecord("lift_id", lift_id).set('included', include);
+        biglifts.stores.PowerliftingTotalLifts.sync();
     },
     useEstimatesChecked:function (c) {
 
@@ -26,7 +26,7 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
                     name:l.get('id'),
                     label:l.get('name'),
                     labelWidth:'66%',
-                    checked:biglifts.stores.PowerliftingTotalConfig.findRecord('lift_id', l.get('id')).get('included'),
+                    checked:biglifts.stores.PowerliftingTotalLifts.findRecord('lift_id', l.get('id')).get('included'),
                     listeners:{
                         check:Ext.bind(me.liftChecked, me),
                         uncheck:Ext.bind(me.liftUnchecked, me)

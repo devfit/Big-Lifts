@@ -1,4 +1,4 @@
-Ext.define('PowerliftingTotalConfig', {
+Ext.define('PowerliftingTotalLifts', {
     extend:'Ext.data.Model',
     config:{
         identifier:'uuid',
@@ -14,7 +14,7 @@ Ext.define('PowerliftingTotalConfig', {
     }
 });
 
-Ext.define('PowerliftingTotalConfigStore', {
+Ext.define('PowerliftingTotalLiftsStore', {
     extend:'Ext.data.Store',
     setupDefaults:function () {
         var me = this;
@@ -69,5 +69,5 @@ Ext.define('PowerliftingTotalConfigStore', {
     }
 });
 
-biglifts.stores.PowerliftingTotalConfig = Ext.create('PowerliftingTotalConfigStore');
-biglifts.stores.push(biglifts.stores.PowerliftingTotalConfig);
+biglifts.stores.PowerliftingTotalLifts= Ext.create('PowerliftingTotalConfigStore');
+biglifts.stores.push(biglifts.stores.PowerliftingTotalLifts);

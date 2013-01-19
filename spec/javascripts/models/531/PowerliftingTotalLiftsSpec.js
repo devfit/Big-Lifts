@@ -1,7 +1,7 @@
-describe("PowerliftingTotalConfig", function () {
+describe("PowerliftingTotalLifts", function () {
     beforeEach(function () {
         this.lifts = reloadStore(biglifts.stores.lifts.Lifts);
-        this.powerliftingConfig = emptyStore(biglifts.stores.PowerliftingTotalConfig);
+        this.powerliftingConfig = emptyStore(biglifts.stores.PowerliftingTotalLifts);
     });
 
     it("should load default lifts", function () {
