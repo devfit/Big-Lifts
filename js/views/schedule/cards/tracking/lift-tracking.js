@@ -122,7 +122,7 @@ Ext.define('biglifts.views.LiftTracking', {
                                 labelWidth: '50%',
                                 name: 'reps',
                                 xtype: 'numberfield',
-                                label: 'Last set reps',
+                                label: 'Reps',
                                 listeners: {
                                     change: Ext.bind(me.recomputeOneRepMax, me)
                                 }

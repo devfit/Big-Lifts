@@ -8,12 +8,12 @@ Feature: Reps to beat
     When I set the squat max to 200
     When I view the squat lift schedule for week 1
     And I tap the checkmark
-    And I set the first log reps to 7
+    And I set "Reps" input to "7"
     And I tap the "Save" button
     And I wait for the animation
     And I view the squat lift schedule for week 2
     And I tap the checkmark
-    And I set the first log reps to 4
+    And I set the "Reps" input to "4"
     And I tap the "Save" button
     And I wait for the animation
     And I view the squat lift schedule for week 3

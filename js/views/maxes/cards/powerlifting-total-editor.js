@@ -10,6 +10,12 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
         biglifts.stores.PowerliftingTotalConfig.findRecord("lift_id", lift_id).set('included', include);
         biglifts.stores.PowerliftingTotalConfig.sync();
     },
+    useEstimatesChecked:function (c) {
+
+    },
+    useEstimatesUnchedked:function (c) {
+
+    },
     rebuildLiftsFieldset:function () {
         var me = this;
         me.liftsFieldset.removeAll(true);
@@ -52,6 +58,22 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
             xtype:'fieldset',
             title:'Lifts',
             cls:'fieldset-title-no-margin'
+        });
+
+        this.configFieldset = this.add({
+            xtype:'fieldset'
+        });
+
+        this.configFieldset.add({
+            xtype:'checkboxfield',
+            name:"useEstimates",
+            label:"Use Estimates",
+            labelWidth:'66%',
+            checked:true,
+            listeners:{
+                check:Ext.bind(this.useEstimatesChecked, this),
+                uncheck:Ext.bind(this.useEstimatesUnchecked, this)
+            }
         });
     },
     config:{

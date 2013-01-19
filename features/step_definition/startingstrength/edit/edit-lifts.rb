@@ -7,6 +7,7 @@ When /^I set the "(.*?)" input to "(.*?)"$/ do |name, weight|
   input = find_input_by_label name
   input.clear
   input.send_keys weight
+  @driver.find_element(:id => 'ext-viewport').click
 end
 
 Then /^The "(.*?)" input is "(.*?)"$/ do |input_name, value|
