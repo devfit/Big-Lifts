@@ -43,6 +43,7 @@ src_files:
             - js/models/log-sort.js
             - js/models/rest-time.js
             - js/models/531/current-cycle.js
+            - js/models/531/powerlifting-total-config.js
             - js/models/plates/bar.js
             - js/models/plates/plates.js
             - js/models/assistance/assistance.js

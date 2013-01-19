@@ -1,4 +1,3 @@
-Ext.ns('biglifts.defaults', 'biglifts.stores.migrations');
 Ext.define('LiftLog', {
     extend:'Ext.data.Model',
     config:{

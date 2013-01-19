@@ -6,4 +6,4 @@ gem 'json'
 gem 'rake'
 gem 'parallel_tests'
 gem 'debugger'
-gem 'jasmine'
+gem 'jasmine', "1.3.0"
