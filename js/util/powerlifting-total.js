@@ -22,7 +22,12 @@ Ext.ns("util.powerliftingTotal");
             var maxes = {};
             biglifts.stores.PowerliftingTotalConfig.each(function (r) {
                 var lift_id = r.get('lift_id');
-                maxes[lift_id] = biglifts.stores.lifts.Lifts.findRecord('id', lift_id).get('max');
+                if (r.get('included')) {
+                    var lift = biglifts.stores.lifts.Lifts.findRecord('id', lift_id);
+                    if (lift) {
+                        maxes[lift_id] = lift.get('max');
+                    }
+                }
             });
 
             return maxes;
@@ -31,7 +36,9 @@ Ext.ns("util.powerliftingTotal");
             var maxes = {};
             util.withNoFilters(biglifts.stores.LiftLog, function () {
                 biglifts.stores.PowerliftingTotalConfig.each(function (r) {
-                    maxes[r.get('lift_id')] = 0;
+                    if (r.get('included')) {
+                        maxes[r.get('lift_id')] = 0;
+                    }
                 });
 
                 biglifts.stores.LiftLog.each(function (log) {

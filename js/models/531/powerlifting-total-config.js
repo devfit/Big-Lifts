@@ -33,12 +33,36 @@ Ext.define('PowerliftingTotalConfigStore', {
         });
         me.sync();
     },
+    addMissingEntries:function () {
+        var me = this;
+        biglifts.stores.lifts.Lifts.each(function (l) {
+            var matchingEntry = me.findRecord('lift_id', l.get('id'));
+            if (!matchingEntry) {
+                me.add({lift_id:l.get('id'), included:false});
+            }
+        });
+    },
+    removeStaleEntries:function () {
+        var me = this;
+        me.each(function (p) {
+            var liftEntry = biglifts.stores.lifts.Lifts.findRecord('id', p.get('lift_id'));
+            if (!liftEntry) {
+                me.remove(p);
+            }
+        });
+    },
+    syncToLifts:function () {
+        this.addMissingEntries();
+        this.removeStaleEntries();
+        this.sync();
+    },
     config:{
         model:'PowerliftingTotalConfig',
         listeners:{
             load:function () {
                 if (this.getCount() === 0) {
                     this.setupDefaults();
+                    biglifts.stores.lifts.Lifts.addListener("beforesync", this.syncToLifts, this);
                 }
             }
         }

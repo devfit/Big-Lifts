@@ -18,4 +18,17 @@ describe("PowerliftingTotalConfig", function () {
         this.powerliftingConfig.filter('included', true);
         expect(this.powerliftingConfig.getCount()).toEqual(2);
     });
+
+    it("should sync to add lifts", function () {
+        this.powerliftingConfig.syncToLifts();
+        expect(this.powerliftingConfig.getCount()).toEqual(4);
+    });
+
+    it("should sync to remove lifts", function () {
+        this.powerliftingConfig.syncToLifts();
+        this.lifts.remove(this.lifts.findRecord('name','Squat'));
+        this.lifts.sync();
+        this.powerliftingConfig.syncToLifts();
+        expect(this.powerliftingConfig.getCount()).toEqual(3);
+    });
 });

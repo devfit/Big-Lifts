@@ -12,13 +12,8 @@ Ext.define("biglifts.components.PowerliftingTotal", {
     updatePowerliftingTotal:function () {
         var me = this;
         util.powerliftingTotal.getTotal(function (total) {
-            if (total === -1) {
-                me.powerliftingTotal.hide();
-            }
-            else {
-                me.powerliftingTotal.show();
-                me.powerliftingTotal.setData({total:total});
-            }
+            me.powerliftingTotal.show();
+            me.powerliftingTotal.setData({total:total});
         });
     },
     constructor:function () {
@@ -56,4 +51,5 @@ Ext.define("biglifts.components.PowerliftingTotal", {
             }
         }
     }
-});
+})
+;
