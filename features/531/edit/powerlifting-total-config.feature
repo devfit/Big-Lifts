@@ -15,7 +15,7 @@ Feature: Powerlifting Total Config
     And I wait for the animation
 
     And I navigate to the lift editor
-    Then The powerlifting total is "700"
+    Then The powerlifting total is "606"
 
     And I tap the powerlifting config gear
     And I tap the "Use Estimates" checkbox

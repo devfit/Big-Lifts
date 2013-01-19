@@ -11,10 +11,12 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
         biglifts.stores.PowerliftingTotalLifts.sync();
     },
     useEstimatesChecked:function (c) {
-
+        biglifts.stores.PowerliftingTotalConfig.first().set('useEstimates', true);
+        biglifts.stores.PowerliftingTotalConfig.sync();
     },
-    useEstimatesUnchedked:function (c) {
-
+    useEstimatesUnchecked:function (c) {
+        biglifts.stores.PowerliftingTotalConfig.first().set('useEstimates', false);
+        biglifts.stores.PowerliftingTotalConfig.sync();
     },
     rebuildLiftsFieldset:function () {
         var me = this;
@@ -64,16 +66,19 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
             xtype:'fieldset'
         });
 
-        this.configFieldset.add({
-            xtype:'checkboxfield',
-            name:"useEstimates",
-            label:"Use Estimates",
-            labelWidth:'66%',
-            checked:true,
-            listeners:{
-                check:Ext.bind(this.useEstimatesChecked, this),
-                uncheck:Ext.bind(this.useEstimatesUnchecked, this)
-            }
+        var me = this;
+        util.withLoadedStore(biglifts.stores.PowerliftingTotalConfig, function () {
+            me.configFieldset.add({
+                xtype:'checkboxfield',
+                name:"useEstimates",
+                label:"Use Estimates",
+                labelWidth:'66%',
+                checked:biglifts.stores.PowerliftingTotalConfig.first().get('useEstimates'),
+                listeners:{
+                    check:Ext.bind(me.useEstimatesChecked, me),
+                    uncheck:Ext.bind(me.useEstimatesUnchecked, me)
+                }
+            });
         });
     },
     config:{

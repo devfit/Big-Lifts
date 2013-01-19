@@ -5,8 +5,9 @@ Ext.ns("util.powerliftingTotal");
             util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
                 util.withLoadedStore(biglifts.stores.LiftLog, function () {
                     util.withLoadedStore(biglifts.stores.PowerliftingTotalLifts, function () {
+                        var shouldUseEstimates = biglifts.stores.PowerliftingTotalConfig.first().get('useEstimates');
                         var knownMaxes = util.powerliftingTotal.getKnownMaxes();
-                        var logMaxes = util.powerliftingTotal.getMaxesFromLog();
+                        var logMaxes = shouldUseEstimates ? util.powerliftingTotal.getMaxesFromLog() : {};
                         var maxes = util.powerliftingTotal.findMaxes(knownMaxes, logMaxes);
                         var total = 0;
                         _.each(maxes, function (w) {

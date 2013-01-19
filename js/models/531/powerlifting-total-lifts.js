@@ -57,7 +57,7 @@ Ext.define('PowerliftingTotalLiftsStore', {
         this.sync();
     },
     config:{
-        model:'PowerliftingTotalConfig',
+        model:'PowerliftingTotalLifts',
         listeners:{
             load:function () {
                 if (this.getCount() === 0) {
@@ -69,5 +69,5 @@ Ext.define('PowerliftingTotalLiftsStore', {
     }
 });
 
-biglifts.stores.PowerliftingTotalLifts= Ext.create('PowerliftingTotalConfigStore');
+biglifts.stores.PowerliftingTotalLifts= Ext.create('PowerliftingTotalLiftsStore');
 biglifts.stores.push(biglifts.stores.PowerliftingTotalLifts);
