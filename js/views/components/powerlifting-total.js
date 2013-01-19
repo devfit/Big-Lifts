@@ -3,6 +3,7 @@ Ext.define("biglifts.components.PowerliftingTotal", {
     bindListeners:function () {
         biglifts.stores.lifts.Lifts.addListener('beforesync', this.updatePowerliftingTotal, this);
         biglifts.stores.LiftLog.addListener('beforesync', this.updatePowerliftingTotal, this);
+        biglifts.stores.PowerliftingTotalConfig.addListener('beforesync', this.updatePowerliftingTotal, this);
     },
     destroyListeners:function () {
         biglifts.stores.lifts.Lifts.removeListener('beforesync', this.updatePowerliftingTotal, this);
@@ -44,8 +45,14 @@ Ext.define("biglifts.components.PowerliftingTotal", {
         pack:'end',
         listeners:{
             painted:function () {
-                this.bindListeners();
+                if (!this._painted) {
+                    this._painted = true;
+                    this.bindListeners();
+                }
                 this.updatePowerliftingTotal();
+            },
+            destroy:function () {
+                this.destroyListeners();
             }
         }
     }

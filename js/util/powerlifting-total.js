@@ -1,10 +1,10 @@
 Ext.ns("util.powerliftingTotal");
 (function () {
     util.powerliftingTotal = {
-        getTotal: function (callback) {
+        getTotal:function (callback) {
             util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
                 util.withLoadedStore(biglifts.stores.LiftLog, function () {
-                    if (util.powerliftingTotal.allLiftsPresent()) {
+                    util.withLoadedStore(biglifts.stores.PowerliftingTotalConfig, function () {
                         var knownMaxes = util.powerliftingTotal.getKnownMaxes();
                         var logMaxes = util.powerliftingTotal.getMaxesFromLog();
                         var maxes = util.powerliftingTotal.findMaxes(knownMaxes, logMaxes);
@@ -14,59 +14,40 @@ Ext.ns("util.powerliftingTotal");
                         });
 
                         callback(total);
-                    }
-                    else {
-                        callback(-1);
-                    }
+                    });
                 });
             });
         },
-        allLiftsPresent: function () {
-            var allLiftsPresent = true;
-            var lifts = biglifts.stores.lifts.Lifts;
-            util.withNoFilters(lifts, function () {
-                lifts.filter('enabled', true);
-                var benchPresent = !!lifts.findRecord('name', 'Bench');
-                var deadliftPresent = !!lifts.findRecord('name', 'Deadlift');
-                var squatPresent = !!lifts.findRecord('name', 'Squat');
-                if (!benchPresent || !deadliftPresent || !squatPresent) {
-                    allLiftsPresent = false;
-                }
-                lifts.clearFilter();
+        getKnownMaxes:function () {
+            var maxes = {};
+            biglifts.stores.PowerliftingTotalConfig.each(function (r) {
+                var lift_id = r.get('lift_id');
+                maxes[lift_id] = biglifts.stores.lifts.Lifts.findRecord('id', lift_id).get('max');
             });
 
-            return allLiftsPresent;
+            return maxes;
         },
-        getKnownMaxes: function () {
-            var lifts = biglifts.stores.lifts.Lifts;
-            var benchRecord = lifts.findRecord('name', 'Bench');
-            var squatRecord = lifts.findRecord('name', 'Squat');
-            var deadliftRecord = lifts.findRecord('name', 'Deadlift');
-
-            return {
-                'Bench': benchRecord.get('max'),
-                'Squat': squatRecord.get('max'),
-                'Deadlift': deadliftRecord.get('max')
-            };
-        },
-        getMaxesFromLog: function () {
-            var lifts = ['Bench', 'Squat', 'Deadlift'];
+        getMaxesFromLog:function () {
             var maxes = {};
             util.withNoFilters(biglifts.stores.LiftLog, function () {
-                _.each(lifts, function (lift) {
-                    maxes[lift] = 0;
+                biglifts.stores.PowerliftingTotalConfig.each(function (r) {
+                    maxes[r.get('lift_id')] = 0;
                 });
 
                 biglifts.stores.LiftLog.each(function (log) {
                     var liftName = log.get('liftName');
-                    var logEstimate = util.formulas.estimateOneRepMax(log.get('weight'), log.get('reps'));
-                    maxes[liftName] = Math.max(logEstimate, maxes[liftName]);
+                    var lift = biglifts.stores.lifts.Lifts.findRecord('name', liftName);
+
+                    if (lift && _.has(maxes, lift.get('id'))) {
+                        var logEstimate = util.formulas.estimateOneRepMax(log.get('weight'), log.get('reps'));
+                        maxes[lift.get('id')] = Math.max(logEstimate, maxes[lift.get('id')]);
+                    }
                 });
             });
 
             return maxes;
         },
-        findMaxes: function (knownMaxes, logMaxes) {
+        findMaxes:function (knownMaxes, logMaxes) {
             var combinedMaxes = {};
             _.each(knownMaxes, function (v, k) {
                 combinedMaxes[k] = logMaxes[k] ? Math.max(logMaxes[k], v) : v;

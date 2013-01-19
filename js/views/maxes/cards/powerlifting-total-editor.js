@@ -20,7 +20,7 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
                     name:l.get('id'),
                     label:l.get('name'),
                     labelWidth:'66%',
-                    checked:true,
+                    checked:biglifts.stores.PowerliftingTotalConfig.findRecord('lift_id', l.get('id')).get('included'),
                     listeners:{
                         check:Ext.bind(me.liftChecked, me),
                         uncheck:Ext.bind(me.liftUnchecked, me)
@@ -28,6 +28,9 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
                 });
             });
         })
+    },
+    goBack:function () {
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-form'));
     },
     constructor:function () {
         this.callParent(arguments);
@@ -39,7 +42,8 @@ Ext.define("biglifts.views.PowerliftingTotalEditor", {
                 {
                     xtype:'button',
                     ui:'back',
-                    text:'Back'
+                    text:'Back',
+                    handler:Ext.bind(this.goBack, this)
                 }
             ]
         });

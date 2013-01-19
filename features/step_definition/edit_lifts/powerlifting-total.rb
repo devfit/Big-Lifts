@@ -12,7 +12,19 @@ When /^I tap the powerlifting config gear$/ do
   parent_container.find_element(:class => 'config-gear').click
 end
 
-When /^I tap the "(.*?)" input$/ do |arg1|
-  @driver.find_elements(:class => 'x-field-checkbox').select { |c| c.displayed? }[0].find_element(:class => 'x-field-mask').click
+def get_checkbox_field text
+  @driver.find_elements(:class => 'x-field-checkbox').select { |c| c.displayed? && c.text().include?(text) }[0]
 end
 
+When /^I tap the "(.*?)" checkbox/ do |text|
+  get_checkbox_field(text).find_element(:class => 'x-field-mask').click
+end
+
+
+Then /^The "(.*?)" checkbox is unchecked$/ do |text|
+  get_checkbox_field(text).find_element(:class => 'x-input-checkbox').attribute('checked').should be_false
+end
+
+Then /^The "(.*?)" checkbox is checked$/ do |text|
+  get_checkbox_field(text).find_element(:class => 'x-input-checkbox').attribute('checked').should be_true
+end
