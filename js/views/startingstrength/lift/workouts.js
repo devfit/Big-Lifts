@@ -4,6 +4,9 @@ Ext.define('biglifts.views.ss.Workouts', {
         var parent = this.getParent();
         parent.setActiveItem(parent.restTimer);
     },
+    showConfig:function () {
+        Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-config'));
+    },
     markWorkoutCompleted:function () {
         var me = this;
         var newWorkoutId = biglifts.stores.ss.Log.getNewWorkoutId();
@@ -66,6 +69,7 @@ Ext.define('biglifts.views.ss.Workouts', {
         biglifts.stores.GlobalSettings.removeListener('beforesync', this.refreshActiveItem, this);
     },
     config:{
+        id:'ss-workout',
         cls:'ss-workout',
         listeners:{
             activeitemchange:function () {
@@ -77,6 +81,13 @@ Ext.define('biglifts.views.ss.Workouts', {
                 me.workoutToolbar = me.add({
                     xtype:'toolbar',
                     docked:'top'
+                });
+
+                me.workoutToolbar.add({
+                    iconCls:'settings',
+                    iconMask:true,
+                    ui:'action',
+                    handler:Ext.bind(this.showConfig, this)
                 });
 
                 me.workoutToolbar.add({xtype:'spacer'});
