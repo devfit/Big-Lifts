@@ -22,11 +22,15 @@ describe("Starting Strength workout", function () {
 
     it('should order by SS lift order, and warmup defined order', function () {
         this.workouts.load();
+        biglifts.stores.ss.Lifts.fireEvent('load');
         this.workouts.filter('name', 'A');
-
         var squat = this.lifts.findRecord('name', 'Squat');
+        this.workouts.filter('lift_id', squat.get('id'));
+
+        expect(this.workouts.getCount()).toEqual(5);
         for (var i = 0; i < 5; i++) {
             expect(this.workouts.getAt(i).get('lift_id')).toEqual(squat.get('id'));
+            expect(this.workouts.getAt(i).get('order')).toEqual(i);
         }
     });
 });
