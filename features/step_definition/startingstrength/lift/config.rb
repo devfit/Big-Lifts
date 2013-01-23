@@ -5,3 +5,7 @@ end
 Then /^The starting strength config page includes "(.*?)"$/ do |text|
   @driver.find_element(:id => 'ss-config').text().should include text
 end
+
+Then /^The starting strength config page does not include "(.*?)"$/ do |text|
+  @driver.find_element(:id => 'ss-config').text().should_not include text
+end

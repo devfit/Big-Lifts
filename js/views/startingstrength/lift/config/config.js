@@ -18,16 +18,12 @@ Ext.define('biglifts.views.ss.Config', {
             handler:this.goBack
         });
 
-        var html = "Big Lifts Pro currently supports the following configs:" +
-            "\n<ul>" +
-            "<li>» Pure Novice</li>" +
-            "<li>» Regular</li>" +
-            "</ul>";
-        this.add({
-            xtype:'container',
-            html:html,
-            cls:'message'
-        });
+        if (biglifts.premium) {
+
+        }
+        else {
+            this.add(Ext.create('biglifts.views.ss.ConfigPromo'));
+        }
     },
     config:{
         cls:'ss-config',
