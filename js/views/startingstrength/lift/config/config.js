@@ -8,6 +8,7 @@ Ext.define('biglifts.views.ss.Config', {
 
         if (biglifts.premium) {
             this.add(Ext.create('biglifts.views.ss.TemplateDefault'));
+            this.add(Ext.create('biglifts.views.ss.NoviceTemplate'));
         }
         else {
             this.add(Ext.create('biglifts.views.ss.ConfigPromo'));

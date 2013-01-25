@@ -2,8 +2,11 @@ Ext.define('biglifts.views.ss.Template', {
     extend:"Ext.Panel",
     templateName:"",
     templateDescription:"",
+    goForward:null,
     setTemplate:function () {
-        Ext.Msg.alert('Update', this.templateName + " template has been applied.");
+        Ext.Msg.alert('Update', this.templateName + " template has been applied.", function () {
+            Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-workout'));
+        });
     },
     constructor:function () {
         this.callParent(arguments);
@@ -19,6 +22,17 @@ Ext.define('biglifts.views.ss.Template', {
             text:'Back',
             handler:this.goBack
         });
+
+        this.topToolbar.add({xtype:'spacer'});
+
+        if (this.goForward) {
+            this.topToolbar.add({
+                xtype:'button',
+                ui:'forward',
+                text:'Next',
+                handler:this.goForward
+            });
+        }
 
         this.add({
             html:this.templateDescription
