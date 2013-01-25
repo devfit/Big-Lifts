@@ -8,16 +8,17 @@ describe("Starting Strength lift", function () {
     });
 
     it("should adjust lift increases when the units are changed to kg", function () {
-        biglifts.stores.GlobalSettings.load();
+        ensureLoaded(biglifts.stores.GlobalSettings);
 
         biglifts.stores.GlobalSettings.first().set('units', 'kg');
         biglifts.stores.GlobalSettings.sync();
+
         this.liftStore.adjustUnits();
         expect(this.liftStore.findRecord('name', 'Squat').get('increase')).toEqual(5);
     });
 
     it("should adjust lift increases when the units are changed to lbs", function () {
-        biglifts.stores.GlobalSettings.load();
+        ensureLoaded(biglifts.stores.GlobalSettings);
 
         biglifts.stores.GlobalSettings.first().set('units', 'kg');
         biglifts.stores.GlobalSettings.sync();

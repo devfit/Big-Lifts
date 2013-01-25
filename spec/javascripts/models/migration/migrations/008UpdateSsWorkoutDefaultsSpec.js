@@ -1,7 +1,7 @@
 describe("SS Workout Migration", function () {
     beforeEach(function () {
         this.routines = reloadStore(biglifts.stores.Routine);
-        this.routines.add({name: '5/3/1'});
+        this.routines.add({name:'5/3/1'});
         this.routines.sync();
 
         this.lifts = biglifts.stores.ss.Lifts;
@@ -10,7 +10,8 @@ describe("SS Workout Migration", function () {
         expect(this.lifts.getCount()).toEqual(0);
 
         this.lifts.load();
-        biglifts.stores.GlobalSettings.load();
+        ensureLoaded(biglifts.stores.GlobalSettings);
+
         expect(this.lifts.getCount()).toEqual(5);
 
         this.workouts = reloadStore(biglifts.stores.ss.WorkoutStore);

@@ -4,6 +4,7 @@ Ext.define('biglifts.views.ss.Template', {
     templateDescription:"",
     goForward:null,
     setTemplate:function () {
+        Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo(this.templateName);
         Ext.Msg.alert('Update', this.templateName + " template has been applied.", function () {
             Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-workout'));
         });

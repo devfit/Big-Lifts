@@ -10,6 +10,8 @@ Feature: Novice template
     And I wait for the animation
     And I tap the "OK" button
     And I wait for the animation
+    And I navigate to the "Edit" tab
+    Then There is not a "Power Clean" form label
     Then I am on the starting strength workout
     And I tap the "B" tab
     And I tap the "Warmup" button
