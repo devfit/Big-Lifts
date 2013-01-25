@@ -19,7 +19,11 @@ Ext.define('biglifts.models.GlobalSettings', {
 Ext.define("biglifts.models.GlobalSettingsStore", {
     extend: "biglifts.stores.AbstractSettingsStore",
     getUnits: function () {
-        return this.first().get('units');
+        if( this.first() ){
+            return this.first().get('units');
+        }
+
+        return "lbs";
     },
     getExtDateFormat: function () {
         return this.getDateFormat().toLowerCase().replace('dd', 'd').replace('mm', 'm').replace('yyyy', 'Y');

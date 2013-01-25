@@ -1,5 +1,6 @@
 describe("Starting Strength lift", function () {
     beforeEach(function () {
+        reloadStore(biglifts.stores.GlobalSettings);
         this.liftStore = reloadStore(biglifts.stores.ss.Lifts);
     });
 

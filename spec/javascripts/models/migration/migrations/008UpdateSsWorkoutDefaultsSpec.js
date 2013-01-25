@@ -4,20 +4,14 @@ describe("SS Workout Migration", function () {
         this.routines.add({name:'5/3/1'});
         this.routines.sync();
 
-        this.lifts = biglifts.stores.ss.Lifts;
-        this.lifts.removeAll();
-        this.lifts.sync();
-        expect(this.lifts.getCount()).toEqual(0);
-
-        this.lifts.load();
-        ensureLoaded(biglifts.stores.GlobalSettings);
-
-        expect(this.lifts.getCount()).toEqual(5);
+        reloadStore(biglifts.stores.GlobalSettings);
+        this.lifts = reloadStore(biglifts.stores.ss.Lifts);
 
         this.workouts = reloadStore(biglifts.stores.ss.WorkoutStore);
         this.workouts.removeAll();
         this.workouts.addWorkSets();
         this.workouts.sync();
+
         expect(this.workouts.getCount()).toEqual(6);
     });
 
@@ -41,6 +35,8 @@ describe("SS Workout Migration", function () {
     it("should add warmup sets to squat and adjust the work set order", function () {
         var squat = this.lifts.findRecord('name', 'Squat');
         var workSet = this.workouts.findRecord('lift_id', squat.get('id'));
+        workSet.set('order', 0);
+        this.workouts.sync();
 
         Ext.create('biglifts.migrations.UpdateSsDefaults').run();
 
@@ -53,6 +49,8 @@ describe("SS Workout Migration", function () {
     it("should add warmup sets to deadlift and adjust the work set order", function () {
         var deadlift = this.lifts.findRecord('name', 'Deadlift');
         var workSet = this.workouts.findRecord('lift_id', deadlift.get('id'));
+        workSet.set('order', 0);
+        this.workouts.sync();
 
         Ext.create('biglifts.migrations.UpdateSsDefaults').run();
 
