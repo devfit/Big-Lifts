@@ -30,8 +30,8 @@ Then /^There is a "(.*?)" form label$/ do |name|
 end
 
 Then /^There is not a "(.*?)" form label$/ do |name|
-  labels = @driver.find_elements(:class => 'x-form-label').select { |label| label.displayed? && label.text().include?(name) }
-  labels.length.should == 0
+  label = @driver.find_elements(:class => 'x-form-label').find { |label| label.displayed? && label.text().include?(name) }
+  label.should == nil
 end
 
 Then /^The page title is "([^"]+)"$/ do |title|

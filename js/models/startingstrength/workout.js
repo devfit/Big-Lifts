@@ -24,42 +24,6 @@ Ext.define('biglifts.models.startingstrength.Workout', {
 
 Ext.define('biglifts.models.startingstrength.WorkoutStore', {
     extend:'Ext.data.Store',
-    WARMUPS:{
-        //https://docs.google.com/spreadsheet/ccc?key=0AmWyzQPqnP1wcGxsU1FwNlpITmFBT1AzRVI0WENQSXc&hl=en#gid=0
-        squat:[
-            {sets:2, reps:5, name:'A', percentage:0, warmup:true},
-            {sets:1, reps:5, name:'A', percentage:40, warmup:true},
-            {sets:1, reps:3, name:'A', percentage:60, warmup:true},
-            {sets:1, reps:2, name:'A', percentage:80, warmup:true},
-            {sets:2, reps:5, name:'B', percentage:0, warmup:true},
-            {sets:1, reps:5, name:'B', percentage:40, warmup:true},
-            {sets:1, reps:3, name:'B', percentage:60, warmup:true},
-            {sets:1, reps:2, name:'B', percentage:80, warmup:true}
-        ],
-        bench:[
-            {sets:2, reps:5, name:'A', percentage:0, warmup:true},
-            {sets:1, reps:5, name:'A', percentage:50, warmup:true},
-            {sets:1, reps:3, name:'A', percentage:70, warmup:true},
-            {sets:1, reps:2, name:'A', percentage:90, warmup:true}
-        ],
-        deadlift:[
-            {sets:2, reps:5, name:'A', percentage:40, warmup:true},
-            {sets:1, reps:3, name:'A', percentage:60, warmup:true},
-            {sets:1, reps:2, name:'A', percentage:85, warmup:true}
-        ],
-        press:[
-            {sets:2, reps:5, name:'B', percentage:0, warmup:true},
-            {sets:1, reps:5, name:'B', percentage:55, warmup:true},
-            {sets:1, reps:3, name:'B', percentage:70, warmup:true},
-            {sets:1, reps:2, name:'B', percentage:85, warmup:true}
-        ],
-        powerclean:[
-            {sets:2, reps:5, name:'B', percentage:0, warmup:true},
-            {sets:1, reps:5, name:'B', percentage:55, warmup:true},
-            {sets:1, reps:3, name:'B', percentage:70, warmup:true},
-            {sets:1, reps:2, name:'B', percentage:85, warmup:true}
-        ]
-    },
     addWarmup:function () {
         var me = this;
         util.withLoadedStore(biglifts.stores.ss.Lifts, function () {
@@ -69,15 +33,15 @@ Ext.define('biglifts.models.startingstrength.WorkoutStore', {
                         me.filter('name', name);
                         me.filter('lift_id', lift.get('id'));
                         var liftName = lift.get('name').replace(/\s/g, "").toLowerCase();
-                        var newSets = _.filter(me.WARMUPS[liftName], function (s) {
-                            return s.name === name
+                        var newSets = _.filter(biglifts.models.startingstrength.workouts.standard[liftName], function (s) {
+                            return s.name === name && s.warmup === true
                         });
-                        var i = 0;
+
                         _.each(newSets, function (s) {
-                            s.order = i++;
                             s.lift_id = lift.get('id');
                             me.add(s);
                         });
+
                         me.clearFilter();
                     });
                 });

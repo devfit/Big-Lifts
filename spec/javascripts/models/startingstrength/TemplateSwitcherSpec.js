@@ -3,6 +3,7 @@ describe("Starting Strength template switcher", function () {
         ensureLoaded(biglifts.stores.GlobalSettings);
         expect(biglifts.stores.GlobalSettings.getCount()).toEqual(1);
         this.lifts = reloadStore(biglifts.stores.ss.Lifts);
+        this.workouts = reloadStore(biglifts.stores.ss.WorkoutStore);
     });
 
     var getCurrentRecords = function (me) {
@@ -32,6 +33,16 @@ describe("Starting Strength template switcher", function () {
 
     it("should switch set lifts to standard entries, adding needed entries", function () {
         Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Novice');
+
+        var previousRecords = getCurrentRecords(this);
+        Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Standard');
+
+        expect(this.lifts.getCount()).toEqual(5);
+        assertExistingLiftsAreTheSame(this, previousRecords);
+    });
+
+    it("should set workouts to match the novice template", function () {
+        Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Stanard');
 
         var previousRecords = getCurrentRecords(this);
         Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Standard');

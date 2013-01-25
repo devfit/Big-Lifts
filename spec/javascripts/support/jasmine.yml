@@ -67,6 +67,7 @@ src_files:
             - js/models/startingstrength/lift-defaults.js
             - js/models/startingstrength/lift.js
             - js/models/startingstrength/template-switcher.js
+            - js/models/startingstrength/workout-defaults.js
             - js/models/startingstrength/workout.js
             - js/models/startingstrength/log.js
             - js/models/startingstrength/combined-log.js
