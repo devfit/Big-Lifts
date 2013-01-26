@@ -42,8 +42,7 @@ Ext.define('biglifts.models.startingstrength.LiftStore', {
                 var me = this;
                 util.withLoadedStore(biglifts.stores.GlobalSettings, function () {
                     if (me.getCount() === 0) {
-                        me.add(biglifts.models.startingstrength.lifts.standard[biglifts.stores.GlobalSettings.getUnits()]);
-                        me.sync();
+                        Ext.create('biglifts.models.startingstrength.TemplateSwitcher').setupLifts('standard');
                     }
                 });
             }

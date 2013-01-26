@@ -6,6 +6,7 @@ Ext.define('biglifts.views.ss.Workouts', {
     },
     showConfig:function () {
         Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-config'));
+        Ext.getCmp('ss-config').setActiveItem(0);
     },
     markWorkoutCompleted:function () {
         var me = this;

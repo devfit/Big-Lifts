@@ -42,12 +42,13 @@ describe("Starting Strength template switcher", function () {
     });
 
     it("should set workouts to match the novice template", function () {
-        Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Stanard');
+        var templateSwitcher = Ext.create('biglifts.models.startingstrength.TemplateSwitcher');
+        templateSwitcher.switchTo('Standard');
+        templateSwitcher.switchTo('Novice');
 
-        var previousRecords = getCurrentRecords(this);
-        Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Standard');
-
-        expect(this.lifts.getCount()).toEqual(5);
-        assertExistingLiftsAreTheSame(this, previousRecords);
+        var deadlift = this.lifts.findRecord('name', 'Deadlift');
+        this.workouts.filter('lift_id', deadlift.get('id'));
+        this.workouts.filter('warmup', false);
+        expect(this.workouts.getCount()).toEqual(2);
     });
 });

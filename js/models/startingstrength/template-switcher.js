@@ -1,6 +1,18 @@
 Ext.define('biglifts.models.startingstrength.TemplateSwitcher', {
     switchTo:function (template) {
         template = template.toLowerCase();
+        this.setupLifts(template);
+        this.setupWorkouts(template);
+    },
+    setupWorkouts:function (template) {
+        biglifts.stores.ss.WorkoutStore.removeAll();
+        biglifts.stores.ss.WorkoutStore.sync();
+
+        biglifts.stores.ss.WorkoutStore.addWorkoutLifts(true, template);
+        biglifts.stores.ss.WorkoutStore.addWorkoutLifts(false, template);
+
+    },
+    setupLifts:function (template) {
         var units = biglifts.stores.GlobalSettings.getUnits();
         var newLifts = biglifts.models.startingstrength.lifts[template][units];
         this.removeLiftsNotNeeded(newLifts);

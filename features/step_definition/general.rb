@@ -3,7 +3,13 @@ When /^debugger$/ do
 end
 
 When /^I tap the "(.*?)" button$/ do |button_text|
-  @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == button_text }[0].click
+  buttons = @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == button_text }
+  buttons.each do |button|
+    begin
+      button.click
+    rescue Exception
+    end
+  end
 end
 
 Then /^There is a "(.*?)" list item$/ do |text|
@@ -60,4 +66,8 @@ end
 
 Then /^The "(.+?)" select is set to "(.+?)"$/ do |name, value|
   @driver.find_elements(:name => name).select { |s| s.displayed? }[0].attribute('value').should == value
+end
+
+Then /^The title says "(.*?)"$/ do |title|
+  @driver.find_elements(:class => 'x-title').select { |t| t.displayed? && t.text() == title }.should_not == []
 end
