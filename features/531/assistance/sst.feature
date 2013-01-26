@@ -1,6 +1,17 @@
 @531
 @premium
 Feature: Simplest Strength Template
+
+  Scenario: Maxes are persisted
+    When I tap the assistance tab
+    And I select "Simplest Strength Template" assistance work
+    And I tap the "Deadlift" list item
+    And I tap the "Maxes" button
+    And I set the "Front Squat" input to "250"
+    And I tap the "Back" button
+    And I tap the "Maxes" button
+    Then The "Front Squat" input is "250"
+
   Scenario: Starting week is inferred
     When I view the squat lift schedule for week 1
     When I tap the checkmark

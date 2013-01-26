@@ -8,7 +8,11 @@ Ext.define('SstMovement', {
             {name:'name', type:'string'},
             {name:'lift_id', type:'string'},
             {name:'max', type:'float'}
-        ]
+        ],
+        proxy:{
+            type:'localstorage',
+            id:'sst-assistance'
+        }
     }
 });
 

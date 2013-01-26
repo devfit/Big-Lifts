@@ -9,7 +9,11 @@ Ext.define('SstSets', {
             {name: 'set', type: 'integer'},
             {name: 'percentage', type: 'integer'},
             {name: 'reps', type: 'integer'}
-        ]
+        ],
+        proxy:{
+            type:'localstorage',
+            id:'sst-sets'
+        }
     }
 });
 

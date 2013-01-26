@@ -19,7 +19,8 @@ Ext.define('biglifts.views.SimplestStrengthTemplateMaxes', {
                 xtype:'numberfield',
                 label:l.get('name'),
                 labelWidth:'66%',
-                name:l.get('id')
+                name:l.get('id'),
+                value:l.get('max')
             });
         });
     },
