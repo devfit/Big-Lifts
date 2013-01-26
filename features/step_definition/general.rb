@@ -3,13 +3,7 @@ When /^debugger$/ do
 end
 
 When /^I tap the "(.*?)" button$/ do |button_text|
-  buttons = @driver.find_elements(:class => 'x-button').select { |button| button.displayed? && button.text() == button_text }
-  buttons.each do |button|
-    begin
-      button.click
-    rescue Exception
-    end
-  end
+  @driver.find_elements(:class => 'x-button').find { |button| button.displayed? && button.text() == button_text }.click
 end
 
 Then /^There is a "(.*?)" list item$/ do |text|

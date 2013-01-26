@@ -19,6 +19,11 @@ When /^I tap the use template button$/ do
   sleep MainNavigation::DELAY
 end
 
+When /^I tap the ss use template button$/ do
+  page = @driver.find_element(:id => @driver.execute_script("return Ext.getCmp('ss-config').getActiveItem().id"))
+  page.find_elements(:class => 'x-button').find { |button| button.text() == "Use" }.click
+end
+
 When /^I confirm the progression change$/ do
   msg_box = @driver.find_element(:class => 'x-msgbox')
   ok_button = msg_box.find_element(:class => 'x-button')

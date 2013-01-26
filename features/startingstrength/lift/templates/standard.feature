@@ -16,16 +16,14 @@ Feature: Standard template
     When I navigate to the "Lift" tab
     And I tap the gear button
     And I tap the "Next" button
-    And I tap the "Use" button
+    And I tap the ss use template button
     And I wait for the animation
     And I tap the "OK" button
     And I wait for the animation
     And I tap the gear button
-    And I wait for the animation
 
     Then The title says "Standard"
-
-    And I tap the "Use" button
+    And I tap the ss use template button
     And I wait for the animation
     And I tap the "OK" button
     And I wait for the animation
