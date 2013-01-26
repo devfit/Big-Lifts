@@ -19,7 +19,7 @@ Feature: Custom - Assistance Work
     Then I am on the track tab
     And I tap the "Asst." button
     Then List item 1 contains "Move2 Sets: 5 15x"
-    Then List item 2 shows "Move1 Sets: 5 15x"
+    Then List item 2 contains "Move1 Sets: 5 15x"
 
   Scenario: Adding custom lift movements
     When I tap the assistance tab
