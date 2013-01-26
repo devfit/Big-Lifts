@@ -21,6 +21,8 @@ Feature: Standard template
     And I tap the "OK" button
     And I wait for the animation
     And I tap the gear button
+    And I wait for the animation
+
     Then The title says "Standard"
 
     And I tap the "Use" button
