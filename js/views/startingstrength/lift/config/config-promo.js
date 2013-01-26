@@ -1,5 +1,5 @@
 Ext.define('biglifts.views.ss.ConfigPromo', {
-    extend:"Ext.Container",
+    extend:"Ext.Panel",
     goBack:function () {
         Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-workout'));
     },
@@ -18,14 +18,11 @@ Ext.define('biglifts.views.ss.ConfigPromo', {
             handler:this.goBack
         });
 
-        var html = "Big Lifts Pro currently supports the following configs:" +
+        var html = "Big Lifts Pro currently supports the following templates:" +
             "\n<ul>" +
+            "<li>» Standard</li>" +
             "<li>» Pure Novice</li>" +
-            "<li>» Regular</li>" +
             "</ul>";
-        this.add({html:html});
-    },
-    config:{
-        cls:'message'
+        this.add({html:html, cls:'message'});
     }
 });
