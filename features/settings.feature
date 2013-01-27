@@ -18,5 +18,5 @@ Feature: Settings
     Then The lift schedule shows "5 115 [warm] 40%","5 145 [warm] 50%","3 170 [warm] 60%","5 185 65%","5 215 75%","5 240 85%"
     And I navigate to the lift editor
     Then The training percentage shows 95
-    Then The calculated squat training max is 285
+    Then The "Squat" training max is "285"
 

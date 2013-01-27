@@ -21,8 +21,3 @@ Then /^The training percentage shows (\d+)$/ do |percentage|
   training_percentage_text = @driver.find_element(:id => 'training-max-percentage-indicator').text
   training_percentage_text.include?(percentage).should be_true
 end
-
-Then /^The calculated squat training max is (\d+)$/ do |trainingMax|
-  training_value = @driver.find_element(:name => 'squat-training').attribute('value')
-  training_value.should == trainingMax
-end
