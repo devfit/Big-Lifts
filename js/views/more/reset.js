@@ -12,10 +12,12 @@ Ext.define('biglifts.views.Reset', {
     },
     resetCheckedStores:function () {
         var stores = [];
-        _.each(this.getValues(), function (value, storeId) {
-            if (value) {
-                stores.push(Ext.getStore(storeId));
-            }
+        _.each(this.getValues(), function (value, storeIds) {
+            _.each(storeIds.split(','), function (storeId) {
+                if (value) {
+                    stores.push(Ext.getStore(storeId));
+                }
+            });
         });
 
         _.each(stores, function (store) {
@@ -86,8 +88,8 @@ Ext.define('biglifts.views.Reset', {
                 if (biglifts.toggles.Assistance) {
                     fieldset.add({
                         xtype:'checkboxfield',
-                        label:'Custom Asst.',
-                        name:'triumvirate'
+                        label:'Assistance',
+                        name:'triumvirate,bodyweight,sst,bbb'
                     });
 
                     fieldset.add({

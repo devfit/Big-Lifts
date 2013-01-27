@@ -23,6 +23,7 @@ Ext.define("BodyweightMovementStore", {
     ],
     config: {
         model: 'BodyweightMovement',
+        storeId: 'bodyweight',
         listeners: {
             load: function () {
                this.onLoad();

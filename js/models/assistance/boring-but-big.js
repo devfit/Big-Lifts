@@ -72,6 +72,7 @@ Ext.define('BoringButBigStore', {
     },
     config: {
         model: 'BoringButBigLift',
+        storeId: 'bbb',
         listeners: {
             load: function () {
                 this.syncAssistanceToLifts();

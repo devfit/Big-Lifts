@@ -39,6 +39,7 @@ Ext.define("SstStore", {
     },
     config:{
         model:'SstMovement',
+        storeId: 'sst',
         listeners:{
             load:function () {
                 if (this.getCount() === 0) {
