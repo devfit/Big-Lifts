@@ -6,22 +6,22 @@ biglifts.liftSchedule.currentLiftProperty = null;
 biglifts.liftSchedule.currentWeek = 1;
 
 Ext.define('biglifts.views.LiftSchedule', {
-    extend: 'Ext.Panel',
-    getRestTimer: function () {
+    extend:'Ext.Panel',
+    getRestTimer:function () {
         return this.restTimer;
     },
-    config: {
-        id: 'lift-schedule',
-        title: 'Lift!',
-        iconCls: 'icnBarbell',
-        layout: 'card',
-        listeners: {
-            initialize: function () {
+    config:{
+        id:'lift-schedule',
+        title:'Lift!',
+        iconCls:'icnBarbell',
+        layout:'card',
+        listeners:{
+            initialize:function () {
                 this.add([
                     Ext.create('biglifts.views.LiftSelector'),
                     biglifts.views.liftSchedule.liftTemplate,
                     biglifts.views.liftSchedule.LiftsCompletedScreen,
-                    biglifts.views.liftSchedule.IncreaseMaxesHelp,
+                    Ext.create('biglifts.views.IncreaseMaxesHelp'),
                     biglifts.views.liftSchedule.LiftSettings,
                     Ext.create('biglifts.views.templates.CustomWeekEditor'),
                     Ext.create('biglifts.views.EditProgression'),
@@ -30,8 +30,8 @@ Ext.define('biglifts.views.LiftSchedule', {
                 this.restTimer = this.add(Ext.create('biglifts.views.RestTimer'));
 
                 this.add({
-                    xtype: 'firstlognoteseditor',
-                    id: 'first-log-notes-editor'
+                    xtype:'firstlognoteseditor',
+                    id:'first-log-notes-editor'
                 });
                 this.setActiveItem(0);
             }
