@@ -54,57 +54,59 @@ biglifts.views.liftSchedule.LiftsCompletedScreen = {
     id:'cycle-complete',
     xtype:'formpanel',
     listeners:{
+        initialize:function () {
+            this.add({
+                docked:'top',
+                xtype:'toolbar',
+                title:'Finish Cycle?',
+                items:[
+                    {
+                        id:'complete-cycle-back-button',
+                        xtype:'button',
+                        text:'Cancel',
+                        ui:'back',
+                        handler:biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen
+                    }
+                ]
+            });
+
+            this.cycleFieldset = this.add({
+                xtype:'fieldset',
+                style:'margin-top: 0',
+                cls:'fieldset-no-margin',
+                defaults:{
+                    labelWidth:'66%'
+                }
+            });
+
+            this.cycleFieldset.add({
+                name:'new-cycle',
+                xtype:'numberfield',
+                label:'New cycle'
+            });
+
+            this.increaseMaxesToggle = this.cycleFieldset.add({
+                id:'increase-maxes-toggle',
+                xtype:'togglefield',
+                label:'Increase maxes <img class="help-image" style="float:right" src="images/question.png"/>',
+                value:1
+            });
+
+            this.cycleFieldset.add({
+                id:'lifts-complete-done-button',
+                xtype:'button',
+                text:'Done',
+                handler:biglifts.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen
+            });
+        },
         painted:function () {
             if (!this._painted) {
                 this._painted = true;
-                Ext.get('increase-maxes-help-image').addListener('tap',
+                this.increaseMaxesToggle.element.down('img').addListener('tap',
                     biglifts.liftSchedule.cycleComplete.showIncreaseMaxesHelpScreen);
             }
             biglifts.liftSchedule.cycleComplete.setNextCycleDefault();
             biglifts.navigation.setBackFunction(biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen);
         }
-    },
-    items:[
-        {
-            docked:'top',
-            xtype:'toolbar',
-            title:'Finish Cycle?',
-            items:[
-                {
-                    id:'complete-cycle-back-button',
-                    xtype:'button',
-                    text:'Cancel',
-                    ui:'back',
-                    handler:biglifts.liftSchedule.cycleComplete.closeLiftCompletedScreen
-                }
-            ]
-        },
-        {
-            xtype:'fieldset',
-            style:'margin-top: 0',
-            cls:'fieldset-no-margin',
-            defaults:{
-                labelWidth:'66%'
-            },
-            items:[
-                {
-                    name:'new-cycle',
-                    xtype:'numberfield',
-                    label:'New cycle'
-                },
-                {
-                    id:'increase-maxes-toggle',
-                    xtype:'togglefield',
-                    label:'Increase maxes <img id="increase-maxes-help-image" style="float:right" src="images/question.png"/>',
-                    value:1
-                },
-                {
-                    id:'lifts-complete-done-button',
-                    xtype:'button',
-                    text:'Done',
-                    handler:biglifts.liftSchedule.cycleComplete.saveAndCloseLiftCompletedScreen
-                }
-            ]
-        }
-    ]
+    }
 };
