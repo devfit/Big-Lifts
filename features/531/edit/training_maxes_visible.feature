@@ -1,10 +1,11 @@
 @531
 Feature: Training maxes in the maxes editor
-  As a lifter
-  I want to see the training max being used in the maxes editor,
-  So that I know if I'm using the training max or not
+  Scenario: Training maxes are updated after edit
+    When I navigate to the "Edit" tab
+    And I set the "Press" input to "300"
+    Then The "Press" training max is "270"
 
-  Scenario: Training max togging
+  Scenario: Training max toggling
     When I navigate to the "More" tab
     And I tap the "Settings" list item
     And I toggle use training max
@@ -28,4 +29,4 @@ Feature: Training maxes in the maxes editor
   Scenario: I add a lift and edit its max
     When I add a new lift named "Clean" with max 200
     And I navigate to the lift editor
-    Then The training max for clean is shown
+    Then The training max for "Clean" is shown
