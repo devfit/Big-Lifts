@@ -10,6 +10,7 @@ Ext.define('biglifts.views.IncreaseMaxesHelp', {
     },
     rebuildFieldsets:function () {
         this.increasesFieldset.removeAll();
+        biglifts.stores.lifts.Lifts.filter('enabled', true);
         biglifts.stores.lifts.Lifts.each(function (l) {
             this.increasesFieldset.add({
                 xtype:'numberfield',
@@ -40,14 +41,13 @@ Ext.define('biglifts.views.IncreaseMaxesHelp', {
         this.increasesFieldset = this.add({
             xtype:'fieldset'
         });
-
-        this.rebuildFieldsets();
     },
     config:{
         id:'increase-maxes-help',
         listeners:{
             painted:function () {
                 biglifts.stores.lifts.Lifts.filter('enabled', true);
+                this.rebuildFieldsets();
                 biglifts.navigation.setBackFunction(Ext.bind(this.closeIncreaseMaxesHelpScreen, this));
             }
         }

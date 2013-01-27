@@ -27,7 +27,10 @@ Feature: Disabling lifts
     And I tap the "Save" button
     Then I am prompted with the cycle complete dialog
     And I tap the question mark button
-    Then The help screen shows lifts "Bench"
+    Then There is a "Bench" form label
+    Then There is not a "Deadlift" form label
+    Then There is not a "Squat" form label
+    Then There is not a "Press" form label
     And I tap the "Back" button
 
 
