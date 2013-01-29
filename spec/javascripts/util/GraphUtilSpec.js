@@ -21,7 +21,7 @@ describe("Graph Util", function () {
         expect(store.first().get('Deadlift')).toBeDefined();
     });
 
-    it("should merge log entries on the same day to the same day", function(){
+    it("should merge log entries on the same day to the same day", function () {
         biglifts.stores.LiftLog.add({liftName:"Squat", timestamp:Date.parse("01-02-2012").getTime(), weight:300, reps:3});
         biglifts.stores.LiftLog.add({liftName:"Deadlift", timestamp:Date.parse("01-02-2012").getTime(), weight:300, reps:3});
         biglifts.stores.LiftLog.add({liftName:"Deadlift", timestamp:Date.parse("01-04-2012").getTime(), weight:300, reps:3});
@@ -32,9 +32,18 @@ describe("Graph Util", function () {
         expect(store.first().get('Deadlift')).toBeDefined();
     });
 
-    it("should use one rep max estimates for graph data", function(){
+    it("should use one rep max estimates for graph data", function () {
         biglifts.stores.LiftLog.add({liftName:"Squat", timestamp:Date.parse("01-02-2012").getTime(), weight:300, reps:3});
         var store = biglifts.util.graph.convertLogToGraphStore();
         expect(store.first().get('Squat')).toEqual(329.5);
+    });
+
+    it("should differentiate dates by days", function () {
+        var lastYear = {date:Date.parse("03/02/2012")};
+        var thisYear = {date:Date.parse("02/02/2012")};
+
+        var data = [lastYear];
+        biglifts.util.graph.extendOrAdd(data, thisYear);
+        expect(data.length).toEqual(2);
     });
 });

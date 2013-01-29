@@ -10,29 +10,33 @@ biglifts.util.graph.convertLogToGraphStore = function () {
     });
 
     return Ext.create('Ext.data.JsonStore', {
-        fields: _.flatten([
+        fields:_.flatten([
             'date',
             biglifts.stores.lifts.Lifts.getUniqueLiftNames()
         ]),
-        data: data
+        data:data
     });
 };
 
 biglifts.util.graph.addLogRecordToData = function (data, record) {
     var formattedDate = new Date(record.get('timestamp'));
     var graphRecord = {
-        date: formattedDate
+        date:formattedDate
     };
     graphRecord[record.get('liftName')] = util.formulas.estimateOneRepMax(record.get('weight'), record.get("reps"));
+    biglifts.util.graph.extendOrAdd(data, graphRecord);
+};
 
+biglifts.util.graph.extendOrAdd = function (data, record) {
+    var DATE_FORMAT = 'MM/dd/yyyy';
     var existingData = _.find(data, function (existingData) {
-        return existingData.date.toString('mm/dd/yyyy') === graphRecord.date.toString('mm/dd/yyyy');
+        return existingData.date.toString(DATE_FORMAT) === record.date.toString(DATE_FORMAT);
     });
 
     if (existingData) {
-        _.extend(existingData, graphRecord);
+        _.extend(existingData, record);
     }
     else {
-        data.push(graphRecord);
+        data.push(record);
     }
 };
