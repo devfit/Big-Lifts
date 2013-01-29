@@ -97,12 +97,7 @@ Ext.define('biglifts.views.LiftSelector', {
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'));
     },
     viewLift:function (view, index) {
-        var record = biglifts.stores.lifts.Lifts.getAt(index);
-
-        Ext.getCmp('lift-template-toolbar').setTitle(record.get('name'));
-        biglifts.liftSchedule.currentLiftProperty = record.get('propertyName');
-
-        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
+        Ext.getCmp('lift-template').showForRecord(biglifts.stores.lifts.Lifts.getAt(index));
     },
     bindListeners:function () {
         biglifts.stores.lifts.LiftCompletion.addListener('beforesync', this.setupListDoneIcons, this);

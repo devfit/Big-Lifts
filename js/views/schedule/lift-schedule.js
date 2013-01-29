@@ -19,7 +19,7 @@ Ext.define('biglifts.views.LiftSchedule', {
             initialize:function () {
                 this.add([
                     Ext.create('biglifts.views.LiftSelector'),
-                    biglifts.views.liftSchedule.liftTemplate,
+                    Ext.create('biglifts.views.LiftTemplate'),
                     biglifts.views.liftSchedule.LiftsCompletedScreen,
                     Ext.create('biglifts.views.IncreaseMaxesHelp'),
                     biglifts.views.liftSchedule.LiftSettings,

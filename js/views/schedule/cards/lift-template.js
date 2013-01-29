@@ -1,214 +1,203 @@
-"use strict";
-Ext.ns('biglifts.views.liftSchedule', 'biglifts.liftSchedule.liftTemplate');
+Ext.define('biglifts.views.LiftTemplate', {
+    extend:'Ext.Panel',
+    constructor:function () {
+        this.callParent(arguments);
 
-biglifts.liftSchedule.liftTemplate.showLiftTracking = function () {
-    var liftProgression = biglifts.stores.lifts.LiftProgression.findRecord('set', 6).data;
-    var reps = liftProgression.reps;
-    var weight = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), liftProgression.percentage);
-    var formValues = {
-        'reps': reps,
-        'weight': weight,
-        'estimated-one-rep-max': util.formulas.estimateOneRepMax(weight, reps),
-        'notes': ''
-    };
+        this.topToolbar = this.add({
+            xtype:'toolbar',
+            docked:'top',
+            items:[
+                {
+                    text:'Back',
+                    ui:'back',
+                    handler:Ext.bind(this.returnToLiftSelect, this)
+                },
+                {xtype:'spacer'},
+                {
+                    cls:'rest-timer-button',
+                    iconCls:'clock',
+                    iconMask:true,
+                    ui:'decline',
+                    handler:Ext.bind(this.showRestTimer, this)
+                },
+                {
+                    style:'z-index: 11',
+                    iconCls:'done',
+                    iconMask:true,
+                    ui:'action',
+                    handler:Ext.bind(this.showLiftTracking, this)
+                }
+            ]
+        });
 
-    var liftTracking = Ext.getCmp('lift-tracking');
-    liftTracking.setNotes('');
-    Ext.getCmp('lift-schedule').setActiveItem(liftTracking);
-    liftTracking.setValues(formValues);
-};
+        this.repsToolbar = this.add({
+            xtype:'toolbar',
+            ui:'light',
+            hidden:true,
+            docked:'top'
+        });
 
+        this.repsToBeatPanel = this.repsToolbar.add({
+            xtype:'panel',
+            width:'100%',
+            html:'<table class="reps-to-beat-text"><tr>' +
+                '<td width="40%">' +
+                'Best: ~<span id="last-one-rep-estimate">000</span>' +
+                '</td>' +
+                '<td width="60%" style="text-align:right">' +
+                ' <span>Reps to beat: <span id="reps-needed-to-beat-last-estimate">00</span></span>' +
+                '</td>' +
+                '</tr></table>'
+        });
 
-biglifts.liftSchedule.liftTemplate.formatLiftWeight = function (values) {
-    var max = null;
-    if (values.goalLift) {
-        max = biglifts.stores.lifts.MeetGoals.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty).get('weight');
-    }
-    else {
-        max = biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax);
-    }
-    return biglifts.weight.format(max, values.percentage);
-};
-
-biglifts.liftSchedule.liftTemplate.getLiftRowClass = function (values) {
-    return (values.amrap ? 'amrap ' : '') + (values.warmup ? 'warmup ' : '');
-};
-
-biglifts.liftSchedule.liftTemplate.getEffectiveWeek = function () {
-    if (biglifts.stores.WeekRotation.getCount() === 0) {
-        return biglifts.liftSchedule.currentWeek;
-    }
-    else {
-        var rotation = biglifts.stores.WeekRotation.findRecord('liftProperty', biglifts.liftSchedule.currentLiftProperty);
-        var startingWeek = rotation.get('startingWeek');
-
-        return ((biglifts.liftSchedule.currentWeek + startingWeek - 2) % 4) + 1;
-    }
-};
-
-biglifts.liftSchedule.liftTemplate.updateLiftValues = function () {
-    if (!biglifts.liftSchedule.currentLiftProperty) {
-        return;
-    }
-
-    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
-    if (liftRecord === null) {
-        if (Ext.getCmp('lift-schedule').getActiveItem() !== Ext.getCmp('lift-selector')) {
-            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+        this.liftList = this.add({
+            xtype:'list',
+            store:biglifts.stores.lifts.LiftProgression,
+            itemCls:'lift-row',
+            itemTpl:new Ext.XTemplate('<p class="{[this.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
+                '<span class="weight">{[this.formatLiftWeight(values)]}</span>' +
+                '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +
+                (biglifts.toggles.BarLoading ?
+                    '<p class="bar-loader-breakdown">{[util.plates.getFormattedPlateList(' +
+                        'this.formatLiftWeight(values),biglifts.liftSchedule.currentLiftProperty)]}</p>' : ''), {
+                getLiftRowClass:function (values) {
+                    return (values.amrap ? 'amrap ' : '') + (values.warmup ? 'warmup ' : '');
+                },
+                formatLiftWeight:function (values) {
+                    var max = null;
+                    if (values.goalLift) {
+                        max = biglifts.stores.lifts.MeetGoals.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty).get('weight');
+                    }
+                    else {
+                        max = biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax);
+                    }
+                    return biglifts.weight.format(max, values.percentage);
+                }
+            })
+        });
+    },
+    showForRecord:function (record) {
+        this.topToolbar.setTitle(record.get('name'));
+        biglifts.liftSchedule.currentLiftProperty = record.get('propertyName');
+        Ext.getCmp('lift-schedule').setActiveItem(this);
+    },
+    getEffectiveWeek:function () {
+        if (biglifts.stores.WeekRotation.getCount() === 0) {
+            return biglifts.liftSchedule.currentWeek;
         }
-        return;
-    }
+        else {
+            var rotation = biglifts.stores.WeekRotation.findRecord('liftProperty', biglifts.liftSchedule.currentLiftProperty);
+            var startingWeek = rotation.get('startingWeek');
 
-    var settings = biglifts.stores.w.Settings.first();
-    if (settings) {
+            return ((biglifts.liftSchedule.currentWeek + startingWeek - 2) % 4) + 1;
+        }
+    },
+    updateLiftValues:function () {
+        if (!biglifts.liftSchedule.currentLiftProperty) {
+            return;
+        }
+
+        var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
+
+        var settings = biglifts.stores.w.Settings.first();
         var showWarmupSets = settings.get('showWarmupSets');
-        biglifts.liftSchedule.currentShowingMax = liftRecord.data.max;
-        biglifts.stores.lifts.LiftProgression.clearFilter();
-        biglifts.stores.lifts.LiftProgression.filter("week", biglifts.liftSchedule.liftTemplate.getEffectiveWeek());
 
+        biglifts.liftSchedule.currentShowingMax = liftRecord.data.max;
+
+        biglifts.stores.lifts.LiftProgression.clearFilter();
+        biglifts.stores.lifts.LiftProgression.filter("week", this.getEffectiveWeek());
+
+        var me = this;
         if (!showWarmupSets) {
             biglifts.stores.lifts.LiftProgression.filterBy(function (record) {
-                return !record.get('warmup') && record.data.week === biglifts.liftSchedule.liftTemplate.getEffectiveWeek();
+                return !record.get('warmup') && record.data.week === me.getEffectiveWeek();
             });
         }
 
-        biglifts.liftSchedule.liftTemplate.setupBestOneRepMax();
-    }
-};
-
-biglifts.liftSchedule.liftTemplate.setupBestOneRepMax = function () {
-    if (biglifts.liftSchedule.liftTemplate.getEffectiveWeek() === 4) {
-        Ext.getCmp('reps-to-beat-toolbar').hide();
-        return;
-    }
-
-    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
-    var bestLogRecordOneRepEstimate = null;
-    biglifts.stores.LiftLog.each(function (r) {
-        if (r.get('liftName') === liftRecord.get('name')) {
-            var weight = parseFloat(r.get('weight'));
-            var reps = r.get('reps');
-            var estimateOneRep = util.formulas.estimateOneRepMax(weight, reps);
-            if (_.isNull(bestLogRecordOneRepEstimate)) {
-                bestLogRecordOneRepEstimate = estimateOneRep;
-            }
-            else if (estimateOneRep > bestLogRecordOneRepEstimate) {
-                bestLogRecordOneRepEstimate = estimateOneRep;
-            }
+        this.setupBestOneRepMax();
+    },
+    returnToLiftSelect:function () {
+        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+    },
+    setupBestOneRepMax:function () {
+        if (this.getEffectiveWeek() === 4) {
+            this.repsToolbar.hide();
+            return;
         }
-    });
 
-    if (!_.isNull(bestLogRecordOneRepEstimate)) {
-        var lastSetMax = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), biglifts.stores.lifts.LiftProgression.last().get('percentage'));
-
-        Ext.get('last-one-rep-estimate').setHtml(bestLogRecordOneRepEstimate);
-        Ext.get('reps-needed-to-beat-last-estimate').setHtml(util.formulas.calculateRepsToBeatWeight(bestLogRecordOneRepEstimate, lastSetMax));
-        Ext.getCmp('reps-to-beat-toolbar').show();
-    }
-    else {
-        Ext.getCmp('reps-to-beat-toolbar').hide();
-    }
-};
-
-biglifts.liftSchedule.liftTemplate.returnToLiftSelect = function () {
-    Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
-};
-
-biglifts.liftSchedule.liftTemplate.showRestTimer = function () {
-    var restTimer = Ext.getCmp('lift-schedule').getRestTimer();
-    restTimer.setBack(function () {
-        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
-    });
-
-    Ext.getCmp('lift-schedule').setActiveItem(restTimer);
-};
-
-biglifts.liftSchedule.liftTemplate.formatPercentage = function (value) {
-    return value;
-};
-
-biglifts.views.liftSchedule.liftTemplate = {
-    xtype: 'panel',
-    id: 'lift-template',
-    layout: 'fit',
-    items: [
-        {
-            xtype: 'toolbar',
-            id: 'lift-template-toolbar',
-            docked: 'top',
-            items: [
-                {
-                    text: 'Back',
-                    ui: 'back',
-                    handler: biglifts.liftSchedule.liftTemplate.returnToLiftSelect
-                },
-                {xtype: 'spacer'},
-                {
-                    cls: 'rest-timer-button',
-                    iconCls: 'clock',
-                    iconMask: true,
-                    ui: 'decline',
-                    handler: biglifts.liftSchedule.liftTemplate.showRestTimer
-                },
-                {
-                    style: 'z-index: 11',
-                    id: 'mark-lift-completed-button',
-                    iconCls: 'done',
-                    iconMask: true,
-                    ui: 'action',
-                    handler: biglifts.liftSchedule.liftTemplate.showLiftTracking
+        var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
+        var bestLogRecordOneRepEstimate = null;
+        biglifts.stores.LiftLog.each(function (r) {
+            if (r.get('liftName') === liftRecord.get('name')) {
+                var weight = parseFloat(r.get('weight'));
+                var reps = r.get('reps');
+                var estimateOneRep = util.formulas.estimateOneRepMax(weight, reps);
+                if (_.isNull(bestLogRecordOneRepEstimate)) {
+                    bestLogRecordOneRepEstimate = estimateOneRep;
                 }
-            ]
-        },
-        {
-            xtype: 'toolbar',
-            id: 'reps-to-beat-toolbar',
-            ui: 'light',
-            hidden: true,
-            docked: 'top',
-            items: [
-                {
-                    id: 'reps-to-beat-panel',
-                    xtype: 'panel',
-                    width: '100%',
-                    html: '<table class="reps-to-beat-text"><tr>' +
-                        '<td width="40%">' +
-                        'Best: ~<span id="last-one-rep-estimate">000</span>' +
-                        '</td>' +
-                        '<td width="60%" style="text-align:right">' +
-                        ' <span>Reps to beat: <span id="reps-needed-to-beat-last-estimate">00</span></span>' +
-                        '</td>' +
-                        '</tr></table>'
+                else if (estimateOneRep > bestLogRecordOneRepEstimate) {
+                    bestLogRecordOneRepEstimate = estimateOneRep;
                 }
-            ]
-        },
-        {
-            id: 'lift-template-list',
-            xtype: 'list',
-            store: biglifts.stores.lifts.LiftProgression,
-            itemCls: 'lift-row',
-            itemTpl: '<p class="{[biglifts.liftSchedule.liftTemplate.getLiftRowClass (values)]}"><span class="reps">{reps}</span> ' +
-                '<span class="weight">{[biglifts.liftSchedule.liftTemplate.formatLiftWeight(values)]}</span>' +
-                '<span class="percentage"><span class="warmup-indicator">[warm]</span> {[biglifts.liftSchedule.liftTemplate.formatPercentage(values.percentage)]}%</span></p>' +
-                (biglifts.toggles.BarLoading ?
-                    '<p class="bar-loader-breakdown">{[util.plates.getFormattedPlateList(' +
-                        'biglifts.liftSchedule.liftTemplate.formatLiftWeight(values),biglifts.liftSchedule.currentLiftProperty)]}</p>' : '')
-        }
-    ],
-    listeners: {
-        painted: function () {
-            if (!this._painted) {
-                this._painted = true;
-                biglifts.stores.lifts.LiftProgression.addListener('beforesync', function () {
-                    Ext.getCmp('lift-template-list').refresh();
-                });
-
-                biglifts.stores.lifts.Lifts.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
-                biglifts.stores.lifts.MeetGoals.addListener('beforesync', biglifts.liftSchedule.liftTemplate.updateLiftValues);
             }
+        });
 
-            biglifts.navigation.setBackFunction(biglifts.liftSchedule.liftTemplate.returnToLiftSelect);
-            biglifts.liftSchedule.liftTemplate.updateLiftValues();
+        if (!_.isNull(bestLogRecordOneRepEstimate)) {
+            var lastSetMax = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), biglifts.stores.lifts.LiftProgression.last().get('percentage'));
+
+            this.repsToolbar.show();
+            Ext.get('last-one-rep-estimate').setHtml(bestLogRecordOneRepEstimate);
+            Ext.get('reps-needed-to-beat-last-estimate').setHtml(util.formulas.calculateRepsToBeatWeight(bestLogRecordOneRepEstimate, lastSetMax));
+        }
+        else {
+            this.repsToolbar.hide();
+        }
+    },
+    showRestTimer:function () {
+        var restTimer = Ext.getCmp('lift-schedule').getRestTimer();
+        restTimer.setBack(function () {
+            Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
+        });
+
+        Ext.getCmp('lift-schedule').setActiveItem(restTimer);
+    },
+    showLiftTracking:function () {
+        var liftProgression = biglifts.stores.lifts.LiftProgression.findRecord('set', 6).data;
+        var reps = liftProgression.reps;
+        var weight = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), liftProgression.percentage);
+
+        Ext.getCmp('lift-tracking').showFor({
+            'reps':reps,
+            'weight':weight,
+            'estimated-one-rep-max':util.formulas.estimateOneRepMax(weight, reps),
+            'notes':''
+        });
+    },
+    bindListeners:function () {
+        biglifts.stores.lifts.LiftProgression.addListener('beforesync', this.updateLiftValues, this);
+        biglifts.stores.lifts.Lifts.addListener('beforesync', this.updateLiftValues, this);
+        biglifts.stores.lifts.MeetGoals.addListener('beforesync', this.updateLiftValues, this);
+    },
+    destroyListeners:function () {
+        biglifts.stores.lifts.LiftProgression.removeListener('beforesync', this.updateLiftValues, this);
+        biglifts.stores.lifts.Lifts.removeListener('beforesync', this.updateLiftValues, this);
+        biglifts.stores.lifts.MeetGoals.removeListener('beforesync', this.updateLiftValues, this);
+    },
+    config:{
+        id:'lift-template',
+        layout:'fit',
+        listeners:{
+            painted:function () {
+                if (!this._painted) {
+                    this._painted = true;
+                    this.bindListeners();
+                }
+
+                this.updateLiftValues();
+                biglifts.navigation.setBackFunction(Ext.bind(this.returnToLiftSelect, this));
+            },
+            destroy:function () {
+                this.destroyListeners();
+            }
         }
     }
-};
+});
