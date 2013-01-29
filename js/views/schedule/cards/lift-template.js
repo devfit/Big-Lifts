@@ -34,20 +34,26 @@ Ext.define('biglifts.views.LiftTemplate', {
             xtype:'toolbar',
             ui:'light',
             hidden:true,
-            docked:'top'
+            docked:'top',
+            cls:'reps-toolbar'
         });
 
         this.repsToBeatPanel = this.repsToolbar.add({
-            xtype:'panel',
+            xtype:'component',
+            cls:'reps-panel',
             width:'100%',
-            html:'<table class="reps-to-beat-text"><tr>' +
+            tpl:'<table><tr>' +
                 '<td width="40%">' +
-                'Best: ~<span id="last-one-rep-estimate">000</span>' +
+                'Best: ~{lastEstimate}' +
                 '</td>' +
                 '<td width="60%" style="text-align:right">' +
-                ' <span>Reps to beat: <span id="reps-needed-to-beat-last-estimate">00</span></span>' +
+                ' <span>Reps to beat: {repsToBeat}</span>' +
                 '</td>' +
-                '</tr></table>'
+                '</tr></table>',
+            data:{
+                lastEstimate:0,
+                repsToBeat:0
+            }
         });
 
         this.liftList = this.add({
@@ -145,8 +151,8 @@ Ext.define('biglifts.views.LiftTemplate', {
             var lastSetMax = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), biglifts.stores.lifts.LiftProgression.last().get('percentage'));
 
             this.repsToolbar.show();
-            Ext.get('last-one-rep-estimate').setHtml(bestLogRecordOneRepEstimate);
-            Ext.get('reps-needed-to-beat-last-estimate').setHtml(util.formulas.calculateRepsToBeatWeight(bestLogRecordOneRepEstimate, lastSetMax));
+            var repsToBeat = util.formulas.calculateRepsToBeatWeight(bestLogRecordOneRepEstimate, lastSetMax);
+            this.repsToBeatPanel.setData({lastEstimate:bestLogRecordOneRepEstimate, repsToBeat:repsToBeat})
         }
         else {
             this.repsToolbar.hide();

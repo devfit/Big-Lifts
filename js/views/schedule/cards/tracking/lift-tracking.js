@@ -72,7 +72,7 @@ Ext.define('biglifts.views.LiftTracking', {
         var formValues = Ext.getCmp('lift-tracking').getValues();
         var reps = formValues['reps'];
         var notes = this.currentLiftNotes;
-        var week = biglifts.liftSchedule.liftTemplate.getEffectiveWeek();
+        var week = Ext.getCmp('lift-template').getEffectiveWeek();
         var weight = formValues['weight'];
         var cycle = biglifts.stores.CurrentCycle.first().data.cycle;
         var units = biglifts.stores.w.Settings.first().data.units;

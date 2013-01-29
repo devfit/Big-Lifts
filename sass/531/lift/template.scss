@@ -1,13 +1,13 @@
-#reps-to-beat-toolbar {
+.reps-toolbar {
   color: white;
 
-  table.reps-to-beat-text {
-    width: 100%;
-  }
-
-  #reps-to-beat-panel {
+  .reps-panel {
     padding-left: 0.5em;
     padding-right: 0.5em;
+
+    table {
+      width: 100%;
+    }
   }
 }
 
