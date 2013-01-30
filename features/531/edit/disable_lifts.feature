@@ -41,7 +41,7 @@ Feature: Disabling lifts
     And I tap the "Done" button
     And I navigate to the lift schedule
     When I view the deadlift lift schedule for week 1
-    Then The lift template title is "Deadlift"
+    Then The title says "Deadlift"
 
   Scenario: Weeks can be checked with lifts disabled
     When I navigate to the lift editor
