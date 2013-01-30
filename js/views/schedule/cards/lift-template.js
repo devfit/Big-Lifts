@@ -30,31 +30,7 @@ Ext.define('biglifts.views.LiftTemplate', {
             ]
         });
 
-        this.repsToolbar = this.add({
-            xtype:'toolbar',
-            ui:'light',
-            hidden:true,
-            docked:'top',
-            cls:'reps-toolbar'
-        });
-
-        this.repsToBeatPanel = this.repsToolbar.add({
-            xtype:'component',
-            cls:'reps-panel',
-            width:'100%',
-            tpl:'<table><tr>' +
-                '<td width="40%">' +
-                'Best: ~{lastEstimate}' +
-                '</td>' +
-                '<td width="60%" style="text-align:right">' +
-                ' <span>Reps to beat: {repsToBeat}</span>' +
-                '</td>' +
-                '</tr></table>',
-            data:{
-                lastEstimate:0,
-                repsToBeat:0
-            }
-        });
+        this.repsToolbar = this.add(Ext.create('biglifts.components.RepsToBeatToolbar'));
 
         this.liftList = this.add({
             xtype:'list',
@@ -131,32 +107,7 @@ Ext.define('biglifts.views.LiftTemplate', {
             return;
         }
 
-        var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
-        var bestLogRecordOneRepEstimate = null;
-        biglifts.stores.LiftLog.each(function (r) {
-            if (r.get('liftName') === liftRecord.get('name')) {
-                var weight = parseFloat(r.get('weight'));
-                var reps = r.get('reps');
-                var estimateOneRep = util.formulas.estimateOneRepMax(weight, reps);
-                if (_.isNull(bestLogRecordOneRepEstimate)) {
-                    bestLogRecordOneRepEstimate = estimateOneRep;
-                }
-                else if (estimateOneRep > bestLogRecordOneRepEstimate) {
-                    bestLogRecordOneRepEstimate = estimateOneRep;
-                }
-            }
-        });
-
-        if (!_.isNull(bestLogRecordOneRepEstimate)) {
-            var lastSetMax = biglifts.weight.format(biglifts.weight.lowerMaxToTrainingMax(biglifts.liftSchedule.currentShowingMax), biglifts.stores.lifts.LiftProgression.last().get('percentage'));
-
-            this.repsToolbar.show();
-            var repsToBeat = util.formulas.calculateRepsToBeatWeight(bestLogRecordOneRepEstimate, lastSetMax);
-            this.repsToBeatPanel.setData({lastEstimate:bestLogRecordOneRepEstimate, repsToBeat:repsToBeat})
-        }
-        else {
-            this.repsToolbar.hide();
-        }
+        this.repsToolbar.updateForLift(biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty));
     },
     showRestTimer:function () {
         var restTimer = Ext.getCmp('lift-schedule').getRestTimer();
