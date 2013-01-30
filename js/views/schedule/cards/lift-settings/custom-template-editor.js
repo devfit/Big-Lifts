@@ -1,111 +1,115 @@
 "use strict";
 Ext.define('biglifts.views.templates.CustomWeekEditor', {
-    extend: 'Ext.tab.Panel',
-    switchLiftWeek: function (container, newValue) {
+    extend:'Ext.tab.Panel',
+    switchLiftWeek:function (container, newValue) {
         var lists = this.getWeekLists();
         this.currentWeek = lists.indexOf(newValue) + 1;
         this.updateLiftPercentaqes();
     },
-    createTab: function (week) {
+    createTab:function (week) {
         var me = this;
         return {
-            xtype: 'panel',
-            layout: 'vbox',
-            title: week,
-            items: [
+            xtype:'panel',
+            layout:'vbox',
+            title:week,
+            items:[
                 {
-                    flex: 4,
-                    xtype: 'list',
-                    store: biglifts.stores.lifts.LiftProgression,
-                    itemCls: 'lift-percentage-row',
-                    itemTpl: '<table width="100%"><tbody><tr>' +
-                        '<td width="60%"><div class="{[biglifts.liftSchedule.liftTemplate.getLiftRowClass(values)]}">' +
+                    flex:4,
+                    xtype:'list',
+                    store:biglifts.stores.lifts.LiftProgression,
+                    itemCls:'lift-percentage-row',
+                    itemTpl:new Ext.XTemplate('<table width="100%"><tbody><tr>' +
+                        '<td width="60%"><div class="{[this.getLiftRowClass(values)]}">' +
                         '<span class="reps">{reps}</span> <span class="percentage">{percentage}%</span></div>' +
                         '<td width="40%" class="no-delete-button"></td>' +
                         '<td width="40%" class="delete-button-holder hidden"></td>' +
-                        '</tr></tbody></table>',
-                    listeners: {
-                        initialize: function () {
+                        '</tr></tbody></table>', {
+                        getLiftRowClass:function (values) {
+                            return (values.amrap ? 'amrap ' : '') + (values.warmup ? 'warmup ' : '');
+                        }
+                    }),
+                    listeners:{
+                        initialize:function () {
                             biglifts.components.addSwipeToDelete(this, Ext.bind(me.showProgression, me),
                                 Ext.bind(me.deleteLiftProgression, me), Ext.emptyFn, '.no-delete-button');
                         }
                     }
                 },
                 {
-                    xtype: 'panel',
-                    padding: 3,
-                    items: [
+                    xtype:'panel',
+                    padding:3,
+                    items:[
                         {
-                            xtype: 'button',
-                            text: 'Add',
-                            handler: Ext.bind(me.addSet, me)
+                            xtype:'button',
+                            text:'Add',
+                            handler:Ext.bind(me.addSet, me)
                         }
                     ]
                 }
             ]
         };
     },
-    returnToLiftSettings: function () {
+    returnToLiftSettings:function () {
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-settings'));
     },
-    updateLiftPercentaqes: function () {
+    updateLiftPercentaqes:function () {
         if (this.currentWeek) {
             biglifts.stores.lifts.LiftProgression.clearFilter();
             biglifts.stores.lifts.LiftProgression.filter("week", this.currentWeek);
         }
     },
-    addSet: function () {
+    addSet:function () {
         var newSet = biglifts.stores.lifts.LiftProgression.max('set') + 1;
         biglifts.stores.lifts.LiftProgression.add({
-            week: this.currentWeek,
-            set: newSet,
-            reps: 0,
-            percentage: 0,
-            amrap: false,
-            warmup: false
+            week:this.currentWeek,
+            set:newSet,
+            reps:0,
+            percentage:0,
+            amrap:false,
+            warmup:false
         });
         biglifts.stores.lifts.LiftProgression.sync();
         Ext.getCmp('edit-progression').showEditLiftProgression(biglifts.stores.lifts.LiftProgression.last());
     },
-    deleteLiftProgression: function (view, index) {
+    deleteLiftProgression:function (view, index) {
         var set = index + 1;
         var liftProgression = biglifts.stores.lifts.LiftProgression.findRecord('set', set);
 
         biglifts.stores.lifts.LiftProgression.removeProgression(liftProgression);
         biglifts.stores.lifts.LiftProgression.sync();
     },
-    showProgression: function (view, index) {
+    showProgression:function (view, index) {
         Ext.getCmp('edit-progression').showEditLiftProgression(biglifts.stores.lifts.LiftProgression.findRecord('set', index + 1));
     },
-    getWeekLists: function () {
+    getWeekLists:function () {
         var listFilter = new Ext.util.Filter({
-            filterFn: function (item) {
+            filterFn:function (item) {
                 return item.getBaseCls() === "x-panel";
             }
         });
         return this.getItems().filter(listFilter);
     },
-    bindListeners: function () {
+    bindListeners:function () {
         this.addListener('activeitemchange', this.switchLiftWeek, this);
     },
-    destroyListeners: function () {
+    destroyListeners:function () {
         this.removeListener('activeitemchange', this.switchLiftWeek, this);
     },
-    config: {
-        id: 'edit-lift-percentages',
-        title: 'Edit',
-        items: [
+    config:{
+        id:'edit-lift-percentages',
+        title:'Edit',
+        items:[
             {
-                docked: 'top',
-                xtype: 'toolbar',
-                title: 'Weeks',
-                items: [
+                docked:'top',
+                xtype:'toolbar',
+                title:'Weeks',
+                items:[
                     {
-                        xtype: 'button',
-                        text: 'Back',
-                        ui: 'back',
-                        listeners: {
-                            initialize: function () {
+                        xtype:'button',
+                        text:'Back',
+                        ui:'back',
+                        listeners:{
+                            initialize:function () {
                                 this.setHandler(Ext.getCmp('edit-lift-percentages').returnToLiftSettings);
                             }
                         }
@@ -113,8 +117,8 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
                 ]
             }
         ],
-        listeners: {
-            painted: function () {
+        listeners:{
+            painted:function () {
                 biglifts.navigation.setBackFunction(this.returnToLiftSettings);
                 this.updateLiftPercentaqes();
                 if (!this._painted) {
@@ -122,10 +126,10 @@ Ext.define('biglifts.views.templates.CustomWeekEditor', {
                     this.bindListeners();
                 }
             },
-            destroy: function () {
+            destroy:function () {
                 this.destroyListeners();
             },
-            initialize: function () {
+            initialize:function () {
                 this.currentWeek = 1;
 
                 var me = this;
