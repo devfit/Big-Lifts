@@ -14,6 +14,7 @@ Ext.define('biglifts.views.SimplestStrengthTemplateMaxes', {
     setupFieldset:function () {
         var me = this;
         me.liftsFieldset.removeAll();
+        this.down('#configuration').removeAll();
         biglifts.stores.assistance.SST.each(function (l) {
             me.liftsFieldset.add({
                 xtype:'numberfield',
@@ -22,13 +23,23 @@ Ext.define('biglifts.views.SimplestStrengthTemplateMaxes', {
                 name:l.get('id'),
                 value:l.get('max')
             });
+
+            me.createConfigGear(l);
         });
+    },
+    createConfigGear:function (r) {
+        this.down('#configuration').add(Ext.create('biglifts.components.ConfigGear', {
+            record:r,
+            tapAction:function () {
+                Ext.getCmp('sst-lift-form').showFor(r);
+            }
+        }));
     },
     initialize:function () {
         this.add({
             xtype:'toolbar',
             docked:'top',
-            title:'Maxes',
+            title:'SST Lifts',
             items:[
                 {
                     xtype:'button',
@@ -39,9 +50,23 @@ Ext.define('biglifts.views.SimplestStrengthTemplateMaxes', {
             ]
         });
 
-        this.liftsFieldset = this.add({
+        var fieldsetContainer = this.add({
+            xtype:'container',
+            layout:'hbox',
+            items:[
+                {
+                    flex:1,
+                    itemId:'configuration',
+                    cls:'config-fieldset',
+                    xtype:'fieldset'
+                }
+            ]
+        });
+
+        this.liftsFieldset = fieldsetContainer.add({
             xtype:'fieldset',
-            cls:'fieldset-title-no-margin'
+            cls:'fieldset-title-no-margin',
+            flex:6
         });
     },
     config:{

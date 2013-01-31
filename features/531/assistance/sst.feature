@@ -2,6 +2,19 @@
 @premium
 Feature: Simplest Strength Template
 
+  Scenario: Changing SST lifts
+    When I tap the assistance tab
+    And I select "Simplest Strength Template" assistance work
+    And I tap the "Deadlift" list item
+    And I tap the "Maxes" button
+    And I tap the "Front Squat" gear icon
+    And I set the "Name" input to "Dips"
+    And I set the "Max" input to "100"
+    And I tap the "Back" button
+    Then The "Dips" input is "100"
+    And I tap the "Back" button
+    Then List item 1 contains "Dips 10x 50lbs"
+
   Scenario: Maxes are persisted
     When I tap the assistance tab
     And I select "Simplest Strength Template" assistance work

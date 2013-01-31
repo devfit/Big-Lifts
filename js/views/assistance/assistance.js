@@ -28,6 +28,7 @@ Ext.define('biglifts.views.Assistance', {
 
                 this.add(Ext.create('biglifts.views.SimplestStrengthTemplate'));
                 this.add(Ext.create('biglifts.views.SimplestStrengthTemplateMaxes'));
+                this.add(Ext.create('biglifts.views.SimplestStrengthTemplateEditLift'));
 
                 this.restTimer = this.add(Ext.create('biglifts.views.RestTimer'));
 
