@@ -36,6 +36,15 @@ Ext.define("biglifts.views.CustomPanel", {
         this.getCustomMovementStore().clearFilter();
         this.getCustomMovementStore().filter('liftProperty', Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
     },
+    showRestTimer:function () {
+        var me = this;
+        var assistance = Ext.getCmp('assistance');
+        var restTimer = assistance.getRestTimer();
+        restTimer.setBack(function () {
+            assistance.setActiveItem(me);
+        });
+        assistance.setActiveItem(restTimer);
+    },
     supportsAdd:true,
     supportsArrange:true,
     initialize:function () {
@@ -57,6 +66,14 @@ Ext.define("biglifts.views.CustomPanel", {
 
         this.topToolbar.add({
             xtype:'spacer'
+        });
+
+        this.topToolbar.add({
+            cls:'rest-timer-button',
+            iconCls:'clock',
+            iconMask:true,
+            ui:'decline',
+            handler:Ext.bind(me.showRestTimer, me)
         });
 
         this.saveButton = this.topToolbar.add({

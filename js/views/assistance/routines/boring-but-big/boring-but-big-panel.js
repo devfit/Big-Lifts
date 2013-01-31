@@ -27,10 +27,11 @@ Ext.define("biglifts.views.BoringButBigPanel", {
         biglifts.stores.assistance.BoringButBig.filter("lift_id", lift.get('id'));
     },
     showRestTimer: function () {
+        var me = this;
         var assistance = Ext.getCmp('assistance');
         var restTimer = assistance.getRestTimer();
         restTimer.setBack(function () {
-            assistance.setActiveItem(Ext.getCmp('boring-but-big'));
+            assistance.setActiveItem(me);
         });
         assistance.setActiveItem(restTimer);
     },
