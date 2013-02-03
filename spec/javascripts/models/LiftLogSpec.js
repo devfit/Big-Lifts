@@ -1,6 +1,6 @@
 describe("The lift log store", function () {
     beforeEach(function () {
-        this.liftLog = biglifts.stores.LiftLog;
+        this.liftLog = emptyStore(reloadStore(biglifts.stores.LiftLog));
     });
 
     it("should return sort by date secondarily if sorting A-Z", function () {
@@ -20,10 +20,10 @@ describe("The lift log store", function () {
     });
 
     it("should add workout ids with add", function () {
-        biglifts.stores.LiftLog.addWithWorkoutId({liftName:'Squat'});
+        biglifts.stores.LiftLog.addLogEntry({liftName:'Squat'});
         expect(biglifts.stores.LiftLog.first().get('workout_id')).toEqual(1);
 
-        biglifts.stores.LiftLog.addWithWorkoutId({liftName:'Press'});
+        biglifts.stores.LiftLog.addLogEntry({liftName:'Press'});
         expect(biglifts.stores.LiftLog.last().get('workout_id')).toEqual(2);
     });
 });

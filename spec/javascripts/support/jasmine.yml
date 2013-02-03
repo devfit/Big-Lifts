@@ -72,6 +72,7 @@ src_files:
             - js/models/startingstrength/workout.js
             - js/models/startingstrength/log.js
             - js/models/startingstrength/combined-log.js
+            - js/models/sync/log-syncer.js
             - js/views/routine-chooser.js
             - js/views/components/notes-editor.js
             - js/views/components/rest-timer.js

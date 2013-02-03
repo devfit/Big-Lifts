@@ -5,7 +5,7 @@ Ext.define('LiftLog', {
         fields:[
             {name:'id', type:'string'},
             {name:'liftName', type:'string'},
-            {name:'weight', type:'string'},
+            {name:'weight', type:'float'},
             {name:'units', type:'string'},
             {name:'reps', type:'int'},
             {name:'notes', type:'string', defaultValue:''},
