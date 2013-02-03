@@ -41,22 +41,17 @@ Ext.define('biglifts.views.LiftTracking', {
         Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-template'));
     },
     logLift:function (data) {
-        var expectedRepsByWeek = biglifts.stores.lifts.LiftProgression.findExpectedRepsForWeek(data.week);
-        biglifts.stores.LiftLog.add(
-            {
-                liftName:data.liftName,
-                reps:data.reps,
-                expectedReps:expectedRepsByWeek,
-                notes:data.notes,
-                week:data.week,
-                weight:data.weight,
-                cycle:data.cycle,
-                date:null,
-                timestamp:new Date().getTime(),
-                units:biglifts.stores.GlobalSettings.getUnits()
-            });
-
-        biglifts.stores.LiftLog.sync();
+        biglifts.stores.LiftLog.addLogEntry({
+            liftName:data.liftName,
+            reps:data.reps,
+            expectedReps:biglifts.stores.lifts.LiftProgression.findExpectedRepsForWeek(data.week),
+            notes:data.notes,
+            week:data.week,
+            weight:data.weight,
+            cycle:data.cycle,
+            date:null,
+            units:biglifts.stores.GlobalSettings.getUnits()
+        });
     },
     persistLiftCompletion:function () {
         var liftCompletion = biglifts.stores.lifts.LiftCompletion.findLiftCompletionByPropertyAndWeek(

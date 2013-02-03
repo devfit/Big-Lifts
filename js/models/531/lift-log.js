@@ -12,7 +12,8 @@ Ext.define('LiftLog', {
             {name:'expectedReps', type:'int'},
             {name:'week', type:'int'},
             {name:'cycle', type:'int'},
-            {name:'timestamp', type:'int'}
+            {name:'timestamp', type:'int'},
+            {name:'workout_id', type:'int'}
         ],
         proxy:{
             type:'localstorage',
@@ -33,6 +34,13 @@ Ext.define('LiftLogStore', {
 
             this.sort();
         }
+    },
+    addLogEntry:function (l) {
+        var currentMaxId = this.max('workout_id');
+        l.workout_id = _.isNull(currentMaxId) || _.isUndefined(currentMaxId) ? 1 : currentMaxId + 1;
+        l.timestamp = new Date().getTime();
+        this.add(l);
+        this.sync();
     },
     extend:'Ext.data.Store',
     config:{

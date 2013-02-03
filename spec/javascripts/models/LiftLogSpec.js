@@ -18,4 +18,12 @@ describe("The lift log store", function () {
         expect(this.liftLog.getAt(3).get('timestamp')).toEqual(2000);
         expect(this.liftLog.getAt(4).get('timestamp')).toEqual(1000);
     });
+
+    it("should add workout ids with add", function () {
+        biglifts.stores.LiftLog.addWithWorkoutId({liftName:'Squat'});
+        expect(biglifts.stores.LiftLog.first().get('workout_id')).toEqual(1);
+
+        biglifts.stores.LiftLog.addWithWorkoutId({liftName:'Press'});
+        expect(biglifts.stores.LiftLog.last().get('workout_id')).toEqual(2);
+    });
 });
