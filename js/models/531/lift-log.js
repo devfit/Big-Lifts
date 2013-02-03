@@ -49,6 +49,16 @@ Ext.define('LiftLogStore', {
         listeners:{
             load:function () {
                 Ext.create('biglifts.models.Log531Syncer').postLog();
+            },
+            removerecords:function () {
+                var me = this;
+                util.withNoSorters(this, function () {
+                    me.sort('workout_id', 'ASC');
+                    var i = 1;
+                    me.each(function (r) {
+                        r.set('workout_id', i++);
+                    });
+                });
             }
         }
     }

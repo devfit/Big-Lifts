@@ -20,9 +20,17 @@ describe("The lift log store", function () {
     });
 
     it("should add workout ids with add", function () {
-        biglifts.stores.LiftLog.addLogEntry({liftName:'Squat'});
-        expect(biglifts.stores.LiftLog.findRecord('liftName', 'Squat').get('workout_id')).toEqual(1);
-        biglifts.stores.LiftLog.addLogEntry({liftName:'Press'});
-        expect(biglifts.stores.LiftLog.findRecord('liftName', 'Press').get('workout_id')).toEqual(2);
+        this.liftLog.addLogEntry({liftName:'Squat'});
+        expect(this.liftLog.findRecord('liftName', 'Squat').get('workout_id')).toEqual(1);
+        this.liftLog.addLogEntry({liftName:'Press'});
+        expect(this.liftLog.findRecord('liftName', 'Press').get('workout_id')).toEqual(2);
+    });
+
+    it("should restitch workout ids when log entries are removed", function () {
+        this.liftLog.addLogEntry({liftName:'Squat'});
+        this.liftLog.addLogEntry({liftName:'Press'});
+        this.liftLog.addLogEntry({liftName:'Deadlift'});
+        this.liftLog.remove(this.liftLog.findRecord('liftName', 'Press'));
+        expect(this.liftLog.findRecord('liftName', 'Deadlift').get('workout_id')).toEqual(2);
     });
 });

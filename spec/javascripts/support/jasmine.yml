@@ -18,6 +18,7 @@ src_files:
             - js/util/proxy.js
             - js/util/navigation.js
             - js/util/filters.js
+            - js/util/sorters.js
             - js/util/rounding.js
             - js/util/formulas.js
             - js/util/plates.js
