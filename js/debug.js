@@ -29,10 +29,7 @@ if (biglifts.DEBUG) {
 
     Ext.define('biglifts.overrides.UserStore', {
         override: 'biglifts.stores.UserStore',
-        createUserRemotely: function () {
-            this.add({username: 'bob', password: 'password'});
-            this.sync();
-        }
+        CREATE_USER_URL:'http://localhost:3000/users'
     });
 
     Ext.ns('biglifts.log.emailExport');

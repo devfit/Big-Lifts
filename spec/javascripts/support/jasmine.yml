@@ -4,6 +4,7 @@ src_files:
             - js/lib/underscore-min.js
             - js/lib/async.js
             - js/lib/date.js
+            - js/lib/base64.js
             - js/ext-overrides.js
             - js/premium.js
             - js/app.js

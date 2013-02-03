@@ -21,9 +21,8 @@ describe("The lift log store", function () {
 
     it("should add workout ids with add", function () {
         biglifts.stores.LiftLog.addLogEntry({liftName:'Squat'});
-        expect(biglifts.stores.LiftLog.first().get('workout_id')).toEqual(1);
-
+        expect(biglifts.stores.LiftLog.findRecord('liftName', 'Squat').get('workout_id')).toEqual(1);
         biglifts.stores.LiftLog.addLogEntry({liftName:'Press'});
-        expect(biglifts.stores.LiftLog.last().get('workout_id')).toEqual(2);
+        expect(biglifts.stores.LiftLog.findRecord('liftName', 'Press').get('workout_id')).toEqual(2);
     });
 });
