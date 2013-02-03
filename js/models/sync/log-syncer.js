@@ -1,20 +1,24 @@
 Ext.define('biglifts.models.Log531Syncer', {
-    LOG_URL:'http://localhost:3000/log',
+    LOG_URL:'http://biglifts.herokuapp.com/log',
     postLog:function () {
         var me = this;
         util.withLoadedStore(biglifts.stores.Users, function () {
-            Ext.Ajax.request({
-                url:me.LOG_URL,
-                method:'POST',
-                headers:me.buildAuthHeaders(),
-                params:me.getFormattedLog(),
-                success:function (response) {
-                    console.log("SUCCESS");
-                },
-                failure:function (response) {
-//                    console.log("FAILURE");
-                },
-                scope:me
+            var workouts = me.getFormattedLog();
+
+            async.forEachSeries(workouts, function (workout, callback) {
+                Ext.Ajax.request({
+                    url:me.LOG_URL,
+                    method:'POST',
+                    headers:me.buildAuthHeaders(),
+                    jsonData:workout,
+                    success:function (response) {
+                        callback(null);
+                    },
+                    failure:function (response) {
+                        callback(null);
+                    },
+                    scope:me
+                });
             });
         });
     },
@@ -33,7 +37,7 @@ Ext.define('biglifts.models.Log531Syncer', {
                         type:'5/3/1',
                         data:{
                             cycle:l.get('cycle'),
-                            expectedReps:l.get('expectedReps'),
+                            expected_reps:l.get('expectedReps'),
                             week:l.get('week')
                         }
                     }

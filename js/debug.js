@@ -32,6 +32,11 @@ if (biglifts.DEBUG) {
         CREATE_USER_URL:'http://localhost:3000/users'
     });
 
+    Ext.define('biglifts.overrides.Log531Syncer', {
+        override: 'biglifts.stores.Log531Syncer',
+        LOG_URL:'http://localhost:3000/log'
+    });
+
     Ext.ns('biglifts.log.emailExport');
     biglifts.log.emailExport.ajaxEmailRequest = function (email, data) {
         window.testEmail = email;

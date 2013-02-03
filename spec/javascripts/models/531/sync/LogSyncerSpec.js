@@ -24,7 +24,7 @@ describe("Log Syncer", function () {
                             type:'5/3/1',
                             data:{
                                 cycle:3,
-                                expectedReps:5,
+                                expected_reps:5,
                                 week:1
                             }
                         }
