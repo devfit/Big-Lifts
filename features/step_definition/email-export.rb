@@ -29,7 +29,7 @@ Then /^The CSV to export is correct$/ do
   object['estimated one rep max'].should == 180.5
   object['notes'].should == ""
   object['week'].should == 1
-  object['weight'].should == "155"
+  object['weight'].should == 155
   object['cycle'].should == 1
 
   object['date'].should == Time.now.strftime("%m/%d/%Y")
