@@ -6,8 +6,10 @@ Ext.define('biglifts.migrations.FixPowerCleanPercentage', {
                 util.withLoadedStore(biglifts.stores.ss.WorkoutStore, function () {
                     util.withNoFilters(biglifts.stores.ss.WorkoutStore, function () {
                         var p = me.getWorkSetPowerClean();
-                        p.set('percentage', 100);
-                        p.save();
+                        if (p) {
+                            p.set('percentage', 100);
+                            p.save();
+                        }
                     });
 
                     biglifts.stores.ss.WorkoutStore.sync();
@@ -16,7 +18,12 @@ Ext.define('biglifts.migrations.FixPowerCleanPercentage', {
         });
     },
     getWorkSetPowerClean:function () {
-        var lift_id = biglifts.stores.ss.Lifts.findRecord('name', 'Power Clean').get('id');
+        var lift = biglifts.stores.ss.Lifts.findRecord('name', 'Power Clean');
+        if (!lift) {
+            return null;
+        }
+
+        var lift_id = lift.get('id');
         var index = biglifts.stores.ss.WorkoutStore.findBy(function (w) {
             return w.get('lift_id') === lift_id && w.get('order') === 4;
         });
