@@ -33,7 +33,7 @@ if (biglifts.DEBUG) {
     });
 
     Ext.define('biglifts.overrides.Log531Syncer', {
-        override: 'biglifts.stores.Log531Syncer',
+        override: 'biglifts.models.Log531Syncer',
         LOG_URL:'http://localhost:3000/log'
     });
 

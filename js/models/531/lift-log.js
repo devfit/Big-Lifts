@@ -47,6 +47,12 @@ Ext.define('LiftLogStore', {
         storeId:'log531',
         model:'LiftLog',
         listeners:{
+            addrecords:function (store, records) {
+                var syncer = Ext.create('biglifts.models.Log531Syncer');
+                _.each(records, function (record) {
+                    syncer.saveWorkout(syncer.buildFormattedWorkout(record), Ext.emptyFn);
+                });
+            },
             load:function () {
                 Ext.create('biglifts.models.Log531Syncer').postLog();
             },
@@ -59,6 +65,8 @@ Ext.define('LiftLogStore', {
                         r.set('workout_id', i++);
                     });
                 });
+
+                Ext.create('biglifts.models.Log531Syncer').postLog();
             }
         }
     }

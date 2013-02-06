@@ -3,49 +3,52 @@ Ext.define('biglifts.models.Log531Syncer', {
     postLog:function () {
         var me = this;
         util.withLoadedStore(biglifts.stores.Users, function () {
-            var workouts = me.getFormattedLog();
-
-            async.forEachSeries(workouts, function (workout, callback) {
-                Ext.Ajax.request({
-                    url:me.LOG_URL,
-                    method:'POST',
-                    headers:me.buildAuthHeaders(),
-                    jsonData:workout,
-                    success:function (response) {
-                        callback(null);
-                    },
-                    failure:function (response) {
-                        callback(null);
-                    },
-                    scope:me
-                });
-            });
+            async.forEachSeries(me.getFormattedLog(), Ext.bind(me.saveWorkout, me));
+        });
+    },
+    saveWorkout:function (workout, callback) {
+        Ext.Ajax.request({
+            url:this.LOG_URL,
+            method:'POST',
+            headers:this.buildAuthHeaders(),
+            jsonData:workout,
+            success:function (response) {
+                callback(null);
+            },
+            failure:function (response) {
+                callback(null);
+            },
+            scope:this
         });
     },
     getFormattedLog:function () {
+        var me = this;
         var data = [];
         biglifts.stores.LiftLog.each(function (l) {
-            var logEntry = {workout_id:l.get('workout_id'), logs:[
+            data.push(me.buildFormattedWorkout(l));
+        });
+        return data;
+    },
+    buildFormattedWorkout:function (log_entry) {
+        return {
+            workout_id:log_entry.get('workout_id'), logs:[
                 {
                     sets:1,
-                    reps:l.get('reps'),
-                    name:l.get('liftName'),
-                    weight:l.get('weight'),
-                    notes:l.get('notes'),
-                    date:l.get('timestamp'),
+                    reps:log_entry.get('reps'),
+                    name:log_entry.get('liftName'),
+                    weight:log_entry.get('weight'),
+                    notes:log_entry.get('notes'),
+                    date:log_entry.get('timestamp'),
                     specific:{
                         type:'5/3/1',
                         data:{
-                            cycle:l.get('cycle'),
-                            expected_reps:l.get('expectedReps'),
-                            week:l.get('week')
+                            cycle:log_entry.get('cycle'),
+                            expected_reps:log_entry.get('expectedReps'),
+                            week:log_entry.get('week')
                         }
                     }
                 }
             ]};
-            data.push(logEntry);
-        });
-        return data;
     },
     buildAuthHeaders:function () {
         var user = biglifts.stores.Users.first();
