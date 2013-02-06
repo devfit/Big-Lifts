@@ -38,7 +38,7 @@ biglifts.models.startingstrength.workouts.standard = {
         {sets:1, reps:5, name:'B', percentage:55, warmup:true, order:1},
         {sets:1, reps:3, name:'B', percentage:70, warmup:true, order:2},
         {sets:1, reps:2, name:'B', percentage:85, warmup:true, order:3},
-        {sets:5, reps:3, name:'B', percentage:85, warmup:false, order:4}
+        {sets:5, reps:3, name:'B', percentage:100, warmup:false, order:4}
     ]
 };
 

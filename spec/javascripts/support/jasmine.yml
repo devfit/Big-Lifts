@@ -67,6 +67,7 @@ src_files:
             - js/models/migration/migrations/007_add_order_to_assistance.js
             - js/models/migration/migrations/008_update_ss_workout_defaults.js
             - js/models/migration/migrations/011_add_workout_id_to_log.js
+            - js/models/migration/migrations/012_fix_ss_powerclean_percentage.js
             - js/models/startingstrength/lift-defaults.js
             - js/models/startingstrength/lift.js
             - js/models/startingstrength/template-switcher.js

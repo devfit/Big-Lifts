@@ -20,6 +20,14 @@ describe("Starting Strength workout", function () {
         expect(this.workouts.getCount()).toEqual(15);
     });
 
+    it("should set the work set for default workouts to 100%", function () {
+        this.workouts.load();
+        this.workouts.filter('warmup', false);
+        this.workouts.each(function (w) {
+            expect(w.get('percentage')).toEqual(100);
+        });
+    });
+
     it('should order by SS lift order, and warmup defined order', function () {
         this.workouts.load();
         biglifts.stores.ss.Lifts.fireEvent('load');
