@@ -27,4 +27,8 @@ describe("Plate Breakdown Formulas", function () {
     it("should calculate 445lbs properly", function () {
         expect(util.formulas.buildPlateListForWeight(445, 45)).toEqual([45, 45, 45, 45, 10, 10]);
     });
+
+    it("should handle 20.4kg bar weight", function () {
+        expect(util.formulas.buildPlateListForWeight(55, 20.4)).toEqual([10,5,2.5]);
+    });
 });

@@ -23,7 +23,7 @@ util.formulas.buildPlateListForWeight = function (targetWeight, barWeight, avail
         availablePlatePairsCopy = {45:1, 35:1, 25:1, 10:1, 5:1, 2.5:1};
     }
 
-    targetWeight -= barWeight;
+    targetWeight = util.rounding.roundTo0p5(targetWeight - barWeight, 'up');
     var plates = [];
     while (targetWeight > 0) {
         var remainingPlateWeights = _.map(_.keys(availablePlatePairsCopy), function (w) {
