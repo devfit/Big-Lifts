@@ -98,7 +98,7 @@ Ext.define("Biglifts.views.MaxesForm", {
         biglifts.stores.lifts.MeetGoals.sync();
     },
     barPlateButtonPressed:function () {
-        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('bar-plate-setup-panel'));
+        Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('bar-plates'));
     },
     addLiftButtonPressed:function () {
         Ext.getCmp('maxes-panel').setActiveItem(Ext.getCmp('maxes-add-lift-panel'));
