@@ -38,7 +38,6 @@ Ext.define('LiftLogStore', {
     addLogEntry:function (l) {
         var currentMaxId = this.max('workout_id');
         l.workout_id = (_.isNull(currentMaxId) || _.isUndefined(currentMaxId)) ? 1 : currentMaxId + 1;
-        l.timestamp = new Date().getTime();
         this.add(l);
         this.sync();
     },
@@ -54,7 +53,7 @@ Ext.define('LiftLogStore', {
                 });
             },
             load:function () {
-                Ext.create('biglifts.models.Log531Syncer').postLog();
+                Ext.create('biglifts.models.Log531Syncer').getAndSync();
             },
             removerecords:function () {
                 var me = this;

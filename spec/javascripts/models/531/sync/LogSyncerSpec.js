@@ -4,6 +4,7 @@ describe("Log Syncer", function () {
         this.users = emptyStore(reloadStore(biglifts.stores.Users));
         this.syncer = Ext.create('biglifts.models.Log531Syncer');
     });
+
     it("should convert the 5/3/1 log into post ready format", function () {
         var timestamp = new Date().getTime();
         this.log.add({workout_id:1, reps:2, liftName:'Squat', weight:100, timestamp:timestamp, cycle:3, expectedReps:5, week:1});
@@ -39,4 +40,36 @@ describe("Log Syncer", function () {
         this.users.add({username:'bob', password:'password'});
         expect(this.syncer.buildAuthHeaders()).toEqual({Authorization:'Basic Ym9iOnBhc3N3b3Jk'});
     });
+
+    it("should merge non date colliding logs with local logs", function () {
+        var now = new Date().getTime();
+        var yesterday = (1).days().ago();
+        var localLog = {workout_id:1, reps:2, liftName:'Squat', weight:100, timestamp:now, cycle:3, expectedReps:5, week:1};
+
+        var cycle = 5;
+        var reps = 2;
+        var week = 3;
+        var expectedReps = 1;
+        var remoteLog = {workout_id:1, logs:[
+            {reps:reps, name:'Squat', weight:90, timestamp:yesterday.getTime(), sets:1, specific_workout:{
+                cycle:cycle, week:week, expected_reps:expectedReps
+            }}
+        ]};
+
+        this.log.add(localLog);
+        this.log.sync();
+        this.syncer.mergeRemoteLogs([
+            remoteLog
+        ]);
+
+        expect(this.log.getCount()).toEqual(2);
+        var newRecord = this.log.findRecord('workout_id', 2);
+        expect(newRecord.get('weight')).toEqual(90);
+        expect(newRecord.get('liftName')).toEqual('Squat');
+        expect(newRecord.get('reps')).toEqual(reps);
+        expect(newRecord.get('cycle')).toEqual(cycle);
+        expect(newRecord.get('week')).toEqual(week);
+        expect(newRecord.get('expectedReps')).toEqual(expectedReps);
+    });
+
 });

@@ -49,6 +49,7 @@ Ext.define('biglifts.views.LiftTracking', {
             week:data.week,
             weight:data.weight,
             cycle:data.cycle,
+            timestamp:new Date().getTime(),
             date:null,
             units:biglifts.stores.GlobalSettings.getUnits()
         });

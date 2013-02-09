@@ -1,5 +1,11 @@
 Ext.define('biglifts.models.Log531Syncer', {
     LOG_URL:'http://biglifts.herokuapp.com/log',
+    getAndSync:function () {
+        var me = this;
+        me.syncRemoteLog(function () {
+            me.postLog();
+        });
+    },
     postLog:function () {
         var me = this;
         util.withLoadedStore(biglifts.stores.Users, function () {
@@ -19,6 +25,38 @@ Ext.define('biglifts.models.Log531Syncer', {
                 callback(null);
             },
             scope:this
+        });
+    },
+    syncRemoteLog:function (callback) {
+        Ext.Ajax.request({
+            url:this.LOG_URL,
+            method:'GET',
+            headers:this.buildAuthHeaders(),
+            success:function (response) {
+                this.mergeRemoteLogs(JSON.parse(response.responseText));
+                callback(null);
+            },
+            failure:function () {
+            },
+            scope:this
+        });
+    },
+    mergeRemoteLogs:function (workouts) {
+        var DATE_FORMAT = "MM/dd/yyyy";
+        _.each(workouts, function (workout) {
+            var log = workout.logs[0];
+            var dateAsString = new Date(log.timestamp).toString(DATE_FORMAT);
+            var matchingDate = biglifts.stores.LiftLog.findBy(function (l) {
+                return new Date(l.get('timestamp')).toString(DATE_FORMAT) === dateAsString;
+            });
+
+            if (matchingDate === -1) {
+                log.liftName = log.name;
+                log.cycle = log.specific_workout.cycle;
+                log.week = log.specific_workout.week;
+                log.expectedReps = log.specific_workout.expected_reps;
+                biglifts.stores.LiftLog.addLogEntry(log);
+            }
         });
     },
     getFormattedLog:function () {
