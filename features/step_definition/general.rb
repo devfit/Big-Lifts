@@ -34,10 +34,6 @@ Then /^There is not a "(.*?)" form label$/ do |name|
   label.should == nil
 end
 
-Then /^The page title is "([^"]+)"$/ do |title|
-  @driver.find_elements(:class => 'x-toolbar').select { |toolbar| toolbar.displayed? }[0].text().should == title
-end
-
 When /^I wait for the animation$/ do
   sleep MainNavigation::DELAY
 end
@@ -62,6 +58,6 @@ Then /^The "(.+?)" select is set to "(.+?)"$/ do |name, value|
   @driver.find_elements(:name => name).select { |s| s.displayed? }[0].attribute('value').should == value
 end
 
-Then /^The title says "(.*?)"$/ do |title|
+Then /^The page title is "(.*?)"$/ do |title|
   @driver.find_elements(:class => 'x-title').select { |t| t.displayed? && t.text() == title }.should_not == []
 end

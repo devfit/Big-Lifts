@@ -22,7 +22,7 @@ Feature: Standard template
     And I wait for the animation
     And I tap the gear button
 
-    Then The title says "Standard"
+    Then The page title is "Standard"
     And I tap the ss use template button
     And I wait for the animation
     And I tap the "OK" button
