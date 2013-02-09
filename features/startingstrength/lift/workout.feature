@@ -4,7 +4,7 @@ Feature: Workouts
   Scenario: The title is updated when the workout is switched
     When I navigate to the "Lift" tab
     And I tap the "B" tab
-    Then The page title is "Workout B"
+    Then The page title is "B"
 
   Scenario: Lift weights are reflected in workouts
     When I navigate to the "Edit" tab

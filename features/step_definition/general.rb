@@ -35,7 +35,7 @@ Then /^There is not a "(.*?)" form label$/ do |name|
 end
 
 Then /^The page title is "([^"]+)"$/ do |title|
-  @driver.find_elements(:class => 'x-toolbar').select { |toolbar| toolbar.displayed? }[0].text().should include title
+  @driver.find_elements(:class => 'x-toolbar').select { |toolbar| toolbar.displayed? }[0].text().should == title
 end
 
 When /^I wait for the animation$/ do

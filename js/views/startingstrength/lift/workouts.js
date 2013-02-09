@@ -37,7 +37,7 @@ Ext.define('biglifts.views.ss.Workouts', {
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('ss-track-tab'));
     },
     setToolbarTitle:function () {
-        this.workoutToolbar.setTitle('Workout ' + this.getActiveItem()._workoutName);
+        this.workoutToolbar.setTitle(this.getActiveItem()._workoutName);
     },
     refreshActiveItem:function () {
         this.getActiveItem().refresh();
