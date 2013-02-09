@@ -1,9 +1,50 @@
 Ext.define('biglifts.views.LiftGraph', {
     extend:'Ext.Panel',
     xtype:'liftgraph',
+    getLiftAxes:function (lift_id) {
+        var liftFields = biglifts.stores.lifts.Lifts.getUniqueLiftNames();
+
+        return [
+            {
+                type:'Numeric',
+                position:'left',
+                fields:liftFields,
+                label:{
+                    renderer:function (v) {
+                        return v.toFixed(1);
+                    }
+                },
+                title:'Est. 1RM',
+                grid:{
+                    odd:{
+                        opacity:1,
+                        stroke:'#aaa',
+                        'stroke-width':1
+                    }
+                }
+            },
+            {
+                type:'Category',
+                position:'bottom',
+                label:{
+                    renderer:function (date) {
+                        var dateFormat = biglifts.stores.w.Settings.first().get('dateFormat');
+                        var datePieces = dateFormat.split("/");
+                        var format = datePieces[0] + "/" + datePieces[1];
+                        return date.toString(format);
+                    },
+                    rotate:{
+                        degrees:315
+                    }
+                },
+                fields:['date'],
+                title:'Date'
+            }
+        ];
+    },
     _setupGraph:function () {
-        if (Ext.getCmp('lift-chart')) {
-            Ext.getCmp('lift-chart').bindStore(biglifts.util.graph.convertLogToGraphStore());
+        if (this.liftChart) {
+            this.liftChart.bindStore(biglifts.util.graph.convertLogToGraphStore('all'));
         }
         else {
             var series = [];
@@ -18,10 +59,9 @@ Ext.define('biglifts.views.LiftGraph', {
                 });
             });
 
-            Ext.getCmp('graph').add({
-                id:'lift-chart',
+            this.liftChart = this.add({
                 xtype:'chart',
-                store:biglifts.util.graph.convertLogToGraphStore(),
+                store:biglifts.util.graph.convertLogToGraphStore('all'),
                 animate:true,
                 shadow:false,
                 legend:{
@@ -30,43 +70,7 @@ Ext.define('biglifts.views.LiftGraph', {
                         landscape:'bottom'
                     }
                 },
-                axes:[
-                    {
-                        type:'Numeric',
-                        position:'left',
-                        fields:biglifts.stores.lifts.Lifts.getUniqueLiftNames(),
-                        label:{
-                            renderer:function (v) {
-                                return v.toFixed(1);
-                            }
-                        },
-                        title:'Est. 1RM',
-                        grid:{
-                            odd:{
-                                opacity:1,
-                                stroke:'#aaa',
-                                'stroke-width':1
-                            }
-                        }
-                    },
-                    {
-                        type:'Category',
-                        position:'bottom',
-                        label:{
-                            renderer:function (date) {
-                                var dateFormat = biglifts.stores.w.Settings.first().get('dateFormat');
-                                var datePieces = dateFormat.split("/");
-                                var format = datePieces[0] + "/" + datePieces[1];
-                                return date.toString(format);
-                            },
-                            rotate:{
-                                degrees:315
-                            }
-                        },
-                        fields:['date'],
-                        title:'Date'
-                    }
-                ],
+                axes:this.getLiftAxes('all'),
                 series:series
             });
         }
@@ -76,7 +80,38 @@ Ext.define('biglifts.views.LiftGraph', {
         Ext.getCmp('tab-navigation').show();
     },
     getLiftOptions:function () {
-        return [];
+        var options = [
+            {text:'All', value:'all'}
+        ];
+        biglifts.stores.lifts.Lifts.each(function (l) {
+            options.push({text:l.get('name'), value:l.get('id')});
+        });
+        return options;
+    },
+    liftSelected:function (select, newValue, oldValue) {
+        var graphStore = biglifts.util.graph.convertLogToGraphStore(newValue);
+        this.liftChart.bindStore(graphStore);
+        this.hackSelectLift(newValue);
+        this.liftChart.redraw();
+    },
+    hackSelectLift:function (lift) {
+        _.each(this.liftChart.getSeries().items, function (series) {
+            series.hideAll();
+        });
+
+        if (lift === "all") {
+            _.each(this.liftChart.getSeries().items, function (series) {
+                series.showAll();
+            });
+        }
+        else {
+            var liftName = biglifts.stores.lifts.Lifts.findRecord('id', lift).get('name');
+            _.each(this.liftChart.getSeries().items, function (series) {
+                if (series._yField[0] === liftName) {
+                    series.showAll();
+                }
+            });
+        }
     },
     constructor:function () {
         this.callParent(arguments);
@@ -95,7 +130,10 @@ Ext.define('biglifts.views.LiftGraph', {
 
         this.topToolbar.add({
             xtype:'selectfield',
-            options:this.getLiftOptions()
+            options:this.getLiftOptions(),
+            listeners:{
+                change:Ext.bind(this.liftSelected, this)
+            }
         });
     },
     config:{

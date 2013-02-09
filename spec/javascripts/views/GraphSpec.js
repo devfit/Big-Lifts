@@ -6,10 +6,11 @@ describe("5/3/1 lift graph", function () {
 
     it("should generate lift select options", function () {
         var expected = [
-            {text:'Press', value:''},
-            {text:'Press', value:''},
-            {text:'Press', value:''},
-            {text:'Press', value:''}
+            {text:'All', value:'all'},
+            {text:'Press', value:this.lifts.findRecord('name', 'Press').get('id')},
+            {text:'Deadlift', value:this.lifts.findRecord('name', 'Deadlift').get('id')},
+            {text:'Bench', value:this.lifts.findRecord('name', 'Bench').get('id')},
+            {text:'Squat', value:this.lifts.findRecord('name', 'Squat').get('id')}
         ];
         var options = this.graph.getLiftOptions();
         expect(options).toEqual(expected);

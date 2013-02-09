@@ -1,6 +1,25 @@
 Ext.ns('biglifts.util.graph');
 
-biglifts.util.graph.convertLogToGraphStore = function () {
+biglifts.util.graph.convertLogToGraphStore = function (lift_id) {
+    var data = biglifts.util.graph.buildData(lift_id);
+    var graphLifts = lift_id === "all" ? biglifts.stores.lifts.Lifts.getUniqueLiftNames() :
+        biglifts.stores.lifts.Lifts.findRecord('id', lift_id).get('name');
+
+    return Ext.create('Ext.data.JsonStore', {
+        fields:_.flatten([
+            'date',
+            graphLifts
+        ]),
+        data:data
+    });
+};
+
+biglifts.util.graph.buildData = function (lift_id) {
+    if (lift_id !== 'all') {
+        var name = biglifts.stores.lifts.Lifts.findRecord('id', lift_id).get('name');
+        biglifts.stores.LiftLog.filter('liftName', name);
+    }
+
     var data = [];
     biglifts.stores.LiftLog.sort('timestamp', 'ASC');
     biglifts.stores.LiftLog.each(function (r) {
@@ -9,13 +28,8 @@ biglifts.util.graph.convertLogToGraphStore = function () {
         }
     });
 
-    return Ext.create('Ext.data.JsonStore', {
-        fields:_.flatten([
-            'date',
-            biglifts.stores.lifts.Lifts.getUniqueLiftNames()
-        ]),
-        data:data
-    });
+    biglifts.stores.LiftLog.clearFilter();
+    return data;
 };
 
 biglifts.util.graph.addLogRecordToData = function (data, record) {
