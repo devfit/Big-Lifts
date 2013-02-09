@@ -1,5 +1,5 @@
 Ext.define('biglifts.views.ss.Workouts', {
-    extend:'Ext.tab.Panel',
+    extend:'Ext.Panel',
     showRestTimer:function () {
         var parent = this.getParent();
         parent.setActiveItem(parent.restTimer);
@@ -37,10 +37,15 @@ Ext.define('biglifts.views.ss.Workouts', {
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('ss-track-tab'));
     },
     setToolbarTitle:function () {
-        this.workoutToolbar.setTitle(this.getActiveItem()._workoutName);
+        this.workoutToolbar.setTitle("Workout " + this.workoutPanel.getActiveItem().getWorkoutName());
+    },
+    activeItemChanged:function () {
+        this.workoutName = this.workoutPanel.getActiveItem().getWorkoutName();
+        biglifts.stores.ss.WorkoutStore.filter('name', this.workoutName);
+        this.setToolbarTitle();
     },
     refreshActiveItem:function () {
-        this.getActiveItem().refresh();
+        this.workoutPanel.getActiveItem().refresh();
     },
     toggleWarmup:function () {
         if (this.warmupButton.getUi() === 'confirm') {
@@ -54,23 +59,20 @@ Ext.define('biglifts.views.ss.Workouts', {
         }
     },
     bindListeners:function () {
-        this.addListener('activeitemchange', this.setToolbarTitle, this);
+        this.workoutPanel.addListener('activeitemchange', this.activeItemChanged, this);
         biglifts.stores.ss.Lifts.addListener('beforesync', this.refreshActiveItem, this);
         biglifts.stores.GlobalSettings.addListener('beforesync', this.refreshActiveItem, this);
     },
     destroyListeners:function () {
-        this.removeListener('activeitemchange', this.setToolbarTitle, this);
+        this.removeListener('activeitemchange', this.activeItemChanged, this);
         biglifts.stores.ss.Lifts.removeListener('beforesync', this.refreshActiveItem, this);
         biglifts.stores.GlobalSettings.removeListener('beforesync', this.refreshActiveItem, this);
     },
     config:{
         id:'ss-workout',
         cls:'ss-workout',
+        layout:'fit',
         listeners:{
-            activeitemchange:function () {
-                this.workoutName = this.getActiveItem().tab.getText();
-                biglifts.stores.ss.WorkoutStore.filter('name', this.workoutName);
-            },
             initialize:function () {
                 var me = this;
                 me.workoutToolbar = me.add({
@@ -105,46 +107,11 @@ Ext.define('biglifts.views.ss.Workouts', {
 
                 this.workoutName = 'A';
                 biglifts.stores.ss.WorkoutStore.filter('name', this.workoutName);
-                var listConfigA = {
-                    title:'A',
-                    xtype:'list',
-                    store:biglifts.stores.ss.WorkoutStore,
-                    itemCls:'workout-item',
-                    itemTpl:new Ext.XTemplate(
-                        '<table class="ss-workout {[values.warmup ? "warmup" : ""]}"><tbody><tr>' +
-                            '<td class="name" width="50%">{[this.getLiftName(values.lift_id)]}</td>' +
-                            '<td width="25%"><span class="sets">{sets}x </span>{reps}</td>' +
-                            '<td class="last" width="25%">{[this.getWeight(values.lift_id, values.percentage)]}{[this.getUnits()]}</td>' +
-                            '</tr></tbody></table>' +
 
-                            (biglifts.toggles.BarLoading ?
-                                '<p class="bar-loader-breakdown">{[util.plates.getFormattedPlateList(' +
-                                    'this.getWeight(values.lift_id, values.percentage),this.getLiftName(values.lift_id))]}</p>' : ''), {
-                            getLiftName:function (lift_id) {
-                                return biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('name');
-                            },
-                            getWeight:function (lift_id, percentage) {
-                                var weight = biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('weight');
-                                if (percentage === 0) {
-                                    return biglifts.stores.BarWeight.first().get('weight');
-                                }
-                                else {
-                                    return biglifts.weight.format(weight, percentage);
-                                }
-                            },
-                            getUnits:function () {
-                                return biglifts.stores.GlobalSettings.getUnits();
-                            }
-                        })
-                };
-
-                var listConfigB = _.clone(listConfigA);
-                listConfigB.title = 'B';
-
-                this.workoutA = me.add(listConfigA);
-                this.workoutA._workoutName = 'A';
-                this.workoutB = me.add(listConfigB);
-                this.workoutB._workoutName = 'B';
+                this.workoutPanel = Ext.create('Ext.tab.Panel');
+                this.workoutPanel.add(Ext.create('biglifts.views.ss.WorkoutList', {workoutName:'A', title:'A'}));
+                this.workoutPanel.add(Ext.create('biglifts.views.ss.WorkoutList', {workoutName:'B', title:'B'}));
+                this.add(this.workoutPanel);
 
                 me.setToolbarTitle();
 
@@ -157,6 +124,7 @@ Ext.define('biglifts.views.ss.Workouts', {
                 this.warmupButton = toolbar.add({xtype:'button', text:'Warmup', ui:'confirm', handler:Ext.bind(me.toggleWarmup, me)});
                 toolbar.add({xtype:'spacer'});
                 toolbar.add(Ext.create('biglifts.components.SetCounter'));
+
                 this.bindListeners();
             },
             destroy:function () {
