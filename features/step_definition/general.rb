@@ -61,3 +61,8 @@ end
 Then /^The page title is "(.*?)"$/ do |title|
   @driver.find_elements(:class => 'x-title').select { |t| t.displayed? && t.text() == title }.should_not == []
 end
+
+When /^I change the "(.*?)" date to "(.*?)"$/ do |id, date|
+  @driver.execute_script("Ext.getCmp('#{id}').setValue(Date.parse('#{date}'));Ext.getCmp('#{id}').fireEvent('change');")
+  sleep 0.3
+end
