@@ -17,7 +17,7 @@ Ext.define('biglifts.views.Log', {
                 this.add([
                     Ext.create('biglifts.views.LogList'),
                     biglifts.views.log.cards.EditLogEntry,
-                    biglifts.views.log.cards.EditAssistanceLogEntry,
+                    Ext.create('biglifts.views.EditAssistanceLogEntry', {id:'edit-assistance-log-entry'}),
                     {
                         xtype:'lognoteseditor',
                         id:'log-notes-editor'
