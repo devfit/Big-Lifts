@@ -54,7 +54,7 @@ Feature: Boring But Big - Assistance Work
     And I tap the "Asst." button
     Then I see 1 assistance log entry for "10x90"
     And I tap "5x10" log entry 1
-    And I set the assistance log reps to 15
+    And I set the "Reps" input to "15"
     And I tap the "Back" button
     Then I see 1 assistance log entry for "15x90"
 
