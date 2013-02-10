@@ -41,6 +41,16 @@ Ext.define('LiftLogStore', {
         this.add(l);
         this.sync();
     },
+    restitchWorkoutIds:function () {
+        var me = this;
+        util.withNoSorters(this, function () {
+            me.sort('workout_id', 'ASC');
+            var i = 1;
+            me.each(function (r) {
+                r.set('workout_id', i++);
+            });
+        });
+    },
     extend:'Ext.data.Store',
     config:{
         storeId:'log531',
@@ -55,17 +65,20 @@ Ext.define('LiftLogStore', {
             load:function () {
                 Ext.create('biglifts.models.Log531Syncer').getAndSync();
             },
-            removerecords:function () {
-                var me = this;
-                util.withNoSorters(this, function () {
-                    me.sort('workout_id', 'ASC');
-                    var i = 1;
-                    me.each(function (r) {
-                        r.set('workout_id', i++);
+            removerecords:function (s, models) {
+                this.restitchWorkoutIds();
+
+                var syncer = Ext.create('biglifts.models.Log531Syncer');
+                var tasks = [];
+                _.each(models, function (model) {
+                    tasks.push(function (callback) {
+                        syncer.deleteRecord(model, callback);
                     });
                 });
 
-                Ext.create('biglifts.models.Log531Syncer').postLog();
+                async.series(tasks, function () {
+                    syncer.postLog();
+                });
             }
         }
     }

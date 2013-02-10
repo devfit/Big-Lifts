@@ -2,14 +2,33 @@ Ext.define('biglifts.models.Log531Syncer', {
     LOG_URL:'http://biglifts.herokuapp.com/log',
     getAndSync:function () {
         var me = this;
-        me.syncRemoteLog(function () {
-            me.postLog();
+        biglifts.stores.Users.withUser(function () {
+            me.syncRemoteLog(function () {
+                me.postLog();
+            });
         });
     },
     postLog:function () {
         var me = this;
-        util.withLoadedStore(biglifts.stores.Users, function () {
+        biglifts.stores.Users.withUser(function () {
             async.forEachSeries(me.getFormattedLog(), Ext.bind(me.saveWorkout, me));
+        });
+    },
+    deleteRecord:function (record, callback) {
+        var me = this;
+        biglifts.stores.Users.withUser(function () {
+            Ext.Ajax.request({
+                url:me.LOG_URL + "/" + record.get('workout_id'),
+                method:'DELETE',
+                headers:me.buildAuthHeaders(),
+                success:function (response) {
+                    callback(null);
+                },
+                failure:function (response) {
+                    callback(null);
+                },
+                scope:this
+            });
         });
     },
     saveWorkout:function (workout, callback) {
@@ -45,7 +64,7 @@ Ext.define('biglifts.models.Log531Syncer', {
         var DATE_FORMAT = "MM/dd/yyyy";
         _.each(workouts, function (workout) {
             var log = workout.logs[0];
-            var dateAsString = new Date(log.timestamp).toString(DATE_FORMAT);
+            var dateAsString = new Date(log.date).toString(DATE_FORMAT);
             var matchingDate = biglifts.stores.LiftLog.findBy(function (l) {
                 return new Date(l.get('timestamp')).toString(DATE_FORMAT) === dateAsString;
             });
@@ -55,6 +74,7 @@ Ext.define('biglifts.models.Log531Syncer', {
                 log.cycle = log.specific_workout.cycle;
                 log.week = log.specific_workout.week;
                 log.expectedReps = log.specific_workout.expected_reps;
+                log.timestamp = log.date;
                 biglifts.stores.LiftLog.addLogEntry(log);
             }
         });
