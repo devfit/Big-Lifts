@@ -29,7 +29,8 @@ Ext.define('Migrations', {
         {klass:'biglifts.migrations.RateApp', done:false},
         {klass:'biglifts.migrations.RecreateStartingStrength', done:false},
         {klass:'biglifts.migrations.AddWorkoutIdToLog', done:false},
-        {klass:'biglifts.migrations.FixPowerCleanPercentage', done:false}
+        {klass:'biglifts.migrations.FixPowerCleanPercentage', done:false},
+        {klass:'biglifts.migrations.FixSsDoubling', done:false}
     ],
     loadMissingMigrations:function () {
         var me = this;

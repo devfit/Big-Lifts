@@ -10,7 +10,6 @@ Ext.define('biglifts.models.startingstrength.TemplateSwitcher', {
 
         biglifts.stores.ss.WorkoutStore.addWorkoutLifts(true, template);
         biglifts.stores.ss.WorkoutStore.addWorkoutLifts(false, template);
-
     },
     setupLifts:function (template) {
         var units = biglifts.stores.GlobalSettings.getUnits();
