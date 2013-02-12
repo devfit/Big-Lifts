@@ -22,7 +22,7 @@ Ext.define('biglifts.views.ss.Workouts', {
                     weight:lift.get('weight'),
                     sets:w.get('sets'),
                     reps:w.get('reps'),
-                    units:'lbs',
+                    units:biglifts.stores.GlobalSettings.getUnits(),
                     timestamp:new Date().getTime(),
                     workout_id:newWorkoutId
                 });

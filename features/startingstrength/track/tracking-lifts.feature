@@ -1,6 +1,19 @@
 @StartingStrength
 Feature: Tracking Lifts
 
+  Scenario: Tracking lifts honors units
+    When I navigate to the "Edit" tab
+    And I set the "Bench" input to "225"
+    And I navigate to the "More" tab
+    And I tap the "Settings" list item
+    And I set select "units" to "kg"
+    And I tap the "Back" button
+    And I navigate to the "Lift" tab
+    And I tap the checkmark
+    And I wait for the animation
+    Then I am on the track tab
+    Then There is a "Bench 3x 5 225kg" list item
+
   Scenario: The track tab uses the combined log
     When I navigate to the "Edit" tab
     And I navigate to the "Lift" tab
