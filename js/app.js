@@ -21,40 +21,38 @@ biglifts.main.loadApplication = function () {
 };
 
 biglifts.main.tabPanelConfig = {
-    xtype: 'tabpanel',
-    id: 'main-tab-panel',
-    fullscreen: true,
-    sortable: false,
-    tabBar: {
-        id: 'tab-navigation',
-        docked: 'bottom',
-        layout: { pack: 'center', align: 'center' }
+    xtype:'tabpanel',
+    id:'main-tab-panel',
+    fullscreen:true,
+    sortable:false,
+    tabBar:{
+        id:'tab-navigation',
+        docked:'bottom',
+        layout:{ pack:'center', align:'center' }
     }
 };
 
 Ext.application({
-    launch: function () {
-        Ext.create('Ext.Panel', {
-            id: 'app',
-            fullscreen: true,
-            layout: 'card',
-            items: [
-                biglifts.main.tabPanelConfig,
-                {
-                    id: 'routine-chooser',
-                    xtype: 'routine-chooser'
-                }
+    launch:function () {
+        var app = Ext.create('Ext.Panel', {
+            id:'app',
+            fullscreen:true,
+            layout:'card',
+            items:[
+                biglifts.main.tabPanelConfig
             ],
-            listeners: {
-                activeitemchange:function(){
+            listeners:{
+                activeitemchange:function () {
                     Ext.getCmp('routine-chooser').hideLoadingIndicator();
                 },
-                initialize: function () {
+                initialize:function () {
                     biglifts.main.deviceReady = true;
                     biglifts.main.loadApplication();
                 }
             }
         });
+        app.add(Ext.create('biglifts.views.Setup', {id:'routine-chooser'}));
+
         util.fireApplicationReady();
     }
 });

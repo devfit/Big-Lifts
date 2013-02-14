@@ -37,9 +37,8 @@ biglifts.routines.routineStore = Ext.create('Ext.data.Store', {
     }
 });
 
-Ext.define('biglifts.views.RoutineChooser', {
+Ext.define('biglifts.views.Setup', {
     extend: 'Ext.form.Panel',
-    xtype: 'routine-chooser',
     routineSelected: function (list, index) {
         var routine = biglifts.routines.routineStore.getAt(index);
         if (routine.get('available')) {
@@ -94,12 +93,22 @@ Ext.define('biglifts.views.RoutineChooser', {
             initialize: {
                 fn: function () {
                     var me = this;
+                    var topToolbar = me.add({
+                        xtype: 'toolbar',
+                        docked: 'top',
+                        title: 'Big Lifts'
+                    });
+
+                    topToolbar.add({
+                        xtype:'spacer'
+                    });
+
+                    topToolbar.add({
+                        xtype:'button',
+                        text: "User: Bob"
+                    });
+
                     me.add([
-                        {
-                            xtype: 'toolbar',
-                            docked: 'top',
-                            title: 'Big Lifts'
-                        },
                         {
                             html: '<h1 class="first-time-launch-header">What are you lifting?</h1>',
                             height: 30
