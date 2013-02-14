@@ -20,9 +20,7 @@ Ext.define('biglifts.views.531.MoreInfoList', {
                 var listIndex = 0;
                 this.listItems = [
                     {model: {index: listIndex++, text: null}, handler: Ext.bind(this.selectRoutine, this), textFn: function () {
-                        return '<span class="text">Routine: <span id="routine-text">' +
-                            biglifts.stores.Routine.first().get("name") +
-                            '</span></span><span class="disclosure"></span>';
+                        return '<span class="text">Setup...<span class="disclosure"></span>';
                     }}
                 ];
 
