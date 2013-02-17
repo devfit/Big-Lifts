@@ -12,7 +12,7 @@ biglifts.main.loadApplication = function () {
         var firstTimeInApp = biglifts.stores.Routine.getCount() === 0;
 
         if (firstTimeInApp) {
-            Ext.getCmp('app').setActiveItem(Ext.getCmp('routine-chooser'));
+            Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
         }
         else {
             Ext.getCmp('routine-chooser').loadRoutine(biglifts.stores.Routine.first().get('name'), firstTimeInApp);
@@ -34,24 +34,25 @@ biglifts.main.tabPanelConfig = {
 
 Ext.application({
     launch:function () {
-        var app = Ext.create('Ext.Panel', {
+        Ext.create('Ext.Panel', {
             id:'app',
             fullscreen:true,
             layout:'card',
-            items:[
-                biglifts.main.tabPanelConfig
-            ],
             listeners:{
                 activeitemchange:function () {
-                    Ext.getCmp('routine-chooser').hideLoadingIndicator();
+                    if (this.setupScreen) {
+                        this.setupScreen.hideLoadingIndicator();
+                    }
                 },
                 initialize:function () {
+                    this.add(biglifts.main.tabPanelConfig);
+                    this.setupScreen = this.add(Ext.create('biglifts.views.Setup'));
+
                     biglifts.main.deviceReady = true;
                     biglifts.main.loadApplication();
                 }
             }
         });
-        app.add(Ext.create('biglifts.views.Setup', {id:'routine-chooser'}));
 
         util.fireApplicationReady();
     }

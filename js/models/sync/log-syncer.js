@@ -20,7 +20,7 @@ Ext.define('biglifts.models.Log531Syncer', {
             Ext.Ajax.request({
                 url:me.LOG_URL + "/" + record.get('workout_id'),
                 method:'DELETE',
-                headers:me.buildAuthHeaders(),
+                headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
                 success:function (response) {
                     callback(null);
                 },
@@ -35,7 +35,7 @@ Ext.define('biglifts.models.Log531Syncer', {
         Ext.Ajax.request({
             url:this.LOG_URL,
             method:'POST',
-            headers:this.buildAuthHeaders(),
+            headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
             jsonData:workout,
             success:function (response) {
                 callback(null);
@@ -50,7 +50,7 @@ Ext.define('biglifts.models.Log531Syncer', {
         Ext.Ajax.request({
             url:this.LOG_URL,
             method:'GET',
-            headers:this.buildAuthHeaders(),
+            headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
             success:function (response) {
                 this.mergeRemoteLogs(JSON.parse(response.responseText));
                 callback(null);
@@ -107,17 +107,5 @@ Ext.define('biglifts.models.Log531Syncer', {
                     }
                 }
             ]};
-    },
-    buildAuthHeaders:function () {
-        var user = biglifts.stores.Users.first();
-        if (user) {
-            var username = user.get('username');
-            var password = user.get('password');
-            var key = Base64.encode(username + ":" + password);
-            return {Authorization:"Basic " + key};
-        }
-        else {
-            return {};
-        }
     }
 });

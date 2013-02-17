@@ -42,15 +42,17 @@ Ext.define("biglifts.stores.UserStore", {
             url:this.CREATE_USER_URL,
             method:'POST',
             success:function (response) {
-                var user = JSON.parse(response.responseText).user;
-                this.add({username:user.username, password:user.password});
-                this.sync();
-                this.fireCallbacks();
+                this.addUser(JSON.parse(response.responseText).user);
             },
             failure:function (response) {
             },
             scope:this
         });
+    },
+    addUser:function (user) {
+        this.add(user);
+        this.sync();
+        this.fireCallbacks();
     },
     config:{
         model:'biglifts.models.User',
