@@ -1,5 +1,13 @@
 Feature: User Setup
 
+  @531
+  Scenario: User setup can be reached after a routine has loaded
+    When I tap the "More" tab
+    And I tap the "Setup..." list item
+    And I tap the user icon
+    And A user loads with username "bob" and password "password"
+    Then The "User" input is "bob"
+
   Scenario: User data is populated in the user setup
     When I tap the user icon
     Then The "User" input is "Loading..."

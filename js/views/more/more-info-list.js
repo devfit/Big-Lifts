@@ -1,7 +1,7 @@
 Ext.define('biglifts.views.MoreInfoList', {
     extend: "Ext.dataview.List",
     selectRoutine: function () {
-        Ext.getCmp('app').setActiveItem(Ext.getCmp('routine-chooser'));
+        Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
     },
     getVersionOsInfo: function () {
         var appVersion = "v" + biglifts.version;
