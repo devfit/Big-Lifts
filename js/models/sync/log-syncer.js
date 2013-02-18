@@ -80,11 +80,12 @@ Ext.define('biglifts.models.Log531Syncer', {
         _.each(workouts, function (workout) {
             var log = workout.logs[0];
             var dateAsString = new Date(log.date).toString(DATE_FORMAT);
-            var matchingDate = biglifts.stores.LiftLog.findBy(function (l) {
-                return new Date(l.get('timestamp')).toString(DATE_FORMAT) === dateAsString;
+            var matchingEntry = biglifts.stores.LiftLog.findBy(function (l) {
+                return new Date(l.get('timestamp')).toString(DATE_FORMAT) === dateAsString
+                    && l.get('liftName') === log.name;
             });
 
-            if (matchingDate === -1) {
+            if (matchingEntry === -1) {
                 log.liftName = log.name;
                 log.cycle = log.specific_workout.cycle;
                 log.week = log.specific_workout.week;
