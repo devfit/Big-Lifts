@@ -46,6 +46,18 @@ Ext.define('biglifts.models.Log531Syncer', {
             scope:this
         });
     },
+    authorizationChanged:function () {
+        biglifts.stores.Users.recreateUser(function () {
+            util.whenApplicationReady(function () {
+                Ext.Msg.confirm('User Changed', 'User authentication failed. Update username/password?', function (text) {
+                    if (text === "yes") {
+                        Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
+                        Ext.getCmp('setup').setActiveItem(Ext.getCmp('user-setup'));
+                    }
+                });
+            });
+        });
+    },
     syncRemoteLog:function (callback) {
         Ext.Ajax.request({
             url:this.LOG_URL,
@@ -55,7 +67,10 @@ Ext.define('biglifts.models.Log531Syncer', {
                 this.mergeRemoteLogs(JSON.parse(response.responseText));
                 callback(null);
             },
-            failure:function () {
+            failure:function (response) {
+                if (response.status === 401) {
+                    this.authorizationChanged();
+                }
             },
             scope:this
         });

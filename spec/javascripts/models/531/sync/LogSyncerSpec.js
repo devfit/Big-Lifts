@@ -36,12 +36,7 @@ describe("Log Syncer", function () {
         expect(this.syncer.getFormattedLog()).toEqual(expected);
     });
 
-    it("should build basic auth headers from the user store", function () {
-        this.users.add({username:'bob', password:'password'});
-        expect(this.syncer.buildAuthHeaders()).toEqual({Authorization:'Basic Ym9iOnBhc3N3b3Jk'});
-    });
-
-    it("should not merge logs with colliding dates", function () {
+    it("should not merge logs with colliding dates and same name", function () {
         var now = new Date().getTime();
         var localLog = {workout_id:1, reps:2, liftName:'Squat', weight:100, timestamp:now, cycle:3, expectedReps:5, week:1};
 
@@ -58,6 +53,25 @@ describe("Log Syncer", function () {
         ]);
 
         expect(this.log.getCount()).toEqual(1);
+    });
+
+    it("should merge logs with colliding dates and different name", function () {
+        var now = new Date().getTime();
+        var localLog = {workout_id:1, reps:2, liftName:'Squat', weight:100, timestamp:now, cycle:3, expectedReps:5, week:1};
+
+        var remoteLog = {workout_id:1, logs:[
+            {reps:2, name:'Press', weight:90, date:now, sets:1, specific_workout:{
+                cycle:5, week:3, expected_reps:1
+            }}
+        ]};
+
+        this.log.add(localLog);
+        this.log.sync();
+        this.syncer.mergeRemoteLogs([
+            remoteLog
+        ]);
+
+        expect(this.log.getCount()).toEqual(2);
     });
 
     it("should merge non date colliding logs with local logs", function () {
@@ -91,5 +105,4 @@ describe("Log Syncer", function () {
         expect(newRecord.get('expectedReps')).toEqual(expectedReps);
         expect(newRecord.get('timestamp')).toEqual(yesterday.getTime());
     });
-
 });

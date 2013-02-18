@@ -31,11 +31,17 @@ Ext.define("biglifts.stores.UserStore", {
             }
         });
     },
+    recreateUser: function(callback){
+        this.removeAll();
+        this.withUser(callback);
+        this.createUserRemotely();
+    },
     fireCallbacks:function () {
         var user = this.first();
         _.each(this.withUserCallbacks, function (callback) {
             callback(user);
         });
+        this.withUserCallbacks = [];
     },
     createUserRemotely:function () {
         Ext.Ajax.request({

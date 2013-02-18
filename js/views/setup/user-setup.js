@@ -24,9 +24,11 @@ Ext.define('biglifts.views.UserSetup', {
 
         this.showFlashMessage(message, true);
 
-        this.getRecord().set(this.getValues());
-        this.getRecord().save();
+        var user = biglifts.stores.Users.first();
+        user.set(this.getValues());
+        user.save();
         biglifts.stores.Users.sync();
+        biglifts.stores.Users.fireEvent('beforesync');
     },
     saveFailure:function (message) {
         this.enableDisableFields(true);
