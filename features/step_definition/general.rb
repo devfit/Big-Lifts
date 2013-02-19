@@ -1,4 +1,5 @@
 When /^debugger$/ do
+  require 'ruby-debug'
   debugger
 end
 
