@@ -31,7 +31,7 @@ biglifts.models.startingstrength.workouts.standard = {
         {sets:1, reps:5, name:'B', percentage:55, warmup:true, order:1},
         {sets:1, reps:3, name:'B', percentage:70, warmup:true, order:2},
         {sets:1, reps:2, name:'B', percentage:85, warmup:true, order:3},
-        {sets:1, reps:2, name:'B', percentage:100, warmup:false, order:4}
+        {sets:3, reps:5, name:'B', percentage:100, warmup:false, order:4}
     ],
     powerclean:[
         {sets:2, reps:5, name:'B', percentage:0, warmup:true, order:0},
@@ -67,7 +67,7 @@ biglifts.models.startingstrength.workouts.novice = {
         {sets:1, reps:5, name:'B', percentage:55, warmup:true, order:1},
         {sets:1, reps:3, name:'B', percentage:70, warmup:true, order:2},
         {sets:1, reps:2, name:'B', percentage:85, warmup:true, order:3},
-        {sets:1, reps:2, name:'B', percentage:100, warmup:false, order:4}
+        {sets:3, reps:5, name:'B', percentage:100, warmup:false, order:4}
     ],
     deadlift:[
         {sets:2, reps:5, name:'A', percentage:40, warmup:true, order:0},

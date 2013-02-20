@@ -69,6 +69,7 @@ src_files:
             - js/models/migration/migrations/011_add_workout_id_to_log.js
             - js/models/migration/migrations/012_fix_ss_powerclean_percentage.js
             - js/models/migration/migrations/013_fix_ss_doubling.js
+            - js/models/migration/migrations/014_fix_ss_press_percentage.js
             - js/models/startingstrength/lift-defaults.js
             - js/models/startingstrength/lift.js
             - js/models/startingstrength/template-switcher.js
