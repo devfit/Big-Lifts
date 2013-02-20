@@ -3,7 +3,7 @@ Feature: Switching routines
   @StartingStrength
   Scenario: Switching out and back in to Starting Strength
     When I navigate to the "More" tab
-    And I tap the "Routine" list item
+    And I tap the "Setup..." list item
     Then I am on the routine chooser
     And I tap the "Starting Strength" list item
     And I wait for the animation
@@ -15,7 +15,7 @@ Feature: Switching routines
   @531
   Scenario: Switching out and back in to 5/3/1
     When I navigate to the "More" tab
-    And I tap the "Routine" list item
+    And I tap the "Setup..." list item
     Then I am on the routine chooser
     And I tap the "5/3/1" list item
     And I wait for the animation
