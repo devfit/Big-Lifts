@@ -34,6 +34,7 @@ Feature: Boring But Big - Assistance Work
     When I tap the assistance tab
     And I select "5x10" assistance work
     And I tap the "Deadlift" list item
+    And I tap the "Deadlift" list item
     And I tap the delete button
     Then There are 0 list items
 
