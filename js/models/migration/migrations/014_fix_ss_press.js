@@ -1,9 +1,10 @@
-Ext.define('biglifts.migrations.FixSsPressPercentage', {
+Ext.define('biglifts.migrations.FixSsPress', {
     run:function () {
         var me = this;
         util.withLoadedStore(biglifts.stores.Routine, function () {
             if (biglifts.stores.Routine.getCount() !== 0) {
                 util.withLoadedStore(biglifts.stores.ss.WorkoutStore, function () {
+                    Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo(me.getTemplateName());
                 });
             }
         });
