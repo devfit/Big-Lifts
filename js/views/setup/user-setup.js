@@ -96,7 +96,7 @@ Ext.define('biglifts.views.UserSetup', {
 
         var fieldset = this.add({xtype:'fieldset', style:'margin-bottom: 4px'});
         this.userField = fieldset.add({xtype:'textfield', name:'username', value:'Loading...', label:'User', disabled:true});
-        this.passwordField = fieldset.add({xtype:'textfield', name:'password', value:'Loading...', label:'Password', disabled:true});
+        this.passwordField = fieldset.add({xtype:'textfield', name:'password', value:'Loading...', label:'Pass', disabled:true});
         this.setupWaitForUser();
 
         this.flashMessage = this.add({
