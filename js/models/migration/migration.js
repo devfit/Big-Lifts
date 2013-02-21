@@ -31,6 +31,7 @@ Ext.define('Migrations', {
         {klass:'biglifts.migrations.AddWorkoutIdToLog', done:false},
         {klass:'biglifts.migrations.FixPowerCleanPercentage', done:false},
         {klass:'biglifts.migrations.FixSsDoubling', done:false},
+        {klass:'biglifts.migrations.SyncAlert', done:false},
         {klass:'biglifts.migrations.FixSsPress', done:false}
     ],
     loadMissingMigrations:function () {

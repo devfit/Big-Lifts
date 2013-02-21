@@ -1,217 +1,218 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="js/sencha-touch/resources/css/sencha-touch.css"/>
-    <link rel="stylesheet" href="js/touch-charts-2.0.0-beta/resources/css/touch-charts-full.css"/>
-    <link rel="stylesheet" href="css/components/set-counter.css"/>
-    <link rel="stylesheet" href="css/components/reps-to-beat-toolbar.css"/>
-    <link rel="stylesheet" href="css/components/config-gear.css"/>
-    <link rel="stylesheet" href="css/more.css"/>
-    <link rel="stylesheet" href="css/user_setup.css"/>
-    <link rel="stylesheet" href="css/first_time_launch.css"/>
-    <link rel="stylesheet" href="css/icons.css"/>
-    <link rel="stylesheet" href="css/lift-selector.css"/>
-    <link rel="stylesheet" href="css/531/edit.css"/>
-    <link rel="stylesheet" href="css/edit-lifts-list.css"/>
-    <link rel="stylesheet" href="css/531/lift/template.css"/>
-    <link rel="stylesheet" href="css/templates/lift-settings.css"/>
-    <link rel="stylesheet" href="css/templates/rotations.css"/>
-    <link rel="stylesheet" href="css/assistance/boring-but-big.css"/>
-    <link rel="stylesheet" href="css/assistance/assistance.css"/>
-    <link rel="stylesheet" href="css/track.css"/>
-    <link rel="stylesheet" href="css/one-rep.css"/>
-    <link rel="stylesheet" href="css/forms.css"/>
-    <link rel="stylesheet" href="css/rest-timer.css"/>
-    <link rel="stylesheet" href="css/graph.css"/>
-    <link rel="stylesheet" href="css/ext-fix.css"/>
-    <link rel="stylesheet" href="css/startingstrength/workout.css"/>
-    <link rel="stylesheet" href="css/startingstrength/edit.css"/>
-    <link rel="stylesheet" href="css/startingstrength/config.css"/>
-    <script type="text/javascript" src="phonegap.js"></script>
-    <!--combine-->
-    <script type="text/javascript" src="js/sencha-touch/sencha-touch-all.js"></script>
-    <script type="text/javascript" src="js/touch-charts-2.0.0-beta/touch-charts.js"></script>
-    <script type="text/javascript" src="js/lib/underscore-min.js"></script>
-    <script type="text/javascript" src="js/lib/async.js"></script>
-    <script type="text/javascript" src="js/lib/date.js"></script>
-    <script type="text/javascript" src="js/lib/base64.js"></script>
-    <script type="text/javascript" src="js/ext-overrides.js"></script>
-    <script type="text/javascript" src="js/premium.js"></script>
-    <script type="text/javascript" src="js/app.js"></script>
-    <script type="text/javascript" src="js/feature-toggles.js"></script>
-    <script type="text/javascript" src="js/util/graph/graph-util.js"></script>
-    <script type="text/javascript" src="js/util/backup/setup_file_or_local_loading.js"></script>
-    <script type="text/javascript" src="js/util/weight-formatter.js"></script>
-    <script type="text/javascript" src="js/util/stores.js"></script>
-    <script type="text/javascript" src="js/util/components.js"></script>
-    <script type="text/javascript" src="js/util/powerlifting-total.js"></script>
-    <script type="text/javascript" src="js/util/proxy.js"></script>
-    <script type="text/javascript" src="js/util/navigation.js"></script>
-    <script type="text/javascript" src="js/util/filters.js"></script>
-    <script type="text/javascript" src="js/util/sorters.js"></script>
-    <script type='text/javascript' src='js/util/rounding.js'></script>
-    <script type="text/javascript" src="js/util/formulas.js"></script>
-    <script type="text/javascript" src="js/util/plates.js"></script>
-    <script type="text/javascript" src="js/util/timing.js"></script>
-    <script type="text/javascript" src="js/util/phonegap-util.js"></script>
-    <script type="text/javascript" src="js/version.js"></script>
-    <script type='text/javascript' src='js/util/email.js'></script>
-    <script type='text/javascript' src='js/util/backup/files.js'></script>
-    <script type='text/javascript' src='js/util/backup/store-file-backer.js'></script>
-    <script type='text/javascript' src='js/util/backup/when-application-ready.js'></script>
-    <script type='text/javascript' src='js/models/stores.js'></script>
-    <script type='text/javascript' src='js/models/user.js'></script>
-    <script type='text/javascript' src='js/models/routines.js'></script>
-    <script type='text/javascript' src='js/models/531/lift-progression.js'></script>
-    <script type='text/javascript' src='js/models/531/lifts.js'></script>
-    <script type='text/javascript' src='js/models/templates/meet_goal.js'></script>
-    <script type='text/javascript' src='js/models/templates/template.js'></script>
-    <script type='text/javascript' src='js/models/templates/week_rotation.js'></script>
-    <script type='text/javascript' src='js/models/531/lift-completion.js'></script>
-    <script type='text/javascript' src='js/models/abstract-settings-store.js'></script>
-    <script type='text/javascript' src='js/models/531/settings.js'></script>
-    <script type='text/javascript' src='js/models/global-settings.js'></script>
-    <script type='text/javascript' src='js/models/531/lift-log.js'></script>
-    <script type='text/javascript' src='js/models/log-sort.js'></script>
-    <script type='text/javascript' src='js/models/rest-time.js'></script>
-    <script type='text/javascript' src='js/models/531/current-cycle.js'></script>
-    <script type='text/javascript' src='js/models/531/powerlifting-total-config.js'></script>
-    <script type='text/javascript' src='js/models/531/powerlifting-total-lifts.js'></script>
-    <script type='text/javascript' src='js/models/plates/bar.js'></script>
-    <script type='text/javascript' src='js/models/plates/plates.js'></script>
-    <script type='text/javascript' src='js/models/assistance/assistance.js'></script>
-    <script type='text/javascript' src='js/models/assistance/boring-but-big-percentage.js'></script>
-    <script type='text/javascript' src='js/models/assistance/boring-but-big.js'></script>
-    <script type='text/javascript' src='js/models/assistance/custom/custom.js'></script>
-    <script type='text/javascript' src='js/models/assistance/custom/triumvirate.js'></script>
-    <script type='text/javascript' src='js/models/assistance/custom/bodyweight.js'></script>
-    <script type='text/javascript' src='js/models/assistance/sst/sst.js'></script>
-    <script type='text/javascript' src='js/models/assistance/sst/sst-sets.js'></script>
-    <script type='text/javascript' src='js/models/migration/migration.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/001_starting_strength_notification.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/002_global_settings_defaults.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/003_date_format_finder.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/004_stitch_broken_progression_sets.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/005_bbb_doubling_fix.js'></script>
-    <script type='text/javascript'
-            src='js/models/migration/migrations/006_rotating_week_store_lift_matching.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/007_add_order_to_assistance.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/008_update_ss_workout_defaults.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/009_rate_app.js'></script>
-    <script type='text/javascript'
-    src='js/models/migration/migrations/010_recreate_starting_strength_workouts.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/011_add_workout_id_to_log.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/012_fix_ss_powerclean_percentage.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/013_fix_ss_doubling.js'></script>
-    <script type='text/javascript' src='js/models/migration/migrations/014_fix_ss_press.js'></script>
-    <script type='text/javascript' src='js/models/startingstrength/lift-defaults.js'></script>
-    <script type='text/javascript' src='js/models/startingstrength/lift.js'></script>
-    <script type='text/javascript' src='js/models/startingstrength/template-switcher.js'></script>
-    <script type='text/javascript' src='js/models/startingstrength/workout-defaults.js'></script>
-    <script type='text/javascript' src='js/models/startingstrength/workout.js'></script>
-    <script type='text/javascript' src='js/models/startingstrength/log.js'></script>
-    <script type='text/javascript' src='js/models/startingstrength/combined-log.js'></script>
-    <script type='text/javascript' src='js/models/sync/log-syncer.js'></script>
-    <script type='text/javascript' src='js/models/sync/headers.js'></script>
-    <script type="text/javascript" src="js/views/setup/setup.js"></script>
-    <script type="text/javascript" src="js/views/setup/routine-chooser.js"></script>
-    <script type="text/javascript" src="js/views/setup/user-setup.js"></script>
-    <script type='text/javascript' src='js/views/components/notes-editor.js'></script>
-    <script type='text/javascript' src='js/views/components/rest-timer.js'></script>
-    <script type='text/javascript' src='js/views/components/config-gear.js'></script>
-    <script type='text/javascript' src='js/views/components/swipe-to-delete.js'></script>
-    <script type='text/javascript' src='js/views/components/reps-to-beat-toolbar.js'></script>
-    <script type='text/javascript' src='js/views/components/set-counter.js'></script>
-    <script type='text/javascript' src='js/views/components/powerlifting-total.js'></script>
-    <script type='text/javascript' src='js/views/components/sort-toolbar.js'></script>
-    <script type='text/javascript' src='js/views/components/bar-loading-toolbar.js'></script>
-    <script type='text/javascript' src='js/views/maxes/cards/add-lift.js'></script>
-    <script type='text/javascript' src='js/views/maxes/cards/edit-lift.js'></script>
-    <script type='text/javascript' src='js/views/maxes/cards/edit-lifts-list.js'></script>
-    <script type='text/javascript' src='js/views/maxes/cards/maxes-form.js'></script>
-    <script type='text/javascript' src='js/views/maxes/cards/arrange-lifts.js'></script>
-    <script type='text/javascript' src='js/views/maxes/cards/plate-bar-setup.js'></script>
-    <script type='text/javascript' src='js/views/maxes/cards/powerlifting-total-editor.js'></script>
-    <script type='text/javascript' src='js/views/maxes/maxes.js'></script>
-    <script type='text/javascript' src='js/views/assistance/assistance-chooser.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/custom/custom-assistance.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/custom/custom-panel.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/custom/custom-movement-editor.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/custom/custom-panel-list.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/custom/custom-arrange-panel.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/custom/custom-arrange-list.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/sst/sst.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/sst/sst-custom-panel.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/sst/sst-maxes.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/sst/sst-lift-form.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/boring-but-big/boring-but-big.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/boring-but-big/boring-but-big-panel.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/bodyweight/bodyweight.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/bodyweight/bodyweight-movement-editor.js'></script>
-    <script type='text/javascript'
-            src='js/views/assistance/routines/boring-but-big/bbb-movement-editor.js'></script>
-    <script type='text/javascript'
-            src='js/views/assistance/routines/boring-but-big/boring-but-big-notes.js'></script>
-    <script type='text/javascript' src='js/views/assistance/routines/triumvirate/triumvirate.js'></script>
-    <script type='text/javascript'
-            src='js/views/assistance/routines/triumvirate/triumvirate-movement-editor.js'></script>
-    <script type='text/javascript' src='js/views/assistance/assistance-lift-chooser.js'></script>
-    <script type='text/javascript' src='js/views/assistance/assistance.js'></script>
-    <script type='text/javascript' src='js/views/assistance/assistance-toolbar.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/cycle-complete/increase-maxes-help.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/cycle-complete/cycle-complete.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-selector.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/tracking/lift-tracking.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/tracking/first-log-notes-editor.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-template.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/common-behavior.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/custom-template.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/fresher.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/heavier.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/rotating.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/powerlifting.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-settings/lift-settings.js'></script>
-    <script type='text/javascript'
-            src='js/views/schedule/cards/lift-settings/custom-template-editor.js'></script>
-    <script type='text/javascript' src='js/views/schedule/cards/lift-settings/edit-progression.js'></script>
-    <script type='text/javascript' src='js/views/schedule/lift-schedule.js'></script>
-    <script type='text/javascript' src='js/views/settings/cards/settings-form.js'></script>
-    <script type='text/javascript' src='js/views/settings/settings.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/edit-log-entry.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/edit-assistance-log-entry.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/log-lists/lift-log-list.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/log-lists/assistance-log-list.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/log-lists/log-list.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/export.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/assistance-log-notes-editor.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/log-notes-editor.js'></script>
-    <script type='text/javascript' src='js/views/track/cards/graph.js'></script>
-    <script type='text/javascript' src='js/views/track/track.js'></script>
-    <script type='text/javascript' src='js/views/oneRepMaxCalculator.js'></script>
-    <script type='text/javascript' src='js/views/more/more-info-list.js'></script>
-    <script type='text/javascript' src='js/views/more/reset.js'></script>
-    <script type='text/javascript' src='js/views/531/more/more-info-list.js'></script>
-    <script type='text/javascript' src='js/views/531/more/more.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/lift/lift-tab.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/lift/config/config.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/lift/config/templates/template.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/lift/config/templates/default.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/lift/config/templates/novice.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/lift/config/config-promo.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/lift/workouts.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/lift/workout-list.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/edit/edit-tab.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/edit/edit-lifts-form.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/edit/edit-lift.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/track/track-tab.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/more/more-info-list.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/more/settings/settings-form.js'></script>
-    <script type='text/javascript' src='js/views/startingstrength/more/more.js'></script>
-    <script type="text/javascript" src="js/debug.js"></script>
-    <script type='text/javascript' src='js/util/backup/loading.js'></script>
-    <script type="text/javascript" src="js/util/orientationLock.js"></script>
-    <!--end combine-->
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<link rel="stylesheet" href="js/sencha-touch/resources/css/sencha-touch.css"/>
+<link rel="stylesheet" href="js/touch-charts-2.0.0-beta/resources/css/touch-charts-full.css"/>
+<link rel="stylesheet" href="css/components/set-counter.css"/>
+<link rel="stylesheet" href="css/components/reps-to-beat-toolbar.css"/>
+<link rel="stylesheet" href="css/components/config-gear.css"/>
+<link rel="stylesheet" href="css/more.css"/>
+<link rel="stylesheet" href="css/user_setup.css"/>
+<link rel="stylesheet" href="css/first_time_launch.css"/>
+<link rel="stylesheet" href="css/icons.css"/>
+<link rel="stylesheet" href="css/lift-selector.css"/>
+<link rel="stylesheet" href="css/531/edit.css"/>
+<link rel="stylesheet" href="css/edit-lifts-list.css"/>
+<link rel="stylesheet" href="css/531/lift/template.css"/>
+<link rel="stylesheet" href="css/templates/lift-settings.css"/>
+<link rel="stylesheet" href="css/templates/rotations.css"/>
+<link rel="stylesheet" href="css/assistance/boring-but-big.css"/>
+<link rel="stylesheet" href="css/assistance/assistance.css"/>
+<link rel="stylesheet" href="css/track.css"/>
+<link rel="stylesheet" href="css/one-rep.css"/>
+<link rel="stylesheet" href="css/forms.css"/>
+<link rel="stylesheet" href="css/rest-timer.css"/>
+<link rel="stylesheet" href="css/graph.css"/>
+<link rel="stylesheet" href="css/ext-fix.css"/>
+<link rel="stylesheet" href="css/startingstrength/workout.css"/>
+<link rel="stylesheet" href="css/startingstrength/edit.css"/>
+<link rel="stylesheet" href="css/startingstrength/config.css"/>
+<script type="text/javascript" src="phonegap.js"></script>
+<!--combine-->
+<script type="text/javascript" src="js/sencha-touch/sencha-touch-all.js"></script>
+<script type="text/javascript" src="js/touch-charts-2.0.0-beta/touch-charts.js"></script>
+<script type="text/javascript" src="js/lib/underscore-min.js"></script>
+<script type="text/javascript" src="js/lib/async.js"></script>
+<script type="text/javascript" src="js/lib/date.js"></script>
+<script type="text/javascript" src="js/lib/base64.js"></script>
+<script type="text/javascript" src="js/ext-overrides.js"></script>
+<script type="text/javascript" src="js/premium.js"></script>
+<script type="text/javascript" src="js/app.js"></script>
+<script type="text/javascript" src="js/feature-toggles.js"></script>
+<script type="text/javascript" src="js/util/graph/graph-util.js"></script>
+<script type="text/javascript" src="js/util/backup/setup_file_or_local_loading.js"></script>
+<script type="text/javascript" src="js/util/weight-formatter.js"></script>
+<script type="text/javascript" src="js/util/stores.js"></script>
+<script type="text/javascript" src="js/util/components.js"></script>
+<script type="text/javascript" src="js/util/powerlifting-total.js"></script>
+<script type="text/javascript" src="js/util/proxy.js"></script>
+<script type="text/javascript" src="js/util/navigation.js"></script>
+<script type="text/javascript" src="js/util/filters.js"></script>
+<script type="text/javascript" src="js/util/sorters.js"></script>
+<script type='text/javascript' src='js/util/rounding.js'></script>
+<script type="text/javascript" src="js/util/formulas.js"></script>
+<script type="text/javascript" src="js/util/plates.js"></script>
+<script type="text/javascript" src="js/util/timing.js"></script>
+<script type="text/javascript" src="js/util/phonegap-util.js"></script>
+<script type="text/javascript" src="js/version.js"></script>
+<script type='text/javascript' src='js/util/email.js'></script>
+<script type='text/javascript' src='js/util/backup/files.js'></script>
+<script type='text/javascript' src='js/util/backup/store-file-backer.js'></script>
+<script type='text/javascript' src='js/util/backup/when-application-ready.js'></script>
+<script type='text/javascript' src='js/models/stores.js'></script>
+<script type='text/javascript' src='js/models/user.js'></script>
+<script type='text/javascript' src='js/models/routines.js'></script>
+<script type='text/javascript' src='js/models/531/lift-progression.js'></script>
+<script type='text/javascript' src='js/models/531/lifts.js'></script>
+<script type='text/javascript' src='js/models/templates/meet_goal.js'></script>
+<script type='text/javascript' src='js/models/templates/template.js'></script>
+<script type='text/javascript' src='js/models/templates/week_rotation.js'></script>
+<script type='text/javascript' src='js/models/531/lift-completion.js'></script>
+<script type='text/javascript' src='js/models/abstract-settings-store.js'></script>
+<script type='text/javascript' src='js/models/531/settings.js'></script>
+<script type='text/javascript' src='js/models/global-settings.js'></script>
+<script type='text/javascript' src='js/models/531/lift-log.js'></script>
+<script type='text/javascript' src='js/models/log-sort.js'></script>
+<script type='text/javascript' src='js/models/rest-time.js'></script>
+<script type='text/javascript' src='js/models/531/current-cycle.js'></script>
+<script type='text/javascript' src='js/models/531/powerlifting-total-config.js'></script>
+<script type='text/javascript' src='js/models/531/powerlifting-total-lifts.js'></script>
+<script type='text/javascript' src='js/models/plates/bar.js'></script>
+<script type='text/javascript' src='js/models/plates/plates.js'></script>
+<script type='text/javascript' src='js/models/assistance/assistance.js'></script>
+<script type='text/javascript' src='js/models/assistance/boring-but-big-percentage.js'></script>
+<script type='text/javascript' src='js/models/assistance/boring-but-big.js'></script>
+<script type='text/javascript' src='js/models/assistance/custom/custom.js'></script>
+<script type='text/javascript' src='js/models/assistance/custom/triumvirate.js'></script>
+<script type='text/javascript' src='js/models/assistance/custom/bodyweight.js'></script>
+<script type='text/javascript' src='js/models/assistance/sst/sst.js'></script>
+<script type='text/javascript' src='js/models/assistance/sst/sst-sets.js'></script>
+<script type='text/javascript' src='js/models/migration/migration.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/001_starting_strength_notification.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/002_global_settings_defaults.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/003_date_format_finder.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/004_stitch_broken_progression_sets.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/005_bbb_doubling_fix.js'></script>
+<script type='text/javascript'
+        src='js/models/migration/migrations/006_rotating_week_store_lift_matching.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/007_add_order_to_assistance.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/008_update_ss_workout_defaults.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/009_rate_app.js'></script>
+<script type='text/javascript'
+        src='js/models/migration/migrations/010_recreate_starting_strength_workouts.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/011_add_workout_id_to_log.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/012_fix_ss_powerclean_percentage.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/013_fix_ss_doubling.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/014_fix_ss_press.js'></script>
+<script type='text/javascript' src='js/models/migration/migrations/015_sync_alert.js'></script>
+<script type='text/javascript' src='js/models/startingstrength/lift-defaults.js'></script>
+<script type='text/javascript' src='js/models/startingstrength/lift.js'></script>
+<script type='text/javascript' src='js/models/startingstrength/template-switcher.js'></script>
+<script type='text/javascript' src='js/models/startingstrength/workout-defaults.js'></script>
+<script type='text/javascript' src='js/models/startingstrength/workout.js'></script>
+<script type='text/javascript' src='js/models/startingstrength/log.js'></script>
+<script type='text/javascript' src='js/models/startingstrength/combined-log.js'></script>
+<script type='text/javascript' src='js/models/sync/log-syncer.js'></script>
+<script type='text/javascript' src='js/models/sync/headers.js'></script>
+<script type="text/javascript" src="js/views/setup/setup.js"></script>
+<script type="text/javascript" src="js/views/setup/routine-chooser.js"></script>
+<script type="text/javascript" src="js/views/setup/user-setup.js"></script>
+<script type='text/javascript' src='js/views/components/notes-editor.js'></script>
+<script type='text/javascript' src='js/views/components/rest-timer.js'></script>
+<script type='text/javascript' src='js/views/components/config-gear.js'></script>
+<script type='text/javascript' src='js/views/components/swipe-to-delete.js'></script>
+<script type='text/javascript' src='js/views/components/reps-to-beat-toolbar.js'></script>
+<script type='text/javascript' src='js/views/components/set-counter.js'></script>
+<script type='text/javascript' src='js/views/components/powerlifting-total.js'></script>
+<script type='text/javascript' src='js/views/components/sort-toolbar.js'></script>
+<script type='text/javascript' src='js/views/components/bar-loading-toolbar.js'></script>
+<script type='text/javascript' src='js/views/maxes/cards/add-lift.js'></script>
+<script type='text/javascript' src='js/views/maxes/cards/edit-lift.js'></script>
+<script type='text/javascript' src='js/views/maxes/cards/edit-lifts-list.js'></script>
+<script type='text/javascript' src='js/views/maxes/cards/maxes-form.js'></script>
+<script type='text/javascript' src='js/views/maxes/cards/arrange-lifts.js'></script>
+<script type='text/javascript' src='js/views/maxes/cards/plate-bar-setup.js'></script>
+<script type='text/javascript' src='js/views/maxes/cards/powerlifting-total-editor.js'></script>
+<script type='text/javascript' src='js/views/maxes/maxes.js'></script>
+<script type='text/javascript' src='js/views/assistance/assistance-chooser.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/custom/custom-assistance.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/custom/custom-panel.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/custom/custom-movement-editor.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/custom/custom-panel-list.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/custom/custom-arrange-panel.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/custom/custom-arrange-list.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/sst/sst.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/sst/sst-custom-panel.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/sst/sst-maxes.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/sst/sst-lift-form.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/boring-but-big/boring-but-big.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/boring-but-big/boring-but-big-panel.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/bodyweight/bodyweight.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/bodyweight/bodyweight-movement-editor.js'></script>
+<script type='text/javascript'
+        src='js/views/assistance/routines/boring-but-big/bbb-movement-editor.js'></script>
+<script type='text/javascript'
+        src='js/views/assistance/routines/boring-but-big/boring-but-big-notes.js'></script>
+<script type='text/javascript' src='js/views/assistance/routines/triumvirate/triumvirate.js'></script>
+<script type='text/javascript'
+        src='js/views/assistance/routines/triumvirate/triumvirate-movement-editor.js'></script>
+<script type='text/javascript' src='js/views/assistance/assistance-lift-chooser.js'></script>
+<script type='text/javascript' src='js/views/assistance/assistance.js'></script>
+<script type='text/javascript' src='js/views/assistance/assistance-toolbar.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/cycle-complete/increase-maxes-help.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/cycle-complete/cycle-complete.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-selector.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/tracking/lift-tracking.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/tracking/first-log-notes-editor.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-template.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/common-behavior.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/custom-template.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/fresher.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/heavier.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/rotating.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-settings/templates/powerlifting.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-settings/lift-settings.js'></script>
+<script type='text/javascript'
+        src='js/views/schedule/cards/lift-settings/custom-template-editor.js'></script>
+<script type='text/javascript' src='js/views/schedule/cards/lift-settings/edit-progression.js'></script>
+<script type='text/javascript' src='js/views/schedule/lift-schedule.js'></script>
+<script type='text/javascript' src='js/views/settings/cards/settings-form.js'></script>
+<script type='text/javascript' src='js/views/settings/settings.js'></script>
+<script type='text/javascript' src='js/views/track/cards/edit-log-entry.js'></script>
+<script type='text/javascript' src='js/views/track/cards/edit-assistance-log-entry.js'></script>
+<script type='text/javascript' src='js/views/track/cards/log-lists/lift-log-list.js'></script>
+<script type='text/javascript' src='js/views/track/cards/log-lists/assistance-log-list.js'></script>
+<script type='text/javascript' src='js/views/track/cards/log-lists/log-list.js'></script>
+<script type='text/javascript' src='js/views/track/cards/export.js'></script>
+<script type='text/javascript' src='js/views/track/cards/assistance-log-notes-editor.js'></script>
+<script type='text/javascript' src='js/views/track/cards/log-notes-editor.js'></script>
+<script type='text/javascript' src='js/views/track/cards/graph.js'></script>
+<script type='text/javascript' src='js/views/track/track.js'></script>
+<script type='text/javascript' src='js/views/oneRepMaxCalculator.js'></script>
+<script type='text/javascript' src='js/views/more/more-info-list.js'></script>
+<script type='text/javascript' src='js/views/more/reset.js'></script>
+<script type='text/javascript' src='js/views/531/more/more-info-list.js'></script>
+<script type='text/javascript' src='js/views/531/more/more.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/lift/lift-tab.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/lift/config/config.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/lift/config/templates/template.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/lift/config/templates/default.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/lift/config/templates/novice.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/lift/config/config-promo.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/lift/workouts.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/lift/workout-list.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/edit/edit-tab.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/edit/edit-lifts-form.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/edit/edit-lift.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/track/track-tab.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/more/more-info-list.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/more/settings/settings-form.js'></script>
+<script type='text/javascript' src='js/views/startingstrength/more/more.js'></script>
+<script type="text/javascript" src="js/debug.js"></script>
+<script type='text/javascript' src='js/util/backup/loading.js'></script>
+<script type="text/javascript" src="js/util/orientationLock.js"></script>
+<!--end combine-->
 </head>
 <body>
 </body>

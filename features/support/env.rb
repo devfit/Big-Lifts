@@ -23,10 +23,6 @@ Before('@StartingStrength') do
   @routine = 'Starting Strength'
 end
 
-Before('@Existing531WithoutNotification') do
-  @existing_routine = 'existing_routine=531NoNotification'
-end
-
 Before do
   @driver = Selenium::WebDriver.for :chrome
 
