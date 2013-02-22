@@ -128,6 +128,10 @@ Ext.define('biglifts.views.LiftTemplate', {
             'estimated-one-rep-max':util.formulas.estimateOneRepMax(weight, reps),
             'notes':''
         });
+
+        if (!biglifts.premium) {
+            window.plugins.iAdPlugin.showAd(true);
+        }
     },
     bindListeners:function () {
         biglifts.stores.lifts.LiftProgression.addListener('beforesync', this.updateLiftValues, this);
