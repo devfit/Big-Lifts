@@ -22,7 +22,7 @@ When /^I wait for the animation$/ do
 end
 
 When /^I set select "([^"]+)" to "([^"]+)"/ do |name, value|
-  select_combobox @driver.find_elements(:name => 'units').select { |input| input.displayed? }[0], value
+  select_combobox @driver.find_elements(:name => name).select { |input| input.displayed? }[0], value
 end
 
 Then /^There is a "(.*?)" button$/ do |text|
@@ -45,3 +45,9 @@ When /^I change the "(.*?)" date to "(.*?)"$/ do |id, date|
   @driver.execute_script("Ext.getCmp('#{id}').setValue(Date.parse('#{date}'));Ext.getCmp('#{id}').fireEvent('change');")
   sleep 0.3
 end
+
+When /^I toggle "(.*?)"$/ do |label|
+  label_element = @driver.find_elements(:class => 'x-form-label').select { |f| f.displayed? }[0]
+  label_element.find_element(:xpath => './..').find_element(:class => 'x-toggle-inner').click
+end
+
