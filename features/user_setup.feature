@@ -11,10 +11,10 @@ Feature: User Setup
   Scenario: User data is populated in the user setup
     When I tap the user icon
     Then The "User" input is "Loading..."
-    Then The "Password" input is "Loading..."
+    Then The "Pass" input is "Loading..."
     And A user loads with username "bob" and password "password"
     Then The "User" input is "bob"
-    Then The "Password" input is "password"
+    Then The "Pass" input is "password"
 
   Scenario: Username can be changed
     When I tap the user icon
