@@ -31,17 +31,21 @@ biglifts.loading.load = function () {
                 biglifts.main.start();
             });
 
-            if (Ext.os.is.iOS) {
-                document.addEventListener("iAdBannerViewDidLoadAdEvent", function (evt) {
-                    window.plugins.iAdPlugin.showAd(true);
-                }, false);
-                document.addEventListener("iAdBannerViewDidFailToReceiveAdWithErrorEvent", function (evt) {
-                    window.plugins.iAdPlugin.showAd(false);
-                }, false);
-                window.plugins.iAdPlugin.orientationChanged(true);
-                window.plugins.iAdPlugin.prepare(true);
-            }
+            setupAds();
         }, 0);
+    }
+};
+
+var setupAds = function () {
+    if (Ext.os.is.iOS) {
+        document.addEventListener("iAdBannerViewDidLoadAdEvent", function (evt) {
+            window.plugins.iAdPlugin.showAd(true);
+        }, false);
+        document.addEventListener("iAdBannerViewDidFailToReceiveAdWithErrorEvent", function (evt) {
+            window.plugins.iAdPlugin.showAd(false);
+        }, false);
+        window.plugins.iAdPlugin.orientationChanged(true);
+        window.plugins.iAdPlugin.prepare(true);
     }
 };
 
