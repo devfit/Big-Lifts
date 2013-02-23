@@ -5,8 +5,7 @@ Feature: One rep max calculator
     When I open the 1-rep calculator
     And I set weight to <weight> and reps to <reps>
     And I select use for <lift>
-    Then I am taken to the maxes page
-    And The "<lift>" input is "<estimate>"
+    Then The "<lift>" input is "<estimate>"
 
   Scenarios: use one-rep calculations
     | weight | reps | lift     | estimate |
