@@ -90,9 +90,6 @@ Ext.define('biglifts.views.RestTimer', {
         layout:'fit',
         listeners:{
             painted:function () {
-                if (!biglifts.premium) {
-                    window.plugins.iAdPlugin.showAd(true);
-                }
                 this.checkIfSoundMuted();
                 this.remainingSeconds = _.isUndefined(this.remainingSeconds) ? 0 : this.remainingSeconds;
                 if (this.remainingSeconds === 0) {

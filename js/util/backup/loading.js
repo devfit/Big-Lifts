@@ -46,6 +46,12 @@ var setupAds = function () {
         }, false);
         window.plugins.iAdPlugin.orientationChanged(true);
         window.plugins.iAdPlugin.prepare(true);
+        var ONE_MINUTE = 1000 * 60;
+        setTimeout(function () {
+            if (!biglifts.premium) {
+                window.plugins.iAdPlugin.showAd(true);
+            }
+        }, ONE_MINUTE)
     }
 };
 
