@@ -25,9 +25,5 @@ Then /^I select use for (\w+)$/ do |lift|
   select_combobox lift_selector, lift
 
   @driver.find_element(:id => 'use-max-button').click
-
-end
-
-Then /^I am taken to the maxes page$/ do
-  @driver.find_element(:id => 'maxes-form').displayed?.should be_true
+  sleep MainNavigation::DELAY
 end

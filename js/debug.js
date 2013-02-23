@@ -54,4 +54,5 @@ if (biglifts.DEBUG) {
     }
 
     biglifts.loadingFromFile = false;
+    biglifts.setupAds = Ext.emptyFn;
 }

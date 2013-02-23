@@ -31,12 +31,12 @@ biglifts.loading.load = function () {
                 biglifts.main.start();
             });
 
-            setupAds();
+            biglifts.setupAds();
         }, 0);
     }
 };
 
-var setupAds = function () {
+biglifts.setupAds = function () {
     if (Ext.os.is.iOS) {
         document.addEventListener("iAdBannerViewDidLoadAdEvent", function (evt) {
             window.plugins.iAdPlugin.showAd(true);
