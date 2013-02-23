@@ -17,3 +17,7 @@ end
 Then /^I tap the delete button$/ do
   click_button 'trash'
 end
+
+Then /^I tap the graph button$/ do
+  click_button "chart"
+end

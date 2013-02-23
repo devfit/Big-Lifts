@@ -21,7 +21,6 @@ biglifts.util.graph.buildData = function (lift_id) {
     }
 
     var data = [];
-    biglifts.stores.LiftLog.sort('timestamp', 'ASC');
     biglifts.stores.LiftLog.each(function (r) {
         if (r.get('week') !== 4) {
             biglifts.util.graph.addLogRecordToData(data, r);
