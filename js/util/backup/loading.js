@@ -7,12 +7,17 @@ biglifts.loading.loadStore = function (store, callback) {
         });
     }
     else {
-        store.load({
-            callback:function () {
-                util.filebackup.watchStoreSync(store);
-                callback();
-            }
-        });
+        try {
+            store.load({
+                callback:function () {
+                    util.filebackup.watchStoreSync(store);
+                    callback();
+                }
+            });
+        }
+        catch (e) {
+            callback();
+        }
     }
 };
 
