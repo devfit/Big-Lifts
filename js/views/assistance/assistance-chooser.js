@@ -7,7 +7,7 @@ Ext.define('biglifts.views.AssistanceChooser', {
     },
     highlightLastChosenAssistance: function () {
         var selectedIndex = 0;
-        var assistanceType = this.getLastAssistanceType();
+        var assistanceType = biglifts.stores.assistance.ActivityLog.getLastAssistanceType();
         if (assistanceType !== null) {
             var assistanceRecord = _.find(this.assistanceOptions, function (option) {
                 return option.assistanceType === assistanceType;
@@ -19,24 +19,6 @@ Ext.define('biglifts.views.AssistanceChooser', {
         if (assistanceList) {
             assistanceList.select(selectedIndex);
         }
-    },
-    getLastAssistanceType: function () {
-        var assistanceType = null;
-        util.withNoFilters(biglifts.stores.assistance.ActivityLog, function () {
-            if (biglifts.stores.assistance.ActivityLog.getCount() > 0) {
-                var highestTimestamp = 0;
-                var lastAssistanceRecord = null;
-                biglifts.stores.assistance.ActivityLog.each(function (record) {
-                    if (record.get('timestamp') > highestTimestamp) {
-                        lastAssistanceRecord = record;
-                        highestTimestamp = record.get('timestamp');
-                    }
-                });
-
-                assistanceType = lastAssistanceRecord.get('assistanceType');
-            }
-        });
-        return assistanceType;
     },
     nextButtonPressed: function () {
         var selection = Ext.getCmp('assistance-chooser-list').getSelection();

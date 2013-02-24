@@ -23,6 +23,25 @@ Ext.define('AssistanceActivity', {
 
 Ext.define("ActivityLogStore", {
     extend:"Ext.data.Store",
+    getLastAssistanceType:function () {
+        var me = this;
+        var assistanceType = null;
+        util.withNoFilters(me, function () {
+            if (me.getCount() > 0) {
+                var highestTimestamp = 0;
+                var lastAssistanceRecord = null;
+                me.each(function (record) {
+                    if (record.get('timestamp') > highestTimestamp) {
+                        lastAssistanceRecord = record;
+                        highestTimestamp = record.get('timestamp');
+                    }
+                });
+
+                assistanceType = lastAssistanceRecord.get('assistanceType');
+            }
+        });
+        return assistanceType;
+    },
     filterOutNoneEntries:function () {
         this.filterBy(function (item) {
             return item.get("assistanceType") !== "NONE";

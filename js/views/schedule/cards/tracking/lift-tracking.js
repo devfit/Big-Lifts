@@ -101,8 +101,9 @@ Ext.define('biglifts.views.LiftTracking', {
     goToLog:function () {
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
     },
-    goToAssistance:function(){
-
+    goToAssistance:function () {
+        var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
+        Ext.getCmp('assistance').doLastAssistanceFor(lift);
     },
     config:{
         id:'lift-tracking',

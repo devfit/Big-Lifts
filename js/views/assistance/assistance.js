@@ -5,7 +5,23 @@ Ext.define('biglifts.views.Assistance', {
         return this.restTimer;
     },
     doLastAssistanceFor:function (liftRecord) {
+        this.assistanceLiftChooser.setCurrentLift(liftRecord);
+        var assistanceType = biglifts.stores.assistance.ActivityLog.getLastAssistanceType();
+        var assistanceMapping = {
+            'BBB':this.boringButBig,
+            'SST':this.sst,
+            'Custom':this.triumvirate,
+            'Bodyweight':this.bodyweight
+        };
 
+        var nextAssistance = assistanceMapping[assistanceType];
+        if (nextAssistance) {
+            this.setActiveItem(nextAssistance);
+        }
+        else {
+            this.setActiveItem(this.assistanceChooser);
+        }
+        Ext.getCmp('main-tab-panel').setActiveItem(this);
     },
     config:{
         id:'assistance',
@@ -14,9 +30,9 @@ Ext.define('biglifts.views.Assistance', {
         layout:'card',
         listeners:{
             initialize:function () {
-                this.assistanceChooser = Ext.create('biglifts.views.AssistanceChooser');
-                this.assistanceLiftChooser = Ext.create('biglifts.views.AssistanceLiftChooser');
-                this.boringButBig = Ext.create('biglifts.views.BoringButBig');
+                this.assistanceChooser = this.add(Ext.create('biglifts.views.AssistanceChooser'));
+                this.assistanceLiftChooser = this.add(Ext.create('biglifts.views.AssistanceLiftChooser'));
+                this.boringButBig = this.add(Ext.create('biglifts.views.BoringButBig'));
                 this.add(Ext.create('biglifts.views.BoringButBigMovementEditor'));
 
                 this.bodyweight = this.add(Ext.create('biglifts.views.BodyWeight'));
