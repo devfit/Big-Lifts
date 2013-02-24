@@ -1,6 +1,9 @@
 @StartingStrength
 Feature: Tracking Lifts
 
+  Scenario: Lifts can be deleted
+
+
   Scenario: Tracking lifts honors units
     When I navigate to the "Edit" tab
     And I set the "Bench" input to "225"
