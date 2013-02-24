@@ -86,8 +86,23 @@ Ext.define('biglifts.views.LiftTracking', {
             Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('cycle-complete'));
         }
         else {
-            Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+            if (this.asstToggle) {
+                if (this.asstToggle.getValue()) {
+                    this.goToAssistance();
+                }
+                else {
+                    this.goToLog();
+                }
+            } else {
+                this.goToLog();
+            }
         }
+    },
+    goToLog:function () {
+        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
+    },
+    goToAssistance:function(){
+
     },
     config:{
         id:'lift-tracking',
@@ -96,73 +111,80 @@ Ext.define('biglifts.views.LiftTracking', {
             initialize:function () {
                 var me = this;
                 me.currentLiftNotes = '';
-                me.add([
-                    {
-                        docked:'top',
-                        xtype:'toolbar',
-                        title:'Log',
-                        items:[
-                            {
-                                ui:'back',
-                                text:'Back',
-                                handler:Ext.bind(me.cancelLogTracking, me)
-                            },
-                            {xtype:'spacer'},
-                            {
-                                ui:'confirm',
-                                text:'Save',
-                                handler:Ext.bind(me.logAndShowTracking, me)
-                            }
-                        ]
-                    },
-                    {
-                        xtype:'fieldset',
-                        style:'margin-top: 0; margin-bottom:7px',
-                        items:[
-                            {
-                                labelWidth:'50%',
-                                name:'reps',
-                                xtype:'numberfield',
-                                label:'Reps',
-                                listeners:{
-                                    change:Ext.bind(me.recomputeOneRepMax, me)
-                                }
-                            },
-                            {
-                                labelWidth:'50%',
-                                name:'weight',
-                                xtype:'numberfield',
-                                label:'Weight',
-                                listeners:{
-                                    change:Ext.bind(me.recomputeOneRepMax, me)
-                                }
-                            },
-                            {
-                                labelWidth:'50%',
-                                name:'estimated-one-rep-max',
-                                xtype:'numberfield',
-                                label:'Estimated 1RM',
-                                cls:'one-rep-max-estimate',
-                                readOnly:true
-                            }
-                        ]
-                    },
-                    {
-                        xtype:'panel',
-                        bodyPadding:0,
-                        layout:'fit',
-                        html:'<div class="x-form-fieldset-title fieldset-title-no-margin">Notes</div>' +
-                            '<div id="first-log-notes" class="log-notes"><div class="notes-empty-text">Tap to edit</div></div>',
-                        listeners:{
-                            painted:function () {
-                                if (!this._painted) {
-                                    this._painted = true;
-                                    Ext.get('first-log-notes').addListener('tap', Ext.bind(me.editNotes, me));
-                                }
+                var topToolbar = me.add({
+                    docked:'top',
+                    xtype:'toolbar',
+                    title:'Log'
+                });
+                topToolbar.add({
+                    ui:'back',
+                    text:'Back',
+                    handler:Ext.bind(me.cancelLogTracking, me)
+                });
+                topToolbar.add({xtype:'spacer'});
+                topToolbar.add({
+                    ui:'confirm',
+                    text:'Save',
+                    handler:Ext.bind(me.logAndShowTracking, me)
+                });
+
+                var fieldset = me.add({
+                    xtype:'fieldset',
+                    style:'margin-top: 0; margin-bottom:7px'
+                });
+
+                if (biglifts.toggles.Assistance) {
+                    this.asstToggle = fieldset.add({
+                        xtype:'togglefield',
+                        labelWidth:'66%',
+                        value:1,
+                        label:'Asst.'
+                    });
+                }
+
+                fieldset.add({
+                    labelWidth:'50%',
+                    name:'reps',
+                    xtype:'numberfield',
+                    label:'Reps',
+                    listeners:{
+                        change:Ext.bind(me.recomputeOneRepMax, me)
+                    }
+                });
+                fieldset.add({
+                    labelWidth:'50%',
+                    name:'weight',
+                    xtype:'numberfield',
+                    label:'Weight',
+                    listeners:{
+                        change:Ext.bind(me.recomputeOneRepMax, me)
+                    }
+                });
+
+                fieldset.add({
+                    labelWidth:'50%',
+                    name:'estimated-one-rep-max',
+                    xtype:'numberfield',
+                    label:'Estimated 1RM',
+                    cls:'one-rep-max-estimate',
+                    readOnly:true
+                });
+
+                me.add({
+                    xtype:'panel',
+                    bodyPadding:0,
+                    layout:'fit',
+                    html:'<div class="x-form-fieldset-title fieldset-title-no-margin">Notes</div>' +
+                        '<div id="first-log-notes" class="log-notes"><div class="notes-empty-text">Tap to edit</div></div>',
+                    listeners:{
+                        painted:function () {
+                            if (!this._painted) {
+                                this._painted = true;
+                                Ext.get('first-log-notes').addListener('tap', Ext.bind(me.editNotes, me));
                             }
                         }
                     }
-                ]);
+                });
             },
             painted:function () {
                 biglifts.navigation.setBackFunction(Ext.bind(this.cancelLogTracking, this));

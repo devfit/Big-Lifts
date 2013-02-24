@@ -2,7 +2,6 @@
 
 Ext.define('biglifts.views.AssistanceLiftChooser', {
     extend: 'Ext.Panel',
-    xtype: 'assistanceliftchooser',
     showLiftChooser: function (assistanceId, title) {
         this.assistanceId = assistanceId;
         this._toolbar.setTitle(title);

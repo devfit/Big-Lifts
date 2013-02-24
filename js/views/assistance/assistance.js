@@ -4,6 +4,9 @@ Ext.define('biglifts.views.Assistance', {
     getRestTimer:function () {
         return this.restTimer;
     },
+    doLastAssistanceFor:function (liftRecord) {
+
+    },
     config:{
         id:'assistance',
         title:'Asst.',
@@ -11,22 +14,23 @@ Ext.define('biglifts.views.Assistance', {
         layout:'card',
         listeners:{
             initialize:function () {
-                this.add([
-                    {xtype:'assistancechooser'},
-                    {xtype:'assistanceliftchooser'},
-                    Ext.create('biglifts.views.BoringButBig'),
-                    Ext.create('biglifts.views.BoringButBigMovementEditor'),
-                    Ext.create('biglifts.views.BodyWeight'),
-                    biglifts.views.liftSchedule.assistance.BodyweightMovementEditor,
-                    biglifts.views.liftSchedule.assistance.Custom,
-                    biglifts.views.liftSchedule.assistance.CustomMovementEditor,
-                    {
-                        xtype:'boringbutbignotes',
-                        id:'boring-but-big-notes'
-                    }
-                ]);
+                this.assistanceChooser = Ext.create('biglifts.views.AssistanceChooser');
+                this.assistanceLiftChooser = Ext.create('biglifts.views.AssistanceLiftChooser');
+                this.boringButBig = Ext.create('biglifts.views.BoringButBig');
+                this.add(Ext.create('biglifts.views.BoringButBigMovementEditor'));
 
-                this.add(Ext.create('biglifts.views.SimplestStrengthTemplate'));
+                this.bodyweight = this.add(Ext.create('biglifts.views.BodyWeight'));
+                this.add(Ext.create('BodyweightMovementEditor'));
+
+                this.triumvirate = this.add(Ext.create('biglifts.views.Triumvirate'));
+                this.add(Ext.create('TriumvirateMovementEditor'));
+
+                this.add({
+                    xtype:'boringbutbignotes',
+                    id:'boring-but-big-notes'
+                });
+
+                this.sst = this.add(Ext.create('biglifts.views.SimplestStrengthTemplate'));
                 this.add(Ext.create('biglifts.views.SimplestStrengthTemplateMaxes'));
                 this.add(Ext.create('biglifts.views.SimplestStrengthTemplateEditLift'));
 

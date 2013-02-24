@@ -1,14 +1,10 @@
-Ext.ns('biglifts.views.liftSchedule.assistance');
-
 Ext.define('BodyweightMovementEditor', {
     extend:'biglifts.views.CustomMovementEditor',
     xtype:'bodyweightmovementeditor',
     assistanceViewId:'bodyweight',
-    customMovementStore:biglifts.stores.assistance.BodyweightMovement
+    customMovementStore:biglifts.stores.assistance.BodyweightMovement,
+    config:{
+        id:'bodyweight-movement-editor',
+        assistanceViewId:'bodyweight'
+    }
 });
-
-biglifts.views.liftSchedule.assistance.BodyweightMovementEditor = {
-    xtype:'bodyweightmovementeditor',
-    id:'bodyweight-movement-editor',
-    assistanceViewId:'bodyweight'
-};

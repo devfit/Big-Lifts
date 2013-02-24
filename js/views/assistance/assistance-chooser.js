@@ -1,7 +1,6 @@
 "use strict";
 Ext.define('biglifts.views.AssistanceChooser', {
     extend: 'Ext.Panel',
-    xtype: 'assistancechooser',
     continueToLog: function () {
         this.saveNoAssistance();
         Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('log'));
