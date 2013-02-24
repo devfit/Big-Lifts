@@ -18,25 +18,18 @@ Ext.define('biglifts.views.ss.Track', {
     },
     deleteEntry:function (dataview, index, item, e) {
         var combinedLog = biglifts.stores.ss.CombinedLog.getAt(index);
-        var workoutId = combinedLog.get('workout_id');
 
-        util.withNoFilters(biglifts.stores.ss.Log, function () {
-            biglifts.stores.ss.Log.filter('workout_id', workoutId);
-            biglifts.stores.ss.Log.each(function (r) {
-                biglifts.stores.ss.Log.remove(r);
-            });
-            biglifts.stores.ss.Log.clearFilter();
-        });
-
-        biglifts.stores.ss.Log.sync();
+        combinedLog.logs().removeAll();
+        biglifts.stores.ss.CombinedLog.remove(combinedLog);
+        biglifts.stores.ss.CombinedLog.sync();
     },
     bindListeners:function () {
-        biglifts.stores.ss.Log.addListener('beforesync', this.sortAndRefreshList, this);
+        biglifts.stores.ss.CombinedLog.addListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.LogSort.addListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.w.Settings.addListener('beforesync', this.refreshLoglist, this);
     },
     destroyListeners:function () {
-        biglifts.stores.ss.Log.removeListener('beforesync', this.sortAndRefreshList, this);
+        biglifts.stores.ss.CombinedLog.removeListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.LogSort.removeListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.w.Settings.removeListener('beforesync', this.refreshLoglist, this);
     },
