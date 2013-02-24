@@ -105,6 +105,10 @@ Ext.define('biglifts.views.LiftTracking', {
         var lift = biglifts.stores.lifts.Lifts.findRecord('propertyName', biglifts.liftSchedule.currentLiftProperty);
         Ext.getCmp('assistance').doLastAssistanceFor(lift);
     },
+    doAssistanceChanged:function (me, s, t, newValue) {
+        biglifts.stores.assistance.DoAsstAfterLift.first().set('doAssistance', !!newValue);
+        biglifts.stores.assistance.DoAsstAfterLift.sync();
+    },
     config:{
         id:'lift-tracking',
         scroll:'vertical',
@@ -135,11 +139,15 @@ Ext.define('biglifts.views.LiftTracking', {
                 });
 
                 if (biglifts.toggles.Assistance) {
+                    var doAssistance = biglifts.stores.assistance.DoAsstAfterLift.first().get('doAssistance');
                     this.asstToggle = fieldset.add({
                         xtype:'togglefield',
                         labelWidth:'66%',
-                        value:1,
-                        label:'Asst.'
+                        value:doAssistance ? 1 : 0,
+                        label:'Asst.',
+                        listeners:{
+                            change:Ext.bind(me.doAssistanceChanged, me)
+                        }
                     });
                 }
 
