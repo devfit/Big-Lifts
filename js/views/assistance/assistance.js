@@ -1,28 +1,28 @@
 "use strict";
 Ext.define('biglifts.views.Assistance', {
-    extend: 'Ext.Panel',
-    getRestTimer: function () {
+    extend:'Ext.Panel',
+    getRestTimer:function () {
         return this.restTimer;
     },
-    config: {
-        id: 'assistance',
-        title: 'Asst.',
-        iconCls: 'icnAssistance',
-        layout: 'card',
-        listeners: {
-            initialize: function () {
+    config:{
+        id:'assistance',
+        title:'Asst.',
+        iconCls:'icnAssistance',
+        layout:'card',
+        listeners:{
+            initialize:function () {
                 this.add([
-                    {xtype: 'assistancechooser'},
-                    {xtype: 'assistanceliftchooser'},
+                    {xtype:'assistancechooser'},
+                    {xtype:'assistanceliftchooser'},
                     Ext.create('biglifts.views.BoringButBig'),
                     Ext.create('biglifts.views.BoringButBigMovementEditor'),
-                    biglifts.views.liftSchedule.assistance.Bodyweight,
+                    Ext.create('biglifts.views.BodyWeight'),
                     biglifts.views.liftSchedule.assistance.BodyweightMovementEditor,
                     biglifts.views.liftSchedule.assistance.Custom,
                     biglifts.views.liftSchedule.assistance.CustomMovementEditor,
                     {
-                        xtype: 'boringbutbignotes',
-                        id: 'boring-but-big-notes'
+                        xtype:'boringbutbignotes',
+                        id:'boring-but-big-notes'
                     }
                 ]);
 

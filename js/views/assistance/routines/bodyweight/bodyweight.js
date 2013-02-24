@@ -5,10 +5,8 @@ Ext.define('biglifts.views.BodyWeight', {
     xtype:'bodyweightassistance',
     customMovementStore:biglifts.stores.assistance.BodyweightMovement,
     movementEditor:'bodyweight-movement-editor',
-    assistanceType:'Bodyweight'
+    assistanceType:'Bodyweight',
+    config:{
+        id:'bodyweight'
+    }
 });
-
-biglifts.views.liftSchedule.assistance.Bodyweight = {
-    xtype:'bodyweightassistance',
-    id:'bodyweight'
-};
