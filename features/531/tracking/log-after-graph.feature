@@ -4,6 +4,7 @@ Feature: Lift tracking after viewing the graph
   Scenario: Sorters are persisted after viewing the graph
     When I view the squat lift schedule for week 1
     And I tap the checkmark
+    And I toggle "Asst."
     And I tap the "Save" button
     And I wait for the animation
 
