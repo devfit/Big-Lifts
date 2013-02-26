@@ -6,7 +6,6 @@ Ext.define('biglifts.views.LiftLogList', {
     deleteLogEntry: function (dataview, index, item, e) {
         biglifts.stores.LiftLog.removeAt(index);
         biglifts.stores.LiftLog.sync();
-        Ext.getCmp('lift-log-list').refresh();
     },
     showLogEntry: function (dataview, index, item, e) {
         var logRecord = biglifts.stores.LiftLog.getAt(index);

@@ -17,8 +17,10 @@ describe("Starting Strength combined workout logs", function () {
             this.combinedLog.rebuildCombinedStore();
 
             expect(this.combinedLog.getCount()).toEqual(2);
-            expect(this.combinedLog.findRecord('workout_id', 1).logs().getCount()).toEqual(2);
-            expect(this.combinedLog.findRecord('workout_id', 2).logs().getCount()).toEqual(1);
+            var workout_1_logs = JSON.parse(this.combinedLog.findRecord('workout_id', 1).get('logs'));
+            expect(workout_1_logs.length).toEqual(2);
+            var workout_2_logs = JSON.parse(this.combinedLog.findRecord('workout_id', 2).get('logs'));
+            expect(workout_2_logs.length).toEqual(1);
         });
     });
 

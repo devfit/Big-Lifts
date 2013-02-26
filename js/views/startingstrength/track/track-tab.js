@@ -16,13 +16,24 @@ Ext.define('biglifts.views.ss.Track', {
     refreshLoglist: function () {
         this.logList.refresh();
     },
+    deleteEntry: function (dataview, index, item, e) {
+        var combinedLog = biglifts.stores.ss.CombinedLog.getAt(index);
+        console.log(combinedLog);
+        var logs = JSON.parse(combinedLog.get('logs'));
+
+        _.each(logs, function (log_id) {
+            var logStore = biglifts.stores.ss.Log;
+            logStore.remove(logStore.findRecord('id', log_id));
+        });
+        biglifts.stores.ss.Log.sync();
+    },
     bindListeners: function () {
-        biglifts.stores.ss.Log.addListener('beforesync', this.sortAndRefreshList, this);
+        biglifts.stores.ss.CombinedLog.addListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.LogSort.addListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.w.Settings.addListener('beforesync', this.refreshLoglist, this);
     },
     destroyListeners: function () {
-        biglifts.stores.ss.Log.removeListener('beforesync', this.sortAndRefreshList, this);
+        biglifts.stores.ss.CombinedLog.removeListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.LogSort.removeListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.w.Settings.removeListener('beforesync', this.refreshLoglist, this);
     },
@@ -33,6 +44,7 @@ Ext.define('biglifts.views.ss.Track', {
         title: 'Track',
         listeners: {
             initialize: function () {
+                var me = this;
                 this.topToolbar = this.add({
                     xtype: 'toolbar',
                     docked: 'top',
@@ -64,22 +76,28 @@ Ext.define('biglifts.views.ss.Track', {
                             var rows = "";
                             var i = 0;
                             biglifts.stores.ss.Log.each(function (r) {
-                                var timeStampColumn = "<td width='23%' class='timestamp last'>";
-                                timeStampColumn += i == 1 ? convertTimestamp(r.get('timestamp')) : "";
-                                timeStampColumn += "</td>";
+                                var timeStampColumn = i == 1 ?
+                                    "<td width='30%' class='timestamp last'>" + convertTimestamp(r.get('timestamp')) + "</td>" : "";
+
+                                var deleteColumn = i == 1 ? '<td width="30%" class="delete-button-holder hidden"></td>' : "";
+
                                 rows += "<tr>" +
                                     "<td width='30%' class='name'>" + r.get('name') + "</td>" +
-                                    "<td width='23%'><span class='sets'>" + r.get('sets') + "x</span> " + r.get('reps') + "</td>" +
-                                    "<td width='23%'>" + r.get('weight') + r.get('units') + "</td>" +
-                                    timeStampColumn +
+                                    "<td width='20%'><span class='sets'>" + r.get('sets') + "x</span> " + r.get('reps') + "</td>" +
+                                    "<td width='20%'>" + r.get('weight') + r.get('units') + "</td>" +
+                                    timeStampColumn + deleteColumn +
                                     "</tr>";
                                 i++;
                             });
                             biglifts.stores.ss.Log.clearFilter();
-
                             return rows;
                         }
-                    })
+                    }),
+                    listeners: {
+                        painted: function () {
+                            biglifts.components.addSwipeToDelete(this, Ext.emptyFn, me.deleteEntry, Ext.emptyFn, '.timestamp');
+                        }
+                    }
                 });
 
                 this.setActiveItem(0);
