@@ -1,69 +1,73 @@
 Ext.define('biglifts.views.ss.Track', {
-    extend:'Ext.Panel',
-    showSortMenu:function () {
+    extend: 'Ext.Panel',
+    showSortMenu: function () {
         util.components.toggleVisibility(this.sortToolbar);
     },
-    sortLifts:function (sortProperty, sortDirection) {
+    sortLifts: function (sortProperty, sortDirection) {
         biglifts.stores.LiftLog.sort(sortProperty, sortDirection);
         this.logList.refresh();
     },
-    sortAndRefreshList:function () {
+    sortAndRefreshList: function () {
         var liftLogSort = biglifts.stores.LogSort.first();
         var sortDirection = liftLogSort.get('ascending') ? 'ASC' : 'DESC';
         var sortProperty = liftLogSort.get('property');
         this.sortLifts(sortProperty, sortDirection);
     },
-    refreshLoglist:function () {
+    refreshLoglist: function () {
         this.logList.refresh();
     },
-    deleteEntry:function (dataview, index, item, e) {
+    deleteEntry: function (dataview, index, item, e) {
         var combinedLog = biglifts.stores.ss.CombinedLog.getAt(index);
+        console.log(combinedLog);
+        var logs = JSON.parse(combinedLog.get('logs'));
 
-        combinedLog.logs().removeAll();
-        biglifts.stores.ss.CombinedLog.remove(combinedLog);
-        biglifts.stores.ss.CombinedLog.sync();
+        _.each(logs, function (log_id) {
+            var logStore = biglifts.stores.ss.Log;
+            logStore.remove(logStore.findRecord('id', log_id));
+        });
+        biglifts.stores.ss.Log.sync();
     },
-    bindListeners:function () {
+    bindListeners: function () {
         biglifts.stores.ss.CombinedLog.addListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.LogSort.addListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.w.Settings.addListener('beforesync', this.refreshLoglist, this);
     },
-    destroyListeners:function () {
+    destroyListeners: function () {
         biglifts.stores.ss.CombinedLog.removeListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.LogSort.removeListener('beforesync', this.sortAndRefreshList, this);
         biglifts.stores.w.Settings.removeListener('beforesync', this.refreshLoglist, this);
     },
-    config:{
-        id:'ss-track-tab',
-        iconCls:'bookmarks',
-        layout:'card',
-        title:'Track',
-        listeners:{
-            initialize:function () {
+    config: {
+        id: 'ss-track-tab',
+        iconCls: 'bookmarks',
+        layout: 'card',
+        title: 'Track',
+        listeners: {
+            initialize: function () {
                 var me = this;
                 this.topToolbar = this.add({
-                    xtype:'toolbar',
-                    docked:'top',
-                    title:'Track',
-                    items:[
+                    xtype: 'toolbar',
+                    docked: 'top',
+                    title: 'Track',
+                    items: [
                         {
-                            xtype:'button',
-                            ui:'action',
-                            text:'Sort',
-                            handler:Ext.bind(this.showSortMenu, this)
+                            xtype: 'button',
+                            ui: 'action',
+                            text: 'Sort',
+                            handler: Ext.bind(this.showSortMenu, this)
                         }
                     ]
                 });
 
-                this.sortToolbar = this.add(Ext.create('biglifts.components.SortToolbar', {alphaEnabled:false}));
+                this.sortToolbar = this.add(Ext.create('biglifts.components.SortToolbar', {alphaEnabled: false}));
 
                 this.logList = this.add({
-                    xtype:'list',
-                    store:biglifts.stores.ss.CombinedLog,
-                    itemTpl:new Ext.XTemplate("<table class='ss-workout'><tbody>" +
+                    xtype: 'list',
+                    store: biglifts.stores.ss.CombinedLog,
+                    itemTpl: new Ext.XTemplate("<table class='ss-workout'><tbody>" +
                         "{[this.buildRowsForWorkout(values)]}" +
                         "</tbody></table>", {
-                        buildRowsForWorkout:function (values) {
+                        buildRowsForWorkout: function (values) {
                             var convertTimestamp = function (timestamp) {
                                 return new Date(timestamp).toString(biglifts.stores.w.Settings.first().get('dateFormat'));
                             };
@@ -89,8 +93,8 @@ Ext.define('biglifts.views.ss.Track', {
                             return rows;
                         }
                     }),
-                    listeners:{
-                        painted:function () {
+                    listeners: {
+                        painted: function () {
                             biglifts.components.addSwipeToDelete(this, Ext.emptyFn, me.deleteEntry, Ext.emptyFn, '.timestamp');
                         }
                     }
@@ -98,7 +102,7 @@ Ext.define('biglifts.views.ss.Track', {
 
                 this.setActiveItem(0);
             },
-            painted:function () {
+            painted: function () {
                 biglifts.navigation.unbindBackEvent();
 
                 if (!this._painted) {
@@ -107,7 +111,7 @@ Ext.define('biglifts.views.ss.Track', {
                     this.bindListeners();
                 }
             },
-            destroy:function () {
+            destroy: function () {
                 this.destroyListeners();
             }
         }

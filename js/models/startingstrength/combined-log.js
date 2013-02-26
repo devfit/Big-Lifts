@@ -4,12 +4,11 @@ Ext.define('biglifts.models.startingstrength.CombinedLog', {
         identifier: 'uuid',
         fields: [
             {name: 'id', type: 'string'},
-            {name: 'workout_id', type: 'int'}
+            {name: 'workout_id', type: 'int'},
+            {name: 'logs', type: 'string', defaultValue: '[]'}//hasMany is broken
         ],
-        hasMany: {model: 'biglifts.models.startingstrength.Log', name: 'logs'},
         proxy: {
-            type: 'memory',
-            id: 'ss-combined-log'
+            type: 'memory'
         }
     }
 });
@@ -20,15 +19,19 @@ Ext.define('biglifts.models.startingstrength.CombinedLogStore', {
         var me = this;
         util.withLoadedStore(biglifts.stores.ss.Log, function () {
             me.removeAll();
+            me.sync();
             biglifts.stores.ss.Log.each(function (r) {
                 var workout_id = r.get('workout_id');
                 var record = me.findRecord('workout_id', workout_id);
                 if (!record) {
-                    record = Ext.create('biglifts.models.startingstrength.CombinedLog', {workout_id: workout_id});
-                    me.add(record);
+                    me.add({workout_id: workout_id});
+                    me.sync();
+                    record = me.findRecord('workout_id', workout_id);
                 }
-                record.logs().add(r);
-                record.logs().sync();
+                var logs = JSON.parse(record.get('logs'));
+                logs.push(r.get('id'));
+                record.set('logs', JSON.stringify(logs));
+                record.save();
             });
             me.sync();
         });

@@ -38,11 +38,13 @@ biglifts.components.swipeToDelete.itemSwipeWrapper = function (item, e, selector
 
 biglifts.components.swipeToDelete.findRowWithDeleteButtonFromTapTarget = function (tapTarget) {
     var list = tapTarget.up('.list-swipe-to-delete');
-    var deleteContainers = list.query('.delete-button-holder');
-    for (var i = 0; i < deleteContainers.length; i++) {
-        var deleteContainer = deleteContainers[i];
-        if (!Ext.get(deleteContainer).hasCls('hidden')) {
-            return Ext.get(deleteContainer).up('.x-list-item');
+    if (list) {
+        var deleteContainers = list.query('.delete-button-holder');
+        for (var i = 0; i < deleteContainers.length; i++) {
+            var deleteContainer = deleteContainers[i];
+            if (!Ext.get(deleteContainer).hasCls('hidden')) {
+                return Ext.get(deleteContainer).up('.x-list-item');
+            }
         }
     }
     return null;
@@ -71,10 +73,10 @@ biglifts.components.swipeToDelete.showDeleteButtonForDom = function (container) 
 
     if (container.down('.delete-button') === null) {
         new Ext.Button({
-            cls:'delete-button',
-            ui:'decline',
-            text:'Delete',
-            renderTo:container
+            cls: 'delete-button',
+            ui: 'decline',
+            text: 'Delete',
+            renderTo: container
         });
     }
 };
