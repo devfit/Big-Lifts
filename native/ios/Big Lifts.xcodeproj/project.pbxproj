@@ -870,8 +870,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Usable Design LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Usable Design LLC";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -884,8 +884,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Big Lifts";
-				PROVISIONING_PROFILE = "86B78E6A-8232-4AFE-8A2B-34A00580ED3A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86B78E6A-8232-4AFE-8A2B-34A00580ED3A";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
@@ -895,8 +895,8 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				ARCHS = armv7;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Usable Design LLC";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Usable Design LLC";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Wendler531/Big Lifts-Prefix.pch";
@@ -907,8 +907,8 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "Big Lifts";
-				PROVISIONING_PROFILE = "86B78E6A-8232-4AFE-8A2B-34A00580ED3A";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "86B78E6A-8232-4AFE-8A2B-34A00580ED3A";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
