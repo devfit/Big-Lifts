@@ -1,6 +1,6 @@
 Ext.define('biglifts.models.Log531Syncer', {
-    LOG_URL:'http://biglifts.herokuapp.com/log',
-    getAndSync:function () {
+    LOG_URL: 'http://biglifts.herokuapp.com/log',
+    getAndSync: function () {
         var me = this;
         biglifts.stores.Users.withUser(function () {
             me.syncRemoteLog(function () {
@@ -8,45 +8,45 @@ Ext.define('biglifts.models.Log531Syncer', {
             });
         });
     },
-    postLog:function () {
+    postLog: function () {
         var me = this;
         biglifts.stores.Users.withUser(function () {
             async.forEachSeries(me.getFormattedLog(), Ext.bind(me.saveWorkout, me));
         });
     },
-    deleteRecord:function (record, callback) {
+    deleteRecord: function (record, callback) {
         var me = this;
         biglifts.stores.Users.withUser(function () {
             Ext.Ajax.request({
-                url:me.LOG_URL + "/" + record.get('workout_id'),
-                method:'DELETE',
-                headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
-                success:function (response) {
+                url: me.LOG_URL + "/" + record.get('workout_id'),
+                method: 'DELETE',
+                headers: Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
+                success: function (response) {
                     callback(null);
                 },
-                failure:function (response) {
+                failure: function (response) {
                     callback(null);
                 },
-                scope:this
+                scope: this
             });
         });
     },
-    saveWorkout:function (workout, callback) {
+    saveWorkout: function (workout, callback) {
         Ext.Ajax.request({
-            url:this.LOG_URL,
-            method:'POST',
-            headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
-            jsonData:workout,
-            success:function (response) {
+            url: this.LOG_URL,
+            method: 'POST',
+            headers: Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
+            jsonData: workout,
+            success: function (response) {
                 callback(null);
             },
-            failure:function (response) {
+            failure: function (response) {
                 callback(null);
             },
-            scope:this
+            scope: this
         });
     },
-    authorizationChanged:function () {
+    authorizationChanged: function () {
         biglifts.stores.Users.recreateUser(function () {
             util.whenApplicationReady(function () {
                 Ext.Msg.confirm('User Changed', 'User authentication failed. Update username/password?', function (text) {
@@ -58,26 +58,30 @@ Ext.define('biglifts.models.Log531Syncer', {
             });
         });
     },
-    syncRemoteLog:function (callback) {
+    syncRemoteLog: function (callback) {
         Ext.Ajax.request({
-            url:this.LOG_URL,
-            method:'GET',
-            headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
-            success:function (response) {
+            url: this.LOG_URL,
+            method: 'GET',
+            headers: Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
+            success: function (response) {
                 this.mergeRemoteLogs(JSON.parse(response.responseText));
                 callback(null);
             },
-            failure:function (response) {
+            failure: function (response) {
                 if (response.status === 401) {
                     this.authorizationChanged();
                 }
             },
-            scope:this
+            scope: this
         });
     },
-    mergeRemoteLogs:function (workouts) {
+    mergeRemoteLogs: function (workouts) {
         var DATE_FORMAT = "MM/dd/yyyy";
         _.each(workouts, function (workout) {
+            if (workout.type !== '5/3/1') {
+                return;
+            }
+
             var log = workout.logs[0];
             var dateAsString = new Date(log.date).toString(DATE_FORMAT);
             var matchingEntry = biglifts.stores.LiftLog.findBy(function (l) {
@@ -95,7 +99,7 @@ Ext.define('biglifts.models.Log531Syncer', {
             }
         });
     },
-    getFormattedLog:function () {
+    getFormattedLog: function () {
         var me = this;
         var data = [];
         biglifts.stores.LiftLog.each(function (l) {
@@ -103,22 +107,24 @@ Ext.define('biglifts.models.Log531Syncer', {
         });
         return data;
     },
-    buildFormattedWorkout:function (log_entry) {
+    buildFormattedWorkout: function (log_entry) {
         return {
-            workout_id:log_entry.get('workout_id'), logs:[
+            workout_id: log_entry.get('workout_id'),
+            type: '5/3/1',
+            logs: [
                 {
-                    sets:1,
-                    reps:log_entry.get('reps'),
-                    name:log_entry.get('liftName'),
-                    weight:log_entry.get('weight'),
-                    notes:log_entry.get('notes'),
-                    date:log_entry.get('timestamp'),
-                    specific:{
-                        type:'5/3/1',
-                        data:{
-                            cycle:log_entry.get('cycle'),
-                            expected_reps:log_entry.get('expectedReps'),
-                            week:log_entry.get('week')
+                    sets: 1,
+                    reps: log_entry.get('reps'),
+                    name: log_entry.get('liftName'),
+                    weight: log_entry.get('weight'),
+                    notes: log_entry.get('notes'),
+                    date: log_entry.get('timestamp'),
+                    specific: {
+                        type: '5/3/1',
+                        data: {
+                            cycle: log_entry.get('cycle'),
+                            expected_reps: log_entry.get('expectedReps'),
+                            week: log_entry.get('week')
                         }
                     }
                 }
