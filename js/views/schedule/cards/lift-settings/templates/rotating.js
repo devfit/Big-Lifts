@@ -83,20 +83,7 @@ Ext.define('biglifts.views.templates.Rotating', {
             ]
         });
 
-        this.add({
-            xtype: 'toolbar',
-            docked: 'top',
-            ui: 'light',
-            items: [
-                {xtype: 'spacer'},
-                {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Use',
-                    handler: Ext.bind(me.useRotatingTemplate, me)
-                }
-            ]
-        });
+        this.add(this.buildUseToolbar(Ext.bind(me.useRotatingTemplate, me)));
 
         this.add({
             html: '<p>Like "fresher", but lifts are staggered by week</p>'

@@ -21,22 +21,11 @@ Ext.define('biglifts.views.templates.Powerlifting', {
                 }
             ]
         });
-        this.add({
-            xtype: 'toolbar',
-            docked: 'top',
-            ui: 'light',
-            items: [
-                {xtype: 'spacer'},
-                {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Use',
-                    handler: function () {
-                        me.setupLiftScheme("powerlifting");
-                    }
-                }
-            ]
-        });
+
+        this.add(this.buildUseToolbar(function () {
+            me.setupLiftScheme("powerlifting");
+        }));
+
         this.add({
             html: '<div class="example-percentages"><span style="font-weight:bold">Pre-Meet (raw)</span>' +
                 '<table>' +

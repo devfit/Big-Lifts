@@ -22,22 +22,9 @@ Ext.define('biglifts.views.templates.Fresher', {
             ]
         });
 
-        this.topSubToolbar = this.add({
-            xtype: 'toolbar',
-            docked: 'top',
-            ui: 'light',
-            items: [
-                {xtype: 'spacer'},
-                {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Use',
-                    handler: function () {
-                        me.setupLiftScheme("fresher");
-                    }
-                }
-            ]
-        });
+        this.add(this.buildUseToolbar(function () {
+            me.setupLiftScheme("fresher");
+        }));
 
         this.add({
             html: '<div class="example-percentages">' +

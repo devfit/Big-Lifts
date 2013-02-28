@@ -12,33 +12,20 @@ Ext.define('biglifts.views.templates.Heavier', {
                 {
                     text: 'Back',
                     ui: 'back',
-                    handler: this.carouselBack
+                    handler: Ext.bind(this.carouselBack, this)
                 },
                 {xtype: 'spacer'},
                 {
                     text: 'Next',
                     ui: 'forward',
-                    handler: this.carouselForward
+                    handler: Ext.bind(this.carouselForward, this)
                 }
             ]
         });
 
-        this.add({
-            xtype: 'toolbar',
-            docked: 'top',
-            ui: 'light',
-            items: [
-                {xtype: 'spacer'},
-                {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Use',
-                    handler: function () {
-                        me.setupLiftScheme("heavier");
-                    }
-                }
-            ]
-        });
+        this.add(this.buildUseToolbar(function () {
+            me.setupLiftScheme("fresher");
+        }));
 
         this.add({
             html: '<div class="example-percentages">' +

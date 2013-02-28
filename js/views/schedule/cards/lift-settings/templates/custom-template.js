@@ -20,20 +20,7 @@ Ext.define('biglifts.views.templates.Custom', {
             ]
         });
 
-        this.add({
-            xtype: 'toolbar',
-            docked: 'top',
-            ui: 'light',
-            items: [
-                {xtype: 'spacer'},
-                {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Use',
-                    handler: Ext.bind(me.showEditLiftPercentages, me)
-                }
-            ]
-        });
+        this.add(this.buildUseToolbar(Ext.bind(me.showEditLiftPercentages, me)));
 
         this.add({
             html: 'Setup sets, reps, and percentages manually',

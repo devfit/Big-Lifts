@@ -1,12 +1,32 @@
 Ext.define('biglifts.views.templates.Base', {
     extend: 'Ext.Panel',
+    buildUseToolbar: function (useHandler) {
+        var me = this;
+        return {
+            xtype: 'toolbar',
+            docked: 'top',
+            ui: 'light',
+            items: [
+                {xtype: 'spacer'},
+                {
+                    xtype: 'button',
+                    ui: 'confirm',
+                    text: 'Use',
+                    handler: useHandler
+                }
+            ]
+        };
+    },
+    getActiveItemIndex: function (c) {
+        return c.items.findIndex('id', c.getActiveItem().id);
+    },
     carouselBack: function () {
         var liftSettings = Ext.getCmp('lift-settings');
-        liftSettings.setActiveItem(liftSettings.getActiveIndex() - 1);
+        liftSettings.setActiveItem(this.getActiveItemIndex(liftSettings) - 1);
     },
     carouselForward: function () {
         var liftSettings = Ext.getCmp('lift-settings');
-        liftSettings.setActiveItem(liftSettings.getActiveIndex() + 1);
+        liftSettings.setActiveItem(this.getActiveItemIndex(liftSettings) + 1);
     },
     setupLiftScheme: function (scheme) {
         var prebuiltVariation = biglifts.liftProgressions.options[scheme];
