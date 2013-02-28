@@ -1,43 +1,47 @@
-Ext.ns('biglifts.liftSettings.templates');
-biglifts.liftSettings.templates.heavier = {
-    padding:5,
-    items:[
-        {
-            xtype:'toolbar',
-            docked:'top',
-            title:"Heavier",
-            items:[
+Ext.define('biglifts.views.templates.Heavier', {
+    extend: 'biglifts.views.templates.Base',
+    constructor: function () {
+        this.callParent(arguments);
+
+        var me = this;
+        this.add({
+            xtype: 'toolbar',
+            docked: 'top',
+            title: "Heavier",
+            items: [
                 {
-                    text:'Back',
-                    ui:'back',
-                    handler:biglifts.liftSettings.carouselBack
+                    text: 'Back',
+                    ui: 'back',
+                    handler: this.carouselBack
                 },
-                {xtype:'spacer'},
+                {xtype: 'spacer'},
                 {
-                    text:'Next',
-                    ui:'forward',
-                    handler:biglifts.liftSettings.carouselForward
+                    text: 'Next',
+                    ui: 'forward',
+                    handler: this.carouselForward
                 }
             ]
-        },
-        {
-            xtype:'toolbar',
-            docked:'top',
-            ui:'light',
-            items:[
-                {xtype:'spacer'},
+        });
+
+        this.add({
+            xtype: 'toolbar',
+            docked: 'top',
+            ui: 'light',
+            items: [
+                {xtype: 'spacer'},
                 {
-                    xtype:'button',
-                    ui:'confirm',
-                    text:'Use',
-                    handler:function () {
-                        biglifts.liftSettings.setupLiftScheme("heavier");
+                    xtype: 'button',
+                    ui: 'confirm',
+                    text: 'Use',
+                    handler: function () {
+                        me.setupLiftScheme("heavier");
                     }
                 }
             ]
-        },
-        {
-            html:'<div class="example-percentages">' +
+        });
+
+        this.add({
+            html: '<div class="example-percentages">' +
                 '<table>' +
                 '<thead><tr><th>Week</th><th>Scheme</th></tr></thead>' +
                 '<tbody class="example-percentages-table">' +
@@ -47,7 +51,7 @@ biglifts.liftSettings.templates.heavier = {
                 '<tr><td>4</td><td>5x 40, 5x 50, 5x 60</td></tr></tbody>' +
                 '</table>' +
                 '</div>',
-            margin:"0 0 5 0"
-        }
-    ]
-};
+            margin: "0 0 5 0"
+        });
+    }
+});
