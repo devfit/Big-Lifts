@@ -1,4 +1,4 @@
-Ext.define('biglifts.models.Log531Syncer', {
+Ext.define('biglifts.models.LogSyncer', {
     LOG_URL: 'http://biglifts.herokuapp.com/log',
     getAndSync: function () {
         var me = this;
@@ -14,11 +14,11 @@ Ext.define('biglifts.models.Log531Syncer', {
             async.forEachSeries(me.getFormattedLog(), Ext.bind(me.saveWorkout, me));
         });
     },
-    deleteRecord: function (record, callback) {
+    deleteRecord: function (workout_id, callback) {
         var me = this;
         biglifts.stores.Users.withUser(function () {
             Ext.Ajax.request({
-                url: me.LOG_URL + "/" + record.get('workout_id'),
+                url: me.LOG_URL + "/" + workout_id,
                 method: 'DELETE',
                 headers: Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
                 success: function (response) {
@@ -47,6 +47,7 @@ Ext.define('biglifts.models.Log531Syncer', {
         });
     },
     authorizationChanged: function () {
+        console.log("Handle two syncers trying to make prompts");
         biglifts.stores.Users.recreateUser(function () {
             util.whenApplicationReady(function () {
                 Ext.Msg.confirm('User Changed', 'User authentication failed. Update username/password?', function (text) {
@@ -76,58 +77,21 @@ Ext.define('biglifts.models.Log531Syncer', {
         });
     },
     mergeRemoteLogs: function (workouts) {
-        var DATE_FORMAT = "MM/dd/yyyy";
-        _.each(workouts, function (workout) {
-            if (workout["name"] !== '5/3/1') {
-                return;
-            }
-
-            var log = workout.logs[0];
-            var dateAsString = new Date(log.date).toString(DATE_FORMAT);
-            var matchingEntry = biglifts.stores.LiftLog.findBy(function (l) {
-                return new Date(l.get('timestamp')).toString(DATE_FORMAT) === dateAsString
-                    && l.get('liftName') === log.name;
-            });
-
-            if (matchingEntry === -1) {
-                log.liftName = log.name;
-                log.cycle = log.specific_workout.cycle;
-                log.week = log.specific_workout.week;
-                log.expectedReps = log.specific_workout.expected_reps;
-                log.timestamp = log.date;
-                biglifts.stores.LiftLog.addLogEntry(log);
-            }
-        });
+        throw "abstract";
     },
     getFormattedLog: function () {
+        if (!this.store) {
+            throw "store not defined for syncer";
+        }
+
         var me = this;
         var data = [];
-        biglifts.stores.LiftLog.each(function (l) {
+        this.store.each(function (l) {
             data.push(me.buildFormattedWorkout(l));
         });
         return data;
     },
     buildFormattedWorkout: function (log_entry) {
-        return {
-            workout_id: log_entry.get('workout_id'),
-            name: '5/3/1',
-            logs: [
-                {
-                    sets: 1,
-                    reps: log_entry.get('reps'),
-                    name: log_entry.get('liftName'),
-                    weight: log_entry.get('weight'),
-                    notes: log_entry.get('notes'),
-                    date: log_entry.get('timestamp'),
-                    specific: {
-                        type: '5/3/1',
-                        data: {
-                            cycle: log_entry.get('cycle'),
-                            expected_reps: log_entry.get('expectedReps'),
-                            week: log_entry.get('week')
-                        }
-                    }
-                }
-            ]};
+        throw "abstract";
     }
 });

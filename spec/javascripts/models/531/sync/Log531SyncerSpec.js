@@ -1,4 +1,4 @@
-describe("Log Syncer", function () {
+describe("Log 5/3/1 Syncer", function () {
     beforeEach(function () {
         this.log = emptyStore(reloadStore(biglifts.stores.LiftLog));
         this.users = emptyStore(reloadStore(biglifts.stores.Users));

@@ -78,6 +78,8 @@ src_files:
             - js/models/startingstrength/log.js
             - js/models/startingstrength/combined-log.js
             - js/models/sync/log-syncer.js
+            - js/models/sync/log-531-syncer.js
+            - js/models/sync/log-startingstrength-syncer.js
             - js/models/sync/headers.js
             - js/views/setup/setup.js
             - js/views/setup/routine-chooser.js
