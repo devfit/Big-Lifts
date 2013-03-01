@@ -1,43 +1,33 @@
-Ext.ns('biglifts.liftSettings.templates');
-biglifts.liftSettings.templates.powerlifting = {
-    padding:5,
-    items:[
-        {
-            xtype:'toolbar',
-            docked:'top',
-            title:"Powerlifting",
-            items:[
+Ext.define('biglifts.views.templates.Powerlifting', {
+    extend: 'biglifts.views.templates.Base',
+    constructor: function () {
+        this.callParent(arguments);
+        var me = this;
+        this.add({
+            xtype: 'toolbar',
+            docked: 'top',
+            title: "Powerlifting",
+            items: [
                 {
-                    text:'Back',
-                    ui:'back',
-                    handler:biglifts.liftSettings.carouselBack
+                    text: 'Back',
+                    ui: 'back',
+                    handler: Ext.bind(me.carouselBack, me)
                 },
-                {xtype:'spacer'},
+                {xtype: 'spacer'},
                 {
-                    text:'Next',
-                    ui:'forward',
-                    handler:biglifts.liftSettings.carouselForward
+                    text: 'Next',
+                    ui: 'forward',
+                    handler: Ext.bind(me.carouselForward, me)
                 }
             ]
-        },
-        {
-            xtype:'toolbar',
-            docked:'top',
-            ui:'light',
-            items:[
-                {xtype:'spacer'},
-                {
-                    xtype:'button',
-                    ui:'confirm',
-                    text:'Use',
-                    handler:function () {
-                        biglifts.liftSettings.setupLiftScheme("powerlifting");
-                    }
-                }
-            ]
-        },
-        {
-            html:'<div class="example-percentages"><span style="font-weight:bold">Pre-Meet (raw)</span>' +
+        });
+
+        this.add(this.buildUseToolbar(function () {
+            me.setupLiftScheme("powerlifting");
+        }));
+
+        this.add({
+            html: '<div class="example-percentages"><span style="font-weight:bold">Pre-Meet (raw)</span>' +
                 '<table>' +
                 '<thead><tr><th>Week</th><th>Scheme</th></tr></thead>' +
                 '<tbody class="example-percentages-table">' +
@@ -47,7 +37,7 @@ biglifts.liftSettings.templates.powerlifting = {
                 '<tr><td>4</td><td>5x 40, 5x 50, 5x 60</td></tr></tbody>' +
                 '</table>' +
                 '</div>',
-            margin:"0 0 5 0"
-        }
-    ]
-};
+            margin: "0 0 5 0"
+        });
+    }
+});

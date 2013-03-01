@@ -1,22 +1,27 @@
-Ext.ns('biglifts.views.liftSchedule', 'biglifts.liftSettings', 'biglifts.liftProgressions');
-
-biglifts.views.liftSchedule.LiftSettings = {
-    id:'lift-settings',
-    xtype:'carousel',
-    listeners:{
-        painted:function () {
-            biglifts.navigation.setBackFunction(biglifts.liftSettings.returnToLiftSelectFromSettings);
+Ext.define('biglifts.views.LiftSettings', {
+    extend: 'Ext.Panel',
+    returnToLiftSelectFromSettings: function () {
+        Ext.getCmp('lift-schedule').setActiveItem(Ext.getCmp('lift-selector'));
+    },
+    config: {
+        id: 'lift-settings',
+        layout: 'card',
+        activeItem: 0,
+        listeners: {
+            painted: function () {
+                biglifts.navigation.setBackFunction(this.returnToLiftSelectFromSettings);
+            },
+            initialize: function () {
+                this.add(Ext.create('biglifts.views.templates.Fresher'));
+                this.add(Ext.create('biglifts.views.templates.Heavier'));
+                this.add(Ext.create('biglifts.views.templates.Powerlifting'));
+                this.add(Ext.create('biglifts.views.templates.Rotating'));
+                this.add(Ext.create('biglifts.views.templates.Custom'));
+            }
+        },
+        defaults: {
+            xtype: 'formpanel',
+            scroll: 'vertical'
         }
-    },
-    defaults:{
-        xtype:'formpanel',
-        scroll:'vertical'
-    },
-    items:[
-        biglifts.liftSettings.templates.fresher,
-        biglifts.liftSettings.templates.heavier,
-        biglifts.liftSettings.templates.powerlifting,
-        biglifts.liftSettings.templates.rotating,
-        biglifts.liftSettings.templates.custom
-    ]
-};
+    }
+});
