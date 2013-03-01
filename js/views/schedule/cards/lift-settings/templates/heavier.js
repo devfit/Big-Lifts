@@ -24,7 +24,7 @@ Ext.define('biglifts.views.templates.Heavier', {
         });
 
         this.add(this.buildUseToolbar(function () {
-            me.setupLiftScheme("fresher");
+            me.setupLiftScheme("heavier");
         }));
 
         this.add({
