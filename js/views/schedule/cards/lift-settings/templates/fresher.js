@@ -1,45 +1,33 @@
-Ext.ns('biglifts.liftSettings.templates');
-
-biglifts.liftSettings.templates.fresher = {
-    padding:5,
-    items:[
-        {
-            xtype:'toolbar',
-            docked:'top',
-            title:"Fresher",
-            items:[
+Ext.define('biglifts.views.templates.Fresher', {
+    extend: 'biglifts.views.templates.Base',
+    constructor: function () {
+        this.callParent(arguments);
+        var me = this;
+        var topToolbar = this.add({
+            xtype: 'toolbar',
+            docked: 'top',
+            title: "Fresher",
+            items: [
                 {
-                    id:'lift-settings-back-button',
-                    text:'Back',
-                    ui:'back',
-                    handler:biglifts.liftSettings.returnToLiftSelectFromSettings
+                    text: 'Back',
+                    ui: 'back',
+                    handler: Ext.bind(Ext.getCmp('lift-settings').returnToLiftSelectFromSettings)
                 },
-                {xtype:'spacer'},
+                {xtype: 'spacer'},
                 {
-                    text:'Next',
-                    ui:'forward',
-                    handler:biglifts.liftSettings.carouselForward
+                    text: 'Next',
+                    ui: 'forward',
+                    handler: Ext.bind(me.carouselForward, me)
                 }
             ]
-        },
-        {
-            xtype:'toolbar',
-            docked:'top',
-            ui:'light',
-            items:[
-                {xtype:'spacer'},
-                {
-                    xtype:'button',
-                    ui:'confirm',
-                    text:'Use',
-                    handler:function () {
-                        biglifts.liftSettings.setupLiftScheme("fresher");
-                    }
-                }
-            ]
-        },
-        {
-            html:'<div class="example-percentages">' +
+        });
+
+        this.add(this.buildUseToolbar(function () {
+            me.setupLiftScheme("fresher");
+        }));
+
+        this.add({
+            html: '<div class="example-percentages">' +
                 '<table>' +
                 '<thead><tr><th>Week</th><th>Scheme</th></tr></thead>' +
                 '<tbody class="example-percentages-table">' +
@@ -49,7 +37,7 @@ biglifts.liftSettings.templates.fresher = {
                 '<tr><td>4</td><td>5x 40, 5x 50, 5x 60</td></tr></tbody>' +
                 '</table>' +
                 '</div>',
-            margin:"0 0 5 0"
-        }
-    ]
-};
+            margin: "0 0 5 0"
+        });
+    }
+});

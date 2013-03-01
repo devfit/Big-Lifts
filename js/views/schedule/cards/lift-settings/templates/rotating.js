@@ -1,5 +1,3 @@
-Ext.ns('biglifts.liftSettings.templates');
-
 Ext.define('RotatingWeekEntry', {
     extend: 'Ext.data.Model',
     config: {
@@ -57,41 +55,16 @@ Ext.define("RotatingWeekStore", {
     }
 });
 
-biglifts.liftSettings.templates.rotatingWeekStore = Ext.create('RotatingWeekStore');
-biglifts.liftSettings.templates.rotatingWeekStore.load();
+Ext.define('biglifts.views.templates.Rotating', {
+    extend: 'biglifts.views.templates.Base',
+    constructor: function () {
+        this.callParent(arguments);
+        var me = this;
 
-biglifts.liftSettings.templates.getDisplayForWeek = function (week) {
-    var weekDisplayMapping = {1: '5/5/5', 2: '3/3/3', 3: '5/3/1', 4: 'deload'};
-    return weekDisplayMapping[week];
-};
+        this.rotatingWeekStore = Ext.create('RotatingWeekStore');
+        this.rotatingWeekStore.load();
 
-biglifts.liftSettings.templates.setupWeekRotation = function () {
-    biglifts.liftSettings.templates.rotatingWeekStore.each(function (r) {
-        biglifts.stores.WeekRotation.add({liftProperty: r.get('liftProperty'), startingWeek: r.get('week')});
-    });
-    biglifts.stores.WeekRotation.sync();
-};
-
-biglifts.liftSettings.templates.useRotatingTemplate = function () {
-    biglifts.liftSettings.setupLiftScheme("fresher");
-    biglifts.liftSettings.templates.setupWeekRotation();
-};
-
-biglifts.liftSettings.templates.rotating = {
-    id: 'rotating-template',
-    padding: 5,
-    listeners: {
-        painted: function () {
-            if (!this._painted) {
-                this._painted = true;
-                biglifts.liftSettings.templates.rotatingWeekStore.addListener('beforesync', function () {
-                    Ext.getCmp('rotating-lift-list').refresh();
-                });
-            }
-        }
-    },
-    items: [
-        {
+        this.add({
             xtype: 'toolbar',
             docked: 'top',
             title: "Rotating",
@@ -99,60 +72,75 @@ biglifts.liftSettings.templates.rotating = {
                 {
                     text: 'Back',
                     ui: 'back',
-                    handler: biglifts.liftSettings.carouselBack
+                    handler: Ext.bind(me.carouselBack, me)
                 },
                 {xtype: 'spacer'},
                 {
                     text: 'Next',
                     ui: 'forward',
-                    handler: biglifts.liftSettings.carouselForward
+                    handler: Ext.bind(me.carouselForward, me)
                 }
             ]
-        },
-        {
-            xtype: 'toolbar',
-            docked: 'top',
-            ui: 'light',
-            items: [
-                {xtype: 'spacer'},
-                {
-                    xtype: 'button',
-                    ui: 'confirm',
-                    text: 'Use',
-                    handler: biglifts.liftSettings.templates.useRotatingTemplate
-                }
-            ]
-        },
-        {
+        });
+
+        this.add(this.buildUseToolbar(Ext.bind(me.useRotatingTemplate, me)));
+
+        this.add({
             html: '<p>Like "fresher", but lifts are staggered by week</p>'
-        },
-        {
-            itemId: 'lift-list-container',
+        });
+
+        this.liftListContainer = this.add({
             xtype: 'container',
             layout: 'fit',
             listeners: {
                 initialize: function () {
-                    var listHeight = 52 * biglifts.liftSettings.templates.rotatingWeekStore.getCount();
+                    var listHeight = 52 * me.rotatingWeekStore.getCount();
                     this.setHeight(listHeight);
                 }
-            },
-            items: [
-                {
-                    id: 'rotating-lift-list',
-                    padding: 0,
-                    xtype: 'list',
-                    store: biglifts.liftSettings.templates.rotatingWeekStore,
-                    itemTpl: '<table><tr><td class="name">{name}</td>' +
-                        '<td class="week">{[biglifts.liftSettings.templates.getDisplayForWeek(values.week)]}</td></tr></table>'
-                }
-            ]
-        },
-        {
+            }
+        });
+
+        this.liftList = this.liftListContainer.add({
+            padding: 0,
+            xtype: 'list',
+            store: me.rotatingWeekStore,
+            itemTpl: '<table><tr><td class="name">{name}</td>' +
+                '<td class="week">{[biglifts.liftSettings.templates.getDisplayForWeek(values.week)]}</td></tr></table>'
+        });
+
+        this.add({
             xtype: 'button',
             text: 'Rotate',
             handler: function () {
-                biglifts.liftSettings.templates.rotatingWeekStore.rotateWeeks();
+                me.rotatingWeekStore.rotateWeeks();
+            }
+        });
+    },
+    setupWeekRotation: function () {
+        this.rotatingWeekStore.each(function (r) {
+            biglifts.stores.WeekRotation.add({liftProperty: r.get('liftProperty'), startingWeek: r.get('week')});
+        });
+        biglifts.stores.WeekRotation.sync();
+    },
+    useRotatingTemplate: function () {
+        this.setupLiftScheme("fresher");
+        this.setupWeekRotation();
+    },
+    getDisplayForWeek: function (week) {
+        var weekDisplayMapping = {1: '5/5/5', 2: '3/3/3', 3: '5/3/1', 4: 'deload'};
+        return weekDisplayMapping[week];
+    },
+    config: {
+        id: 'rotating-template',
+        listeners: {
+            painted: function () {
+                if (!this._painted) {
+                    this._painted = true;
+                    this.rotatingWeekStore.addListener('beforesync', function () {
+                        this.liftList.refresh();
+                    }, this);
+                }
             }
         }
-    ]
-};
+    }
+});
