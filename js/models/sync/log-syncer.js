@@ -78,7 +78,7 @@ Ext.define('biglifts.models.Log531Syncer', {
     mergeRemoteLogs: function (workouts) {
         var DATE_FORMAT = "MM/dd/yyyy";
         _.each(workouts, function (workout) {
-            if (workout.type !== '5/3/1') {
+            if (workout["name"] !== '5/3/1') {
                 return;
             }
 
@@ -110,7 +110,7 @@ Ext.define('biglifts.models.Log531Syncer', {
     buildFormattedWorkout: function (log_entry) {
         return {
             workout_id: log_entry.get('workout_id'),
-            type: '5/3/1',
+            name: '5/3/1',
             logs: [
                 {
                     sets: 1,
