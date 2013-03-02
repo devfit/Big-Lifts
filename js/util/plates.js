@@ -15,7 +15,7 @@ util.plates.getFormattedPlateList = function (weight, currentLiftProperty) {
 
     var plateString = plates.length === 0 ? "" : "[" + plates.join(',') + "]";
 
-    if (util.rounding.roundTo0p5(totalWeight, 'down') !== weight) {
+    if (util.rounding.roundTo0p5(totalWeight, 'down') !== weight && util.rounding.roundTo0p5(totalWeight, 'normal') !== weight) {
         plateString = "<span class='invalid-plates'>" + plateString + "</span>";
     }
 
