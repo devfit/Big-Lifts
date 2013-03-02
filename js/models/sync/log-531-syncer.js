@@ -1,6 +1,7 @@
 Ext.define('biglifts.models.Log531Syncer', {
     extend: 'biglifts.models.LogSyncer',
     store: biglifts.stores.LiftLog,
+    workoutName: '5/3/1',
     mergeRemoteLogs: function (workouts) {
         var DATE_FORMAT = "MM/dd/yyyy";
         var me = this;

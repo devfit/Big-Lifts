@@ -17,12 +17,17 @@ Ext.define('biglifts.models.LogSyncer', {
         });
     },
     deleteRecord: function (workout_id, callback) {
+        if (!this.workoutName) {
+            throw "Workout name must be defined";
+        }
+
         var me = this;
         biglifts.stores.Users.withUser(function () {
             Ext.Ajax.request({
                 url: me.LOG_URL + "/" + workout_id,
                 method: 'DELETE',
                 headers: Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
+                jsonData: {name: me.workoutName},
                 success: function (response) {
                     callback(null);
                 },

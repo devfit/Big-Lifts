@@ -1,9 +1,8 @@
 Ext.define('biglifts.models.LogStartingStrengthSyncer', {
     extend: 'biglifts.models.LogSyncer',
     store: biglifts.stores.ss.Log,
+    workoutName: 'StartingStrength',
     mergeRemoteLogs: function (workouts) {
-        console.log( "Merging" );
-        console.log(workouts);
         var DATE_FORMAT = "MM/dd/yyyy";
         var me = this;
         _.each(workouts, function (workout) {
@@ -25,6 +24,7 @@ Ext.define('biglifts.models.LogStartingStrengthSyncer', {
                     biglifts.stores.ss.Log.add(log);
                 });
                 biglifts.stores.ss.Log.sync();
+                biglifts.stores.ss.Log.fireEvent('beforesync');
             }
         });
     },
