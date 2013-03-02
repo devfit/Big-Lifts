@@ -19,6 +19,21 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
+		<key>Big Lifts copy 2.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>7</integer>
+		</dict>
+		<key>Big Lifts copy 4.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>8</integer>
+		</dict>
+		<key>Big Lifts copy.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>6</integer>
+		</dict>
 		<key>UnitTests.xcscheme</key>
 		<dict>
 			<key>orderHint</key>
@@ -53,6 +68,11 @@
 			<true/>
 		</dict>
 		<key>02BECE9E161754A80087626F</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>02BEEA4616E2409700D43C7C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
