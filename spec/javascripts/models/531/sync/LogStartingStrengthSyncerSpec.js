@@ -20,18 +20,18 @@ describe("Log StartingStrength Syncer", function () {
                 name: 'StartingStrength',
                 logs: [
                     {
-                        sets: 5,
-                        reps: 3,
                         name: 'Power Clean',
                         weight: 200,
+                        sets: 5,
+                        reps: 3,
                         units: 'lbs',
                         date: timestamp
                     },
                     {
-                        sets: 3,
-                        reps: 5,
                         name: 'Squat',
                         weight: 300,
+                        sets: 3,
+                        reps: 5,
                         units: 'lbs',
                         date: timestamp
                     }
@@ -111,7 +111,7 @@ describe("Log StartingStrength Syncer", function () {
         this.log.add(localLog);
         this.log.sync();
 
-        var remoteLog = {workout_id: 1, name: '5/3/1', logs: [
+        var remoteLog = {workout_id: 1, name: 'StartingStrength', logs: [
             {
                 sets: 3,
                 reps: 5,

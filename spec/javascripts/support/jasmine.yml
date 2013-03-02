@@ -124,7 +124,7 @@ src_files:
             - js/views/schedule/cards/tracking/lift-tracking.js
             - js/views/schedule/cards/tracking/first-log-notes-editor.js
             - js/views/schedule/cards/lift-template.js
-            - js/views/schedule/cards/lift-settings/templates/common-behavior.js
+            - js/views/schedule/cards/lift-settings/templates/template-base.js
             - js/views/schedule/cards/lift-settings/templates/custom-template.js
             - js/views/schedule/cards/lift-settings/templates/fresher.js
             - js/views/schedule/cards/lift-settings/templates/heavier.js

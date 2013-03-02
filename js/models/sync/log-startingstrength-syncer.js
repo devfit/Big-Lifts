@@ -1,7 +1,9 @@
 Ext.define('biglifts.models.LogStartingStrengthSyncer', {
     extend: 'biglifts.models.LogSyncer',
-    store: biglifts.stores.ss.CombinedLog,
+    store: biglifts.stores.ss.Log,
     mergeRemoteLogs: function (workouts) {
+        console.log( "Merging" );
+        console.log(workouts);
         var DATE_FORMAT = "MM/dd/yyyy";
         var me = this;
         _.each(workouts, function (workout) {
@@ -16,12 +18,31 @@ Ext.define('biglifts.models.LogStartingStrengthSyncer', {
             });
 
             if (matchingEntry === -1) {
+                var newWorkoutId = biglifts.stores.ss.Log.getNewWorkoutId();
+                _.each(workout.logs, function (log) {
+                    log.timestamp = log.date;
+                    log.workout_id = newWorkoutId;
+                    biglifts.stores.ss.Log.add(log);
+                });
+                biglifts.stores.ss.Log.sync();
             }
         });
     },
-    buildFormattedWorkout: function (combined_log_entry) {
-        var workout_id = combined_log_entry.get('workout_id');
+    getFormattedLog: function () {
+        var me = this;
 
+        var models = [];
+        me.store.each(function (m) {
+            models.push(m);
+        });
+
+        var data = [];
+        _.each(me.store.getUniqueWorkoutIdsFromModels(models), function (workout_id) {
+            data.push(me.buildFormattedWorkout(workout_id));
+        });
+        return data;
+    },
+    buildFormattedWorkout: function (workout_id) {
         var logs = [];
         util.withNoFilters(biglifts.stores.ss.Log, function () {
             biglifts.stores.ss.Log.filter('workout_id', workout_id);

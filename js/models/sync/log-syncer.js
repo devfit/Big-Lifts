@@ -1,3 +1,5 @@
+Ext.ns('sync');
+sync.authPrompting = false;
 Ext.define('biglifts.models.LogSyncer', {
     LOG_URL: 'http://biglifts.herokuapp.com/log',
     getAndSync: function () {
@@ -32,6 +34,7 @@ Ext.define('biglifts.models.LogSyncer', {
         });
     },
     saveWorkout: function (workout, callback) {
+        callback = callback || Ext.emptyFn;
         Ext.Ajax.request({
             url: this.LOG_URL,
             method: 'POST',
@@ -47,17 +50,19 @@ Ext.define('biglifts.models.LogSyncer', {
         });
     },
     authorizationChanged: function () {
-        console.log("Handle two syncers trying to make prompts");
-        biglifts.stores.Users.recreateUser(function () {
-            util.whenApplicationReady(function () {
-                Ext.Msg.confirm('User Changed', 'User authentication failed. Update username/password?', function (text) {
-                    if (text === "yes") {
-                        Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
-                        Ext.getCmp('setup').setActiveItem(Ext.getCmp('user-setup'));
-                    }
+        if (!sync.authPrompting) {
+            sync.authPrompting = true;
+            biglifts.stores.Users.recreateUser(function () {
+                util.whenApplicationReady(function () {
+                    Ext.Msg.confirm('User Changed', 'User authentication failed. Update username/password?', function (text) {
+                        if (text === "yes") {
+                            Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
+                            Ext.getCmp('setup').setActiveItem(Ext.getCmp('user-setup'));
+                        }
+                    });
                 });
             });
-        });
+        }
     },
     syncRemoteLog: function (callback) {
         Ext.Ajax.request({

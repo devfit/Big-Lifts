@@ -59,7 +59,7 @@ Ext.define('LiftLogStore', {
             addrecords: function (store, records) {
                 var syncer = Ext.create('biglifts.models.Log531Syncer');
                 _.each(records, function (record) {
-                    syncer.saveWorkout(syncer.buildFormattedWorkout(record), Ext.emptyFn);
+                    syncer.saveWorkout(syncer.buildFormattedWorkout(record));
                 });
             },
             load: function () {
