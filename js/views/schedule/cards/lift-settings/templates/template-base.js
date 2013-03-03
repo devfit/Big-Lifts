@@ -43,8 +43,7 @@ Ext.define('biglifts.views.templates.Base', {
         biglifts.stores.WeekRotation.removeAll();
         biglifts.stores.WeekRotation.sync();
 
-        biglifts.stores.lifts.MeetGoals.removeAll();
-        biglifts.stores.lifts.syncMeetGoalsToLifts();
+        biglifts.stores.lifts.MeetGoals.syncMeetGoalsToLifts();
 
         var customMessages = {'powerlifting': 'Meet goals have been defaulted to your 1RM estimates. You can change meet goals on the lifts tab.'};
         var message = _.has(customMessages, scheme) ? customMessages[scheme] : 'The lift scheme has been updated';

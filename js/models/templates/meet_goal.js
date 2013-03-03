@@ -2,58 +2,64 @@
 Ext.ns('biglifts.stores.lifts');
 
 Ext.define('MeetGoal', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'propertyName', type:'string'},
-            {name:'weight', type:'float'}
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'propertyName', type: 'string'},
+            {name: 'weight', type: 'float'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'meet-goal-proxy'
+        proxy: {
+            type: 'localstorage',
+            id: 'meet-goal-proxy'
         }
     }
 });
 
-biglifts.stores.lifts.syncMeetGoalsToLifts = function () {
-    var allPropertyNames = [];
-    biglifts.stores.lifts.Lifts.each(function (lift) {
-        var propertyName = lift.get('propertyName');
-        allPropertyNames.push(propertyName);
-        if (!biglifts.stores.lifts.MeetGoals.findRecord('propertyName', propertyName)) {
-            biglifts.stores.lifts.MeetGoals.add({propertyName:propertyName, weight:lift.get('max')})
-        }
-    });
-
-    biglifts.stores.lifts.MeetGoals.filterBy(function (meetGoal) {
-        return _.indexOf(allPropertyNames, meetGoal.get('propertyName')) === -1;
-    });
-
-    biglifts.stores.lifts.MeetGoals.each(function (deadMeetGoal) {
-        biglifts.stores.lifts.MeetGoals.remove(deadMeetGoal);
-    });
-    biglifts.stores.lifts.MeetGoals.sync();
-    biglifts.stores.lifts.MeetGoals.clearFilter();
-};
-
-biglifts.stores.lifts.MeetGoals = Ext.create('Ext.data.Store', {
-    model:'MeetGoal',
-    listeners:{
-        load:function () {
-            biglifts.stores.lifts.syncMeetGoalsToLifts();
-            biglifts.stores.lifts.Lifts.addListener('beforesync', function () {
-                biglifts.stores.lifts.syncMeetGoalsToLifts();
-            });
-        }
+Ext.define('biglifts.stores.MeetGoals', {
+    extend: 'Ext.data.Store',
+    addMissingMeetGoals: function () {
+        var me = this;
+        biglifts.stores.lifts.Lifts.each(function (lift) {
+            var propertyName = lift.get('propertyName');
+            if (!me.findRecord('propertyName', propertyName)) {
+                me.add({propertyName: propertyName, weight: lift.get('max')})
+            }
+        });
     },
-    sorters:[
-        {
-            property:'propertyName',
-            direction:'ASC'
-        }
-    ]
+    removeDeadMeetGoals: function () {
+        var me = this;
+        this.filterBy(function (meetGoal) {
+            return biglifts.stores.lifts.Lifts.findRecord('propertyName', meetGoal.get('propertyName')) == null;
+        });
+
+        this.each(function (deadMeetGoal) {
+            me.remove(deadMeetGoal);
+        });
+        me.clearFilter();
+    },
+    syncMeetGoalsToLifts: function () {
+        this.addMissingMeetGoals();
+        this.removeDeadMeetGoals();
+        this.sync();
+    },
+    config: {
+        model: 'MeetGoal',
+        listeners: {
+            load: function () {
+                this.syncMeetGoalsToLifts();
+                biglifts.stores.lifts.Lifts.addListener('beforesync', this.syncMeetGoalsToLifts, this);
+            }
+        },
+        sorters: [
+            {
+                property: 'propertyName',
+                direction: 'ASC'
+            }
+        ]
+    }
 });
 
+biglifts.stores.lifts.MeetGoals = Ext.create('biglifts.stores.MeetGoals');
 biglifts.stores.push(biglifts.stores.lifts.MeetGoals);
