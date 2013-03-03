@@ -1,6 +1,20 @@
 @531
 @premium
-Feature: Lift tracking after viewing the graph
+Feature: Graph
+
+  Scenario: Lift selector is updated when lifts are added or removed
+    When I tap the "Track" tab
+    And I tap the graph button
+    Then The "lifts" combobox contains "All,Squat,Press,Deadlift,Bench"
+
+    And I tap the "Back" button
+    And I tap the "Edit" tab
+    When I add a new lift named "Clean" with max 200
+
+    When I tap the "Track" tab
+    And I tap the graph button
+    Then The "lifts" combobox contains "All,Squat,Press,Deadlift,Bench,Clean"
+
   Scenario: Sorters are persisted after viewing the graph
     When I view the squat lift schedule for week 1
     And I tap the checkmark
