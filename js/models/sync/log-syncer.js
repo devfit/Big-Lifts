@@ -26,7 +26,7 @@ Ext.define('biglifts.models.LogSyncer', {
             Ext.Ajax.request({
                 url: me.LOG_URL + "/" + workout_id,
                 method: 'DELETE',
-                headers: Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
+                headers: Ext.create('biglifts.models.HeadersBuilder').buildSyncHeaders(),
                 jsonData: {name: me.workoutName},
                 success: function (response) {
                     callback(null);
@@ -43,7 +43,7 @@ Ext.define('biglifts.models.LogSyncer', {
         Ext.Ajax.request({
             url: this.LOG_URL,
             method: 'POST',
-            headers: Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
+            headers: Ext.create('biglifts.models.HeadersBuilder').buildSyncHeaders(),
             jsonData: workout,
             success: function (response) {
                 callback(null);
@@ -73,7 +73,7 @@ Ext.define('biglifts.models.LogSyncer', {
         Ext.Ajax.request({
             url: this.LOG_URL,
             method: 'GET',
-            headers: Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
+            headers: Ext.create('biglifts.models.HeadersBuilder').buildSyncHeaders(),
             success: function (response) {
                 this.mergeRemoteLogs(JSON.parse(response.responseText));
                 callback(null);
