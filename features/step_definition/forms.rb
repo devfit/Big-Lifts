@@ -1,5 +1,5 @@
 def find_input_by_label label
-  label = @driver.find_elements(:class => 'x-form-label').select { |l| l.displayed? && l.text().include?(label) }[0]
+  label = @driver.find_elements(:class => 'x-form-label').select { |l| l.displayed? && l.text() == label }[0]
   label.find_element(:xpath => '..').find_element(:tag_name => 'input')
 end
 
