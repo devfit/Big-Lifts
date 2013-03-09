@@ -19,7 +19,7 @@ Ext.define('biglifts.views.ss.WorkoutList', {
                     return biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('name');
                 },
                 getLift: function (lift_id) {
-                    return biglifts.stores.lifts.Lifts.findRecord('id', lift_id);
+                    return biglifts.stores.ss.Lifts.findRecord('id', lift_id);
                 },
                 getWeight: function (lift_id, percentage) {
                     var weight = biglifts.stores.ss.Lifts.findRecord('id', lift_id).get('weight');
