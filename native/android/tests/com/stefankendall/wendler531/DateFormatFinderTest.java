@@ -1,4 +1,4 @@
-package com.stefankendall.wendler531;
+package com.stefankendall.wendler531premium;
 
 import android.content.Context;
 import org.junit.Assert;
