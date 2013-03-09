@@ -10,8 +10,7 @@ Ext.define('biglifts.views.SimplestStrengthTemplate', {
             "</tr></tbody></table>",
             {
                 getCurrentLiftId:function () {
-                    var currentLiftProperty = Ext.getCmp('assistance-lift-chooser').currentLiftProperty;
-                    return biglifts.stores.lifts.Lifts.findRecord('propertyName', currentLiftProperty).get('id');
+                    return Ext.getCmp('assistance-lift-chooser').getCurrentLift().get('id');
                 },
                 getName:function () {
                     return biglifts.stores.assistance.SST.findRecord('lift_id', this.getCurrentLiftId()).get('name');

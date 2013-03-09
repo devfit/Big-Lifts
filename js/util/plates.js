@@ -1,7 +1,6 @@
 Ext.ns('util.plates');
-util.plates.getFormattedPlateList = function (weight, currentLiftProperty) {
+util.plates.getFormattedPlateList = function (weight, liftRecord) {
     var barWeight = biglifts.stores.BarWeight.first().get('weight');
-    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', currentLiftProperty);
     if (liftRecord.get("customBarWeight")) {
         barWeight = liftRecord.get("customBarWeight");
     }

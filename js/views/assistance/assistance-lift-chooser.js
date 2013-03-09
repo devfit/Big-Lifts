@@ -6,13 +6,16 @@ Ext.define('biglifts.views.AssistanceLiftChooser', {
         this.assistanceId = assistanceId;
         this._toolbar.setTitle(title);
         Ext.getCmp('assistance').setActiveItem(this);
-        this.currentLiftProperty = null;
+        this.setCurrentLift(null);
     },
     back: function () {
         Ext.getCmp('assistance').setActiveItem(Ext.getCmp('assistance-chooser'));
     },
-    setCurrentLift: function(liftRecord){
-      this.currentLiftProperty = liftRecord.get('propertyName');
+    setCurrentLift: function (liftRecord) {
+        this.currentLift = liftRecord;
+    },
+    getCurrentLift: function () {
+        return this.currentLift;
     },
     liftSelected: function (list, index) {
         this.setCurrentLift(this._liftList.getStore().getAt(index));
