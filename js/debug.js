@@ -32,8 +32,8 @@ if (biglifts.DEBUG) {
         CREATE_USER_URL:'http://localhost:3000/users'
     });
 
-    Ext.define('biglifts.overrides.Log531Syncer', {
-        override:'biglifts.models.Log531Syncer',
+    Ext.define('biglifts.overrides.LogSyncer', {
+        override:'biglifts.models.LogSyncer',
         LOG_URL:'http://localhost:3000/log'
     });
 

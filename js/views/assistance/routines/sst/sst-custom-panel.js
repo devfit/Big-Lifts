@@ -1,15 +1,15 @@
 Ext.define("biglifts.views.SstCustomPanel", {
     extend:"biglifts.views.CustomPanel",
     filterCustomMovements:function () {
-        var startingWeek = this.findLastCompletedWeek(Ext.getCmp('assistance-lift-chooser').currentLiftProperty);
+        var startingWeek = this.findLastCompletedWeek(Ext.getCmp('assistance-lift-chooser').getCurrentLift());
         this.weekSelector.setValue(startingWeek);
         biglifts.stores.assistance.SSTSets.filter('week', startingWeek);
     },
-    findLastCompletedWeek:function (liftProperty) {
+    findLastCompletedWeek:function (lift) {
         var highestCompleted = 1;
 
         util.withNoFilters(biglifts.stores.lifts.LiftCompletion, function () {
-            biglifts.stores.lifts.LiftCompletion.filter('liftPropertyName', liftProperty);
+            biglifts.stores.lifts.LiftCompletion.filter('liftPropertyName', lift.get('propertyName'));
             biglifts.stores.lifts.LiftCompletion.each(function (l) {
                 if (l.get('completed') && l.get('week') > highestCompleted) {
                     highestCompleted = l.get('week');
@@ -30,8 +30,7 @@ Ext.define("biglifts.views.SstCustomPanel", {
     logMovements:function () {
         var me = this;
 
-        var liftPropertyName = Ext.getCmp('assistance-lift-chooser').currentLiftProperty;
-        var lift_id = biglifts.stores.lifts.Lifts.findRecord('propertyName', liftPropertyName).get('id');
+        var lift_id = Ext.getCmp('assistance-lift-chooser').getCurrentLift().get('id');
         var ssLift = biglifts.stores.assistance.SST.findRecord('lift_id', lift_id);
 
         this.getCustomMovementStore().each(function (record) {

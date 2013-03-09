@@ -38,7 +38,7 @@ Ext.define('biglifts.views.UserSetup', {
         Ext.Ajax.request({
             url:this.UPDATE_USER_URL,
             method:'PUT',
-            headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
+            headers:Ext.create('biglifts.models.HeadersBuilder').buildSyncHeaders(),
             success:function (response) {
                 this.saveSuccessful(JSON.parse(response.responseText).status);
             },

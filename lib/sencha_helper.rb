@@ -1,5 +1,5 @@
 module SenchaHelper
-  def select_combobox(combobox, value)
+  def get_select_option_items combobox
     lift_selector_parent = combobox.find_element(:xpath => '..')
     lift_selector_parent.find_element(:class => 'x-field-mask').click
     sleep 0.3
@@ -8,7 +8,11 @@ module SenchaHelper
       floatingItem.attribute('class').include? 'x-container'
     }[0]
 
-    lift_items = floating_selector.find_elements(:tag_name => 'div', :class => 'x-list-item-label')
+    floating_selector.find_elements(:tag_name => 'div').select { |d| d.attribute('class') == 'x-list-item-label' }
+  end
+
+  def select_combobox(combobox, value)
+    lift_items = get_select_option_items combobox
 
     lift_div = lift_items.select { |label|
       label.text == value

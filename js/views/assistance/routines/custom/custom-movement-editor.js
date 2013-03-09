@@ -10,8 +10,8 @@ Ext.define('biglifts.views.CustomMovementEditor', {
     returnToCustom: function () {
         this.saveMovementChange();
         var assistancePanel = Ext.getCmp(this.assistanceViewId);
-        Ext.getCmp('assistance').setActiveItem(assistancePanel);
         assistancePanel.showCustomMovement();
+        Ext.getCmp('assistance').setActiveItem(assistancePanel);
     },
     deleteMovement: function () {
         var record = this.getRecord();

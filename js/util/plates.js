@@ -1,7 +1,6 @@
 Ext.ns('util.plates');
-util.plates.getFormattedPlateList = function (weight, currentLiftProperty) {
+util.plates.getFormattedPlateList = function (weight, liftRecord) {
     var barWeight = biglifts.stores.BarWeight.first().get('weight');
-    var liftRecord = biglifts.stores.lifts.Lifts.findRecord('propertyName', currentLiftProperty);
     if (liftRecord.get("customBarWeight")) {
         barWeight = liftRecord.get("customBarWeight");
     }
@@ -15,7 +14,7 @@ util.plates.getFormattedPlateList = function (weight, currentLiftProperty) {
 
     var plateString = plates.length === 0 ? "" : "[" + plates.join(',') + "]";
 
-    if (util.rounding.roundTo0p5(totalWeight, 'down') !== weight) {
+    if (util.rounding.roundTo0p5(totalWeight, 'down') !== weight && util.rounding.roundTo0p5(totalWeight, 'normal') !== weight) {
         plateString = "<span class='invalid-plates'>" + plateString + "</span>";
     }
 

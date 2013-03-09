@@ -2,6 +2,13 @@
 @premium
 Feature: Boring But Big Movement Editor
 
+  Scenario: Editing "Bench" defaults to "Bench"
+    When I tap the assistance tab
+    And I select "5x10" assistance work
+    And I tap the "Bench" list item
+    And I tap the "Bench" list item
+    Then The "Lift" input is "Bench"
+
   Scenario: Adding a second big lift
     When I tap the assistance tab
     And I select "5x10" assistance work

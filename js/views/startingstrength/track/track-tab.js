@@ -18,7 +18,6 @@ Ext.define('biglifts.views.ss.Track', {
     },
     deleteEntry: function (dataview, index, item, e) {
         var combinedLog = biglifts.stores.ss.CombinedLog.getAt(index);
-        console.log(combinedLog);
         var logs = JSON.parse(combinedLog.get('logs'));
 
         _.each(logs, function (log_id) {

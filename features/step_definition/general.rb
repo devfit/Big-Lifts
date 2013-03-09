@@ -51,3 +51,12 @@ When /^I toggle "(.*?)"$/ do |label|
   label_element.find_element(:xpath => './..').find_element(:class => 'x-toggle-inner').click
 end
 
+Then /^The "(.*?)" combobox contains "(.*?)"$/ do |name, lifts_as_text|
+  lifts = lifts_as_text.split ','
+  list_items = get_select_option_items @driver.find_elements(:name => name).select { |d| d.displayed? }[0]
+  lift_names = list_items.collect { |l| l.text() }
+
+  lift_names.sort().should == lifts.sort()
+  @driver.find_elements(:class => "x-mask").select { |t| t.attribute('class').include?('x-floating') && t.displayed? }[0].click
+end
+

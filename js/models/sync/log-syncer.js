@@ -1,6 +1,8 @@
-Ext.define('biglifts.models.Log531Syncer', {
-    LOG_URL:'http://biglifts.herokuapp.com/log',
-    getAndSync:function () {
+Ext.ns('sync');
+sync.authPrompting = false;
+Ext.define('biglifts.models.LogSyncer', {
+    LOG_URL: 'http://biglifts.herokuapp.com/log',
+    getAndSync: function () {
         var me = this;
         biglifts.stores.Users.withUser(function () {
             me.syncRemoteLog(function () {
@@ -8,120 +10,98 @@ Ext.define('biglifts.models.Log531Syncer', {
             });
         });
     },
-    postLog:function () {
+    postLog: function () {
         var me = this;
         biglifts.stores.Users.withUser(function () {
             async.forEachSeries(me.getFormattedLog(), Ext.bind(me.saveWorkout, me));
         });
     },
-    deleteRecord:function (record, callback) {
+    deleteRecord: function (workout_id, callback) {
+        if (!this.workoutName) {
+            throw "Workout name must be defined";
+        }
+
         var me = this;
         biglifts.stores.Users.withUser(function () {
             Ext.Ajax.request({
-                url:me.LOG_URL + "/" + record.get('workout_id'),
-                method:'DELETE',
-                headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
-                success:function (response) {
+                url: me.LOG_URL + "/" + workout_id,
+                method: 'DELETE',
+                headers: Ext.create('biglifts.models.HeadersBuilder').buildSyncHeaders(),
+                jsonData: {name: me.workoutName},
+                success: function (response) {
                     callback(null);
                 },
-                failure:function (response) {
+                failure: function (response) {
                     callback(null);
                 },
-                scope:this
+                scope: this
             });
         });
     },
-    saveWorkout:function (workout, callback) {
+    saveWorkout: function (workout, callback) {
+        callback = callback || Ext.emptyFn;
         Ext.Ajax.request({
-            url:this.LOG_URL,
-            method:'POST',
-            headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
-            jsonData:workout,
-            success:function (response) {
+            url: this.LOG_URL,
+            method: 'POST',
+            headers: Ext.create('biglifts.models.HeadersBuilder').buildSyncHeaders(),
+            jsonData: workout,
+            success: function (response) {
                 callback(null);
             },
-            failure:function (response) {
+            failure: function (response) {
                 callback(null);
             },
-            scope:this
+            scope: this
         });
     },
-    authorizationChanged:function () {
-        biglifts.stores.Users.recreateUser(function () {
-            util.whenApplicationReady(function () {
-                Ext.Msg.confirm('User Changed', 'User authentication failed. Update username/password?', function (text) {
-                    if (text === "yes") {
-                        Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
-                        Ext.getCmp('setup').setActiveItem(Ext.getCmp('user-setup'));
-                    }
+    authorizationChanged: function () {
+        if (!sync.authPrompting) {
+            sync.authPrompting = true;
+            biglifts.stores.Users.recreateUser(function () {
+                util.whenApplicationReady(function () {
+                    Ext.Msg.confirm('User Changed', 'User authentication failed. Update username/password?', function (text) {
+                        if (text === "yes") {
+                            Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
+                            Ext.getCmp('setup').setActiveItem(Ext.getCmp('user-setup'));
+                        }
+                    });
                 });
             });
-        });
+        }
     },
-    syncRemoteLog:function (callback) {
+    syncRemoteLog: function (callback) {
         Ext.Ajax.request({
-            url:this.LOG_URL,
-            method:'GET',
-            headers:Ext.create('biglifts.models.HeadersBuilder').buildAuthHeaders(),
-            success:function (response) {
+            url: this.LOG_URL,
+            method: 'GET',
+            headers: Ext.create('biglifts.models.HeadersBuilder').buildSyncHeaders(),
+            success: function (response) {
                 this.mergeRemoteLogs(JSON.parse(response.responseText));
                 callback(null);
             },
-            failure:function (response) {
+            failure: function (response) {
                 if (response.status === 401) {
                     this.authorizationChanged();
                 }
             },
-            scope:this
+            scope: this
         });
     },
-    mergeRemoteLogs:function (workouts) {
-        var DATE_FORMAT = "MM/dd/yyyy";
-        _.each(workouts, function (workout) {
-            var log = workout.logs[0];
-            var dateAsString = new Date(log.date).toString(DATE_FORMAT);
-            var matchingEntry = biglifts.stores.LiftLog.findBy(function (l) {
-                return new Date(l.get('timestamp')).toString(DATE_FORMAT) === dateAsString
-                    && l.get('liftName') === log.name;
-            });
+    mergeRemoteLogs: function (workouts) {
+        throw "abstract";
+    },
+    getFormattedLog: function () {
+        if (!this.store) {
+            throw "store not defined for syncer";
+        }
 
-            if (matchingEntry === -1) {
-                log.liftName = log.name;
-                log.cycle = log.specific_workout.cycle;
-                log.week = log.specific_workout.week;
-                log.expectedReps = log.specific_workout.expected_reps;
-                log.timestamp = log.date;
-                biglifts.stores.LiftLog.addLogEntry(log);
-            }
-        });
-    },
-    getFormattedLog:function () {
         var me = this;
         var data = [];
-        biglifts.stores.LiftLog.each(function (l) {
+        this.store.each(function (l) {
             data.push(me.buildFormattedWorkout(l));
         });
         return data;
     },
-    buildFormattedWorkout:function (log_entry) {
-        return {
-            workout_id:log_entry.get('workout_id'), logs:[
-                {
-                    sets:1,
-                    reps:log_entry.get('reps'),
-                    name:log_entry.get('liftName'),
-                    weight:log_entry.get('weight'),
-                    notes:log_entry.get('notes'),
-                    date:log_entry.get('timestamp'),
-                    specific:{
-                        type:'5/3/1',
-                        data:{
-                            cycle:log_entry.get('cycle'),
-                            expected_reps:log_entry.get('expectedReps'),
-                            week:log_entry.get('week')
-                        }
-                    }
-                }
-            ]};
+    buildFormattedWorkout: function (log_entry) {
+        throw "abstract";
     }
 });
