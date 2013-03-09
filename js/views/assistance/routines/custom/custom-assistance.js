@@ -1,12 +1,12 @@
 Ext.define("Biglifts.views.Custom", {
     extend: "Ext.Panel",
     showArrange: function () {
-        if (!this.customPanelArrange == this.getActiveItem()) {
+        if (this.customPanelArrange != this.getActiveItem()) {
             this.setActiveItem(this.customPanelArrange);
         }
     },
     showCustomMovement: function () {
-        if (!this.customPanel == this.getActiveItem()) {
+        if (this.customPanel != this.getActiveItem()) {
             this.setActiveItem(this.customPanel);
         }
     },
