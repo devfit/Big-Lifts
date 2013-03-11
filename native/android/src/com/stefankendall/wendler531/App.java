@@ -9,6 +9,9 @@ import com.google.ads.AdSize;
 import com.google.ads.AdView;
 import org.apache.cordova.DroidGap;
 
+import java.util.Arrays;
+import java.util.HashSet;
+
 public class App extends DroidGap {
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -30,15 +33,21 @@ public class App extends DroidGap {
     }
 
     private void setupAds() {
-        AdView adView = new AdView(this, AdSize.BANNER, "a15138083566f58");
-        LinearLayout layout = super.root;
-        layout.addView(adView);
+        if (!isPremium()) {
+            AdView adView = new AdView(this, AdSize.BANNER, "a15138083566f58");
+            LinearLayout layout = super.root;
+            layout.addView(adView);
 
-        AdRequest request = new AdRequest();
-        request.setTesting(true);
-        adView.loadAd(request);
+            AdRequest request = new AdRequest();
+            request.setTestDevices(new HashSet<String>(Arrays.asList("AEF1D2CF66BB4FC2247C707A31D7E138")));
+            adView.loadAd(request);
 
-        super.root.requestLayout();
+            super.root.requestLayout();
+        }
+    }
+
+    public boolean isPremium() {
+        return false;
     }
 }
 

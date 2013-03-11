@@ -21,35 +21,46 @@ biglifts.main.loadApplication = function () {
 };
 
 biglifts.main.tabPanelConfig = {
-    xtype:'tabpanel',
-    id:'main-tab-panel',
-    fullscreen:true,
-    sortable:false,
-    tabBar:{
-        id:'tab-navigation',
-        docked:'bottom',
-        layout:{ pack:'center', align:'center' }
+    xtype: 'tabpanel',
+    id: 'main-tab-panel',
+    fullscreen: true,
+    sortable: false,
+    tabBar: {
+        id: 'tab-navigation',
+        docked: 'bottom',
+        layout: { pack: 'center', align: 'center' }
     }
 };
 
+biglifts.main.watchForAppResize = function () {
+    biglifts.WINDOW_HEIGHT = window.innerHeight;
+    setInterval(function () {
+        if (biglifts.WINDOW_HEIGHT !== window.innerHeight) {
+            biglifts.WINDOW_HEIGHT = window.innerHeight;
+            Ext.Viewport.fireEvent('orientationchange');
+        }
+    }, 500);
+};
+
 Ext.application({
-    launch:function () {
+    launch: function () {
         Ext.create('Ext.Panel', {
-            id:'app',
-            fullscreen:true,
-            layout:'card',
-            listeners:{
-                activeitemchange:function () {
+            id: 'app',
+            fullscreen: true,
+            layout: 'card',
+            listeners: {
+                activeitemchange: function () {
                     if (this.setupScreen) {
                         this.setupScreen.hideLoadingIndicator();
                     }
                 },
-                initialize:function () {
+                initialize: function () {
                     this.add(biglifts.main.tabPanelConfig);
                     this.setupScreen = this.add(Ext.create('biglifts.views.Setup'));
 
                     biglifts.main.deviceReady = true;
                     biglifts.main.loadApplication();
+                    biglifts.main.watchForAppResize();
                 }
             }
         });
