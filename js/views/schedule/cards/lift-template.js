@@ -41,7 +41,8 @@ Ext.define('biglifts.views.LiftTemplate', {
                 '<span class="percentage"><span class="warmup-indicator">[warm]</span> {percentage}%</span></p>' +
                 (biglifts.toggles.BarLoading ?
                     '<p class="bar-loader-breakdown">{[util.plates.getFormattedPlateList(' +
-                        'this.formatLiftWeight(values),biglifts.liftSchedule.currentLiftProperty)]}</p>' : ''), {
+                        'this.formatLiftWeight(values),' +
+                        'biglifts.stores.lifts.Lifts.findRecord("propertyName",biglifts.liftSchedule.currentLiftProperty))]}</p>' : ''), {
                 getLiftRowClass:function (values) {
                     return (values.amrap ? 'amrap ' : '') + (values.warmup ? 'warmup ' : '');
                 },

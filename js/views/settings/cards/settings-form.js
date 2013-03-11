@@ -5,6 +5,14 @@ Ext.define('biglifts.views.SettingsForm', {
         this.setValues(biglifts.stores.w.Settings.getCombinedSettings());
         this.hasBeenLoaded = true;
     },
+    bindListeners:function(){
+        biglifts.stores.w.Settings.addListener('beforesync', this.reloadForm, this);
+        biglifts.stores.GlobalSettings.addListener('beforesync', this.reloadForm, this);
+    },
+    destroyListeners:function(){
+        biglifts.stores.w.Settings.removeListener('beforesync', this.reloadForm, this);
+        biglifts.stores.GlobalSettings.removeListener('beforesync', this.reloadForm, this);
+    },
     resetToDefaults: function () {
         biglifts.stores.w.Settings.setupDefaultSettings();
         biglifts.stores.GlobalSettings.setupDefaultSettings();
@@ -15,14 +23,17 @@ Ext.define('biglifts.views.SettingsForm', {
         if (!settingsForm.hasBeenLoaded) {
             return;
         }
-
+        var settingsFormValues = settingsForm.getValues();
         if (oldValue === 'lbs' && newValue === 'kg') {
             biglifts.stores.lifts.Lifts.adjustCycleIncreaseForKg();
+            if (settingsFormValues.roundingValue === "5") {
+                settingsFormValues.roundingValue = "2.5";
+            }
         }
 
         var settingsRecord = biglifts.stores.w.Settings.first();
         var globalSettings = biglifts.stores.GlobalSettings.first();
-        var settingsFormValues = settingsForm.getValues();
+
         for (var property in settingsFormValues) {
             if (biglifts.stores.GlobalSettings.hasField(property)) {
                 globalSettings.set(property, settingsFormValues[property]);
@@ -109,7 +120,14 @@ Ext.define('biglifts.views.SettingsForm', {
                 ]);
             },
             painted: function () {
-                this.reloadForm();
+                if (!this._painted) {
+                    this._painted = true;
+                    this.reloadForm();
+                    this.bindListeners();
+                }
+            },
+            destroy:function(){
+                this.destroyListeners();
             }
         }
     }

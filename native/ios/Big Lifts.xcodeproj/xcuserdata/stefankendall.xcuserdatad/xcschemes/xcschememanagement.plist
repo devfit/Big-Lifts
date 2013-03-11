@@ -19,21 +19,6 @@
 			<key>orderHint</key>
 			<integer>5</integer>
 		</dict>
-		<key>Big Lifts copy 2.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>7</integer>
-		</dict>
-		<key>Big Lifts copy 4.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>8</integer>
-		</dict>
-		<key>Big Lifts copy.xcscheme</key>
-		<dict>
-			<key>orderHint</key>
-			<integer>6</integer>
-		</dict>
 		<key>UnitTests.xcscheme</key>
 		<dict>
 			<key>orderHint</key>

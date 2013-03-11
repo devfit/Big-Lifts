@@ -1,6 +1,11 @@
 @531
 Feature: Adjusting the weights to kg
 
+  Scenario: Rounding is set to 2.5 when kg is selected
+    When I navigate to the settings page
+    And I set select "units" to "kg"
+    Then The "Round to" input is "2.5"
+
   @premium
   Scenario: Plates are adjusted when kg is selected
     When I navigate to the settings page
