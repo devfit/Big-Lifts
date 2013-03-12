@@ -29,7 +29,7 @@ public class App extends DroidGap {
         super.loadUrl("file:///android_asset/www/index.html");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
 
-        setupAds();
+//        setupAds();
     }
 
     private void setupAds() {
