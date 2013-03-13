@@ -13,7 +13,8 @@ Ext.define('LiftLog', {
             {name: 'week', type: 'int'},
             {name: 'cycle', type: 'int'},
             {name: 'timestamp', type: 'int'},
-            {name: 'workout_id', type: 'int'}
+            {name: 'workout_id', type: 'int'},
+            {name: 'synced', type: 'boolean'}
         ],
         proxy: {
             type: 'localstorage',

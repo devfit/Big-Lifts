@@ -10,7 +10,8 @@ Ext.define('biglifts.models.startingstrength.Log', {
             {name: 'reps', type: 'int'},
             {name: 'units', type: 'string'},
             {name: 'timestamp', type: 'int'},
-            {name: 'workout_id', type: 'int'}
+            {name: 'workout_id', type: 'int'},
+            {name: 'synced', type: 'boolean'}
         ],
         proxy: {
             type: 'localstorage',
