@@ -45,19 +45,3 @@ Ext.define('Ext.dataview.override', {
         this.doMultiSelect(records, keepExisting);
     }
 });
-
-Ext.define('Ext.viewport.Override', {
-    override: 'Ext.viewport.Default',
-    onResize: function () {
-        var oldWidth = this.windowWidth,
-            oldHeight = this.windowHeight,
-            width = this.getWindowWidth(),
-            height = this.getWindowHeight(),
-            currentOrientation = this.getOrientation(),
-            newOrientation = this.determineOrientation();
-
-        if (oldWidth !== width || oldHeight !== height || currentOrientation !== newOrientation) {
-            this.fireOrientationChangeEvent(newOrientation, currentOrientation);
-        }
-    }
-});

@@ -3,14 +3,7 @@ package com.stefankendall.wendler531;
 import android.media.AudioManager;
 import android.os.Bundle;
 import android.view.WindowManager;
-import android.widget.LinearLayout;
-import com.google.ads.AdRequest;
-import com.google.ads.AdSize;
-import com.google.ads.AdView;
 import org.apache.cordova.DroidGap;
-
-import java.util.Arrays;
-import java.util.HashSet;
 
 public class App extends DroidGap {
     @Override
@@ -28,26 +21,6 @@ public class App extends DroidGap {
         super.setVolumeControlStream(AudioManager.STREAM_MUSIC);
         super.loadUrl("file:///android_asset/www/index.html");
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
-
-//        setupAds();
-    }
-
-    private void setupAds() {
-        if (!isPremium()) {
-            AdView adView = new AdView(this, AdSize.BANNER, "a15138083566f58");
-            LinearLayout layout = super.root;
-            layout.addView(adView);
-
-            AdRequest request = new AdRequest();
-            request.setTestDevices(new HashSet<String>(Arrays.asList("AEF1D2CF66BB4FC2247C707A31D7E138")));
-            adView.loadAd(request);
-
-            super.root.requestLayout();
-        }
-    }
-
-    public boolean isPremium() {
-        return false;
     }
 }
 

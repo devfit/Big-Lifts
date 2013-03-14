@@ -32,16 +32,6 @@ biglifts.main.tabPanelConfig = {
     }
 };
 
-biglifts.main.watchForAppResize = function () {
-    biglifts.WINDOW_HEIGHT = window.innerHeight;
-    setInterval(function () {
-        if (biglifts.WINDOW_HEIGHT !== window.innerHeight) {
-            biglifts.WINDOW_HEIGHT = window.innerHeight;
-            Ext.Viewport.fireEvent('orientationchange');
-        }
-    }, 500);
-};
-
 Ext.application({
     launch: function () {
         Ext.create('Ext.Panel', {
@@ -60,7 +50,6 @@ Ext.application({
 
                     biglifts.main.deviceReady = true;
                     biglifts.main.loadApplication();
-                    biglifts.main.watchForAppResize();
                 }
             }
         });
