@@ -102,18 +102,18 @@ span.disclosure-small {
   .x-list-item-label {
     padding: 0;
   }
+}
 
-  .unsynced {
-    background: image-url('hourglass.png', false, false);
-  }
+.unsynced {
+  background: image-url('hourglass.png', false, false);
+}
 
-  .synced {
-    background: image-url('tick_small.png', false, false);
-  }
+.synced {
+  background: image-url('tick_small.png', false, false);
+}
 
-  .synced, .unsynced {
-    background-position: right bottom;
-    background-repeat: no-repeat;
-  }
-
+.synced, .unsynced {
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
 }

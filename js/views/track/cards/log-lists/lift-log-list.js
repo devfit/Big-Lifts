@@ -51,9 +51,9 @@ Ext.define('biglifts.views.LiftLogList', {
         },
         selectedCls: '',
         store: biglifts.stores.LiftLog,
-        itemCls:'log-row',
+        itemCls: 'log-row',
         emptyText: '<div id="lift-log-empty-text">To track a lift, use the checkmark in the lift view</div>',
-        itemTpl: '<div class="unsynced"><table><tbody><tr>' +
+        itemTpl: new Ext.XTemplate('<div class="{[this.getSyncedClass(values)]}"><table><tbody><tr>' +
             '<td width="32%"><div class="lift-name">{liftName}</div><div class="cycle-and-week">C{cycle} W{week} ' +
             '<span class="deload-indicator">{[Ext.getCmp("lift-log-list").deloadMarker(values.week)]}</span>' +
             '</div></td>' +
@@ -62,6 +62,10 @@ Ext.define('biglifts.views.LiftLogList', {
             '<td width="40%" class="date-week">' +
             '<span class="date">{[biglifts.log.formatDate(values.timestamp)]}</span><span class="disclosure-small"></span>' +
             '</td><td width="40%" class="delete-button-holder hidden"></td>' +
-            '</tr></tbody></table></div>'
+            '</tr></tbody></table></div>', {
+            getSyncedClass: function (values) {
+                return values.synced ? "synced" : "unsynced";
+            }
+        })
     }
 });

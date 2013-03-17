@@ -23,7 +23,14 @@ Ext.define('biglifts.models.Log531Syncer', {
                 log.week = log.specific_workout.week;
                 log.expectedReps = log.specific_workout.expected_reps;
                 log.timestamp = log.date;
+                log.synced = true;
                 me.store.addLogEntry(log);
+            }
+            else {
+                var entry = me.store.getAt(matchingEntry);
+                entry.set('synced',true);
+                entry.save();
+                me.store.sync();
             }
         });
     },
