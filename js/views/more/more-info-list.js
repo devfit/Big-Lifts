@@ -1,6 +1,9 @@
 Ext.define('biglifts.views.MoreInfoList', {
     extend: "Ext.dataview.List",
     selectRoutine: function () {
+        biglifts.navigation.setBackFunction(function () {
+            biglifts.main.loadRoutine(false);
+        });
         Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
     },
     getAppInfo: function () {

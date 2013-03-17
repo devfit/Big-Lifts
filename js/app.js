@@ -7,6 +7,10 @@ biglifts.main.start = function () {
     biglifts.main.loadApplication();
 };
 
+biglifts.main.loadRoutine = function (firstTimeInApp) {
+    Ext.getCmp('routine-chooser').loadRoutine(biglifts.stores.Routine.first().get('name'), firstTimeInApp);
+};
+
 biglifts.main.loadApplication = function () {
     if (biglifts.main.started && biglifts.main.deviceReady) {
         var firstTimeInApp = biglifts.stores.Routine.getCount() === 0;
@@ -15,7 +19,7 @@ biglifts.main.loadApplication = function () {
             Ext.getCmp('app').setActiveItem(Ext.getCmp('setup'));
         }
         else {
-            Ext.getCmp('routine-chooser').loadRoutine(biglifts.stores.Routine.first().get('name'), firstTimeInApp);
+            biglifts.main.loadRoutine(firstTimeInApp);
         }
     }
 };

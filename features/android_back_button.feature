@@ -4,6 +4,12 @@ Feature:
   I want to be able to use my back button to navigate the app
   So that all my apps navigate more consistently
 
+  Scenario: Android user presses back at setup from 5/3/1
+    When I navigate to the "More" tab
+    And I tap the "Setup..." list item
+    And I press the android back button
+    Then I am on the lift schedule
+
   Scenario: Android user presses back at lift schedule
     When I navigate to the lift schedule
     And I press the android back button

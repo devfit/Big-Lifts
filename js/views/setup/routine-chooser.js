@@ -76,9 +76,6 @@ Ext.define('biglifts.views.RoutineChooser', {
         id:'routine-chooser',
         layout:'vbox',
         listeners:{
-            painted:function () {
-                biglifts.navigation.unbindBackEvent();
-            },
             initialize:{
                 fn:function () {
                     var me = this;
