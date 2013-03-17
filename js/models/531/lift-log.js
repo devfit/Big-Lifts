@@ -13,7 +13,8 @@ Ext.define('LiftLog', {
             {name: 'week', type: 'int'},
             {name: 'cycle', type: 'int'},
             {name: 'timestamp', type: 'int'},
-            {name: 'workout_id', type: 'int'}
+            {name: 'workout_id', type: 'int'},
+            {name: 'synced', type: 'boolean'}
         ],
         proxy: {
             type: 'localstorage',
@@ -59,7 +60,9 @@ Ext.define('LiftLogStore', {
             addrecords: function (store, records) {
                 var syncer = Ext.create('biglifts.models.Log531Syncer');
                 _.each(records, function (record) {
-                    syncer.saveWorkout(syncer.buildFormattedWorkout(record));
+                    syncer.saveWorkout(syncer.buildFormattedWorkout(record), function () {
+                        syncer.getAndSync();
+                    });
                 });
             },
             load: function () {

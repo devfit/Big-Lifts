@@ -63,9 +63,9 @@ Ext.define('biglifts.views.ss.Track', {
                 this.logList = this.add({
                     xtype: 'list',
                     store: biglifts.stores.ss.CombinedLog,
-                    itemTpl: new Ext.XTemplate("<table class='ss-workout'><tbody>" +
+                    itemTpl: new Ext.XTemplate("<div class='{[this.getSyncedClass(values)]}'><table class='ss-workout'><tbody>" +
                         "{[this.buildRowsForWorkout(values)]}" +
-                        "</tbody></table>", {
+                        "</tbody></table></div>", {
                         buildRowsForWorkout: function (values) {
                             var convertTimestamp = function (timestamp) {
                                 return new Date(timestamp).toString(biglifts.stores.w.Settings.first().get('dateFormat'));
@@ -90,6 +90,15 @@ Ext.define('biglifts.views.ss.Track', {
                             });
                             biglifts.stores.ss.Log.clearFilter();
                             return rows;
+                        },
+                        getSyncedClass: function (values) {
+                            biglifts.stores.ss.Log.filter('workout_id', values.workout_id);
+                            var synced = true;
+                            biglifts.stores.ss.Log.each(function (r) {
+                                synced = synced && r.get('synced');
+                            });
+                            biglifts.stores.ss.Log.clearFilter();
+                            return synced ? "synced" : "unsynced";
                         }
                     }),
                     listeners: {

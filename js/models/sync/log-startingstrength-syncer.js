@@ -21,12 +21,25 @@ Ext.define('biglifts.models.LogStartingStrengthSyncer', {
                 _.each(workout.logs, function (log) {
                     log.timestamp = log.date;
                     log.workout_id = newWorkoutId;
+                    log.synced = true;
                     biglifts.stores.ss.Log.add(log);
                 });
-                biglifts.stores.ss.Log.sync();
-                biglifts.stores.ss.Log.fireEvent('beforesync');
+            }
+            else {
+                util.withNoFilters(me.store, function () {
+                    me.store.filter(function (l) {
+                        return new Date(l.get('timestamp')).toString(DATE_FORMAT) === dateAsString;
+                    });
+                    me.store.each(function (l) {
+                        l.set('synced', true);
+                        l.save();
+                    });
+                });
             }
         });
+
+        biglifts.stores.ss.Log.sync();
+        biglifts.stores.ss.Log.fireEvent('beforesync');
     },
     getFormattedLog: function () {
         var me = this;

@@ -18,15 +18,15 @@ span.disclosure-small {
 }
 
 @-webkit-keyframes fade-in {
-0% {
+  0% {
     opacity: 0;
-}
-60% {
+  }
+  60% {
     opacity: 0;
-}
-100% {
+  }
+  100% {
     opacity: 1;
-}
+  }
 }
 
 .fade-in {
@@ -36,7 +36,7 @@ span.disclosure-small {
   -webkit-animation-iteration-count: 1;
 }
 
-.x-list div.lift-log-row, div.lift-list-row {
+.x-list div.log-row, div.lift-list-row {
   .x-list-item-label {
     padding-top: 2px;
     padding-bottom: 2px;
@@ -98,32 +98,22 @@ span.disclosure-small {
   margin-top: -1.5em;
 }
 
-$notesBorderColor: #777777;
-div.log-notes {
-  background-color: white;
-  padding: 5px;
-  border: solid 2px $notesBorderColor;
-  @include border-radius(8px, 8px);
-}
-
-div.log-notes.tapped {
-  color: black;
-  background-color: #77B2F8;
-
-  div.notes-empty-text {
-    color: black;
+.log-row {
+  .x-list-item-label {
+    padding: 0;
   }
 }
 
-div.notes-empty-text {
-  width: 100%;
-  text-align: center;
-  color: #a9a9a9;
+.unsynced {
+  background: image-url('hourglass.png', false, false);
 }
 
-div.notes-form {
-  height: 100%;
-  margin: 0px;
-  border: solid 2px $notesBorderColor;
-  @include border-radius(8px, 8px);
+.synced {
+  background: image-url('tick_small.png', false, false);
+}
+
+.synced, .unsynced {
+  background-position: right bottom;
+  background-repeat: no-repeat;
+  background-size: 10px 10px;
 }
