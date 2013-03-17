@@ -42,7 +42,7 @@ biglifts.loading.load = function () {
 };
 
 biglifts.setupAds = function () {
-    if (Ext.os.is.iOS) {
+    if (Ext.os.is.iOS && !biglifts.DEBUG) {
         document.addEventListener("iAdBannerViewDidLoadAdEvent", function (evt) {
             window.plugins.iAdPlugin.showAd(true);
         }, false);
