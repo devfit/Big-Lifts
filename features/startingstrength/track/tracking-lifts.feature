@@ -37,7 +37,7 @@ Feature: Tracking Lifts
     And I navigate to the "Edit" tab
     Then The "Bench" input is "230"
     Then The "Squat" input is "320"
-    Then The "Deadlift" input is "405"
+    Then The "Deadlift" input is "410"
     Then The "Power Clean" input is "205"
     Then The "Press" input is "125"
 
