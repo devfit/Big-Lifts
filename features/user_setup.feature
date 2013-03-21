@@ -21,7 +21,6 @@ Feature: User Setup
     And A user loads with username "bob" and password "password"
     And I set the "User" input to "bob2"
     And I tap the "Save" button
-    Then The "User" input is disabled
     And The user save responds with success, user changed
     Then The "User" input is enabled
     Then The user save flash message is "Username changed!"
