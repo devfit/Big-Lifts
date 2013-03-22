@@ -58,6 +58,7 @@ Ext.application({
             }
         });
 
+        Ext.Viewport.addListener('orientationchange', biglifts.ads.orientationChange);
         util.fireApplicationReady();
     }
 });
