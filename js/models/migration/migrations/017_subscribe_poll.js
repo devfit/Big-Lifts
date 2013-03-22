@@ -7,7 +7,7 @@ Ext.define('biglifts.migrations.SubscribePoll', {
             headers: Ext.create('biglifts.models.HeadersBuilder').buildSyncHeaders(),
             jsonData: {
                 name: 'subscribe',
-                answer: yesOrNo === 'yes'
+                answer: yesOrNo == 'yes' ? "true" : "false"
             },
             success: function (response) {
                 console.log("Success");
