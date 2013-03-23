@@ -1,7 +1,7 @@
 //Fix list deselection bug
 Ext.define('Ext.dataview.override', {
-    override:'Ext.dataview.DataView',
-    onStoreUpdate:function (store, record, newIndex, oldIndex) {
+    override: 'Ext.dataview.DataView',
+    onStoreUpdate: function (store, record, newIndex, oldIndex) {
         var me = this,
             container = me.container;
         oldIndex = (typeof oldIndex === 'undefined') ? newIndex : oldIndex;
@@ -22,7 +22,7 @@ Ext.define('Ext.dataview.override', {
 //Fix selectRange in lists.
 Ext.define('Ext.dataview.override', {
     override: 'Ext.dataview.DataView',
-    selectRange: function(startRecord, endRecord, keepExisting) {
+    selectRange: function (startRecord, endRecord, keepExisting) {
         var me = this,
             store = me.getStore(),
             records = [],

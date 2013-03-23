@@ -117,8 +117,7 @@ Ext.define('biglifts.views.LiftGraph', {
         this.callParent(arguments);
         this.topToolbar = this.add({
             docked: 'top',
-            xtype: 'toolbar',
-            title: 'Graph'
+            xtype: 'toolbar'
         });
         this.topToolbar.add({
             xtype: 'button',

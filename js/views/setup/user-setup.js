@@ -48,6 +48,7 @@ Ext.define('biglifts.views.UserSetup', {
                     this.saveFailure(JSON.parse(response.responseText).status);
                 }
                 catch (e) {
+                    this.saveFailure("Something went wrong. Let me know via Feedback and I'll look into it.")
                 }
             },
             scope:this

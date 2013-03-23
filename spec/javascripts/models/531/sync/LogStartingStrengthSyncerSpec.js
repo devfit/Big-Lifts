@@ -130,4 +130,50 @@ describe("Log StartingStrength Syncer", function () {
         expect(this.log.getCount()).toEqual(3);
         expect(this.combinedLog.getCount()).toEqual(2);
     });
+
+    it("should set existing records not removed to synced true", function () {
+        var now = new Date().getTime();
+        var localLog = [
+            {
+                sets: 5,
+                reps: 3,
+                name: 'Power Clean',
+                weight: 200,
+                units: 'lbs',
+                timestamp: now,
+                synced: false
+            },
+            {
+                sets: 5,
+                reps: 3,
+                name: 'Press',
+                weight: 200,
+                units: 'lbs',
+                timestamp: now,
+                synced: false
+            }
+        ];
+
+        this.log.add(localLog);
+        this.log.sync();
+
+        var remoteLog = {workout_id: 1, name: 'StartingStrength', logs: [
+            {
+                sets: 3,
+                reps: 5,
+                name: 'Press',
+                weight: 100,
+                units: 'lbs',
+                date: now
+            }
+        ]};
+
+
+        this.syncer.mergeRemoteLogs([
+            remoteLog
+        ]);
+
+        expect(this.log.first().get('synced')).toEqual(true);
+        expect(this.log.last().get('synced')).toEqual(true);
+    });
 });

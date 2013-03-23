@@ -10,7 +10,8 @@ Ext.define('biglifts.models.startingstrength.Log', {
             {name: 'reps', type: 'int'},
             {name: 'units', type: 'string'},
             {name: 'timestamp', type: 'int'},
-            {name: 'workout_id', type: 'int'}
+            {name: 'workout_id', type: 'int'},
+            {name: 'synced', type: 'boolean'}
         ],
         proxy: {
             type: 'localstorage',
@@ -40,8 +41,15 @@ Ext.define('biglifts.models.startingstrength.LogStore', {
         listeners: {
             addrecords: function (s, records) {
                 var me = this;
+                var tasks = [];
                 _.each(this.getUniqueWorkoutIdsFromModels(records), function (workout_id) {
-                    me.syncer.saveWorkout(me.syncer.buildFormattedWorkout(workout_id));
+                    tasks.push(function (callback) {
+                        me.syncer.saveWorkout(me.syncer.buildFormattedWorkout(workout_id), callback);
+                    });
+                });
+
+                async.series(tasks, function () {
+                    me.syncer.getAndSync();
                 });
             },
             load: function () {

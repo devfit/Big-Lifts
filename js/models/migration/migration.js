@@ -32,7 +32,9 @@ Ext.define('Migrations', {
         {klass:'biglifts.migrations.FixPowerCleanPercentage', done:false},
         {klass:'biglifts.migrations.FixSsDoubling', done:false},
         {klass:'biglifts.migrations.SyncAlert', done:false},
-        {klass:'biglifts.migrations.FixSsPress', done:false}
+        {klass:'biglifts.migrations.FixSsPress', done:false},
+        {klass:'biglifts.migrations.AddSyncedToLogs', done:false},
+        {klass:'biglifts.migrations.SubscribePoll', done:false}
     ],
     loadMissingMigrations:function () {
         var me = this;

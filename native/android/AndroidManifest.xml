@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-      package="com.stefankendall.wendler531premium" android:versionName="102" android:versionCode="132">
+      package="com.stefankendall.wendler531premium" android:versionName="105" android:versionCode="135">
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"
@@ -42,6 +42,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name="com.google.ads.AdActivity"
+                  android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"/>
     </application>
 
     <uses-sdk android:minSdkVersion="11" />

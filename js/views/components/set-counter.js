@@ -4,9 +4,17 @@ Ext.define('biglifts.components.SetCounter', {
         this.currentSet++;
         this.setButton.setText(this.currentSet + "");
     },
-    clearSetCount: function () {
+    setClearTapped: function () {
         this.currentSet = 0;
         this.setButton.setText("0");
+
+        this.clearIcon.hide();
+        this.clearIconDark.show();
+
+        Ext.Function.defer(function () {
+            this.clearIcon.show();
+            this.clearIconDark.hide();
+        }, 100, this);
     },
     config: {
         layout: 'hbox',
@@ -15,17 +23,35 @@ Ext.define('biglifts.components.SetCounter', {
                 var me = this;
                 me.currentSet = 0;
 
-                me.add({
-                    cls: 'clear-icon set-counter-clear',
+                var clearContainer = me.add({
+                    xtype: 'container',
+                    layout: 'fit',
+                    width: 48,
+                    height: 32,
                     listeners: {
                         painted: function () {
                             if (!this._painted) {
                                 this._painted = true;
-                                this.element.addListener('tap', Ext.bind(me.clearSetCount, me));
+                                this.element.addListener('tap', Ext.bind(me.setClearTapped, me));
                             }
                         }
                     }
                 });
+
+                me.clearIcon = clearContainer.add([
+                    {
+                        height: 24,
+                        cls: 'clear-icon set-counter-clear'
+                    }
+                ]);
+
+                me.clearIconDark = clearContainer.add([
+                    {
+                        hidden: true,
+                        height: 24,
+                        cls: 'clear-icon-dark set-counter-clear'
+                    }
+                ]);
 
                 me.add({
                     html: 'Set',

@@ -1,10 +1,17 @@
 @import "compass/css3/background-size";
 
-.clear-icon {
+.clear-icon, .clear-icon-dark {
   margin: 4px;
   width: 44px;
   background: image-url('clear-icon.png', false, false);
   background-position: center;
-  background-repeat:no-repeat;
+  background-repeat: no-repeat;
+  @include background-size(contain);
+}
+
+.clear-icon-dark {
+  background: image-url('clear-icon-dark.png', false, false);
+  background-position: center;
+  background-repeat: no-repeat;
   @include background-size(contain);
 }

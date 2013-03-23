@@ -2,7 +2,7 @@
 Ext.ns('biglifts.debug');
 
 biglifts.debug.setup531WithoutNotification = function () {
-    biglifts.stores.Routine.add({'name':'5/3/1'});
+    biglifts.stores.Routine.add({'name': '5/3/1'});
     biglifts.stores.Routine.sync();
 };
 
@@ -14,32 +14,42 @@ if (biglifts.DEBUG) {
     };
 
     window.device = {
-        name:"Chrome",
-        uuid:'1234',
-        version:'1.0',
-        exitApp:function () {
+        name: "Chrome",
+        uuid: '1234',
+        version: '1.0',
+        exitApp: function () {
             window.location.reload();
         }
     };
 
     Ext.define('biglifts.overrides.RestTimer', {
-        override:'biglifts.views.RestTimer',
-        TIME_INTERVAL:3
+        override: 'biglifts.views.RestTimer',
+        TIME_INTERVAL: 3
     });
 
     Ext.define('biglifts.overrides.UserStore', {
-        override:'biglifts.stores.UserStore',
-        CREATE_USER_URL:'http://localhost:3000/users'
+        override: 'biglifts.stores.UserStore',
+        CREATE_USER_URL: 'http://localhost:3000/users'
     });
 
     Ext.define('biglifts.overrides.LogSyncer', {
-        override:'biglifts.models.LogSyncer',
-        LOG_URL:'http://localhost:3000/log'
+        override: 'biglifts.models.LogSyncer',
+        LOG_URL: 'http://localhost:3000/log'
     });
 
     Ext.define('biglifts.overrides.UserSetup', {
-        override:'biglifts.views.UserSetup',
-        UPDATE_USER_URL:'http://localhost:3000/users/1'
+        override: 'biglifts.views.UserSetup',
+        UPDATE_USER_URL: 'http://localhost:3000/users/1'
+    });
+
+    Ext.define('biglifts.overrides.UserSetup', {
+        override: 'biglifts.views.UserSetup',
+        UPDATE_USER_URL: 'http://localhost:3000/users/1'
+    });
+
+    Ext.define('biglifts.overrides.SubscribePoll', {
+        override: 'biglifts.migrations.SubscribePoll',
+        POLL_URL: 'http://localhost:3000/poll'
     });
 
     Ext.ns('biglifts.log.emailExport');
@@ -54,5 +64,4 @@ if (biglifts.DEBUG) {
     }
 
     biglifts.loadingFromFile = false;
-    biglifts.setupAds = Ext.emptyFn;
 }
