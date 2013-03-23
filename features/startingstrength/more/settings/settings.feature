@@ -1,6 +1,12 @@
 @StartingStrength
 Feature: StartingStrength Settings
 
+  Scenario: Has rounding options
+    When I navigate to the "More" tab
+    And I tap the "Settings" list item
+    Then There is a "Round to" form label
+    Then There is a "Rounding" form label
+
   Scenario: Navigating to settings
     When I navigate to the "Edit" tab
     And I set the "Bench" input to "100"

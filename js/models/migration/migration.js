@@ -34,7 +34,8 @@ Ext.define('Migrations', {
         {klass:'biglifts.migrations.SyncAlert', done:false},
         {klass:'biglifts.migrations.FixSsPress', done:false},
         {klass:'biglifts.migrations.AddSyncedToLogs', done:false},
-        {klass:'biglifts.migrations.SubscribePoll', done:false}
+        {klass:'biglifts.migrations.SubscribePoll', done:false},
+        {klass:'biglifts.migrations.AddRoundingToGlobal', done:false}
     ],
     loadMissingMigrations:function () {
         var me = this;
@@ -56,10 +57,7 @@ Ext.define('Migrations', {
                 me.each(function (migration) {
                     var alreadyRun = migration.get('done');
                     if (!alreadyRun) {
-                        var klass = migration.get('klass');
-                        var migrationRunner = Ext.create(klass);
-                        migrationRunner.run();
-
+                        Ext.create(migration.get('klass')).run();
                         migration.set('done', true);
                         me.sync();
                     }
