@@ -66,11 +66,13 @@ Ext.define('LiftLogStore', {
                 });
             },
             load: function () {
-                Ext.create('biglifts.models.Log531Syncer').getAndSync();
-
-                biglifts.stores.Users.addListener('beforesync', function () {
+                Ext.Function.defer(function () {
                     Ext.create('biglifts.models.Log531Syncer').getAndSync();
-                });
+
+                    biglifts.stores.Users.addListener('beforesync', function () {
+                        Ext.create('biglifts.models.Log531Syncer').getAndSync();
+                    });
+                }, 5000);
             },
             removerecords: function (s, models) {
                 this.restitchWorkoutIds();
