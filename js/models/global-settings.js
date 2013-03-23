@@ -63,12 +63,14 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
         me.sync();
     },
     watchForUnitChange: function (store, record, newIndex, oldIndex, modifiedFieldNames, modifiedValues) {
-        if (modifiedValues.units === 'kg') {
-            var settings = store.first();
-            if (settings.get('roundingValue') === "5") {
-                settings.set('roundingValue', "2.5");
-                settings.save();
-                store.sync();
+        if (_.indexOf(modifiedFieldNames, 'units') !== -1) {
+            if (record.get('units') === 'kg') {
+                var settings = store.first();
+                if (settings.get('roundingValue') === "5") {
+                    settings.set('roundingValue', "2.5");
+                    settings.save();
+                    store.sync();
+                }
             }
         }
     },
