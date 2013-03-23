@@ -2,6 +2,7 @@ Ext.ns("biglifts.weight");
 
 biglifts.weight.format = function (max, percentage) {
     percentage = _.isUndefined(percentage) ? 100 : percentage;
+    var globalSettings = biglifts.stores.GlobalSettings.first();
     return util.roundNumber(max * percentage / 100.0, globalSettings.get('roundingValue'), globalSettings.get('roundingType'));
 };
 
