@@ -67,9 +67,13 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
             if (record.get('units') === 'kg') {
                 var settings = store.first();
                 if (settings.get('roundingValue') === "5") {
-                    settings.set('roundingValue', "2.5");
-                    settings.save();
-                    store.sync();
+                    Ext.Function.defer(function () {
+                        settings.set('roundingValue', "2.5");
+                        settings.save();
+                        store.sync();
+                        store.fireEvent('beforesync');
+                        biglifts.stores.lifts.Lifts.adjustCycleIncreaseForKg();
+                    }, 100);
                 }
             }
         }

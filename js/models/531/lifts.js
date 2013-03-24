@@ -37,14 +37,25 @@ Ext.define('Lifts', {
         return _.keys(liftNameSet);
     },
     adjustCycleIncreaseForKg: function () {
+        var shouldModify = false;
         var lbToKg = {10: 5, 5: 2.5};
+
         this.each(function (r) {
-            var newKgIncrease = lbToKg[r.data.cycleIncrease];
-            if (typeof(newKgIncrease) !== 'undefined') {
-                r.set('cycleIncrease', lbToKg[r.data.cycleIncrease]);
+            var cycleIncrease = r.get('cycleIncrease');
+            if (_.indexOf(_.values(lbToKg), cycleIncrease) === -1) {
+                shouldModify = true;
             }
         });
-        this.sync();
+
+        if (shouldModify) {
+            this.each(function (r) {
+                var newKgIncrease = lbToKg[r.get('cycleIncrease')];
+                if (typeof(newKgIncrease) !== 'undefined') {
+                    r.set('cycleIncrease', lbToKg[r.get('cycleIncrease')]);
+                }
+            });
+            this.sync();
+        }
     },
     DEFAULT_LIFTS: [
         Ext.create('Lift', {name: 'Press', max: 150, propertyName: 'press', cycleIncrease: 5, order: 0}),
