@@ -8,6 +8,11 @@ describe("Starting Strength lift", function () {
         expect(this.liftStore.getCount()).toEqual(5);
     });
 
+    it("should load lifts with order", function () {
+        expect(this.liftStore.first().get('order')).toEqual(0);
+        expect(this.liftStore.last().get('order')).toEqual(4);
+    });
+
     it("should adjust lift increases when the units are changed to kg", function () {
         ensureLoaded(biglifts.stores.GlobalSettings);
 

@@ -88,6 +88,7 @@ src_files:
             - js/views/setup/setup.js
             - js/views/setup/routine-chooser.js
             - js/views/setup/user-setup.js
+            - js/views/components/arrange-panel.js
             - js/views/components/notes-editor.js
             - js/views/components/rest-timer.js
             - js/views/components/config-gear.js

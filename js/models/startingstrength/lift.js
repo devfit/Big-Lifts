@@ -9,7 +9,8 @@ Ext.define('biglifts.models.startingstrength.Lift', {
             {name:'id', type:'string'},
             {name:'name', type:'string'},
             {name:'weight', type:'float'},
-            {name:'increase', type:'float'}
+            {name:'increase', type:'float'},
+            {name:'order', type:'integer'}
         ],
         proxy:{
             type:'localstorage',
