@@ -1,24 +1,25 @@
 Ext.define('biglifts.models.startingstrength.TemplateSwitcher', {
-    switchTo:function (template) {
+    switchTo: function (template) {
         template = template.toLowerCase();
         this.setupLifts(template);
         this.setupWorkouts(template);
     },
-    setupWorkouts:function (template) {
+    setupWorkouts: function (template) {
         biglifts.stores.ss.WorkoutStore.removeAll();
         biglifts.stores.ss.WorkoutStore.sync();
 
         biglifts.stores.ss.WorkoutStore.addWorkoutLifts(true, template);
         biglifts.stores.ss.WorkoutStore.addWorkoutLifts(false, template);
     },
-    setupLifts:function (template) {
+    setupLifts: function (template) {
         var units = biglifts.stores.GlobalSettings.getUnits();
         var newLifts = biglifts.models.startingstrength.lifts[template][units];
         this.removeLiftsNotNeeded(newLifts);
         this.addNeededLifts(newLifts);
+        this.restitchOrdering();
         biglifts.stores.ss.Lifts.sync();
     },
-    removeLiftsNotNeeded:function (newLifts) {
+    removeLiftsNotNeeded: function (newLifts) {
         var newLiftNames = _.map(newLifts, function (value) {
             return value.name
         });
@@ -33,7 +34,7 @@ Ext.define('biglifts.models.startingstrength.TemplateSwitcher', {
             biglifts.stores.ss.Lifts.clearFilter();
         });
     },
-    addNeededLifts:function (newLifts) {
+    addNeededLifts: function (newLifts) {
         util.withNoFilters(biglifts.stores.ss.Lifts, function () {
             _.each(newLifts, function (newLift) {
                 if (!biglifts.stores.ss.Lifts.findRecord('name', newLift.name)) {
@@ -42,6 +43,12 @@ Ext.define('biglifts.models.startingstrength.TemplateSwitcher', {
             });
 
             biglifts.stores.ss.Lifts.clearFilter();
+        });
+    },
+    restitchOrdering: function () {
+        var count = 0;
+        biglifts.stores.ss.Lifts.each(function (l) {
+            l.set('order', count++);
         });
     }
 });

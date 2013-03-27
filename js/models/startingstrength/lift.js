@@ -2,26 +2,26 @@
 Ext.ns('biglifts.stores.ss');
 
 Ext.define('biglifts.models.startingstrength.Lift', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'name', type:'string'},
-            {name:'weight', type:'float'},
-            {name:'increase', type:'float'},
-            {name:'order', type:'integer'}
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'name', type: 'string'},
+            {name: 'weight', type: 'float'},
+            {name: 'increase', type: 'float'},
+            {name: 'order', type: 'integer'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'ss-lift-proxy'
+        proxy: {
+            type: 'localstorage',
+            id: 'ss-lift-proxy'
         }
     }
 });
 
 Ext.define('biglifts.models.startingstrength.LiftStore', {
-    extend:'Ext.data.Store',
-    adjustUnits:function () {
+    extend: 'Ext.data.Store',
+    adjustUnits: function () {
         var me = this;
 
         util.withLoadedStore(biglifts.stores.GlobalSettings, function () {
@@ -36,10 +36,10 @@ Ext.define('biglifts.models.startingstrength.LiftStore', {
             me.sync();
         });
     },
-    config:{
-        model:'biglifts.models.startingstrength.Lift',
-        listeners:{
-            load:function () {
+    config: {
+        model: 'biglifts.models.startingstrength.Lift',
+        listeners: {
+            load: function () {
                 var me = this;
                 util.withLoadedStore(biglifts.stores.GlobalSettings, function () {
                     if (me.getCount() === 0) {
@@ -48,10 +48,10 @@ Ext.define('biglifts.models.startingstrength.LiftStore', {
                 });
             }
         },
-        sorters:[
+        sorters: [
             {
-                property:'name',
-                direction:'ASC'
+                property: 'name',
+                direction: 'ASC'
             }
         ]
     }
