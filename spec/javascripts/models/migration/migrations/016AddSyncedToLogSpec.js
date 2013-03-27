@@ -1,25 +1,33 @@
-describe("Add Synced to Logs migration", function () {
-    beforeEach(function () {
-        this.liftLog = emptyStore(reloadStore(biglifts.stores.LiftLog));
-        this.ssLog = emptyStore(reloadStore(biglifts.stores.ss.Log));
-        this.migration = Ext.create('biglifts.migrations.AddSyncedToLogs');
+(function () {
+    var MODULE_NAME = "Add Synced to Logs migration";
+    module(MODULE_NAME);
+    var liftLog;
+    var ssLog;
+    var migration;
+
+    QUnit.testStart(function (detail) {
+        if (detail.module === MODULE_NAME) {
+            liftLog = emptyStore(reloadStore(biglifts.stores.LiftLog));
+            ssLog = emptyStore(reloadStore(biglifts.stores.ss.Log));
+            migration = Ext.create('biglifts.migrations.AddSyncedToLogs');
+        }
     });
 
     test('should migrate the 5/3/1 log', function () {
-        this.liftLog.add({liftName: 'squat'});
-        this.liftLog.sync();
+        liftLog.add({liftName: 'squat'});
+        liftLog.sync();
 
-        this.migration.run();
+        migration.run();
 
-        equal(this.liftLog.first().get('synced'),false);
+        equal(liftLog.first().get('synced'), false);
     });
 
     test('should migrate the SS log', function () {
-        this.ssLog.add({name: 'Power Clean'});
-        this.ssLog.sync();
+        ssLog.add({name: 'Power Clean'});
+        ssLog.sync();
 
-        this.migration.run();
+        migration.run();
 
-        equal(this.ssLog.first().get('synced'),false);
+        equal(ssLog.first().get('synced'), false);
     });
-});
+})();

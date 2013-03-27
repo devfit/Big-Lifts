@@ -13,10 +13,10 @@
         if (details.module === MODULE_NAME) {
             routines = reloadStore(biglifts.stores.Routine);
             migration = Ext.create('biglifts.migrations.AddOrderToAssistance');
-            triumvirate = reloadStore(biglifts.stores.assistance.TriumvirateMovement);
-            bodyweight = reloadStore(biglifts.stores.assistance.BodyweightMovement);
-            bbb = reloadStore(biglifts.stores.assistance.BoringButBig);
-            lifts = reloadStore(biglifts.stores.lifts.Lifts);
+            triumvirate = reloadStore(emptyStore(biglifts.stores.assistance.TriumvirateMovement));
+            bodyweight = reloadStore(emptyStore(biglifts.stores.assistance.BodyweightMovement));
+            lifts = reloadStore(emptyStore(biglifts.stores.lifts.Lifts));
+            bbb = reloadStore(emptyStore(biglifts.stores.assistance.BoringButBig));
         }
     });
 
@@ -48,7 +48,6 @@
 
     test("should add order to bbb", function () {
         migration.run();
-        routines.fireEvent('load');
         equal(bbb.getCount(), 4);
 
         lifts.each(function (l) {

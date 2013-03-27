@@ -1,10 +1,13 @@
-describe("Fix Power Clean Percentage migration", function () {
-    beforeEach(function () {
-        this.routines = reloadStore(biglifts.stores.Routine);
-        this.routines.add({name:'5/3/1'});
-        this.routines.sync();
-        reloadStore(biglifts.stores.ss.Lifts);
-        reloadStore(biglifts.stores.ss.WorkoutStore);
+(function () {
+    var MODULE_NAME = "Fix Power Clean Percentage migration";
+    module(MODULE_NAME);
+
+    QUnit.moduleStart(function (details) {
+        if (details.name === MODULE_NAME) {
+            reloadStore(emptyStore(biglifts.stores.Routine)).setup531();
+            reloadStore(emptyStore(biglifts.stores.ss.Lifts));
+            reloadStore(emptyStore(biglifts.stores.ss.WorkoutStore));
+        }
     });
 
     test("should set the power clean work set to 100", function () {
@@ -16,6 +19,6 @@ describe("Fix Power Clean Percentage migration", function () {
 
         migration.run();
 
-        equal(p.get('percentage'),100);
+        equal(p.get('percentage'), 100);
     });
-});
+})();

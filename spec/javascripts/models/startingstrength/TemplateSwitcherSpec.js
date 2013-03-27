@@ -50,7 +50,9 @@
         var templateSwitcher = Ext.create('biglifts.models.startingstrength.TemplateSwitcher');
         templateSwitcher.switchTo('Standard');
         templateSwitcher.switchTo('Novice');
+        equal(lifts.getCount(), 4);
 
+        workouts.clearFilter();
         var deadlift = lifts.findRecord('name', 'Deadlift');
         workouts.filter('lift_id', deadlift.get('id'));
         workouts.filter('warmup', false);

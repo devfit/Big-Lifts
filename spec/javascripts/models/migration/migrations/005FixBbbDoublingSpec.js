@@ -1,9 +1,17 @@
 (function () {
-    module("Fix BBB Doubling");
+    var MODULE_NAME = "Fix BBB Doubling";
+    module(MODULE_NAME);
 
-    reloadStore(emptyStore(biglifts.stores.Routine)).setup531();
-    var migration = Ext.create('biglifts.migrations.fixBbbDoubling');
-    var bbb = emptyStore(reloadStore(biglifts.stores.assistance.BoringButBig));
+    var migration;
+    var bbb;
+
+    QUnit.moduleStart(function (details) {
+        if (details.name === MODULE_NAME) {
+            reloadStore(emptyStore(biglifts.stores.Routine)).setup531();
+            migration = Ext.create('biglifts.migrations.fixBbbDoubling');
+            bbb = emptyStore(reloadStore(biglifts.stores.assistance.BoringButBig));
+        }
+    });
 
     test("should remove BBB duplicates of main lifts", function () {
         bbb.add({lift_id: '1', movement_lift_id: '1'});

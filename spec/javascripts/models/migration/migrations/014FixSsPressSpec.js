@@ -1,29 +1,36 @@
-describe("Fix Ss Press", function () {
-    beforeEach(function () {
-        this.routines = reloadStore(biglifts.stores.Routine);
-        this.routines.add({name:'5/3/1'});
-        this.routines.sync();
-        this.lifts = reloadStore(biglifts.stores.ss.Lifts);
-        this.workouts = reloadStore(emptyStore(reloadStore(biglifts.stores.ss.WorkoutStore)));
-        this.migration = Ext.create('biglifts.migrations.FixSsPress');
+(function () {
+    var MODULE_NAME = "Fix Ss Press";
+    module(MODULE_NAME);
+
+    var lifts;
+    var workouts;
+    var migration;
+
+    QUnit.testStart(function (details) {
+        if (details.module === MODULE_NAME) {
+            reloadStore(emptyStore(biglifts.stores.Routine)).setup531();
+            lifts = reloadStore(biglifts.stores.ss.Lifts);
+            workouts = reloadStore(emptyStore(reloadStore(biglifts.stores.ss.WorkoutStore)));
+            migration = Ext.create('biglifts.migrations.FixSsPress');
+        }
     });
 
     test('should determine the current template for standard', function () {
         Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Standard');
-        equal(this.migration.getTemplateName(),"standard");
+        equal(migration.getTemplateName(), "standard");
     });
 
     test('should determine the current template for novice', function () {
         Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Novice');
-        equal(this.migration.getTemplateName(),"novice");
+        equal(migration.getTemplateName(), "novice");
     });
 
     var findLastPress = function () {
-        var lift_id = this.lifts.findRecord('name', 'Press').get('id');
-        var index = this.workouts.findBy(function (r) {
+        var lift_id = lifts.findRecord('name', 'Press').get('id');
+        var index = workouts.findBy(function (r) {
             return r.get('lift_id') === lift_id && r.get('order') === 4;
         });
-        return this.workouts.getAt(index);
+        return workouts.getAt(index);
     };
 
     test('should correct bad press reps', function () {
@@ -32,11 +39,11 @@ describe("Fix Ss Press", function () {
         var workout = findLastPress.apply(this);
         workout.set('reps', 2);
         workout.save();
-        this.workouts.sync();
+        workouts.sync();
 
-        this.migration.run();
+        migration.run();
 
         var fixedWorkout = findLastPress.apply(this);
-        equal(fixedWorkout.get('reps'),5);
+        equal(fixedWorkout.get('reps'), 5);
     });
-});
+})();
