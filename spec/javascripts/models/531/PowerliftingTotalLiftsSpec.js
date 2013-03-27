@@ -19,14 +19,14 @@
 
     test("should ignore missing lifts when loading defaults", function () {
         lifts.remove(lifts.findRecord('name', 'Squat'));
-        lifts.sync();
+        powerliftingLifts.syncToLifts();
         powerliftingLifts.filter('included', true);
         equal(powerliftingLifts.getCount(), 2);
     });
 
     test("should sync to remove lifts", function () {
         lifts.remove(lifts.findRecord('name', 'Squat'));
-        lifts.sync();
+        powerliftingLifts.syncToLifts();
         equal(powerliftingLifts.getCount(), 3);
     });
 })();

@@ -1,14 +1,23 @@
-describe("Log 5/3/1 Syncer", function () {
-    beforeEach(function () {
-        this.log = emptyStore(reloadStore(biglifts.stores.LiftLog));
-        this.users = emptyStore(reloadStore(biglifts.stores.Users));
-        this.syncer = Ext.create('biglifts.models.Log531Syncer');
+(function () {
+    var MODULE_NAME = "Log 5/3/1 Syncer";
+    module(MODULE_NAME);
+
+    var log;
+    var users;
+    var syncer;
+
+    QUnit.testStart(function (details) {
+        if (details.module === MODULE_NAME) {
+            log = emptyStore(reloadStore(biglifts.stores.LiftLog));
+            users = emptyStore(reloadStore(biglifts.stores.Users));
+            syncer = Ext.create('biglifts.models.Log531Syncer');
+        }
     });
 
     test("should convert the 5/3/1 log into post ready format", function () {
         var timestamp = new Date().getTime();
-        this.log.add({workout_id: 1, reps: 2, liftName: 'Squat', weight: 100, timestamp: timestamp, cycle: 3, expectedReps: 5, week: 1});
-        this.log.sync();
+        log.add({workout_id: 1, reps: 2, liftName: 'Squat', weight: 100, timestamp: timestamp, cycle: 3, expectedReps: 5, week: 1});
+        log.sync();
 
         var expected = [
             {
@@ -34,7 +43,7 @@ describe("Log 5/3/1 Syncer", function () {
                 ]
             }
         ];
-        equal(this.syncer.getFormattedLog(),expected);
+        deepEqual(syncer.getFormattedLog(), expected);
     });
 
     test("should not merge logs with colliding dates and same name", function () {
@@ -47,13 +56,13 @@ describe("Log 5/3/1 Syncer", function () {
             }}
         ]};
 
-        this.log.add(localLog);
-        this.log.sync();
-        this.syncer.mergeRemoteLogs([
+        log.add(localLog);
+        log.sync();
+        syncer.mergeRemoteLogs([
             remoteLog
         ]);
 
-        equal(this.log.getCount(),1);
+        equal(log.getCount(), 1);
     });
 
     test("should merge logs with colliding dates and different name", function () {
@@ -66,13 +75,13 @@ describe("Log 5/3/1 Syncer", function () {
             }}
         ]};
 
-        this.log.add(localLog);
-        this.log.sync();
-        this.syncer.mergeRemoteLogs([
+        log.add(localLog);
+        log.sync();
+        syncer.mergeRemoteLogs([
             remoteLog
         ]);
 
-        equal(this.log.getCount(),2);
+        equal(log.getCount(), 2);
     });
 
     test("should merge non date colliding logs with local logs", function () {
@@ -90,21 +99,21 @@ describe("Log 5/3/1 Syncer", function () {
             }}
         ]};
 
-        this.log.add(localLog);
-        this.log.sync();
-        this.syncer.mergeRemoteLogs([
+        log.add(localLog);
+        log.sync();
+        syncer.mergeRemoteLogs([
             remoteLog
         ]);
 
-        equal(this.log.getCount(),2);
-        var newRecord = this.log.findRecord('workout_id', 2);
-        equal(newRecord.get('weight'),90);
-        equal(newRecord.get('liftName'),'Squat');
-        equal(newRecord.get('reps'),reps);
-        equal(newRecord.get('cycle'),cycle);
-        equal(newRecord.get('week'),week);
-        equal(newRecord.get('expectedReps'),expectedReps);
-        equal(newRecord.get('timestamp'),yesterday.getTime());
+        equal(log.getCount(), 2);
+        var newRecord = log.findRecord('workout_id', 2);
+        equal(newRecord.get('weight'), 90);
+        equal(newRecord.get('liftName'), 'Squat');
+        equal(newRecord.get('reps'), reps);
+        equal(newRecord.get('cycle'), cycle);
+        equal(newRecord.get('week'), week);
+        equal(newRecord.get('expectedReps'), expectedReps);
+        equal(newRecord.get('timestamp'), yesterday.getTime());
     });
 
     test("should not merge non 5/3/1 logs", function () {
@@ -118,12 +127,12 @@ describe("Log 5/3/1 Syncer", function () {
             }}
         ]};
 
-        this.log.add(localLog);
-        this.log.sync();
-        this.syncer.mergeRemoteLogs([
+        log.add(localLog);
+        log.sync();
+        syncer.mergeRemoteLogs([
             remoteLog
         ]);
 
-        equal(this.log.getCount(),1);
+        equal(log.getCount(), 1);
     });
-});
+})();
