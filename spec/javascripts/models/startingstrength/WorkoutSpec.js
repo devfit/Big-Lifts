@@ -1,44 +1,49 @@
-describe("Starting Strength workout", function () {
-    beforeEach(function () {
-        this.lifts = reloadStore(biglifts.stores.ss.Lifts);
-        biglifts.stores.GlobalSettings.removeAll();
-        biglifts.stores.GlobalSettings.setupDefaultSettings();
-        expect(this.lifts.getCount(),5);
+(function () {
+    var MODULE_NAME = "Starting Strength workout";
+    module(MODULE_NAME);
 
-        this.workouts = reloadStore(biglifts.stores.ss.WorkoutStore);
-        this.workouts.removeAll();
-        this.workouts.sync();
+    var lifts;
+    var workouts;
+
+    QUnit.testStart(function (details) {
+        if (details.module === MODULE_NAME) {
+            lifts = reloadStore(biglifts.stores.ss.Lifts);
+            reloadStore(emptyStore(biglifts.stores.GlobalSettings));
+            equal(lifts.getCount(), 5);
+
+            workouts = emptyStore(reloadStore(biglifts.stores.ss.WorkoutStore));
+        }
     });
 
     test("should load default workouts", function () {
-        expect(this.workouts.getCount(),0);
-        this.workouts.load();
-        expect(this.workouts.getCount(),29);
-        this.workouts.filter('name', 'A');
-        expect(this.workouts.getCount(),14);
-        this.workouts.filter('name', 'B');
-        expect(this.workouts.getCount(),15);
+        equal(workouts.getCount(), 0);
+        workouts.load();
+        equal(workouts.getCount(), 29);
+        workouts.filter('name', 'A');
+        equal(workouts.getCount(), 14);
+        workouts.filter('name', 'B');
+        equal(workouts.getCount(), 15);
     });
 
     test("should set the work set for default workouts to 100%", function () {
-        this.workouts.load();
-        this.workouts.filter('warmup', false);
-        this.workouts.each(function (w) {
-            expect(w.get('percentage'),100);
+        workouts.load();
+        workouts.filter('warmup', false);
+        workouts.each(function (w) {
+            equal(w.get('percentage'), 100);
         });
     });
 
     test('should order by SS lift order, and warmup defined order', function () {
-        this.workouts.load();
+        workouts.load();
         biglifts.stores.ss.Lifts.fireEvent('load');
-        this.workouts.filter('name', 'A');
-        var squat = this.lifts.findRecord('name', 'Squat');
-        this.workouts.filter('lift_id', squat.get('id'));
+        workouts.filter('name', 'A');
+        var squat = lifts.findRecord('name', 'Squat');
+        workouts.filter('lift_id', squat.get('id'));
 
-        expect(this.workouts.getCount(),5);
+        equal(workouts.getCount(), 5);
         for (var i = 0; i < 5; i++) {
-            expect(this.workouts.getAt(i).get('lift_id'),squat.get('id'));
-            expect(this.workouts.getAt(i).get('order'),i);
+            equal(workouts.getAt(i).get('lift_id'), squat.get('id'));
+            equal(workouts.getAt(i).get('order'), i);
         }
     });
-});
+})();

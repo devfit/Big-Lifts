@@ -16,6 +16,6 @@ describe("Fix Power Clean Percentage migration", function () {
 
         migration.run();
 
-        expect(p.get('percentage'),100);
+        equal(p.get('percentage'),100);
     });
 });

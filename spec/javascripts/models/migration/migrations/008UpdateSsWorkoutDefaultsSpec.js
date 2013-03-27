@@ -12,7 +12,7 @@ describe("SS Workout Migration", function () {
         this.workouts.addWorkSets();
         this.workouts.sync();
 
-        expect(this.workouts.getCount(),6);
+        equal(this.workouts.getCount(),6);
     });
 
     test("should set default warmup to false, percentage to 100", function () {
@@ -28,8 +28,8 @@ describe("SS Workout Migration", function () {
 
         Ext.create('biglifts.migrations.UpdateSsDefaults').run();
 
-        expect(squatWorkout.get('percentage'),100);
-        expect(squatWorkout.get('warmup'),false);
+        equal(squatWorkout.get('percentage'),100);
+        equal(squatWorkout.get('warmup'),false);
     });
 
     test("should add warmup sets to squat and adjust the work set order", function () {
@@ -42,8 +42,8 @@ describe("SS Workout Migration", function () {
 
         this.workouts.filter('lift_id', squat.get('id'));
         this.workouts.filter('name', 'A');
-        expect(this.workouts.getCount(),5);
-        expect(workSet.get('order'),4);
+        equal(this.workouts.getCount(),5);
+        equal(workSet.get('order'),4);
     });
 
     test("should add warmup sets to deadlift and adjust the work set order", function () {
@@ -56,7 +56,7 @@ describe("SS Workout Migration", function () {
 
         this.workouts.filter('lift_id', deadlift.get('id'));
         this.workouts.filter('name', 'A');
-        expect(this.workouts.getCount(),4);
-        expect(workSet.get('order'),3);
+        equal(this.workouts.getCount(),4);
+        equal(workSet.get('order'),3);
     });
 });

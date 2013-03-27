@@ -11,7 +11,7 @@ describe("Add Synced to Logs migration", function () {
 
         this.migration.run();
 
-        expect(this.liftLog.first().get('synced'),false);
+        equal(this.liftLog.first().get('synced'),false);
     });
 
     test('should migrate the SS log', function () {
@@ -20,6 +20,6 @@ describe("Add Synced to Logs migration", function () {
 
         this.migration.run();
 
-        expect(this.ssLog.first().get('synced'),false);
+        equal(this.ssLog.first().get('synced'),false);
     });
 });

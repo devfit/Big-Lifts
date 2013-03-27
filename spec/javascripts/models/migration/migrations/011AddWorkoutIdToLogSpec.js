@@ -11,10 +11,10 @@ describe("Add Workout Id to Log", function () {
     test("should add workout ids to existing log entries", function () {
         biglifts.stores.LiftLog.add({liftName:'Squat'});
         biglifts.stores.LiftLog.sync();
-        expect(biglifts.stores.LiftLog.first().get('workout_id'),null);
+        equal(biglifts.stores.LiftLog.first().get('workout_id'),null);
 
         Ext.create('biglifts.migrations.AddWorkoutIdToLog').run();
 
-        expect(biglifts.stores.LiftLog.first().get('workout_id'),0);
+        equal(biglifts.stores.LiftLog.first().get('workout_id'),0);
     });
 });

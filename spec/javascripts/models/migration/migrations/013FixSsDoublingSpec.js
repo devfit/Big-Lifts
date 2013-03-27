@@ -16,23 +16,23 @@ describe("Fix Ss Doubling", function () {
         }, this);
         this.workouts.sync();
 
-        expect(this.workouts.getCount(),58);
+        equal(this.workouts.getCount(),58);
     };
 
     test('should get the expected workout counts', function(){
-        expect(this.migration.getTemplateWorkoutCounts(),[29,28]);
+        equal(this.migration.getTemplateWorkoutCounts(),[29,28]);
     });
 
     test("should detect a bad ss workout configuration", function () {
-        expect(this.workouts.getCount(),29);
+        equal(this.workouts.getCount(),29);
         setupBadData.apply(this);
-        expect(this.migration.hasBadData(),true);
+        equal(this.migration.hasBadData(),true);
     });
 
     test("should correct a bad ss configuration", function () {
-        expect(this.workouts.getCount(),29);
+        equal(this.workouts.getCount(),29);
         setupBadData.apply(this);
         this.migration.run();
-        expect(this.workouts.getCount(),29);
+        equal(this.workouts.getCount(),29);
     });
 });

@@ -15,7 +15,7 @@ describe("Add Rounding to Global Settings", function () {
 
         this.migration.run();
 
-        expect(this.global.first().get('roundingValue'),'1');
-        expect(this.global.first().get('roundingType'),'down');
+        equal(this.global.first().get('roundingValue'),'1');
+        equal(this.global.first().get('roundingType'),'down');
     });
 });
