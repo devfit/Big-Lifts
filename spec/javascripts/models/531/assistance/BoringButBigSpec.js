@@ -15,7 +15,7 @@ describe("Boring But Big Model", function () {
         this.lifts.load();
         this.bbb.load();
 
-        expect(this.bbb.getCount(),4);
+        equal(this.bbb.getCount(),4);
     });
 
     test("should default to a null weight and non-null associated movement_lift_id", function () {
@@ -23,22 +23,22 @@ describe("Boring But Big Model", function () {
         this.bbb.load();
 
         var firstBbbLift = this.bbb.first();
-        expect(firstBbbLift.get('movement_lift_id'),this.lifts.first().getId().toString());
-        expect(firstBbbLift.get('weight'),null);
+        equal(firstBbbLift.get('movement_lift_id'),this.lifts.first().getId().toString());
+        equal(firstBbbLift.get('weight'),null);
     });
 
     test("should return the weight of the record if it exists", function () {
         this.bbb.add({name: "Chins", weight: 25});
         this.bbb.sync();
         var weight = this.bbb.getWeightForRecord(this.bbb.findRecord('name', 'Chins').data);
-        expect(weight,25);
+        equal(weight,25);
     });
 
     test("should return 0 if no weight or associated record are set", function () {
         this.bbb.add({name: "Chins", sets: 5});
         this.bbb.sync();
         var weight = this.bbb.getWeightForRecord(this.bbb.findRecord('name', 'Chins').data);
-        expect(weight,0);
+        equal(weight,0);
     });
 
     test("should return a percentage of the associated lift's weight of an associated lift exists", function () {
@@ -47,7 +47,7 @@ describe("Boring But Big Model", function () {
         this.lifts.sync();
         this.bbb.add({name: "Clean", movement_lift_id: this.lifts.findRecord('name', 'Clean').getId()});
         var weight = this.bbb.getWeightForRecord(this.bbb.findRecord('name', 'Clean').data);
-        expect(weight,300 * 0.9 * 0.5);
+        equal(weight,300 * 0.9 * 0.5);
     });
 
     test("should store the boring but big main lift when creating default records", function () {
@@ -55,7 +55,7 @@ describe("Boring But Big Model", function () {
         this.bbb.load();
 
         var firstBbbLift = this.bbb.first();
-        expect(firstBbbLift.get('lift_id'),this.lifts.first().getId().toString());
+        equal(firstBbbLift.get('lift_id'),this.lifts.first().getId().toString());
     });
 
     test("should return the name of the associated lift record for the movement", function () {
@@ -64,7 +64,7 @@ describe("Boring But Big Model", function () {
         this.bbb.load();
 
         var firstBbbLift = this.bbb.first();
-        expect(this.bbb.getNameForRecord(firstBbbLift.data),'Clean');
+        equal(this.bbb.getNameForRecord(firstBbbLift.data),'Clean');
     });
 
     test("should return the name of the movement if it is set", function () {
@@ -72,7 +72,7 @@ describe("Boring But Big Model", function () {
         this.bbb.load();
 
         this.bbb.add({name: "Chins"});
-        expect(this.bbb.getNameForRecord(this.bbb.last().data),'Chins');
+        equal(this.bbb.getNameForRecord(this.bbb.last().data),'Chins');
     });
 
     test("should not create duplicates of existing lifts", function () {
@@ -80,6 +80,6 @@ describe("Boring But Big Model", function () {
         this.bbb.syncAssistanceToLifts();
         this.bbb.syncAssistanceToLifts();
 
-        expect(this.bbb.getCount(),4);
+        equal(this.bbb.getCount(),4);
     });
 });

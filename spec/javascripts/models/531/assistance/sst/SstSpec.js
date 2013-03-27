@@ -7,6 +7,6 @@ describe("Sst Store", function () {
     });
 
     test("should load default lifts", function () {
-        expect(this.sst.getCount(),4);
+        equal(this.sst.getCount(),4);
     });
 });

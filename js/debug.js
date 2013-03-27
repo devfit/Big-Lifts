@@ -7,6 +7,7 @@ biglifts.debug.setup531WithoutNotification = function () {
 };
 
 biglifts.DEBUG = Ext.os.is.Linux || Ext.os.is.MacOS || location.href.indexOf('debug=true') !== -1;
+biglifts.CI = location.href.indexOf('ci=true') !== -1;
 if (biglifts.DEBUG) {
     window.onerror = function (em, url, ln) {
         alert(em + ", " + url + ", " + ln);

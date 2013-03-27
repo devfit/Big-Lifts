@@ -34,7 +34,7 @@ describe("Log 5/3/1 Syncer", function () {
                 ]
             }
         ];
-        expect(this.syncer.getFormattedLog(),expected);
+        equal(this.syncer.getFormattedLog(),expected);
     });
 
     test("should not merge logs with colliding dates and same name", function () {
@@ -53,7 +53,7 @@ describe("Log 5/3/1 Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount(),1);
+        equal(this.log.getCount(),1);
     });
 
     test("should merge logs with colliding dates and different name", function () {
@@ -72,7 +72,7 @@ describe("Log 5/3/1 Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount(),2);
+        equal(this.log.getCount(),2);
     });
 
     test("should merge non date colliding logs with local logs", function () {
@@ -96,15 +96,15 @@ describe("Log 5/3/1 Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount(),2);
+        equal(this.log.getCount(),2);
         var newRecord = this.log.findRecord('workout_id', 2);
-        expect(newRecord.get('weight'),90);
-        expect(newRecord.get('liftName'),'Squat');
-        expect(newRecord.get('reps'),reps);
-        expect(newRecord.get('cycle'),cycle);
-        expect(newRecord.get('week'),week);
-        expect(newRecord.get('expectedReps'),expectedReps);
-        expect(newRecord.get('timestamp'),yesterday.getTime());
+        equal(newRecord.get('weight'),90);
+        equal(newRecord.get('liftName'),'Squat');
+        equal(newRecord.get('reps'),reps);
+        equal(newRecord.get('cycle'),cycle);
+        equal(newRecord.get('week'),week);
+        equal(newRecord.get('expectedReps'),expectedReps);
+        equal(newRecord.get('timestamp'),yesterday.getTime());
     });
 
     test("should not merge non 5/3/1 logs", function () {
@@ -124,6 +124,6 @@ describe("Log 5/3/1 Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount(),1);
+        equal(this.log.getCount(),1);
     });
 });

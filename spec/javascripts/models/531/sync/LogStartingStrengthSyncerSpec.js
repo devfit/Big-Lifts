@@ -12,7 +12,7 @@ describe("Log StartingStrength Syncer", function () {
         this.log.add({name: 'Squat', weight: 300, sets: 3, reps: 5, units: 'lbs', timestamp: timestamp, workout_id: 1});
         this.log.sync();
 
-        expect(this.combinedLog.getCount(),1);
+        equal(this.combinedLog.getCount(),1);
 
         var expected = [
             {
@@ -38,7 +38,7 @@ describe("Log StartingStrength Syncer", function () {
                 ]
             }
         ];
-        expect(this.syncer.getFormattedLog(),expected);
+        equal(this.syncer.getFormattedLog(),expected);
     });
 
     test("should not merge logs with colliding dates", function () {
@@ -81,8 +81,8 @@ describe("Log StartingStrength Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount(),2);
-        expect(this.combinedLog.getCount(),1);
+        equal(this.log.getCount(),2);
+        equal(this.combinedLog.getCount(),1);
     });
 
     test("should merge logs with non colliding dates", function () {
@@ -127,8 +127,8 @@ describe("Log StartingStrength Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount(),3);
-        expect(this.combinedLog.getCount(),2);
+        equal(this.log.getCount(),3);
+        equal(this.combinedLog.getCount(),2);
     });
 
     test("should set existing records not removed to synced true", function () {
@@ -173,7 +173,7 @@ describe("Log StartingStrength Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.first().get('synced'),true);
-        expect(this.log.last().get('synced'),true);
+        equal(this.log.first().get('synced'),true);
+        equal(this.log.last().get('synced'),true);
     });
 });

@@ -14,13 +14,13 @@ describe("Triumvirate Store", function () {
 
         var NUMBER_OF_LIFTS = 5;
         var MOVEMENTS_PER_LIFT = 2;
-        expect(this.triumvirate.getCount(),NUMBER_OF_LIFTS * MOVEMENTS_PER_LIFT);
+        equal(this.triumvirate.getCount(),NUMBER_OF_LIFTS * MOVEMENTS_PER_LIFT);
     });
 
     test("should add custom movements with an order property", function () {
         this.triumvirate.filter('liftProperty', 'press');
         this.triumvirate.addWithOrder({liftProperty: 'press', name: 'Rows'});
-        expect(this.triumvirate.getCount(),3);
-        expect(this.triumvirate.last().get('name'),'Rows');
+        equal(this.triumvirate.getCount(),3);
+        equal(this.triumvirate.last().get('name'),'Rows');
     });
 });
