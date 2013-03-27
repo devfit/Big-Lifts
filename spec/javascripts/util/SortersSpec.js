@@ -1,5 +1,5 @@
 describe("Sorters utility", function () {
-    it("should be able to temporarily remove sorters", function () {
+    test("should be able to temporarily remove sorters", function () {
         Ext.define('TestModel2', {
             extend:'Ext.data.Model',
             config:{
@@ -27,10 +27,10 @@ describe("Sorters utility", function () {
             direction:'DESC'
         }));
 
-        expect(store.data._sorters.getCount()).toEqual(2);
+        expect(store.data._sorters.getCount(),2);
         util.withNoSorters(store, function (s) {
-            expect(s.data._sorters.getCount()).toEqual(0);
+            expect(s.data._sorters.getCount(),0);
         });
-        expect(store.data._sorters.getCount()).toEqual(2);
+        expect(store.data._sorters.getCount(),2);
     });
 });

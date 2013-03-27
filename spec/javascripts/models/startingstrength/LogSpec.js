@@ -5,29 +5,29 @@ describe("Starting Strength log", function () {
     });
 
     describe("getNewWorkoutId", function () {
-        it("should return 0 if there are no log entries", function () {
-            expect(this.log.getNewWorkoutId()).toEqual(0);
+        test("should return 0 if there are no log entries", function () {
+            expect(this.log.getNewWorkoutId(),0);
         });
 
-        it("should return 1 if there is a log entry with a 0 id", function () {
+        test("should return 1 if there is a log entry with a 0 id", function () {
             this.log.add({workout_id:0});
             this.log.sync();
-            expect(this.log.getNewWorkoutId()).toEqual(1);
+            expect(this.log.getNewWorkoutId(),1);
         });
     });
 
     describe("getUniqueWorkoutIds", function () {
-        it("should remove duplicates and return the set of unique workoutIds", function () {
+        test("should remove duplicates and return the set of unique workoutIds", function () {
             this.log.add({workout_id: 1, name: 'Squat'});
             this.log.add({workout_id: 1, name: 'Press'});
             this.log.sync();
-            expect(this.log.getUniqueWorkoutIdsFromModels([this.log.first(),this.log.last()])).toEqual([1]);
+            expect(this.log.getUniqueWorkoutIdsFromModels([this.log.first(),this.log.last()]),[1]);
         });
 
-        it("should return 1 if there is a log entry with a 0 id", function () {
+        test("should return 1 if there is a log entry with a 0 id", function () {
             this.log.add({workout_id:0});
             this.log.sync();
-            expect(this.log.getNewWorkoutId()).toEqual(1);
+            expect(this.log.getNewWorkoutId(),1);
         });
     });
 });

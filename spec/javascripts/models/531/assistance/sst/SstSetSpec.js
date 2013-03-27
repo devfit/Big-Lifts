@@ -4,7 +4,7 @@ describe("Sst Store", function () {
         reloadStore(this.sstSets);
     });
 
-    it("should load default lifts", function () {
-        expect(this.sstSets.getCount()).toEqual(12);
+    test("should load default lifts", function () {
+        expect(this.sstSets.getCount(),12);
     });
 });

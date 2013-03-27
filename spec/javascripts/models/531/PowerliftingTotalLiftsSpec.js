@@ -4,31 +4,31 @@ describe("PowerliftingTotalLifts", function () {
         this.powerliftingLifts = emptyStore(biglifts.stores.PowerliftingTotalLifts);
     });
 
-    it("should load default lifts", function () {
+    test("should load default lifts", function () {
         this.powerliftingLifts.setupDefaults();
-        expect(this.powerliftingLifts.getCount()).toEqual(4);
+        expect(this.powerliftingLifts.getCount(),4);
         this.powerliftingLifts.filter('included', true);
-        expect(this.powerliftingLifts.getCount()).toEqual(3);
+        expect(this.powerliftingLifts.getCount(),3);
     });
 
-    it("should ignore missing lifts when loading defaults", function () {
+    test("should ignore missing lifts when loading defaults", function () {
         this.lifts.remove(this.lifts.findRecord('name', 'Squat'));
         this.lifts.sync();
         this.powerliftingLifts.setupDefaults();
         this.powerliftingLifts.filter('included', true);
-        expect(this.powerliftingLifts.getCount()).toEqual(2);
+        expect(this.powerliftingLifts.getCount(),2);
     });
 
-    it("should sync to add lifts", function () {
+    test("should sync to add lifts", function () {
         this.powerliftingLifts.syncToLifts();
-        expect(this.powerliftingLifts.getCount()).toEqual(4);
+        expect(this.powerliftingLifts.getCount(),4);
     });
 
-    it("should sync to remove lifts", function () {
+    test("should sync to remove lifts", function () {
         this.powerliftingLifts.syncToLifts();
         this.lifts.remove(this.lifts.findRecord('name','Squat'));
         this.lifts.sync();
         this.powerliftingLifts.syncToLifts();
-        expect(this.powerliftingLifts.getCount()).toEqual(3);
+        expect(this.powerliftingLifts.getCount(),3);
     });
 });

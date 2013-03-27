@@ -5,7 +5,7 @@ describe("Global Settings Defaults Migration", function () {
         this.routines = reloadStore(biglifts.stores.Routine);
     });
 
-    it("should copy 5/3/1 settings if they exist and a routine is loaded", function () {
+    test("should copy 5/3/1 settings if they exist and a routine is loaded", function () {
         this.settings531.first().set({units:'test'});
         this.settings531.sync();
 
@@ -14,6 +14,6 @@ describe("Global Settings Defaults Migration", function () {
 
         Ext.create('biglifts.migrations.globalSettingsDefaults').run();
 
-        expect(this.settings.getUnits()).toEqual('test');
+        expect(this.settings.getUnits(),'test');
     });
 });

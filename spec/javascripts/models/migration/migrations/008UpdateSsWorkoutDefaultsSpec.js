@@ -12,10 +12,10 @@ describe("SS Workout Migration", function () {
         this.workouts.addWorkSets();
         this.workouts.sync();
 
-        expect(this.workouts.getCount()).toEqual(6);
+        expect(this.workouts.getCount(),6);
     });
 
-    it("should set default warmup to false, percentage to 100", function () {
+    test("should set default warmup to false, percentage to 100", function () {
         var squat = this.lifts.findRecord('name', 'Squat');
         var squatId = this.workouts.findBy(function (w) {
             return w.get('name') === 'A' && w.get('lift_id') == squat.get('id') && w.get('warmup') === false;
@@ -28,11 +28,11 @@ describe("SS Workout Migration", function () {
 
         Ext.create('biglifts.migrations.UpdateSsDefaults').run();
 
-        expect(squatWorkout.get('percentage')).toEqual(100);
-        expect(squatWorkout.get('warmup')).toEqual(false);
+        expect(squatWorkout.get('percentage'),100);
+        expect(squatWorkout.get('warmup'),false);
     });
 
-    it("should add warmup sets to squat and adjust the work set order", function () {
+    test("should add warmup sets to squat and adjust the work set order", function () {
         var squat = this.lifts.findRecord('name', 'Squat');
         var workSet = this.workouts.findRecord('lift_id', squat.get('id'));
         workSet.set('order', 0);
@@ -42,11 +42,11 @@ describe("SS Workout Migration", function () {
 
         this.workouts.filter('lift_id', squat.get('id'));
         this.workouts.filter('name', 'A');
-        expect(this.workouts.getCount()).toEqual(5);
-        expect(workSet.get('order')).toEqual(4);
+        expect(this.workouts.getCount(),5);
+        expect(workSet.get('order'),4);
     });
 
-    it("should add warmup sets to deadlift and adjust the work set order", function () {
+    test("should add warmup sets to deadlift and adjust the work set order", function () {
         var deadlift = this.lifts.findRecord('name', 'Deadlift');
         var workSet = this.workouts.findRecord('lift_id', deadlift.get('id'));
         workSet.set('order', 0);
@@ -56,7 +56,7 @@ describe("SS Workout Migration", function () {
 
         this.workouts.filter('lift_id', deadlift.get('id'));
         this.workouts.filter('name', 'A');
-        expect(this.workouts.getCount()).toEqual(4);
-        expect(workSet.get('order')).toEqual(3);
+        expect(this.workouts.getCount(),4);
+        expect(workSet.get('order'),3);
     });
 });

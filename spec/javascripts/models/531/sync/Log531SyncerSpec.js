@@ -5,7 +5,7 @@ describe("Log 5/3/1 Syncer", function () {
         this.syncer = Ext.create('biglifts.models.Log531Syncer');
     });
 
-    it("should convert the 5/3/1 log into post ready format", function () {
+    test("should convert the 5/3/1 log into post ready format", function () {
         var timestamp = new Date().getTime();
         this.log.add({workout_id: 1, reps: 2, liftName: 'Squat', weight: 100, timestamp: timestamp, cycle: 3, expectedReps: 5, week: 1});
         this.log.sync();
@@ -34,10 +34,10 @@ describe("Log 5/3/1 Syncer", function () {
                 ]
             }
         ];
-        expect(this.syncer.getFormattedLog()).toEqual(expected);
+        expect(this.syncer.getFormattedLog(),expected);
     });
 
-    it("should not merge logs with colliding dates and same name", function () {
+    test("should not merge logs with colliding dates and same name", function () {
         var now = new Date().getTime();
         var localLog = {workout_id: 1, reps: 2, liftName: 'Squat', weight: 100, timestamp: now, cycle: 3, expectedReps: 5, week: 1};
 
@@ -53,10 +53,10 @@ describe("Log 5/3/1 Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount()).toEqual(1);
+        expect(this.log.getCount(),1);
     });
 
-    it("should merge logs with colliding dates and different name", function () {
+    test("should merge logs with colliding dates and different name", function () {
         var now = new Date().getTime();
         var localLog = {workout_id: 1, reps: 2, liftName: 'Squat', weight: 100, timestamp: now, cycle: 3, expectedReps: 5, week: 1};
 
@@ -72,10 +72,10 @@ describe("Log 5/3/1 Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount()).toEqual(2);
+        expect(this.log.getCount(),2);
     });
 
-    it("should merge non date colliding logs with local logs", function () {
+    test("should merge non date colliding logs with local logs", function () {
         var now = new Date().getTime();
         var yesterday = (1).days().ago();
         var localLog = {workout_id: 1, reps: 2, liftName: 'Squat', weight: 100, timestamp: now, cycle: 3, expectedReps: 5, week: 1};
@@ -96,18 +96,18 @@ describe("Log 5/3/1 Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount()).toEqual(2);
+        expect(this.log.getCount(),2);
         var newRecord = this.log.findRecord('workout_id', 2);
-        expect(newRecord.get('weight')).toEqual(90);
-        expect(newRecord.get('liftName')).toEqual('Squat');
-        expect(newRecord.get('reps')).toEqual(reps);
-        expect(newRecord.get('cycle')).toEqual(cycle);
-        expect(newRecord.get('week')).toEqual(week);
-        expect(newRecord.get('expectedReps')).toEqual(expectedReps);
-        expect(newRecord.get('timestamp')).toEqual(yesterday.getTime());
+        expect(newRecord.get('weight'),90);
+        expect(newRecord.get('liftName'),'Squat');
+        expect(newRecord.get('reps'),reps);
+        expect(newRecord.get('cycle'),cycle);
+        expect(newRecord.get('week'),week);
+        expect(newRecord.get('expectedReps'),expectedReps);
+        expect(newRecord.get('timestamp'),yesterday.getTime());
     });
 
-    it("should not merge non 5/3/1 logs", function () {
+    test("should not merge non 5/3/1 logs", function () {
         var now = new Date().getTime();
         var yesterday = (1).days().ago();
         var localLog = {workout_id: 1, reps: 2, liftName: 'Squat', weight: 100, timestamp: now, cycle: 3, expectedReps: 5, week: 1};
@@ -124,6 +124,6 @@ describe("Log 5/3/1 Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount()).toEqual(1);
+        expect(this.log.getCount(),1);
     });
 });

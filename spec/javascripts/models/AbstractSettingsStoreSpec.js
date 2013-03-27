@@ -25,7 +25,7 @@ describe("Abstract Settings Stores", function () {
         this.settingsStore = Ext.create('SettingsTestStore');
     });
 
-    it("should determine if a model has a field", function () {
+    test("should determine if a model has a field", function () {
         expect(this.settingsStore.hasField('units')).toBe(true);
         expect(this.settingsStore.hasField('units2')).toBe(false);
     });

@@ -7,7 +7,7 @@ describe("Global Settings Defaults Migration", function () {
         this.liftProgressions.sync();
     });
 
-    it("should copy 5/3/1 settings if they exist and a routine is loaded", function () {
+    test("should copy 5/3/1 settings if they exist and a routine is loaded", function () {
         this.liftProgressions.add({week: 1, set: 1});
         this.liftProgressions.add({week: 1, set: 3});
         this.liftProgressions.add({week: 1, set: 5});
@@ -24,7 +24,7 @@ describe("Global Settings Defaults Migration", function () {
         this.liftProgressions.each(function (p) {
             var expectedSet = (i % 3 ) + 1;
             i++;
-            expect(p.get('set')).toEqual(expectedSet);
+            expect(p.get('set'),expectedSet);
         });
     });
 });

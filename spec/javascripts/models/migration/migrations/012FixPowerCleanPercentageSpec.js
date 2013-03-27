@@ -7,7 +7,7 @@ describe("Fix Power Clean Percentage migration", function () {
         reloadStore(biglifts.stores.ss.WorkoutStore);
     });
 
-    it("should set the power clean work set to 100", function () {
+    test("should set the power clean work set to 100", function () {
         var migration = Ext.create('biglifts.migrations.FixPowerCleanPercentage');
         var p = migration.getWorkSetPowerClean();
         p.set('percentage', 85);
@@ -16,6 +16,6 @@ describe("Fix Power Clean Percentage migration", function () {
 
         migration.run();
 
-        expect(p.get('percentage')).toEqual(100);
+        expect(p.get('percentage'),100);
     });
 });

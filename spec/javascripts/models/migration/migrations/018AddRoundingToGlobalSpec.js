@@ -6,7 +6,7 @@ describe("Add Rounding to Global Settings", function () {
         this.w531 = reloadStore(emptyStore(biglifts.stores.w.Settings));
     });
 
-    it('should pull over existing 5/3/1 rounding settings', function () {
+    test('should pull over existing 5/3/1 rounding settings', function () {
         var w531 = this.w531.first();
         w531.set('roundingValue', '1');
         w531.set('roundingType', 'down');
@@ -15,7 +15,7 @@ describe("Add Rounding to Global Settings", function () {
 
         this.migration.run();
 
-        expect(this.global.first().get('roundingValue')).toEqual('1');
-        expect(this.global.first().get('roundingType')).toEqual('down');
+        expect(this.global.first().get('roundingValue'),'1');
+        expect(this.global.first().get('roundingType'),'down');
     });
 });

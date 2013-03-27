@@ -6,13 +6,13 @@ describe("Log StartingStrength Syncer", function () {
         this.syncer = Ext.create('biglifts.models.LogStartingStrengthSyncer');
     });
 
-    it("should convert the StartingStrength log into post ready format", function () {
+    test("should convert the StartingStrength log into post ready format", function () {
         var timestamp = new Date().getTime();
         this.log.add({name: 'Power Clean', weight: 200, sets: 5, reps: 3, units: 'lbs', timestamp: timestamp, workout_id: 1});
         this.log.add({name: 'Squat', weight: 300, sets: 3, reps: 5, units: 'lbs', timestamp: timestamp, workout_id: 1});
         this.log.sync();
 
-        expect(this.combinedLog.getCount()).toEqual(1);
+        expect(this.combinedLog.getCount(),1);
 
         var expected = [
             {
@@ -38,10 +38,10 @@ describe("Log StartingStrength Syncer", function () {
                 ]
             }
         ];
-        expect(this.syncer.getFormattedLog()).toEqual(expected);
+        expect(this.syncer.getFormattedLog(),expected);
     });
 
-    it("should not merge logs with colliding dates", function () {
+    test("should not merge logs with colliding dates", function () {
         var now = new Date().getTime();
         var localLog = [
             {
@@ -81,11 +81,11 @@ describe("Log StartingStrength Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount()).toEqual(2);
-        expect(this.combinedLog.getCount()).toEqual(1);
+        expect(this.log.getCount(),2);
+        expect(this.combinedLog.getCount(),1);
     });
 
-    it("should merge logs with non colliding dates", function () {
+    test("should merge logs with non colliding dates", function () {
         var now = new Date().getTime();
         var yesterday = (1).days().ago();
 
@@ -127,11 +127,11 @@ describe("Log StartingStrength Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.getCount()).toEqual(3);
-        expect(this.combinedLog.getCount()).toEqual(2);
+        expect(this.log.getCount(),3);
+        expect(this.combinedLog.getCount(),2);
     });
 
-    it("should set existing records not removed to synced true", function () {
+    test("should set existing records not removed to synced true", function () {
         var now = new Date().getTime();
         var localLog = [
             {
@@ -173,7 +173,7 @@ describe("Log StartingStrength Syncer", function () {
             remoteLog
         ]);
 
-        expect(this.log.first().get('synced')).toEqual(true);
-        expect(this.log.last().get('synced')).toEqual(true);
+        expect(this.log.first().get('synced'),true);
+        expect(this.log.last().get('synced'),true);
     });
 });

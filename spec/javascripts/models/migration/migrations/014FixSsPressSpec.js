@@ -8,14 +8,14 @@ describe("Fix Ss Press", function () {
         this.migration = Ext.create('biglifts.migrations.FixSsPress');
     });
 
-    it('should determine the current template for standard', function () {
+    test('should determine the current template for standard', function () {
         Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Standard');
-        expect(this.migration.getTemplateName()).toEqual("standard");
+        expect(this.migration.getTemplateName(),"standard");
     });
 
-    it('should determine the current template for novice', function () {
+    test('should determine the current template for novice', function () {
         Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Novice');
-        expect(this.migration.getTemplateName()).toEqual("novice");
+        expect(this.migration.getTemplateName(),"novice");
     });
 
     var findLastPress = function () {
@@ -26,7 +26,7 @@ describe("Fix Ss Press", function () {
         return this.workouts.getAt(index);
     };
 
-    it('should correct bad press reps', function () {
+    test('should correct bad press reps', function () {
         Ext.create('biglifts.models.startingstrength.TemplateSwitcher').switchTo('Novice');
 
         var workout = findLastPress.apply(this);
@@ -37,6 +37,6 @@ describe("Fix Ss Press", function () {
         this.migration.run();
 
         var fixedWorkout = findLastPress.apply(this);
-        expect(fixedWorkout.get('reps')).toEqual(5);
+        expect(fixedWorkout.get('reps'),5);
     });
 });

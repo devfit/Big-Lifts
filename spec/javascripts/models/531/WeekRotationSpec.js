@@ -12,44 +12,44 @@ describe("Week Rotations", function () {
         this.rotations.sync();
     });
 
-    it("should not add rotations if the store is empty", function () {
-        expect(this.rotations.getCount()).toEqual(0);
+    test("should not add rotations if the store is empty", function () {
+        expect(this.rotations.getCount(),0);
         this.lifts.add({name: "Squat"});
         this.lifts.sync();
 
-        expect(this.rotations.getCount()).toEqual(0);
+        expect(this.rotations.getCount(),0);
     });
 
-    it("should add rotations to match when lifts are added", function () {
+    test("should add rotations to match when lifts are added", function () {
         this.lifts.add({name: "Squat", propertyName: 'squat'});
         this.lifts.sync();
         this.lifts.fireEvent('beforesync');
 
         this.rotations.add({liftProperty: 'squat'});
         this.rotations.sync();
-        expect(this.rotations.getCount()).toEqual(1);
+        expect(this.rotations.getCount(),1);
 
         this.lifts.add({name: 'Press', propertyName: 'press'});
         this.lifts.sync();
         this.lifts.fireEvent('beforesync');
 
-        expect(this.rotations.getCount()).toEqual(2);
+        expect(this.rotations.getCount(),2);
     });
 
-    it("should should remove rotations when lifts are deleted", function () {
-        expect(this.rotations.getCount()).toEqual(0);
+    test("should should remove rotations when lifts are deleted", function () {
+        expect(this.rotations.getCount(),0);
 
         this.lifts.add({name: "Squat", propertyName: 'squat'});
         this.lifts.sync();
 
         this.rotations.add({liftProperty: 'squat'});
         this.rotations.sync();
-        expect(this.rotations.getCount()).toEqual(1);
+        expect(this.rotations.getCount(),1);
 
         this.lifts.removeAll();
         this.lifts.sync();
         this.lifts.fireEvent('beforesync');
 
-        expect(this.rotations.getCount()).toEqual(0);
+        expect(this.rotations.getCount(),0);
     });
 });

@@ -5,7 +5,7 @@ describe("Migrations", function () {
         this.migrations.MIGRATION_VALUES = [];
     });
 
-    it("should load migrations if migrations are missing", function () {
+    test("should load migrations if migrations are missing", function () {
         Ext.define('test.C1', {run:function () {
         }});
         Ext.define('test.C2', {run:function () {
@@ -18,10 +18,10 @@ describe("Migrations", function () {
         this.migrations.add({klass:'test.C1', done:true});
         this.migrations.sync();
         this.migrations.loadMissingMigrations();
-        expect(this.migrations.getCount()).toEqual(2);
+        expect(this.migrations.getCount(),2);
     });
 
-    it("should run migrations on load", function () {
+    test("should run migrations on load", function () {
         var run = false;
         Ext.define('test.klass10', {
             run:function () {
@@ -42,7 +42,7 @@ describe("Migrations", function () {
         expect(run).toBe(true);
     });
 
-    it("should not run previously-run migrations load", function () {
+    test("should not run previously-run migrations load", function () {
         var run = false;
         Ext.define('test.klass3', {
             run:function () {
@@ -60,7 +60,7 @@ describe("Migrations", function () {
         expect(run).toBe(false);
     });
 
-    it("should mark migrations done when run", function () {
+    test("should mark migrations done when run", function () {
         Ext.define('test.klass4', {
             run:function () {
             }

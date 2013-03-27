@@ -5,21 +5,21 @@ describe("Add Synced to Logs migration", function () {
         this.migration = Ext.create('biglifts.migrations.AddSyncedToLogs');
     });
 
-    it('should migrate the 5/3/1 log', function () {
+    test('should migrate the 5/3/1 log', function () {
         this.liftLog.add({liftName: 'squat'});
         this.liftLog.sync();
 
         this.migration.run();
 
-        expect(this.liftLog.first().get('synced')).toEqual(false);
+        expect(this.liftLog.first().get('synced'),false);
     });
 
-    it('should migrate the SS log', function () {
+    test('should migrate the SS log', function () {
         this.ssLog.add({name: 'Power Clean'});
         this.ssLog.sync();
 
         this.migration.run();
 
-        expect(this.ssLog.first().get('synced')).toEqual(false);
+        expect(this.ssLog.first().get('synced'),false);
     });
 });
