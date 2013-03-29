@@ -2,26 +2,26 @@
 Ext.ns('biglifts.stores');
 
 Ext.define('biglifts.models.User', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'username', type:'string'},
-            {name:'password', type:'string'}
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'username', type: 'string'},
+            {name: 'password', type: 'string'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'user'
+        proxy: {
+            type: 'localstorage',
+            id: 'user'
         }
     }
 });
 
 Ext.define("biglifts.stores.UserStore", {
-    extend:"Ext.data.Store",
-    CREATE_USER_URL:'http://biglifts.herokuapp.com/users',
-    withUserCallbacks:[],
-    withUser:function (callback) {
+    extend: "Ext.data.Store",
+    CREATE_USER_URL: 'http://biglifts.herokuapp.com/users',
+    withUserCallbacks: [],
+    withUser: function (callback) {
         var me = this;
         util.withLoadedStore(this, function () {
             if (me.getCount() === 0) {
@@ -31,39 +31,43 @@ Ext.define("biglifts.stores.UserStore", {
             }
         });
     },
-    recreateUser: function(callback){
+    recreateUser: function (successCallback, failureCallback) {
         this.removeAll();
-        this.withUser(callback);
-        this.createUserRemotely();
+        this.withUser(successCallback);
+        this.createUserRemotely(successCallback, failureCallback);
     },
-    fireCallbacks:function () {
+    fireCallbacks: function () {
         var user = this.first();
         _.each(this.withUserCallbacks, function (callback) {
             callback(user);
         });
         this.withUserCallbacks = [];
     },
-    createUserRemotely:function () {
+    createUserRemotely: function (successCallback, failureCallback) {
+        successCallback = successCallback || Ext.emptyFn;
+        failureCallback = failureCallback || Ext.emptyFn;
         Ext.Ajax.request({
-            url:this.CREATE_USER_URL,
-            method:'POST',
-            success:function (response) {
+            url: this.CREATE_USER_URL,
+            method: 'POST',
+            success: function (response) {
                 this.addUser(JSON.parse(response.responseText).user);
+                successCallback();
             },
-            failure:function (response) {
+            failure: function (response) {
+                failureCallback();
             },
-            scope:this
+            scope: this
         });
     },
-    addUser:function (user) {
+    addUser: function (user) {
         this.add(user);
         this.sync();
         this.fireCallbacks();
     },
-    config:{
-        model:'biglifts.models.User',
-        listeners:{
-            load:function () {
+    config: {
+        model: 'biglifts.models.User',
+        listeners: {
+            load: function () {
                 if (this.getCount() === 0) {
                     this.createUserRemotely();
                 }
