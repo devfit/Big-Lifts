@@ -1,6 +1,7 @@
 Ext.define('biglifts.components.ArrangePanel', {
     extend: "Ext.Panel",
     arrangeListClass: 'biglifts.views.CustomMovementArrangeList',
+    orderProperty: 'order',
     done: function () {
         throw "abstract";
     },
@@ -9,11 +10,11 @@ Ext.define('biglifts.components.ArrangePanel', {
             return;
         }
 
-        var order1 = r1.get('order');
-        var order2 = r2.get('order');
+        var order1 = r1.get(this.orderProperty);
+        var order2 = r2.get(this.orderProperty);
 
-        r1.set('order', order2);
-        r2.set('order', order1);
+        r1.set(this.orderProperty, order2);
+        r2.set(this.orderProperty, order1);
 
         this.getCustomMovementStore().sync();
     },
@@ -23,6 +24,7 @@ Ext.define('biglifts.components.ArrangePanel', {
             return;
         }
 
+        var me = this;
         var beforeRecord = null;
         this.getCustomMovementStore().each(function (r) {
             if (selectedRecord === r) {
@@ -30,13 +32,13 @@ Ext.define('biglifts.components.ArrangePanel', {
             }
 
             if (beforeRecord === null) {
-                if (r.get('order') < selectedRecord.get('order')) {
+                if (r.get(me.orderProperty) < selectedRecord.get(me.orderProperty)) {
                     beforeRecord = r;
                 }
             }
             else {
-                var testRecordDifference = selectedRecord.get('order') - r.get('order');
-                if (testRecordDifference > 0 && testRecordDifference < selectedRecord.get('order') - beforeRecord.get('order')) {
+                var testRecordDifference = selectedRecord.get(me.orderProperty) - r.get(me.orderProperty);
+                if (testRecordDifference > 0 && testRecordDifference < selectedRecord.get(me.orderProperty) - beforeRecord.get(me.orderProperty)) {
                     beforeRecord = r;
                 }
             }
@@ -51,16 +53,17 @@ Ext.define('biglifts.components.ArrangePanel', {
         }
 
         var afterRecord = null;
+        var me = this;
         this.getCustomMovementStore().each(function (r) {
             if (afterRecord == null) {
-                if (r.get('order') > selectedRecord.get('order')) {
+                if (r.get(me.orderProperty) > selectedRecord.get(me.orderProperty)) {
                     afterRecord = r;
                 }
             }
             else {
-                var testRecordDifference = r.get('order') - selectedRecord.get('order');
+                var testRecordDifference = r.get(me.orderProperty) - selectedRecord.get(me.orderProperty);
                 if (testRecordDifference > 0 && testRecordDifference <
-                    afterRecord.get('order') - selectedRecord.get('order')) {
+                    afterRecord.get(me.orderProperty) - selectedRecord.get(me.orderProperty)) {
                     afterRecord = r;
                 }
             }

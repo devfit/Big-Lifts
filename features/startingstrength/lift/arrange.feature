@@ -12,6 +12,6 @@ Feature: Arranging SS workouts
     Then List item 1 contains "Bench"
     Then List item 2 contains "Squat"
     And I tap the "Done" button
-    Then There are 29 list items
+    Then There are 14 list items
     And I tap the "Warmup" button
     Then List item 1 contains "Bench"

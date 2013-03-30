@@ -1,12 +1,15 @@
 Ext.define('biglifts.views.ss.Arrange', {
     extend: "biglifts.components.ArrangePanel",
     arrangeListClass: 'biglifts.views.ss.ArrangeList',
+    orderProperty: 'groupOrder',
     done: function () {
         var me = this;
         me.getCustomMovementStore().clearFilter();
         _.each(me.savedFilters, function (f) {
             me.getCustomMovementStore().filter(f);
         });
+
+        Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-workout'));
     },
     config: {
         id: 'ss-workout-arrange',
