@@ -1,10 +1,22 @@
 Ext.ns('biglifts.loading');
 biglifts.loading.loadStore = function (store, callback) {
     if (biglifts.loadingFromFile) {
-        util.filebackup.loadStore(store, function () {
-            util.filebackup.watchStoreSync(store);
+        try {
+            if (_.contains(biglifts.syncedStores, store)) {
+                store.load();
+                callback();
+            }
+            else {
+                util.filebackup.loadStore(store, function () {
+                    util.filebackup.watchStoreSync(store);
+                    callback();
+                });
+            }
+        }
+        catch (e) {
+            store.load();
             callback();
-        });
+        }
     }
     else {
         try {

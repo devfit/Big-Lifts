@@ -94,3 +94,4 @@ Ext.define('LiftLogStore', {
 
 biglifts.stores.LiftLog = Ext.create('LiftLogStore');
 biglifts.stores.push(biglifts.stores.LiftLog);
+biglifts.syncedStores.push(biglifts.stores.LiftLog);
