@@ -2,29 +2,31 @@
 Ext.ns('biglifts.stores.ss');
 
 Ext.define('biglifts.models.startingstrength.Workout', {
-    extend:'Ext.data.Model',
-    config:{
-        identifier:'uuid',
-        fields:[
-            {name:'id', type:'string'},
-            {name:'name', type:'string'},
-            {name:'lift_id', type:'string'},
-            {name:'sets', type:'integer'},
-            {name:'reps', type:'integer'},
-            {name:'percentage', type:'float'},
-            {name:'warmup', type:'boolean'},
-            {name:'order', type:'integer'}
+    extend: 'Ext.data.Model',
+    config: {
+        identifier: 'uuid',
+        fields: [
+            {name: 'id', type: 'string'},
+            {name: 'name', type: 'string'},
+            {name: 'lift_id', type: 'string'},
+            {name: 'sets', type: 'integer'},
+            {name: 'reps', type: 'integer'},
+            {name: 'percentage', type: 'float'},
+            {name: 'warmup', type: 'boolean'},
+            {name: 'order', type: 'integer'},
+            {name: 'groupOrder', type: 'integer'}
         ],
-        proxy:{
-            type:'localstorage',
-            id:'ss-workout-proxy'
+        proxy: {
+            type: 'localstorage',
+            id: 'ss-workout-proxy'
         }
     }
 });
 
 Ext.define('biglifts.models.startingstrength.WorkoutStore', {
-    extend:'Ext.data.Store',
-    addWorkoutLifts:function (isWarmup, template) {
+    extend: 'Ext.data.Store',
+    workSetsByLiftId: {},
+    addWorkoutLifts: function (isWarmup, template) {
         var me = this;
         util.withLoadedStore(biglifts.stores.ss.Lifts, function () {
             biglifts.stores.ss.Lifts.each(function (lift) {
@@ -43,26 +45,39 @@ Ext.define('biglifts.models.startingstrength.WorkoutStore', {
             me.sync();
         });
     },
-    addWarmup:function () {
+    addWarmup: function () {
         this.addWorkoutLifts(true, 'standard');
     },
-    addWorkSets:function () {
+    addWorkSets: function () {
         this.addWorkoutLifts(false, 'standard');
     },
-    config:{
-        model:'biglifts.models.startingstrength.Workout',
-        listeners:{
-            load:function () {
+    setupWorkSetCacheForSorting: function () {
+        var me = this;
+        util.withNoFilters(me, function () {
+            me.each(function (w) {
+                if (w.get('warmup') === false) {
+                    me.workSetsByLiftId[w.get('lift_id')] = w;
+                }
+            });
+        });
+    },
+    config: {
+        model: 'biglifts.models.startingstrength.Workout',
+        listeners: {
+            load: function () {
                 var me = this;
                 if (me.getCount() === 0) {
                     me.addWarmup();
                     me.addWorkSets();
                 }
+
+                this.setupWorkSetCacheForSorting();
+                this.addListener('beforesync', this.setupWorkSetCacheForSorting, this);
             }
         },
-        sorters:[
+        sorters: [
             {
-                sorterFn:function (c1, c2) {
+                sorterFn: function (c1, c2) {
                     if (c2.get('name') !== c1.get('name')) {
                         return c2.get('name') === 'B' ? 1 : -1;
                     }
@@ -74,11 +89,15 @@ Ext.define('biglifts.models.startingstrength.WorkoutStore', {
                         return c1.get('order') - c2.get('order');
                     }
                     else {
-                        var liftOrders = ['Squat', 'Bench', 'Press', 'Deadlift', 'Power Clean'];
-                        var lift1index = _.indexOf(liftOrders, lift1.get('name'));
-                        var lift2index = _.indexOf(liftOrders, lift2.get('name'));
+                        var lift1WorkSet = biglifts.stores.ss.WorkoutStore.workSetsByLiftId[lift1.get('id')];
+                        var lift2WorkSet = biglifts.stores.ss.WorkoutStore.workSetsByLiftId[lift2.get('id')];
 
-                        return lift1index - lift2index;
+                        if (lift1WorkSet && lift2WorkSet) {
+                            return lift1WorkSet.get('groupOrder') - lift2WorkSet.get('groupOrder');
+                        }
+                        else {
+                            return c1.get('order') - c2.get('order');
+                        }
                     }
                 }
             }

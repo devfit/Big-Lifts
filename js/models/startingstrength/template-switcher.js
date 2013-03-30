@@ -16,7 +16,6 @@ Ext.define('biglifts.models.startingstrength.TemplateSwitcher', {
         var newLifts = biglifts.models.startingstrength.lifts[template][units];
         this.removeLiftsNotNeeded(newLifts);
         this.addNeededLifts(newLifts);
-        this.restitchOrdering();
         biglifts.stores.ss.Lifts.sync();
     },
     removeLiftsNotNeeded: function (newLifts) {
@@ -43,12 +42,6 @@ Ext.define('biglifts.models.startingstrength.TemplateSwitcher', {
             });
 
             biglifts.stores.ss.Lifts.clearFilter();
-        });
-    },
-    restitchOrdering: function () {
-        var count = 0;
-        biglifts.stores.ss.Lifts.each(function (l) {
-            l.set('order', count++);
         });
     }
 });

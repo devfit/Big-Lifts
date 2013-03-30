@@ -13,11 +13,6 @@
         equal(liftStore.getCount(), 5);
     });
 
-    test("should load lifts with order", function () {
-        equal(liftStore.first().get('order'), 0);
-        equal(liftStore.last().get('order'), 4);
-    });
-
     test("should adjust lift increases when the units are changed to kg", function () {
         biglifts.stores.GlobalSettings.first().set('units', 'kg');
         biglifts.stores.GlobalSettings.sync();
