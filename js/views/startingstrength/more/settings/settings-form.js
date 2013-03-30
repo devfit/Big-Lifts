@@ -64,6 +64,18 @@ Ext.define('biglifts.views.ss.SettingsForm', {
                                 name: 'units',
                                 label: "Units",
                                 options: biglifts.settings.options.units
+                            },
+                            {
+                                xtype: 'selectfield',
+                                name: 'roundingValue',
+                                label: 'Round to',
+                                options: biglifts.settings.options.roundingValues
+                            },
+                            {
+                                xtype: 'selectfield',
+                                name: 'roundingType',
+                                label: 'Rounding',
+                                options: biglifts.settings.options.roundingType
                             }
                         ]
                     },

@@ -56,10 +56,6 @@ Ext.define('WeekRotationStore', {
         me.sync();
     },
     fixWeekRotationToLifts: function () {
-        if (this.getCount() === 0) {
-            return;
-        }
-
         var me = this;
         util.withLoadedStore(biglifts.stores.lifts.Lifts, function () {
             me.addMissingLifts();

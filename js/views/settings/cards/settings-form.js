@@ -24,12 +24,6 @@ Ext.define('biglifts.views.SettingsForm', {
             return;
         }
         var settingsFormValues = settingsForm.getValues();
-        if (oldValue === 'lbs' && newValue === 'kg') {
-            biglifts.stores.lifts.Lifts.adjustCycleIncreaseForKg();
-            if (settingsFormValues.roundingValue === "5") {
-                settingsFormValues.roundingValue = "2.5";
-            }
-        }
 
         var settingsRecord = biglifts.stores.w.Settings.first();
         var globalSettings = biglifts.stores.GlobalSettings.first();

@@ -1,21 +1,26 @@
-describe("Global Settings Defaults Migration", function () {
-    beforeEach(function () {
-        this.routines = biglifts.stores.Routine;
-        this.migration = Ext.create('biglifts.migrations.fixBbbDoubling');
-        this.bbb = biglifts.stores.assistance.BoringButBig;
-        this.bbb.removeAll();
-        this.bbb.sync();
+(function () {
+    var MODULE_NAME = "Fix BBB Doubling";
+    module(MODULE_NAME);
+
+    var migration;
+    var bbb;
+
+    QUnit.moduleStart(function (details) {
+        if (details.name === MODULE_NAME) {
+            reloadStore(emptyStore(biglifts.stores.Routine)).setup531();
+            migration = Ext.create('biglifts.migrations.fixBbbDoubling');
+            bbb = emptyStore(reloadStore(biglifts.stores.assistance.BoringButBig));
+        }
     });
 
-    it("should remove BBB duplicates of main lifts", function () {
-        this.bbb.add({lift_id: '1', movement_lift_id: '1'});
-        this.bbb.add({lift_id: '1', movement_lift_id: '1'});
-        this.bbb.add({lift_id: '2', movement_lift_id: '2'});
-        this.bbb.sync();
+    test("should remove BBB duplicates of main lifts", function () {
+        bbb.add({lift_id: '1', movement_lift_id: '1'});
+        bbb.add({lift_id: '1', movement_lift_id: '1'});
+        bbb.add({lift_id: '2', movement_lift_id: '2'});
+        bbb.sync();
 
-        expect(this.bbb.getCount()).toEqual(3);
-        this.migration.run();
-        this.routines.fireEvent('load');
-        expect(this.bbb.getCount()).toEqual(2);
+        equal(bbb.getCount(), 3);
+        migration.run();
+        equal(bbb.getCount(), 2);
     });
-});
+})();

@@ -7,7 +7,9 @@ Ext.define('biglifts.models.GlobalSettings', {
         fields: [
             {name: 'id', type: 'string'},
             {name: 'units', type: 'string'},
-            {name: 'dateFormat', type: 'string'}
+            {name: 'dateFormat', type: 'string'},
+            {name: 'roundingValue', type: 'string'},
+            {name: 'roundingType', type: 'string'}
         ],
         proxy: {
             type: 'localstorage',
@@ -19,7 +21,7 @@ Ext.define('biglifts.models.GlobalSettings', {
 Ext.define("biglifts.models.GlobalSettingsStore", {
     extend: "biglifts.stores.AbstractSettingsStore",
     getUnits: function () {
-        if( this.first() ){
+        if (this.first()) {
             return this.first().get('units');
         }
 
@@ -47,7 +49,9 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
     setupDefaultSettings: function () {
         var me = this;
         var DEFAULT_SETTINGS = {
-            units: 'lbs'
+            units: 'lbs',
+            'roundingValue': '5',
+            'roundingType': 'normal'
         };
 
         if (me.getCount() === 0) {
@@ -58,6 +62,22 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
         }
         me.sync();
     },
+    watchForUnitChange: function (store, record, newIndex, oldIndex, modifiedFieldNames, modifiedValues) {
+        if (_.indexOf(modifiedFieldNames, 'units') !== -1) {
+            if (record.get('units') === 'kg') {
+                var settings = store.first();
+                if (settings.get('roundingValue') === "5") {
+                    Ext.Function.defer(function () {
+                        settings.set('roundingValue', "2.5");
+                        settings.save();
+                        store.sync();
+                        store.fireEvent('beforesync');
+                        biglifts.stores.lifts.Lifts.adjustCycleIncreaseForKg();
+                    }, 100);
+                }
+            }
+        }
+    },
     config: {
         model: 'biglifts.models.GlobalSettings',
         listeners: {
@@ -65,6 +85,8 @@ Ext.define("biglifts.models.GlobalSettingsStore", {
                 if (this.getCount() === 0) {
                     this.setupDefaultSettings();
                 }
+
+                this.addListener('updaterecord', this.watchForUnitChange, this);
 
                 var me = this;
                 util.whenApplicationReady(function () {

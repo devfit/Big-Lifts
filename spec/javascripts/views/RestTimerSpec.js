@@ -1,16 +1,23 @@
-describe("Rest Timer", function () {
-    beforeEach(function(){
-       this.restTimer = Ext.create('biglifts.views.RestTimer');
-    });
-    it("should format seconds to minutes", function () {
-        expect(this.restTimer.convertSecondsForDisplay(60)).toEqual('1:00');
+(function () {
+    var MODULE_NAME = "Rest Timer";
+    module(MODULE_NAME);
+
+    var restTimer;
+    QUnit.moduleStart(function (details) {
+        if (details.name === MODULE_NAME) {
+            restTimer = Ext.create('biglifts.views.RestTimer');
+        }
     });
 
-    it("should handle 0 seconds", function () {
-        expect(this.restTimer.convertSecondsForDisplay(0)).toEqual('0:00');
+    test("should format seconds to minutes", function () {
+        equal(restTimer.convertSecondsForDisplay(60), '1:00');
     });
 
-    it("should show double digit seconds", function () {
-        expect(this.restTimer.convertSecondsForDisplay(71)).toEqual('1:11');
+    test("should handle 0 seconds", function () {
+        equal(restTimer.convertSecondsForDisplay(0), '0:00');
     });
-});
+
+    test("should show double digit seconds", function () {
+        equal(restTimer.convertSecondsForDisplay(71), '1:11');
+    });
+})();

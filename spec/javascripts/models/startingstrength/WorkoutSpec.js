@@ -1,44 +1,83 @@
-describe("Starting Strength workout", function () {
-    beforeEach(function () {
-        this.lifts = reloadStore(biglifts.stores.ss.Lifts);
-        biglifts.stores.GlobalSettings.removeAll();
-        biglifts.stores.GlobalSettings.setupDefaultSettings();
-        expect(this.lifts.getCount()).toEqual(5);
+(function () {
+    var MODULE_NAME = "Starting Strength workout";
+    module(MODULE_NAME);
 
-        this.workouts = reloadStore(biglifts.stores.ss.WorkoutStore);
-        this.workouts.removeAll();
-        this.workouts.sync();
+    var lifts;
+    var workouts;
+
+    QUnit.testStart(function (details) {
+        if (details.module === MODULE_NAME) {
+            lifts = reloadStore(emptyStore(biglifts.stores.ss.Lifts));
+            reloadStore(emptyStore(biglifts.stores.GlobalSettings));
+            equal(lifts.getCount(), 5);
+
+            workouts = reloadStore(emptyStore(biglifts.stores.ss.WorkoutStore));
+        }
     });
 
-    it("should load default workouts", function () {
-        expect(this.workouts.getCount()).toEqual(0);
-        this.workouts.load();
-        expect(this.workouts.getCount()).toEqual(29);
-        this.workouts.filter('name', 'A');
-        expect(this.workouts.getCount()).toEqual(14);
-        this.workouts.filter('name', 'B');
-        expect(this.workouts.getCount()).toEqual(15);
+    test("should load default workouts", function () {
+        equal(workouts.getCount(), 29);
+        workouts.filter('name', 'A');
+        equal(workouts.getCount(), 14);
+        workouts.filter('name', 'B');
+        equal(workouts.getCount(), 15);
     });
 
-    it("should set the work set for default workouts to 100%", function () {
-        this.workouts.load();
-        this.workouts.filter('warmup', false);
-        this.workouts.each(function (w) {
-            expect(w.get('percentage')).toEqual(100);
+    test("should set the work set for default workouts to 100%", function () {
+        workouts.filter('warmup', false);
+        workouts.each(function (w) {
+            equal(w.get('percentage'), 100);
         });
     });
 
-    it('should order by SS lift order, and warmup defined order', function () {
-        this.workouts.load();
-        biglifts.stores.ss.Lifts.fireEvent('load');
-        this.workouts.filter('name', 'A');
-        var squat = this.lifts.findRecord('name', 'Squat');
-        this.workouts.filter('lift_id', squat.get('id'));
+    test('should order by SS lift order, and warmup defined order', function () {
+        workouts.filter('name', 'A');
+        var squat = lifts.findRecord('name', 'Squat');
+        workouts.filter('lift_id', squat.get('id'));
 
-        expect(this.workouts.getCount()).toEqual(5);
+        equal(workouts.getCount(), 5);
         for (var i = 0; i < 5; i++) {
-            expect(this.workouts.getAt(i).get('lift_id')).toEqual(squat.get('id'));
-            expect(this.workouts.getAt(i).get('order')).toEqual(i);
+            equal(workouts.getAt(i).get('lift_id'), squat.get('id'));
+            equal(workouts.getAt(i).get('order'), i);
         }
     });
-});
+
+    test('should set group order for non warmup lifts', function () {
+        workouts.filter('warmup', false);
+        equal(workouts.getCount(), 6);
+        workouts.each(function (w) {
+            notEqual(w.get('groupOrder'), null);
+        });
+    });
+
+    test('should get work set for lift', function () {
+        lifts = emptyStore(lifts);
+        workouts = emptyStore(workouts);
+
+        lifts.add({name: '1'});
+        var lift2 = lifts.add({name: '2'})[0];
+        lifts.sync();
+
+        workouts.add({name: 'A', lift_id: lifts.findRecord('name', '1').get('id')});
+        workouts.add({name: 'B', lift_id: lift2.get('id'), warmup: true});
+        var workset = workouts.add({name: 'B', lift_id: lift2.get('id'), warmup: false})[0];
+        workouts.sync();
+
+        equal(workset, workouts.workSetsByLiftId[lift2.get('id')]);
+    });
+
+    test('should sort by group order in the store', function () {
+        workouts.filter('name', 'A');
+        workouts.filter('warmup', false);
+        equal(workouts.getCount(), 3);
+
+        var squat = biglifts.stores.ss.WorkoutStore.workSetsByLiftId[lifts.findRecord('name', 'Squat').get('id')];
+        var deadlift = biglifts.stores.ss.WorkoutStore.workSetsByLiftId[lifts.findRecord('name', 'Deadlift').get('id')];
+
+        squat.set('groupOrder', 2);
+        deadlift.set('groupOrder', 0);
+
+        workouts.sync();
+        equal(workouts.first(), deadlift);
+    });
+})();
