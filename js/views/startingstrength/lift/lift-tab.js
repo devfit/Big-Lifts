@@ -20,6 +20,7 @@ Ext.define('biglifts.views.ss.Lift', {
                 }));
 
                 this.add(Ext.create('biglifts.views.ss.Config'));
+                this.add(Ext.create('biglifts.views.ss.Arrange'));
                 this.setActiveItem(0);
             }
         }

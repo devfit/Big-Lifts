@@ -1,30 +1,26 @@
-describe("Global Settings Defaults Migration", function () {
-    beforeEach(function () {
-        this.routines = biglifts.stores.Routine;
-        this.migration = Ext.create('biglifts.migrations.stitchBrokenLiftTemplates');
-        this.liftProgressions = biglifts.stores.lifts.LiftProgression;
-        this.liftProgressions.removeAll();
-        this.liftProgressions.sync();
-    });
+(function () {
+    module("Stitch Broken Progressions Migration");
 
-    it("should copy 5/3/1 settings if they exist and a routine is loaded", function () {
-        this.liftProgressions.add({week: 1, set: 1});
-        this.liftProgressions.add({week: 1, set: 3});
-        this.liftProgressions.add({week: 1, set: 5});
-        this.liftProgressions.add({week: 2, set: 1});
-        this.liftProgressions.add({week: 2, set: 2});
-        this.liftProgressions.add({week: 2, set: 4});
-        this.liftProgressions.sync();
+    reloadStore(emptyStore(biglifts.stores.Routine)).setup531();
+    var migration = Ext.create('biglifts.migrations.stitchBrokenLiftTemplates');
+    var liftProgressions = emptyStore(reloadStore(biglifts.stores.lifts.LiftProgression));
 
-        this.migration.run();
-        this.routines.fireEvent('load');
-        this.liftProgressions.fireEvent('load');
+    test("should stitch bad lift progression sets", function () {
+        liftProgressions.add({week: 1, set: 1});
+        liftProgressions.add({week: 1, set: 3});
+        liftProgressions.add({week: 1, set: 5});
+        liftProgressions.add({week: 2, set: 1});
+        liftProgressions.add({week: 2, set: 2});
+        liftProgressions.add({week: 2, set: 4});
+        liftProgressions.sync();
+
+        migration.run();
 
         var i = 0;
-        this.liftProgressions.each(function (p) {
-            var expectedSet = (i % 3 ) + 1;
+        liftProgressions.each(function (p) {
+            var expectedSet = (i % 3) + 1;
             i++;
-            expect(p.get('set')).toEqual(expectedSet);
+            equal(p.get('set'), expectedSet);
         });
     });
-});
+})();

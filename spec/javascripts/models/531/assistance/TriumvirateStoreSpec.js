@@ -1,26 +1,30 @@
-describe("Triumvirate Store", function () {
-    beforeEach(function () {
-        this.lifts = biglifts.stores.lifts.Lifts;
-        this.triumvirate = biglifts.stores.assistance.TriumvirateMovement;
-        reloadStore(this.lifts);
-        reloadStore(this.triumvirate);
+(function () {
+    var MODULE_NAME = "Triumvirate Store";
+    module(MODULE_NAME);
+    var lifts;
+    var triumvirate;
+    QUnit.testStart(function (details) {
+        if (details.module === MODULE_NAME) {
+            lifts = reloadStore(emptyStore(biglifts.stores.lifts.Lifts));
+            triumvirate = reloadStore(emptyStore(biglifts.stores.assistance.TriumvirateMovement));
+        }
     });
 
-    it("should add unknown triumvirate movements for non-default big lifts", function () {
-        this.lifts.add({name: 'Clean', propertyName: 'clean', max: 300});
-        this.lifts.sync();
+    test("should add unknown triumvirate movements for non-default big lifts", function () {
+        lifts.add({name: 'Clean', propertyName: 'clean', max: 300});
+        lifts.sync();
 
-        this.triumvirate.addMissingCustomLiftAssociations();
+        triumvirate.addMissingCustomLiftAssociations();
 
         var NUMBER_OF_LIFTS = 5;
         var MOVEMENTS_PER_LIFT = 2;
-        expect(this.triumvirate.getCount()).toEqual(NUMBER_OF_LIFTS * MOVEMENTS_PER_LIFT);
+        equal(triumvirate.getCount(), NUMBER_OF_LIFTS * MOVEMENTS_PER_LIFT);
     });
 
-    it("should add custom movements with an order property", function () {
-        this.triumvirate.filter('liftProperty', 'press');
-        this.triumvirate.addWithOrder({liftProperty: 'press', name: 'Rows'});
-        expect(this.triumvirate.getCount()).toEqual(3);
-        expect(this.triumvirate.last().get('name')).toEqual('Rows');
+    test("should add custom movements with an order property", function () {
+        triumvirate.filter('liftProperty', 'press');
+        triumvirate.addWithOrder({liftProperty: 'press', name: 'Rows'});
+        equal(triumvirate.getCount(), 3);
+        equal(triumvirate.last().get('name'), 'Rows');
     });
-});
+})();

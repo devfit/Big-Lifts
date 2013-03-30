@@ -1,11 +1,18 @@
-describe("Global Settings", function () {
-    beforeEach(function () {
-        this.globalSettings = reloadStore(emptyStore(biglifts.stores.GlobalSettings));
+(function () {
+    var MODULE_NAME = "Global Settings";
+    module(MODULE_NAME);
+
+    var globalSettings;
+    QUnit.testStart(function (details) {
+        if (details.module === MODULE_NAME) {
+            reloadStore(emptyStore(biglifts.stores.w.Settings));
+            globalSettings = reloadStore(emptyStore(biglifts.stores.GlobalSettings));
+        }
     });
 
-    it("should have rounding defaults", function () {
-        var settings = this.globalSettings.first();
-        expect(settings.get('roundingValue')).toEqual('5');
-        expect(settings.get('roundingType')).toEqual('normal');
+    test("should have rounding defaults", function () {
+        var settings = globalSettings.first();
+        equal(settings.get('roundingValue'), '5');
+        equal(settings.get('roundingType'), 'normal');
     });
-});
+})();

@@ -1,13 +1,16 @@
-describe("Fix Power Clean Percentage migration", function () {
-    beforeEach(function () {
-        this.routines = reloadStore(biglifts.stores.Routine);
-        this.routines.add({name:'5/3/1'});
-        this.routines.sync();
-        reloadStore(biglifts.stores.ss.Lifts);
-        reloadStore(biglifts.stores.ss.WorkoutStore);
+(function () {
+    var MODULE_NAME = "Fix Power Clean Percentage migration";
+    module(MODULE_NAME);
+
+    QUnit.moduleStart(function (details) {
+        if (details.name === MODULE_NAME) {
+            reloadStore(emptyStore(biglifts.stores.Routine)).setup531();
+            reloadStore(emptyStore(biglifts.stores.ss.Lifts));
+            reloadStore(emptyStore(biglifts.stores.ss.WorkoutStore));
+        }
     });
 
-    it("should set the power clean work set to 100", function () {
+    test("should set the power clean work set to 100", function () {
         var migration = Ext.create('biglifts.migrations.FixPowerCleanPercentage');
         var p = migration.getWorkSetPowerClean();
         p.set('percentage', 85);
@@ -16,6 +19,6 @@ describe("Fix Power Clean Percentage migration", function () {
 
         migration.run();
 
-        expect(p.get('percentage')).toEqual(100);
+        equal(p.get('percentage'), 100);
     });
-});
+})();

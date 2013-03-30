@@ -1,21 +1,29 @@
-describe("Add Rounding to Global Settings", function () {
-    beforeEach(function () {
-        this.migration = Ext.create('biglifts.migrations.AddRoundingToGlobal');
+(function () {
+    var MODULE_NAME = "Add Rounding to Global Settings";
+    module(MODULE_NAME);
 
-        this.global = reloadStore(emptyStore(biglifts.stores.GlobalSettings));
-        this.w531 = reloadStore(emptyStore(biglifts.stores.w.Settings));
+    var migration;
+    var global;
+    var w531Settings;
+
+    QUnit.testStart(function (detail) {
+        if (detail.module === MODULE_NAME) {
+            migration = Ext.create('biglifts.migrations.AddRoundingToGlobal');
+            global = reloadStore(emptyStore(biglifts.stores.GlobalSettings));
+            w531Settings = reloadStore(emptyStore(biglifts.stores.w.Settings));
+        }
     });
 
-    it('should pull over existing 5/3/1 rounding settings', function () {
-        var w531 = this.w531.first();
+    test('should pull over existing 5/3/1 rounding settings', function () {
+        var w531 = w531Settings.first();
         w531.set('roundingValue', '1');
         w531.set('roundingType', 'down');
         w531.save();
-        this.w531.sync();
+        w531Settings.sync();
 
-        this.migration.run();
+        migration.run();
 
-        expect(this.global.first().get('roundingValue')).toEqual('1');
-        expect(this.global.first().get('roundingType')).toEqual('down');
+        equal(global.first().get('roundingValue'), '1');
+        equal(global.first().get('roundingType'), 'down');
     });
-});
+})();

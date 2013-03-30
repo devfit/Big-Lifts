@@ -1,45 +1,53 @@
-describe("Meet Goals", function () {
-    beforeEach(function () {
-        this.lifts = biglifts.stores.lifts.Lifts;
-        this.lifts.removeAll();
-        this.meetGoals = biglifts.stores.lifts.MeetGoals;
-        this.meetGoals.removeAll();
+(function () {
+    var MODULE_NAME = "Meet Goals";
+    module(MODULE_NAME);
 
-        this.lifts.sync();
-        this.meetGoals.sync();
+    var lifts;
+    var meetGoals;
+
+    QUnit.testStart(function (details) {
+        if (details.module === MODULE_NAME) {
+            lifts = biglifts.stores.lifts.Lifts;
+            lifts.removeAll();
+            meetGoals = biglifts.stores.lifts.MeetGoals;
+            meetGoals.removeAll();
+
+            lifts.sync();
+            meetGoals.sync();
+        }
     });
 
-    it("should sync to the available lifts, adding missing lifts and defaulting meetGoal to the one rep max", function () {
-        this.lifts.add({propertyName: 'squat', max: 400});
-        this.meetGoals.syncMeetGoalsToLifts();
-        expect(this.meetGoals.getCount()).toEqual(1);
-        expect(this.meetGoals.first().get('weight')).toEqual(400);
+    test("should sync to the available lifts, adding missing lifts and defaulting meetGoal to the one rep max", function () {
+        lifts.add({propertyName: 'squat', max: 400});
+        meetGoals.syncMeetGoalsToLifts();
+        equal(meetGoals.getCount(), 1);
+        equal(meetGoals.first().get('weight'), 400);
     });
 
-    it("should not rewrite existing meet goals when syncing", function () {
-        this.lifts.add({propertyName: 'squat', max: 400});
-        this.lifts.sync();
-        expect(this.meetGoals.getCount()).toEqual(0);
-        this.meetGoals.add({propertyName: 'squat', weight: 450});
-        this.meetGoals.sync();
+    test("should not rewrite existing meet goals when syncing", function () {
+        lifts.add({propertyName: 'squat', max: 400});
+        lifts.sync();
+        equal(meetGoals.getCount(), 0);
+        meetGoals.add({propertyName: 'squat', weight: 450});
+        meetGoals.sync();
 
-        this.meetGoals.syncMeetGoalsToLifts();
-        expect(this.meetGoals.first().get('weight')).toEqual(450);
+        meetGoals.syncMeetGoalsToLifts();
+        equal(meetGoals.first().get('weight'), 450);
     });
 
-    it("should sync to the available lifts, removing missing lifts", function () {
-        this.lifts.add({propertyName: 'squat'});
-        this.meetGoals.add({propertyName: 'press'});
-        this.meetGoals.syncMeetGoalsToLifts();
-        expect(this.meetGoals.getCount()).toEqual(1);
+    test("should sync to the available lifts, removing missing lifts", function () {
+        lifts.add({propertyName: 'squat'});
+        meetGoals.add({propertyName: 'press'});
+        meetGoals.syncMeetGoalsToLifts();
+        equal(meetGoals.getCount(), 1);
     });
 
-    it("should sync lifts when the lifts store is modified", function () {
-        this.lifts.add({propertyName: 'squat'});
-        expect(this.meetGoals.getCount()).toEqual(0);
-        this.lifts.sync();
+    test("should sync lifts when the lifts store is modified", function () {
+        lifts.add({propertyName: 'squat'});
+        equal(meetGoals.getCount(), 0);
+        lifts.sync();
 
-        this.meetGoals.syncMeetGoalsToLifts();
-        expect(this.meetGoals.getCount()).toEqual(1);
+        meetGoals.syncMeetGoalsToLifts();
+        equal(meetGoals.getCount(), 1);
     });
-});
+})();

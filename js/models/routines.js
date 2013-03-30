@@ -18,6 +18,10 @@ Ext.define('Routine', {
 
 Ext.define('RoutineStore', {
     extend:'Ext.data.Store',
+    setup531: function(){
+        this.add({'name': '5/3/1'});
+        this.sync();
+    },
     config:{
         model:'Routine'
     }
