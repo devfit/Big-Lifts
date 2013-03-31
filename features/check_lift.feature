@@ -6,4 +6,4 @@ Feature: Checking off individual lifts
     And I tap the "Save" button
     And I wait for the animation
     And I navigate to the lift schedule
-    Then the Squat lift is checked
+    Then The "Squat" list item is checked
