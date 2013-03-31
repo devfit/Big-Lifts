@@ -53,16 +53,23 @@ Ext.define('LiftLogStore', {
             });
         });
     },
-    uncheckAssociatedCompletions: function(models){
-        _.each(models, function(l){
+    uncheckAssociatedCompletions: function (models) {
+        _.each(models, function (l) {
             var liftCompletionId = l.get('lift_completion_id');
             if (liftCompletionId != null) {
-                var completion = biglifts.stores.lifts.LiftCompletion.findRecord('id',liftCompletionId);
+                var completion = biglifts.stores.lifts.LiftCompletion.findRecord('id', liftCompletionId);
                 completion.set('completed', false);
                 completion.save();
                 biglifts.stores.lifts.LiftCompletion.sync();
             }
         });
+    },
+    removeLiftCompletions: function () {
+        this.each(function (l) {
+            l.set('lift_completion_id', null);
+            l.save();
+        });
+        this.sync();
     },
     extend: 'Ext.data.Store',
     config: {
@@ -85,6 +92,8 @@ Ext.define('LiftLogStore', {
                         Ext.create('biglifts.models.Log531Syncer').getAndSync();
                     });
                 }, 5000);
+
+                biglifts.stores.CurrentCycle.addListener('beforesync', this.removeLiftCompletions, this);
             },
             removerecords: function (s, models) {
                 this.restitchWorkoutIds();

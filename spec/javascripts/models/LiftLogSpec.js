@@ -3,9 +3,11 @@
     module(MODULE_NAME);
 
     var liftLog;
+    var currentCycle;
     QUnit.testStart(function (details) {
         if (details.module === MODULE_NAME) {
             liftLog = emptyStore(reloadStore(biglifts.stores.LiftLog));
+            currentCycle = reloadStore(emptyStore(biglifts.stores.CurrentCycle));
         }
     });
 
@@ -38,5 +40,14 @@
         liftLog.addLogEntry({liftName: 'Deadlift'});
         liftLog.remove(liftLog.findRecord('liftName', 'Press'));
         equal(liftLog.findRecord('liftName', 'Deadlift').get('workout_id'), 2);
+    });
+
+    test("should clear lift_completion_ids on cycle change", function () {
+        liftLog.addLogEntry({liftName: 'Squat', lift_completion_id: '1'});
+        currentCycle.first().set('cycle', 2);
+//        currentCycle.first().save();
+        currentCycle.sync();
+
+        equal(liftLog.first().get('lift_completion_id'), null);
     });
 })();
