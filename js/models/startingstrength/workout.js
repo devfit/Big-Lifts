@@ -28,21 +28,27 @@ Ext.define('biglifts.models.startingstrength.WorkoutStore', {
     workSetsByLiftId: {},
     addWorkoutLifts: function (isWarmup, template) {
         var me = this;
-        util.withLoadedStore(biglifts.stores.ss.Lifts, function () {
-            biglifts.stores.ss.Lifts.each(function (lift) {
-                _.each(['A', 'B'], function (name) {
-                    var liftName = lift.get('name').replace(/\s/g, "").toLowerCase();
-                    var newSets = _.filter(biglifts.models.startingstrength.workouts[template][liftName], function (s) {
-                        return s.name === name && s.warmup === isWarmup
-                    });
 
-                    _.each(newSets, function (s) {
-                        s.lift_id = lift.get('id');
-                        me.add(s);
-                    });
+        biglifts.stores.ss.Lifts.each(function (lift) {
+            _.each(['A', 'B'], function (name) {
+                var liftName = lift.get('name').replace(/\s/g, "").toLowerCase();
+                var newSets = _.filter(biglifts.models.startingstrength.workouts[template][liftName], function (s) {
+                    return s.name === name && s.warmup === isWarmup
+                });
+
+                _.each(newSets, function (s) {
+                    s.lift_id = lift.get('id');
+                    me.add(s);
                 });
             });
-            me.sync();
+        });
+        me.sync();
+    },
+    rebuildWorkouts: function () {
+        var me = this;
+        util.withLoadedStore(biglifts.stores.ss.Lifts, function () {
+            me.addWorkoutLifts(true, 'standard');
+            me.addWorkoutLifts(false, 'standard');
         });
     },
     addWarmup: function () {
@@ -67,8 +73,7 @@ Ext.define('biglifts.models.startingstrength.WorkoutStore', {
             load: function () {
                 var me = this;
                 if (me.getCount() === 0) {
-                    me.addWarmup();
-                    me.addWorkSets();
+                    me.rebuildWorkouts();
                 }
 
                 this.setupWorkSetCacheForSorting();
