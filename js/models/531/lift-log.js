@@ -13,6 +13,7 @@ Ext.define('LiftLog', {
             {name: 'week', type: 'int'},
             {name: 'cycle', type: 'int'},
             {name: 'timestamp', type: 'int'},
+            {name: 'lift_completion_id', type: 'string'},
             {name: 'workout_id', type: 'int'},
             {name: 'synced', type: 'boolean'}
         ],
@@ -52,6 +53,24 @@ Ext.define('LiftLogStore', {
             });
         });
     },
+    uncheckAssociatedCompletions: function (models) {
+        _.each(models, function (l) {
+            var liftCompletionId = l.get('lift_completion_id');
+            if (liftCompletionId != null) {
+                var completion = biglifts.stores.lifts.LiftCompletion.findRecord('id', liftCompletionId);
+                completion.set('completed', false);
+                completion.save();
+                biglifts.stores.lifts.LiftCompletion.sync();
+            }
+        });
+    },
+    removeLiftCompletions: function () {
+        this.each(function (l) {
+            l.set('lift_completion_id', null);
+            l.save();
+        });
+        this.sync();
+    },
     extend: 'Ext.data.Store',
     config: {
         storeId: 'log531',
@@ -73,9 +92,12 @@ Ext.define('LiftLogStore', {
                         Ext.create('biglifts.models.Log531Syncer').getAndSync();
                     });
                 }, 5000);
+
+                biglifts.stores.CurrentCycle.addListener('beforesync', this.removeLiftCompletions, this);
             },
             removerecords: function (s, models) {
                 this.restitchWorkoutIds();
+                this.uncheckAssociatedCompletions(models);
                 var syncer = Ext.create('biglifts.models.Log531Syncer');
                 var tasks = [];
                 _.each(models, function (model) {
