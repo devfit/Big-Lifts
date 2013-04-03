@@ -85,15 +85,16 @@ Ext.define('LiftLogStore', {
                 });
             },
             load: function () {
-                Ext.Function.defer(function () {
+                if (!this.__loaded) {
+                    this.__loaded = true;
                     Ext.create('biglifts.models.Log531Syncer').getAndSync();
 
                     biglifts.stores.Users.addListener('beforesync', function () {
                         Ext.create('biglifts.models.Log531Syncer').getAndSync();
                     });
-                }, 5000);
 
-                biglifts.stores.CurrentCycle.addListener('beforesync', this.removeLiftCompletions, this);
+                    biglifts.stores.CurrentCycle.addListener('beforesync', this.removeLiftCompletions, this);
+                }
             },
             removerecords: function (s, models) {
                 this.restitchWorkoutIds();
@@ -116,4 +117,10 @@ Ext.define('LiftLogStore', {
 
 biglifts.stores.LiftLog = Ext.create('LiftLogStore');
 biglifts.stores.push(biglifts.stores.LiftLog);
-biglifts.syncedStores.push(biglifts.stores.LiftLog);
+
+//hack to fix log being inaccessible and never loading - no clue why.
+util.whenApplicationReady(function(){
+    biglifts.stores.LiftLog.loading = false;
+    biglifts.stores.LiftLog.loaded = true;
+    biglifts.stores.LiftLog.fireEvent('load');
+});
