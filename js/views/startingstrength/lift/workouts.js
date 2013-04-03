@@ -1,75 +1,23 @@
 Ext.define('biglifts.views.ss.Workouts', {
     extend: 'Ext.Panel',
-    showRestTimer: function () {
-        var parent = this.getParent();
-        parent.setActiveItem(parent.restTimer);
-    },
     showConfig: function () {
         Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-config'));
         Ext.getCmp('ss-config').setActiveItem(0);
     },
-    markWorkoutCompleted: function () {
-        var me = this;
-        var newWorkoutId = biglifts.stores.ss.Log.getNewWorkoutId();
-        util.withNoFilters(biglifts.stores.ss.WorkoutStore, function () {
-            biglifts.stores.ss.WorkoutStore.filter('warmup', false);
-            biglifts.stores.ss.WorkoutStore.filter('name', me.workoutName);
-            biglifts.stores.ss.WorkoutStore.each(function (w) {
-                var lift = biglifts.stores.ss.Lifts.findRecord('id', w.get('lift_id'));
-
-                biglifts.stores.ss.Log.add({
-                    name: lift.get("name"),
-                    weight: lift.get('weight'),
-                    sets: w.get('sets'),
-                    reps: w.get('reps'),
-                    units: biglifts.stores.GlobalSettings.getUnits(),
-                    timestamp: new Date().getTime(),
-                    workout_id: newWorkoutId
-                });
-
-                lift.set('weight', lift.get('weight') + lift.get('increase'));
-            });
-            biglifts.stores.ss.WorkoutStore.clearFilter();
-        });
-
-        biglifts.stores.ss.Log.sync();
-        biglifts.stores.ss.Lifts.sync();
-        Ext.getCmp('main-tab-panel').setActiveItem(Ext.getCmp('ss-track-tab'));
-    },
-    setToolbarTitle: function () {
-        this.workoutToolbar.setTitle("Workout " + this.workoutPanel.getActiveItem().getWorkoutName());
-    },
-    activeItemChanged: function () {
-        this.workoutName = this.workoutPanel.getActiveItem().getWorkoutName();
-        biglifts.stores.ss.WorkoutStore.filter('name', this.workoutName);
-        this.setToolbarTitle();
-    },
-    refreshActiveItem: function () {
-        this.workoutPanel.getActiveItem().refresh();
-    },
-    toggleWarmup: function () {
-        if (this.warmupButton.getUi() === 'confirm') {
-            this.warmupButton.setUi('decline');
-            biglifts.stores.ss.WorkoutStore.filter('warmup', false);
-        }
-        else {
-            this.warmupButton.setUi('confirm');
-            biglifts.stores.ss.WorkoutStore.clearFilter(true);
-            biglifts.stores.ss.WorkoutStore.filter('name', this.workoutName);
-        }
+    workoutChanged: function(s, newValue){
+        biglifts.stores.ss.WorkoutStore.filter('name', newValue);
     },
     arrange: function () {
         Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-workout-arrange'));
     },
-    bindListeners: function () {
-        this.workoutPanel.addListener('activeitemchange', this.activeItemChanged, this);
-        biglifts.stores.ss.Lifts.addListener('beforesync', this.refreshActiveItem, this);
-        biglifts.stores.GlobalSettings.addListener('beforesync', this.refreshActiveItem, this);
+    startWorkout: function(){
+        Ext.getCmp('ss-workout-breakdown').startWorkout(biglifts.stores.ss.WorkoutStore.getRange());
     },
-    destroyListeners: function () {
-        this.removeListener('activeitemchange', this.activeItemChanged, this);
-        biglifts.stores.ss.Lifts.removeListener('beforesync', this.refreshActiveItem, this);
-        biglifts.stores.GlobalSettings.removeListener('beforesync', this.refreshActiveItem, this);
+    setupView: function () {
+        biglifts.stores.ss.WorkoutStore.clearFilter(true);
+        biglifts.stores.ss.WorkoutStore.filter('name', this.workoutSelector.getValue());
+        biglifts.stores.ss.WorkoutStore.filter('warmup', false);
+        this.workoutList.refresh();
     },
     config: {
         id: 'ss-workout',
@@ -80,7 +28,8 @@ Ext.define('biglifts.views.ss.Workouts', {
                 var me = this;
                 me.workoutToolbar = me.add({
                     xtype: 'toolbar',
-                    docked: 'top'
+                    docked: 'top',
+                    title: 'Workout'
                 });
 
                 me.workoutToolbar.add({
@@ -89,50 +38,34 @@ Ext.define('biglifts.views.ss.Workouts', {
                     ui: 'action',
                     handler: Ext.bind(this.showConfig, this)
                 });
-
                 me.workoutToolbar.add({xtype: 'spacer'});
+                me.workoutToolbar.add({xtype: 'button', ui: 'confirm', text: 'Start', handler: this.startWorkout});
 
-                me.workoutToolbar.add({
-                    cls: 'rest-timer-button',
-                    iconCls: 'clock',
-                    iconMask: true,
-                    ui: 'decline',
-                    handler: Ext.bind(me.showRestTimer, me)
-                });
-
-                me.workoutToolbar.add({
-                    style: 'z-index: 11',
-                    iconCls: 'done',
-                    iconMask: true,
-                    ui: 'action',
-                    handler: Ext.bind(me.markWorkoutCompleted, me)
-                });
-
-                this.workoutName = 'A';
-                biglifts.stores.ss.WorkoutStore.filter('name', this.workoutName);
-
-                this.workoutPanel = Ext.create('Ext.tab.Panel');
-                this.workoutPanel.add(Ext.create('biglifts.views.ss.WorkoutList', {workoutName: 'A', title: 'A'}));
-                this.workoutPanel.add(Ext.create('biglifts.views.ss.WorkoutList', {workoutName: 'B', title: 'B'}));
-                this.add(this.workoutPanel);
-
-                me.setToolbarTitle();
+                biglifts.stores.ss.WorkoutStore.filter('name', 'A');
+                this.workoutList = this.add(Ext.create('biglifts.views.ss.WorkoutList'));
 
                 var toolbar = me.add({
                     xtype: 'toolbar',
-                    docked: 'bottom',
-                    cls: 'unstyled-toolbar'
+                    docked: 'top',
+                    ui: 'light'
                 });
-
-                this.warmupButton = toolbar.add({xtype: 'button', text: 'Warmup', ui: 'confirm', handler: Ext.bind(me.toggleWarmup, me)});
-                this.arrangeButton = toolbar.add({xtype: 'button', text: 'Arrange', handler: Ext.bind(me.arrange, me)});
+                toolbar.add({xtype: 'button', text: 'Arrange', handler: Ext.bind(me.arrange, me)});
                 toolbar.add({xtype: 'spacer'});
-                toolbar.add(Ext.create('biglifts.components.SetCounter'));
-
-                this.bindListeners();
+                this.workoutSelector = toolbar.add({
+                    xtype: 'selectfield',
+                    name: 'workout',
+                    label: "Workout",
+                    options: [
+                        {text: 'A', value: 'A'},
+                        {text: 'B', value: 'B'}
+                    ],
+                    listeners: {
+                        change: Ext.bind(me.workoutChanged, me)
+                    }
+                });
             },
-            destroy: function () {
-                this.destroyListeners();
+            painted: function () {
+                this.setupView();
             }
         }
     }

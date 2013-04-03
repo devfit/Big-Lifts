@@ -1,8 +1,6 @@
 Ext.define('biglifts.views.ss.WorkoutList', {
     extend: "Ext.dataview.List",
     config: {
-        workoutName: null,
-        title: 'A',
         store: biglifts.stores.ss.WorkoutStore,
         itemCls: 'workout-item',
         itemTpl: new Ext.XTemplate(
