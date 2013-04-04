@@ -1,11 +1,6 @@
 @StartingStrength
 Feature: Workouts
 
-  Scenario: The title is updated when the workout is switched
-    When I navigate to the "Lift" tab
-    And I tap the "B" tab
-    Then The page title is "Workout B"
-
   Scenario: Lift weights are reflected in workouts
     When I navigate to the "Edit" tab
     When I set the "Bench" input to "225"
@@ -18,7 +13,6 @@ Feature: Workouts
 
   Scenario: Workout A
     When I navigate to the "Lift" tab
-    And I tap the "Warmup" button
     Then There are 3 list items
     Then There is a "Squat" list item
     Then There is a "Bench" list item
@@ -26,8 +20,7 @@ Feature: Workouts
 
   Scenario: Workout B
     When I navigate to the "Lift" tab
-    And I tap the "B" tab
-    And I tap the "Warmup" button
+    And I set select "workout" to "B"
     Then There are 3 list items
     Then There is a "Squat" list item
     Then There is a "Press" list item
