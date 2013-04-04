@@ -9,7 +9,10 @@ Feature: Tracking Lifts
     And I set select "units" to "kg"
     And I tap the "Back" button
     And I navigate to the "Lift" tab
-    And I tap the checkmark
+    And I tap the "Start" button
+    And I tap the "Next" button
+    And I tap the "Next" button
+    And I tap the "Save" button
     And I wait for the animation
     Then I am on the track tab
     Then There is a "Bench 3x 5 225kg" list item
@@ -17,7 +20,10 @@ Feature: Tracking Lifts
   Scenario: The track tab uses the combined log
     When I navigate to the "Edit" tab
     And I navigate to the "Lift" tab
-    And I tap the checkmark
+    And I tap the "Start" button
+    And I tap the "Next" button
+    And I tap the "Next" button
+    And I tap the "Save" button
     And I wait for the animation
     Then I am on the track tab
     Then There are 1 list items
@@ -30,10 +36,20 @@ Feature: Tracking Lifts
     When I set the "Power Clean" input to "200"
     When I set the "Press" input to "120"
     And I navigate to the "Lift" tab
-    And I tap the checkmark
+
+    And I tap the "Start" button
+    And I tap the "Next" button
+    And I tap the "Next" button
+    And I tap the "Save" button
+
     And I navigate to the "Lift" tab
-    And I tap the "B" tab
-    And I tap the checkmark
+    And I set select "workout" to "B"
+
+    And I tap the "Start" button
+    And I tap the "Next" button
+    And I tap the "Next" button
+    And I tap the "Save" button
+
     And I navigate to the "Edit" tab
     Then The "Bench" input is "230"
     Then The "Squat" input is "320"
@@ -47,7 +63,12 @@ Feature: Tracking Lifts
     When I set the "Squat" input to "300"
     When I set the "Deadlift" input to "400"
     And I navigate to the "Lift" tab
-    And I tap the checkmark
+
+    And I tap the "Start" button
+    And I tap the "Next" button
+    And I tap the "Next" button
+    And I tap the "Save" button
+
     And I wait for the animation
     Then I am on the track tab
     Then There is a "Bench 3x 5 225lbs" list item
