@@ -8,7 +8,10 @@ Feature: Editing individual ss lifts
     And I set the "Increase" input to "5"
     And I tap the "Back" button
     And I navigate to the "Lift" tab
-    And I tap the checkmark
+    And I tap the "Start" button
+    And I tap the "Next" button
+    And I tap the "Next" button
+    And I tap the "Save" button
     And I wait for the animation
     And I tap the "Edit" tab
     Then The "Squat" input is "205"
