@@ -16,7 +16,7 @@ Ext.define('biglifts.views.ss.Lift', {
                 me.restTimer = this.add(Ext.create('biglifts.views.RestTimer', {
                     id:'ss-rest-timer',
                     backFunction:function () {
-                        me.setActiveItem(me.workoutView);
+                        me.setActiveItem(me.workoutBreakdown);
                     }
                 }));
 
