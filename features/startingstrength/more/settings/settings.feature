@@ -17,7 +17,10 @@ Feature: StartingStrength Settings
     And I set select "units" to "kg"
     And I tap the "Back" button
     And I navigate to the "Lift" tab
-    And I tap the checkmark
+    And I tap the "Start" button
+    And I tap the "Next" button
+    And I tap the "Next" button
+    And I tap the "Save" button
     And I navigate to the "Edit" tab
     Then The "Bench" input is "102"
 
