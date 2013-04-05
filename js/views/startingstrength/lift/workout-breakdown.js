@@ -1,7 +1,7 @@
 Ext.define('biglifts.views.ss.WorkoutBreakdown', {
     extend: 'Ext.Panel',
-    showRestTimer: function(){
-      Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-rest-timer'));
+    showRestTimer: function () {
+        Ext.getCmp('ss-lift-tab').setActiveItem(Ext.getCmp('ss-rest-timer'));
     },
     back: function () {
         var currentIndex = _.indexOf(this.workouts, this.currentWorkout);
@@ -85,8 +85,10 @@ Ext.define('biglifts.views.ss.WorkoutBreakdown', {
 
                 this.workoutList = this.add(Ext.create('biglifts.views.ss.WorkoutList'));
 
-                this.bottomToolbar = this.add({xtype: 'toolbar', docked: 'bottom'});
+                this.bottomToolbar = this.add({xtype: 'toolbar', docked: 'bottom', cls: 'unstyled-toolbar'});
                 this.bottomToolbar.add({xtype: 'button', cls: 'rest-timer-button', iconCls: 'clock', iconMask: true, ui: 'decline', handler: Ext.bind(this.showRestTimer, this)});
+                this.bottomToolbar.add({xtype: 'spacer'});
+                this.bottomToolbar.add(Ext.create('biglifts.components.SetCounter'));
             },
             painted: function () {
                 this.setupView();
