@@ -7,19 +7,19 @@ Ext.define('LiftLog', {
             {name: 'liftName', type: 'string'},
             {name: 'weight', type: 'float'},
             {name: 'units', type: 'string'},
-            {name: 'reps', type: 'int'},
+            {name: 'reps', type: 'integer'},
             {name: 'notes', type: 'string', defaultValue: ''},
-            {name: 'expectedReps', type: 'int'},
-            {name: 'week', type: 'int'},
-            {name: 'cycle', type: 'int'},
-            {name: 'timestamp', type: 'int'},
+            {name: 'expectedReps', type: 'integer'},
+            {name: 'week', type: 'integer'},
+            {name: 'cycle', type: 'integer'},
+            {name: 'timestamp', type: 'integer'},
             {name: 'lift_completion_id', type: 'string'},
-            {name: 'workout_id', type: 'int'},
+            {name: 'workout_id', type: 'integer'},
             {name: 'synced', type: 'boolean'}
         ],
         proxy: {
             type: 'localstorage',
-            id: 'lift-log-proxy'
+            id: 'llproxy'
         }
     }
 });
@@ -117,10 +117,3 @@ Ext.define('LiftLogStore', {
 
 biglifts.stores.LiftLog = Ext.create('LiftLogStore');
 biglifts.stores.push(biglifts.stores.LiftLog);
-
-//hack to fix log being inaccessible and never loading - no clue why.
-util.whenApplicationReady(function(){
-    biglifts.stores.LiftLog.loading = false;
-    biglifts.stores.LiftLog.loaded = true;
-    biglifts.stores.LiftLog.fireEvent('load');
-});
