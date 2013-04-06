@@ -4,9 +4,9 @@ module SenchaHelper
     lift_selector_parent.find_element(:class => 'x-field-mask').click
     sleep 0.3
 
-    floating_selector = @driver.find_elements(:class => 'x-floating').select { |floatingItem|
-      floatingItem.attribute('class').include? 'x-container'
-    }[0]
+    floating_selector = @driver.find_elements(:class => 'x-floating').find { |floating|
+      floating.displayed? && floating.attribute('class').include?('x-container')
+    }
 
     floating_selector.find_elements(:tag_name => 'div').select { |d| d.attribute('class') == 'x-list-item-label' }
   end
