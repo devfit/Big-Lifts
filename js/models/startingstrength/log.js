@@ -37,46 +37,7 @@ Ext.define('biglifts.models.startingstrength.LogStore', {
         return uniqueWorkoutIds;
     },
     config: {
-        model: 'biglifts.models.startingstrength.Log',
-        listeners: {
-            addrecords: function (s, records) {
-                var me = this;
-                var tasks = [];
-                _.each(this.getUniqueWorkoutIdsFromModels(records), function (workout_id) {
-                    tasks.push(function (callback) {
-                        me.syncer.saveWorkout(me.syncer.buildFormattedWorkout(workout_id), callback);
-                    });
-                });
-
-                async.series(tasks, function () {
-                    me.syncer.getAndSync();
-                });
-            },
-            load: function () {
-                this.syncer = Ext.create('biglifts.models.LogStartingStrengthSyncer');
-
-                var me = this;
-                me.syncer.getAndSync();
-
-                biglifts.stores.Users.addListener('beforesync', function () {
-                    me.syncer.getAndSync();
-                });
-            },
-            removerecords: function (s, models) {
-                var me = this;
-                var tasks = [];
-
-                _.each(this.getUniqueWorkoutIdsFromModels(models), function (workout_id) {
-                    tasks.push(function (callback) {
-                        me.syncer.deleteRecord(workout_id, callback);
-                    });
-                });
-
-                async.series(tasks, function () {
-                    me.syncer.postLog();
-                });
-            }
-        }
+        model: 'biglifts.models.startingstrength.Log'
     }
 });
 

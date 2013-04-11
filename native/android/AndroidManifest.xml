@@ -18,7 +18,7 @@
        under the License.
 -->
 <manifest xmlns:android="http://schemas.android.com/apk/res/android" android:windowSoftInputMode="adjustPan"
-      package="com.stefankendall.wendler531premium" android:versionName="108" android:versionCode="138">
+      package="com.stefankendall.wendler531premium" android:versionName="109" android:versionCode="139">
     <supports-screens
         android:largeScreens="true"
         android:normalScreens="true"

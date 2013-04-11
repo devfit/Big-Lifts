@@ -54,7 +54,7 @@ Ext.define('biglifts.views.ss.Workouts', {
                 this.workoutSelector = toolbar.add({
                     xtype: 'selectfield',
                     name: 'workout',
-                    label: "Workout",
+                    width: 160,
                     options: [
                         {text: 'A', value: 'A'},
                         {text: 'B', value: 'B'}

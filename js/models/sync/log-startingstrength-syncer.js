@@ -34,6 +34,7 @@ Ext.define('biglifts.models.LogStartingStrengthSyncer', {
                         l.set('synced', true);
                         l.save();
                     });
+                    me.clearFilter();
                 });
             }
         });
