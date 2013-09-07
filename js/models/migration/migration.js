@@ -37,7 +37,8 @@ Ext.define('Migrations', {
         {klass: 'biglifts.migrations.SubscribePoll', done: false},
         {klass: 'biglifts.migrations.AddRoundingToGlobal', done: false},
         {klass: 'biglifts.migrations.RebuildSsWorkouts', done: false},
-        {klass: 'biglifts.migrations.LogSyncWarning', done: false}
+        {klass: 'biglifts.migrations.LogSyncWarning', done: false},
+        {klass: 'biglifts.migrations.NewAppNotification', done: false}
     ],
     loadMissingMigrations: function () {
         var me = this;
