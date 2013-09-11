@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>26D5D255-78DF-4065-874F-CE832BC22C35</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Big Lifts</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>2DEA4E00-43B7-4DA0-A8D6-40D4563912AE</key>
+		<string>ssh://github.com/stefankendall/Big-Lifts.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>native/ios/Big Lifts.xcodeproj/project.xcworkspace</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>2DEA4E00-43B7-4DA0-A8D6-40D4563912AE</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>ssh://github.com/stefankendall/Big-Lifts.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>110</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>2DEA4E00-43B7-4DA0-A8D6-40D4563912AE</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>2DEA4E00-43B7-4DA0-A8D6-40D4563912AE</string>
+			<key>IDESourceControlWCCName</key>
+			<string>Big-Lifts</string>
+		</dict>
+	</array>
+</dict>
+</plist>
